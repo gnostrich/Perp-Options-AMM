@@ -60,6 +60,43 @@ crossover pins to K=84000 every time (err ~0). `sNorm=(oracle₀/S)^γ` exact.
 5. File-safety: blobs (line layer) unchanged, 3 scripts parse, IIFE intact.
 
 ## Sequence
-This lands before the Finding-2 chart-ray fix (Finding-2 direction follows from the corrected
-registration). Build → new file `engine/builds/temporal_mvp_v26c_strikereg.html`; manager verifies
-before HEAD promotion.
+**Operator ruled (A), 2026-06-08: the registration must be UNIFORM** — the strike is ONE mark on the
+pool curve; registering it at K for the table, oracle₀²/K for execution, and the old basis on the
+chart = three strikes for one instrument, and the screen would lie about what trades. So the fix
+extends to **every curve-coordinate registration site**: display mark (v26c, done) + execution/
+settlement path + chart strike-ray. **Finding-2 is ABSORBED here** — re-registering `drawStrikeRay`
+to live `sNorm(K)` IS the Finding-2 fix (live registration also kills the stale entry-θ drift).
+
+### Full (A) scope — extend v26c (`temporal_mvp_v26c_strikereg.html`)
+- **Execution/settlement path:** `executeBand`/`closeBand` → `legPrice`/`markEff`/`legValueUnified` →
+  `compositeRay`/`vsValue` → V → dy. Everywhere the strike enters as a CURVE coordinate (feeds
+  mark/value), use `sNormStrike(state, K)` from the dollar strikes `K_inner/K_outer`. This is
+  economically material (γ>1 trades currently priced ~10% off near the strike).
+- **Chart strike-ray:** `drawStrikeRay` (fed `b.sold.inner`/`.outer`) → `sNormStrike`. = Finding-2.
+- **LEAVE `drawStrikeMark`** (funding-polar marker) — funding is untouched and already at K; the
+  strike ray and the funding marker sitting at different spots is CORRECT (different quantities).
+
+### Guardrails (how reopening settlement stays safe — same discipline as v26b)
+1. **Uniform** — no `K/oracle` left at any CURVE-coordinate registration site (mark/value/chart-ray).
+   (Price-measure uses — `isOTM`/`wingMember`, funding's deviation — STAY on K/oracle; their crossover
+   is already at K, so they're not the bug. "Registration site" = where the strike is dropped onto
+   the curve to mark intrinsic, not the price-measure OTM/deviation gates.)
+2. **Conversion structure byte-unchanged** — the stage-2→3 dollar pipe (`carvedNotional`/
+   `entryPerpMark`/`dollarFigure`) is FED the correctly-registered value; the pipe itself does NOT
+   change.
+3. **§6 STOP-CONDITION LIVE** — if feeding the corrected registration cleanly requires a NEW dollar
+   path, **STOP and re-escalate to the manager→operator**. Do NOT improvise settlement to fit. This
+   is the line that lets the reopening be authorized at all.
+4. **Quantify the premium delta** — pin the ~10% near-strike correction; confirm premiums move TOWARD
+   the correctly-registered value; check the extremes + the free boundary for blowups.
+5. **Full re-verify + mixed-basis negative control** — 7 gates + seam + dir_gate with EVERY site
+   registered; ENHANCE dir_gate so a MIXED basis (any curve site left on K/oracle) TRIPS crossover@K —
+   a future partial fix must not pass.
+
+**Funding stays untouched throughout** — pool-vs-anchor deviation, already at K, not a registration
+site. The execution pass must not drift into it. If clean: v26c becomes HEAD-promotable as the
+complete coherently-registered build.
+
+## (historical) initial scope note
+The first v26c pass scoped to the display mark (`pfComponents`) only and STOP-and-reported the
+execution/chart sites as locked-surface entanglements — correct discipline; operator then ruled (A).
