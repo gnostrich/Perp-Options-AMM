@@ -5,10 +5,13 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 ## HEAD / verification
 - **HEAD = `engine/builds/HEAD_temporal_mvp_v26a.html`, md5 `89ae89e9df229186b134ca6638726d0c`.**
   GH curve swap (v25) + v26a barrier-remnant fixes + slippage units fix.
-- **Manager-verified at the Node level (2026-06-08):** ran `engine/verify/run_all.sh` myself —
-  7 GH gates PASS (γ∈{1.5,2,3,4}), curveTrace 401/401 on the GH curve (worst slope err 5.16e-12),
-  marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 → 71.45%/$6240.94),
-  loud-NaN guard OK. **UI still owed to tester** (browser visual). Lean = trusted-from-prover.
+- **Manager-verified at the Node level (2026-06-08, re-run on resume):** ran `engine/verify/run_all.sh`
+  myself — 7 GH gates PASS (γ∈{1.5,2,3,4}), curveTrace 401/401 on the GH curve (worst slope err
+  5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →
+  71.45%/$6240.94), loud-NaN guard OK. **UI owed to tester** — live browser run DISPATCHED (bg,
+  agent a0b7eb8b). Lean = trusted-from-prover.
+- **Branch:** working on `claude/pensive-sagan-WhNLb`. peaceful-volta-82pJP already merged to main
+  (PR #1, HEAD e7c8ce9) — bootstrap scaffolding is on main.
 - Blobs intact: webp `ab663f5c…` (line 74), svg `c505b08a…` (line 1060). File-safety hook live.
 
 ## Build lineage (engine/builds/BUILD_LINEAGE.md)
@@ -29,8 +32,15 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    (real engine change). Operator decides.
 3. **v26b — ITM/American build** | intern | CLEARED, NOT STARTED. Build on HEAD per
    `specs/SPEC_itm_exercise_smoothpaste_NEXT.md`; wire `verify/seam_gate.js` into run_all.
-4. **Blob-ledger reconcile** | manager + operator | OPEN. Files carry canonical `ab663f5c`/`c505b08a`;
-   old ledger lists minified `8d2e1a84`/`1b320fc5`. Fix the ledger; never restore minified blobs.
+4. **Blob-ledger reconcile** | manager + operator | **VERIFIED, awaiting operator ratification.**
+   Decoded HEAD blobs at all 3 layers myself (2026-06-08): line-md5 `ab663f5c`/`c505b08a` (canonical,
+   what the hook+run_all check) → DECODED-binary `8d2e1a84`/`1b320fc5`, b64-payload `d3ff8fc8`/`b6f0d67b`.
+   273864 b64 × ¾ = 205398 exact; 5168 × ¾ ≈ 3875. ⇒ `8d2e1a84`/`1b320fc5` is **NOT a second/minified
+   "broken cut"** — it's the *decode of the same canonical blob*. INTEGRITY.md was right; the "minified
+   broken cut, never restore" narrative in CLAUDE.md/GOTCHAS/BUILD_LINEAGE/hook-comments is the actual
+   error. Hook/harness key off the correct line layer ⇒ nothing operationally at risk. Reconcile =
+   correct the narrative + ratify which layer is canonical (recommend keeping line layer = status quo).
+   Held doc edits pending operator (touches shared-truth CLAUDE.md). Surfaced to operator 2026-06-08.
 5. **Layer-2 honest-dollar slippage $** | manager/intern | DEFERRED, non-blocking. Route reserve-USD
    through the existing carved-perp settlement chain; reuse, don't improvise.
 6. **Lean GH gate-discharge** | research-lead→Aristotle | OPEN. Instantiate GH, discharge 4 gate
