@@ -158,10 +158,22 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      drift). LEAVE `drawStrikeMark` (funding-polar) + funding + isOTM (price-measure, already at K).
      Guardrails: uniform (no curve-coord K/oracle left); stage-2→3 dollar pipe byte-unchanged (FED
      corrected value); **§6 HARD STOP if a new dollar path is needed**; quantify ~10% premium delta +
-     extremes/boundary; dir_gate enhanced so a MIXED basis trips crossover@K. **Intern BUILDING
-     v26c_full (agent a245ff2a)** → `temporal_mvp_v26c_full.html`. Verify before HEAD: re-derive
-     premium delta, negative-control mixed-basis gate, confirm dollar-pipe bytes unchanged.
-   - **Finding-2 absorbed into this pass (no longer a separate thread).**
+     extremes/boundary; dir_gate enhanced so a MIXED basis trips crossover@K. **v26c_full DELIVERED +
+     MANAGER-VERIFIED Node level (2026-06-08)** → `temporal_mvp_v26c_full.html` md5 `8f7b3ffb`
+     (committed 708fb02, NOT HEAD). Verified MYSELF: 7 GH + seam + dir_gate(mixed-basis exec control)
+     PASS; **dollar-pipe content BYTE-IDENTICAL** (guardrail 2 ✓); premium delta re-derived matches
+     intern (+7.69%@K=82k near-strike / +15.76%@K=84k, toward correct); extremes/boundary CLEAN (new
+     path fixes an old-path blowup); §6 NOT tripped; funding/isOTM/markFrac/drawStrikeMark untouched.
+     dir_gate mixed-basis: mutant→76190, registered→K (negative-controlled by me). Minor: exec
+     crossover 84005 vs 84000 = sweep resolution (cosmetic).
+   - **Intern's 3 flags:** (1) chart-ray uses K/oracle_LIVE not sNorm(K) — I VERIFIED correct (sNorm(K)
+     would draw ray@72565; K/oracle_live@84000, same curve point; price-space object). RESOLVED.
+     (3) settled-value changes ITM-close dollar = the premium delta, authorized, verified. RESOLVED.
+     (2) **`drawPayoff`/legFraction left price-ratio — OPEN, ESCALATED.** Self-consistent in its own
+     coord (crossover at K) but mark VALUES differ from carry-basis bands table; re-basing needs the
+     whole swept x-axis. Operator: in-scope for uniformity now, or deferred display increment?
+   - **NOT HEAD pending: (a) drawPayoff ruling; (b) tester browser pass** (bands mark@K, chart
+     strike-ray live, payoff, + bundled x-range). Finding-2 absorbed (no longer separate).
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
