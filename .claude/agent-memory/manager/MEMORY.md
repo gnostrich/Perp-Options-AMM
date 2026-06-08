@@ -37,11 +37,22 @@ actor). I do **not** see raw prover output and am no longer a courier.
   aristotle …` (uvx present); no official Harmonic MCP → **no `.mcp.json`**; routines use the
   **Harmonic connector**. Full invocation/re-verify procedure lives in research-lead's MEMORY.md — I
   don't run it.
-- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → local re-verify can't run yet
-  (needs Lean v4.28.0 + Mathlib v4.28.0). Host: operator says Harmonic now unblocked — research-lead
-  verifies with a real submit; if it 403s, it flags up and we do NOT fake a round-trip.
-- **Smoke probes** (`formal/smoke/`): `2+2=4` → expect proved+re-verified; `∀n,n=n+1` → expect
-  counterexample. research-lead submits directly. [smoke result recorded below once run.]
+- **Host UNBLOCKED — CONFIRMED 2026-06-08** via a real round-trip (research-lead, direct CLI). The old
+  `403 host_not_allowed` is gone; both smoke lemmas submitted, ran, returned archives.
+- **API-KEY GOTCHA (escalate to operator):** `$ARISTOTLE_API_KEY` is stored wrapped in literal angle
+  brackets `<arstl…>` (len 51); passed verbatim the server returns "Invalid API key". research-lead
+  strips the `<>` (→ len 49) to authenticate. **Fix the stored secret to the bare key** so no workaround
+  is needed. Provisioning artifact, not a real auth failure.
+- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → **local re-verify is
+  PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate works; re-verify half does not
+  run here — nothing is reported as "proved + re-verified" until a toolchain lands.
+- **SMOKE RESULT (2026-06-08, research-lead distilled):** direct loop works end-to-end through
+  submit→candidate. `smoke_true` (`2+2=4`) → valid candidate, axioms = propext only; **label: candidate
+  returned, re-verify PENDING-LEAN** (NOT proved+re-verified). `smoke_false` (`∀n,n=n+1`) → Aristotle
+  did NOT prove it: declared false, gave counterexample n=0→0=1, proved the *negation* instead; **label:
+  counterexample (correct refutation), no red flag.** Discrimination test PASSED — prover did not fake
+  the false goal, research-lead labeled it `counterexample` not `proved`. (Manager independently
+  corroborated against the Harmonic dashboard the operator shared.)
 - Routine spec: `docs/routines/aristotle_ph_loop.md` (now the direct, research-lead-only loop).
 - PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
   only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.

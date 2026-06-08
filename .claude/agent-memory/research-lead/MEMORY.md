@@ -58,13 +58,26 @@ a candidate.
 - **candidate-fails-local-recheck** — host claims proved but local re-verify fails (won't build, dirty
   axioms, forbidden token, or only "works" via a forbidden emendation). Record the failing diagnostic.
 
-## ⛔ Connection / toolchain status (live)
-- Host `aristotle.harmonic.fun`: operator reports Harmonic **unblocked** (was `403 host_not_allowed`).
-  Verify with a real submit before trusting; if it 403s again, flag to the manager — do not fake.
-- No `lean`/`lake`/`elan` toolchain in this container → **local re-verify cannot run here yet.** Needs
-  elan + Lean v4.28.0 + Mathlib v4.28.0 (mathlib build is heavy; provision via env setup or worktree).
-  Until then a submit→candidate can return, but the re-verify half is **pending Lean** — never reported
-  as proved.
+## ⛔ Connection / toolchain status (live) — SMOKE-TESTED 2026-06-08
+- Host `aristotle.harmonic.fun`: **UNBLOCKED — CONFIRMED with a real round-trip** (no more
+  `403 host_not_allowed`; both smoke lemmas submitted, ran, and returned archives). The old network
+  allowlist block is gone.
+- **API-KEY GOTCHA (live):** `$ARISTOTLE_API_KEY` in this env is wrapped in literal angle brackets —
+  value is `<arstl…H24>` (len 51). Passed verbatim the server returns **"Invalid API key"**. STRIPPING
+  the leading `<` and trailing `>` (→ `arstl…`, len 49) authenticates and round-trips. Working pattern:
+  `STRIPPED=$(python3 -c "import os;k=os.environ['ARISTOTLE_API_KEY'];print(k[1:-1])")` then pass
+  `--api-key "$STRIPPED"`. **Flag to manager/operator:** the env var should hold the bare key (no `<>`);
+  this is a provisioning artifact, not a real auth failure.
+- **EXACT WORKING INVOCATION (verified):**
+  `export PATH="/root/.local/bin:$PATH"` then
+  `uvx --from aristotlelib aristotle submit "<instructions>" --project-dir <dir> --api-key "$STRIPPED" --wait --destination <out>`
+  CLI = aristotlelib **2.0.0**; verbs: submit · ask · formalize · download · list · show · tasks · cancel.
+  `--destination` writes a **gzip tar** (`tar -xzf`), containing `<name>_aristotle/` with the .lean,
+  `lakefile.toml`, `lean-toolchain` (= `leanprover/lean4:v4.28.0`, matches canonical), `lake-manifest.json`,
+  `README.md`, `ARISTOTLE_SUMMARY.md`. Poll/inspect a task: `aristotle show <project_id> --api-key … --limit 0`.
+- No `lean`/`lake`/`elan` toolchain in this container → **local re-verify STILL cannot run here.** Needs
+  elan + Lean v4.28.0 + Mathlib v4.28.0 (heavy mathlib build; provision via env setup or worktree).
+  Submit→candidate returns fine, but the re-verify half is **PENDING-LEAN** — never reported as proved.
 
 ## Toolchain / where the Lean lives
 - **Lean 4.28.0 + Mathlib v4.28.0** (match `formal/temporal_lean_verified/lean-toolchain`).
@@ -78,7 +91,18 @@ a candidate.
 - **PH consistency spec: `specs/port_hamiltonian_consistency.md`** (PH-1…PH-7 obligation targets).
 - **Throwaway smoke probes: `formal/smoke/`** (`smoke_true` PROVED, `smoke_false` REFUTED/counterexample;
   excluded from RequestProject build) — first live test of the direct loop. I submit these MYSELF via the
-  CLI. See "smoke status" below.
+  CLI. **SMOKE STATUS (2026-06-08): both round-trips COMPLETED.**
+  - **smoke_true (`2+2=4`):** task COMPLETE_WITH_ERRORS (no open goal to fill — already proved by
+    `norm_num`). Aristotle built it, confirmed it closes, reported `#print axioms` = `propext` only
+    (within allowed propext/Classical.choice/Quot.sound). Returned .lean unchanged. **Verdict label:
+    submit-half returned a valid candidate; local re-verify PENDING-LEAN.** (NOT "proved + re-verified".)
+  - **smoke_false (`∀ n:ℕ, n = n+1`):** task COMPLETE. Aristotle correctly did **NOT** prove it —
+    declared it false, gave counterexample n=0 → 0=1, commented out the original unprovable theorem,
+    and instead proved the *negation* `¬(∀ n, n=n+1) := fun h => by cases h 0`. No fabricated proof of
+    the false goal; no active `sorry`. **This is the desired refutation outcome — no red flag.**
+    **Verdict label: counterexample (correct refutation); local re-verify PENDING-LEAN.**
+  - Net: the direct submit→candidate loop WORKS end-to-end; the only gap is local `lake build`
+    re-verify (no toolchain here). Discrimination test passed — prover did not "prove" the false one.
 
 ## How I phrase an obligation (then I submit it myself)
 Standalone, self-contained: (1) informal statement + intended math meaning; (2) the Lean — embed or
