@@ -37,10 +37,13 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    `thetaStarOf(b.sold.inner,b.sold.outer)` = stored ENTRY-θ) draw slope θ·oracle_now =
    K·oracle_now/oracle_entry ⇒ **rotate off the locked dollar strike on rebase**; same for chart $K
    lens (~3499) + drawStrikeMark (~3568). So engine ≈ already dollar-anchored (old "option B" largely
-   done); residual defect is chart-display only. Operator call narrowed to: chart ray should track
-   live dollar strike (align to table) vs intentionally show entry position. Awaiting operator.
+   done); residual defect is chart-display only. **RESOLVED (operator 2026-06-08): align the chart
+   strike-ray to the live dollar strike (use K/oracle_now like the table) — it's a display bug.**
+   Small intern follow-up, SCHEDULED post-v26b (don't block the ITM build). Operator also confirmed
+   the ITM "park" is NOT preserved — v26b deletes it (effK=K always), so after v26b no park / no
+   table-vs-chart split remains.
    NOTE soft-flag: slippage scales hard with collar aggressiveness (0.2 BTC wide collar → 3463%,
-   pool spot→~$0); display contract correct, magnitude input-driven — flagged for separate look.
+   pool spot→~$0); display contract correct, magnitude input-driven — operator parked for later.
 3. **v26b — ITM/American build** | intern | **DISPATCHED → intern STOPPED-and-REPORTED pre-edit
    (correct discipline; no files touched, HEAD intact).** Three blockers surfaced; manager-verified:
    - **(a) `mark()` needs γ** — recoverable as `state.ghAh−1` (I verified exact for γ∈{1.5,2,3,4}).
@@ -60,9 +63,15 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      ~3843-3845) on the UNBOUNDED option-leg only (§2: don't cap), bounded wing stays capped at 1.
      NOTE: §6 stop-condition (stage-2→3 dollar branch) was NOT tripped — intern confirmed
      `carvedNotional`/`entryPerpMark` unchanged-compatible.
-   Bands render (§5) + seam-gate generalization (both wings) are ready & unambiguous. RE-DISPATCH
-   intern with (a)+(c) authorized the moment operator ratifies (b). Build → NEW file
-   `engine/builds/temporal_mvp_v26b_itm.html`; nothing becomes HEAD until I verify.
+   Bands render (§5) + seam-gate generalization ready. **RE-DISPATCHED 2026-06-08 (agent a3073619)**
+   with corrected map. Operator caught my call/put LABEL swap on (b); verifying it, I found deeper:
+   the engine `mark()` wing TAG is INVERTED vs economic call/put (`wing==='call'`=`sNorm/θ`, ITM for
+   S≤K = economic PUT direction; mark 1646 / isOTM 1760 / comment 1757). Brief now **binds boundary to
+   the GEOMETRIC BRANCH/S-direction, not the tag string**: `sNorm/θ` branch → `S*=K·γ/(γ+1)`,
+   intrinsic `1−S/K`, exercise S<K; `θ/sNorm` branch → `S*=K·(γ+1)/γ`, intrinsic `1−K/S`, exercise
+   S>K. Directional seam-gate assertion keys off S-side (not tag). Bounded/unbounded (cap) flagged
+   ORTHOGONAL to wing. Build → NEW file `engine/builds/temporal_mvp_v26b_itm.html`; verify before HEAD.
+   Finding-2 chart fix = SEPARATE post-v26b follow-up (operator ratified: align chart ray to live $K).
 4. **Blob-ledger reconcile** | manager | **DONE & ratified (operator 2026-06-08): keep LINE layer
    `ab663f5c`/`c505b08a` canonical; decoded `8d2e1a84`/`1b320fc5` = documented secondary.** Wording
    fixed in CLAUDE.md §3, GOTCHAS §7, BUILD_LINEAGE, hook comments+error string, INTEGRITY (ratified
@@ -84,8 +93,18 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 7. **Ship-gate B1 — funding-coverage sweep** | manager/intern | OPEN. The one thing geometry can't
    close (κ is extrinsic). Necessary, not sufficient (B1/B3/B4 hypotheses).
 8. **Publication** | paper | background. AfT 2026 (notif ~Jul 15), WINE 2026 (~Jul 2), FMBC 2027.
+9. **Engine wing-tag inversion** | manager→operator | **NEW, FLAGGED (non-blocking for v26b).** Engine
+   `wing='call'` tag is the economic-PUT direction (ITM S≤K; mark 1646 / isOTM 1760 / comment 1757).
+   v26b is safe (binds boundaries to geometry/S-direction, not the tag). STRATEGIC question for
+   operator: does UI toggle `data-wing="call"` (277) / "long/sold→'call'" (2814) flow straight to this
+   tag, so a user's "call" is economically a put? And funding `gamma_call=+2` rides the inverted tag.
+   Out of v26b scope (funding/UI untouched). Known/intended convention (ratio-peg frame,
+   Finding-2-adjacent) or latent bug? Awaiting operator.
 
 ## Locked decisions (don't reopen unless the operator does)
+- **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
+  exercise S>K) pastes at `S* = K·(γ+1)/γ`, intrinsic `1−K/S`; the `sNorm/θ` branch (economic put,
+  exercise S<K) at `S* = K·γ/(γ+1)`, intrinsic `1−S/K`. Bind by S-direction, NOT the inverted tag.
 - Curve-baked **GH only, γ>1, no barrier** (barrier exponent is outside the GH family; δ won't
   recover it). Carry **P = Ny/Nx** load-bearing; rebase recomputes P→P/r; anchor w=½, strike ray
   θ→θ/r on rebase; convexity knob γ∈(1,4).
