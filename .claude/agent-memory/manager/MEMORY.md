@@ -138,15 +138,15 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      Blast radius mapped (pfComponents ray 4162→mark 4174; markEff/legValueUnified/legPrice fed
      sold.inner; drawStrikeRay/Mark; fundingPerStrike 2160). isOTM/wingMember STAY (price-measure
      entry checks, already crossover at K; corrected mark now agrees with them).
-   - **BLOCKED — funding formula:** tested it; a naive θ-swap does NOT yield "funding→0 deep ITM"
-     (markFrac fraction decays but (S−1)/S factor grows → net non-decaying; all 3 basis combos fail).
-     Achieving operator's target needs a funding REFORMULATION (candidate: funding ∝ American mark's
-     remaining extrinsic = continuation−intrinsic, →0 by construction). **ESCALATED — need operator to
-     confirm the funding formula before building.** Hold the whole change for one coherent build
-     (operator wants mark+funding to share θ). Checks to bake: crossover at K all γ; mark+funding
-     share crossover; PERMANENT directional-consistency gate (strike-placement sign==funding
-     sign==mark slope sign); re-run 7 gates+seam (directional re-anchors to corrected strike).
-   - **Finding-2 chart-ray fix BLOCKED behind this** (chart direction depends on corrected basis).
+   - **BLOCKED — funding formula:** RESOLVED (operator 2026-06-08): **funding stays LOCKED/untouched.**
+     The "→0 deep ITM" target was a mistaken extrinsic-carry overlay; funding is a pure pool-vs-anchor
+     slope-deviation (crossover already at K; directionality = ±2 wing sign). My test confirmed a
+     θ-swap FLIPS funding's sign → funding must NOT be touched. Fix scope = **mark path + chart-ray
+     registration ONLY.** Spec `specs/SPEC_strike_registration_NEXT.md`. Directional-consistency gate
+     convention PINNED + verified: `sign(K−oracle)==sign(funding ±2)==sign(d(mark)/d(sNorm))` (curve
+     coordinate; CALL all +, PUT all −). **Intern BUILDING v26c (agent adf5c8f6)** →
+     `temporal_mvp_v26c_strikereg.html`; verify before HEAD.
+   - **Finding-2 chart-ray fix BLOCKED behind v26c** (chart direction follows corrected registration).
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
