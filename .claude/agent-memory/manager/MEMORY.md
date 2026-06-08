@@ -176,8 +176,15 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      BUILDING `temporal_mvp_v26c_full2.html` (agent ab6a4ecf)** — re-base drawPayoff mark inputs to
      carry (θ=sNormStrike, sNorm via getSNorm) so its mark == bands-table mark; + port the ±200%
      x-range. drawPayoff-only.
-   - **NOT HEAD pending: (a) v26c_full2 verify (sample-match chart mark==table); (b) tester browser
-     pass** (bands mark@K, live chart strike-ray, re-based payoff, x-range). Finding-2 absorbed.
+   - **v26c_full2 DELIVERED + MANAGER-VERIFIED Node level** → `temporal_mvp_v26c_full2.html` md5
+     `6cc73563` (committed 2a1bdf3). drawPayoff re-based to carry; **I independently confirmed chart
+     mark==table mark** (worst |diff| 8.6e-11 across wings/strikes/γ); diff drawPayoff-only; 7 GH +
+     seam + dir_gate PASS; §6 not tripped. x-range adapted −90%..+200% (carry: −r→−spot→NaN; clears
+     both free boundaries; naked>1 region unreachable but free-boundary crossing visible). Intern also
+     fixed a pre-existing drawPayoff N_buy bug (state→state.pool, was NaN-fallback; display-only).
+     **= COMPLETE uniform-registration build, HEAD candidate.** Finding-2 absorbed.
+   - **NOT HEAD pending: tester browser pass** (bands mark crossing@K, live chart strike-ray, re-based
+     payoff curve matches table, −90%..+200% frame) — DISPATCHED. Promote v26c_full2→HEAD if clean.
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
