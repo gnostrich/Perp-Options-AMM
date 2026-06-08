@@ -128,21 +128,25 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 7. **Ship-gate B1 — funding-coverage sweep** | manager/intern | OPEN. The one thing geometry can't
    close (κ is extrinsic). Necessary, not sufficient (B1/B3/B4 hypotheses).
 8. **Publication** | paper | background. AfT 2026 (notif ~Jul 15), WINE 2026 (~Jul 2), FMBC 2027.
-9. **Engine wing-tag inversion** | manager→operator | **TRACED (manager, 2026-06-08); escalated for
-   convention-vs-bug ruling. Evidence: `evidence/wing_tag_inversion_trace.md`.** Operator inserted
-   this AHEAD of Finding-2 (don't align a chart ray to an unconfirmed convention). Findings: (1)
-   call/put IS user-facing — `wingTag` (4206) renders the RAW tag (no relabel), + chart legend
-   (1389-90) + tooltip (1345). (2) `wing='call'` leg marks ITM as spot FALLS (verified with correct
-   θ=K/oracle), yet its strike is placed ABOVE spot (2887/3155) and funding (2163, +2) pays as spot
-   RISES — so strike-placement + funding are call-direction but mark/moneyness is put-direction, all
-   labeled "call." ROOT (hypothesis): `mark()` compares poolsNorm (∝S^(−γ)) to strike ray θ=K/oracle
-   (∝S^(−1)) — same measure only at γ=1; for γ>1 the moneyness flip leaves the strike (sits at
-   ~oracle0^γ/K^(γ−1), BELOW K). **Operator decides (A) intended carry-measure convention → document
-   + relabel UI, no engine change; or (B) latent bug → map strike ray into sNorm measure, which
-   un-inverts the wing and SWAPS which American boundary attaches to which wing in v26b mark() +
-   flips the seam directional assertion + sets Finding-2 chart direction.** v26b ITM pasting math is
-   correct either way (NOT a rollback). Funding-vs-mark disagreement is the strongest (B) indicator.
-   **Finding-2 chart-ray fix BLOCKED on this ruling.**
+9. **Engine wing-tag → STRIKE-BASIS fix** | manager→operator | **Operator RULED (2026-06-08):
+   NOT directional — a strike-basis mismatch. Strike in price basis θ=K/oracle (∝S⁻¹); curve/mark in
+   carry basis sNorm (∝S⁻ᵞ); agree only at γ=1. Fix: θ_strike=sNorm(K) via
+   getSNorm(arbitrageToOracle(state,K)) (NOT FD), fed to mark + funding + chart ray. Authorized
+   reopening of funding.** Evidence: `evidence/strike_basis_fix_verification.md`.
+   - **VERIFIED myself:** θ=sNorm(K) lands crossover at exactly K for γ∈{1.5,2,3,4} (θ γ-dependent
+     0.9295/0.9071/0.8639/0.8228 but crossover pinned to K). mark+chart-ray fix correct & spec-ready.
+     Blast radius mapped (pfComponents ray 4162→mark 4174; markEff/legValueUnified/legPrice fed
+     sold.inner; drawStrikeRay/Mark; fundingPerStrike 2160). isOTM/wingMember STAY (price-measure
+     entry checks, already crossover at K; corrected mark now agrees with them).
+   - **BLOCKED — funding formula:** tested it; a naive θ-swap does NOT yield "funding→0 deep ITM"
+     (markFrac fraction decays but (S−1)/S factor grows → net non-decaying; all 3 basis combos fail).
+     Achieving operator's target needs a funding REFORMULATION (candidate: funding ∝ American mark's
+     remaining extrinsic = continuation−intrinsic, →0 by construction). **ESCALATED — need operator to
+     confirm the funding formula before building.** Hold the whole change for one coherent build
+     (operator wants mark+funding to share θ). Checks to bake: crossover at K all γ; mark+funding
+     share crossover; PERMANENT directional-consistency gate (strike-placement sign==funding
+     sign==mark slope sign); re-run 7 gates+seam (directional re-anchors to corrected strike).
+   - **Finding-2 chart-ray fix BLOCKED behind this** (chart direction depends on corrected basis).
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
