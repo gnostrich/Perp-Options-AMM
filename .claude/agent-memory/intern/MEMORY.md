@@ -140,6 +140,41 @@ intact; 3 scripts parse (longest script line 482); whole-md5 `8f7b3ffb…`.
   SEPARATE display increment. Did NOT expand scope. (3) Settled-value correction changes the dollar
   figure on ITM-leg closes — manager should re-derive before HEAD promotion.
 
+## Done — v26c-full2 drawPayoff carry re-basing (operator (i), handed to manager 2026-06-08)
+Build: **`engine/builds/temporal_mvp_v26c_full2.html`** (from `temporal_mvp_v26c_full.html`
+`8f7b3ffb`; HEAD `8df9f8a3` untouched). Splice: `/tmp/splice_v26c_full2.py` (4 reps, all `count==1`,
+blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs source = drawPayoff-ONLY
+(lines ~3891-4041), exactly the 4 regions; longest script line 482.
+- **THE re-basing:** drawPayoff now feeds `mark` in CARRY basis like the bands table (pfComponents).
+  (1) Leg thetas: `K/S0` price-ratio → `Engine.sNormStrike(state.pool, K)` (the SAME registration
+  pfComponents/exec use). (2) Swept sNorm in `composedEquity`: `(1+r)` price-ratio →
+  `Engine.sNormStrike(state.pool, S0*(1+r))` (= getSNorm(arbitrageToOracle(pool,S)), the same inverse).
+  (3) **Pre-existing bug fixed in passing:** the N_buy block passed the Store WRAPPER `state` to
+  `legPrice`/`getSNorm`, which read `state.x`/`state.alpha` (undefined → NaN → silent fallback). Now
+  uses `const pool = state.pool` so getSNorm sees x/alpha/gh* — N_buy now actually derives (matches
+  bands table). legFraction CAP STRUCTURE UNCHANGED (barrier uncapped, spread min(1,·)); only the
+  mark INPUTS changed basis. Guards: negative/zero swept spot → NaN → leg skipped (loud, not e^0).
+- **SAMPLE MATCH (acceptance):** γ=2, call wing, K=72000, r=0 (S=S0=80000): bands-table mark
+  0.1200105126 == drawPayoff mark 0.1200105126, |diff|=5.1e-13. Verified true across wings/K
+  {call 72000/60000, put 88000/100000} and γ∈{1.5,2,3,4}, all |diff|<1e-9. (At r=0,
+  sNormStrike(pool,S0)==getSNorm(pool) at equilibrium, so the marks coincide exactly.)
+- **x-range ADAPTED (not literal ±200%):** carry basis makes sNorm∝S^-γ, so r=-2 → S=-80000 (negative
+  spot → sNormStrike NaN). Spot can't drop below -100%. Used **xMin=-0.9, xMax=2.0** (asymmetric):
+  -90% clears the call-wing free boundary sNorm* and +200% clears the put-wing sNorm* for ALL γ
+  (verified: call sN@r=-0.9 = 31/99/990/9873 ≥ sNstar 2.5/2.8/3.3/3.7; put sN@r=+2 ≤ sNstar both).
+  x-tick loop `-50..50 step10` → `-50..200 step50` (clean ticks inside the range; -90 edge unticked).
+  **Note:** the naked-leg mark `1−S/K` (call) only EXCEEDS 1 as S→0 (unreachable, floored at -90%),
+  so the strict naked>capped uncap isn't visible; what IS reached/visible is the continuation→
+  intrinsic free-boundary crossing (the geometrically meaningful divergence). Flagged honestly.
+- **§6 carve-out did NOT trigger:** bounded display increment, no locked surface touched (funding/
+  isOTM/wingMember/markFrac/drawStrikeMark/drawStrikeRay/dollar pipe/execution all UNTOUCHED —
+  confirmed in diff). drawPayoff-only.
+- **Gates:** `sh verify/run_all.sh builds/temporal_mvp_v26c_full2.html` GREEN — 7 GH PASS γ∈{1.5,2,3,4},
+  seam PASS both branches, dir_gate PASS, blobs `ab663f5c`/`c505b08a` intact, 3 scripts parse,
+  sigs/IIFE true, no blob-in-script. **Open for tester:** visual — payoff chart leg marks now match
+  the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
+  **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
+
 ## Done — v26b payoff x-range widen (DISPLAY-ONLY, handed to manager 2026-06-08)
 Build: **`engine/builds/temporal_mvp_v26b_xrange.html`** (from HEAD `8df9f8a3`; HEAD untouched).
 Splice: `/tmp/splice_xrange.py` (2 reps, both `count==1`, blobs never through). Operator-approved
