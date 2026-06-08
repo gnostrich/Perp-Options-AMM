@@ -24,12 +24,23 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 | **HEAD_temporal_mvp_v26a** | **89ae89e9** | slippage units fix (both paths → mpGeom) — **work from this** |
 
 ## Open threads (what | owner | status)
-1. **Tester browser re-run on HEAD** | tester | **OWED — this is the first resume action.** Confirm
-   slippage display (% primary, $ reserve-USD label), v26a frame re-fit (dot ~fixed while axes
-   rescale; one-line revert exists), GH-continuation curve. Needs Playwright network grant.
-2. **Surface Finding-2** | tester→manager→operator | tester flags during the run; I escalate.
-   American strike as a ratio peg floating off dollars (UX fix) vs dollar-anchored "$120k call"
-   (real engine change). Operator decides.
+1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
+   Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
+   (% primary, $ labelled reserve-USD). (2) Frame re-fit PASS — **keep current, do NOT apply the
+   one-line revert** (freezing the frame clips the GH bend as it climbs out). (3) Curve geometry PASS
+   — GH continuation, no barrier remnant. Evidence committed `evidence/v26a_pw/` (7db9b4d); harnesses
+   `engine/verify/pw_v26a_visual.mjs` (PLAYWRIGHT_BROWSERS_PATH=/home/user/.cache/ms-playwright).
+2. **Finding-2 — REFINED & re-surfaced to operator** | tester→manager→operator | Tester found v26a
+   has **SPLIT behavior**, I verified the code localization myself: portfolio table (pfComponents,
+   ray=K/oracle_now) + close engine (liveRay ~1976) are **dollar-anchored** ($84k/$68k HELD across
+   rebase 80k→120k). But chart strike rays (`drawStrikeRay` ~3355, called 3389 with
+   `thetaStarOf(b.sold.inner,b.sold.outer)` = stored ENTRY-θ) draw slope θ·oracle_now =
+   K·oracle_now/oracle_entry ⇒ **rotate off the locked dollar strike on rebase**; same for chart $K
+   lens (~3499) + drawStrikeMark (~3568). So engine ≈ already dollar-anchored (old "option B" largely
+   done); residual defect is chart-display only. Operator call narrowed to: chart ray should track
+   live dollar strike (align to table) vs intentionally show entry position. Awaiting operator.
+   NOTE soft-flag: slippage scales hard with collar aggressiveness (0.2 BTC wide collar → 3463%,
+   pool spot→~$0); display contract correct, magnitude input-driven — flagged for separate look.
 3. **v26b — ITM/American build** | intern | CLEARED, NOT STARTED. Build on HEAD per
    `specs/SPEC_itm_exercise_smoothpaste_NEXT.md`; wire `verify/seam_gate.js` into run_all.
 4. **Blob-ledger reconcile** | manager + operator | **VERIFIED, awaiting operator ratification.**
