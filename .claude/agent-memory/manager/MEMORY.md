@@ -43,9 +43,12 @@ actor). I do **not** see raw prover output and am no longer a courier.
   brackets `<arstl…>` (len 51); passed verbatim the server returns "Invalid API key". research-lead
   strips the `<>` (→ len 49) to authenticate. **Fix the stored secret to the bare key** so no workaround
   is needed. Provisioning artifact, not a real auth failure.
-- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → **local re-verify is
-  PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate works; re-verify half does not
-  run here — nothing is reported as "proved + re-verified" until a toolchain lands.
+- **Toolchain gap — OPERATOR ACK'D 2026-06-08: NO ACTION / DEFERRED.** No `lean`/`lake`/`elan` in
+  container → **local re-verify is PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate
+  works; re-verify half does not run here — nothing is reported as "proved + re-verified" until a
+  toolchain lands. Operator chose to leave it for now; not a blocker for config work.
+- **API-key `<>` wrapper — OPERATOR will fix at their end.** Until then research-lead's strip-workaround
+  (`k[1:-1]`) stays. Don't treat "Invalid API key" as a real auth failure — it's the wrapper.
 - **SMOKE RESULT (2026-06-08, research-lead distilled):** direct loop works end-to-end through
   submit→candidate. `smoke_true` (`2+2=4`) → valid candidate, axioms = propext only; **label: candidate
   returned, re-verify PENDING-LEAN** (NOT proved+re-verified). `smoke_false` (`∀n,n=n+1`) → Aristotle
@@ -98,7 +101,18 @@ passes behind the hook). Escalate to operator = what-we're-building (curve/invar
 semantics, reopen a locked decision/ship-gate, product calls Finding-2 / |Γ|>1 / Fork A-vs-B,
 calibration tier, paper claims). Irreversible/high-blast-radius escalates regardless.
 
+## Git/PR state (2026-06-08, aristotle-fold task)
+- Working branch **`claude/upbeat-allen-w07u52`** = thompson base + the two aristotle-fold commits
+  (`d4c7055` config collapse, `19e0bc6` smoke result). Pushed to origin. **Supersedes**
+  `claude/vigilant-thompson-orizg8` (deleted aristotle files net to zero vs main).
+- **PR NOT YET OPENED — blocked in-session:** `gh`/`glab` absent; GitHub MCP tools + ToolSearch
+  **not enabled in this context**; new `GH_TOKEN` is **proxy-scoped** (push/merge OK, but 401 "Bad
+  credentials" vs api.github.com REST). Manual open link handed to operator:
+  `https://github.com/gnostrich/Perp-Options-AMM/pull/new/claude/upbeat-allen-w07u52`. Retry the
+  instant any of {MCP connector, gh, REST-scoped token} is enabled. **Operator said PR-only — DO NOT
+  merge** even though GH_TOKEN now technically permits push-to-main.
+
 ## Waiting on operator (bootstrap)
-- `GH_TOKEN` (PAT, full repo control) + `gh` install → then I **merge the scaffolding branch to main**.
+- **PR open** for the aristotle-fold branch (see Git/PR state) — needs GitHub tooling enabled.
 - Playwright network grant + browser install → tester's live v26a run.
 - Operator reply **"go"** = checklist done.
