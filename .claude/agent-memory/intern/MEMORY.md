@@ -63,6 +63,36 @@ Splice: `/tmp/splice_v26b.py` (17 reps, all `count==1`, blobs never through). Al
 - **Open for tester:** browser/visual run — bands table renders (empty Eff cell, renamed headers),
   payoff chart legFraction uncapped on naked leg, polar marker dot stays on its ψ-curve.
 
+## Done — v26c strike-registration fix (IMPLEMENTED partial, handed to manager 2026-06-08)
+Build: **`engine/builds/temporal_mvp_v26c_strikereg.html`** (from HEAD `8df9f8a3`; HEAD untouched).
+Splice: `/tmp/splice_v26c.py` (4 reps, all `count==1`, blobs never through). Diff vs HEAD = exactly
+the 4 intended regions (helper + export + pfComponents ray + 2 call sites); longest non-blob line 553.
+- **The fix:** register strike in curve coord `θ=sNorm(K)=getSNorm(arbitrageToOracle(pool,K))` (NOT
+  FD; NOT K/oracle). New engine helper `sNormStrike(s,K)` (loud NaN on degenerate). Verified γ-dep
+  θ=0.9295/0.9071/0.8639/0.8228 (γ=1.5/2/3/4), crossover pins to K=84000 every γ (OLD drifted: γ=2 →
+  o0²/K=76190). Helper exported.
+- **Applied to (DISPLAY mark path only):** `pfComponents` — ray `K=>K/oracleLive` → `Engine.sNormStrike(pool,K)`;
+  threaded `s.pool` in at the 2 renderBands call sites. The `itm` test (sNormPool vs theta) now crosses
+  at K too → AGREES with isOTM/wingMember (gate 2). `mark` now gets sNorm(K) → intrinsic `1−S/K` correct.
+- **NOT touched (LOCKED / escalated):** funding (`fundingPerStrike` ±2, markFrac) — untouched.
+  isOTM/wingMember — untouched (stay K/oracle price-measure). **DELIBERATELY LEFT in OLD basis,
+  flagged to manager:** (a) execution/settlement path `executeBand`/`closeBand`→`legPrice`/`markEff`/
+  `legValueUnified` + `compositeRay`/`vsValue` — re-basing theta there reshapes θ*/δ/V/dy = the AMM
+  swap + stage-2 leg value feeding the LOCKED stage-2→3 dollar conversion (settlement semantics).
+  (b) chart-ray `drawStrikeMark` uses `Engine.markFrac` (locked polar/funding route); `drawStrikeRay`
+  built on `thetaStarOf`=compositeRay geometry. Both entangle locked surfaces → STOP-and-report per
+  brief, not improvise.
+- **Gates:** new permanent `verify/dir_gate.js` (crossover@K all γ + directional CALL+++/PUT−−− +
+  swapped-arm mutation detected; SKIPs as pass pre-v26c via missing sNormStrike export). Seam gate
+  re-anchored: `sNat` now prefers `E.sNormStrike` (was already inline getSNorm(arb(s0,K)) — effectively
+  no-op, made explicit). Both wired into run_all.sh as HARD GATES. Full harness on v26c GREEN: 7 GH
+  gates PASS, seam PASS both branches, DIR gate PASS, blobs `ab663f5c`/`c505b08a` intact, 3 scripts
+  parse, sigs/IIFE true. HEAD stays green (dir_gate SKIPs).
+- **Open for manager (architectural fork):** does the registration fix extend to the execution/
+  settlement pricing path + chart-ray markFrac sites? Those reshape locked dollar-conversion/funding-
+  polar surfaces — needs an operator ruling before I touch them. **Open for tester:** browser/visual —
+  bands table mark crossover now at K; chart strike ray/dot still on OLD basis (pending the fork).
+
 ## Done — v26b payoff x-range widen (DISPLAY-ONLY, handed to manager 2026-06-08)
 Build: **`engine/builds/temporal_mvp_v26b_xrange.html`** (from HEAD `8df9f8a3`; HEAD untouched).
 Splice: `/tmp/splice_xrange.py` (2 reps, both `count==1`, blobs never through). Operator-approved

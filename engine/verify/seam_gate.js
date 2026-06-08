@@ -39,8 +39,14 @@ const E = vm.runInNewContext('(function(){' + eng + '\n;return Engine;})()',
 const K = 80000;
 const TOL = 0.15;   // percent, value AND slope
 function open(g) { const gh = E.ghCalibrate(5, 400000, 80000, g); return Object.assign({}, gh, { alpha: 5, beta: 400000, x: 10, y: 800000 }); }
-// pool sNorm when the oracle is S (price->coordinate via the live engine)
-const sNat = (s0, S) => E.getSNorm(E.arbitrageToOracle(s0, S));
+// pool sNorm when the oracle is S (price->coordinate via the live engine).
+// v26c: this IS the strike registration theta = sNorm(K). Prefer the engine's
+// own exported sNormStrike (so the seam's free boundaries derive from the SAME
+// registration the mark path uses); fall back to the inline inverse on a build
+// that predates the export. Both equal getSNorm(arbitrageToOracle(s0,S)).
+const sNat = (s0, S) => (typeof E.sNormStrike === 'function')
+  ? E.sNormStrike(s0, S)
+  : E.getSNorm(E.arbitrageToOracle(s0, S));
 
 let fails = 0;
 function check(label, cond, detail) {

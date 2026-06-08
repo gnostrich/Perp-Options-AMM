@@ -32,4 +32,7 @@ node splice_level_check.js temporal_mvp_v26a.html
 echo "\n================ SEAM GATE — v26b ITM/American (value+slope <=0.15% AND directional) [HARD GATE] ================"
 node seam_gate.js temporal_mvp_v26b_itm.html   # set -e => nonzero exit aborts run_all
 
+echo "\n================ DIR GATE — v26c strike-registration (crossover@K + directional consistency) [HARD GATE] ================"
+node dir_gate.js temporal_mvp_v26b_itm.html    # set -e => nonzero exit aborts run_all; SKIPs as pass pre-v26c
+
 echo "\nAll checks above should be green. (Lean = trusted-from-prover; UI = tester-confirmed.)"
