@@ -20,6 +20,28 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 | temporal_mvp_v26a_2c0337e8_slipWIP | 2c0337e8 | slippage WIP — **known-broken (~97% flat)**, lineage only |
 | **HEAD_temporal_mvp_v26a** | **89ae89e9** | slippage units fix (both paths → mpGeom) — **work from this** |
 
+## Roster (6 agents, after 2026-06-08 config task)
+manager · research-lead (theory owner, **no prover tools**) · **aristotle (NEW — prover interface)** ·
+intern · tester · paper. The prover loop is **brokered**: research-lead phrases obligation → **manager
+couriers** → aristotle (submit to Harmonic's Aristotle → poll → local `lake build` re-verify → emend
+mechanical backend diffs only → one of 4 verdicts: proved+re-verified / counterexample / still-open /
+candidate-fails-local-recheck) → manager couriers verdict back → research-lead audits. aristotle: no
+git, no engine edits; tools Read/Grep/Glob/Write/Bash + the aristotlelib CLI.
+
+## Aristotle connection (config-only task, 2026-06-08)
+- **Interface = `aristotlelib` v2.0.0 CLI** (`aristotle submit/formalize/list/show/download/cancel/tasks/ask`),
+  auth `ARISTOTLE_API_KEY` (set), host `aristotle.harmonic.fun`. Submit: `aristotle submit "<instr>"
+  --project-dir formal/temporal_lean_verified --wait --destination <out.tar.gz>`. No official Harmonic
+  MCP package exists → **no `.mcp.json`** (path b dropped); routines use the **Harmonic connector** (path a).
+- **⛔ Live loop BLOCKED — reported to operator, NOT faked:** (1) network policy denies the host
+  (`403 x-deny-reason: host_not_allowed`) → operator must add **`aristotle.harmonic.fun`** to the
+  **Custom allowlist**; (2) no `lean`/`lake`/`elan` in container → local re-verify can't run yet.
+- **Smoke test STAGED, not run** (`formal/smoke/`): `2+2=4` → expect proved+re-verified; `∀n,n=n+1`
+  → expect counterexample. Run the round the instant allowlist + toolchain land.
+- Routine spec ready-to-paste: `docs/routines/aristotle_ph_loop.md`.
+- PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
+  only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **OWED — this is the first resume action.** Confirm
    slippage display (% primary, $ reserve-USD label), v26a frame re-fit (dot ~fixed while axes
