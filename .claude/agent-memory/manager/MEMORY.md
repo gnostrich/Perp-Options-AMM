@@ -169,11 +169,15 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    - **Intern's 3 flags:** (1) chart-ray uses K/oracle_LIVE not sNorm(K) — I VERIFIED correct (sNorm(K)
      would draw ray@72565; K/oracle_live@84000, same curve point; price-space object). RESOLVED.
      (3) settled-value changes ITM-close dollar = the premium delta, authorized, verified. RESOLVED.
-     (2) **`drawPayoff`/legFraction left price-ratio — OPEN, ESCALATED.** Self-consistent in its own
-     coord (crossover at K) but mark VALUES differ from carry-basis bands table; re-basing needs the
-     whole swept x-axis. Operator: in-scope for uniformity now, or deferred display increment?
-   - **NOT HEAD pending: (a) drawPayoff ruling; (b) tester browser pass** (bands mark@K, chart
-     strike-ray live, payoff, + bundled x-range). Finding-2 absorbed (no longer separate).
+     (2) **`drawPayoff` — operator ruled (i) 2026-06-08: re-base to carry basis NOW (before HEAD).**
+     Rationale: drawPayoff COMPUTES marks; a chart showing different mark values than the table = a
+     basis split (unlike the chart ray, a legit price-space object). §6 carve-out: if re-basing is
+     more than a bounded display increment (hits locked surface / structural), STOP→defer. **Intern
+     BUILDING `temporal_mvp_v26c_full2.html` (agent ab6a4ecf)** — re-base drawPayoff mark inputs to
+     carry (θ=sNormStrike, sNorm via getSNorm) so its mark == bands-table mark; + port the ±200%
+     x-range. drawPayoff-only.
+   - **NOT HEAD pending: (a) v26c_full2 verify (sample-match chart mark==table); (b) tester browser
+     pass** (bands mark@K, live chart strike-ray, re-based payoff, x-range). Finding-2 absorbed.
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
