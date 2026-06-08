@@ -121,13 +121,21 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 7. **Ship-gate B1 — funding-coverage sweep** | manager/intern | OPEN. The one thing geometry can't
    close (κ is extrinsic). Necessary, not sufficient (B1/B3/B4 hypotheses).
 8. **Publication** | paper | background. AfT 2026 (notif ~Jul 15), WINE 2026 (~Jul 2), FMBC 2027.
-9. **Engine wing-tag inversion** | manager→operator | **NEW, FLAGGED (non-blocking for v26b).** Engine
-   `wing='call'` tag is the economic-PUT direction (ITM S≤K; mark 1646 / isOTM 1760 / comment 1757).
-   v26b is safe (binds boundaries to geometry/S-direction, not the tag). STRATEGIC question for
-   operator: does UI toggle `data-wing="call"` (277) / "long/sold→'call'" (2814) flow straight to this
-   tag, so a user's "call" is economically a put? And funding `gamma_call=+2` rides the inverted tag.
-   Out of v26b scope (funding/UI untouched). Known/intended convention (ratio-peg frame,
-   Finding-2-adjacent) or latent bug? Awaiting operator.
+9. **Engine wing-tag inversion** | manager→operator | **TRACED (manager, 2026-06-08); escalated for
+   convention-vs-bug ruling. Evidence: `evidence/wing_tag_inversion_trace.md`.** Operator inserted
+   this AHEAD of Finding-2 (don't align a chart ray to an unconfirmed convention). Findings: (1)
+   call/put IS user-facing — `wingTag` (4206) renders the RAW tag (no relabel), + chart legend
+   (1389-90) + tooltip (1345). (2) `wing='call'` leg marks ITM as spot FALLS (verified with correct
+   θ=K/oracle), yet its strike is placed ABOVE spot (2887/3155) and funding (2163, +2) pays as spot
+   RISES — so strike-placement + funding are call-direction but mark/moneyness is put-direction, all
+   labeled "call." ROOT (hypothesis): `mark()` compares poolsNorm (∝S^(−γ)) to strike ray θ=K/oracle
+   (∝S^(−1)) — same measure only at γ=1; for γ>1 the moneyness flip leaves the strike (sits at
+   ~oracle0^γ/K^(γ−1), BELOW K). **Operator decides (A) intended carry-measure convention → document
+   + relabel UI, no engine change; or (B) latent bug → map strike ray into sNorm measure, which
+   un-inverts the wing and SWAPS which American boundary attaches to which wing in v26b mark() +
+   flips the seam directional assertion + sets Finding-2 chart direction.** v26b ITM pasting math is
+   correct either way (NOT a rollback). Funding-vs-mark disagreement is the strongest (B) indicator.
+   **Finding-2 chart-ray fix BLOCKED on this ruling.**
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
