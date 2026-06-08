@@ -151,16 +151,17 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      intact; funding/isOTM/execution/markFrac UNTOUCHED (diff-confirmed). **dir_gate negative-controlled
      by me:** basis flip → crossover≠K FAIL (caught); wing swap → sSlope flips, directional FAIL
      (caught). HEAD (v26b) still green (dir_gate SKIPs pre-v26c).
-   - **SCOPE FORK — intern STOP-and-report (operator ruling needed):** fix applied to DISPLAY mark
-     (`pfComponents`) only. Spec's "APPLY TO" also listed (a) execution path
-     (markEff/legValueUnified/legPrice/executeBand → AMM swap dy + LOCKED stage-2→3 dollars) and (b)
-     chart ray (drawStrikeMark on LOCKED markFrac/polar route; drawStrikeRay on compositeRay). Intern
-     correctly stopped — re-registering those reshapes locked settlement + funding-polar. Execution
-     bug IS economically material (γ>1 trades priced at wrong registration, ~10% off near strike).
-     **ESCALATED:** extend registration into execution/settlement + chart (authorized reopening), or
-     keep display-only (and flag the display-vs-execution-vs-chart basis inconsistency)? Display-only
-     is NOT HEAD-promotable (creates the inconsistency).
-   - **Finding-2 chart-ray fix BLOCKED behind the chart-ray scope ruling.**
+   - **SCOPE FORK RESOLVED — operator ruled (A) 2026-06-08:** registration must be UNIFORM (one mark
+     on the curve; display@K + execution@oracle₀²/K + chart@old = three strikes = screen lies about
+     what trades). Extend θ=sNorm(K) to execution/settlement path + chart strike-ray (`drawStrikeRay`);
+     **Finding-2 ABSORBED** (drawStrikeRay re-registration = the Finding-2 fix, also kills entry-θ
+     drift). LEAVE `drawStrikeMark` (funding-polar) + funding + isOTM (price-measure, already at K).
+     Guardrails: uniform (no curve-coord K/oracle left); stage-2→3 dollar pipe byte-unchanged (FED
+     corrected value); **§6 HARD STOP if a new dollar path is needed**; quantify ~10% premium delta +
+     extremes/boundary; dir_gate enhanced so a MIXED basis trips crossover@K. **Intern BUILDING
+     v26c_full (agent a245ff2a)** → `temporal_mvp_v26c_full.html`. Verify before HEAD: re-derive
+     premium delta, negative-control mixed-basis gate, confirm dollar-pipe bytes unchanged.
+   - **Finding-2 absorbed into this pass (no longer a separate thread).**
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
