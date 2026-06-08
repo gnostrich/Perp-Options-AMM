@@ -99,14 +99,18 @@ splice silently corrupts the build while gates stay green.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v26b.html` — **canonical HEAD** (md5 `8df9f8a3…`); v26b lands the
-  ITM/American smooth-pasting rule (mark/markFrac split, both wings; seam gate wired). Node-verified
-  (7 GH gates + seam PASS, negative-controlled) + UI tester-confirmed. Prior HEAD demoted to
-  `temporal_mvp_v26a.html` (`89ae89e9…`). **Promotion landed the ITM math only — it does NOT bless the
-  wing-tag convention: `wing='call'` is the economic-PUT direction (pre-existing in v25/v26a, ITM-
-  orthogonal), an OPEN correctness item pending a UI-label + funding-sign trace.** Lineage +
-  `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses, `engine/splices/`
-  recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
+- `engine/builds/HEAD_temporal_mvp_v26c.html` — **canonical HEAD** (md5 `6cc73563…`); v26c lands the
+  **uniform strike registration** in the curve's carry coordinate (`θ=sNorm(K)` via `sNormStrike`=
+  getSNorm∘arbitrageToOracle) across the display mark, execution/settlement value, and the payoff
+  chart — the OTM→ITM crossover now lands at the dollar strike K for all γ (was drifting to
+  oracle₀²/K for γ>1). The chart strike-RAY stays live `K/oracle` (a price-space object); funding/
+  isOTM/wingMember stay price-measure (already at K). Permanent `dir_gate.js` (crossover@K +
+  directional-consistency + mixed-basis control). **Finding-2 is absorbed** (live chart ray). Builds
+  on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
+  byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
+  cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
+  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses,
+  `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
   `prompts/` + `MANAGER_VERIFICATION.md`. `paper/` draft + docx. `notes/`, `history/`
   (`session_tree_note.md`), `evidence/`. `docs/` operating protocol, personas, orientation, briefs,

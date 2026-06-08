@@ -1,74 +1,97 @@
 # MEMORY — tester
-_Last updated: 2026-06-08, after live v26b ITM/American browser confirmation run._
+_Last updated: 2026-06-08, after live v26c_full2 uniform-strike-registration browser confirmation._
 
-## DONE — live v26b ITM/American browser confirmation (build 8df9f8a3…)
-Ran **live Playwright Chromium** against `builds/temporal_mvp_v26b_itm.html`. Build md5
-`8df9f8a3cb705282a5348ce778f9eb82` unchanged (no engine edit); blobs `ab663f5c…`/`c505b08a…`
-intact; 3 scripts parse. Oracle `run_all.sh builds/temporal_mvp_v26b_itm.html` GREEN incl.
-**SEAM GATE PASS** (value+slope ≤0.15%, directional, both branches, γ∈{1.5,2,3,4}). Harness:
-`engine/verify/pw_v26b_visual.mjs`. Repro identical across 2 runs (not flaky).
+## DONE — live v26c_full2 browser confirmation (build 6cc73563…)
+Ran **live Playwright Chromium** against `builds/temporal_mvp_v26c_full2.html`. Build md5
+`6cc73563779a3e030774b7597d0ae187` unchanged (no engine edit); blobs `ab663f5c…`/`c505b08a…`
+intact; 3 scripts parse. Oracle `run_all.sh builds/temporal_mvp_v26c_full2.html` GREEN incl. SEAM
+GATE + **DIR GATE PASS** (γ∈{1.5,2,3,4}, mutation-detected). Note: run_all.sh COPIES the passed
+build into a scratch file literally named `temporal_mvp_v26b_itm.html` (line 16) and the seam/dir
+gates read that scratch copy — so the "v26b_itm" filename in gate headers is the scratch name, the
+CONTENT is v26c_full2. Harness: `engine/verify/pw_v26c_visual.mjs`. Reproduced clean across 2 runs
+(chart-vs-table diff identical to the bit; not flaky).
+
+### KEY ENABLER (new): `Engine` AND `Store` ARE reachable inside `page.evaluate`
+Classic-script top-level `const`s (Engine line 1590, Store line 2255) live in the page global and
+ARE visible to `page.evaluate` (unlike Node import, which can't see them). So the live oracle of
+record here is the page's OWN engine called against the live `Store.state.pool` + the rendered DOM
+mark cells — strongest possible evidence. (Prior v26b memory said "NOT on window"; that's true for
+`window.Engine`, but `typeof Engine !== 'undefined'` inside evaluate is TRUE. Probe-confirmed.)
 
 ### Verdicts (FLAG per item)
-1. **Bands §5 — PASS (tester-confirmed, rendered).** Header reads **"Attrib P&L"** (no "/ Eff
-   strike"); Strike header is "Entry equity / Strike" (was "Orig strike"). Comp rows = **9 cells**,
-   alignment intact; the **eff-strike sub-cell is the empty 4th `<td>`** (under Attrib P&L). Oracle
-   (live), Entry mark, Mark cell all present. `11_bands_table_crop.png` legible. DOM in trace.json.
-2. **Mark continuation→intrinsic — PASS (tester-confirmed live DOM + closed-form).** Sweeping oracle
-   80k→500k, the rendered SOLD-call (K=$84k) Mark cell grows **smoothly & monotonically 0.1231→0.5612
-   and never clamps to 1.0000** — the OLD `markFrac` would saturate to 1.0 the instant sNorm≥1
-   (oracle≥$84k). So the cell unambiguously uses the new rule. Closed-form re-derivation (src
-   1658-1670) confirms **no jump at strike (gap ~3e-7) and no jump at seam sNstar (gap ~3e-7)**, max
-   consecutive sweep jump ~0.005 (= step size, no kink); cap reached only deep past the seam.
-   `06_bands_table_ITM.png`.
-3. **Payoff legFraction naked-uncapped vs spread-capped — PARTIAL: logic-confirmed, NOT visually
-   distinguishable in the chart's window. FLAG.** Source (line 3866-3873): naked barrier =
-   `Engine.mark()` with **NO `Math.min(1,·)`**; spread = `min(1,mIn)−min(1,mOut)` (each capped).
-   Closed-form: naked `mark()` fraction rises monotonically and **asymptotes to 1 (never exceeds 1)**
-   for a clean barrier; the spread stays bounded. The cap-removal is structurally correct/distinct,
-   but the **payoff chart x-axis is "perp mark % change ±50%"**, far short of the deep-ITM region —
-   naked (`09_payoff_naked.png`) and spread (`10_payoff_spread.png`) render **pixel-identical** in
-   that window. So "naked value grows past 1 deep-ITM" is **logic-only**, not a pixel I saw. The
-   "grows past 1" phrasing is about leg VALUE (N·frac·pM), not the fraction (which caps at 1).
-   → FLAG to manager: item-3's visual claim isn't observable in the current chart range; the code is
-   correct. If product wants it visible, the payoff chart needs a wider sNorm sweep.
-4. **Polar mark-curve marker — PASS (tester-confirmed, rendered).** The polar mark chart is the
-   **"pricing" / `canvas-pricing`** view ("Mark Across Strikes"), NOT trajectory/canvas-ratio.
-   `07_polar_mark_pricing.png`: green dot (bought put K~$68k, left of mode) sits exactly ON the pink
-   put-wing ψ curve; red dot (sold call K=$84k, right of mode) sits exactly ON the teal call-wing
-   curve. Both route to `markFrac` (src 3598) and the curve is the same `min(s/θ,θ/s)` — re-derived
-   identity maxDiff=0. No drift.
+1. **Bands table crossover at K — PASS (tester-confirmed, live engine + rendered DOM).** The
+   OTM→ITM **regime** crossover (`legIsITM`) requires a pool-SPOT move, not a rebase: set oracle then
+   click **#btn-arb (Run Arbitrage to Oracle)** to push poolMark to the oracle. Then `soldITM` flips
+   **false→true EXACTLY at oracle=poolMark=120000=K** (119900 OTM, 120000 ITM) for the SOLD call
+   K=$120k, γ=2 build. `legIsITM` uses price-measure `sNorm0=poolMark/oNow` vs live ray `K/oNow` ⟺
+   poolMark≥K. All-γ crossover-at-K is the Node DIR_GATE's job (PASS, manager-verified); browser
+   confirms γ=2 live. Registration identity verified: `getMP_raw(arbitrageToOracle(pool,K))=K`
+   exactly (120000.0000000003), `getSNorm(that)=thetaReg`. `11_bands_table_crop.png` (ITM, oracle
+   $130k, SOLD mark 0.3333) + `12_bands_table_OTM_crop.png` (OTM, oracle $100k).
+   - GOTCHA: a pure oracle REBASE (kpi-oracle alone, no arb) does NOT cross the strike — it carries
+     the position with the frame (poolMark stays fixed, soldITM never flips). That's correct
+     (absorbed Finding-2). Must arb to move spot through K.
+2. **Chart strike-ray live on the position — PASS (tester-confirmed, rendered).** Curve view: white
+   eq-marker on the GH curve; green (put) / red (call) strike rays from origin with trade-dots ON
+   them. Rebasing oracle 80k→160k (`08b`→`08c`) **rescales the frame and repositions the rays**
+   (live K/oracle), marker stays on curve — no stale entry-θ drift (the absorbed Finding-2). Curve
+   is GH continuation, not Balancer weight-form. Drift table (item2_drift in trace): leg.inner
+   (entry-frozen θ, sold 1.5 const) vs sNormStrike(pool,K) (live, sold 0.4446→0.0494 across sweep) —
+   they diverge post-rebase, confirming the live path is used, not the stale entry value.
+3. **Re-based payoff matches the table — PASS (tester-confirmed, exact numeric).** At the live spot
+   (r=0) the chart's legFraction == bands-table markEff == rendered DOM mark cell, **|diff|=0.0
+   exactly** both legs: SOLD 0.24169229297386294 (DOM 0.2417), BOUGHT 0.2826730030550262 (DOM
+   0.2827). Same registered carry basis. Payoff frame is **−90%..+200%** asymmetric (`09_payoff`),
+   renders cleanly across the full range, downside floors at $0, free-boundary kink visible at left,
+   no NaN/blank/clip. Rebased-160k (`09b`) rescales Y-axis to $375k, still clean. (Payoff chart is
+   canvas-only — no DOM data table — so the numeric compare is the page's own legFraction closed
+   form vs the rendered table cell; both evaluated live against Store.state.pool.)
+4. **No v26b regression — PASS (tester-confirmed, rendered).** Polar mark "Mark Across Strikes"
+   (`canvas-pricing`, `07_polar_mark_pricing.png`): green dot (~$80k) and red dot (sold call ~$138k)
+   both sit exactly ON their ψ-curves (pink put-wing / teal call-wing), peak 1.0 at the mode —
+   continuity through strike, no drift. Bands §5 columns all present & correctly labelled (9 cells/
+   comp row, OPEN/CLOSE, headers verbatim in trace.item1_headers). Matches v26b.
 
 ### Provenance summary
-- tester-confirmed (rendered pixels): items 1, 2, 4.
-- logic-only (closed-form + source, NOT a distinguishing pixel): item 3's uncapped-vs-capped visual.
-- Node oracle incl. seam gate: PASS against the v26b build.
-
-### Gotcha learned
-- Chart view values: `curve`=pool curve, **`pricing`=polar Mark-Across-Strikes (canvas-pricing) — this
-  is item-4's polar mark chart**, `trajectory`=(Δφ_C,Δφ_P) on canvas-ratio (NOT the mark curve),
-  `payoff`=canvas-payoff. My first harness pass aimed item-4 at canvas-ratio by mistake (the v26a
-  ratio chart); corrected to canvas-pricing.
-- `Engine`/`Store` are module-scoped consts (line 1590/2192), **NOT on window** — harness re-derives
-  closed forms inline (transcribed from source) and uses rendered DOM as the live oracle.
+- tester-confirmed (rendered pixels): items 1 (table crops), 2 (curve rays), 3 (payoff frame), 4
+  (polar mark). Numeric cross-checks: page's OWN Engine/Store live (NOT a Node re-derivation).
+- Node oracle incl. seam + dir gate: PASS against v26c_full2 (scratch-named v26b_itm).
+- VERDICT: all 4 PASS, clean ×2, no regression. Recommend HEAD promotion clear from the visual layer.
 
 ### Repro
-`cd engine; PLAYWRIGHT_BROWSERS_PATH=/home/user/.cache/ms-playwright node verify/pw_v26b_visual.mjs`
-Seam gate: `cd engine; sh verify/run_all.sh builds/temporal_mvp_v26b_itm.html` (the bare `run_all.sh`
-defaults to the v26a HEAD and SKIPs the seam gate — must pass the v26b path explicitly).
-Chromium at `~/.cache/ms-playwright/chromium-1194`. `engine/node_modules/` symlinks resolve
-`import 'playwright'` — tmp harnesses must live under `engine/` to resolve the module.
+`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v26c_visual.mjs`
+Crossover-at-K (arb-driven): set #kpi-oracle then click #btn-arb, read Engine.legIsITM live.
+Oracle gate: `cd engine; sh verify/run_all.sh builds/temporal_mvp_v26c_full2.html` (seam+dir PASS).
+Chromium binary at BOTH `/opt/pw-browsers/chromium-1194` and `~/.cache/ms-playwright/chromium-1194`;
+`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` is the one that resolved here. tmp harnesses must live
+under `engine/` so `import 'playwright'` resolves `engine/node_modules/`.
 
-## What you run
-- Oracle: `cd engine && sh verify/run_all.sh builds/temporal_mvp_v26b_itm.html` (7 GH gates +
-  curveTrace + slope + slippage splice + **seam gate**). Bare invocation = v26a, seam SKIP.
-- Live Playwright (confirmed working). No browser → Node VM+DOM shim is logic-only.
-- File-safety: blob md5s `ab663f5c…`/`c505b08a…`; 3 `<script>` parse; build md5 `8df9f8a3…`.
+### Gotchas learned (v26c)
+- chart-select option values: `curve` (canvas-curve, GH pool curve + strike rays), `pricing`
+  (canvas-pricing, polar Mark-Across-Strikes — item-4), `trajectory` (canvas-ratio), `payoff`
+  (canvas-payoff, the −90%..+200% sim).
+- Band validation (#btn-execute disabled): bought PUT K must be < oracle (OTM put); sold CALL K >
+  oracle (OTM call). With oracle=$80k: sold 120000 / bought 68000 works; bought 90000 fails
+  ("not OTM on put wing"). Needs a perp added first (club.totalNotional>0).
+- carry sNorm is INVERSE to price (sNorm ∝ S^−γ): higher K → lower thetaReg. `isOTM`/`wingMember`
+  use the PRICE-RATIO leg.inner (K/oracle, ∝S^+1), NOT the carry theta — feeding carry theta to
+  isOTM gives wrong answers. The v26c design deliberately keeps entry-checks on price-ratio,
+  value/mark on carry (sNorm(K)). Don't conflate.
 
-## v26a state (prior run, still valid context)
-Finding-2 still open: v26a table/engine dollar-anchored, curve/ratio chart ratio-pegged. Manager's
-escalation input. Slippage display PASS. Frame re-fit PASS (don't revert). Curve = GH continuation.
+## Prior runs (still-valid context)
+- v26b (8df9f8a3…): items 1/2/4 tester-confirmed, item-3 uncapped-vs-capped logic-only (chart window
+  too narrow then; v26c's −90..+200 frame now clears the free boundary so legs render past it).
+  Seam gate PASS. `evidence/v26b_pw/`.
+- v26a: Finding-2 was open (curve/ratio chart ratio-pegged, table dollar-anchored) — **now ABSORBED
+  in v26c**: chart rays are live K/oracle, table+chart+settlement all carry-registered at sNorm(K).
+  Slippage display PASS, frame re-fit PASS (don't revert), curve = GH continuation.
+
+## File-safety canon
+Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060); 3 `<script>` parse.
+v26c_full2 build md5 `6cc73563779a3e030774b7597d0ae187`. v26b HEAD `8df9f8a3…`.
 
 ## Evidence
-`evidence/v26b_pw/` — 01_inputs, 03/09/10_payoff*, 04_after_execute, 05/06_bands_table_*,
-07_polar_mark_pricing, 08_pricing_full, **11_bands_table_crop** (item-1 legible), trace.json (all
-DOM/canvas numbers + sweeps). `evidence/v26a_pw/` prior run.
+`evidence/v26c_pw/` — 01_inputs, 02_after_execute, 05_bands_table_spot, 06_bands_table_ITM,
+07_polar_mark_pricing, 08/08b/08c_curve_strikeray*, 09/09b_payoff_rebased*, **11_bands_table_crop**
+(ITM legible), **12_bands_table_OTM_crop** (OTM legible), trace.json (all DOM + live-engine numbers,
+sweeps, drift table, chart-vs-table diffs). Harness `engine/verify/pw_v26c_visual.mjs`.

@@ -3,15 +3,20 @@ _Last updated: 2026-06-08, bootstrap. This is the project's state-of-the-whole; 
 mechanical audit trail. Rewrite the changed bits at the end of every task._
 
 ## HEAD / verification
-- **HEAD = `engine/builds/HEAD_temporal_mvp_v26b.html`, md5 `8df9f8a3cb705282a5348ce778f9eb82`
-  (PROMOTED 2026-06-08, operator-approved).** v26a (`89ae89e9`) demoted to `temporal_mvp_v26a.html`.
-  v26b = GH curve (v25) + v26a fixes + slippage units fix + **ITM/American smooth-pasting** (mark/
-  markFrac split, both wings, seam gate wired). Node-verified (7 GH gates + seam PASS, negative-
-  controlled) + UI tester-confirmed (bands §5, mark continuity, polar marker; item-3 logic-only).
-  `run_all.sh` no-arg now defaults to v26b (exit 0, seam gate runs). **Promotion landed ITM math only
-  — did NOT bless the wing-tag inversion (open correctness item, see thread #9).**
-  Harness gotcha: `run_all.sh <path>` takes the build path as positional $1 (env `HEAD=` is ignored;
-  it copies $1 into scratch incl. the v26b name the seam gate reads).
+- **HEAD = `engine/builds/HEAD_temporal_mvp_v26c.html`, md5 `6cc73563779a3e030774b7597d0ae187`
+  (PROMOTED 2026-06-08, operator pre-authorized contingent on tester-clean).** v26b (`8df9f8a3`)
+  demoted to `temporal_mvp_v26b.html`. v26c = v26b ITM/American + **UNIFORM strike registration**
+  (`θ=sNorm(K)` via `sNormStrike`=getSNorm∘arbitrageToOracle) across display mark + execution/
+  settlement value + payoff chart; crossover@K all γ (was oracle₀²/K for γ>1); chart strike-ray live
+  K/oracle (price-space); funding/isOTM/wingMember price-measure (already at K). Permanent
+  `dir_gate.js` (crossover@K + directional + mixed-basis). **Finding-2 absorbed; wing-tag/strike-basis
+  saga CLOSED.** Verified MYSELF: 7 GH + seam + dir_gate PASS, dollar-pipe byte-identical, premium
+  delta re-derived (+7.69%@K=82k), chart-mark==table 8.6e-11, §6 not tripped + UI tester-confirmed
+  (bands cross@K, live ray no drift, payoff==table |diff|0.0, clean ×2). no-arg run_all defaults to
+  v26c (exit 0).
+  Harness gotcha: `run_all.sh <path>` takes the build path as positional $1 (env `HEAD=` ignored; it
+  copies $1 into scratch under the seam/dir gate names those gates read).
+  Minor open: payoff ray-legend text overprint (cosmetic, intern polish item, non-blocking).
 - **Manager-verified at the Node level (2026-06-08, re-run on resume):** ran `engine/verify/run_all.sh`
   myself — 7 GH gates PASS (γ∈{1.5,2,3,4}), curveTrace 401/401 on the GH curve (worst slope err
   5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →
@@ -183,8 +188,11 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      both free boundaries; naked>1 region unreachable but free-boundary crossing visible). Intern also
      fixed a pre-existing drawPayoff N_buy bug (state→state.pool, was NaN-fallback; display-only).
      **= COMPLETE uniform-registration build, HEAD candidate.** Finding-2 absorbed.
-   - **NOT HEAD pending: tester browser pass** (bands mark crossing@K, live chart strike-ray, re-based
-     payoff curve matches table, −90%..+200% frame) — DISPATCHED. Promote v26c_full2→HEAD if clean.
+   - **CLOSED 2026-06-08: tester browser pass all 4 PASS (clean ×2, tester-confirmed via page's own
+     engine vs live Store + DOM): bands cross@K (legIsITM flips at oracle=120000=K), live chart
+     strike-ray no entry-θ drift, payoff legFraction==table markEff==DOM cell |diff|0.0, no v26b
+     regression. v26c_full2 PROMOTED → HEAD (`HEAD_temporal_mvp_v26c.html`, 6cc73563).** Minor cosmetic
+     (payoff ray-legend overprint) tracked, non-blocking. Wing-tag/strike-basis saga DONE.
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,

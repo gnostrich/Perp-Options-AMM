@@ -3,9 +3,9 @@
 # Run from the engine/ package root:  sh verify/run_all.sh [path-to-build.html]
 # With no arg it validates the canonical HEAD; the file-safety hook passes the edited file.
 set -e
-HEAD=${1:-builds/HEAD_temporal_mvp_v26b.html}
+HEAD=${1:-builds/HEAD_temporal_mvp_v26c.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 8df9f8a3cb705282a5348ce778f9eb82): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 6cc73563779a3e030774b7597d0ae187): "; md5sum "$HEAD" | awk '{print $1}'
 echo -n "blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): "; sed -n '74p'   "$HEAD" | md5sum | awk '{print $1}'
 echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$HEAD" | md5sum | awk '{print $1}'
 
