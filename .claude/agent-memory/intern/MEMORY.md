@@ -93,6 +93,53 @@ the 4 intended regions (helper + export + pfComponents ray + 2 call sites); long
   polar surfaces — needs an operator ruling before I touch them. **Open for tester:** browser/visual —
   bands table mark crossover now at K; chart strike ray/dot still on OLD basis (pending the fork).
 
+## Done — v26c-FULL strike-registration (operator (A): UNIFORM, handed to manager 2026-06-08)
+Build: **`engine/builds/temporal_mvp_v26c_full.html`** (from `temporal_mvp_v26c_strikereg.html`;
+HEAD `8df9f8a3` untouched). Splices: `/tmp/splice_v26c_full.py` (8 reps), `/tmp/splice_v26c_chartray.py`
+(1), `/tmp/splice_v26c_export.py` (1) — all `count==1`, blobs never through. Blobs `ab663f5c`/`c505b08a`
+intact; 3 scripts parse (longest script line 482); whole-md5 `8f7b3ffb…`.
+- **New engine helper `regLeg(s, leg)`** (after `sNormStrike`, exported): registers a leg's
+  K_inner/K_outer into carry-space (theta=sNorm(K)) for the mark/value PRICING path; leaves the
+  leg's price-ratio inner/outer untouched (isOTM/wingMember keep reading those at K/oracle).
+- **Execution path (`executeBand`):** sell leg, N_buy denom, buy leg all re-registered. THE KEY
+  FINDING: the denom mark fed a PRICE-MEASURE spot (`poolMark/oracle`) + price-ratio theta, NOT the
+  carry basis legPrice uses (`getSNorm` + sNorm(K)). `mark` is NOT invariant to that basis (diverges
+  up to ~38% @γ=4). Re-based denom spot → `getSNorm(leg1.newState)` + registered theta. `sNorm2`
+  feeds ONLY mark there (no isOTM shares it) ⇒ clean. **End-to-end the OLD exec path BLEW UP**: γ=3/4
+  N_buy=3.28e6, netPoolY=2.6e11 (price-measure denom near-zero). NEW: N_buy~0.1-0.6, netPoolY~16-32k,
+  all finite/positive across K∈[80001,500000], no NaN/Inf/sign-flip.
+- **Settlement (`closeBand`):** all 3 branches (soldITM/boughtITM/neither). Settle-to-cash VALUE
+  (`legValueUnified`/`markEff`) and live-leg reversal (`legPrice`) re-registered to `getSNorm(s)` +
+  sNorm(K). **Leg SELECTION (legIsITM/wingMember) LEFT on `sNorm0` price-measure** — only the VALUE
+  fed to the dollar pipe is corrected (guardrail 2 authorizes "feed corrected value"). Crossover
+  agrees at K in both spaces so selection unchanged. **Dollar pipe (carvedNotional/entryPerpMark/
+  attributablePnL/carvedEquityAtClosure/L0 multiply) byte-unchanged** — confirmed in diff.
+- **Premium delta (legPrice, isolated, barrier call):** moves UP toward registered value. K=84000:
+  +12.97/15.76/21.54/27.62% (γ=1.5/2/3/4); K=82000 (~near-strike): +6.37/7.69/10.38/13.14% — the
+  "~10%" sits here. Grows with γ (price-ratio vs sNorm diverge with γ).
+- **Chart strike-ray (`drawStrikeRay`, Finding-2):** fed LIVE `K/oracleVal` rays (was stale
+  `b.*.inner`=K/oracle_entry). `drawStrikeRay` is PRICE-RATIO space (rawSlope=θ·oracle=mp-line);
+  `rawSlope=K` lands ray+dot on `arbitrageToOracle(pool,K)` = the sNorm(K) point, every γ; rebase
+  drift gone. **DIVERGENCE FROM BRIEF LITERAL:** the brief says "→ sNormStrike", but feeding the
+  sNorm value into θ·oracle would draw sNorm·oracle (72565 vs correct 84000 @γ=2) — WRONG. Used the
+  geometrically-faithful K/oracle_live instead (same registered point). Flagged to manager.
+- **`drawStrikeMark` LEFT** (funding-polar marker, brief says leave). isOTM/wingMember/funding/markFrac
+  untouched (price-measure, stay at K).
+- **dir_gate enhanced (guardrail 5):** added MIXED-BASIS exec-path control — asserts the EXECUTION
+  leg-mark crossover (via `E.regLeg`) ALSO lands at K, and demonstrates the K/oracle mutant misses K
+  (drift point). DEMONSTRATED: mutating `regLeg`→K/oracle in a temp build FAILS dir_gate (exit 1) at
+  every γ; uniform build PASSES. SKIPs cleanly if no `regLeg` export (HEAD stays green).
+- **Gates:** `sh verify/run_all.sh builds/temporal_mvp_v26c_full.html` GREEN — 7 GH PASS γ∈{1.5,2,3,4},
+  seam PASS both branches (re-anchored), dir_gate PASS (crossover@K + exec mixed-basis control +
+  directional + mutation). HEAD still green (dir_gate SKIP).
+- **OPEN / flagged (not done, intentional — surface to operator):** (1) chart-ray brief-literal
+  divergence above. (2) **Payoff chart `drawPayoff`/`legFraction` (line ~3914) left on price-ratio**
+  — it sweeps spot as `sNorm=(1+r)` (fractional move) and feeds `mark` with `K/S0` strikes; it's
+  self-consistent in price-ratio space but NOT in the brief's listed scope (brief lists drawStrikeRay
+  only, not drawPayoff). Bringing it to carry-space requires re-basing the whole swept x-axis — a
+  SEPARATE display increment. Did NOT expand scope. (3) Settled-value correction changes the dollar
+  figure on ITM-leg closes — manager should re-derive before HEAD promotion.
+
 ## Done — v26b payoff x-range widen (DISPLAY-ONLY, handed to manager 2026-06-08)
 Build: **`engine/builds/temporal_mvp_v26b_xrange.html`** (from HEAD `8df9f8a3`; HEAD untouched).
 Splice: `/tmp/splice_xrange.py` (2 reps, both `count==1`, blobs never through). Operator-approved

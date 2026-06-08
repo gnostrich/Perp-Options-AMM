@@ -93,6 +93,65 @@ for (const g of [1.5, 2, 3, 4]) {
 }
 console.log('');
 
+// ── MIXED-BASIS negative control (v26c-full, guardrail 5) ───────────────────
+// The display-mark crossover above tests E.mark/E.sNormStrike directly. But a
+// PARTIAL fix could register the DISPLAY mark while leaving an EXECUTION/
+// SETTLEMENT curve site on the old K/oracle ray. This block asserts the
+// EXECUTION-PATH registration crossover ALSO lands at K, so any curve site left
+// on K/oracle (a "mixed basis" build) TRIPS the gate.
+//
+// The execution path prices a leg via E.legPrice, which registers the strike in
+// carry-space (theta = sNorm(K), via E.regLeg) and reads spot = getSNorm. Its
+// OTM->ITM crossover is where the leg's barrier mark saturates (mark -> its
+// boundary fraction 1/(gamma+1) at the free boundary; OTM<->ITM is sNormPool vs
+// theta). We locate the live oracle where the EXECUTION leg mark's regime flips
+// and assert it is K. We then build the SAME crossover with the strike left on
+// the OLD K/oracle ray (the mixed-basis mutant) and assert it does NOT land at
+// K (it drifts to oracle0^2/K for gamma>1) — proving the gate is sensitive.
+if (typeof E.regLeg === 'function') {
+  console.log('mixed-basis exec-path control (guardrail 5): exec crossover must ALSO land at K');
+  // Regime of an execution-path barrier leg at live oracle `o`, registered the
+  // SAME way executeBand/legPrice do (carry-space theta via regLeg, getSNorm
+  // spot). itmSign = sign(sNormPool - theta_registered): >0 once ITM (call).
+  function execRegimeSign(s0, o, K, registered) {
+    const st = E.arbitrageToOracle(s0, o);
+    const leg = { K_inner: K, K_outer: NaN, inner: K / o, outer: NaN };
+    // registered (correct exec path) vs mixed-basis mutant (old K/oracle ray):
+    const theta = registered ? E.regLeg(st, leg).inner : (K / o);
+    return Math.sign(E.getSNorm(st) - theta);
+  }
+  function execCrossover(s0, K, registered) {
+    let prev = null, cross = null;
+    for (let i = 0; i <= 20000; i++) {
+      const o = 60000 + i * 5;
+      const d = execRegimeSign(s0, o, K, registered);
+      if (prev !== null && d !== 0 && Math.sign(d) !== Math.sign(prev) && cross === null) cross = o;
+      if (d !== 0) prev = d;
+    }
+    return cross;
+  }
+  for (const g of [1.5, 2, 3, 4]) {
+    const s0 = open(g);
+    const cxReg = execCrossover(s0, Kx, true);
+    const errReg = Math.abs(cxReg - Kx);
+    const cxMix = execCrossover(s0, Kx, false);   // mixed-basis mutant
+    const drift = ORACLE0 * ORACLE0 / Kx;
+    console.log('  gamma=' + g + ' EXEC crossover(registered)=' + cxReg + ' (|err|=' + errReg +
+                ')   mutant(K/oracle)=' + cxMix + ' (drift point=' + drift.toFixed(0) + ')');
+    check('gamma=' + g + ' EXEC-path crossover at K', errReg <= 5, 'oracle=' + cxReg + ' K=' + Kx);
+    // Sensitivity demo: the mixed-basis mutant must MISS K for gamma>1 (it lands
+    // at the drift point), so a partial fix leaving an exec site on K/oracle
+    // would FAIL the EXEC-path crossover@K assertion above.
+    if (g > 1.01) {
+      check('gamma=' + g + ' mixed-basis mutant DETECTED (misses K)', Math.abs(cxMix - Kx) > 50,
+            'mutant crossover=' + cxMix + ' (drift=' + drift.toFixed(0) + ') vs K=' + Kx);
+    }
+  }
+  console.log('');
+} else {
+  console.log('mixed-basis exec-path control: SKIP — no regLeg export (display-only build).\n');
+}
+
 for (const g of [1.5, 2, 3, 4]) {
   const s0 = open(g);
   const gamma = s0.ghAh - 1;
