@@ -109,6 +109,32 @@ actor). I do **not** see raw prover output and am no longer a courier.
 - PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
   only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.
 
+## PH recap + full Aristotle queue (2026-06-08, branch claude/port-hamiltonian-recap-dxskkm)
+- **PH recap DONE** → `notes/PH_RECAP_2026-06-08.md` (committed a83a793). PH frame (H/J/R/ports,
+  passivity, reserves-no-floor) intact vs v26c HEAD; only PH-5 strike-registration needed re-pin
+  (θ=K/oracle → θ=sNorm(K), a doc fix to match shipped/verified HEAD, NOT settlement-semantics).
+- **Q1 (discrete-vs-continuous):** discrete-time is NOT necessary — our discrete H-balance is the exact
+  forward-Euler/sampled realization of canonical continuous-time PH (boost=one-param group; H_well=∫
+  funding force). REC (research-lead + me): keep discrete PROOFS, present canonical continuous-time as
+  PROSE → zero new obligations. **Operator-flagged:** switching to state-AND-prove in continuous time
+  adds a price-SDE + LVR-integral obligation + re-words the locked scaffold (rec AGAINST). Deterministic
+  continuous-time PH bridge (S exogenous, no SDE) IS in-scope and queued.
+- **Aristotle re-verify gate RELAXED (operator):** server compile = the build; PENDING-LEAN retired;
+  artifact audit kept; label = trusted-from-prover. Synced across research-lead.md, routine,
+  MANAGER_VERIFICATION, smoke README, both MEMORYs (committed a83a793).
+- **BIG QUEUE LAUNCHED (background agent a942ebf4, ~8h, operator-authorized "err to excess"):**
+  research-lead working Tier 1→4 + C1/C2 + GH instantiation + deterministic continuous-time bridge.
+  Durable artifacts → `formal/aristotle_runs/` (+ RESULTS.md ledger), prompts → `formal/prompts/`,
+  PH-5 spec re-pin authorized. GUARDRAILS HELD even unattended: GH-invariant watch-flag (no clean
+  invariant → economic-object finding, escalate NOT patch); B1 stays ship-gate (no fake floor); C3
+  reflection stays an AXIOM; stochastic-SDE NOT attempted. Every candidate gets full artifact audit;
+  I re-audit each archive before folding. On completion: I audit + commit logical units to the feature
+  branch (NO PR, NO main-merge while operator asleep).
+- **Manager independent engine-level confirmation of the cheap-now checks** (parallel, read-only) →
+  `evidence/ph_cheapnow_checks_2026-06-08.md`: seam C¹ BOTH wings (value 0.000%, slope ≤0.0005%, all γ),
+  mpGeom=getMP_raw·e^(−ghMu) (ratio==e^ghMu all γ), directional-sign invariant (CALL+++/PUT−−−, mutation
+  caught), 7 GH gates PASS. These are the numeric ground-truths R1/R3/R4 candidates must reproduce.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
@@ -293,9 +319,13 @@ passes behind the hook). Escalate to operator = what-we're-building (curve/invar
 semantics, reopen a locked decision/ship-gate, product calls Finding-2 / |Γ|>1 / Fork A-vs-B,
 calibration tier, paper claims). Irreversible/high-blast-radius escalates regardless.
 
-## Waiting on operator
-- Nothing blocking from the v26c reconciliation — **v26c is canonical HEAD on main** (PR #4 merged
-  `3d4fbe2`). Open project threads (Lean GH gate-discharge, ship-gate B1, publication, Layer-2
-  honest-dollar $) continue per their owners.
-- (Resolved this task: scaffolding already on main; v26a/v26b/v26c tester runs done; `GH_TOKEN`
-  present & verified 200; integration merged + branch cleaned up.)
+## Waiting on operator (review in the morning, ~8h after 2026-06-08 launch)
+- **Aristotle queue results** — research-lead's consolidated report + RESULTS.md ledger + folded
+  archives on the feature branch. I'll have audited + committed whatever landed (no PR/main-merge).
+- **For the operator to decide (none block the night's run):**
+  1. Q1 framing: continuous-time-as-PROSE (rec) vs state-AND-prove continuous (adds SDE obligation).
+  2. "trusted-from-prover" (current encoding) vs upgrade word to "verified" for server-clean candidates.
+  3. Any GH-invariant economic-object finding, if the watch-flag triggered.
+  4. B1 ship-gate (funding-coverage sweep, κ extrinsic) — still the open solvency prize.
+- v26c remains canonical HEAD on **main** (PR #4 `3d4fbe2`); this PH work is on branch
+  `claude/port-hamiltonian-recap-dxskkm` (no PR opened — operator hasn't asked).
