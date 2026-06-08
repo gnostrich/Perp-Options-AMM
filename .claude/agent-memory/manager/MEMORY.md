@@ -63,7 +63,12 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    Bands render (§5) + seam-gate generalization (both wings) are ready & unambiguous. RE-DISPATCH
    intern with (a)+(c) authorized the moment operator ratifies (b). Build → NEW file
    `engine/builds/temporal_mvp_v26b_itm.html`; nothing becomes HEAD until I verify.
-4. **Blob-ledger reconcile** | manager + operator | **VERIFIED, awaiting operator ratification.**
+4. **Blob-ledger reconcile** | manager | **DONE & ratified (operator 2026-06-08): keep LINE layer
+   `ab663f5c`/`c505b08a` canonical; decoded `8d2e1a84`/`1b320fc5` = documented secondary.** Wording
+   fixed in CLAUDE.md §3, GOTCHAS §7, BUILD_LINEAGE, hook comments+error string, INTEGRITY (ratified
+   note), agents/intern.md, docs/00_ORCHESTRATOR_START_HERE. Dated snapshots (STATE_snapshot_v26a,
+   briefs/INTERN_SPLICE_NOTE, evidence/) left as historical. Intern to update its own MEMORY line.
+   _History:_ **VERIFIED, awaiting operator ratification.**
    Decoded HEAD blobs at all 3 layers myself (2026-06-08): line-md5 `ab663f5c`/`c505b08a` (canonical,
    what the hook+run_all check) → DECODED-binary `8d2e1a84`/`1b320fc5`, b64-payload `d3ff8fc8`/`b6f0d67b`.
    273864 b64 × ¾ = 205398 exact; 5168 × ¾ ≈ 3875. ⇒ `8d2e1a84`/`1b320fc5` is **NOT a second/minified

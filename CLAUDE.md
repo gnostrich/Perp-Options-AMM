@@ -38,9 +38,13 @@ splice silently corrupts the build while gates stay green.
   range (don't hand-type Unicode); `assert txt.count(old)==1`; preserve a trailing `\n`; blobs stay
   on disk. Recipe: `engine/recipe_html_blob_editing.md` + `engine/splices/SPLICE_METHOD.md`
   (`splice_slipfix.py` is the best worked template).
-- **Canonical blob md5s:** webp `ab663f5c26f2a461c5b0ef1421d0ad74` · svg `c505b08ad0e4c6b0fb9e64e9679fe291`.
-  A stale ledger lists the **minified `8d2e1a84`/`1b320fc5` "broken cut" — never restore it.
-  No asset optimizer / minifier, ever** (that's what broke the last cut).
+- **Canonical blob md5s (line layer):** webp `ab663f5c26f2a461c5b0ef1421d0ad74` · svg
+  `c505b08ad0e4c6b0fb9e64e9679fe291`. These are the `sed -n 'Np'|md5sum` line hashes the hook +
+  `run_all.sh` key off — keep them canonical. `8d2e1a84`/`1b320fc5` is **the decode of the very same
+  blob** (273864 b64 chars ×¾ = 205398 bytes exact; 5168 ×¾ = 3875), recorded as a documented
+  *secondary* in `BUILD_LINEAGE.md` — **not** a second or "minified broken cut," so there is nothing
+  to "restore." (Earlier sessions compared a decode-layer hash against a line-layer hash and inferred
+  two artifacts; verified one blob, three layers, 2026-06-08.) **No asset optimizer / minifier, ever.**
 - **After every edit:** 2 blob md5s unchanged · all 3 `<script>` parse · engine IIFE intact · no
   script line >~50k · no signatures changed unless that's the task · `engine/verify/run_all.sh` green.
 - A **`PostToolUse` hook** (`.claude/hooks/file_safety_gate.sh`) re-runs these checks and **blocks on

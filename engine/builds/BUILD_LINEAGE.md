@@ -14,14 +14,18 @@ show exactly what each step changed.
 Predecessor (pre-GH, in notes context only): `temporal_mvp_v24_rebase_fixed_2.html` was the
 barrier-curve build before the GH swap — not included; superseded by v25_gh.
 
-## Blob baseline (canonical — verify against THIS, not any ledger)
-Both blobs must be byte-identical across every safe edit:
-- **webp** (background), line ~74, length **273917**, md5 **`ab663f5c26f2a461c5b0ef1421d0ad74`**
-- **svg** (logo), line ~1060, length **5240**, md5 **`c505b08ad0e4c6b0fb9e64e9679fe291`**
+## Blob baseline (canonical = LINE layer — verify against THIS)
+Both blobs must be byte-identical across every safe edit. Canonical check = the whole-line md5
+(`sed -n 'Np' file | md5sum`), which is what the hook + `run_all.sh` use:
+- **webp** (background), line ~74, length **273917**, line-md5 **`ab663f5c26f2a461c5b0ef1421d0ad74`**
+- **svg** (logo), line ~1060, length **5240**, line-md5 **`c505b08ad0e4c6b0fb9e64e9679fe291`**
 
-⚠️ A ledger elsewhere records the blobs as `8d2e1a84` (len 205398) / `1b320fc5` (len 3875).
-Those are **smaller = optimizer/minifier output = the broken cut.** The files above are
-canonical. Reconcile the ledger to the files; never restore the minified set. (Open thread.)
+**Documented secondary (decoded-binary layer — informational, NOT the check):** the same two blobs
+decode to `8d2e1a84` (205398 bytes) / `1b320fc5` (3875 bytes); b64-payload md5s `d3ff8fc8`/`b6f0d67b`.
+Arithmetic proving it's one blob: 273864 b64 chars ×¾ = 205398 (exact); 5168 ×¾ = 3875. These are
+**not** a "minified broken cut" — they are the decode of the canonical line. Recorded so a future
+line-hash break can be told apart from a real blob change. (RECONCILED 2026-06-08; ratified: keep the
+line layer canonical.)
 
 ## Quick integrity check (any build)
 ```sh
