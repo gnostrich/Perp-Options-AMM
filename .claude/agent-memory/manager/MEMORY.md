@@ -87,7 +87,16 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    ×1.02 → slope 1.96% + jump 6.7e-3 FAIL (CAUGHT). Intern's sNorm-space slope swap = legitimate
    (coordinate-invariant ratio, avoids table aliasing), NOT a green-wash. **OWED: tester browser/UI
    pass** (§5 column drop/rename, payoff-chart uncapped naked leg vs capped spread, polar marker on
-   ψ-curve) before HEAD promotion — DISPATCHED.
+   ψ-curve) before HEAD promotion — **DONE (tester af25ead5, evidence ab1d8be).** Items 1 (bands §5:
+   empty 4th td, 9 cells, "Attrib P&L"/"Strike"), 2 (mark 0.1231→0.5612 smooth, never clamps to 1;
+   old markFrac would saturate at oracle≥$84k; seam gaps ~3e-7), 4 (polar marker on ψ-curve, maxDiff
+   0) = **tester-confirmed (rendered)**. Item 3 (payoff naked uncapped vs spread capped) = **logic-only**:
+   code correct (no Math.min on naked, min on spread) but payoff chart x-range ±50% perp-mark is too
+   narrow to render the deep-ITM divergence → pixel-identical. DISPLAY-COVERAGE flag, NOT a defect.
+   **→ v26b READY for HEAD promotion (Node+UI verified). HELD for operator nod** — promotion edits
+   shared-truth CLAUDE.md §8 HEAD line + run_all default + lineage (milestone), and bundles two
+   product/display calls: (i) item-3 widen payoff x-range? (ii) Finding-2 sequencing (promote v26b
+   now then Finding-2 next = my rec, vs bundle).
 4. **Blob-ledger reconcile** | manager | **DONE & ratified (operator 2026-06-08): keep LINE layer
    `ab663f5c`/`c505b08a` canonical; decoded `8d2e1a84`/`1b320fc5` = documented secondary.** Wording
    fixed in CLAUDE.md §3, GOTCHAS §7, BUILD_LINEAGE, hook comments+error string, INTEGRITY (ratified
