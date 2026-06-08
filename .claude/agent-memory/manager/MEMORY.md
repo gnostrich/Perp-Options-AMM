@@ -5,6 +5,10 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 ## HEAD / verification
 - **HEAD = `engine/builds/HEAD_temporal_mvp_v26a.html`, md5 `89ae89e9df229186b134ca6638726d0c`.**
   GH curve swap (v25) + v26a barrier-remnant fixes + slippage units fix.
+- **v26b ITM build Node-verified (md5 `8df9f8a3`, committed f41a8f7) — UI tester-pending before it
+  becomes HEAD. Until then HEAD stays v26a `89ae89e9`.** Harness gotcha: `run_all.sh <path>` takes the
+  build path as positional $1 (env `HEAD=` is ignored; it copies $1 into scratch incl. the v26b name
+  the seam gate reads).
 - **Manager-verified at the Node level (2026-06-08, re-run on resume):** ran `engine/verify/run_all.sh`
   myself — 7 GH gates PASS (γ∈{1.5,2,3,4}), curveTrace 401/401 on the GH curve (worst slope err
   5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →
@@ -70,8 +74,20 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    the GEOMETRIC BRANCH/S-direction, not the tag string**: `sNorm/θ` branch → `S*=K·γ/(γ+1)`,
    intrinsic `1−S/K`, exercise S<K; `θ/sNorm` branch → `S*=K·(γ+1)/γ`, intrinsic `1−K/S`, exercise
    S>K. Directional seam-gate assertion keys off S-side (not tag). Bounded/unbounded (cap) flagged
-   ORTHOGONAL to wing. Build → NEW file `engine/builds/temporal_mvp_v26b_itm.html`; verify before HEAD.
-   Finding-2 chart fix = SEPARATE post-v26b follow-up (operator ratified: align chart ray to live $K).
+   ORTHOGONAL to wing. Finding-2 chart fix = SEPARATE post-v26b follow-up (operator ratified).
+   **DELIVERED + MANAGER-VERIFIED at Node level 2026-06-08** → `engine/builds/temporal_mvp_v26b_itm.html`
+   md5 `8df9f8a3cb705282a5348ce778f9eb82` (committed f41a8f7, NOT yet HEAD). Verified MYSELF:
+   `run_all.sh <path>` (NB: path is positional $1, NOT env var) → 7 GH gates PASS γ∈{1.5,2,3,4},
+   curveTrace 401/401, marker on-curve, slippage unchanged, **seam gate PASS** (value 0.000%, slope
+   ≤0.0005% in sNorm-space, no-jump ~e-7, directional A:S*<K / B:S*>K, both branches). Blobs intact
+   (line layer). `mark()` math matches ratified boundaries; both exercise branches closed-form
+   `Math.pow` (no GH-table in slope FD). `markFrac`=verbatim old fraction; funding (2162) + polar
+   marker (3598) route to it ⇒ funding bit-identical. **Seam gate negative-controlled by me:** wrong
+   engine boundary +10% → value 9.09% FAIL (CAUGHT); branch swap → 80% FAIL (CAUGHT); injected kink
+   ×1.02 → slope 1.96% + jump 6.7e-3 FAIL (CAUGHT). Intern's sNorm-space slope swap = legitimate
+   (coordinate-invariant ratio, avoids table aliasing), NOT a green-wash. **OWED: tester browser/UI
+   pass** (§5 column drop/rename, payoff-chart uncapped naked leg vs capped spread, polar marker on
+   ψ-curve) before HEAD promotion — DISPATCHED.
 4. **Blob-ledger reconcile** | manager | **DONE & ratified (operator 2026-06-08): keep LINE layer
    `ab663f5c`/`c505b08a` canonical; decoded `8d2e1a84`/`1b320fc5` = documented secondary.** Wording
    fixed in CLAUDE.md §3, GOTCHAS §7, BUILD_LINEAGE, hook comments+error string, INTEGRITY (ratified
