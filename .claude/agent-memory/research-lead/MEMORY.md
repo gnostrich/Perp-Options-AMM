@@ -1,16 +1,50 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-08, aristotle folded in (direct prover interface). Rewrite changed bits at task end._
+_Last updated: 2026-06-08, PH recap + provenance-label sync pass. Rewrite changed bits at task end._
+
+### THIS PASS (2026-06-08, provenance-label sync after the operator's no-local-re-verify clarification)
+Recap memo + label reconciliation. Verified my owned PH docs already comply with the process update
+(`notes/PH_RECAP_2026-06-08.md`, `specs/port_hamiltonian_consistency.md`, this MEMORY) — they retired
+PENDING-LEAN and use `trusted-from-prover` correctly. Synced the two research-lead-owned AUDIT
+artifacts that still carried stale "proved + re-verified" / local-`lake build`-gate framing:
+`formal/smoke/README.md` (now: server compile IS the build; verdict labels = proved (trusted-from-
+prover) / counterexample; SMOKE STATUS folded in) and `formal/MANAGER_VERIFICATION.md` (§0/§1/§5
+reframed: the canonical-env build is a **label upgrade to "verified"**, not a trust-removal of an
+unbuilt sketch). NOT touched (out of my scope — manager owns them): `.claude/agent-memory/manager/
+MEMORY.md`, `.claude/agents/research-lead.md`, `docs/routines/aristotle_ph_loop.md` — these still say
+"local re-verify / proved+re-verified / PENDING-LEAN" and are STALE vs the process update.
+**ESCALATION to manager:** those three manager-owned docs need the same PENDING-LEAN→trusted-from-prover
+/ drop-local-re-verify-gate edit; I cannot edit them (manager-owned). No engine/git actions taken; no
+new heavy submit run (recap only, per task constraint).
 
 ## Role (UPDATED — I am my own prover interface; no courier)
 I am the **theory owner AND my own prover interface**: I decide what to prove, structure the Lean, own
 the PH-scaffold reasoning, phrase obligations, **submit to Harmonic's Aristotle myself via the
-aristotlelib CLI**, re-verify returned candidates locally, emend mechanical backend diffs, and interpret
-verdicts. The standalone `aristotle` peer agent is **GONE** — its job is folded into me. Flow is now
-direct: me → `aristotle submit` → poll → local `lake build` re-verify → one verdict → I audit/interpret.
-**All raw prover/poll/lake output stays in MY context.** The **manager** is orchestrator + sole git/env
+aristotlelib CLI**, audit returned candidates, emend mechanical backend diffs, and interpret verdicts.
+The standalone `aristotle` peer agent is **GONE** — its job is folded into me. Flow is now direct:
+me → `aristotle submit` → poll → **zero-cost artifact audit** → one verdict → I interpret.
+**All raw prover/poll output stays in MY context.** The **manager** is orchestrator + sole git/env
 actor; it gets only my **distilled** reports (verdicts, queue status, escalations), never raw logs, and
 relays nothing between agents. I hold `Bash` + the CLI; I do **no** git/env actions and never rubber-stamp
 a candidate.
+
+### PROCESS UPDATE (operator, 2026-06-08) — no local re-verify gate; Aristotle's server compile IS the build
+Operator clarified: **Aristotle actually compiles/builds at its end, in the matching toolchain (Lean
+4.28.0 / Mathlib v4.28.0).** Consequences, applied throughout this memory:
+- **DROP the PENDING-LEAN framing as a blocker.** A returned candidate Aristotle compiled is a genuine
+  compiled proof, not a sketch. Do NOT park results in PENDING-LEAN limbo, and do NOT use the
+  PENDING-LEAN label anymore. The absence of a local lean/lake toolchain in this container is no longer
+  a verdict-blocker.
+- **No local `lake build` re-verify is required as a gate.** The manager may still build in the
+  canonical env later; that's a label upgrade, not a gate I owe.
+- **KEEP the zero-cost artifact audit** on every returned archive (needs no toolchain): (1) token-scan
+  (`sorry`/`admit`/real `axiom` decls/`native_decide`/`sorryAx`/`opaque`/`unsafe`; kernel `decide` ok),
+  (2) read Aristotle's own `#print axioms` — must be ONLY `propext`/`Classical.choice`/`Quot.sound`,
+  (3) diff every unscoped module byte-for-byte to confirm no statement was weakened / no false hypothesis
+  added, (4) re-derive the math (Lean validity ≠ intended claim). **A clean server build can still be a
+  clean proof of a WEAKENED statement — the audit is what catches that, so it stays mandatory.**
+- **LABEL:** a returned, server-compiled, clean-axiom, audited candidate = **trusted-from-prover**
+  (Aristotle's kernel ran, ours didn't). NOT "verified" (that's the operator's word to grant later),
+  NOT PENDING-LEAN.
 
 ## Connection — EXACT invocation (aristotlelib CLI)
 - **Library:** `aristotlelib` (PyPI; was v2.0.0). Console script: `aristotle`. Host
@@ -30,33 +64,44 @@ a candidate.
 - No official Harmonic **MCP** package exists → **no `.mcp.json`** path. For cloud **routines**, use the
   **Harmonic connector** toggle; for Bash sessions, this CLI is the interface.
 
-## Local re-verify procedure (non-negotiable gate — I never rubber-stamp)
+## Zero-cost artifact audit (non-negotiable gate — I never rubber-stamp; needs NO toolchain)
+_Aristotle's server compile is the build (operator, 2026-06-08), so there's no local `lake build` step.
+The audit below is what I still owe — it catches a clean build of a WEAKENED statement, which a green
+compile alone never would._
 1. Extract the returned candidate over a THROWAWAY copy of `formal/temporal_lean_verified` (never the
    working tree).
-2. Confirm `lean-toolchain` = `leanprover/lean4:v4.28.0` and lakefile mathlib `rev = v4.28.0` UNCHANGED.
-3. `lake build` (after `lake exe cache get` if available) — must compile clean from a candidate, not
-   cache. Doesn't compile → `candidate-fails-local-recheck`.
-4. Token-scan changed files: reject `sorry`/`admit`/`axiom`(real decls)/`native_decide`/`sorryAx`/
+2. Confirm `lean-toolchain` = `leanprover/lean4:v4.28.0` and lakefile mathlib `rev = v4.28.0` UNCHANGED
+   in the returned archive (Aristotle built against these; an altered pin is a red flag).
+3. Token-scan changed files: reject `sorry`/`admit`/`axiom`(real decls)/`native_decide`/`sorryAx`/
    `opaque`/`unsafe`. Kernel `decide` OK. Carried hypothesis FIELDS (B1/B3/B4) are allowed when the
    obligation marks them as fields.
-5. `#print axioms <thm>` for each target — must show ONLY `propext`, `Classical.choice`, `Quot.sound`.
-6. Diff every module I did NOT scope as changed — must be byte-identical (no silent statement edits /
-   weakened hypotheses). Then re-derive the math: Lean validity ≠ intended claim.
+4. Read Aristotle's own `#print axioms <thm>` for each target — must show ONLY `propext`,
+   `Classical.choice`, `Quot.sound` (a `sorryAx` fails). (`ARISTOTLE_SUMMARY.md` reports these.)
+5. Diff every module I did NOT scope as changed — must be byte-identical (no silent statement edits /
+   weakened hypotheses / added false hypothesis). An unexplained out-of-scope diff is a bounce.
+6. Re-derive the math independently and confirm the Lean statement is the INTENDED statement —
+   Lean validity ≠ intended claim. This is the step that catches a clean proof of a weakened goal.
 
 ## Backend-diff emendation — allowed vs bounce (I do the emending now)
 - **MAY emend (mechanical, no math change):** import lines, Mathlib API-drift renames, namespace/open
   fixes, whitespace/formatting, `set_option` not affecting kernel trust. Record every emendation.
 - **MUST NOT patch (treat as theory failure, don't go green):** any change to a *statement*, a
   weakened/added hypothesis, a new `axiom`, replacing a proof with `sorry`/`native_decide`, or any math
-  change. A candidate that only re-verifies after a forbidden change = `candidate-fails-local-recheck`.
+  change. A candidate that only passes after a forbidden change = `candidate-fails-audit`.
 
 ## The four verdicts (exactly one per obligation; distilled to manager)
-- **proved + re-verified** — Aristotle closed it AND it passed steps 1–6 (clean axioms). Trusted-from-
-  prover until the manager builds it in the canonical env. Attach proof for folding.
+- **proved (trusted-from-prover)** — Aristotle compiled it server-side (matching toolchain) AND it
+  passed the zero-cost artifact audit (clean tokens, axioms ⊆ propext/Classical.choice/Quot.sound,
+  no out-of-scope diff, statement is the intended one). Trusted-from-prover (Aristotle's kernel ran,
+  ours didn't); the manager may later upgrade to "verified" by building in the canonical env. Attach
+  proof for folding. (Was "proved + re-verified" — the local re-verify gate is dropped; the audit is
+  the gate.)
 - **counterexample** — Aristotle refuted it. Relay verbatim; repairing the statement is MY call.
 - **still-open** — no proof / timeout / partial. Record furthest state + blocker.
-- **candidate-fails-local-recheck** — host claims proved but local re-verify fails (won't build, dirty
-  axioms, forbidden token, or only "works" via a forbidden emendation). Record the failing diagnostic.
+- **candidate-fails-audit** — host reports proved but the artifact audit fails (dirty axioms/`sorryAx`,
+  forbidden token, altered toolchain pin, out-of-scope statement weakening, or only "passes" via a
+  forbidden emendation). Record the failing diagnostic. (Was `candidate-fails-local-recheck`; renamed —
+  the failure is now an audit failure, not a local-build failure.)
 
 ## ⛔ Connection / toolchain status (live) — SMOKE-TESTED 2026-06-08
 - Host `aristotle.harmonic.fun`: **UNBLOCKED — CONFIRMED with a real round-trip** (no more
@@ -75,9 +120,12 @@ a candidate.
   `--destination` writes a **gzip tar** (`tar -xzf`), containing `<name>_aristotle/` with the .lean,
   `lakefile.toml`, `lean-toolchain` (= `leanprover/lean4:v4.28.0`, matches canonical), `lake-manifest.json`,
   `README.md`, `ARISTOTLE_SUMMARY.md`. Poll/inspect a task: `aristotle show <project_id> --api-key … --limit 0`.
-- No `lean`/`lake`/`elan` toolchain in this container → **local re-verify STILL cannot run here.** Needs
-  elan + Lean v4.28.0 + Mathlib v4.28.0 (heavy mathlib build; provision via env setup or worktree).
-  Submit→candidate returns fine, but the re-verify half is **PENDING-LEAN** — never reported as proved.
+- No `lean`/`lake`/`elan` toolchain in this container → **but this is no longer a blocker** (operator,
+  2026-06-08): Aristotle compiles server-side in the matching toolchain, so the returned candidate IS a
+  compiled proof. I do NOT owe a local `lake build`. What I DO owe is the **zero-cost artifact audit**
+  (token-scan + read Aristotle's `#print axioms` + unscoped-module diff + math re-derivation) — none of
+  which needs a toolchain. A clean, audited candidate is reported **trusted-from-prover** (NOT
+  PENDING-LEAN). The PENDING-LEAN label is retired.
 
 ## Toolchain / where the Lean lives
 - **Lean 4.28.0 + Mathlib v4.28.0** (match `formal/temporal_lean_verified/lean-toolchain`).
@@ -93,16 +141,17 @@ a candidate.
   excluded from RequestProject build) — first live test of the direct loop. I submit these MYSELF via the
   CLI. **SMOKE STATUS (2026-06-08): both round-trips COMPLETED.**
   - **smoke_true (`2+2=4`):** task COMPLETE_WITH_ERRORS (no open goal to fill — already proved by
-    `norm_num`). Aristotle built it, confirmed it closes, reported `#print axioms` = `propext` only
-    (within allowed propext/Classical.choice/Quot.sound). Returned .lean unchanged. **Verdict label:
-    submit-half returned a valid candidate; local re-verify PENDING-LEAN.** (NOT "proved + re-verified".)
+    `norm_num`). Aristotle built it server-side, confirmed it closes, reported `#print axioms` =
+    `propext` only (within allowed propext/Classical.choice/Quot.sound). Returned .lean unchanged.
+    **Verdict label: proved (trusted-from-prover)** — server-compiled, clean axioms, audit passes.
+    (Under the 2026-06-08 process update; was "PENDING-LEAN" before the no-local-re-verify clarification.)
   - **smoke_false (`∀ n:ℕ, n = n+1`):** task COMPLETE. Aristotle correctly did **NOT** prove it —
     declared it false, gave counterexample n=0 → 0=1, commented out the original unprovable theorem,
     and instead proved the *negation* `¬(∀ n, n=n+1) := fun h => by cases h 0`. No fabricated proof of
     the false goal; no active `sorry`. **This is the desired refutation outcome — no red flag.**
-    **Verdict label: counterexample (correct refutation); local re-verify PENDING-LEAN.**
-  - Net: the direct submit→candidate loop WORKS end-to-end; the only gap is local `lake build`
-    re-verify (no toolchain here). Discrimination test passed — prover did not "prove" the false one.
+    **Verdict label: counterexample (correct refutation).**
+  - Net: the direct submit→candidate loop WORKS end-to-end and Aristotle's server compile is the build;
+    no local `lake build` gap remains. Discrimination test passed — prover did not "prove" the false one.
 
 ## How I phrase an obligation (then I submit it myself)
 Standalone, self-contained: (1) informal statement + intended math meaning; (2) the Lean — embed or
@@ -122,10 +171,26 @@ Then `aristotle submit` it directly — no handoff to the manager for the prover
 - **PH-4b** reserves-have-no-floor / "convexity must be funded" — proved-in-prompt for cpmm (O=p²);
   GH analogue open. PIN: this is the NEGATION of an intrinsic floor (not §1 H_floor); makes the funding
   port NECESSARY, not sufficient (sufficiency = B1). autonomous. BddBelow/coercive watch.
-- **PH-5** C¹ continuity at smooth-pasting S*=Kγ/(γ+1) (value+slope match = engine seam gate) — open.
-  autonomous; ESCALATE/stop-and-flag if locked ITM form is found NOT C¹.
-- **PH-6** rebase structure-preserving θ→θ/r — sNorm gauge proved-in-prompt; J/R preservation open. autonomous.
+- **PH-5** C¹ continuity at smooth-pasting S*=Kγ/(γ+1) (value+slope = engine seam gate) — **NEEDS-REPIN
+  (v26c, 2026-06-08).** HEAD registers strike at **θ=sNorm(K)=(oracle₀/S)^γ**, NOT θ=K/oracle (PH-5/ITM
+  spec text is stale on θ). Same closed form, corrected registration coord — NOT a settlement-semantics
+  change. ALSO incomplete: seam gate binds TWO wings (A: call 1−S/K, S*=Kγ/(γ+1)<K; B: put 1−K/S,
+  S*=K(γ+1)/γ>K); PH-5 names one branch → extend to branch B. autonomous; ESCALATE only if locked form
+  found NOT C¹ (seam gate currently green: value 0.04%, slope 0.1% ≤0.15%).
+- **PH-6** rebase structure-preserving θ→θ/r — sNorm gauge proved-in-prompt; J/R preservation open.
+  v26c CONSISTENT (cleaner: θ=sNorm(K) reads strike in the gauge-invariant coord; sNorm* tracks θ→θ/r). autonomous.
 - **PH-7** funding well bounded below (model floor, H=S−logS) — proved-in-prompt. autonomous.
+
+## Build-derived theory candidates (v26c recap, 2026-06-08 — notes/PH_RECAP_2026-06-08.md)
+NOT yet in PH-1…PH-7 / C / B. All AUTONOMOUS formalization; none submitted (recap only). Priority:
+- **R1** Re-pin PH-5 → θ=sNorm(K), extend to 2 branches (highest value; only PH item v26c touched).
+- **R2** crossover-at-K / coordinate-invariance theorem: θ=sNorm(K) ⇒ OTM→ITM crossover at dollar K
+  ∀γ (θ=K/oracle drifts to oracle₀²/K for γ>1; γ−1 gauge defect) + mixed-basis negative control. NEW.
+- **R3** small pin `mpGeom=getMP_raw·e^(−ghMu)`, `getMP_raw/slope=e^μ` — prerequisite for PH-2/PH-3 GH
+  (slope vars must use mpGeom not getMP_raw price coord; the slippage-bug conflation).
+- **R4** directional/orientation lemma: sign(K−oracle)==sign(funding ±2)==sign(d mark/d sNorm); CALL all
+  +, PUT all − ; companion to PH-3. CAVEAT funding stays price-measure (θ-swap flips its sign).
+- **R5** (opt) %-slippage basis-independence (e^μ cancels) — corollary of R3, not its own obligation.
 
 ## Framing
 Typed interface stack: a change at any seam must type-check at every other seam (enforced by the
@@ -143,11 +208,12 @@ reaching past its contract into the raw displaced pool) — caught by type under
   formulas discharge them (conditional solvency → engine-grounded). Funding port is **necessary,
   not sufficient**. B1 funding-coverage sweep is a ship-gate (κ extrinsic — geometry can't close it).
 
-## Audit discipline (before folding any returned archive)
+## Audit discipline (before folding any returned archive — zero-cost, no toolchain)
 Extract → diff unchanged modules → token-scan (`sorry`/`admit`/`axiom`/`native_decide`/`sorryAx`/
-`opaque`/`unsafe`; kernel `decide` ok) → read proofs → **re-derive the math independently** →
-`#print axioms` shows only `propext`/`Classical.choice`/`Quot.sound`. Trusted-from-prover until the
-manager builds locally. Pin every predicate **before** a run.
+`opaque`/`unsafe`; kernel `decide` ok) → read proofs → **re-derive the math independently** → read
+Aristotle's `#print axioms` (must be only `propext`/`Classical.choice`/`Quot.sound`). Server-compiled
++ audited = **trusted-from-prover** (manager may upgrade to "verified" by building canonically; that's
+a label upgrade, not a gate I owe). Pin every predicate **before** a run.
 
 ## Decisions that route to the operator (flag via manager)
 |Γ|>1 scope ("true American" vs "exact replication" are mutually exclusive per wing → ship |Γ|≤1

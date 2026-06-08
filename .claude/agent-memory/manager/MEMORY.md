@@ -65,9 +65,10 @@ is the mechanical audit trail. Rewrite the changed bits at the end of every task
 manager · **research-lead (theory owner AND its own prover interface)** · intern · tester · paper.
 The standalone `aristotle` agent is **REMOVED** — folded into research-lead. The prover loop is now
 **direct, no courier:** research-lead phrases the obligation → calls `aristotle submit` itself (host
-Harmonic's Aristotle) → polls → local `lake build` re-verify (emends mechanical backend diffs only) →
-records one of 4 verdicts (proved+re-verified / counterexample / still-open / candidate-fails-local-
-recheck) → audits/interprets. **research-lead keeps ALL raw prover/poll/lake output in its own context;
+Harmonic's Aristotle, which **compiles server-side** = the build) → polls → **zero-cost artifact audit**
+(token-scan + Aristotle's `#print axioms` + unscoped-module diff + math re-derive; no local `lake build`
+gate per operator 2026-06-08) → records one of 4 verdicts (proved/trusted-from-prover · counterexample ·
+still-open · candidate-fails-audit) → audits/interprets. **research-lead keeps ALL raw prover/poll output in its own context;
 I receive only distilled reports** (verdicts, queue status, escalations) and relay nothing between
 agents. research-lead holds Bash + the aristotlelib CLI; it does NO git/env actions (I am sole git/env
 actor). I do **not** see raw prover output and am no longer a courier.
@@ -84,9 +85,19 @@ actor). I do **not** see raw prover output and am no longer a courier.
   brackets `<arstl…>` (len 51); passed verbatim the server returns "Invalid API key". research-lead
   strips the `<>` (→ len 49) to authenticate. **Fix the stored secret to the bare key** so no workaround
   is needed. Provisioning artifact, not a real auth failure.
-- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → **local re-verify is
-  PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate works; re-verify half does not
-  run here — nothing is reported as "proved + re-verified" until a toolchain lands.
+- **Re-verify gate RELAXED — operator clarified 2026-06-08:** "no re-verifies required, Aristotle
+  compiles/builds at his end." Aristotle's server-side compile (matching toolchain Lean 4.28.0 /
+  Mathlib v4.28.0) **IS the build** — a returned candidate is a genuine compiled proof, not a sketch.
+  **PENDING-LEAN retired** as a blocker; we no longer gate on a local manager `lake build`. **KEPT:**
+  the zero-cost artifact audit (token-scan sorry/admit/axiom/native_decide/sorryAx + read Aristotle's
+  own `#print axioms` ⊆ {propext,Classical.choice,Quot.sound} + diff unscoped modules for silent
+  statement-weakening) — needs no toolchain, and is the only thing that catches a clean server-build
+  of a WEAKENED statement. **LABEL:** clean+audited server-compiled candidate = **trusted-from-prover**
+  (Aristotle's kernel ran, ours didn't); our own canonical-env build is the upgrade to "verified".
+  Encoded into `formal/MANAGER_VERIFICATION.md` + `formal/smoke/README.md` (this task). Operator open
+  q to me: keep "trusted-from-prover" (my rec) vs call server-clean "verified" — AWAITING.
+- _(historical)_ Toolchain gap that drove PENDING-LEAN: no `lean`/`lake`/`elan` in container. Now moot
+  per the gate relaxation above (submit→candidate + artifact audit is the bar).
 - **SMOKE RESULT (2026-06-08, research-lead distilled):** direct loop works end-to-end through
   submit→candidate. `smoke_true` (`2+2=4`) → valid candidate, axioms = propext only; **label: candidate
   returned, re-verify PENDING-LEAN** (NOT proved+re-verified). `smoke_false` (`∀n,n=n+1`) → Aristotle

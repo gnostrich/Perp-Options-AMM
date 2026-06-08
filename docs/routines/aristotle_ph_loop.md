@@ -2,19 +2,20 @@
 
 Ready-to-paste into **claude.ai/code → Routines**. This automates the **direct** loop:
 **research-lead alone** advances the port-Hamiltonian / Aristotle obligation queue against current
-`main` — it phrases each obligation, **calls Harmonic's Aristotle itself** (aristotlelib CLI),
-re-verifies the candidate locally, and records the verdict. There is **no broker/courier step**: the
+`main` — it phrases each obligation, **calls Harmonic's Aristotle itself** (aristotlelib CLI; Aristotle
+compiles server-side = the build), **audits** the returned candidate (no local re-verify gate), and
+records the verdict. There is **no broker/courier step**: the
 standalone `aristotle` agent is gone, folded into research-lead. The manager orchestrates and is the
 sole git/env actor; it receives only research-lead's **distilled** status (verdicts, queue, escalations),
 never raw prover output.
 
-> Prerequisites the operator must satisfy first (see report / escalations):
-> 1. Add **`aristotle.harmonic.fun`** to the environment **Custom allowlist** (currently
->    `host_not_allowed`).
-> 2. Enable the **Harmonic connector** for the routine (cloud-native path a), OR ensure the env
->    setup script installs `aristotlelib` + a Lean v4.28.0 / Mathlib v4.28.0 toolchain for the CLI
->    path (c) and local re-verify.
-> 3. `ARISTOTLE_API_KEY` present in the environment (already set in the current session env).
+> Prerequisites (status 2026-06-08):
+> 1. **`aristotle.harmonic.fun` allowlisted — DONE** (host confirmed UNBLOCKED via real round-trip; the
+>    old `host_not_allowed` is gone). Flag a regression if it returns.
+> 2. Enable the **Harmonic connector** for the routine (cloud path), OR ensure the env setup installs
+>    `aristotlelib` for the CLI path. **No local Lean/Mathlib toolchain is required** — Aristotle compiles
+>    server-side (that IS the build, operator 2026-06-08); the audit needs no local toolchain.
+> 3. `ARISTOTLE_API_KEY` present in the environment (set; note: store the **bare** key, no `<>` wrapper).
 
 ---
 
@@ -47,24 +48,26 @@ Do, in order:
    - submits it to Harmonic's Aristotle itself via the aristotlelib CLI
      (`aristotle submit "<instr>" --project-dir formal/temporal_lean_verified --wait --destination ...`,
      or the Harmonic connector), and polls to completion;
-   - re-verifies any candidate locally (lake build on Lean 4.28.0/Mathlib v4.28.0; axioms ⊆ {propext,
-     Classical.choice, Quot.sound}; no sorry/admit/axiom/native_decide/sorryAx/opaque/unsafe), emending
-     ONLY mechanical backend diffs;
-   - records ONE verdict: proved+re-verified / counterexample / still-open / candidate-fails-local-
-     recheck; never rubber-stamps a candidate.
-   It keeps all prover/poll/lake noise in its own context and returns to you ONLY distilled status:
+   - audits any candidate (Aristotle compiled it server-side = the build; no local lake build gate):
+     unscoped-module byte-diff, token-scan (no sorry/admit/axiom/native_decide/sorryAx/opaque/unsafe),
+     Aristotle's reported #print axioms ⊆ {propext, Classical.choice, Quot.sound}, math re-derivation;
+     emending ONLY mechanical backend diffs;
+   - records ONE verdict: proved (trusted-from-prover) / counterexample / still-open / candidate-fails-
+     audit; never rubber-stamps a candidate.
+   It keeps all prover/poll noise in its own context and returns to you ONLY distilled status:
    verdict(s), queue delta, the folded proof archive (if any), and escalations.
-2. You independently re-audit any "proved+re-verified" archive research-lead hands up for folding
-   (diff unchanged modules, token-scan, re-check the math) — trusted-from-prover until you build it
-   yourself in the canonical env.
+2. You independently re-audit any "proved (trusted-from-prover)" archive research-lead hands up for
+   folding (diff unchanged modules, token-scan, re-check the math) — trusted-from-prover; the upgrade to
+   "verified" is a build in our own canonical env.
 3. Commit queue/spec/memory updates and any folded proof to a routine branch; open a PR; DO NOT merge.
 4. STOP and escalate to the operator (AskUserQuestion) if research-lead flags: any PH property as
    stated would require a real engine / economic-object / settlement-semantics change; a counterexample
    on a load-bearing claim; or a candidate-fails-local-recheck that reveals a weakened statement. Never
    patch a statement toward green.
 
-If the Harmonic host is blocked or the toolchain is missing, research-lead must not fake a round-trip —
-it reports the precise blocker and stops; you relay that up.
+If the Harmonic host is blocked (regression), research-lead must not fake a round-trip — it reports the
+precise blocker and stops; you relay that up. (No local toolchain is needed — Aristotle's server compile
+is the build.)
 ```
 
 ## Self-check / persistence
