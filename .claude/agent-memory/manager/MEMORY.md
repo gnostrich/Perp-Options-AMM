@@ -37,6 +37,13 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    one-line revert** (freezing the frame clips the GH bend as it climbs out). (3) Curve geometry PASS
    — GH continuation, no barrier remnant. Evidence committed `evidence/v26a_pw/` (7db9b4d); harnesses
    `engine/verify/pw_v26a_visual.mjs` (PLAYWRIGHT_BROWSERS_PATH=/home/user/.cache/ms-playwright).
+10. **Payoff chart x-range widen** | intern→manager | **DELIVERED + Node-verified (2026-06-08).**
+   Operator-approved (tester item-3). `engine/builds/temporal_mvp_v26b_xrange.html` md5 `570ef23f`
+   — exactly 2 display lines in `drawPayoff` (xMin/xMax ±0.5→±2.0; x-tick loop ±50→±200 step 50).
+   Reaches sNorm=3.0 > γ=2 free boundary 2.25·θ so naked(uncapped) visibly diverges above
+   capped spread. Verified MYSELF: 7 GH gates + seam PASS, blobs intact, sigs/IIFE intact, no
+   engine-logic change. **Browser-visual DEFERRED** — bundle into the next tester pass (likely the
+   inversion-fix pass if ruling=B). NOT yet HEAD — promote bundled with the inversion ruling outcome.
 2. **Finding-2 — REFINED & re-surfaced to operator** | tester→manager→operator | Tester found v26a
    has **SPLIT behavior**, I verified the code localization myself: portfolio table (pfComponents,
    ray=K/oracle_now) + close engine (liveRay ~1976) are **dollar-anchored** ($84k/$68k HELD across

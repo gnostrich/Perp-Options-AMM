@@ -62,3 +62,19 @@ Splice: `/tmp/splice_v26b.py` (17 reps, all `count==1`, blobs never through). Al
   green. 7 GH gates still PASS γ∈{1.5,2,3,4}; blobs unchanged; 3 scripts parse; IIFE/sigs intact.
 - **Open for tester:** browser/visual run — bands table renders (empty Eff cell, renamed headers),
   payoff chart legFraction uncapped on naked leg, polar marker dot stays on its ψ-curve.
+
+## Done — v26b payoff x-range widen (DISPLAY-ONLY, handed to manager 2026-06-08)
+Build: **`engine/builds/temporal_mvp_v26b_xrange.html`** (from HEAD `8df9f8a3`; HEAD untouched).
+Splice: `/tmp/splice_xrange.py` (2 reps, both `count==1`, blobs never through). Operator-approved
+(tester item-3 follow-up). Diff vs HEAD = exactly 2 lines, both in `drawPayoff`:
+- L3815 `const xMin = -0.5, xMax = 0.5` → `-2.0 .. 2.0` (perp-mark % sweep). Picked ±200% as the
+  smallest clean round range: default γ=2 (`GH_GAMMA=2.0`), naked/barrier (call-wing) free boundary
+  `sNorm*=θ·((γ+1)/γ)^γ=2.25·θ`; r∈[−2,+2] takes sNorm up to 3.0, clears S* for typical OTM θ so the
+  uncapped naked leg's intrinsic visibly diverges above the capped (min(1,·)) spread leg.
+- L3947 x-tick loop `pct=-50..50 step10` → `-200..200 step50` (9 ticks). No other axis/range text
+  states a number (note at L1442 is qualitative); nothing else to update.
+- NO touch to mark/markFrac/legFraction/curve fns/funding/settlement (display/axis only). Harness
+  green from `engine/`: `sh verify/run_all.sh builds/temporal_mvp_v26b_xrange.html` → 7 GH gates
+  PASS γ∈{1.5,2,3,4}, seam gate PASS both branches, blobs `ab663f5c`/`c505b08a` intact, 3 scripts
+  parse, sigs:true, IIFE:true, longest non-blob line 553 chars. **Open for tester:** visual — naked
+  leg climbing past capped spread now visible within the wider frame.
