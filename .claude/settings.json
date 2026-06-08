@@ -1,0 +1,43 @@
+{
+  "agent": "manager",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "Bash(python3:*)",
+      "Bash(awk:*)",
+      "Bash(sed:*)",
+      "Bash(md5sum:*)",
+      "Bash(sh:*)",
+      "Bash(diff:*)",
+      "Bash(grep:*)",
+      "Bash(cp:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(unzip:*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/file_safety_gate.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+
+=== Journal Entry 2026-05-26T16:26:28.658595+00:00 ===
+2026-05-26-16-26-28-temporal-mvp-simulator-session.txt
+[Brainstorm + build session for the Temporal Exchange warp-AMM MVP simulator (a CTO-handoff reference for a DeFi perpetual-options protocol). Contains: HTML simulator edits, a portfolio/settlement redesign worked out conceptually, five Lean-prover (Aristotle) handoff prompts and the assessment of their outputs, a paper diff brief, and a live branching context note. Project context: warp AMM pricing perpetual options across the OTM strike continuum via x^w·y^(1-w)=k. Working files under /home/claude and /mnt/user-data/outputs.]
+
+
+
+
+=== Journal Entry 2026-05-31T04:58:23.825697+00:00 ===
+2026-05-31-04-58-23-temporal-convexity-lens-session.txt
+[Deep research + Lean-formalisation session for the Temporal Exchange warp-AMM protocol (DeFi liquidation-protected perpetual options on Hyperliquid). Spans: simulator/engine inventory, the costless-collar no-arbitrage finding, a settlement-Fork resolution (carved perp closing equity), discovery of "convexity markets" and a (1+1)-Lorentzian state-space picture, a log-moneyness×exponent "lens", and ~11 Aristotle/Lean prover runs with honest assessments. Many cross-session handoff prompts (.md) and Lean files (.lean) produced under /mnt/user-data/outputs/. User=Rohan, terse co-authorship style. Full live context tree maintained at session_tree_note.md.]
+
+
+
+
+=== Journal Entry 2026-06-01T05:28:20.071028+00:00 ===
+2026-06-01-05-28-19-temporal-american-layer-session.txt
+[Deep research + Lean-formalisation + implementation-review session for Temporal Exchange (DeFi warp-AMM, liquidation-protected perps on Hyperhquid). Spans: the convexity-markets / (1+1)-Lorentzian / lens arc (continued from a prior compaction), then the full American-style-option-as-a-layer thread — effective-strike collapse, funding-as-hyperbolic-angle-slope, the measure-theoretic unification of the OTM loop — plus ~6 Aristotle/Lean prover runs with honest assessments, a production integration note, a grunt-package review, and a Lean-intern brief. User=Rohan, terse high-density co-authorship. Many .md prompts and .lean files under /mnt/user-data/outputs/. Full live context tree at session_tree_note.md.]
+
+
+
+
+=== Journal Entry 2026-06-01T09:02:23.003723+00:00 ===
+2026-06-01-09-02-22-temporal-american-otm-loop.txt
+[Continuation of the Temporal Exchange DeFi research/Lean-formalisation/implementation-review session. This segment covers: the log-moneyness×exponent lens run, the curve-native path-integral loop, the effective-strike collapse, funding-as-hyperbolic-angle-slope, the measure-theoretic funding reconciliation, the unified OTM-loop run, a full grunt-package review and update with manager rounds, a research-lead handoff with independent verification, and the live frontier (canonical Γ(K)-to-strike map, now pointing at perpetual-American characteristic-root structure). User=Rohan, terse high-density co-authorship. Many .md/.lean/.zip files under /mnt/user-data/outputs/ and /home/claude/.]
+
+
+
+
+=== Journal Entry 2026-06-01T13:58:02.330270+00:00 ===
+2026-06-01-13-58-01-temporal-american-bl-closure-relay.txt
+[Continuation of the Temporal Exchange DeFi research/Lean-formalisation/implementation-review session. This segment covers: the unified-core Lean capstone (query/transaction/funding + barrier⇄american ODE/Wronskian structure), the canonical Γ(K) derivation (vol-calibrated perpetual-american characteristic root), the put-native run (put is NOT the naive mirror — reflects with finite K/2 limit), BL-closure (the American value IS a barrier basket — proved for call wing), multiple manager-relay packages (v4, incrementals), an overstatement self-correction, and a bidirectional canonical-note reconciliation. User=Rohan, terse high-density co-authorship, acting as relay between Claude (research lead) and a manager who independently verifies. Many .md/.lean/.zip files under /mnt/user-data/outputs/ and /home/claude/.]]
+
+
+
+
+=== Journal Entry 2026-06-02T15:55:26.707323+00:00 ===
+2026-06-02-15-55-26-temporal-american-convexity-relay.txt
+[Continuation of the Temporal Exchange DeFi research/Lean-formalisation/implementation-review session. This segment covers: the implied-carry derivation, the FINAL grunt package assembly + manager review (caught a stale-brief + self-contradicting note), the put-wing BL-closure proof, the put-native run, and a major late-stage conceptual arc reframing the American layer as a perpetual-American on a "warp AMM" gamma machine — culminating in the user's product mechanic (carve + sell same-direction American + buy opposite-direction collar = auto-protect). User=Rohan, terse high-density co-authorship, acting as relay between Claude (research lead) and a manager who independently verifies; Aristotle is the external Lean prover. Many .md/.lean/.zip files under /mnt/user-data/outputs/ and /home/claude/.]
+
+
+
+
+=== Journal Entry 2026-06-02T19:03:22.360466+00:00 ===
+2026-06-02-19-03-21-temporal-convexity-conservation.txt
+[Continuation of the Temporal Exchange DeFi research/Lean-formalisation/diligence relay. This segment covers: the convexity/warp-AMM reframe, the coordinate-convention pin (sNorm = price-reciprocal), the IC3 frame-audit, two manager diligence requests (distance-vs-fixed-slice; barrier→American conservation-law), and a long Rohan-driven first-principles thread that ultimately found the engine's "American" pricing curve is concave/flattening where a real American must be convex/steepening — culminating in a forward-earning-potential unifying frame. User=Rohan, terse high-density co-authorship, relay between Claude (research lead) and a manager who independently verifies; Aristotle = external Lean prover. Files under /mnt/user-data/outputs/ and /home/claude/.]
+
+
+
+
+=== Journal Entry 2026-06-03T01:00:26.472909+00:00 ===
+2026-06-03-01-00-25-temporal-american-lift-conservation.txt
+[Continuation of the Temporal Exchange DeFi research/Lean-formalisation/diligence relay. This segment moves from the convexity/pricing-curve diagnosis into: (1) a clean barrier→American closed-form map in realtime carved-equity terms; (2) the three-layer (EV-ex-cash) decomposition with escrow + linear apportionment; (3) the apples-to-apples cancellation; (4) a source-grounded trace of the American pricing curve through tx/query/funding interfaces; (5) a live-engine check battery (run in a node vm sandbox against v25_reference.html) that confirmed contamination + surfaced a real solvency gap; (6) the conservation/positivity reconciliation (frame-invariant); (7) the discovery that the American whole curve = first derivative of the AMM function, and the funding ×2 = the position→slope Jacobian; (8) a drafted standalone Lean prompt for the unifying "lift" run. User=Rohan, terse high-density co-authorship, relays between Claude (research lead) and a manager who independently verifies; Aristotle = external Lean prover. Files under /home/claude/ and /mnt/user-data/outputs/. Multiple frame-flip self-corrections occurred this segment.]
+
+
+
+
+=== Journal Entry 2026-06-03T05:47:53.153956+00:00 ===
+2026-06-03-05-47-52-temporal-lift-derivative-ladder.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This segment: (1) the goal-seek/walk-warp intuition lifted to the first-derivative curve; (2) confirmation that the funding ×2 = the position→slope Jacobian (d log MP/d log sNorm = −2); (3) drafting + iterating a standalone Lean prompt for the unified lift, decided to be in-thread/additive; (4) a manager pre-stage note for chart implementation, then a corrected scoping (pricing+payoff lift, bonding curve stays); (5) audit of Aristotle's returned unified-lift Lean run (verified, two honest caveats); (6) the user uploaded their AFT 2026 barrier-mechanism paper and requested an INCREMENTAL bridge note for a co-founder; (7) a MAJOR framing correction — the American is the read on the SECOND derivative (curvature/gamma), barrier on the first (slope/delta), rung spacing = ×2; (8) final deliverables: rewritten co-founder note + manager verification note. User=Rohan, terse co-author, relays between Claude (research lead) and a MANAGER (independent verifier); Aristotle = external Lean prover. Files under /home/claude/ and /mnt/user-data/outputs/. Previous transcript catalog in journal.txt.]
+
+
+
+
+=== Journal Entry 2026-06-03T14:11:12.701358+00:00 ===
+2026-06-03-14-11-12-temporal-c1-lift-aristotle-round.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This segment: the "derivative-ladder" lift correction across a co-founder bridge note (markdown + arXiv PDF), the manager's ×2-conflation catch and its fix, a full C1/AMM′ Q&A round (Q1–Q4) with verified math, a terminology cleanup (AMM/AMM′ vs proven C1/C4), the manager's 7-item Aristotle relay + items 6–7 economics, and finally writing the actual Lean prompt for Aristotle in BOTH in-thread/additive and standalone forms. User=Rohan (terse co-author, relays between Claude=research lead and a MANAGER=independent verifier; Aristotle=external Lean prover). All deliverables in /home/claude/ and /mnt/user-data/outputs/. Prior transcript catalog in journal.txt.]
+
+
+
+
+=== Journal Entry 2026-06-03T18:24:17.086653+00:00 ===
+2026-06-03-18-24-16-temporal-american-lift-knob.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This segment: building the arXiv-PDF of the barrier→American "lift" note, the ×2-conflation fix, the C1/AMM′ Q&A round, terminology cleanup, the 7-item Aristotle Lean prompt (in-thread + standalone), the continuous-convexity "knob" reconceptualization (fractional-derivative order = vol DOF), the perpetual-American consistency check, the implementation brief (v1→v2 reconciled to intern4 baseline), and finally auditing Aristotle's returned Lean (L5 found VACUOUS) + reviewing the new convexity HTML's single-option tx (premium-clearing on original curve, NOT a lifted-curve goal-seek; warp under-hedges by exactly γ). User=Rohan (terse co-author, relays between Claude=research lead and a MANAGER=independent verifier; Aristotle=external Lean prover). Deliverables in /home/claude/ and /mnt/user-data/outputs/.]
+
+
+
+
+=== Journal Entry 2026-06-04T07:15:32.644628+00:00 ===
+2026-06-04-07-15-31-temporal-convexity-lift-relay.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This segment: the barrier→American "lift" reconceptualized as a continuous convexity knob Γ, expressed cleanly as a single weight-tempering substitution into the Balancer invariant; the full Γ-generalized expression set tabulated across all interfaces; the funding correction (geometric pool-vs-anchor deviation, exponent Γ, NOT 2Γ); two Aristotle Lean returns audited (first vacuous L5 then a genuine concrete re-submission); deliverables produced (Aristotle expression-set prompt + addendum, updated arXiv co-founder note, manager note). User=Rohan (terse co-author; relays between Claude=research lead and a MANAGER=independent verifier; Aristotle=external Lean prover). Deliverables in /home/claude/ and /mnt/user-data/outputs/.]
+
+
+
+
+=== Journal Entry 2026-06-04T09:59:26.517122+00:00 ===
+2026-06-04-09-59-25-temporal-gamma-curve-derivation.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This segment: the convexity lift reconceptualized as a single weight-tempering substitution into the Balancer invariant; full Γ-generalized expression table produced and corrected (funding fixed from "2Γ exponent" to geometric pool-vs-anchor deviation with exponent Γ); Aristotle Lean return audited (P1 positivity now GENUINE, S1-S3 generation genuine); deliverables produced (spec sheets v1/v2, arXiv co-founder note in tex+pdf+md, manager notes); a MAJOR curve audit by the MANAGER who trade-tested the live engine; Claude reading the ACTUAL HTML engine code and confirming the engine conserves the shifted hyperbola (x−α)(y−β)=αβ with α,β fixed and w drifting — faithful to the paper; architecture decision by Rohan (single-Γ pool, Γ settable via hardcode/vol-oracle); and a derivation in progress of the exact Γ-parametrized tradeUpdate as a weighted constant-product in shifted coords with candidate weight a(Γ)=(Γ−½)/Γ. User=Rohan (terse co-author; relays between Claude=research lead, MANAGER=independent verifier, Aristotle=external Lean prover). Deliverables in /home/claude/ and /mnt/user-data/outputs/. Live engine HTML builds are in /mnt/project/.]
+
+
+
+
+=== Journal Entry 2026-06-06T13:23:27.674224+00:00 ===
+2026-06-06-13-23-27-temporal-amm-energy-object.txt
+[Continuation of the Temporal Exchange DeFi research/Lean/diligence relay. This long segment moved from implementation decisions (convexity lift) into a deep theoretical reframing of the AMM as a pure-math dynamical object (port-Hamiltonian / symplectic / hyperbolic-geometry framing). User=Rohan (terse co-author, relays between Claude=research lead, a MANAGER=independent verifier who runs the live engine, and Aristotle=external Lean prover). Deliverables in /mnt/user-data/outputs/. Live engine HTML + spec in /mnt/project/. Many sympy verifications in /tmp/. The conversation arc: a multi-turn thrash over WHERE convexity lives (curve vs read vs funding), repeatedly self-corrected, converging on an invariant-agnostic geometric "machine" and then an energy/port-Hamiltonian formalization. Heavy on honest self-correction and "natural-not-forced" mapping discipline.]
+
+
+
+
+=== Journal Entry 2026-06-06T16:54:59.384039+00:00 ===
+2026-06-06-16-54-58-temporal-port-hamiltonian-aristotle.txt
+[Temporal Exchange DeFi research continuation. Long brainstorm recasting the protocol as a port-Hamiltonian/passivity system, an empirical engine bug-hunt (headless Node sim of the real HTML AMM that found a self-sandwich leak + path-dependence), and the production of Lean formalization prompts for the external "Aristotle" prover — one of which was already run and returned PASSING. Contains verified math (sympy/Node), Lean source, file paths to all deliverables, and the current "interface-stack" design goal. Continues a prior compacted summary (Temporal AMM energy-object thread).]
+
+
+

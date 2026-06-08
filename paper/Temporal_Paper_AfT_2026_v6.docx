@@ -1,0 +1,321 @@
+*<**This is a hand-written draft – we will adapt the AI generated paper to align with this presentation which serves reader intuition more naturally – keeping the latest version of this doc uploaded to project files for brainstorming**>*
+
+**Singular Dynamic AMM Pricing Perpetual Options Across The Strike Continuum**
+
+## **Abstract**
+
+Perpetual options allow perpetual futures traders to manage liquidation risk.
+
+However, market mechanisms used by existing trading venues are complex, and liquidity is fragmented across strikes.
+
+We show that the entire OTM strike continuum for calls and puts can be priced in closed form by a single liquidity pool, using the function (x^(w))*(y^(1−w))=k with one dynamic weight ‘w’.
+
+## **Perpetual Options**
+
+### **Definition**
+
+American-style perpetual options are non-expiring contracts-for-difference, representing the payout from favourable price action (↑ for calls; ↓ for puts) of an underlying asset (vs. a denominating asset, here USD) beyond a given strike price. Contracts terminate when they are exercised by the holder.
+
+### **Utility**
+
+Liquidation in a perpetual future is the involuntary termination of a leveraged position when collateral is exhausted. Composing a perpetual future with an OTM perpetual option on the same underlying — a call to hedge a short, a put to hedge a long — caps realized loss past the strike, bounding the trader's drawdown without forcing position closure. Because the option position does not expire, the hedge persists for as long as the underlying perp is held.
+
+### **Pricing**
+
+*<**closed-form expression; standard reference — Merton (1973), McKean (1965)**>*
+
+For OTM strikes, the value of a perpetual American option is power-law in the underlying-to-strike ratio:
+
+    V(S; K) = A · (S/K)^γ
+
+where γ is the relevant root of the characteristic equation (1/2)σ²γ(γ−1) + (r−δ)γ − r = 0 — positive for calls (γ_c > 1), negative for puts (γ_p < 0) — and A is set by smooth-pasting at the optimal exercise threshold. This is the value family the AMM invariant will be constructed to match, making the premium surface family-coherent across the strike continuum by construction.
+
+## **AMM Intuition**
+
+*<**Under each point in this section we need the minimal illustration to convey only that point itself**>*
+
+We make 2 generalisations to the AMM function (x^(w))*(y^(1−w))=k, giving it the expressivity to price perpetual options across the strike continuum.
+
+***“Trades Skew The AMM Curve Instead Of Moving The Reserves Point Along It”***
+
+A 2-asset constant function AMM (CFMM) can be visualised as a curve on the XY plane, along which reserves (x, y) represent a point. Price is the slope at that point. Trades modify reserves and thereby move the reserves point along the curve.
+
+The invariant (x^(w))*(y^(1−w))=k gives a curve whose shape is determined by the ‘w’.
+
+Instead of updating the AMM's quoted prices by ‘moving the reserves point along the curve’ (as in CFMMs) we can instead obtain the same effect by ‘changing the shape of the curve’ via ‘w’ — the broad intuition is: for a small trade, if the ‘reserves point’ were to move along the curve, we note what the slope would have been at the ‘post-trade reserves point’; now instead of actually moving the reserves point from the pre-trade point to the post-trade point, we change the shape of the curve (by changing x, y & w) such that it brings the slope of the aforementioned ‘post-trade reserves point’ to the ‘pre-trade reserves point’ — see “AMM Mechanics” section.
+
+***“Trades Happen Anywhere On The Curve, Not Just At A Single Point”***
+
+In traditional CFMMs, trades are ‘spot swaps’, so they're always ‘happening at a point’ on the AMM curve.
+
+We treat spot swaps as a special case of perpetual option swaps, which can occur at any point on the curve (subject to being out-of-money).
+
+Transactions at any ‘trade point’ on the curve are treated as if the ‘trade point’ were the pool ‘reserves point’.
+
+## **Translating Perpetual Options Into AMM Swap Transactions**
+
+Here we establish certain conventions enabling us to translate perpetual option transactions into the ‘language’ of the AMM.
+
+### **Mapping Strikes To Ray Angles**
+
+*<**we remove any mentions of ‘mode’, which was an informal term used internally**>*
+
+Each ray from the origin in the (x, y) plane is parameterised by its angle, equivalently by the constant ratio y/x along the ray. We identify each ray with a unique perpetual option strike. A ray intersects the AMM curve at exactly one point; that intersection is the ‘trade point’ for the strike.
+
+*<**illustration: rays from origin fanning across the curve, with one intersection per ray**>*
+
+### **Anchor Curve As Strike Reference**
+
+The anchor curve is the AMM curve at the designated reference state. Strikes are identified with rays via their intersection with the anchor curve — the anchor ‘picks out’ one strike per ray. As trades reshape the live curve (via w), trade points shift along each ray, but the strike-to-ray identification is preserved against the anchor.
+
+### **45 Degrees Ray Represents Spot**
+
+By convention, the 45° ray (y = x) corresponds to the ATM strike. The anchor curve is normalised so its 45° intersection sits at unity (see Strike Normalisation). Rays on either side of 45° parametrise the OTM continuum.
+
+### **Calls ****&**** Puts On Opposite Sides**
+
+Rays steeper than 45° and rays shallower than 45° partition the OTM continuum into two wings — one carries calls (above-spot), the other carries puts (below-spot). The pool prices both wings from the same (x, y, w) state; no liquidity is partitioned between them.
+
+### **Calculating Premia**
+
+The premium for opening a position of size q at strike K (ray θ) is the cash amount swapped at the trade point on that ray. Mechanically: the swap is executed as if the trade point were the reserves point, with the curve reshaped (via w-update) so that the slope at the pre-trade reserves point is preserved. The cash leg of the swap is the premium.
+
+*<**closed form; see Annexures**>*
+
+Under the conservation law (α = x·w, β = y·(1−w) invariant), the reserves trajectory is the hyperbola (x−α)(y−β) = αβ. The cash leg of a swap moving the reserves point from x₀ to x₁ along this trajectory integrates to a closed form (see Annexure: Derivation Of Continuous Case).
+
+## **AMM Mechanics**
+
+The AMM prices cash ↔ perpetual option.
+
+### **Conservation Law**
+
+For each trade, the quantities x·w and y·(1−w) are individually conserved. Denote α = x·w and β = y·(1−w). Pool state is therefore fully determined by (x, y); w is a derived field, w = α/x (equivalently 1−w = β/y), recovered from the conserved quantities at any time. No additional state storage is required.
+
+Together with the constraint w + (1−w) = 1, the conservation law confines all reachable states to the hyperbola (x−α)(y−β) = αβ (see Annexure).
+
+### **Trade Formula**
+
+*<**the explicit (Δx, Δy, Δw) relation for a swap at trade point (x_T, y_T) on the live curve — to be filled with the Lean-validated closed form**>*
+
+Parametrising the swap by its cash leg Δy (trader's cash into pool; negative if cash flows out), the global state updates along the conservation hyperbola (x−α)(y−β) = αβ:
+
+    y' = y + Δy
+
+    Δx = − αβ · Δy / [ (y − β)(y' − β) ]
+
+    Δw = β · Δy / [ y · y' ]
+
+Post-trade state: (x', y', w') = (x + Δx, y + Δy, w + Δw), with α = x'·w' and β = y'·(1−w') preserved by construction.
+
+For a swap at trade point (x_T, y_T) on ray θ with position size q at strike K(θ), the cash leg Δy = q · π(θ), where π(θ) is the per-contract premium from the trade-point swap mechanic (see Calculating Premia). The position-size-to-cash-leg map π(θ) is the protocol-specific parametrisation; the global state update above follows under any choice of π.
+
+*(Derivation from conservation; cross-check against Lean-validated closed form.)*
+
+### **Pool Depth Evolution**
+
+Pool depth at any ray is determined by (x, y, w) at that ray's trade point. As w updates with trades, depth redistributes smoothly across the continuum. Summary here; full derivation in Annexures.
+
+## **Strike Normalisation**
+
+### **Rationale**
+
+Sustained directional drift in spot causes cumulative reserve imbalance — one wing depletes faster than the other. Without normalisation, the strike-to-ray map drifts away from the original anchor and pool spot decouples from oracle spot.
+
+*<**cumulative liquidity imbalance from drift**>*
+
+### **Approach**
+
+We index the oracle spot price to unity. The current pool spot floats around this unity reference, anchored by a funding-elastic restoring force. The anchor curve is defined in this normalised frame, so the strike-to-ray map is stable under arbitrary spot trajectories.
+
+*<**indexing oracle spot price to unity, current curve spot floats around this anchored by funding elastic**>*
+
+## **Funding**
+
+### **Intuition**
+
+Funding anchors pool spot to oracle spot. When pool spot deviates from unity, all open positions accrue funding proportional to the deviation, directed so as to incentivise restoration. As a structural consequence, funding is countercyclical: traders on the crowded (consensus) side of the market pay traders on the contrarian side — dampening LP exposure variance.
+
+### **Funding For Given Individual Position**
+
+*<**Relative to anchor curve, defined above; closed form**>*
+
+For a position of size q at strike K(θ), instantaneous funding paid by the holder at time t is:
+
+    f(t; θ, q) = κ · q · γ(θ) · V(S(t); K(θ))/S(t) · (S(t) − 1)
+
+where κ is the protocol-set funding elasticity, γ(θ) is the power-law exponent of the position's value function (γ > 1 for calls, γ < 0 for puts; see Perpetual Options → Pricing), V(·; K) is the perpetual American option value, and S(t) is the live pool spot in the oracle-normalised frame (oracle = 1).
+
+Sign convention: f > 0 means the holder pays funding to LPs; f < 0 means the holder receives it. The product γ(θ) · (S(t) − 1) carries the countercyclical sign — when pool spot > 1 (bullish consensus), call holders pay (γ_c > 0, S − 1 > 0) and put holders receive (γ_p < 0, S − 1 > 0). The reverse holds when pool spot < 1.
+
+Integrated funding over a hold period [t₀, t₁]: F(t₀, t₁) = ∫_{t₀}^{t₁} f(t; θ, q) dt.
+
+*(Form follows from countercyclicality + power-law value family; calibration of κ is protocol-specific.)*
+
+## **Position Lifecycle**
+
+A perpetual option position has three phases: open, hold, close.
+
+### **Open**
+
+The trader selects a strike on the OTM continuum (any ray angle, subject to the OTM restriction). A cash payment is swapped into the pool at the chosen ray's trade point; the AMM reshapes via w (preserving the conservation law) and the position is recorded against the trade point. The cash swapped is the premium paid.
+
+### **Hold**
+
+The open position accrues funding continuously as a function of the deviation between pool spot and unity-normalised oracle spot (see Funding section). The position carries no expiry.
+
+### **Close**
+
+The holder closes the position by executing the reverse swap at the position's strike ray. The closing swap is unrestricted by the OTM constraint — the OTM restriction applies only to opening — so positions whose strike has been crossed by spot (i.e. now ITM) can also be closed via the same mechanism. The cash returned is the position's current premium under live pool state.
+
+Exercise and close are economically equivalent for the holder: since the pool prices the position at its current market value (including any intrinsic component when ITM), a close-out swap returns the full value of the position. No separate exercise mechanism is required.
+
+## **Liquidity Provision**
+
+Liquidity providers deposit proportional contributions of cash and underlying into the pool reserves (x, y). They receive pool-share tokens representing a claim on (x, y) at any future state.
+
+LPs are collectively the counterparty to every open option position in the pool. Net LP exposure at any moment is the position-weighted aggregate of option deltas across all open positions on both wings.
+
+LP P&L from internal protocol accounting equals fees earned. Reserve value changes are an IL/HODL-benchmark concern (external analysis frame) and are not part of protocol accounting; including them creates double-counting against fee P&L.
+
+### **Hedging note**
+
+LPs can hedge net delta externally via spot or perp futures on the same underlying. The countercyclical funding mechanism partially offsets directional drift in LP exposure — funding inflows are systematically aligned with the wing under stress — but does not fully neutralise. Residual exposure is the LP's structural option-writer position, which the family-coherent surface makes maximally aligned with the natural perpetual American value family (see Properties).
+
+## **Properties**
+
+### **No internal arbitrage**
+
+Within a single pool state (x, y, w), no composition of swaps across rays yields riskless cash extraction. Cross-strike consistency is enforced by construction via the single-pool, family-coherent surface.
+
+### **External arbitrage**
+
+Pool spot can diverge from oracle spot between blocks; arbitrageurs restore convergence by trading against the pool. This is the price-discovery mechanism, incentivised by the funding-elastic restoring force (see Strike Normalisation).
+
+### **Round trip**
+
+Opening and immediately closing a position at the same ray returns the original cash less protocol fees. No path-dependent leakage beyond fees (see Annexure).
+
+### **Kurtosis-Arb Rigidity Bound**
+
+Among rigid pricing systems — those without per-strike LP discretion — the family-coherent surface is best-positioned against kurtosis-arb. Formally (Aristotle / Lean 4, conditional on FamilyPolySpan): in natural regimes where the realized density lies in the power-law family, kurtosis-arb extraction against this pool is zero, while extraction against rigid alternatives (Univ2 lognormal, Curve near-peg) is strictly positive. See Annexure: Formal Verification (Lean 4).
+
+## **Limitations**
+
+### **Higher-Moment Expressivity Boundary**
+
+A single pool exposes one uniform w-shift and one slow k. Higher-moment / dispersion regime shifts that move the empirical density off the power-law family cannot be absorbed parametrically. This is a structural property of single-pool design, not a parametric flaw. The residual kurtosis-arb extraction is bounded by d(q*, F_pl) — the distance from the realized density to the power-law family — and vanishes when the realized density lies in the family (see Properties: Kurtosis-Arb Rigidity Bound).
+
+### **Mitigation: Ambient Kurtosis Arb Parity**
+
+Kurtosis is tradable across the ambient on-chain + CEX options stack via cross-venue composition; this is not venue-specific. Our family-coherent smile carries no locally-mispriceable ticks (cf. Univ3/Panoptic), bounding kurtosis-arb pressure to realized-distribution drift rather than per-strike LP placement gaps.
+
+## **Conclusion**
+
+A single liquidity pool governed by a weighted constant-product invariant with one dynamic weight prices the entire OTM perpetual American option continuum in closed form. The invariant matches the natural value-function family of perpetual American options, making the smile structurally coherent rather than parametrically fit. Composition with perpetual futures delivers the liquidation protection that motivates the design.
+
+All rigid AMM LPs are option writers in disguise — Univ2 LPs write lognormal-priced exposure; Curve LPs write near-peg-priced exposure. Ours is the only rigid family whose disguise matches the body: the locked density family contains the value functions of the priced object. The Lean-verified consequence is zero kurtosis-arb extraction in natural regimes, structurally smaller than any other rigid system, with the residual in extreme regimes bounded by the same family-mismatch distance that bounds every other rigid AMM in all regimes.
+
+## **References**
+
+*<**verify bibliographic details before submission**>*
+
+[1] Adams, H., Zinsmeister, N., & Robinson, D. (2020). Uniswap v2 Core.
+
+[2] Adams, H., Zinsmeister, N., Salem, M., Keefer, R., & Robinson, D. (2021). Uniswap v3 Core.
+
+[3] Angeris, G., & Chitra, T. (2020). Improved Price Oracles: Constant Function Market Makers. In Proceedings of the 2nd ACM Conference on Advances in Financial Technologies (AFT '20).
+
+[4] Angeris, G., Kao, H.-T., Chiang, R., Noyes, C., & Chitra, T. (2019). An Analysis of Uniswap Markets. Cryptoeconomic Systems.
+
+[5] Martinelli, F., & Mushegian, N. (2019). Balancer: A Non-Custodial Portfolio Manager, Liquidity Provider, and Price Sensor.
+
+[6] Lambert, G., White, J., Robinson, D., & Bordignon, J.-M. (2023). Panoptic: A Perpetual, Oracle-Free Options Protocol.
+
+[7] Merton, R. C. (1973). Theory of Rational Option Pricing. Bell Journal of Economics and Management Science, 4(1), 141–183.
+
+[8] McKean Jr., H. P. (1965). A Free Boundary Problem for the Heat Equation Arising from a Problem in Mathematical Economics. Industrial Management Review, 6(2), 32–39.
+
+[9] Karatzas, I., & Shreve, S. E. (1998). Methods of Mathematical Finance. Springer.
+
+[10] Wilmott, P., Howison, S., & Dewynne, J. (1995). The Mathematics of Financial Derivatives: A Student Introduction. Cambridge University Press.
+
+[11] de Moura, L., & Ullrich, S. (2021). The Lean 4 Theorem Prover and Programming Language. In Automated Deduction – CADE 28.
+
+[12] The mathlib Community. (2020). The Lean Mathematical Library. In Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP '20).
+
+## **Annexures**
+
+### **Notation Table**
+
+| **Symbol** | **Meaning** |
+| --- | --- |
+| x, y | Pool reserves of the two assets (underlying, cash) |
+| w | Dynamic weight; w ∈ (0, 1) |
+| k | Pool invariant; k = x^w · y^(1−w) |
+| α | Conserved quantity; α = x · w |
+| β | Conserved quantity; β = y · (1−w) |
+| (x_T, y_T) | Trade point on the curve (intersection of strike ray with curve) |
+| θ | Ray angle from origin; identified with strike |
+| K | Strike price (parametrised by θ) |
+| S | Underlying spot price |
+| q | Position size (notional) |
+| γ(θ) | Power-law exponent of position's value function (γ > 1 for calls, γ < 0 for puts) |
+| π(θ) | Per-contract premium at strike K(θ) |
+| κ | Protocol-set funding elasticity |
+| p | Marginal price; p = (w/(1−w)) · (y/x) = α y² / (β x²) |
+| F_pl | Power-law value function family of perpetual American options |
+| F_V | Density family implied by pricing system V ∈ {v2, curve, new} |
+| q* | Realized (empirical) density of the underlying |
+| L_V(φ) | Kurtosis-arb extraction operator against system V |
+| d(q*, F) | Mismatch distance; inf over q ∈ F of ││q* − q││ |
+
+### **At-The-Limit Equivalence Of Conservation Law With “Change ‘w’ To Skew Curve So Proforma Post-Trade Point****'****s Slope, Migrates To Pre-Trade Point”**
+
+Conventional Balancer mechanic (View A): a swap (Δx, Δy) keeps k = x^w · y^(1−w) and w fixed; reserves move along the curve from (x, y) to (x', y'). The marginal price at the post-trade point is p' = (w/(1−w)) · (y'/x').
+
+Our mechanic (View B): the conservation law fixes α = x · w and β = y · (1−w). A swap moves (x, y, w) simultaneously, with w derived as w = α/x at any state. Reachable states satisfy α/x + β/y = 1, i.e. the hyperbola (x − α)(y − β) = αβ.
+
+Marginal price under View B: p = (w/(1−w)) · (y/x) = (α/x)/(β/y) · (y/x) = α y² / (β x²).
+
+At-the-limit equivalence: differentiate p along the trade trajectory under View B and along the constant-k curve under View A; to leading order in trade size, dp/dx agree. Hence for infinitesimal trades the two mechanics produce identical price impact at the pre-trade point.
+
+### **Derivation Of Continuous Case From Discrete Step Conservation Law**
+
+From the conservation law, w · x = α and (1−w) · y = β are constants along any trade trajectory. Together with w + (1−w) = 1, this gives α/x + β/y = 1, equivalent to (x − α)(y − β) = αβ — a hyperbola in the (x, y) plane with asymptotes x = α and y = β.
+
+Parametrise the trajectory by x: y(x) = β + αβ/(x − α). The marginal price along the trajectory is p(x) = α y(x)² / (β x²).
+
+For a continuous trade taking the reserves from (x₀, y₀) to (x₁, y₁) along the hyperbola, the cash leg integrates to:
+
+    Δy = y(x₁) − y(x₀) = αβ · [ 1/(x₁ − α) − 1/(x₀ − α) ].
+
+Closing the discrete-to-continuous bridge: this expression is recovered as the integral of p(x) dx along the trajectory, by direct substitution.
+
+### **No Round-Trip Math**
+
+A round trip is a trade from (x₀, y₀) to (x₁, y₁) followed by the reverse trade back to (x₀, y₀). By the conservation law, (α, β) are invariant under both legs. Marginal price p = α y² / (β x²) is a function of (x, y) alone — it returns to its initial value at (x₀, y₀).
+
+Cash and underlying balances return to their original values, since the reserves do. Hence no path-dependent leakage on round trips, beyond protocol fees applied per leg.
+
+### **Formal Verification (Lean 4): Kurtosis-Arb Rigidity Bound**
+
+Setting. Three rigid pricing systems V ∈ {v2, curve, new}, each with implied density q_V and parametric family F_V. A kurtosis-arb portfolio φ has bounded sup-norm |φ|_∞ ≤ M. The extraction operator L_V(φ) quantifies cash extractable via φ against system V. The mismatch distance d(q*, F_V) = inf over q ∈ F_V of ||q* − q||.
+
+Hypothesis (FamilyPolySpan). For each system V, any two densities q₁, q₂ ∈ F_V satisfy q₁ − q₂ ∈ span{1, K, K²} a.e. — i.e. each family is parametrised by mean / variance / gamma alone.
+
+Lemma 1 (Universal Bound). |L_V(φ)| ≤ M · d(q*, F_V) for any kurtosis-arb portfolio φ with |φ|_∞ ≤ M.
+
+Lemma 2 (Family Alignment). q* ∈ F_new ⇒ d(q*, F_new) = 0. Moreover F_new ⊄ F_v2 and F_new ⊄ F_curve.
+
+Main Theorem. In the natural regime q* ∈ F_new (= F_pl, the power-law family), |L_new(φ)| = 0 ≤ |L_V(φ)| for any other rigid system V ∈ {v2, curve}.
+
+Verification status. Aristotle (Lean 4 / Mathlib) closes the proof with zero sorries and only standard axioms (propext, Classical.choice, Quot.sound).
+
+Bridging Remark. FamilyPolySpan is an idealisation. Real families {lognormal, StableSwap, power-law} satisfy it only to leading order: first-order Taylor expansions in family parameters live in span{1, K, K²}, but the families themselves do not literally satisfy the polynomial-difference condition pointwise. Higher-order corrections are bounded and do not change the qualitative ordering d(q*, F_new) < d(q*, F_v2), d(q*, F_curve) in natural regimes. Stating the hypothesis explicitly is preferable to burying the idealisation in prose: anyone scrutinising the result can point to one definition and ask whether the real family satisfies it; the honest answer is yes to leading order, with bounded higher-order corrections.
+
+Out of scope of this verification: time-integration / persistence of extraction; cross-venue capital constraints; funding countercyclicality as an additive LP-protection mechanism; flexible (non-rigid) systems such as Univ3 / Panoptic.
+
+### **Other Key Math Stuff**
+
+*<**we**'**ll do a brainstorming session on this one to figure what should be in annexures, and what should be left to the lean workings / project folder**>*
