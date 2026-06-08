@@ -1,0 +1,677 @@
+{
+  "consoleErrors": [],
+  "dialogs": [],
+  "execDisabled": false,
+  "oracle0": 80000,
+  "item1_headers": [
+    "Band / Component",
+    "Entry equity / Strike",
+    "Entry mark / Oracle (live)",
+    "Attrib P&L",
+    "Equity@close / Mark",
+    "Value (carved-perp)",
+    "Funding",
+    "L₀ · Club · Status",
+    ""
+  ],
+  "item1_3_liveSpot": {
+    "liveDOM0": [
+      {
+        "leg": "SOLD call · inner",
+        "strike": "$120,000",
+        "oracle": "$80,000",
+        "attrib": "",
+        "mark": "0.2417",
+        "ncells": 9,
+        "cls": "pf-comp-row"
+      },
+      {
+        "leg": "BOUGHT put · inner",
+        "strike": "$68,000",
+        "oracle": "$80,000",
+        "attrib": "",
+        "mark": "0.2827",
+        "ncells": 9,
+        "cls": "pf-comp-row"
+      }
+    ],
+    "liveEng0": {
+      "oracle": 80000,
+      "sNormPool": 0.7252935080209123,
+      "gamma": 2,
+      "bands": [
+        {
+          "id": "B1",
+          "sold": {
+            "wing": "call",
+            "K_inner": 120000,
+            "K_outer": null,
+            "thetaReg": 0.4445772298117596,
+            "thetaOutReg": null,
+            "thetaEntry": 1.5,
+            "chartFrac": 0.24169229297386294,
+            "tableMarkEff": 0.24169229297386294,
+            "sNorm_atK": 0.4445772298117596,
+            "isBarrier": true
+          },
+          "bought": {
+            "wing": "put",
+            "K_inner": 68000,
+            "K_outer": null,
+            "thetaReg": 1.3838910345579558,
+            "thetaOutReg": null,
+            "thetaEntry": 0.85,
+            "chartFrac": 0.2826730030550262,
+            "tableMarkEff": 0.2826730030550262,
+            "sNorm_atK": 1.3838910345579558,
+            "isBarrier": true
+          }
+        }
+      ]
+    },
+    "payoffLit": {
+      "W": 900,
+      "H": 420,
+      "litPixels": 95844,
+      "blank": false
+    },
+    "payoffLitRebased": {
+      "W": 900,
+      "H": 420,
+      "litPixels": 110758,
+      "blank": false
+    }
+  },
+  "item1_sweep": [
+    {
+      "oracle": 80000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$80,000",
+          "attrib": "",
+          "mark": "0.2417",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$80,000",
+          "attrib": "",
+          "mark": "0.2827",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 80000,
+        "sNormPool": 0.7252935080209123,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.4445772298117596,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.24169229297386294,
+              "tableMarkEff": 0.24169229297386294,
+              "sNorm_atK": 0.4445772298117596,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 1.3838910345579558,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.2826730030550262,
+              "tableMarkEff": 0.2826730030550262,
+              "sNorm_atK": 1.3838910345579558,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 100000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$100,000",
+          "attrib": "",
+          "mark": "0.3736",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$100,000",
+          "attrib": "",
+          "mark": "0.1809",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 100000,
+        "sNormPool": 0.7252935080209123,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.2845686729110076,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.3736217787574232,
+              "tableMarkEff": 0.3736217787574232,
+              "sNorm_atK": 0.2845686729110076,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.8858579935062679,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.18094498269851308,
+              "tableMarkEff": 0.18094498269851308,
+              "sNorm_atK": 0.8858579935062679,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 110000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$110,000",
+          "attrib": "",
+          "mark": "0.4306",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$110,000",
+          "attrib": "",
+          "mark": "0.1496",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 110000,
+        "sNormPool": 0.7252935080209123,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.2351931629515515,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.4305501914881167,
+              "tableMarkEff": 0.4305501914881167,
+              "sNorm_atK": 0.2351931629515515,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.7321667699232425,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.14955207774534796,
+              "tableMarkEff": 0.14955207774534796,
+              "sNorm_atK": 0.7321667699232425,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 118000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$118,000",
+          "attrib": "",
+          "mark": "0.4691",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$118,000",
+          "attrib": "",
+          "mark": "0.1300",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 118000,
+        "sNormPool": 0.7252935080209126,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.2043914798632958,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.4691467274898795,
+              "tableMarkEff": 0.4691467274898795,
+              "sNorm_atK": 0.2043914798632958,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.6362882531567434,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.12996797207079597,
+              "tableMarkEff": 0.12996797207079597,
+              "sNorm_atK": 0.6362882531567434,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 120000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$120,000",
+          "attrib": "",
+          "mark": "0.4780",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$120,000",
+          "attrib": "",
+          "mark": "0.1257",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 120000,
+        "sNormPool": 0.7252935080209126,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.19763728675631217,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.4779915340591825,
+              "tableMarkEff": 0.4779915340591825,
+              "sNorm_atK": 0.19763728675631217,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.6152637202894716,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.125673509793772,
+              "tableMarkEff": 0.125673509793772,
+              "sNorm_atK": 0.6152637202894716,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 122000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$122,000",
+          "attrib": "",
+          "mark": "0.4865",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$122,000",
+          "attrib": "",
+          "mark": "0.1216",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 122000,
+        "sNormPool": 0.7252935080209126,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.19121209031787795,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.4865469009104849,
+              "tableMarkEff": 0.4865469009104849,
+              "sNorm_atK": 0.19121209031787795,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.5952632194142423,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.12158821586251127,
+              "tableMarkEff": 0.12158821586251127,
+              "sNorm_atK": 0.5952632194142423,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 130000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$130,000",
+          "attrib": "",
+          "mark": "0.5181",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$130,000",
+          "attrib": "",
+          "mark": "0.1071",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 130000,
+        "sNormPool": 0.7252935080209123,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.16840805817817545,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.51813593607055,
+              "tableMarkEff": 0.51813593607055,
+              "sNorm_atK": 0.16840805817817545,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.5242777030114858,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.10708874401544613,
+              "tableMarkEff": 0.10708874401544613,
+              "sNorm_atK": 0.5242777030114858,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 160000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$160,000",
+          "attrib": "",
+          "mark": "0.6085",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$160,000",
+          "attrib": "",
+          "mark": "0.0707",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 160000,
+        "sNormPool": 0.7252935080209123,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.11118690528856935,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.608465598908662,
+              "tableMarkEff": 0.608465598908662,
+              "sNorm_atK": 0.11118690528856935,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.3461516200804041,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.07070478492675905,
+              "tableMarkEff": 0.07070478492675905,
+              "sNorm_atK": 0.3461516200804041,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "oracle": 240000,
+      "cells": [
+        {
+          "leg": "SOLD call · inner",
+          "strike": "$120,000",
+          "oracle": "$240,000",
+          "attrib": "",
+          "mark": "0.7390",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        },
+        {
+          "leg": "BOUGHT put · inner",
+          "strike": "$68,000",
+          "oracle": "$240,000",
+          "attrib": "",
+          "mark": "0.0314",
+          "ncells": 9,
+          "cls": "pf-comp-row"
+        }
+      ],
+      "eng": {
+        "oracle": 240000,
+        "sNormPool": 0.7252935080209126,
+        "gamma": 2,
+        "bands": [
+          {
+            "id": "B1",
+            "sold": {
+              "wing": "call",
+              "K_inner": 120000,
+              "K_outer": null,
+              "thetaReg": 0.04942491610334192,
+              "thetaOutReg": null,
+              "thetaEntry": 1.5,
+              "chartFrac": 0.7389545816126644,
+              "tableMarkEff": 0.7389545816126644,
+              "sNorm_atK": 0.04942491610334192,
+              "isBarrier": true
+            },
+            "bought": {
+              "wing": "put",
+              "K_inner": 68000,
+              "K_outer": null,
+              "thetaReg": 0.15387958329912504,
+              "thetaOutReg": null,
+              "thetaEntry": 0.85,
+              "chartFrac": 0.03143137922987829,
+              "tableMarkEff": 0.03143137922987829,
+              "sNorm_atK": 0.15387958329912504,
+              "isBarrier": true
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "item2_drift": [
+    {
+      "oracle": 80000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.4445772298117596,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 1.3838910345579558
+    },
+    {
+      "oracle": 100000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.2845686729110076,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.8858579935062679
+    },
+    {
+      "oracle": 110000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.2351931629515515,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.7321667699232425
+    },
+    {
+      "oracle": 118000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.2043914798632958,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.6362882531567434
+    },
+    {
+      "oracle": 120000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.19763728675631217,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.6152637202894716
+    },
+    {
+      "oracle": 122000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.19121209031787795,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.5952632194142423
+    },
+    {
+      "oracle": 130000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.16840805817817545,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.5242777030114858
+    },
+    {
+      "oracle": 160000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.11118690528856935,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.3461516200804041
+    },
+    {
+      "oracle": 240000,
+      "sold_thetaEntry": 1.5,
+      "sold_thetaReg": 0.04942491610334192,
+      "bought_thetaEntry": 0.85,
+      "bought_thetaReg": 0.15387958329912504
+    }
+  ],
+  "item2_curveLit": {
+    "W": 700,
+    "H": 460,
+    "litPixels": 13396,
+    "blank": false
+  },
+  "item4_pricingLit": {
+    "W": 900,
+    "H": 380,
+    "litPixels": 11250,
+    "blank": false
+  }
+}

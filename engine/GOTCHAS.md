@@ -59,10 +59,12 @@ break (NaN from `arbitrageToOracle`). The curveTrace 3rd element (`Math.atan(o)`
 `drawCurvePts` reads only `[x,y]`; color is `curveSegmentColor(x,y)=(y/x>modeSlope)`, geometric.
 
 ## 7. File-safety traps
-- The blob ledger lists the **wrong (minified) blob md5s** `8d2e1a84`/`1b320fc5`. The files carry
-  the original `ab663f5c`/`c505b08a`. Verify against the FILE's blobs, not the ledger; never
-  "restore" the minified set. (Open reconcile thread.)
-- An asset optimizer/minifier broke a cut. **Never run one** on the HTML.
+- **Blob layers — `8d2e1a84`/`1b320fc5` is NOT a "minified broken cut."** It is the *decode* of the
+  same canonical blob whose **line-layer** md5 is `ab663f5c`/`c505b08a` (273864 b64 ×¾ = 205398 bytes
+  exact). One blob, three layers (line / b64-payload / decoded-binary). The hook + `run_all.sh` key
+  off the **line layer** `ab663f5c`/`c505b08a` — verify against that. There is no second artifact to
+  "restore." (RECONCILED 2026-06-08; was mislabeled when a decode-hash was compared to a line-hash.)
+- An asset optimizer/minifier once broke a cut. **Never run one** on the HTML.
 - Splice with on-disk Python, assert each anchor fires exactly once, and add `\n` to replacement
   strings that replace newline-terminated lines (else you merge two statements onto one line — a
   real near-miss; valid JS but ugly and confusing). See splices/SPLICE_METHOD.md.

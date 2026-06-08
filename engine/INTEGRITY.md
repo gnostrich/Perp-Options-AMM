@@ -7,9 +7,10 @@
 | (v25_gh) | `9910c699` | GH curve swapped onto clean v24; blobs byte-identical to v24 |
 | (v26a fixes) | `951d16eb` | v25_gh + the 3 barrier-remnant fixes (inline slippage, curve-draw, marker) |
 | (slippage WIP head) | `2c0337e8` | v26a + slippage work-in-progress (the splice base) |
-| **`temporal_mvp_v26a.html`** | **`89ae89e9`** | **slipfix — the canonical build. v26b builds on this.** |
+| `temporal_mvp_v26a.html` | `89ae89e9` | slipfix — the blob-layer reconcile below was verified on this build; **demoted, succeeded by v26b then v26c** |
+| **`HEAD_temporal_mvp_v26c.html`** | **`6cc73563`** | **current canonical HEAD** — uniform strike registration θ=sNorm(K); see `BUILD_LINEAGE.md` for the full v26b→v26c lineage |
 
-The two blobs are unchanged across the entire lineage (v24 → slipfix). That is the file-safety invariant; it has held.
+The two blobs are unchanged across the entire lineage (v24 → v26c). That is the file-safety invariant; it has held.
 
 ## The blob-layer resolution (a phantom thread, now CLOSED)
 For weeks the "blob ledger" showed two apparently-conflicting blob md5 sets, framed as "minified broken cut" vs "canonical original." **They are the same blobs measured at different layers.** Verified on `89ae89e9`:
@@ -22,7 +23,12 @@ For weeks the "blob ledger" showed two apparently-conflicting blob md5 sets, fra
 
 Arithmetic that proves it's one blob: `273864 base64 chars × ¾ = 205398 decoded bytes` (exact); `5168 × ¾ ≈ 3875`. The `8d2e1a84/1b320fc5` set is just the **decode** of the `ab663f5c/c505b08a` line. There was never a second file or a minified cut — earlier sessions compared a decode-layer hash against a line-layer hash and inferred two artifacts.
 
-**Action (for the architect to ratify):** pick ONE layer for the file-safety blob check and write it down. Recommended: **decoded-binary md5 `8d2e1a84/1b320fc5`** — it's invariant to data-URI text formatting (prefix, whitespace, line wrapping), so it won't drift if the HTML is re-serialized. Then retire the "minified vs canonical" language entirely.
+**RATIFIED 2026-06-08 (operator):** the file-safety blob check keys off the **line layer**
+`ab663f5c/c505b08a` (`sed -n 'Np'|md5sum`) — status quo, already wired into the hook + `run_all.sh`.
+The decoded-binary md5 `8d2e1a84/1b320fc5` is recorded in `BUILD_LINEAGE.md` as a *documented
+secondary* (re-serialization-invariant; lets a future line-hash break be told apart from a real blob
+change) but is **not** the check. The "minified vs canonical / broken cut" language is retired across
+CLAUDE.md / GOTCHAS / BUILD_LINEAGE / the hook comments.
 
 ## How to check blobs (whatever layer you ratify)
 ```python

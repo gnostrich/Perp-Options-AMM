@@ -1,0 +1,703 @@
+{
+  "consoleErrors": [],
+  "dialogs": [],
+  "execDisabled": false,
+  "item1": {
+    "headers": [
+      "Band / Component",
+      "Entry equity / Strike",
+      "Entry mark / Oracle (live)",
+      "Attrib P&L",
+      "Equity@close / Mark",
+      "Value (carved-perp)",
+      "Funding",
+      "L₀ · Club · Status",
+      ""
+    ],
+    "rows": [
+      {
+        "cls": "pf-band-row",
+        "ncells": 9,
+        "cells": [
+          {
+            "text": "−\n          B1",
+            "title": ""
+          },
+          {
+            "text": "$933.33",
+            "title": "carved entry equity — f_N · club equity, frozen at carve-time"
+          },
+          {
+            "text": "$80,000",
+            "title": "entry perp mark — frozen at carve-time"
+          },
+          {
+            "text": "$0.00",
+            "title": "attributable P&L — carvedNotional · (perpMark − entryPerpMark) / entryPerpMark; dimensionally [USD]"
+          },
+          {
+            "text": "$933.33",
+            "title": "carved equity at closure = entry equity + attributable P&L"
+          },
+          {
+            "text": "0.014503",
+            "title": "band value = Σ component values (carved-perp units)"
+          },
+          {
+            "text": "0.000000",
+            "title": "aggregate funding (carved-perp units)"
+          },
+          {
+            "text": "4.29× · long-btc · OPEN",
+            "title": ""
+          },
+          {
+            "text": "Close",
+            "title": ""
+          }
+        ]
+      },
+      {
+        "cls": "pf-comp-row",
+        "ncells": 9,
+        "cells": [
+          {
+            "text": "SOLD\n            call · inner",
+            "title": ""
+          },
+          {
+            "text": "$84,000",
+            "title": "strike (price)"
+          },
+          {
+            "text": "$80,000",
+            "title": "oracle (live) — layer-1 reference; what strike ratios normalise against"
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "0.1231",
+            "title": "mark — the fraction, from the pool-curve query"
+          },
+          {
+            "text": "0.006155",
+            "title": "component value = N · mark (carved-perp units)"
+          },
+          {
+            "text": "0.000000",
+            "title": "per-component funding (signed, carved-perp units)"
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "",
+            "title": ""
+          }
+        ]
+      },
+      {
+        "cls": "pf-comp-row",
+        "ncells": 9,
+        "cells": [
+          {
+            "text": "BOUGHT\n            put · inner",
+            "title": ""
+          },
+          {
+            "text": "$68,000",
+            "title": "strike (price)"
+          },
+          {
+            "text": "$80,000",
+            "title": "oracle (live) — layer-1 reference; what strike ratios normalise against"
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "0.1443",
+            "title": "mark — the fraction, from the pool-curve query"
+          },
+          {
+            "text": "0.008349",
+            "title": "component value = N · mark (carved-perp units)"
+          },
+          {
+            "text": "0.000000",
+            "title": "per-component funding (signed, carved-perp units)"
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "",
+            "title": ""
+          }
+        ]
+      },
+      {
+        "cls": "pf-total-row",
+        "ncells": 9,
+        "cells": [
+          {
+            "text": "Total",
+            "title": ""
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "raw 0.002194",
+            "title": "raw_net = Y − X (carved-perp units)"
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "",
+            "title": ""
+          },
+          {
+            "text": "0.000000",
+            "title": "total funding (carved-perp units)"
+          },
+          {
+            "text": "$8.78",
+            "title": "settlement value = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply"
+          },
+          {
+            "text": "",
+            "title": ""
+          }
+        ]
+      }
+    ]
+  },
+  "item2": {
+    "markSweep": [
+      {
+        "oracle": 80000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$80,000",
+            "attrib": "",
+            "mark": "0.1231"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$80,000",
+            "attrib": "",
+            "mark": "0.1443"
+          }
+        ]
+      },
+      {
+        "oracle": 90000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$90,000",
+            "attrib": "",
+            "mark": "0.1385"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$90,000",
+            "attrib": "",
+            "mark": "0.1283"
+          }
+        ]
+      },
+      {
+        "oracle": 100000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$100,000",
+            "attrib": "",
+            "mark": "0.1539"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$100,000",
+            "attrib": "",
+            "mark": "0.1155"
+          }
+        ]
+      },
+      {
+        "oracle": 120000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$120,000",
+            "attrib": "",
+            "mark": "0.1846"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$120,000",
+            "attrib": "",
+            "mark": "0.0962"
+          }
+        ]
+      },
+      {
+        "oracle": 150000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$150,000",
+            "attrib": "",
+            "mark": "0.2308"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$150,000",
+            "attrib": "",
+            "mark": "0.0770"
+          }
+        ]
+      },
+      {
+        "oracle": 200000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$200,000",
+            "attrib": "",
+            "mark": "0.3077"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$200,000",
+            "attrib": "",
+            "mark": "0.0577"
+          }
+        ]
+      },
+      {
+        "oracle": 300000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$300,000",
+            "attrib": "",
+            "mark": "0.4335"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$300,000",
+            "attrib": "",
+            "mark": "0.0385"
+          }
+        ]
+      },
+      {
+        "oracle": 500000,
+        "cells": [
+          {
+            "leg": "SOLD call · inner",
+            "strike": "$84,000",
+            "oracle": "$500,000",
+            "attrib": "",
+            "mark": "0.5612"
+          },
+          {
+            "leg": "BOUGHT put · inner",
+            "strike": "$68,000",
+            "oracle": "$500,000",
+            "attrib": "",
+            "mark": "0.0231"
+          }
+        ]
+      }
+    ],
+    "tableITM": {
+      "headers": [
+        "Band / Component",
+        "Entry equity / Strike",
+        "Entry mark / Oracle (live)",
+        "Attrib P&L",
+        "Equity@close / Mark",
+        "Value (carved-perp)",
+        "Funding",
+        "L₀ · Club · Status",
+        ""
+      ],
+      "rows": [
+        {
+          "cls": "pf-band-row",
+          "ncells": 9,
+          "cells": [
+            {
+              "text": "−\n          B1",
+              "title": ""
+            },
+            {
+              "text": "$933.33",
+              "title": "carved entry equity — f_N · club equity, frozen at carve-time"
+            },
+            {
+              "text": "$80,000",
+              "title": "entry perp mark — frozen at carve-time"
+            },
+            {
+              "text": "$21,000.00",
+              "title": "attributable P&L — carvedNotional · (perpMark − entryPerpMark) / entryPerpMark; dimensionally [USD]"
+            },
+            {
+              "text": "$21,933.33",
+              "title": "carved equity at closure = entry equity + attributable P&L"
+            },
+            {
+              "text": "0.029394",
+              "title": "band value = Σ component values (carved-perp units)"
+            },
+            {
+              "text": "0.000000",
+              "title": "aggregate funding (carved-perp units)"
+            },
+            {
+              "text": "4.29× · long-btc · OPEN",
+              "title": ""
+            },
+            {
+              "text": "Close",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "cls": "pf-comp-row",
+          "ncells": 9,
+          "cells": [
+            {
+              "text": "SOLD\n            call · inner",
+              "title": ""
+            },
+            {
+              "text": "$84,000",
+              "title": "strike (price)"
+            },
+            {
+              "text": "$500,000",
+              "title": "oracle (live) — layer-1 reference; what strike ratios normalise against"
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "0.5612",
+              "title": "mark — the fraction, from the pool-curve query"
+            },
+            {
+              "text": "0.028059",
+              "title": "component value = N · mark (carved-perp units)"
+            },
+            {
+              "text": "0.000000",
+              "title": "per-component funding (signed, carved-perp units)"
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "cls": "pf-comp-row",
+          "ncells": 9,
+          "cells": [
+            {
+              "text": "BOUGHT\n            put · inner",
+              "title": ""
+            },
+            {
+              "text": "$68,000",
+              "title": "strike (price)"
+            },
+            {
+              "text": "$500,000",
+              "title": "oracle (live) — layer-1 reference; what strike ratios normalise against"
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "0.0231",
+              "title": "mark — the fraction, from the pool-curve query"
+            },
+            {
+              "text": "0.001336",
+              "title": "component value = N · mark (carved-perp units)"
+            },
+            {
+              "text": "0.000000",
+              "title": "per-component funding (signed, carved-perp units)"
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "cls": "pf-total-row",
+          "ncells": 9,
+          "cells": [
+            {
+              "text": "Total",
+              "title": ""
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "raw -0.026723",
+              "title": "raw_net = Y − X (carved-perp units)"
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "",
+              "title": ""
+            },
+            {
+              "text": "0.000000",
+              "title": "total funding (carved-perp units)"
+            },
+            {
+              "text": "−$2,511.94",
+              "title": "settlement value = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply"
+            },
+            {
+              "text": "",
+              "title": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "item3": {
+    "payoffLit": {
+      "W": 900,
+      "H": 420,
+      "litPixels": 98212
+    },
+    "legSweep": [
+      {
+        "sNorm": 1.5,
+        "naked": 0.2222,
+        "spread": -0.0926
+      },
+      {
+        "sNorm": 1,
+        "naked": 0.1481,
+        "spread": -0.0617
+      },
+      {
+        "sNorm": 0.7,
+        "naked": 0.1037,
+        "spread": -0.0432
+      },
+      {
+        "sNorm": 0.5,
+        "naked": 0.0741,
+        "spread": -0.0309
+      },
+      {
+        "sNorm": 0.35,
+        "naked": 0.0519,
+        "spread": -0.0216
+      },
+      {
+        "sNorm": 0.2,
+        "naked": 0.0296,
+        "spread": -0.0123
+      },
+      {
+        "sNorm": 0.1,
+        "naked": 0.0148,
+        "spread": -0.0062
+      }
+    ],
+    "nakedMax": 0.2222,
+    "spreadMax": -0.0062
+  },
+  "item4": {
+    "ratioLit": {
+      "W": 500,
+      "H": 500,
+      "litPixels": 7495
+    },
+    "polarMaxDiff": 0,
+    "polarSamples": [
+      {
+        "wing": "call",
+        "theta": 0.7,
+        "sNorm": 0.6,
+        "dot": 0.857143,
+        "curve": 0.857143,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1,
+        "sNorm": 0.6,
+        "dot": 0.6,
+        "curve": 0.6,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1.5,
+        "sNorm": 0.6,
+        "dot": 0.4,
+        "curve": 0.4,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 0.7,
+        "sNorm": 0.85,
+        "dot": 0.823529,
+        "curve": 0.823529,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1,
+        "sNorm": 0.85,
+        "dot": 0.85,
+        "curve": 0.85,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1.5,
+        "sNorm": 0.85,
+        "dot": 0.566667,
+        "curve": 0.566667,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 0.7,
+        "sNorm": 1,
+        "dot": 0.7,
+        "curve": 0.7,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 1,
+        "sNorm": 1,
+        "dot": 1,
+        "curve": 1,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1.5,
+        "sNorm": 1,
+        "dot": 0.666667,
+        "curve": 0.666667,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 0.7,
+        "sNorm": 1.3,
+        "dot": 0.538462,
+        "curve": 0.538462,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 1,
+        "sNorm": 1.3,
+        "dot": 0.769231,
+        "curve": 0.769231,
+        "diff": 0
+      },
+      {
+        "wing": "call",
+        "theta": 1.5,
+        "sNorm": 1.3,
+        "dot": 0.866667,
+        "curve": 0.866667,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 0.7,
+        "sNorm": 1.7,
+        "dot": 0.411765,
+        "curve": 0.411765,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 1,
+        "sNorm": 1.7,
+        "dot": 0.588235,
+        "curve": 0.588235,
+        "diff": 0
+      },
+      {
+        "wing": "put",
+        "theta": 1.5,
+        "sNorm": 1.7,
+        "dot": 0.882353,
+        "curve": 0.882353,
+        "diff": 0
+      }
+    ]
+  }
+}

@@ -38,9 +38,13 @@ splice silently corrupts the build while gates stay green.
   range (don't hand-type Unicode); `assert txt.count(old)==1`; preserve a trailing `\n`; blobs stay
   on disk. Recipe: `engine/recipe_html_blob_editing.md` + `engine/splices/SPLICE_METHOD.md`
   (`splice_slipfix.py` is the best worked template).
-- **Canonical blob md5s:** webp `ab663f5c26f2a461c5b0ef1421d0ad74` · svg `c505b08ad0e4c6b0fb9e64e9679fe291`.
-  A stale ledger lists the **minified `8d2e1a84`/`1b320fc5` "broken cut" — never restore it.
-  No asset optimizer / minifier, ever** (that's what broke the last cut).
+- **Canonical blob md5s (line layer):** webp `ab663f5c26f2a461c5b0ef1421d0ad74` · svg
+  `c505b08ad0e4c6b0fb9e64e9679fe291`. These are the `sed -n 'Np'|md5sum` line hashes the hook +
+  `run_all.sh` key off — keep them canonical. `8d2e1a84`/`1b320fc5` is **the decode of the very same
+  blob** (273864 b64 chars ×¾ = 205398 bytes exact; 5168 ×¾ = 3875), recorded as a documented
+  *secondary* in `BUILD_LINEAGE.md` — **not** a second or "minified broken cut," so there is nothing
+  to "restore." (Earlier sessions compared a decode-layer hash against a line-layer hash and inferred
+  two artifacts; verified one blob, three layers, 2026-06-08.) **No asset optimizer / minifier, ever.**
 - **After every edit:** 2 blob md5s unchanged · all 3 `<script>` parse · engine IIFE intact · no
   script line >~50k · no signatures changed unless that's the task · `engine/verify/run_all.sh` green.
 - A **`PostToolUse` hook** (`.claude/hooks/file_safety_gate.sh`) re-runs these checks and **blocks on
@@ -123,9 +127,18 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v26a.html` — **canonical HEAD** (md5 `89ae89e9…`). Lineage +
-  `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses, `engine/splices/`
-  recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
+- `engine/builds/HEAD_temporal_mvp_v26c.html` — **canonical HEAD** (md5 `6cc73563…`); v26c lands the
+  **uniform strike registration** in the curve's carry coordinate (`θ=sNorm(K)` via `sNormStrike`=
+  getSNorm∘arbitrageToOracle) across the display mark, execution/settlement value, and the payoff
+  chart — the OTM→ITM crossover now lands at the dollar strike K for all γ (was drifting to
+  oracle₀²/K for γ>1). The chart strike-RAY stays live `K/oracle` (a price-space object); funding/
+  isOTM/wingMember stay price-measure (already at K). Permanent `dir_gate.js` (crossover@K +
+  directional-consistency + mixed-basis control). **Finding-2 is absorbed** (live chart ray). Builds
+  on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
+  byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
+  cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
+  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses,
+  `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
   `prompts/` + `MANAGER_VERIFICATION.md`. `paper/` draft + docx. `notes/`, `history/`
   (`session_tree_note.md`), `evidence/`. `docs/` operating protocol, personas, orientation, briefs,
