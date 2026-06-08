@@ -7,9 +7,10 @@
 | (v25_gh) | `9910c699` | GH curve swapped onto clean v24; blobs byte-identical to v24 |
 | (v26a fixes) | `951d16eb` | v25_gh + the 3 barrier-remnant fixes (inline slippage, curve-draw, marker) |
 | (slippage WIP head) | `2c0337e8` | v26a + slippage work-in-progress (the splice base) |
-| **`temporal_mvp_v26a.html`** | **`89ae89e9`** | **slipfix — the canonical build. v26b builds on this.** |
+| `temporal_mvp_v26a.html` | `89ae89e9` | slipfix — the blob-layer reconcile below was verified on this build; **demoted, succeeded by v26b then v26c** |
+| **`HEAD_temporal_mvp_v26c.html`** | **`6cc73563`** | **current canonical HEAD** — uniform strike registration θ=sNorm(K); see `BUILD_LINEAGE.md` for the full v26b→v26c lineage |
 
-The two blobs are unchanged across the entire lineage (v24 → slipfix). That is the file-safety invariant; it has held.
+The two blobs are unchanged across the entire lineage (v24 → v26c). That is the file-safety invariant; it has held.
 
 ## The blob-layer resolution (a phantom thread, now CLOSED)
 For weeks the "blob ledger" showed two apparently-conflicting blob md5 sets, framed as "minified broken cut" vs "canonical original." **They are the same blobs measured at different layers.** Verified on `89ae89e9`:

@@ -1,6 +1,25 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-08, bootstrap. This is the project's state-of-the-whole; git history is the
-mechanical audit trail. Rewrite the changed bits at the end of every task._
+_Last updated: 2026-06-08, v26c reconciliation. This is the project's state-of-the-whole; git history
+is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+
+## Integration status (2026-06-08 reconciliation task)
+- **v26c engine line FOLDED.** Merged `claude/pensive-sagan-WhNLb` (26 commits, the v26b→v26c
+  program) into `claude/exciting-volta-82z290` (which sat exactly at `origin/main` 6cb4c92, so it IS
+  a branch off main). Merge commit `addc8c0`. Scope re-confirmed in-bounds: ITM/American
+  smooth-pasting + uniform strike registration θ=sNorm(K) + Finding-2 absorbed + spec/§8/lineage/gate
+  re-pin + evidence; **no curve/invariant change, no new economic object, settlement stays American
+  smooth-pasting S*=Kγ/(γ+1)** (curve fns untouched; G4 PASS proves it).
+- **Re-verified v26c MYSELF on integration:** whole-file md5 `6cc73563779a3e030774b7597d0ae187`,
+  4453 lines, 3 `<script>` blocks; blobs unchanged (webp `ab663f5c` line 74, svg `c505b08a` line
+  1060); `run_all.sh` → 7 GH gates PASS, seam gate PASS, dir gate PASS, slippage PASS.
+- **File-safety gate re-pinned to v26c (verified live):** gate delegates whole-file md5/line to
+  `run_all.sh` (default `builds/HEAD_temporal_mvp_v26c.html`, want `6cc73563`) + pins blobs by
+  md5 at 74/1060. Drove the hook: PASS (exit 0) on clean v26c, BLOCK (exit 2) on tampered blob and
+  on broken script. No stale v26a pin remains in the gate path.
+- **Union merge:** CLAUDE.md auto-merged clean (non-overlapping) — kept BOTH main's §6.1 GitHub-ops/
+  agent-reconfig AND pensive's §8 v26c repo map. No conflict markers anywhere.
+- **PR opened (NOT merged — operator merges):** exciting-volta → main. v26a build kept in history
+  (renamed `temporal_mvp_v26a.html`, not deleted).
 
 ## HEAD / verification
 - **HEAD = `engine/builds/HEAD_temporal_mvp_v26c.html`, md5 `6cc73563779a3e030774b7597d0ae187`
@@ -22,18 +41,20 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →
   71.45%/$6240.94), loud-NaN guard OK. **UI owed to tester** — live browser run DISPATCHED (bg,
   agent a0b7eb8b). Lean = trusted-from-prover.
-- **Branch:** working on `claude/pensive-sagan-WhNLb`. peaceful-volta-82pJP already merged to main
-  (PR #1, HEAD e7c8ce9) — bootstrap scaffolding is on main.
+- **Branch:** integrating on `claude/exciting-volta-82z290` (= main 6cb4c92 at task start). v26c line
+  (`claude/pensive-sagan-WhNLb`) folded in via merge `addc8c0`; PR open to main, operator merges.
 - Blobs intact: webp `ab663f5c…` (line 74), svg `c505b08a…` (line 1060). File-safety hook live.
 
-## Build lineage (engine/builds/BUILD_LINEAGE.md)
+## Build lineage (engine/builds/BUILD_LINEAGE.md — authoritative)
 | file | md5 | what |
 |---|---|---|
-| temporal_mvp_v24_rebase_fixed_2 | 6f606f52 | clean barrier base (pre-GH) |
 | temporal_mvp_v25_gh | 9910c699 | barrier→GH swap; 4 curve fns + calibration; 7 gates |
 | temporal_mvp_v26a_fixes | 951d16eb | 3 barrier remnants fixed |
 | temporal_mvp_v26a_2c0337e8_slipWIP | 2c0337e8 | slippage WIP — **known-broken (~97% flat)**, lineage only |
-| **HEAD_temporal_mvp_v26a** | **89ae89e9** | slippage units fix (both paths → mpGeom) — **work from this** |
+| temporal_mvp_v26a | 89ae89e9 | slippage units fix (both paths → mpGeom) — **prior HEAD, demoted on v26b promotion** |
+| temporal_mvp_v26b | 8df9f8a3 | ITM/American smooth-pasting (mark/markFrac split, both wings) + seam gate — **prior HEAD, demoted on v26c promotion** |
+| temporal_mvp_v26b_xrange / v26c_strikereg / v26c_full | (lineage) | intermediate increments, not HEAD |
+| **HEAD_temporal_mvp_v26c** | **6cc73563** | uniform strike registration θ=sNorm(K) (display+exec+payoff), crossover@K all γ, Finding-2 absorbed, dir_gate permanent — **current canonical HEAD; work from this** |
 
 ## Roster (5 agents, after 2026-06-08 aristotle-fold config task)
 manager · **research-lead (theory owner AND its own prover interface)** · intern · tester · paper.
@@ -256,7 +277,8 @@ passes behind the hook). Escalate to operator = what-we're-building (curve/invar
 semantics, reopen a locked decision/ship-gate, product calls Finding-2 / |Γ|>1 / Fork A-vs-B,
 calibration tier, paper claims). Irreversible/high-blast-radius escalates regardless.
 
-## Waiting on operator (bootstrap)
-- `GH_TOKEN` (PAT, full repo control) + `gh` install → then I **merge the scaffolding branch to main**.
-- Playwright network grant + browser install → tester's live v26a run.
-- Operator reply **"go"** = checklist done.
+## Waiting on operator
+- **Merge the v26c integration PR** (exciting-volta → main) — I opened it; I do NOT merge it myself
+  per this task's instruction. Once merged, v26c is canonical HEAD on main.
+- (Resolved this task: scaffolding already on main; v26a/v26b/v26c tester runs done; `GH_TOKEN`
+  present & verified 200.)
