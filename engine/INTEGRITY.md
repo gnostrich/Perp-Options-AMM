@@ -22,7 +22,12 @@ For weeks the "blob ledger" showed two apparently-conflicting blob md5 sets, fra
 
 Arithmetic that proves it's one blob: `273864 base64 chars × ¾ = 205398 decoded bytes` (exact); `5168 × ¾ ≈ 3875`. The `8d2e1a84/1b320fc5` set is just the **decode** of the `ab663f5c/c505b08a` line. There was never a second file or a minified cut — earlier sessions compared a decode-layer hash against a line-layer hash and inferred two artifacts.
 
-**Action (for the architect to ratify):** pick ONE layer for the file-safety blob check and write it down. Recommended: **decoded-binary md5 `8d2e1a84/1b320fc5`** — it's invariant to data-URI text formatting (prefix, whitespace, line wrapping), so it won't drift if the HTML is re-serialized. Then retire the "minified vs canonical" language entirely.
+**RATIFIED 2026-06-08 (operator):** the file-safety blob check keys off the **line layer**
+`ab663f5c/c505b08a` (`sed -n 'Np'|md5sum`) — status quo, already wired into the hook + `run_all.sh`.
+The decoded-binary md5 `8d2e1a84/1b320fc5` is recorded in `BUILD_LINEAGE.md` as a *documented
+secondary* (re-serialization-invariant; lets a future line-hash break be told apart from a real blob
+change) but is **not** the check. The "minified vs canonical / broken cut" language is retired across
+CLAUDE.md / GOTCHAS / BUILD_LINEAGE / the hook comments.
 
 ## How to check blobs (whatever layer you ratify)
 ```python

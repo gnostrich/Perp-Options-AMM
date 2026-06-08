@@ -7,8 +7,9 @@
 # Touching them naively destroys a session and can silently corrupt the build.
 #
 # When an engine HTML file is edited, this gate:
-#   1. re-verifies the two blob anchors by md5  (canonical set, NOT the minified
-#      8d2e1a84/1b320fc5 "broken cut"),
+#   1. re-verifies the two blob anchors by LINE-layer md5 (sed -n 'Np'|md5sum =
+#      ab663f5c/c505b08a). NB: 8d2e1a84/1b320fc5 is just the DECODE of these same
+#      blobs (one artifact, three layers) — not a "minified broken cut," nothing to restore.
 #   2. confirms the three <script> blocks parse (new Function round-trip),
 #   3. runs the regression + gate harness (engine/verify/run_all.sh) on the file.
 # On ANY failure it BLOCKS (exit 2) and feeds the diagnostic back to the agent.
@@ -75,7 +76,7 @@ print("\n".join(report))
 PY
 )"
 printf '%s' "$BLOBRES" | head -1 | grep -q '^OK' || { printf '%s\n' "$BLOBRES" 1>&2; \
-  block "blob anchor md5 mismatch / missing / duplicated. Never restore the minified 8d2e1a84/1b320fc5 set."; }
+  block "blob anchor LINE-md5 mismatch / missing / duplicated. Canonical = ab663f5c/c505b08a (line layer); 8d2e1a84/1b320fc5 is their decode, not a separate set."; }
 
 # --- 2) Three <script> blocks must parse (and contain no blob-sized line) -----------
 PARSE="$(node - "$ABS" <<'JS'

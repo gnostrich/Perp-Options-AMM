@@ -16,9 +16,9 @@ what's specified, safely; you do not redesign. You are always called "intern", n
    `engine/splices/SPLICE_METHOD.md`, and `engine/GOTCHAS.md`.
 
 ## The engine
-`engine/builds/HEAD_temporal_mvp_v26a.html` (md5 `89ae89e9…`) is the canonical single-file HTML
-simulator — **work from this**. Only 4 functions are curve-dependent: `getMP_raw`, `tradeUpdate`,
-`arbitrageToOracle`, `rebase`.
+`engine/builds/HEAD_temporal_mvp_v26b.html` (md5 `8df9f8a3…`) is the canonical single-file HTML
+simulator — **work from this** (v26b = v26a + ITM/American smooth-pasting). Only 4 functions are
+curve-dependent: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`.
 
 ## ⛔ FILE-SAFETY GATE — NON-NEGOTIABLE, every engine edit
 The HTML embeds **two base64 blobs** (bg webp, line ~74, md5 `ab663f5c26f2a461c5b0ef1421d0ad74`;
@@ -28,8 +28,9 @@ parsed via `new Function`. Corrupting them silently destroys the build.
   (`awk '{print length($0),NR}' | sort -nr | head`; `sed -n 'Np' | md5sum`). Edit **only** via an
   on-disk Python splice: work on a copy, slice the exact old string out by line range (don't
   hand-type Unicode), `assert txt.count(old)==1`, preserve trailing `\n`, write back.
-- **Never restore the minified `8d2e1a84`/`1b320fc5` set** (the optimizer-shrunk broken cut). The
-  files are canonical; the old ledger is stale. **No minifier / asset optimizer, ever.**
+- **Blob check = LINE layer `ab663f5c`/`c505b08a`** (`sed -n 'Np'|md5sum`). `8d2e1a84`/`1b320fc5` is
+  the *decode* of those same blobs (one artifact, three layers) — not a separate "minified" set, so
+  there is nothing to "restore." (Reconciled 2026-06-08.) **No minifier / asset optimizer, ever.**
 - **After every edit, confirm:** the two blob md5s are unchanged; all 3 `<script>` blocks parse
   (`new Function`); engine IIFE intact; no script line > ~50k chars; no signatures changed unless
   that is the task; `engine/verify/run_all.sh` is green.
