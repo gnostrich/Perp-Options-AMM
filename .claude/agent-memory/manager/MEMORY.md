@@ -144,9 +144,23 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
      θ-swap FLIPS funding's sign → funding must NOT be touched. Fix scope = **mark path + chart-ray
      registration ONLY.** Spec `specs/SPEC_strike_registration_NEXT.md`. Directional-consistency gate
      convention PINNED + verified: `sign(K−oracle)==sign(funding ±2)==sign(d(mark)/d(sNorm))` (curve
-     coordinate; CALL all +, PUT all −). **Intern BUILDING v26c (agent adf5c8f6)** →
-     `temporal_mvp_v26c_strikereg.html`; verify before HEAD.
-   - **Finding-2 chart-ray fix BLOCKED behind v26c** (chart direction follows corrected registration).
+     coordinate; CALL all +, PUT all −). **v26c DELIVERED + MANAGER-VERIFIED Node level (2026-06-08)**
+     → `temporal_mvp_v26c_strikereg.html` (committed d851695, NOT HEAD). Diff = 4 surgical regions
+     (new `sNormStrike(s,K)`=getSNorm∘arbitrageToOracle, export, `pfComponents` ray→sNormStrike +
+     pool param, 2 callers). 7 GH + seam + new `dir_gate.js` PASS; crossover@K |err|=0 all γ; blobs
+     intact; funding/isOTM/execution/markFrac UNTOUCHED (diff-confirmed). **dir_gate negative-controlled
+     by me:** basis flip → crossover≠K FAIL (caught); wing swap → sSlope flips, directional FAIL
+     (caught). HEAD (v26b) still green (dir_gate SKIPs pre-v26c).
+   - **SCOPE FORK — intern STOP-and-report (operator ruling needed):** fix applied to DISPLAY mark
+     (`pfComponents`) only. Spec's "APPLY TO" also listed (a) execution path
+     (markEff/legValueUnified/legPrice/executeBand → AMM swap dy + LOCKED stage-2→3 dollars) and (b)
+     chart ray (drawStrikeMark on LOCKED markFrac/polar route; drawStrikeRay on compositeRay). Intern
+     correctly stopped — re-registering those reshapes locked settlement + funding-polar. Execution
+     bug IS economically material (γ>1 trades priced at wrong registration, ~10% off near strike).
+     **ESCALATED:** extend registration into execution/settlement + chart (authorized reopening), or
+     keep display-only (and flag the display-vs-execution-vs-chart basis inconsistency)? Display-only
+     is NOT HEAD-promotable (creates the inconsistency).
+   - **Finding-2 chart-ray fix BLOCKED behind the chart-ray scope ruling.**
 
 ## Locked decisions (don't reopen unless the operator does)
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
