@@ -1,0 +1,16 @@
+SLIPPAGE UNITS FIX — verify trail (deliverable md5 89ae89e9df229186b134ca6638726d0c)
+
+[finding] getMP_raw / |dy/dx| = e^ghMu  (slope_test.js):
+  gamma 1.5/2/3/4 -> e^ghMu 11.68 / 44.52 / 748.6 / 13780 ; ratio matches at every point.
+
+[acceptance] spliced legSlipFrac/legSlipUsd reproduce slip_accept targets (gamma=2):
+  x1.02: 0.99% / $3.46   x1.2: 9.09% / $249.49   x2: 33.34% / $2246.00   x6: 71.45% / $6240.94
+  (old getMP_raw-ref path was ~97% flat — fixed.)
+
+[gates] verify_v26a_mine.js: 7 GH gates x gamma{1.5,2,3,4} PASS; curveTrace 401/401 (slope err 5.16e-12); marker on-curve; parse/sigs/IIFE ok; blob-in-script false.
+
+[no-default] mpGeom(state lacking ghMu) = NaN (loud, never e^0). ghMu confirmed present on pool, tradeUpdate output, arb output; executeBand is called with state.pool/s.pool.
+
+[diff] vs 2c0337e8: slippage block (both paths -> mpGeom; margPrice removed) + getMP_raw comment + Slippage% tooltip ONLY. Engine getMP_raw BODY unchanged. curveTrace untouched (3rd element verified unused).
+
+[file-safety] blobs held ab663f5c / c505b08a (the file's actual safe set); node --check ok x3; IIFE intact; no signature changes.
