@@ -1,6 +1,6 @@
 /-
   THROWAWAY SMOKE PROBE — NOT part of the RequestProject build.
-  Purpose: exercise the brokered Aristotle loop on a trivially-TRUE, genuinely
+  Purpose: exercise the direct Aristotle loop on a trivially-TRUE, genuinely
   provable, axiom-clean lemma.
   Toolchain: Lean 4.28.0 + Mathlib v4.28.0.
   Expected verdict: PROVED + re-verified locally; `#print axioms` shows only

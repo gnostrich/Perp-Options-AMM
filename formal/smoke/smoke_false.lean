@@ -1,6 +1,6 @@
 /-
   THROWAWAY SMOKE PROBE — NOT part of the RequestProject build.
-  Purpose: exercise the brokered Aristotle loop on a trivially-FALSE statement so
+  Purpose: exercise the direct Aristotle loop on a trivially-FALSE statement so
   the prover must REFUTE it / return a counterexample rather than "prove" it.
   Toolchain: Lean 4.28.0 + Mathlib v4.28.0.
 

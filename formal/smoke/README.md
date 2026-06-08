@@ -1,7 +1,7 @@
-# formal/smoke — THROWAWAY smoke probes for the brokered Aristotle loop
+# formal/smoke — THROWAWAY smoke probes for the direct Aristotle loop
 
-These files are **throwaway** probes for end-to-end testing of the brokered prover loop
-(research-lead → manager → aristotle → Harmonic's Aristotle → local re-verify → verdict back).
+These files are **throwaway** probes for end-to-end testing of the direct prover loop
+(research-lead → Harmonic's Aristotle → local re-verify → verdict; no courier, no separate agent).
 They are **NOT part of the `RequestProject` build** — they are standalone `.lean` files under
 `formal/smoke/`, not under `formal/temporal_lean_verified/RequestProject/`, and are not listed in
 `lakefile.toml`. Delete them once the loop is confirmed live.

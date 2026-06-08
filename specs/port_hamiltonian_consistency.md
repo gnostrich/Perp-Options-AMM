@@ -26,8 +26,9 @@ and to prove the consistency facts that the seams depend on.
 **Provenance discipline.** Anything marked `proved-in-prompt` is *trusted-from-prover* at best:
 it compiles in the self-contained prompt file but is not yet folded into the `RequestProject` build
 and not yet built locally by the manager. Do not upgrade these to "verified" until the manager
-builds them. The prover loop is now brokered: research-lead phrases the obligation → manager couriers
-to aristotle → verdict returns to research-lead. research-lead holds no prover tools.
+builds them. The prover loop is **direct**: research-lead phrases the obligation, submits it to
+Harmonic's Aristotle itself (aristotlelib CLI), and re-verifies the returned candidate locally — no
+courier, no separate prover agent. research-lead reports only distilled verdicts up to the manager.
 
 **Status legend:** `open` (not yet stated as Lean) · `scaffolded` (structure/field exists, claim not
 proved) · `proved-in-prompt` (proof present in a prompt file, awaiting local build) · `proved-folded`

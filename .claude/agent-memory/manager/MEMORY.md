@@ -20,25 +20,29 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 | temporal_mvp_v26a_2c0337e8_slipWIP | 2c0337e8 | slippage WIP — **known-broken (~97% flat)**, lineage only |
 | **HEAD_temporal_mvp_v26a** | **89ae89e9** | slippage units fix (both paths → mpGeom) — **work from this** |
 
-## Roster (6 agents, after 2026-06-08 config task)
-manager · research-lead (theory owner, **no prover tools**) · **aristotle (NEW — prover interface)** ·
-intern · tester · paper. The prover loop is **brokered**: research-lead phrases obligation → **manager
-couriers** → aristotle (submit to Harmonic's Aristotle → poll → local `lake build` re-verify → emend
-mechanical backend diffs only → one of 4 verdicts: proved+re-verified / counterexample / still-open /
-candidate-fails-local-recheck) → manager couriers verdict back → research-lead audits. aristotle: no
-git, no engine edits; tools Read/Grep/Glob/Write/Bash + the aristotlelib CLI.
+## Roster (5 agents, after 2026-06-08 aristotle-fold config task)
+manager · **research-lead (theory owner AND its own prover interface)** · intern · tester · paper.
+The standalone `aristotle` agent is **REMOVED** — folded into research-lead. The prover loop is now
+**direct, no courier:** research-lead phrases the obligation → calls `aristotle submit` itself (host
+Harmonic's Aristotle) → polls → local `lake build` re-verify (emends mechanical backend diffs only) →
+records one of 4 verdicts (proved+re-verified / counterexample / still-open / candidate-fails-local-
+recheck) → audits/interprets. **research-lead keeps ALL raw prover/poll/lake output in its own context;
+I receive only distilled reports** (verdicts, queue status, escalations) and relay nothing between
+agents. research-lead holds Bash + the aristotlelib CLI; it does NO git/env actions (I am sole git/env
+actor). I do **not** see raw prover output and am no longer a courier.
 
-## Aristotle connection (config-only task, 2026-06-08)
-- **Interface = `aristotlelib` v2.0.0 CLI** (`aristotle submit/formalize/list/show/download/cancel/tasks/ask`),
-  auth `ARISTOTLE_API_KEY` (set), host `aristotle.harmonic.fun`. Submit: `aristotle submit "<instr>"
-  --project-dir formal/temporal_lean_verified --wait --destination <out.tar.gz>`. No official Harmonic
-  MCP package exists → **no `.mcp.json`** (path b dropped); routines use the **Harmonic connector** (path a).
-- **⛔ Live loop BLOCKED — reported to operator, NOT faked:** (1) network policy denies the host
-  (`403 x-deny-reason: host_not_allowed`) → operator must add **`aristotle.harmonic.fun`** to the
-  **Custom allowlist**; (2) no `lean`/`lake`/`elan` in container → local re-verify can't run yet.
-- **Smoke test STAGED, not run** (`formal/smoke/`): `2+2=4` → expect proved+re-verified; `∀n,n=n+1`
-  → expect counterexample. Run the round the instant allowlist + toolchain land.
-- Routine spec ready-to-paste: `docs/routines/aristotle_ph_loop.md`.
+## Aristotle connection (now research-lead's, for my orchestration awareness only)
+- Interface = `aristotlelib` CLI (`aristotle submit/formalize/list/show/download/cancel/tasks/ask`),
+  auth `ARISTOTLE_API_KEY` (set, len 51), host `aristotle.harmonic.fun`. `uvx --from aristotlelib
+  aristotle …` (uvx present); no official Harmonic MCP → **no `.mcp.json`**; routines use the
+  **Harmonic connector**. Full invocation/re-verify procedure lives in research-lead's MEMORY.md — I
+  don't run it.
+- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → local re-verify can't run yet
+  (needs Lean v4.28.0 + Mathlib v4.28.0). Host: operator says Harmonic now unblocked — research-lead
+  verifies with a real submit; if it 403s, it flags up and we do NOT fake a round-trip.
+- **Smoke probes** (`formal/smoke/`): `2+2=4` → expect proved+re-verified; `∀n,n=n+1` → expect
+  counterexample. research-lead submits directly. [smoke result recorded below once run.]
+- Routine spec: `docs/routines/aristotle_ph_loop.md` (now the direct, research-lead-only loop).
 - PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
   only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.
 
