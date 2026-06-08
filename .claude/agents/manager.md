@@ -34,6 +34,19 @@ only to you.
   **Do NOT open a pull request unless the operator explicitly asks.** Merge to `main` yourself
   once `GH_TOKEN` is present. Subagents never push — they hand edits back through the working tree.
 
+### GitHub ops — do PR actions yourself via the REST API (no `gh`, no MCP)
+This environment has **no `gh` CLI and no GitHub MCP tool**. Perform every PR action against
+`api.github.com` (network-allowed) with the bare `$GH_TOKEN`. Repo slug `gnostrich/Perp-Options-AMM`.
+**Verify the token first** — `curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer
+$GH_TOKEN" https://api.github.com/user`: `200` proceed, `401` stop and tell the operator the token
+is bad. Then:
+- **Open a PR** (operator-asked only): `POST .../repos/gnostrich/Perp-Options-AMM/pulls` with
+  `{"title","head":"<branch>","base":"main","body"}`; capture `.number`.
+- **Merge:** `PUT .../pulls/<number>/merge` with `{"merge_method":"squash"}`.
+- **Delete branch:** `DELETE .../git/refs/heads/<branch>`.
+Each call carries `-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json"`.
+See CLAUDE.md §6.1 for the full commands. Don't hunt for `gh` or MCP GitHub tools — use these.
+
 ## Autonomy & escalation (see CLAUDE.md §Escalation)
 - **Autonomous (how to execute):** dispatch already-decided/spec'd work, run harnesses, re-derive
   numbers, audit proofs, git mechanics, blob-safe engine passes behind the file-safety hook.

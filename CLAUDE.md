@@ -78,6 +78,34 @@ splice silently corrupts the build while gates stay green.
 - **Do NOT open a pull request unless the operator explicitly asks.** Merge to `main` yourself once
   `GH_TOKEN` is present. Push with `git push -u origin <branch>`; retry network failures with backoff.
 
+### 6.1 GitHub ops (manager does all PR actions via the REST API)
+There is **no `gh` CLI and no GitHub MCP tool** in this environment. The manager performs every
+PR action itself against `api.github.com` (already network-allowed) with the bare `$GH_TOKEN`.
+Repo slug is `gnostrich/Perp-Options-AMM`. **Verify the token first, every session that needs it:**
+```sh
+curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/user
+```
+`200` → good, proceed. `401` → **stop**: the token is bad; tell the operator, do not improvise.
+- **Open a PR** (only when the operator explicitly asks):
+  ```sh
+  curl -s -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+    https://api.github.com/repos/gnostrich/Perp-Options-AMM/pulls \
+    -d '{"title":"<title>","head":"<branch>","base":"main","body":"<body>"}'
+  ```
+  Capture the returned `.number` for the merge step.
+- **Merge a PR:**
+  ```sh
+  curl -s -X PUT -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+    https://api.github.com/repos/gnostrich/Perp-Options-AMM/pulls/<number>/merge \
+    -d '{"merge_method":"squash"}'
+  ```
+- **Delete the branch** (after merge):
+  ```sh
+  curl -s -X DELETE -H "Authorization: Bearer $GH_TOKEN" \
+    https://api.github.com/repos/gnostrich/Perp-Options-AMM/git/refs/heads/<branch>
+  ```
+Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
+
 ## 7. Autonomy & escalation
 - **Gate 1 (capability):** only the manager holds git/gh/merge/delete — subagents structurally defer
   (return work → manager performs the remote/irreversible action).
