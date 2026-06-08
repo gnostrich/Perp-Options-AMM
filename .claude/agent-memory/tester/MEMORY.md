@@ -1,61 +1,74 @@
 # MEMORY — tester
-_Last updated: 2026-06-08, after first-resume live v26a browser run._
+_Last updated: 2026-06-08, after live v26b ITM/American browser confirmation run._
 
-## DONE — first-resume live v26a browser run (HEAD 89ae89e9…)
-Ran **live Playwright Chromium** against `builds/HEAD_temporal_mvp_v26a.html`. Build md5 still
-`89ae89e9…`; blobs `ab663f5c…`/`c505b08a…` intact; 3 scripts parse; oracle `run_all.sh` green &
-byte-stable. **Tester-confirmed (rendered), not logic-only.**
+## DONE — live v26b ITM/American browser confirmation (build 8df9f8a3…)
+Ran **live Playwright Chromium** against `builds/temporal_mvp_v26b_itm.html`. Build md5
+`8df9f8a3cb705282a5348ce778f9eb82` unchanged (no engine edit); blobs `ab663f5c…`/`c505b08a…`
+intact; 3 scripts parse. Oracle `run_all.sh builds/temporal_mvp_v26b_itm.html` GREEN incl.
+**SEAM GATE PASS** (value+slope ≤0.15%, directional, both branches, γ∈{1.5,2,3,4}). Harness:
+`engine/verify/pw_v26b_visual.mjs`. Repro identical across 2 runs (not flaky).
 
-### Verdicts
-1. **Slippage display — PASS.** `%` primary, `$` secondary labelled reserve-USD. Gentle collar
-   (0.05 BTC, call $84k / put $68k, spot $80k) → `39.9829 % · ≈ $1546.64`; info-tooltip says
-   "Layer-1 reserve USD, not a trader honest-dollar figure." Pixel shot `11_slippage_summary.png`.
-2. **Frame re-fit — PASS, reads well; do NOT revert.** drawCurve re-fits `xMax=xEq*3, yMax=yEq*3`
-   each draw (line ~3231). Across rebase 80k→120k→200k the white reserves dot holds its horizontal
-   frac (fx 0.477→0.471→0.467) while axis labels rescale (x 30→26.95→38.46 BTC). Vertical drift
-   (fy 0.473→0.596→0.638) is the honest post-trade-below-equilibrium motion. The one-line revert
-   (freeze frame on first draw) would clip the GH bend — current is better.
-3. **Curve geometry — PASS, GH continuation, no barrier remnant.** `02_curve_pre.png` shows the
-   symmetric two-arm `(x−α)(y−β)=αβ` hyperbola bending through eq (~10 BTC,$800k). curveTrace samples
-   `arbitrageToOracle` (GH), weight-form/getDepth retired for the live trace. Not Balancer power-form.
-4. **Finding-2 — FLAGGED, characterized: SPLIT behavior in v26a.**
-   - **Dollar-anchored (correct):** portfolio comp-rows (`pfComponents`, ray=K/oracle_now) + close
-     engine (`liveRay`, line 1976) — Orig strike stays `$84,000`/`$68,000` across rebase 80k→120k.
-     K_inner/K_outer are the locked things.
-   - **Ratio-pegged (drifts off $):** the **curve/ratio chart strike rays** (`drawStrikeRay` 3358,
-     `drawStrikeMark` 3585) read **stored `b.sold.inner` = entry-θ = K/oracle_entry**, NOT
-     K_inner/oracle_now. On rebase the drawn ray rotates off the locked dollar strike (visible in
-     `08_/10_curve_rebase*.png`). So within one build: table/engine = dollar-anchored; chart = ratio-peg.
-   - This is the manager's escalation input (UX-clarity chart fix vs the engine, which is already
-     dollar-anchored). I FLAG; manager escalates to operator. I cannot prompt operator.
+### Verdicts (FLAG per item)
+1. **Bands §5 — PASS (tester-confirmed, rendered).** Header reads **"Attrib P&L"** (no "/ Eff
+   strike"); Strike header is "Entry equity / Strike" (was "Orig strike"). Comp rows = **9 cells**,
+   alignment intact; the **eff-strike sub-cell is the empty 4th `<td>`** (under Attrib P&L). Oracle
+   (live), Entry mark, Mark cell all present. `11_bands_table_crop.png` legible. DOM in trace.json.
+2. **Mark continuation→intrinsic — PASS (tester-confirmed live DOM + closed-form).** Sweeping oracle
+   80k→500k, the rendered SOLD-call (K=$84k) Mark cell grows **smoothly & monotonically 0.1231→0.5612
+   and never clamps to 1.0000** — the OLD `markFrac` would saturate to 1.0 the instant sNorm≥1
+   (oracle≥$84k). So the cell unambiguously uses the new rule. Closed-form re-derivation (src
+   1658-1670) confirms **no jump at strike (gap ~3e-7) and no jump at seam sNstar (gap ~3e-7)**, max
+   consecutive sweep jump ~0.005 (= step size, no kink); cap reached only deep past the seam.
+   `06_bands_table_ITM.png`.
+3. **Payoff legFraction naked-uncapped vs spread-capped — PARTIAL: logic-confirmed, NOT visually
+   distinguishable in the chart's window. FLAG.** Source (line 3866-3873): naked barrier =
+   `Engine.mark()` with **NO `Math.min(1,·)`**; spread = `min(1,mIn)−min(1,mOut)` (each capped).
+   Closed-form: naked `mark()` fraction rises monotonically and **asymptotes to 1 (never exceeds 1)**
+   for a clean barrier; the spread stays bounded. The cap-removal is structurally correct/distinct,
+   but the **payoff chart x-axis is "perp mark % change ±50%"**, far short of the deep-ITM region —
+   naked (`09_payoff_naked.png`) and spread (`10_payoff_spread.png`) render **pixel-identical** in
+   that window. So "naked value grows past 1 deep-ITM" is **logic-only**, not a pixel I saw. The
+   "grows past 1" phrasing is about leg VALUE (N·frac·pM), not the fraction (which caps at 1).
+   → FLAG to manager: item-3's visual claim isn't observable in the current chart range; the code is
+   correct. If product wants it visible, the payoff chart needs a wider sNorm sweep.
+4. **Polar mark-curve marker — PASS (tester-confirmed, rendered).** The polar mark chart is the
+   **"pricing" / `canvas-pricing`** view ("Mark Across Strikes"), NOT trajectory/canvas-ratio.
+   `07_polar_mark_pricing.png`: green dot (bought put K~$68k, left of mode) sits exactly ON the pink
+   put-wing ψ curve; red dot (sold call K=$84k, right of mode) sits exactly ON the teal call-wing
+   curve. Both route to `markFrac` (src 3598) and the curve is the same `min(s/θ,θ/s)` — re-derived
+   identity maxDiff=0. No drift.
 
-### Observations worth a glance (not failures)
-- Slippage scales hard with collar aggressiveness: 0.05 BTC call$84k/put$68k → 40%; same N wider →
-  35%; **0.2 BTC call$100k/put$60k → 3463% and post-trade pool spot → ~$0** (degenerate). Both legs
-  of a long collar push cash in (compounding, per line-1399 comment), so a far-OTM wide collar moves
-  the pool enormously. Display contract still correct; magnitude is input-driven engine behavior, not
-  a display regression. **If product wants collars usable at size, this needs a separate look** —
-  flag to manager as a softer note.
-- Bought put $68k flagged **ITM** at spot $80k in the comp-row regime column. That's pool-mark
-  (sNorm) referenced after the trade moved the pool, not naive spot-vs-strike — consistent with the
-  engine's pool-mark regime test, but visually surprising. Noted, not a finding.
+### Provenance summary
+- tester-confirmed (rendered pixels): items 1, 2, 4.
+- logic-only (closed-form + source, NOT a distinguishing pixel): item 3's uncapped-vs-capped visual.
+- Node oracle incl. seam gate: PASS against the v26b build.
+
+### Gotcha learned
+- Chart view values: `curve`=pool curve, **`pricing`=polar Mark-Across-Strikes (canvas-pricing) — this
+  is item-4's polar mark chart**, `trajectory`=(Δφ_C,Δφ_P) on canvas-ratio (NOT the mark curve),
+  `payoff`=canvas-payoff. My first harness pass aimed item-4 at canvas-ratio by mistake (the v26a
+  ratio chart); corrected to canvas-pricing.
+- `Engine`/`Store` are module-scoped consts (line 1590/2192), **NOT on window** — harness re-derives
+  closed forms inline (transcribed from source) and uses rendered DOM as the live oracle.
 
 ### Repro
-`cd engine; PLAYWRIGHT_BROWSERS_PATH=/home/user/.cache/ms-playwright node verify/pw_v26a_visual.mjs`
-Chromium is at `~/.cache/ms-playwright/chromium-1194` (installed via `npx playwright install chromium`
-WITHOUT `--with-deps` — the apt `--with-deps` step 403s on unrelated deadsnakes/ondrej PPAs; browser
-download itself from cdn.playwright.dev worked). `engine/node_modules/` holds 2 symlinks to the global
-playwright pkg so the ESM `import 'playwright'` resolves — harmless, not a real npm install.
+`cd engine; PLAYWRIGHT_BROWSERS_PATH=/home/user/.cache/ms-playwright node verify/pw_v26b_visual.mjs`
+Seam gate: `cd engine; sh verify/run_all.sh builds/temporal_mvp_v26b_itm.html` (the bare `run_all.sh`
+defaults to the v26a HEAD and SKIPs the seam gate — must pass the v26b path explicitly).
+Chromium at `~/.cache/ms-playwright/chromium-1194`. `engine/node_modules/` symlinks resolve
+`import 'playwright'` — tmp harnesses must live under `engine/` to resolve the module.
 
 ## What you run
-- Oracle: `cd engine && sh verify/run_all.sh` (7 GH gates, curveTrace 401/401, slope, slippage).
-  Seam/American gate joins when v26b lands.
-- Live Playwright (confirmed working this run). Browser path above. No browser → Node VM+DOM shim is
-  logic-only; say "tester-confirmed" only for rendered pixels.
-- File-safety spot-check: blob md5s `ab663f5c…`/`c505b08a…`; 3 `<script>` parse.
+- Oracle: `cd engine && sh verify/run_all.sh builds/temporal_mvp_v26b_itm.html` (7 GH gates +
+  curveTrace + slope + slippage splice + **seam gate**). Bare invocation = v26a, seam SKIP.
+- Live Playwright (confirmed working). No browser → Node VM+DOM shim is logic-only.
+- File-safety: blob md5s `ab663f5c…`/`c505b08a…`; 3 `<script>` parse; build md5 `8df9f8a3…`.
+
+## v26a state (prior run, still valid context)
+Finding-2 still open: v26a table/engine dollar-anchored, curve/ratio chart ratio-pegged. Manager's
+escalation input. Slippage display PASS. Frame re-fit PASS (don't revert). Curve = GH continuation.
 
 ## Evidence
-`evidence/v26a_pw/` — screenshots 01–10 (curve pre/preview/posttrade/rebase120k/rebase200k,
-portfolio 80k/120k, full app), `11_slippage_summary.png`, `12_slippage_row.png`, `trace.json`
-(all canvas/DOM numbers). Harnesses in `engine/verify/pw_v26a_visual.mjs` (+ probe, crop_slip).
-Prior slipfix evidence also in `evidence/`.
+`evidence/v26b_pw/` — 01_inputs, 03/09/10_payoff*, 04_after_execute, 05/06_bands_table_*,
+07_polar_mark_pricing, 08_pricing_full, **11_bands_table_crop** (item-1 legible), trace.json (all
+DOM/canvas numbers + sweeps). `evidence/v26a_pw/` prior run.
