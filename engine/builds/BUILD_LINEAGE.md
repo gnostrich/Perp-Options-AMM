@@ -9,7 +9,8 @@ show exactly what each step changed.
 | temporal_mvp_v25_gh.html | `9910c69924fd0b413dbb75e5b4ca56a0` | barrier→GH swap baseline; gates green |
 | temporal_mvp_v26a_fixes.html | `951d16eb1cfd0db24b2deffff30cd876` | + 3 barrier-remnant fixes; gates green |
 | temporal_mvp_v26a_2c0337e8_slipWIP.html | `2c0337e8e0260e7dae6072e241d764f0` | + slippage WIP — **KNOWN-BROKEN (~97% flat)**; lineage only, do not ship/build on |
-| **HEAD_temporal_mvp_v26a.html** | `89ae89e9df229186b134ca6638726d0c` | + slippage units fix; gates green; **build on this** |
+| **HEAD_temporal_mvp_v26a.html** | `89ae89e9df229186b134ca6638726d0c` | + slippage units fix; gates green; **current canonical HEAD** |
+| temporal_mvp_v26b_itm.html | `8df9f8a3cb705282a5348ce778f9eb82` | + ITM/American smooth-pasting (mark/markFrac split, both wings, seam gate wired); **manager-verified at Node level** (7 GH gates + seam PASS, blobs intact, funding bit-identical); **UI tester-pending** before HEAD promotion |
 
 Predecessor (pre-GH, in notes context only): `temporal_mvp_v24_rebase_fixed_2.html` was the
 barrier-curve build before the GH swap — not included; superseded by v25_gh.

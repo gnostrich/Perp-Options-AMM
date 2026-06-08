@@ -12,7 +12,10 @@ _Last updated: 2026-06-08, bootstrap. Rewrite changed bits at task end._
 
 ## ⛔ FILE-SAFETY (every engine edit)
 - Blobs: webp line ~74 md5 `ab663f5c26f2a461c5b0ef1421d0ad74`; svg line ~1060 md5
-  `c505b08ad0e4c6b0fb9e64e9679fe291`. **Never** the minified `8d2e1a84`/`1b320fc5` set. **No minifier.**
+  `c505b08ad0e4c6b0fb9e64e9679fe291`. The `8d2e1a84`/`1b320fc5` set is NOT a separate broken cut —
+  it is the **decode** of the canonical line layer `ab663f5c`/`c505b08a` (one blob, three layers:
+  line / b64-payload / decoded binary). Hook + run_all key off the **line layer**. RECONCILED
+  repo-wide. **No minifier, ever.**
 - Edit only via on-disk Python splice (work on a copy; slice old string by line range; `assert
   count==1`; preserve trailing `\n`; blobs never through the splice). Recipe:
   `engine/recipe_html_blob_editing.md`, `engine/splices/SPLICE_METHOD.md`; worked examples in
@@ -32,10 +35,30 @@ never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail i
   mislabel fixed; tooltip relabeled reserve-USD). All 7 gates green; splice-level slippage matches
   targets; no silent ghMu default.
 
-## Current work — v26b ITM/American (CLEARED, not started)
-Spec: `specs/SPEC_itm_exercise_smoothpaste_NEXT.md`. Continuation `c·sNorm` runs PAST the strike to
-`sNorm* = θ·((γ+1)/γ)^γ` (price `S* = K·γ/(γ+1)`), `c = 1/((γ+1)·sNorm*)`, then intrinsic-from-strike.
-No new params; drop the redundant "Eff strike" column; drawn curve = GH continuation up to sNorm*
-then intrinsic. Add `verify/seam_gate.js` (value+slope match ≤0.15% at boundary) as a hard gate in
-run_all. **Stage-2→3 dollar conversion is UNCHANGED — if it seems to need an exercise-specific
-branch, STOP and report.** Architectural? → escalate to manager, don't decide.
+## Done — v26b ITM/American (IMPLEMENTED, handed to manager 2026-06-08)
+Build: **`engine/builds/temporal_mvp_v26b_itm.html`** (from HEAD `89ae89e9`; HEAD untouched).
+Splice: `/tmp/splice_v26b.py` (17 reps, all `count==1`, blobs never through). All gates green.
+- **mark split:** `markFrac(wing,θ,sNorm)` = OLD saturating fraction VERBATIM (funding + the polar
+  ψ∈(0,1] mark-curve marker route here; funding proved BIT-IDENTICAL to HEAD, worst |Δ|=0). New
+  `mark(wing,θ,sNorm,γ)` = American smooth-pasting VALUE; `γ = state.ghAh−1` (exact). Branches bound
+  by **S-direction, NOT the call/put tag** (tag is inverted): `wing 'call'`=sNorm/θ arm →
+  `sNorm*=θ·((γ+1)/γ)^γ`, cont `sNorm/((γ+1)·sNorm*)`, intrinsic `1−(sNorm/θ)^(−1/γ)`=1−S/K, S*<K.
+  `wing 'put'`=θ/sNorm arm → `sNorm*=θ·(γ/(γ+1))^γ`, cont `sNorm*/((γ+1)·sNorm)`, intrinsic
+  `1−(sNorm/θ)^(1/γ)`=1−K/S, S*>K. Both fraction@bdry=`1/(γ+1)`.
+- γ threaded through: legPrice, executeBand (buy-side denom), markEff/legValueUnified (+closeBand
+  callers), pfComponents (+renderBands `pfGamma`), preview N_buy denom, legFraction. **Cap removed
+  on the UNBOUNDED (barrier) leg only** in legFraction; spread leg stays `min(1,·)`.
+- **Stage-2→3 dollar conversion UNTOUCHED** (no exercise branch needed — confirmed compatible).
+- **Display:** dropped `effK` (4151/4156), emptied Eff-strike component cell (`<td></td>`, 9-col
+  preserved), header `Attrib P&L / Eff strike`→`Attrib P&L`, `Orig strike`→`Strike`, dropped stale
+  units-note. Kept Oracle(live), Entry mark, mark cell, `itm`/`regimeCls` colouring.
+- **Seam gate** (`verify/seam_gate.js`, generalized): PER BRANCH value match (price-space, 0.000%) +
+  slope match (sNorm-space, ≤0.0005%) + no-jump (~1e-7) + DIRECTIONAL (branch A S*<K, branch B S*>K,
+  keyed off price space). Mutation test (swapped branches) → exits 1. **Slope is measured in
+  sNorm-space on purpose:** price-space FD differencing aliases the GH table (plateaus ~0.2%, does
+  NOT shrink with h → measurement artifact, not a kink); sNorm-space `d mark/d sNorm` is the exact
+  structural smooth-pasting quantity (chain-rule dS/dsNorm cancels). Wired into run_all as HARD GATE;
+  **SKIPs as pass on pre-v26b builds** (detects `markFrac` + non-saturating ITM mark) so HEAD stays
+  green. 7 GH gates still PASS γ∈{1.5,2,3,4}; blobs unchanged; 3 scripts parse; IIFE/sigs intact.
+- **Open for tester:** browser/visual run — bands table renders (empty Eff cell, renamed headers),
+  payoff chart legFraction uncapped on naked leg, polar marker dot stays on its ψ-curve.

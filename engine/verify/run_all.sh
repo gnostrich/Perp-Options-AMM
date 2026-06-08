@@ -13,6 +13,7 @@ echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$
 SCRATCH=$(mktemp -d)
 cp "$HEAD" "$SCRATCH/temporal_mvp_v26a.html"
 cp "$HEAD" "$SCRATCH/temporal_mvp_v26a_2c0337e8.html"
+cp "$HEAD" "$SCRATCH/temporal_mvp_v26b_itm.html"   # seam gate reads this name
 cp verify/*.js "$SCRATCH/"
 cd "$SCRATCH"
 
@@ -27,5 +28,8 @@ node slip_accept.js
 
 echo "\n================ SPLICE-LEVEL: actual spliced functions vs targets (splice_level_check.js) ================"
 node splice_level_check.js temporal_mvp_v26a.html
+
+echo "\n================ SEAM GATE — v26b ITM/American (value+slope <=0.15% AND directional) [HARD GATE] ================"
+node seam_gate.js temporal_mvp_v26b_itm.html   # set -e => nonzero exit aborts run_all
 
 echo "\nAll checks above should be green. (Lean = trusted-from-prover; UI = tester-confirmed.)"
