@@ -41,8 +41,28 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
    live dollar strike (align to table) vs intentionally show entry position. Awaiting operator.
    NOTE soft-flag: slippage scales hard with collar aggressiveness (0.2 BTC wide collar → 3463%,
    pool spot→~$0); display contract correct, magnitude input-driven — flagged for separate look.
-3. **v26b — ITM/American build** | intern | CLEARED, NOT STARTED. Build on HEAD per
-   `specs/SPEC_itm_exercise_smoothpaste_NEXT.md`; wire `verify/seam_gate.js` into run_all.
+3. **v26b — ITM/American build** | intern | **DISPATCHED → intern STOPPED-and-REPORTED pre-edit
+   (correct discipline; no files touched, HEAD intact).** Three blockers surfaced; manager-verified:
+   - **(a) `mark()` needs γ** — recoverable as `state.ghAh−1` (I verified exact for γ∈{1.5,2,3,4}).
+     Requires extending `mark(wing,θ,sNorm)` → thread γ/state through ~8 call sites. **AUTHORIZED
+     (manager):** signature change is part of the mark-rule task (file-safety "sigs unless that's
+     the task" satisfied).
+   - **(b) PUT-wing smooth-pasting boundary** — NEXT spec gives only the call wing; intern derived
+     the put mirror & verified gate-clean. **I independently re-derived:** `sNorm*_put=θ·(γ/(γ+1))^γ`,
+     `S*=K·(γ+1)/γ`, value-match exact, frac@bdry `1/(γ+1)`. Matches HISTORICAL spec
+     `specs/historical/SPEC_itm_exercise_smooth_pasting.md`. **ESCALATED to operator** (CLAUDE §7:
+     smooth-pasting boundary = settlement semantics). Rec: accept (forced mirror, historically
+     specified, gate-clean).
+   - **(c) funding consumes `mark()` (line 2138)** — rescaling mark would change funding's input;
+     CLAUDE §4 LOCKS funding untouched/orthogonal. **RULING (manager, enforces the lock):** split —
+     keep old saturating fraction as `markFrac(wing,θ,sNorm)` for funding (bit-identical), new
+     continuation→intrinsic `mark` for value/portfolio/chart; remove `Math.min(1,…)` caps (lines
+     ~3843-3845) on the UNBOUNDED option-leg only (§2: don't cap), bounded wing stays capped at 1.
+     NOTE: §6 stop-condition (stage-2→3 dollar branch) was NOT tripped — intern confirmed
+     `carvedNotional`/`entryPerpMark` unchanged-compatible.
+   Bands render (§5) + seam-gate generalization (both wings) are ready & unambiguous. RE-DISPATCH
+   intern with (a)+(c) authorized the moment operator ratifies (b). Build → NEW file
+   `engine/builds/temporal_mvp_v26b_itm.html`; nothing becomes HEAD until I verify.
 4. **Blob-ledger reconcile** | manager + operator | **VERIFIED, awaiting operator ratification.**
    Decoded HEAD blobs at all 3 layers myself (2026-06-08): line-md5 `ab663f5c`/`c505b08a` (canonical,
    what the hook+run_all check) → DECODED-binary `8d2e1a84`/`1b320fc5`, b64-payload `d3ff8fc8`/`b6f0d67b`.
