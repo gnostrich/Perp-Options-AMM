@@ -18,8 +18,12 @@ is the mechanical audit trail. Rewrite the changed bits at the end of every task
   on broken script. No stale v26a pin remains in the gate path.
 - **Union merge:** CLAUDE.md auto-merged clean (non-overlapping) — kept BOTH main's §6.1 GitHub-ops/
   agent-reconfig AND pensive's §8 v26c repo map. No conflict markers anywhere.
-- **PR opened (NOT merged — operator merges):** exciting-volta → main. v26a build kept in history
-  (renamed `temporal_mvp_v26a.html`, not deleted).
+- **MERGED to main (operator-authorized, 2026-06-08):** PR #4 squash-merged → main `3d4fbe2`.
+  Confirmed on main: v26c HEAD md5 `6cc73563`, file-safety gate PASS (exit 0), 7 GH + seam + dir
+  gates PASS, blobs intact. ITM/American smooth-pasting = DONE; Finding-2 = RESOLVED (absorbed via
+  uniform strike registration). Integration branch `exciting-volta` deleted (remote+local);
+  `pensive-sagan-WhNLb` kept as backup (full 26-commit granular history). v26a build kept in history
+  (renamed `temporal_mvp_v26a.html`, not deleted). **main HEAD = v26c.**
 
 ## HEAD / verification
 - **HEAD = `engine/builds/HEAD_temporal_mvp_v26c.html`, md5 `6cc73563779a3e030774b7597d0ae187`
@@ -41,8 +45,9 @@ is the mechanical audit trail. Rewrite the changed bits at the end of every task
   5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →
   71.45%/$6240.94), loud-NaN guard OK. **UI owed to tester** — live browser run DISPATCHED (bg,
   agent a0b7eb8b). Lean = trusted-from-prover.
-- **Branch:** integrating on `claude/exciting-volta-82z290` (= main 6cb4c92 at task start). v26c line
-  (`claude/pensive-sagan-WhNLb`) folded in via merge `addc8c0`; PR open to main, operator merges.
+- **Branch:** v26c line (`claude/pensive-sagan-WhNLb`) folded into `exciting-volta` (= main 6cb4c92
+  at task start) via merge `addc8c0`, then **merged to main as PR #4 (`3d4fbe2`)**. exciting-volta
+  deleted; pensive-sagan kept as backup. main HEAD = v26c.
 - Blobs intact: webp `ab663f5c…` (line 74), svg `c505b08a…` (line 1060). File-safety hook live.
 
 ## Build lineage (engine/builds/BUILD_LINEAGE.md — authoritative)
@@ -278,7 +283,8 @@ semantics, reopen a locked decision/ship-gate, product calls Finding-2 / |Γ|>1 
 calibration tier, paper claims). Irreversible/high-blast-radius escalates regardless.
 
 ## Waiting on operator
-- **Merge the v26c integration PR** (exciting-volta → main) — I opened it; I do NOT merge it myself
-  per this task's instruction. Once merged, v26c is canonical HEAD on main.
+- Nothing blocking from the v26c reconciliation — **v26c is canonical HEAD on main** (PR #4 merged
+  `3d4fbe2`). Open project threads (Lean GH gate-discharge, ship-gate B1, publication, Layer-2
+  honest-dollar $) continue per their owners.
 - (Resolved this task: scaffolding already on main; v26a/v26b/v26c tester runs done; `GH_TOKEN`
-  present & verified 200.)
+  present & verified 200; integration merged + branch cleaned up.)
