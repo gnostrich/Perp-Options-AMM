@@ -1,0 +1,2 @@
+# Playwright resolution symlinks to the global package — not a real install
+engine/node_modules/

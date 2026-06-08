@@ -1,0 +1,204 @@
+{
+  "consoleErrors": [],
+  "dialogs": [],
+  "slipLabel": "Slippage % ⓘ",
+  "slipText": "39.9829 %  ·  ≈ $1546.64",
+  "slipTitle": "Price drift across the trade: realized average execution price vs the pre-trade geometric marginal. This cost is already inside the trader's proceeds -- shown for transparency. The $ figure is a pool-level price-impact cost in Layer-1 reserve USD, not a trader honest-dollar figure.",
+  "slipPost": "39.9829 %  ·  ≈ $1546.64",
+  "execDisabled": false,
+  "canvas": {
+    "pre": {
+      "W": 700,
+      "H": 460,
+      "litPixels": 10737,
+      "dot": {
+        "x": 343.2,
+        "y": 218.2,
+        "fx": 0.49,
+        "fy": 0.474,
+        "n": 480
+      },
+      "curveBox": {
+        "minCx": 70,
+        "maxCx": 699,
+        "minCy": 277,
+        "maxCy": 411
+      }
+    },
+    "prev": {
+      "W": 700,
+      "H": 460,
+      "litPixels": 10737,
+      "dot": {
+        "x": 343.2,
+        "y": 218.2,
+        "fx": 0.49,
+        "fy": 0.474,
+        "n": 480
+      },
+      "curveBox": {
+        "minCx": 70,
+        "maxCx": 699,
+        "minCy": 277,
+        "maxCy": 411
+      }
+    },
+    "postTrade": {
+      "W": 700,
+      "H": 460,
+      "litPixels": 8976,
+      "dot": {
+        "x": 333.6,
+        "y": 217.7,
+        "fx": 0.477,
+        "fy": 0.473,
+        "n": 483
+      },
+      "curveBox": {
+        "minCx": 75,
+        "maxCx": 699,
+        "minCy": 279,
+        "maxCy": 408
+      }
+    },
+    "postRebase": {
+      "W": 700,
+      "H": 460,
+      "litPixels": 8545,
+      "dot": {
+        "x": 329.5,
+        "y": 274.3,
+        "fx": 0.471,
+        "fy": 0.596,
+        "n": 530
+      },
+      "curveBox": {
+        "minCx": 235,
+        "maxCx": 699,
+        "minCy": 281,
+        "maxCy": 287
+      }
+    },
+    "postRebase2": {
+      "W": 700,
+      "H": 460,
+      "litPixels": 7720,
+      "dot": {
+        "x": 326.9,
+        "y": 293.5,
+        "fx": 0.467,
+        "fy": 0.638,
+        "n": 519
+      },
+      "curveBox": {
+        "minCx": 263,
+        "maxCx": 699,
+        "minCy": 281,
+        "maxCy": 288
+      }
+    }
+  },
+  "dotFrac": {
+    "postTrade": {
+      "x": 333.6,
+      "y": 217.7,
+      "fx": 0.477,
+      "fy": 0.473,
+      "n": 483
+    },
+    "postRebase": {
+      "x": 329.5,
+      "y": 274.3,
+      "fx": 0.471,
+      "fy": 0.596,
+      "n": 530
+    },
+    "postRebase2": {
+      "x": 326.9,
+      "y": 293.5,
+      "fx": 0.467,
+      "fy": 0.638,
+      "n": 519
+    }
+  },
+  "portfolio": {
+    "at80k": {
+      "hdrSpot": "spot $17,784.50",
+      "kpiSpot": "$17,784.50",
+      "kpiOracle": "80000",
+      "pfStatus": "1 open bands · 1 total",
+      "slip": "39.9829 %  ·  ≈ $1546.64",
+      "logTail": [
+        "[t=0h]Open B1: sold BAR on call N=0.050000 @ θ*=1.0500 → V=3809.52; bought BAR on put N=0.071101 @ θ*=0.8500 → V=5688.09. L₀=4.29, slip=39.9829%, fee=$0.4000, club=long-btc.",
+        "[t=0h]Perp P3: LONG $80000 (margin $20000, entryMark $80000). Free equity → $21000.",
+        "[t=0h]Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+        "[t=0h]Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+        "[t=0h]Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500.",
+        "[t=0h]Perp P1: LONG $10000 (margin $1000, entryMark $80000). Free equity → $1000."
+      ],
+      "compRows": [
+        [
+          "SOLD\n            call · inner",
+          "$84,000",
+          "$80,000",
+          "$84,000 · OTM",
+          "0.2117",
+          "0.010586",
+          "0.000000",
+          "",
+          ""
+        ],
+        [
+          "BOUGHT\n            put · inner",
+          "$68,000",
+          "$80,000",
+          "$80,000 · ITM",
+          "1.0000",
+          "0.071101",
+          "0.000000",
+          "",
+          ""
+        ]
+      ]
+    },
+    "at120k": {
+      "hdrSpot": "spot $26,676.75",
+      "kpiSpot": "$26,676.75",
+      "kpiOracle": "120000",
+      "pfStatus": "1 open bands · 1 total",
+      "slip": "39.9829 %  ·  ≈ $1546.64",
+      "logTail": [
+        "[t=0h]Open B1: sold BAR on call N=0.050000 @ θ*=1.0500 → V=3809.52; bought BAR on put N=0.071101 @ θ*=0.8500 → V=5688.09. L₀=4.29, slip=39.9829%, fee=$0.4000, club=long-btc.",
+        "[t=0h]Perp P3: LONG $80000 (margin $20000, entryMark $80000). Free equity → $21000.",
+        "[t=0h]Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+        "[t=0h]Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+        "[t=0h]Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500.",
+        "[t=0h]Perp P1: LONG $10000 (margin $1000, entryMark $80000). Free equity → $1000."
+      ],
+      "compRows": [
+        [
+          "SOLD\n            call · inner",
+          "$84,000",
+          "$120,000",
+          "$84,000 · OTM",
+          "0.3176",
+          "0.015879",
+          "0.000000",
+          "",
+          ""
+        ],
+        [
+          "BOUGHT\n            put · inner",
+          "$68,000",
+          "$120,000",
+          "$120,000 · ITM",
+          "1.0000",
+          "0.071101",
+          "0.000000",
+          "",
+          ""
+        ]
+      ]
+    }
+  }
+}
