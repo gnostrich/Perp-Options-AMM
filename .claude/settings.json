@@ -3,6 +3,10 @@
   "permissions": {
     "defaultMode": "acceptEdits",
     "allow": [
+      "Agent(research-lead)",
+      "Agent(intern)",
+      "Agent(tester)",
+      "Agent(paper)",
       "Bash(git:*)",
       "Bash(gh:*)",
       "Bash(node:*)",

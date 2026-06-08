@@ -20,6 +20,43 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
 | temporal_mvp_v26a_2c0337e8_slipWIP | 2c0337e8 | slippage WIP — **known-broken (~97% flat)**, lineage only |
 | **HEAD_temporal_mvp_v26a** | **89ae89e9** | slippage units fix (both paths → mpGeom) — **work from this** |
 
+## Roster (5 agents, after 2026-06-08 aristotle-fold config task)
+manager · **research-lead (theory owner AND its own prover interface)** · intern · tester · paper.
+The standalone `aristotle` agent is **REMOVED** — folded into research-lead. The prover loop is now
+**direct, no courier:** research-lead phrases the obligation → calls `aristotle submit` itself (host
+Harmonic's Aristotle) → polls → local `lake build` re-verify (emends mechanical backend diffs only) →
+records one of 4 verdicts (proved+re-verified / counterexample / still-open / candidate-fails-local-
+recheck) → audits/interprets. **research-lead keeps ALL raw prover/poll/lake output in its own context;
+I receive only distilled reports** (verdicts, queue status, escalations) and relay nothing between
+agents. research-lead holds Bash + the aristotlelib CLI; it does NO git/env actions (I am sole git/env
+actor). I do **not** see raw prover output and am no longer a courier.
+
+## Aristotle connection (now research-lead's, for my orchestration awareness only)
+- Interface = `aristotlelib` CLI (`aristotle submit/formalize/list/show/download/cancel/tasks/ask`),
+  auth `ARISTOTLE_API_KEY` (set, len 51), host `aristotle.harmonic.fun`. `uvx --from aristotlelib
+  aristotle …` (uvx present); no official Harmonic MCP → **no `.mcp.json`**; routines use the
+  **Harmonic connector**. Full invocation/re-verify procedure lives in research-lead's MEMORY.md — I
+  don't run it.
+- **Host UNBLOCKED — CONFIRMED 2026-06-08** via a real round-trip (research-lead, direct CLI). The old
+  `403 host_not_allowed` is gone; both smoke lemmas submitted, ran, returned archives.
+- **API-KEY GOTCHA (escalate to operator):** `$ARISTOTLE_API_KEY` is stored wrapped in literal angle
+  brackets `<arstl…>` (len 51); passed verbatim the server returns "Invalid API key". research-lead
+  strips the `<>` (→ len 49) to authenticate. **Fix the stored secret to the bare key** so no workaround
+  is needed. Provisioning artifact, not a real auth failure.
+- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → **local re-verify is
+  PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate works; re-verify half does not
+  run here — nothing is reported as "proved + re-verified" until a toolchain lands.
+- **SMOKE RESULT (2026-06-08, research-lead distilled):** direct loop works end-to-end through
+  submit→candidate. `smoke_true` (`2+2=4`) → valid candidate, axioms = propext only; **label: candidate
+  returned, re-verify PENDING-LEAN** (NOT proved+re-verified). `smoke_false` (`∀n,n=n+1`) → Aristotle
+  did NOT prove it: declared false, gave counterexample n=0→0=1, proved the *negation* instead; **label:
+  counterexample (correct refutation), no red flag.** Discrimination test PASSED — prover did not fake
+  the false goal, research-lead labeled it `counterexample` not `proved`. (Manager independently
+  corroborated against the Harmonic dashboard the operator shared.)
+- Routine spec: `docs/routines/aristotle_ph_loop.md` (now the direct, research-lead-only loop).
+- PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
+  only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **OWED — this is the first resume action.** Confirm
    slippage display (% primary, $ reserve-USD label), v26a frame re-fit (dot ~fixed while axes
