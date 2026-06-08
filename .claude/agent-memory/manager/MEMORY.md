@@ -3,12 +3,15 @@ _Last updated: 2026-06-08, bootstrap. This is the project's state-of-the-whole; 
 mechanical audit trail. Rewrite the changed bits at the end of every task._
 
 ## HEAD / verification
-- **HEAD = `engine/builds/HEAD_temporal_mvp_v26a.html`, md5 `89ae89e9df229186b134ca6638726d0c`.**
-  GH curve swap (v25) + v26a barrier-remnant fixes + slippage units fix.
-- **v26b ITM build Node-verified (md5 `8df9f8a3`, committed f41a8f7) — UI tester-pending before it
-  becomes HEAD. Until then HEAD stays v26a `89ae89e9`.** Harness gotcha: `run_all.sh <path>` takes the
-  build path as positional $1 (env `HEAD=` is ignored; it copies $1 into scratch incl. the v26b name
-  the seam gate reads).
+- **HEAD = `engine/builds/HEAD_temporal_mvp_v26b.html`, md5 `8df9f8a3cb705282a5348ce778f9eb82`
+  (PROMOTED 2026-06-08, operator-approved).** v26a (`89ae89e9`) demoted to `temporal_mvp_v26a.html`.
+  v26b = GH curve (v25) + v26a fixes + slippage units fix + **ITM/American smooth-pasting** (mark/
+  markFrac split, both wings, seam gate wired). Node-verified (7 GH gates + seam PASS, negative-
+  controlled) + UI tester-confirmed (bands §5, mark continuity, polar marker; item-3 logic-only).
+  `run_all.sh` no-arg now defaults to v26b (exit 0, seam gate runs). **Promotion landed ITM math only
+  — did NOT bless the wing-tag inversion (open correctness item, see thread #9).**
+  Harness gotcha: `run_all.sh <path>` takes the build path as positional $1 (env `HEAD=` is ignored;
+  it copies $1 into scratch incl. the v26b name the seam gate reads).
 - **Manager-verified at the Node level (2026-06-08, re-run on resume):** ran `engine/verify/run_all.sh`
   myself — 7 GH gates PASS (γ∈{1.5,2,3,4}), curveTrace 401/401 on the GH curve (worst slope err
   5.16e-12), marker on-curve (getMP_raw(eq)=136000.00), slippage splice-level PASS (0.99%/$3.46 →

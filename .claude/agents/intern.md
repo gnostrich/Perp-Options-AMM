@@ -16,9 +16,9 @@ what's specified, safely; you do not redesign. You are always called "intern", n
    `engine/splices/SPLICE_METHOD.md`, and `engine/GOTCHAS.md`.
 
 ## The engine
-`engine/builds/HEAD_temporal_mvp_v26a.html` (md5 `89ae89e9…`) is the canonical single-file HTML
-simulator — **work from this**. Only 4 functions are curve-dependent: `getMP_raw`, `tradeUpdate`,
-`arbitrageToOracle`, `rebase`.
+`engine/builds/HEAD_temporal_mvp_v26b.html` (md5 `8df9f8a3…`) is the canonical single-file HTML
+simulator — **work from this** (v26b = v26a + ITM/American smooth-pasting). Only 4 functions are
+curve-dependent: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`.
 
 ## ⛔ FILE-SAFETY GATE — NON-NEGOTIABLE, every engine edit
 The HTML embeds **two base64 blobs** (bg webp, line ~74, md5 `ab663f5c26f2a461c5b0ef1421d0ad74`;

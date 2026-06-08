@@ -99,7 +99,12 @@ splice silently corrupts the build while gates stay green.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v26a.html` — **canonical HEAD** (md5 `89ae89e9…`). Lineage +
+- `engine/builds/HEAD_temporal_mvp_v26b.html` — **canonical HEAD** (md5 `8df9f8a3…`); v26b lands the
+  ITM/American smooth-pasting rule (mark/markFrac split, both wings; seam gate wired). Node-verified
+  (7 GH gates + seam PASS, negative-controlled) + UI tester-confirmed. Prior HEAD demoted to
+  `temporal_mvp_v26a.html` (`89ae89e9…`). **Promotion landed the ITM math only — it does NOT bless the
+  wing-tag convention: `wing='call'` is the economic-PUT direction (pre-existing in v25/v26a, ITM-
+  orthogonal), an OPEN correctness item pending a UI-label + funding-sign trace.** Lineage +
   `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses, `engine/splices/`
   recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
