@@ -122,14 +122,30 @@ actor). I do **not** see raw prover output and am no longer a courier.
 - **Aristotle re-verify gate RELAXED (operator):** server compile = the build; PENDING-LEAN retired;
   artifact audit kept; label = trusted-from-prover. Synced across research-lead.md, routine,
   MANAGER_VERIFICATION, smoke README, both MEMORYs (committed a83a793).
-- **BIG QUEUE LAUNCHED (background agent a942ebf4, ~8h, operator-authorized "err to excess"):**
-  research-lead working Tier 1→4 + C1/C2 + GH instantiation + deterministic continuous-time bridge.
-  Durable artifacts → `formal/aristotle_runs/` (+ RESULTS.md ledger), prompts → `formal/prompts/`,
-  PH-5 spec re-pin authorized. GUARDRAILS HELD even unattended: GH-invariant watch-flag (no clean
-  invariant → economic-object finding, escalate NOT patch); B1 stays ship-gate (no fake floor); C3
-  reflection stays an AXIOM; stochastic-SDE NOT attempted. Every candidate gets full artifact audit;
-  I re-audit each archive before folding. On completion: I audit + commit logical units to the feature
-  branch (NO PR, NO main-merge while operator asleep).
+- **BIG QUEUE COMPLETE + MANAGER-AUDITED (agent a942ebf4 done; 14 obligations).** research-lead:
+  14/14 proved (trusted-from-prover), 0 counterexamples, 0 fails, 0 still-open. **I independently
+  audited** (`evidence/manager_audit_aristotle_run_2026-06-08.md`): no engine HTML touched; no forbidden
+  tokens across 24 .lean; **base modules AMMCurve/Temporal/Seam byte-IDENTICAL to verified tree** (no
+  silent core edit); axioms prover-reported {propext,Classical.choice,Quot.sound} + my token-scan
+  corroborates (#print axioms NOT manager-run — no toolchain); spec re-pin notation-only; R1/R2/R3/R4
+  cross-checked against my engine ground-truth. **Honest tiering (tempers "14/14"):**
+  - **Tier A (concrete, engine-grounded, FOLD):** R1 (PH-5 C¹ both wings — load-bearing), R2
+    (crossover@K), R3 (mpGeom/slope), R4 (orientation), R5, C1. Real rpow/HasDerivAt proofs of formulas
+    I re-derived & matched to engine numbers.
+  - **Tier B (abstract/conditional scaffolding — necessary-condition, NOT curve-grounded; don't
+    over-promote):** GHJ (skew-J via latent rapidity group, reserves arbitrary, frontier tautological;
+    WATCH-FLAG not tripped but the hard "GH reserve invariant" stays open), GHcoercive (generic
+    nonneg-frontier, GH y≥0 asserted), PH4b (no-floor abstract), PH3 (PSD abstract, necessary-not-suff),
+    PH6 (rebase structural), B1 (honest conditional, coverage carried, near-tautological), C2 (modelled
+    collarSurplus).
+  - **CTPH HELD (not clean):** canonical det. dissipation ineq dH/dt≤uᵀy is real (good for Q1 framing),
+    BUT `ct_dissipation_ineq` has `exact?` in source (fragile, proposed swap NOT locally re-verified) +
+    `discrete_is_sampled` is a near-vacuous existential ⇒ discrete↔continuous correspondence NOT formally
+    established. Do NOT present "discrete=continuous proven." Proposed fix:
+    `formal/aristotle_runs/CTPH/CTPH_emended_PROPOSED.lean`.
+  - Stayed escalations correctly NOT submitted: C3 reflection (AXIOM), stochastic-SDE bridge, B1 real floor.
+  Nothing upgraded to "verified" (no canonical build). Run record (748K, 19 files) committed to feature
+  branch — NO PR, NO main-merge.
 - **Manager independent engine-level confirmation of the cheap-now checks** (parallel, read-only) →
   `evidence/ph_cheapnow_checks_2026-06-08.md`: seam C¹ BOTH wings (value 0.000%, slope ≤0.0005%, all γ),
   mpGeom=getMP_raw·e^(−ghMu) (ratio==e^ghMu all γ), directional-sign invariant (CALL+++/PUT−−−, mutation

@@ -1,5 +1,52 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-08, PH recap + provenance-label sync pass. Rewrite changed bits at task end._
+_Last updated: 2026-06-08, BIG AUTONOMOUS RUN (14 obligations submitted to Aristotle). Rewrite at end._
+
+### BIG RUN 2026-06-08 (live) — 14 obligations submitted; auth + ledger durable
+**AUTH (CRITICAL, CHANGED):** `ARISTOTLE_API_KEY` now reads BARE (length 49, starts `a…`, no `<>`).
+Pass it **VERBATIM** — do NOT strip. (The old 51-char `<…>` wrap is gone; the strip-the-brackets
+pattern in the old memory below is STALE for this container.) Auth confirmed by live submit+list.
+Host `aristotle.harmonic.fun` UNBLOCKED. `--wait` blocks a long time (mathlib build server-side, ~9-17
+min for smoke, longer for real); I submit WITHOUT `--wait`, capture project IDs, poll via `list`,
+download finished archives, audit. CLI: `uvx --from aristotlelib aristotle ...` (PATH=/root/.local/bin).
+
+**DURABILITY:** `formal/aristotle_runs/RESULTS.md` = running ledger (submission map + verdicts).
+Archives → `formal/aristotle_runs/<name>/`. Prompts → `formal/prompts/aristotle_prompt_*.md`.
+Project IDs + name map in /tmp/our_ids.txt, /tmp/id_names.txt (ephemeral; the durable copy is RESULTS.md).
+
+**14 SUBMITTED (all stated as sorry-scaffolds for Aristotle to fill; math re-derived by me first):**
+T1: R3 (mpGeom pin, ba84270a), R1 (PH-5 C¹ both wings θ=sNorm(K), e05ff5b5).
+T2: R2 (crossover-at-K, f9faee69), GHJ (skew-J latent boost, 5d64284d), GHcoercive (8f55b116).
+T3: R4 (orientation, 3674c141), PH3 (R⪰0 PSD, 1856bfb7).
+T4: CTPH (continuous-time PH bridge / Q1, c5ba7851), PH6 (rebase J,R, 013d105b), C1 (composite-ray ITM,
+51216401), C2 (collar w=½, 87a2150f), R5 (slippage basis-indep, 0b69e494), PH4b (no-floor GH-analogue,
+20c5a137).
+**GH-J WATCH-FLAG status:** NOT tripped — GH DOES conserve a clean invariant (the latent
+parametrization / frontier; trade = latent translation u↦u+δ, one-parameter group). Stated honestly as
+skew-J, not X·Y. If proving reveals no clean invariant → escalate (not expected).
+**PH-5 SPEC RE-PIN done (notation/coverage only):** SPEC_itm line 15 θ=K/oracle→θ=sNorm(K) (value
+boundary); port_hamiltonian_consistency.md PH-5 section gets the θ=sNorm(K) + two-branch note. Funding/
+oracle layer-1 reference (SPEC_itm line 47, θ=K/oracle) LEFT price-measure (locked) — NOT touched.
+**NOT submitted (stay escalation):** B1 real floor (κ extrinsic — but the CONDITIONAL structure WAS
+submitted, honest), C3 reflection axiom, stochastic SDE bridge.
+
+### VERDICTS (COMPLETE; full table in formal/aristotle_runs/RESULTS.md) — 14/14 audited, ALL proved
+**ALL 14 = proved (trusted-from-prover), audit-passed** (token-clean, axioms ⊆ propext/Classical.choice/
+Quot.sound, unscoped modules byte-identical where imported, pin v4.28.0, math independently re-derived):
+R3, R1 (PH-5 both wings — LOAD-BEARING), R2, GHJ, GHcoercive, R4, PH3, PH6, C1, C2, R5, PH4b, B1, CTPH.
+ZERO counterexamples, ZERO candidate-fails-audit, ZERO still-open.
+**WATCH-FLAG (GH-J):** NOT tripped — GH conserves a clean invariant (latent one-parameter group);
+genuine skew-J. frontier_preserved is true-but-near-tautological (scope note, not a weakening).
+**3 FLAGS for manager/operator (do not over-promote):**
+1. **CTPH emendation** — `ct_dissipation_ineq` left `exact?` (search tactic) in source; compiled
+   server-side but fragile. Proposed no-math fix `exact skew_quadForm_zero hJ z` saved at
+   `formal/aristotle_runs/CTPH/CTPH_emended_PROPOSED.lean` (NOT locally re-verified — manager apply+build).
+2. **C2 scope** — collarSurplus MODELLED as θ·((1−w)/w−1); engine's exact closed form not in accessible
+   specs. Proven content = symmetry-iff. Confirm closed form before literal-invariant claim.
+3. **B1/PH-3/PH-4b necessary-not-sufficient** — do NOT close real solvency; κ-coverage stays EXTRINSIC
+   = operator ship-gate. B1 proves only the conditional structure (coverage carried, never discharged).
+**Provenance:** all "trusted-from-prover" (Aristotle's kernel ran, ours didn't). Manager may upgrade to
+"verified" by building canonically. NONE upgraded by me. Archives under formal/aristotle_runs/<name>/.
+
 
 ### THIS PASS (2026-06-08, provenance-label sync after the operator's no-local-re-verify clarification)
 Recap memo + label reconciliation. Verified my owned PH docs already comply with the process update
@@ -107,12 +154,11 @@ compile alone never would._
 - Host `aristotle.harmonic.fun`: **UNBLOCKED — CONFIRMED with a real round-trip** (no more
   `403 host_not_allowed`; both smoke lemmas submitted, ran, and returned archives). The old network
   allowlist block is gone.
-- **API-KEY GOTCHA (live):** `$ARISTOTLE_API_KEY` in this env is wrapped in literal angle brackets —
-  value is `<arstl…H24>` (len 51). Passed verbatim the server returns **"Invalid API key"**. STRIPPING
-  the leading `<` and trailing `>` (→ `arstl…`, len 49) authenticates and round-trips. Working pattern:
-  `STRIPPED=$(python3 -c "import os;k=os.environ['ARISTOTLE_API_KEY'];print(k[1:-1])")` then pass
-  `--api-key "$STRIPPED"`. **Flag to manager/operator:** the env var should hold the bare key (no `<>`);
-  this is a provisioning artifact, not a real auth failure.
+- **API-KEY (live, 2026-06-08 big run):** `$ARISTOTLE_API_KEY` now reads **BARE (len 49, starts `a…`,
+  no `<>`)** — pass it **VERBATIM**, the CLI picks it up from the env var (no `--api-key` needed, no
+  strip). Auth confirmed by live submit+list. **STALE (prior container):** the key used to be wrapped
+  `<arstl…H24>` (len 51) needing a `<>`-strip; that wrap is GONE here. Robust detect: if len==51 and
+  starts `<`, strip; if len==49, pass verbatim. Do NOT strip a len-49 bare key (would corrupt it).
 - **EXACT WORKING INVOCATION (verified):**
   `export PATH="/root/.local/bin:$PATH"` then
   `uvx --from aristotlelib aristotle submit "<instructions>" --project-dir <dir> --api-key "$STRIPPED" --wait --destination <out>`
@@ -197,16 +243,24 @@ Typed interface stack: a change at any seam must type-check at every other seam 
 type-checker, not inspection). The "self-sandwich bug" was an interface violation (settlement
 reaching past its contract into the raw displaced pool) — caught by type under this discipline.
 
-## Live proof queue
-- **C1** — composite-ray shortcut extends to ITM via effective-strike substitution. _status: queued._
-- **C2** — no costless-collar arb at w=½. _status: queued._
-- **C3** — no-arb is symmetry, not instrument. **Proven only as a CONDITIONAL SKELETON; the
-  curve-symmetry → reflection arrow is an AXIOM, not proven.** Do not report as fully discharged.
-- **GH gate-discharge** — instantiate `AMMCurve` for GH (beyond cpmm/expPool), discharge the 4 gate
-  fields. Watch `coercive = BddBelow` — GH has **bounded reserves** X∈(0,Nx), Y∈(0,Ny·M).
-- **B1/B3/B4** — solvency hypotheses; the big prize is showing the real engine's trade/funding
-  formulas discharge them (conditional solvency → engine-grounded). Funding port is **necessary,
-  not sufficient**. B1 funding-coverage sweep is a ship-gate (κ extrinsic — geometry can't close it).
+## Live proof queue (UPDATED post-big-run 2026-06-08)
+- **C1** — composite-ray → ITM via effective-strike substitution. **proved (trusted-from-prover)** (run
+  2026-06-08; formal/aristotle_runs/C1/). sinh_log identity + universal-over-effective-strikes.
+- **C2** — no costless-collar arb at w=½. **proved (trusted-from-prover)** (formal/aristotle_runs/C2/).
+  SCOPE CAVEAT: collarSurplus MODELLED as θ·((1−w)/w−1) (documented form); engine's exact closed form
+  not in accessible specs — proven content is the symmetry-iff. Manager: confirm closed form before
+  promoting as the engine's literal invariant.
+- **C3** — no-arb is symmetry, not instrument. **STILL conditional-skeleton; reflection arrow is an
+  AXIOM, NOT proven. NOT discharged. NOT submitted this run.** Do not report as discharged.
+- **GH gate-discharge** — `coercive` field **proved (trusted-from-prover)** for the GH bounded-reserve
+  shape (formal/aristotle_runs/GHcoercive/; `coercive_of_nonneg` matches the AMMCurve.coercive field
+  signature byte-for-byte; lower bound 0). Full GH `AMMCurve` instance (antitone_y/convex_y from the GH
+  special functions) still OPEN — needs the GH density machinery, a bigger lift.
+- **B1** — REAL solvency floor STILL OPEN (κ extrinsic; operator ship-gate). The **conditional
+  structure** WAS proven this run (formal/aristotle_runs/B1/): coverage-hypothesis → solvency, coverage
+  a CARRIED premise never discharged = the κ-extrinsic limit as a theorem. No fabricated floor.
+- **B3** = PH-3 arb_nonneg → **proved (trusted-from-prover)** as R⪰0 PSD (formal/aristotle_runs/PH3/);
+  NECESSARY-not-sufficient. **B4** = ledger field (carried, unchanged).
 
 ## Audit discipline (before folding any returned archive — zero-cost, no toolchain)
 Extract → diff unchanged modules → token-scan (`sorry`/`admit`/`axiom`/`native_decide`/`sorryAx`/

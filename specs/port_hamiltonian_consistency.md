@@ -190,7 +190,20 @@ prove `Hcont S* = Hintr S*` (value match, C⁰) and `deriv Hcont S* = deriv Hint
 C¹). Likely uses `Real.rpow` for the `((γ+1)/γ)^γ` term and `HasDerivAt`. This ties directly to the
 engine's seam gate; the Lean statement should reference the same `S*`, `c`, `sNorm*` constants.
 
-**Status:** `open` (no Lean yet; closed form is fixed in `CLAUDE.md` §4 / the ITM spec).
+**θ re-pin + two-branch note (NOTATION/COVERAGE ALIGNMENT 2026-06-08, to shipped v26c).** The `θ` in
+`sNorm* = θ·((γ+1)/γ)^γ` is the strike registered in the curve's carry coordinate, **`θ = sNorm(K)`**
+(SHIPPED v26c via `sNormStrike = getSNorm∘arbitrageToOracle`), NOT the price-ratio `θ = K/oracle` the
+older ITM-spec text used — same closed form, corrected registration coordinate (no rule/boundary
+change). The seam gate also binds **two wings**, so PH-5 is a TWO-branch C¹ obligation:
+- branch A (call): intrinsic `1 − S/K`, continuation `a·S^(−γ)` (`a = K^γ(γ/(γ+1))^γ/(γ+1)`),
+  `S*_A = K·γ/(γ+1) < K`; at `S*_A` value `1/(γ+1)`, slope `−1/K`.
+- branch B (put): intrinsic `1 − K/S`, continuation `b·S^γ` (`b = K^(−γ)(γ/(γ+1))^γ/(γ+1)`),
+  `S*_B = K·(γ+1)/γ > K`; at `S*_B` value `1/(γ+1)`, slope `γ²/(K(γ+1)²)`.
+All four matches (value+slope, both wings) re-derived symbolically and hold exactly; submitted to
+Aristotle as obligation **R1** 2026-06-08.
+
+**Status:** `open` (no Lean yet; closed form is fixed in `CLAUDE.md` §4 / the ITM spec). Submitted as
+R1 2026-06-08 (θ=sNorm(K), both branches) — verdict in `formal/aristotle_runs/RESULTS.md`.
 
 **Tag:** AUTONOMOUS as a formalization target — the smooth-pasting boundary and continuation form
 are *already locked decisions* (v26b, `SPEC_itm_exercise_smoothpaste_NEXT.md`). Formalizing them does
