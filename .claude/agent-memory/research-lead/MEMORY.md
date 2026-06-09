@@ -1,5 +1,56 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, CLOSEOUT RUN (collapse remaining formal items to true floor; SCRATCH-ONLY)._
+_Last updated: 2026-06-09, AIRTIGHT RUN (settlement-as-generated + single-μ core; SCRATCH-ONLY)._
+
+### AIRTIGHT RUN — 2026-06-09 (operator BUILD-AUTHORIZED; canonical tree UNTOUCHED)
+4 standalone submits (`import Mathlib`, throwaway copies; all 5 canonical modules byte-identical in
+every returned archive). Scratch `formal/aristotle_runs/AIRTIGHT_{probe_optstop,T1a_invert,T1b_optimality,T2_singlecore}/`;
+IDs in `AIRTIGHT_SUBMISSION_IDS.txt`; full table RESULTS.md AIRTIGHT section. Prompts
+`formal/prompts/aristotle_prompt_airtight_*.md`. Audit: token-clean (the only search tactics are 2
+`grind` in T1b GENERATED bodies = FRAGILE flags, axiom-clean), unscoped byte-identical, pins intact,
+axioms ⊆ {propext,Classical.choice,Quot.sound} all targets, math re-derived.
+
+**PROBE (c9bd9638) — Mathlib v4.28.0 optimal-stopping CAPABILITY FINDING.** EXISTS: stoppedValue,
+optional-stopping/-sampling, hitting times (`hittingBtwn`/`hittingAfter`; old `hitting` gone),
+convexity-optimality toolkit (`IsMinOn.of_isLocalMin_of_convex_univ` etc.), rpow/mgf/cgf. **ABSENT:**
+Snell envelope, optimal-stopping value/existence, variational inequality / obstacle problem,
+free-boundary / smooth-pasting. ⇒ full "smooth-pasting = Snell optimal stopping time" NOT generatable;
+the deterministic value-maximizing-boundary fragment IS (toolkit assembly).
+
+1. **T1a (3566d93c) — SETTLEMENT BOUNDARY GENERATED (leak collapsed, algebraic). proved (trusted-
+   from-prover); GROUNDED.** Inverted R1: `Sstar_{A,B}_forced`/`coeff{A,B}_forced` — from value+slope
+   match at ARBITRARY S>0 (NOT assumed=S*), DERIVE S=Kγ/(γ+1)[call]/K(γ+1)/γ[put] + the coeffs.
+   Slope via explicit deriv-eq WITH bridge lemmas `hasDerivAt_const_mul_rpow`/`_call`/`_put` proving
+   it IS the HasDerivAt content (prompt-allowed). Continuation a·S^(−γ)=exp-family value law ⇒ boundary
+   FROM the value law. NO search tactics (cleaner than R1). Both wings. PH-5 upgrades to "C¹ BECAUSE
+   it's the uniquely-forced free boundary," not a checked coincidence.
+2. **T1b (794363d3) — smooth-pasting = OPTIMAL EXERCISE. proved (trusted-from-prover); GENERATED
+   (variational) + CARRIED (Snell).** 6 GENERATED theorems: `opt_boundary_is_critical_{A,B}`,
+   `critical_iff_smoothfit_{A,B}` (S* UNIQUE critical pt), `opt_boundary_is_max_{A,B}` (S* GLOBAL MAX
+   of holder's value-over-boundaries, via monotone-up/antitone-down each wing). CARRIED:
+   `AmericanOptimalityPrinciple` = `structure : Prop` (NOT axiom) with `True` field = the Snell-envelope
+   optimal-stopping identification Mathlib lacks. So optimality is generated at the variational/free-
+   boundary level, carried at the stochastic optimal-stopping level. **2 FRAGILE FLAGS** (manager
+   harden; axiom-clean): line 92 `grind +qlia`, line 145 `grind`.
+3. **T2 (84a6a417) — SINGLE-μ CORE ("singular, not federation"). proved (trusted-from-prover);
+   GROUNDED. Type-checks as ONE object off c.μ.** `structure MetriplecticCore` with ONE field μ
+   (+hμ C², +hconvex μ″≥0 = single metric source). All primitives `def`s of c.μ: price=∇μ,
+   Rdissip=∇²μ=Fisher, valueMetric=1/μ″ (Legendre dual), trade=translation, sNorm. 8/8 theorems incl
+   headline `single_source` (c.μ=d.μ ⇒ all readings agree = type-level federation-collapse). NO search
+   tactics. **SCOPE CAVEAT (Aristotle-reported, not audit fail):** `omega` is the trivial 1-D skew form
+   (v*w−w*v≡0; unique skew form on ℝ¹ is 0) — symplectic reading degenerate in the 1-D gauge coord
+   (consistent w/ Kähler-CONJECTURAL 1-real-dim finding). price/R/valueMetric/single_source = real content.
+
+**AIRTIGHT verdict (distilled):** Settlement now GENERATED (algebraic leak collapsed, T1a). Optimality
+PARTIAL-honest (variational GENERATED, Snell CARRIED, T1b). Single-μ core BUILT + type-checks as one
+object (T2), ω trivial in 1-D. Kähler/Courant stay OUT-OF-CORE (proved obstruction / Mathlib gap from
+CLOSEOUT) — excision justified; flag to manager for the doc. |Γ|≤1 exact / |Γ|>1 labelled-approx
+(locked, not re-litigated). Funding/κ status quo. NOTHING upgraded to "verified" (env-blocked). No
+economic-object/settlement-semantics question surfaced (T1a/T1b stayed within the locked American
+boundary); no guardrail tripped.
+
+---
+
+### CLOSEOUT RUN — 2026-06-09 (operator: "spam Aristotle"; canonical tree UNTOUCHED)
 
 ### CLOSEOUT RUN — 2026-06-09 (operator: "spam Aristotle"; canonical tree UNTOUCHED)
 5 standalone submits (`import Mathlib` only → no canonical module imported → byte-identity trivial).

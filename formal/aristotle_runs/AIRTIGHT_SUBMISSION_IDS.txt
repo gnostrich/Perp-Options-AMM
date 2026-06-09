@@ -1,0 +1,5 @@
+AIRTIGHT RUN 2026-06-09 — submission IDs (scratch-only; canonical tree untouched)
+probe (Mathlib opt-stopping capability)  c9bd9638-cf48-4989-ab61-77ac2159f6ce  IDLE/done  -> AIRTIGHT_probe_optstop/
+T1a   (invert R1 / boundary generated)   3566d93c-23ac-477b-8c8e-6e6dc610c094  IDLE/done  -> AIRTIGHT_T1a_invert/
+T1b   (optimal-exercise variational)     794363d3-fbbd-4762-b624-f0bbd1aa34d7  IDLE/done  -> AIRTIGHT_T1b_optimality/
+T2    (single-μ core)                    84a6a417-bf3c-49a2-b991-6882dbba7eb5  IDLE/done  -> AIRTIGHT_T2_singlecore/
