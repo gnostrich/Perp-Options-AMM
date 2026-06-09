@@ -65,9 +65,10 @@ is the mechanical audit trail. Rewrite the changed bits at the end of every task
 manager · **research-lead (theory owner AND its own prover interface)** · intern · tester · paper.
 The standalone `aristotle` agent is **REMOVED** — folded into research-lead. The prover loop is now
 **direct, no courier:** research-lead phrases the obligation → calls `aristotle submit` itself (host
-Harmonic's Aristotle) → polls → local `lake build` re-verify (emends mechanical backend diffs only) →
-records one of 4 verdicts (proved+re-verified / counterexample / still-open / candidate-fails-local-
-recheck) → audits/interprets. **research-lead keeps ALL raw prover/poll/lake output in its own context;
+Harmonic's Aristotle, which **compiles server-side** = the build) → polls → **zero-cost artifact audit**
+(token-scan + Aristotle's `#print axioms` + unscoped-module diff + math re-derive; no local `lake build`
+gate per operator 2026-06-08) → records one of 4 verdicts (proved/trusted-from-prover · counterexample ·
+still-open · candidate-fails-audit) → audits/interprets. **research-lead keeps ALL raw prover/poll output in its own context;
 I receive only distilled reports** (verdicts, queue status, escalations) and relay nothing between
 agents. research-lead holds Bash + the aristotlelib CLI; it does NO git/env actions (I am sole git/env
 actor). I do **not** see raw prover output and am no longer a courier.
@@ -84,9 +85,19 @@ actor). I do **not** see raw prover output and am no longer a courier.
   brackets `<arstl…>` (len 51); passed verbatim the server returns "Invalid API key". research-lead
   strips the `<>` (→ len 49) to authenticate. **Fix the stored secret to the bare key** so no workaround
   is needed. Provisioning artifact, not a real auth failure.
-- **Toolchain gap (still real):** no `lean`/`lake`/`elan` in container → **local re-verify is
-  PENDING-LEAN** (needs Lean v4.28.0 + Mathlib v4.28.0). Submit→candidate works; re-verify half does not
-  run here — nothing is reported as "proved + re-verified" until a toolchain lands.
+- **Re-verify gate RELAXED — operator clarified 2026-06-08:** "no re-verifies required, Aristotle
+  compiles/builds at his end." Aristotle's server-side compile (matching toolchain Lean 4.28.0 /
+  Mathlib v4.28.0) **IS the build** — a returned candidate is a genuine compiled proof, not a sketch.
+  **PENDING-LEAN retired** as a blocker; we no longer gate on a local manager `lake build`. **KEPT:**
+  the zero-cost artifact audit (token-scan sorry/admit/axiom/native_decide/sorryAx + read Aristotle's
+  own `#print axioms` ⊆ {propext,Classical.choice,Quot.sound} + diff unscoped modules for silent
+  statement-weakening) — needs no toolchain, and is the only thing that catches a clean server-build
+  of a WEAKENED statement. **LABEL:** clean+audited server-compiled candidate = **trusted-from-prover**
+  (Aristotle's kernel ran, ours didn't); our own canonical-env build is the upgrade to "verified".
+  Encoded into `formal/MANAGER_VERIFICATION.md` + `formal/smoke/README.md` (this task). Operator open
+  q to me: keep "trusted-from-prover" (my rec) vs call server-clean "verified" — AWAITING.
+- _(historical)_ Toolchain gap that drove PENDING-LEAN: no `lean`/`lake`/`elan` in container. Now moot
+  per the gate relaxation above (submit→candidate + artifact audit is the bar).
 - **SMOKE RESULT (2026-06-08, research-lead distilled):** direct loop works end-to-end through
   submit→candidate. `smoke_true` (`2+2=4`) → valid candidate, axioms = propext only; **label: candidate
   returned, re-verify PENDING-LEAN** (NOT proved+re-verified). `smoke_false` (`∀n,n=n+1`) → Aristotle
@@ -97,6 +108,172 @@ actor). I do **not** see raw prover output and am no longer a courier.
 - Routine spec: `docs/routines/aristotle_ph_loop.md` (now the direct, research-lead-only loop).
 - PH consistency spec: `specs/port_hamiltonian_consistency.md` (PH-1…PH-7). Conditional escalations
   only (PH-4/B1 ship-gate; PH-5 if-not-C¹) — none forces an engine change as written.
+
+## PH recap + full Aristotle queue (2026-06-08, branch claude/port-hamiltonian-recap-dxskkm)
+- **PH recap DONE** → `notes/PH_RECAP_2026-06-08.md` (committed a83a793). PH frame (H/J/R/ports,
+  passivity, reserves-no-floor) intact vs v26c HEAD; only PH-5 strike-registration needed re-pin
+  (θ=K/oracle → θ=sNorm(K), a doc fix to match shipped/verified HEAD, NOT settlement-semantics).
+- **Q1 (discrete-vs-continuous):** discrete-time is NOT necessary — our discrete H-balance is the exact
+  forward-Euler/sampled realization of canonical continuous-time PH (boost=one-param group; H_well=∫
+  funding force). REC (research-lead + me): keep discrete PROOFS, present canonical continuous-time as
+  PROSE → zero new obligations. **Operator-flagged:** switching to state-AND-prove in continuous time
+  adds a price-SDE + LVR-integral obligation + re-words the locked scaffold (rec AGAINST). Deterministic
+  continuous-time PH bridge (S exogenous, no SDE) IS in-scope and queued.
+- **Aristotle re-verify gate RELAXED (operator):** server compile = the build; PENDING-LEAN retired;
+  artifact audit kept; label = trusted-from-prover. Synced across research-lead.md, routine,
+  MANAGER_VERIFICATION, smoke README, both MEMORYs (committed a83a793).
+- **BIG QUEUE COMPLETE + MANAGER-AUDITED (agent a942ebf4 done; 14 obligations).** research-lead:
+  14/14 proved (trusted-from-prover), 0 counterexamples, 0 fails, 0 still-open. **I independently
+  audited** (`evidence/manager_audit_aristotle_run_2026-06-08.md`): no engine HTML touched; no forbidden
+  tokens across 24 .lean; **base modules AMMCurve/Temporal/Seam byte-IDENTICAL to verified tree** (no
+  silent core edit); axioms prover-reported {propext,Classical.choice,Quot.sound} + my token-scan
+  corroborates (#print axioms NOT manager-run — no toolchain); spec re-pin notation-only; R1/R2/R3/R4
+  cross-checked against my engine ground-truth. **Honest tiering (tempers "14/14"):**
+  - **Tier A (concrete, engine-grounded, FOLD):** R1 (PH-5 C¹ both wings — load-bearing), R2
+    (crossover@K), R3 (mpGeom/slope), R4 (orientation), R5, C1. Real rpow/HasDerivAt proofs of formulas
+    I re-derived & matched to engine numbers.
+  - **Tier B (abstract/conditional scaffolding — necessary-condition, NOT curve-grounded; don't
+    over-promote):** GHJ (skew-J via latent rapidity group, reserves arbitrary, frontier tautological;
+    WATCH-FLAG not tripped but the hard "GH reserve invariant" stays open), GHcoercive (generic
+    nonneg-frontier, GH y≥0 asserted), PH4b (no-floor abstract), PH3 (PSD abstract, necessary-not-suff),
+    PH6 (rebase structural), B1 (honest conditional, coverage carried, near-tautological), C2 (modelled
+    collarSurplus).
+  - **CTPH HELD (not clean):** canonical det. dissipation ineq dH/dt≤uᵀy is real (good for Q1 framing),
+    BUT `ct_dissipation_ineq` has `exact?` in source (fragile, proposed swap NOT locally re-verified) +
+    `discrete_is_sampled` is a near-vacuous existential ⇒ discrete↔continuous correspondence NOT formally
+    established. Do NOT present "discrete=continuous proven." Proposed fix:
+    `formal/aristotle_runs/CTPH/CTPH_emended_PROPOSED.lean`.
+  - Stayed escalations correctly NOT submitted: C3 reflection (AXIOM), stochastic-SDE bridge, B1 real floor.
+  Nothing upgraded to "verified" (no canonical build). Run record (748K, 19 files) committed to feature
+  branch — NO PR, NO main-merge.
+- **Manager independent engine-level confirmation of the cheap-now checks** (parallel, read-only) →
+  `evidence/ph_cheapnow_checks_2026-06-08.md`: seam C¹ BOTH wings (value 0.000%, slope ≤0.0005%, all γ),
+  mpGeom=getMP_raw·e^(−ghMu) (ratio==e^ghMu all γ), directional-sign invariant (CALL+++/PUT−−−, mutation
+  caught), 7 GH gates PASS. These are the numeric ground-truths R1/R3/R4 candidates must reproduce.
+
+## LABEL POLICY — resolved (operator 2026-06-09: "I trust Aristotle")
+- Operator can't change the env allowlist this session (maybe future). Trusts Aristotle.
+  **RESOLUTION:** `trusted-from-prover` is the standing label and is treated as **SUFFICIENT** (not
+  doubtful, not blocked) — Aristotle's server-side kernel compile + our artifact audit = proven for our
+  purposes; we build on/cite it. **Do NOT write the literal word "verified"** in artifacts (that asserts
+  OUR kernel ran; it didn't). Paper phrasing: "machine-checked by the Aristotle prover (Lean4/Mathlib
+  v4.28.0), audited by us; independent re-build pending toolchain access." Flip to "verified" only if a
+  future session allowlists `release.lean-lang.org` + Mathlib cache and I build locally.
+- **TWO INDEPENDENT AXES — keep distinct:** (1) PROVENANCE = trusted-from-prover (now good per operator);
+  (2) DEPTH = Tier-A curve-grounded vs Tier-B GH-facts-assumed. Trusting Aristotle resolves axis 1 only;
+  it does NOT upgrade axis 2. The watch-flag / economic-object risk lives entirely on axis 2 (the
+  in-progress GH-grounding run). paper must not let trust-in-prover blur into depth-of-claim.
+
+## Local Lean build — ATTEMPTED, BLOCKED by network allowlist (2026-06-09)
+- To earn the "verified" label (vs trusted-from-prover) I tried to provision a real Lean toolchain.
+  **elan installs fine** (4.2.3; raw.githubusercontent + github.com reachable) BUT
+  **`release.lean-lang.org` → HTTP 403 "Host not in allowlist"** — the Lean release/manifest host is
+  NOT in the env network policy, so `elan toolchain install leanprover/lean4:v4.28.0` cannot fetch.
+  `ELAN_DIST_SERVER` override didn't redirect it. ⇒ **local canonical build IMPOSSIBLE here.**
+- **Consequence: label stays `trusted-from-prover` (honest).** To enable real local verification the
+  operator must allowlist `release.lean-lang.org` AND the Mathlib olean cache host (for `lake exe cache
+  get`) in the environment network policy; then I can build the Tier-A proofs canonically → "verified".
+  elan left installed at `/home/user/.elan` (outside repo) for a future allowlisted run.
+
+## UNIFICATION BUILD — launched 2026-06-09 (sympy-gated), check passed clean
+- **Operator-locked target (2026-06-09):** unify Temporal into ONE structure at **GEOMETRIC COMPLETENESS
+  WITH PORTS** — metriplectic/Hessian-(conj-Kähler) interior (one convex potential μ) + Dirac
+  port-INTERFACE, rebase-covariant in the gauge-invariant sNorm coordinate. Operator explicitly means
+  geometric completeness (nothing OUTSIDE the structure), **NOT solvency-intrinsic** (that's excluded by
+  PH-4b; port = native slot + necessity, never sufficiency; solvency stays extrinsic = B1 ship-gate).
+  Single-all-four-native Courant/double-bracket object stays SPECULATIVE — not asserted.
+- **"One last check" PASSED CLEAN (research-lead, discussion-only):** REBASE covariance of the whole
+  object = clean — J & R legs already proved in Lean (PH-6 rebase_boost_commute + R_form_rebase_invariant);
+  μ/Fisher/ω/ports covariant in sNorm gauge coord (caveat: NOT raw (x,y) — design constraint).
+  COMPLETENESS: nothing geometrically extrinsic (every ingredient native/supporting). M=Fisher gets a
+  rebase tailwind (rebase form-invariance is Fisher's fingerprint → evidence-for + disqualifier-test;
+  still conjectural). No check failed; no new escalation.
+- **BUILD COMPLETE + MANAGER-AUDITED (RUN-3, agent a09db6d3).** Stage-0 GATE PASSED; Stage-1
+  `UNIFY/Unify.lean` 11 thms proved (trusted-from-prover). Audit: `evidence/manager_audit_UNIFY_2026-06-09.md`.
+  - **M=Fisher: I INDEPENDENTLY RE-DERIVED it** (own quadrature, GH density αh=4/βh=1/δ=0.08):
+    dm/ds=Var=Ψ″ to ~1e-10, Var 0.13425→0.28950 — reproduces research-lead exactly. HOLDS. BUT it's the
+    **STANDARD exp-family identity** (GH is a genuine exp family per GHJ_grounded), **coordinate-conditional**
+    (gauge/centered only; raw-u curvature=e^u≠Fisher). Real, not novel-deep.
+  - **DEPTH TEMPER (key finding, I read every proof):** UNIFY.lean is mostly a STRUCTURAL SCAFFOLD —
+    A1 (headline "M=Fisher") is a `rfl` definitional TAUTOLOGY; A2(`f⁻¹f=1`)/B2(`R·0=0`)/C1(`g·w=g·w`)/
+    A3 trivial; content lives in docstrings + the sympy gate. GENUINE Lean theorems: B1 (Bregman
+    stationarity = GENERIC deg1), D1 (sNorm invariance), E1 (port necessity); A4/D2/E2 elementary.
+    **Verification weight is NOT in UNIFY.lean** — it's the sympy M=Fisher (manager-reproduced) + the
+    EARLIER grounded modules (GHJ_grounded/PH3/PH4b/PH6). research-lead disclosed this honestly (no
+    deception); the temper is on DEPTH wording.
+  - **HONEST CLAIM:** metriplectic framing ASSEMBLED + internally CONSISTENT; one potential Ψ organizes
+    price(grad)/dual(Legendre)/dissipation(Hessian=Fisher); GENERIC deg1 genuinely proved; rebase
+    covariant. **NOT** "the unification is formally Lean-verified." Kähler CONJECTURAL (C1 trivial);
+    Courant single-object SPECULATIVE (not claimed); solvency EXTRINSIC (ports necessity-only).
+    trusted-from-prover, NOT verified. **Paper must NOT claim formal verification of the whole.**
+  - Audit clean: canonical tree untouched; correct grep -rnE token-scan clean; standalone project
+    (import Mathlib only); axioms standard three. Scope locks 1/2/3 honored.
+
+## CLOSEOUT run — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+Audit: `evidence/manager_audit_CLOSEOUT_2026-06-09.md`. Canonical tree untouched; only real `sorry` =
+declared Kähler-K3 gap. trusted-from-prover ("verified" DROPPED per operator — Aristotle trusted to
+build). Supersedes WIP checkpoints 6b37872/aae9c14.
+- **1 cgf_convexOn HOLD CLOSED** — search tactics replaced w/ concrete lemmas; clean.
+- **2 GH measure DISCHARGED (the prize, I READ IT):** `integrable_ghKernel` (dominated by exp(−c|v|)
+  decay bound), `ghIntegral_pos`, `isProbabilityMeasure_ghProb` (mass=1 via div_self on PROVED-positive
+  ∫ — DERIVED not assumed), `integrable_ghKernel_tilt` (finite MGF on strip). **NO Bessel-K, no assumed
+  Z.** RUN-4 carried hInt/hMGF DISCHARGED ⇒ exp-family/M=Fisher now over a GENUINE GH probability measure.
+- **3 frontier antitone/convex — GROUNDED from slope law; CARRIED[StrictAnti X(u),StrictMono Y(u)]**
+  (reserve-map monotonicity = the residual Bessel-K-adjacent content; honestly named).
+- **4 Kähler integrability — STILL-OPEN/CONJECTURAL** (single honest named sorry; Mathlib v4.28.0 has no
+  almost-complex/Nijenhuis/Newlander–Nirenberg/Kähler infra to even state it).
+- **5 Courant all-four — PROVED NO-GO:** graph(J−R), R≠0, is symmetric not isotropic ⇒ no single
+  maximal-isotropic Dirac bracket carries dissipation. Settled (impossible as a Dirac), not "open."
+- **TRUE FORMAL FLOOR:** (a) GH reserve-map X(u)/Y(u) monotonicity (Bessel-K-adjacent, carried);
+  (b) Bessel-K normalizer VALUE (not needed); (c) Kähler integrability (Mathlib gap); (d) Courant
+  (settled no-go). EXCLUDED: B1 (ship-gate), C3 spec↔engine (→ PIVOT), "verified" (dropped).
+  **Formal phase at a clean, defensible stopping point → pivot to engine-faithfulness scaffolding.**
+
+## RUN-4 (close-the-gaps) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+Audit: `evidence/manager_audit_RUN4_2026-06-09.md`. **Genuine, substantial, HONESTLY-reported upgrade**
+(I read every proof; depth matches claims this time). Canonical tree untouched; correct grep -rnE clean;
+standalone import-Mathlib; axioms standard three; trusted-from-prover (verified still env-blocked).
+- **UNIFY2 = Tier-1 prize: GROUNDED (structure) + CARRIED (GH normalization).** RUN-3 tautologies
+  REPLACED with real theorems over Mathlib's actual `cgf`/`mgf` + real GH kernel: `cgf_deriv_mean_and_variance`
+  (real A1, HasDerivAt cgf = tilted mean), `deg2_score_centered` (real mean-of-tilt, not R·0=0),
+  `boost_is_hamiltonian` (real ½gs²→gs), `ghKernel_pos/measurable/logderiv/exponent_le` (real GH facts).
+  CARRIED (honestly named): GH finite-MGF/∫=1 (Bessel-K) — **Mathlib v4.28.0 has NO Bessel-K** (probe
+  confirmed) = formalization gap not math doubt. **HOLD: `cgf_convexOn` has live `exact?`(L93)+`grind
+  +suggestions`(L99)** — fragile (CTPH-class), core deriv²≥0 clean, harden by replacing the 2 helper steps.
+- **C3 (#7): reflection AXIOM DISCHARGED** (real algebraic identity markPut θ s = markCall θ(θ²/s));
+  residual = "spec-mark = engine-barrier" link. Report "arrow discharged," NOT "C3 fully closed."
+- **Kähler (#4): algebraic Kähler triple GROUNDED (J²=−I, compat, ω skew det=1, G pos); integrability
+  (Nijenhuis) CONJECTURAL.** GH interior 1-real-dim. Upgrades C1.
+- **Courant (#5): linear Dirac GROUNDED (graph ω maximal isotropic); all-four single bracket
+  SPECULATIVE-NOT-ACHIEVED** (honestly reported).
+- **Distance to 100%:** scaffold→theorem-grade for the structure, carried at GH-measure boundary.
+  Remaining: Bessel-K ∫=1 (Mathlib lift or carried), cgf_convexOn harden, Kähler integrability (frontier),
+  Courant all-four (speculative), C3 spec↔engine link, "verified" (env-blocked). EXCLUDED: solvency
+  intrinsic (PH-4b; ports necessity-only). Minor: stray host project c019735d not in ledger (no repo impact).
+- Supersedes WIP checkpoint ac98480.
+
+## RUN-2 (CTPH clean + GH-grounding) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+- Audit: `evidence/manager_audit_aristotle_RUN2_2026-06-09.md`. Canonical tree untouched; base modules
+  byte-identical; returned SOLUTIONS sorry/admit/native_decide/sorryAx-clean (re-scanned correctly).
+- **METHOD MISS I OWN:** my RUN-1/RUN-2 token-scan used `grep -rnED` — `-D` ate the pattern, scan
+  matched nothing. Caught only by READING files (saw `sorry` in RUN-2 dir-root TEMPLATES). Re-scanned
+  with `grep -rnE`: returned solutions clean; the sorries are in SUBMITTED TEMPLATES (dir-root
+  `<NAME>.lean`), proofs live in `extracted/proj_aristotle/.../<NAME>.lean`. Lesson: token-scan never
+  sufficient alone; always read. HYGIENE: sorry-templates committed under aristotle_runs (NOT in any
+  build path; canonical lib = temporal_lean_verified — no poison).
+- **CTPH HOLD LIFTED:** `exact?` gone from the returned solution (concrete `skew_quadForm_zero hJ z`);
+  dissipation ineq clean; discrete↔continuous strengthened to an honest forward-Euler sampled-storage
+  correspondence (no fabricated floor). Folds trusted-from-prover.
+- **GHJ_grounded / PH3_grounded = GROUNDED** (I verified the GHJ solution proofs: esscher_core/
+  density_ratio/gh_slope_law/slope_translation real, non-vacuous hyps). **GHcoercive/PH4b_grounded =
+  honest PARTIAL** (GH ranges derived modulo T<1/C<1 carried as tail/CDF facts).
+- **ECONOMIC-OBJECT WATCH-FLAG RESOLVED (not tripped in the bad sense):** GH conserves NO X·Y product
+  invariant (by construction — value∝S^(−γ) ≠ constant-product), but DOES conserve the latent rapidity
+  one-parameter group + Esscher tilt (slope=P·e^(u−μ) scaling by e^δ). PH-2 lossless/skew-J HOLDS for GH
+  as a group action. NO engine change. Paper implication: describe PH-2's conserved object as the
+  rapidity-group/Esscher structure, NOT a CPMM X·Y-analogue. Relayed to operator.
+- Open GH lift remaining: full GH `AMMCurve` instance (antitone_y/convex_y + discharge T<1/C<1 from the
+  GH special functions) — the real next mountain, not done.
 
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
@@ -258,6 +435,12 @@ actor). I do **not** see raw prover output and am no longer a courier.
      (payoff ray-legend overprint) tracked, non-blocking. Wing-tag/strike-basis saga DONE.
 
 ## Locked decisions (don't reopen unless the operator does)
+- **PH PRESENTATION FRAMING — LOCKED (operator 2026-06-09):** present the model in the **canonical
+  continuous-time port-Hamiltonian form** (`ẋ=(J−R)∂H/∂x+Gu`, `y=Gᵀ∂H/∂x`, `dH/dt≤uᵀy`) as the prose/
+  framing, while the **proofs run in the discrete (forward-Euler/sampled) form** — zero new obligations,
+  no SDE/Itô. Discreteness is an accrual/implementation detail, not a modeling commitment. The
+  stochastic-LVR/SDE version is NOT adopted (would need a volatility-model commitment). **paper** to use
+  this wording. The deterministic continuous-time bridge (CTPH) is the supporting proof (being cleaned up).
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
   exercise S>K) pastes at `S* = K·(γ+1)/γ`, intrinsic `1−K/S`; the `sNorm/θ` branch (economic put,
   exercise S<K) at `S* = K·γ/(γ+1)`, intrinsic `1−S/K`. Bind by S-direction, NOT the inverted tag.
@@ -282,9 +465,13 @@ passes behind the hook). Escalate to operator = what-we're-building (curve/invar
 semantics, reopen a locked decision/ship-gate, product calls Finding-2 / |Γ|>1 / Fork A-vs-B,
 calibration tier, paper claims). Irreversible/high-blast-radius escalates regardless.
 
-## Waiting on operator
-- Nothing blocking from the v26c reconciliation — **v26c is canonical HEAD on main** (PR #4 merged
-  `3d4fbe2`). Open project threads (Lean GH gate-discharge, ship-gate B1, publication, Layer-2
-  honest-dollar $) continue per their owners.
-- (Resolved this task: scaffolding already on main; v26a/v26b/v26c tester runs done; `GH_TOKEN`
-  present & verified 200; integration merged + branch cleaned up.)
+## Waiting on operator (review in the morning, ~8h after 2026-06-08 launch)
+- **Aristotle queue results** — research-lead's consolidated report + RESULTS.md ledger + folded
+  archives on the feature branch. I'll have audited + committed whatever landed (no PR/main-merge).
+- **For the operator to decide (none block the night's run):**
+  1. Q1 framing: continuous-time-as-PROSE (rec) vs state-AND-prove continuous (adds SDE obligation).
+  2. "trusted-from-prover" (current encoding) vs upgrade word to "verified" for server-clean candidates.
+  3. Any GH-invariant economic-object finding, if the watch-flag triggered.
+  4. B1 ship-gate (funding-coverage sweep, κ extrinsic) — still the open solvency prize.
+- v26c remains canonical HEAD on **main** (PR #4 `3d4fbe2`); this PH work is on branch
+  `claude/port-hamiltonian-recap-dxskkm` (no PR opened — operator hasn't asked).

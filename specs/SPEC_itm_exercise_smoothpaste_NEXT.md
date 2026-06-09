@@ -12,7 +12,7 @@ The continuation value is already `c · sNorm` (the GH curve gives value ∝ sNo
 - **Coefficient:** `c = 1 / ((γ+1) · sNorm*)`  (from value-match at the boundary).
 - **Fraction at the boundary:** `1/(γ+1)`. The mark reaches its cap of 1 only at full exercise, not at the boundary.
 
-θ is the live strike ray (`θ = K/oracle`); since θ shifts on rebase (θ→θ/r), `sNorm*` tracks it automatically — read the live θ, no special rebase code.
+θ is the strike registered in the curve's carry coordinate (`θ = sNorm(K)`, the SHIPPED v26c registration via `sNormStrike = getSNorm∘arbitrageToOracle`); since θ→θ/r on rebase, `sNorm*` tracks it automatically — read the registered θ, no special rebase code. (NOTATION RE-PIN 2026-06-08: was written `θ = K/oracle`; HEAD v26c registers the smooth-pasting/value strike at `θ = sNorm(K)` so the OTM→ITM crossover lands at the dollar strike K for all γ. Same closed form, corrected registration coordinate — NOT a settlement-rule or boundary-value change. The separate chart strike-RAY and the funding/oracle layer-1 reference stay price-measure `K/oracle`; see §5.)
 
 ---
 

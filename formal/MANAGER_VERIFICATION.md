@@ -1,11 +1,15 @@
 # Temporal Exchange — formal-verification package for independent audit
 
 **For:** the verifier. **Posture:** trust nothing here; everything below is set up so
-you can confirm it yourself. The prover (Aristotle) ran the Lean; I (the research
-relay) audited the source and the math but **did not run Lean** (sandbox egress wall).
-So the compile result is *trusted-from-prover* — your job is to remove that trust by
-building it. The source audit and the math audit you can also reproduce from the
-scripts included.
+you can confirm it yourself. The prover (Aristotle) **compiled the Lean server-side in
+the matching toolchain** (Lean 4.28.0 / Mathlib v4.28.0) — that server compile *is* a
+real build, not a sketch; I (the research relay) then ran the zero-cost artifact audit
+(forbidden-token scan, Aristotle's own `#print axioms`, unscoped-module diff, math
+re-derivation) but **did not run Lean locally** (no toolchain in the sandbox). So the
+result is *trusted-from-prover*: Aristotle's kernel ran, ours did not. Building it
+yourself in the canonical env (§1) is the **label upgrade to "verified"** — not a
+trust-removal of an unbuilt sketch, but confirmation in our own kernel. The source
+audit and the math audit you can also reproduce from the scripts included.
 
 ---
 
@@ -29,7 +33,7 @@ Toolchain pinned: **Lean 4.28.0 + Mathlib v4.28.0**.
 
 ---
 
-## 1. Build it yourself (removes the trusted-from-prover step)
+## 1. Build it yourself (upgrades trusted-from-prover → verified)
 
 ```
 cd temporal_lean_verified
@@ -141,8 +145,10 @@ non-vacuous ones we intend (so the file isn't proving something trivial or wrong
    Balancer frontier; `expPool` is exponential. Weighted Balancer and the GH/power-sum
    family are not instantiated here (the *mechanism* that they would transfer is what's
    proven, via the abstract interface).
-4. **Compile is trusted-from-prover until you run §1.** I audited source + math, not a
-   Lean run.
+4. **Result is trusted-from-prover; building §1 upgrades it to "verified".** Aristotle
+   compiled it server-side (matching toolchain) and I audited source + math; I did not
+   run Lean in our own kernel. §1 is the canonical-env build that grants the "verified"
+   label.
 5. **Scope.** This package is the passivity/curve/seam line. A separate prover run on
    no-arb-as-symmetry (the `C3` reflection result) is **not** included here.
 

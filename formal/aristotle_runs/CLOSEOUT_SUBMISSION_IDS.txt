@@ -1,0 +1,6 @@
+CLOSEOUT RUN (2026-06-09) — collapse remaining formal items to true floor
+item 1  CGF clean (harden cgf_convexOn)       7606ba6e-5e94-44ac-8808-b85d2bfa6e3c
+item 2  GH measure (discharge integrability)  4f66c494-2ed6-44bc-94a7-ff2b70c342dd
+item 3  Frontier antitone/convex              a6a87587-3f3f-460d-b818-65b37522bf1e
+item 4  Kahler integrability                  6079fd96-b098-4bfe-919b-172696017b8b
+item 5  Courant all-four (obstruction)        3b163167-4ae7-4a8f-8bbd-cb0884cf1c33
