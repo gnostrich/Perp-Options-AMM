@@ -328,6 +328,36 @@ standalone import-Mathlib; axioms standard three; trusted-from-prover (verified 
 - Open GH lift remaining: full GH `AMMCurve` instance (antitone_y/convex_y + discharge T<1/C<1 from the
   GH special functions) — the real next mountain, not done.
 
+## Graph-1 reconciliation brief (2026-06-09, branch claude/optimistic-cerf-29fntq) — TASK-1 IS MOOT
+Operator relayed a brief written against a **stale v26a frame** (assumes graph-1 composite rays + "a
+later build shows 4 individual strike lines"; even references barrier-leg θ_inner / "sold=short colour"
+— barrier removed in v25, GH-only now). HEAD = v26c `6cc73563`. I verified ALL THREE at code level
+(tester dispatched a200408323 for INDEPENDENT live-browser confirmation, read-only):
+- **TASK 1 (pricing regime — the load-bearing precondition): COMPOSITE on BOTH axes; nothing to revert.**
+  Pricing: `legPrice` (1764) spread → `compositeRay(lo,hi)` → ONE θ* → ONE `mark(wing,θ*,sNorm,γ)` →
+  `vsValue`; settlement (`executeBand` 1850/2100+) values each of the **2 legs** (sold/bought) as ONE
+  composite ray (`legValueUnified`/`legPrice`), ITM/American smooth-pasting INSIDE `mark()`/`markEff()`
+  at the single registered ray — **NOT** leg-by-leg over 4 distinct real strikes. Display: drawCurve
+  (3435-3500) already draws 2 composite rays/open band via `thetaStarOf(inner,outer)=√(inner·outer)`
+  (sold colShort + bought colLong) + 2 preview rays. Comment literally "collapsed to composite-ray θ*
+  per leg." ⇒ The "4 individual strike lines" build does NOT exist at HEAD or on any live branch
+  (branches: optimistic-cerf + main only). Reconciliation was already absorbed by the v26c-full
+  Finding-2 live-ray fix. **Outcome = the brief's 3rd (unstated) case: already-reconciled. NO EDIT, NO
+  per-leg STOP. No git action.**
+- **TASK 2 (warp/vol/stepper): γ FROZEN as a hardcoded const `GH_GAMMA=2.0` (line 2259), no live UI
+  knob found in code; δ FROZEN `0.08` inside `ghCalibrate` (line 1624), not exposed.** Pro-forma/stepper
+  chain EXISTS (`leg1State`/`leg2State` from `executeBand` 3122 → `curveTrace` re-trace 3331-3335 →
+  `__previewStep` 3133) but with no live γ control the "re-warp on γ change" can't be user-driven.
+  Tester confirming live whether ANY control is wired. **PRODUCT FLAG (escalate): γ (steepness) and δ
+  (vol) are separate GH params; v26c exposes NEITHER as a live knob. Brief says do NOT add a vol knob
+  this pass — confirm with operator whether a separate vol knob is wanted.**
+- **TASK 3 (portfolio table): UNCHANGED, matches expected.** `#bands-tbody` (9 cols) per band = 1
+  `pf-band-row` (carved-perp origin summary) + ≤4 `pf-comp-row` (inner+outer × SOLD+BOUGHT) + 1
+  `pf-total-row` (single dollar cell) = **≤6 rows/band.** Separate `#perps-tbody` (10 cols) = Perps-tab
+  list, not "the portfolio table." No diff in count/order/labels.
+- **No engine edit performed; no merge; working tree clean.** Awaiting tester live confirmation + an
+  operator product call on the vol knob.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
