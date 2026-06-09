@@ -151,6 +151,17 @@ actor). I do **not** see raw prover output and am no longer a courier.
   mpGeom=getMP_raw·e^(−ghMu) (ratio==e^ghMu all γ), directional-sign invariant (CALL+++/PUT−−−, mutation
   caught), 7 GH gates PASS. These are the numeric ground-truths R1/R3/R4 candidates must reproduce.
 
+## Local Lean build — ATTEMPTED, BLOCKED by network allowlist (2026-06-09)
+- To earn the "verified" label (vs trusted-from-prover) I tried to provision a real Lean toolchain.
+  **elan installs fine** (4.2.3; raw.githubusercontent + github.com reachable) BUT
+  **`release.lean-lang.org` → HTTP 403 "Host not in allowlist"** — the Lean release/manifest host is
+  NOT in the env network policy, so `elan toolchain install leanprover/lean4:v4.28.0` cannot fetch.
+  `ELAN_DIST_SERVER` override didn't redirect it. ⇒ **local canonical build IMPOSSIBLE here.**
+- **Consequence: label stays `trusted-from-prover` (honest).** To enable real local verification the
+  operator must allowlist `release.lean-lang.org` AND the Mathlib olean cache host (for `lake exe cache
+  get`) in the environment network policy; then I can build the Tier-A proofs canonically → "verified".
+  elan left installed at `/home/user/.elan` (outside repo) for a future allowlisted run.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
@@ -311,6 +322,12 @@ actor). I do **not** see raw prover output and am no longer a courier.
      (payoff ray-legend overprint) tracked, non-blocking. Wing-tag/strike-basis saga DONE.
 
 ## Locked decisions (don't reopen unless the operator does)
+- **PH PRESENTATION FRAMING — LOCKED (operator 2026-06-09):** present the model in the **canonical
+  continuous-time port-Hamiltonian form** (`ẋ=(J−R)∂H/∂x+Gu`, `y=Gᵀ∂H/∂x`, `dH/dt≤uᵀy`) as the prose/
+  framing, while the **proofs run in the discrete (forward-Euler/sampled) form** — zero new obligations,
+  no SDE/Itô. Discreteness is an accrual/implementation detail, not a modeling commitment. The
+  stochastic-LVR/SDE version is NOT adopted (would need a volatility-model commitment). **paper** to use
+  this wording. The deterministic continuous-time bridge (CTPH) is the supporting proof (being cleaned up).
 - **ITM second-wing boundary RATIFIED (operator 2026-06-08):** the `θ/sNorm` branch (economic call,
   exercise S>K) pastes at `S* = K·(γ+1)/γ`, intrinsic `1−K/S`; the `sNorm/θ` branch (economic put,
   exercise S<K) at `S* = K·γ/(γ+1)`, intrinsic `1−S/K`. Bind by S-direction, NOT the inverted tag.
