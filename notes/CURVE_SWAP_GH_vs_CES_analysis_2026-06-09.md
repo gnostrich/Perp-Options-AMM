@@ -1,5 +1,18 @@
 # GH vs CES / Balancer-base + kurtosis-knob — discussion note (research-lead)
 
+> ## ⚠ CORRECTION HEADER (2026-06-09 reconcile pass) — read before §1/§2
+> This note's δ-direction claims are **SUPERSEDED**. It says "symmetric Balancer base needs βh=0 AND
+> **δ→0**" (§1 Correction 2, §2 route (b)). That δ→0 is **WRONG**. Resolved by building the curves
+> numerically (`notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` v2, §2.5/CHECK 10):
+> - The **two-root SYMMETRY** is βh=0 at **any δ** — this part is correct.
+> - The **exact Cobb-Douglas/Balancer RESERVE CURVE is the δ→∞ (Gaussian) limit, NOT δ→0.**
+>   Cobb-Douglas = log-normal = Gaussian = δ→∞. δ→0 is the *Laplace* (fat-tailed) symmetric member,
+>   NOT Balancer. Excess kurtosis = 3 at δ→0, → 0 at δ→∞ (decreasing in δ).
+> - **δ is mostly an ATM-elbow / return-kurtosis knob; the option-wing exponent γ is δ-invariant**
+>   (it does NOT fatten the tradeable wings). See the v2 note §3.5.
+> The βh=0 symmetry, αh=1/(1−w) tie, value∝S^(−γ) survival, and transfer accounting (§3) stand.
+> **The authoritative reconciled spec is `REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (v2).**
+
 _2026-06-09. DISCUSSION/ANALYSIS ONLY. No Aristotle submits, no engine edits, no git.
 The curve/invariant choice is the OPERATOR'S call (CLAUDE §4 locked architecture); this note
 ANALYZES and RECOMMENDS. Confident vs conjectural is marked inline. Grounded in:
