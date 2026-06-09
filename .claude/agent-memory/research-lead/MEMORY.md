@@ -1,5 +1,52 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, CLOSEOUT RUN (collapse remaining formal items to true floor; SCRATCH-ONLY)._
+_Last updated: 2026-06-09, MERTON RUN (engine ITM smooth-pasting = Merton perpetual American; σ↔γ map proved)._
+
+### MERTON RUN — 2026-06-09 (theory task: is the ITM solution the Merton perpetual American? pin σ↔γ)
+**Result: ALL THREE CLAIMS CONFIRMED, math independently re-derived (sympy). One NEW obligation queued
++ proved (trusted-from-prover): the σ↔γ characteristic-root map.** SCRATCH-ONLY (`/tmp/merton_submit`,
+`import Mathlib` only → canonical tree UNTOUCHED). Archive
+`formal/aristotle_runs/MertonSigmaGamma/`; ID ae96d620-7634-4ef0-bdd0-639c999f1f5d; prompt
+`formal/prompts/aristotle_prompt_merton_sigmagamma.md`.
+
+- **CLAIM 1 CONFIRMED.** Merton (1973) perpetual-American-put smooth-pasting boundary is `S*=Kλ/(λ−1)`
+  (from value-match + C¹: `A S*^λ = K−S*` and `A S*^λ = −S*/λ`). At negative root `λ=−γ` this is
+  EXACTLY the engine's `Kγ/(γ+1)` (put-direction / sNorm/θ branch). γ = magnitude of the negative root.
+  Merton continuation coeff (dollar payoff K−S) = R1 coeffA × K (the fraction-payoff 1−S/K normalization)
+  — same solution, fraction-scaled. So the engine ITM region IS the Merton perpetual American option.
+- **CLAIM 2 CONFIRMED.** Two engine boundaries ⇒ two roots: `Kγ/(γ+1)→λ₋=−γ`, `K(γ+1)/γ→λ₊=γ+1`
+  (since `Kλ/(λ−1)=K(γ+1)/γ ⟺ λ=γ+1`). SUM=1. Char quadratic sum-of-roots `1−2(r−q)/σ²`=1 ⟺ **r=q**
+  (zero-net-carry). Product `−γ(γ+1)=−2r/σ²` ⇒ **γ(γ+1)=2r/σ²**. Both `−γ` and `γ+1` verified to vanish
+  the quadratic under r=q ∧ r=γ(γ+1)σ²/2.
+- **CLAIM 3 CONFIRMED + BENIGN.** Engine is the one-parameter `r=q` slice of the two-root Merton family
+  (sum-of-roots pinned at 1; only γ free, set by σ via γ(γ+1)=2r/σ²). Independent call/put exponents
+  (full σ,r,q freedom) are NOT in the curve — but r=q (zero net carry) is NATURAL for a perp-funded
+  underlying where funding is the carry mechanism, not a held dividend/rate spread. Restriction is
+  correct/benign for this product. NOT a bug; flag to operator only as a PAPER-SCOPE statement.
+
+**NEW obligation MertonSigmaGamma — proved (trusted-from-prover), AUDIT PASSED.** File
+`RequestProject/MertonSigmaGamma.lean`, 5 targets: root_neg, root_pos, sum_roots, sum_eq_one_iff_rq,
+sigma_gamma_map. Audit: token-clean (no sorry/admit/native_decide/sorryAx/opaque/unsafe/axiom);
+toolchain v4.28.0 + mathlib v4.28.0 UNCHANGED; theorem SIGNATURES byte-identical submit-vs-return;
+ONE allowed mechanical emend = `char` def param `λ`→`«λ»` (Lean-4 keyword escape, statement/meaning/
+constants UNCHANGED — `λ` is the lambda keyword); standalone (no canonical module imported, tree
+untouched); math re-derived independently (sympy). PROVENANCE CAVEAT: archive embeds NO `#print axioms`
+command → axiom-cleanliness {propext,Classical.choice,Quot.sound} is per Aristotle SUMMARY only;
+canonical-env build reproduces it (same caveat as cgf). NOT "verified" (manager's label).
+
+**R1 (PH-5) covers the SMOOTH-PASTING HALF of Merton already** (value+slope match at both S*_A,S*_B =
+C¹ = the McKean/Merton free-boundary conditions) — that is the load-bearing content and was already
+proved-trusted (`formal/aristotle_runs/R1/`). What MertonSigmaGamma ADDS: the explicit identification
+of `−γ, γ+1` as the characteristic roots and the σ↔γ map. R1 + MertonSigmaGamma together = the full
+Merton identification (boundary geometry + characteristic exponent).
+
+**PAPER claim cleared (with scope):** "Temporal's perpetual options are priced by the Merton
+perpetual-American solution; the steepness γ is the characteristic exponent, set by volatility via
+γ(γ+1)=2r/σ² on the zero-carry (r=q) slice." HONEST: state the r=q slice EXPLICITLY (do not imply full
+(σ,r,q) freedom / independent call+put exponents — those are NOT in the curve). Paper-claim sign-off is
+the operator's call (flag via manager).
+
+---
+_Earlier: 2026-06-09, CLOSEOUT RUN (collapse remaining formal items to true floor; SCRATCH-ONLY)._
 
 ### CLOSEOUT RUN — 2026-06-09 (operator: "spam Aristotle"; canonical tree UNTOUCHED)
 5 standalone submits (`import Mathlib` only → no canonical module imported → byte-identity trivial).
