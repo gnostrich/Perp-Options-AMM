@@ -3518,46 +3518,10 @@ const Viz = (function() {
     const pad = { top: 18, right: 18, bottom: 44, left: 64 };
     const plotW = W - pad.left - pad.right;
     const plotH = H - pad.top - pad.bottom;
-    // toPx: raw reserve coords → pixels. Used for REFERENCE geometry (axes,
-    // ticks, mode ray, strike-ray lines) — these stay in honest reserve units.
     const toPx = (x, y) => [
       pad.left + (x / xMax_raw) * plotW,
       pad.top + (1 - y / yMax_raw) * plotH
     ];
-    // ── Like-for-like DISPLAY rescale (display-only; NO pricing touch) ──
-    // The GH curve reads flat because its GEOMETRIC reserve slope
-    // |dy/dx| = getMP_raw·e^(−ghMu) (THE gotcha) is astronomically smaller than
-    // the chord yEq/xEq (a constant-product / Balancer curve has |dy/dx|≈y/x and
-    // reads ~45° for free; GH does not — they differ by the e^μ factor). FIX:
-    // a display-only vertical stretch about the equilibrium so the eq TANGENT
-    // reads ~45° (matched to the box aspect) like v24. This touches NOTHING in
-    // the pricing path — getMP_raw / mark() / arbitrageToOracle are untouched;
-    // it only remaps the DRAWN y of curve-family points. Axes/ticks/rays stay raw.
-    // mpGeom = getMP_raw(eq)·e^(−ghMu): a missing ghMu yields NaN (loud), never e^0.
-    const mpGeomEq = (eq && isFinite(eq.ghMu))
-      ? Engine.getMP_raw(eq) * Math.exp(-eq.ghMu)
-      : NaN;
-    let yStretch = 1;
-    if (isFinite(mpGeomEq) && mpGeomEq > 0 && xEq > 0 && yEq > 0) {
-      // Ideal stretch: make displayed tangent slope = chord yEq/xEq (v24 reads ~45°).
-      const Sideal = (yEq / xEq) / mpGeomEq;
-      // Cap so the stretched curve stays within frame: clamp the displacement of a
-      // reference curve point (oracle ×2, ×0.5) to the frame's vertical headroom.
-      const yHi = Engine.arbitrageToOracle(snap, oracle * 2.0);
-      const yLo = Engine.arbitrageToOracle(snap, oracle * 0.5);
-      const dRef = Math.max(
-        yHi ? Math.abs(yHi.y - yEq) : 0,
-        yLo ? Math.abs(yLo.y - yEq) : 0
-      );
-      const headroom = Math.min(yEq, yMax_raw - yEq);   // keep eq + curve in [0, yMax]
-      const Scap = (dRef > 0) ? (headroom / dRef) * 0.9 : Sideal;
-      yStretch = Math.max(1, Math.min(Sideal, Scap));   // never compress below raw
-    }
-    // toPxC: curve-FAMILY coords (points that lie on/near the live curve) →
-    // pixels, with the display stretch applied. Reserve dots, the equilibrium
-    // marker, and strike-ray DOTS use this so they stay ON the stretched curve.
-    const ty = (y) => yEq + (y - yEq) * yStretch;
-    const toPxC = (x, y) => toPx(x, ty(y));
 
     // Axes
     ctx.strokeStyle = colTertiary; ctx.lineWidth = 1;
@@ -3615,10 +3579,9 @@ const Viz = (function() {
       let prev = null, runColor = null, started = false;
       const flush = () => { if (started) { ctx.stroke(); started = false; } };
       for (const [x, y] of pts) {
-        const yd = ty(y);   // display-stretched y (clip in stretched space)
-        if (x > xMax_raw * 1.5 || yd > yMax_raw * 1.5 || yd < -yMax_raw * 0.5) { flush(); prev = null; continue; }
-        const col = fixedColor || curveSegmentColor(x, y);   // colour by RAW wing geometry (unchanged)
-        const [px, py] = toPxC(x, y);
+        if (x > xMax_raw * 1.5 || y > yMax_raw * 1.5) { flush(); prev = null; continue; }
+        const col = fixedColor || curveSegmentColor(x, y);
+        const [px, py] = toPx(x, y);
         if (!started || col !== runColor) {
           flush();
           ctx.beginPath();
@@ -3680,7 +3643,7 @@ const Viz = (function() {
         const xT = alphaC + betaC / rawSlope;
         const yT = betaC + rawSlope * alphaC;
         if (xT > 0 && xT < xMax_raw && yT > 0 && yT < yMax_raw) {
-          const [dx, dy] = toPxC(xT, yT);   // dot sits ON the stretched curve
+          const [dx, dy] = toPx(xT, yT);
           ctx.fillStyle = color;
           ctx.globalAlpha = (isPreview ? 0.95 : 0.85) * aMul;
           ctx.beginPath(); ctx.arc(dx, dy, 3.5, 0, 2 * Math.PI); ctx.fill();
@@ -3716,15 +3679,15 @@ const Viz = (function() {
       drawStrikeRay(p.leg2_theta_star, colLong, true, (step === 2), (step === 1) ? 0.3 : 1);
     }
 
-    // Live reserves point (on the stretched curve)
-    const [rpx, rpy] = toPxC(snap.x, snap.y);
+    // Live reserves point
+    const [rpx, rpy] = toPx(snap.x, snap.y);
 
     // Trade-displacement arrow: live reserves → preview reserves.
     // (Replicated from the single-pool reference version.) Drawn before the
     // dots so they sit on top. Skipped when the move is sub-pixel — a
     // symmetric band nets ~zero, so no arrow is the honest signal.
     if (previewPool) {
-      const [ppx, ppy] = toPxC(previewPool.x, previewPool.y);
+      const [ppx, ppy] = toPx(previewPool.x, previewPool.y);
       const adx = ppx - rpx, ady = ppy - rpy;
       const alen = Math.sqrt(adx * adx + ady * ady);
       if (alen > 14) {
@@ -3754,7 +3717,7 @@ const Viz = (function() {
 
     // Post-trade reserves point
     if (previewPool) {
-      const [px, py] = toPxC(previewPool.x, previewPool.y);
+      const [px, py] = toPx(previewPool.x, previewPool.y);
       ctx.strokeStyle = colPreview; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(px, py, 4, 0, 2 * Math.PI); ctx.stroke();
     }

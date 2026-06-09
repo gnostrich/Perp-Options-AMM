@@ -178,8 +178,42 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
 
-## Done — CURVE PLAYGROUND (γ/δ/βh dials, IMPLEMENTED, handed to manager 2026-06-09)
-Build: **`reference/temporal_curve_playground.html`** md5 **`2b20c844020ef5f636f27a4cadca3bb7`**
+## Done — CURVE PLAYGROUND drawCurve RESCALE REVERT (IMPLEMENTED in place, handed to manager 2026-06-09)
+Build: **`reference/temporal_curve_playground.html`** EDITED IN PLACE → md5 now
+**`f7fecff4c62b028134190a222167e088`** (was `2b20c844…`). HEAD v26c `6cc73563` + v26d `a406a751` UNTOUCHED.
+Splice: `/tmp/splice_revert_drawcurve.py` (1 rep, `count==1`, blobs never through).
+- **WHY:** the display rescale I added earlier (toPxC vertical-stretch-about-eq, axes left raw) drew a
+  FALSE curve vs its axes and broke call/put colours. Manager brief: remove it entirely, restore
+  honest v24-aligned rendering. Reverted drawCurve to **v26d-native byte-for-byte**.
+- **THE REVERT:** replaced playground drawCurve (lines **3464–3761**, 1-based) with v26d-native
+  drawCurve (`temporal_mvp_v26d_volknob.html` lines **3493–3753**). Result: removed the rescale
+  comment+block (`mpGeomEq`/`yStretch`/`ty`/`toPxC` defs) and reverted all 5 call sites
+  `toPxC→toPx` + the `ty(y)` clip → raw `y`. Post-revert playground drawCurve == v26d drawCurve
+  (verified byte-equal). `grep toPxC|mpGeomEq|yStretch` → **none**.
+- **DIFF SCOPE:** git diff = drawCurve-ONLY (8 ins / 45 del, all inside the fn). mark/markFrac/markEff/
+  funding/executeBand/closeBand/isOTM/wingMember/legFraction/drawPricing/drawTrajectory/drawPayoff/
+  dollar-pipe BYTE-UNCHANGED.
+- **Colours restored:** live curve drawn per-wing via `curveSegmentColor(x,y)=(y/x>modeSlope)?colCall
+  (teal #0ABAB5):colPut(pink #FF85B0)`, fed through standard `toPx`. Live curve `drawCurvePts(livePts,
+  false,1.0,null)` (null fixedColor → per-wing split). NOT green/orange.
+- **Cross-graph reactivity (already correct, no wiring change needed):** dial inputs vk-gamma/delta/betah
+  bind change+input → `apply()` (L2928-30) → `Store.setShape(g,d,bh)` (L2909) → `render()` (L2926).
+  `render()` (L4310) → `previewBand()` + fallback `Viz.drawAll(s,null)` (L4381-83) → `drawAll` (L4014)
+  redraws ALL 4 graphs (drawCurve/drawPricing/drawTrajectory/drawPayoff). Like v24.
+- **KEPT unchanged:** γ/δ/βh steppers, βh via ghCalibrate, setShape, editable Balancer-corner init.
+  NO axis-zoom / display transform added — plot honest only (curve reads flat-ish in default frame =
+  CORRECT shape, not compensated).
+- **GATES:** `sh verify/run_all.sh ../reference/temporal_curve_playground.html` EXIT 0 — 7 GH PASS
+  γ∈{1.5,2,3,4}, curveTrace 401/401, seam PASS both branches, dir PASS, blob74 `ab663f5c`/svg1113
+  `c505b08a` intact, 3 scripts parse (`all parse:true`), `blob-in-script:false`, IIFE true (Engine+Viz).
+  `sigs:false` = expected (ghCalibrate +δ+βh echo, documented). Whole-md5 echo `6cc73563`/blob-1060
+  echo `0eff98b2` are INFORMATIONAL (v26d-lineage svg at 1113).
+- **Open for tester (live):** confirm live curve is teal/pink per-wing (NOT green/orange); a γ/δ/βh
+  dial change re-warps + redraws ALL graphs; curve plots honest reserves (flat-ish default frame OK).
+- **NO git** (manager commits).
+
+## Done — CURVE PLAYGROUND (γ/δ/βh dials, IMPLEMENTED, handed to manager 2026-06-09) [SUPERSEDED rescale removed above]
+Build: ~~md5 `2b20c844020ef5f636f27a4cadca3bb7`~~ (rescale reverted → `f7fecff4`)
 (from `engine/builds/temporal_mvp_v26d_volknob.html` `a406a751`; HEAD v26c `6cc73563` + v26d UNTOUCHED).
 Spec: `specs/SPEC_curve_knobs_NEXT.md`. Splices: `/tmp/splice_playground.py` (engine: 5 reps),
 `/tmp/splice_playground_ui.py` (UI panel+block: 2 reps) — all `count==1`, blobs never through;
