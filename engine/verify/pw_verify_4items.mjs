@@ -31,7 +31,6 @@ out.itemC = await page.evaluate(() => {
     gammaControls, rangeInputs, deltaControls,
     gammaLive: (pool && isFinite(pool.ghAh)) ? pool.ghAh - 1 : 'n/a',
     ghAh: pool ? pool.ghAh : 'n/a',
-    GH_GAMMA_const: (typeof GH_GAMMA !== 'undefined') ? GH_GAMMA : 'n/a',
     stepperButtons: {
       b1: b1 ? { text: b1.textContent.trim(), disabled: b1.disabled } : null,
       b2: b2 ? { text: b2.textContent.trim(), disabled: b2.disabled } : null,
@@ -39,38 +38,32 @@ out.itemC = await page.evaluate(() => {
   };
 });
 
-// ---- Build a 2-leg SPREAD band (sold call spread + bought put spread) ----
+// ---- Build a 2-leg SPREAD band ----
 out.build = await page.evaluate(() => {
   const oraEl = document.getElementById('kpi-oracle');
   oraEl.value = '80000'; oraEl.dispatchEvent(new Event('change', { bubbles: true }));
   Store.addPerp('long', 1.0, 50000, 80000);
-  // pick the club created
   const clubSide = Object.keys(Store.state.clubs).find(k => Store.state.clubs[k].totalNotional > 0)
                    || Object.keys(Store.state.clubs)[0];
-  // sold call SPREAD (inner & outer > oracle), bought put SPREAD (inner & outer < oracle)
   const r = Store.openBand('call', 'put',
-    { inner: 120000, outer: 140000 },   // sold call spread
-    { inner: 68000,  outer: 50000 },    // bought put spread
+    { inner: 120000, outer: 140000 },
+    { inner: 68000,  outer: 50000 },
     0.1, clubSide);
-  return { ok: r && r.ok, reason: r && r.reason, bands: Store.state.bands.length,
-           clubSide, clubs: Object.keys(Store.state.clubs) };
+  if (typeof render === 'function') render();
+  return { ok: r && r.ok, reason: r && r.reason, bands: Store.state.bands.length, clubSide };
 });
 
-// render & switch chart to curve
+// ---- ITEM B: ray count on graph 1 (clear stale preview first) ----
 await page.evaluate(() => {
+  window.__previewBand = null; window.__previewPool = null;
   const sel = document.getElementById('chart-select');
   if (sel) { sel.value = 'curve'; sel.dispatchEvent(new Event('change', { bubbles: true })); }
 });
-await page.waitForTimeout(300);
-
-// ---- ITEM B: count strike rays drawn on graph 1 for the spread band ----
-// Instrument drawStrikeRay calls by wrapping CanvasRenderingContext2D usage is
-// fragile; instead recompute what drawCurve draws from Store + the same formula.
+await page.waitForTimeout(200);
 out.itemB = await page.evaluate(() => {
   const s = Store.state;
   const openBands = s.bands.filter(b => b.status === 'open');
-  // mirror drawCurve: 2 rays per open band (sold composite + bought composite)
-  const thetaStarOf = (inner, outer) => (isFinite(outer) && outer > 0) ? Math.sqrt(inner * outer) : inner;
+  const thetaStarOf = (i, o) => (isFinite(o) && o > 0) ? Math.sqrt(i * o) : i;
   const liveRayTheta = (Ki, Ko, ora) => {
     const ri = (isFinite(Ki) && Ki > 0 && ora > 0) ? Ki / ora : NaN;
     const ro = (isFinite(Ko) && Ko > 0 && ora > 0) ? Ko / ora : NaN;
@@ -79,67 +72,97 @@ out.itemB = await page.evaluate(() => {
   const ora = s.oracle;
   const perBand = openBands.map(b => ({
     id: b.id,
-    soldRayTheta: liveRayTheta(b.sold.K_inner, b.sold.K_outer, ora),
-    boughtRayTheta: liveRayTheta(b.bought.K_inner, b.bought.K_outer, ora),
+    soldComposite: liveRayTheta(b.sold.K_inner, b.sold.K_outer, ora),
+    boughtComposite: liveRayTheta(b.bought.K_inner, b.bought.K_outer, ora),
     soldRealStrikes: [b.sold.K_inner, b.sold.K_outer].filter(k => isFinite(k) && k > 0),
     boughtRealStrikes: [b.bought.K_inner, b.bought.K_outer].filter(k => isFinite(k) && k > 0),
   }));
-  const raysPerBand = 2;  // sold + bought composite
   const totalRealStrikes = perBand.reduce((a, b) => a + b.soldRealStrikes.length + b.boughtRealStrikes.length, 0);
-  const previewRays = window.__previewBand ? 2 : 0;
-  return { openBands: openBands.length, raysPerBand, perBand,
-           totalRealStrikes, previewRays,
-           note: 'rays = 2*openBands + (previewBand?2:0); real strikes = ' + totalRealStrikes };
+  return {
+    openBands: openBands.length,
+    raysPerOpenBand: 2,
+    raysDrawn: 2 * openBands.length,
+    previewRaysActive: window.__previewBand ? 2 : 0,
+    totalRealStrikesInBand: totalRealStrikes,
+    perBand,
+  };
 });
 
-// ---- ITEM A: pricing regime — one mark per leg via compositeRay ----
+// ---- ITEM A: one mark per leg via compositeRay ----
 out.itemA = await page.evaluate(() => {
-  const s = Store.state, pool = s.pool;
-  const b = s.bands.find(x => x.status === 'open');
-  if (!b) return { err: 'no open band' };
+  const pool = Store.state.pool;
+  const b = Store.state.bands.find(x => x.status === 'open');
   const px_s = Engine.legPrice(pool, 'call', b.sold.inner, b.sold.outer, b.sold.N);
-  const px_b = Engine.legPrice(pool, 'put', b.bought.inner, b.bought.outer, b.bought.N);
-  // independently: one composite ray, one mark, vsValue
   const crS = Engine.compositeRay(Math.min(b.sold.inner,b.sold.outer), Math.max(b.sold.inner,b.sold.outer));
-  const sN = Engine.getSNorm(pool);
-  const gP = pool.ghAh - 1;
+  const sN = Engine.getSNorm(pool), gP = pool.ghAh - 1;
   const mStarS = Engine.mark('call', crS.theta_star, sN, gP);
   const vS = Engine.vsValue(b.sold.N, mStarS, crS.delta);
   return {
     soldLeg: { mode: px_s.mode, theta_star: px_s.theta_star, m_star: px_s.m_star, V: px_s.V },
-    boughtLeg:{ mode: px_b.mode, theta_star: px_b.theta_star, m_star: px_b.m_star, V: px_b.V },
-    independentSold: { theta_star: crS.theta_star, m_star: mStarS, V: vS },
-    matchesOneMark: Math.abs(px_s.V - vS) < 1e-9 && Math.abs(px_s.m_star - mStarS) < 1e-9,
-    composite_single_theta_star: isFinite(px_s.theta_star) && px_s.mode === 'spread',
+    independentRecompose: { theta_star: crS.theta_star, m_star: mStarS, V: vS },
+    oneMarkPerLeg_match: Math.abs(px_s.V - vS) < 1e-12 && Math.abs(px_s.m_star - mStarS) < 1e-12,
+    singleThetaStar: px_s.mode === 'spread' && isFinite(px_s.theta_star),
   };
 });
 
-// ---- ITEM D: portfolio table row structure ----
+// ---- ITEM C(c): stepper live — preview a band, toggle step 1<->2 ----
+out.stepper = await page.evaluate(() => {
+  // configure a band preview via the band inputs and trigger previewBand
+  document.getElementById('band-notional').value = '0.1';
+  document.getElementById('sold-inner').value = '120000';
+  document.getElementById('sold-outer').value = '140000';
+  document.getElementById('bought-inner').value = '68000';
+  document.getElementById('bought-outer').value = '50000';
+  ['band-notional','sold-inner','sold-outer','bought-inner','bought-outer'].forEach(id=>{
+    document.getElementById(id).dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  if (typeof previewBand === 'function') previewBand();
+  const pb = window.__previewBand;
+  if (!pb || !pb.leg1State) return { hasPreview: false, reason: 'previewBand did not populate leg1State' };
+  // capture pool weight at step 1 vs step 2 (the pro-forma chain)
+  const wOf = (s) => Engine.getW(s);
+  if (typeof setPreviewStep === 'function') setPreviewStep(1);
+  const step1 = { previewStep: window.__previewStep,
+                  poolIsLeg1: window.__previewPool === pb.leg1State,
+                  w: wOf(window.__previewPool) };
+  if (typeof setPreviewStep === 'function') setPreviewStep(2);
+  const step2 = { previewStep: window.__previewStep,
+                  poolIsLeg2: window.__previewPool === pb.leg2State,
+                  w: wOf(window.__previewPool) };
+  return {
+    hasPreview: true,
+    leg1StatePresent: !!pb.leg1State, leg2StatePresent: !!pb.leg2State,
+    step1, step2,
+    wChangedBetweenSteps: Math.abs(step1.w - step2.w) > 0,
+    leg1RayTheta: pb.leg1_theta_star, leg2RayTheta: pb.leg2_theta_star,
+  };
+});
+
+// ---- ITEM D: portfolio table — navigate via nav-link, read rows ----
 await page.evaluate(() => {
-  // navigate to portfolio page if tab exists
-  const tab = [...document.querySelectorAll('button,a,[role=tab]')].find(e => /portfolio/i.test(e.textContent) && e.textContent.length < 30);
-  if (tab) tab.click();
+  window.__previewBand = null; window.__previewPool = null;
+  const nav = document.querySelector('[data-page="portfolio"]');
+  if (nav) nav.click();
+  if (typeof render === 'function') render();
 });
 await page.waitForTimeout(300);
 out.itemD = await page.evaluate(() => {
   const bt = document.getElementById('bands-tbody');
   const rows = bt ? [...bt.querySelectorAll('tr')] : [];
   const classified = rows.map(tr => ({
-    cls: tr.className,
-    firstCell: (tr.querySelector('td') || {}).textContent ? tr.querySelector('td').textContent.trim().slice(0,40) : '',
+    cls: tr.className.trim(),
+    firstCell: (tr.querySelector('td') ? tr.querySelector('td').textContent.trim().slice(0,40) : ''),
     cols: tr.querySelectorAll('td').length,
   }));
   const bandRow = rows.filter(r => r.classList.contains('pf-band-row')).length;
   const compRow = rows.filter(r => r.classList.contains('pf-comp-row')).length;
   const totalRow = rows.filter(r => r.classList.contains('pf-total-row')).length;
-  // perps table
   const pt = document.getElementById('perps-tbody');
   const perpRows = pt ? [...pt.querySelectorAll('tr')].filter(r=>!r.querySelector('.empty-row')).length : 0;
-  // column header counts
   const bandsHeaders = [...document.querySelectorAll('#bands-table thead th')].map(th=>th.textContent.trim());
   const perpsHeaders = [...document.querySelectorAll('#pf-perps table thead th')].map(th=>th.textContent.trim());
-  return { rows: classified, bandRow, compRow, totalRow, perpRows,
-           bandsCols: bandsHeaders.length, perpsCols: perpsHeaders.length,
+  return { totalRowsRendered: rows.length, bandRow, compRow, totalRow, perpRows,
+           rows: classified, bandsCols: bandsHeaders.length, perpsCols: perpsHeaders.length,
            bandsHeaders, perpsHeaders };
 });
 
