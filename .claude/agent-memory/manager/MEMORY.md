@@ -209,6 +209,26 @@ actor). I do **not** see raw prover output and am no longer a courier.
   - Audit clean: canonical tree untouched; correct grep -rnE token-scan clean; standalone project
     (import Mathlib only); axioms standard three. Scope locks 1/2/3 honored.
 
+## CLOSEOUT run — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+Audit: `evidence/manager_audit_CLOSEOUT_2026-06-09.md`. Canonical tree untouched; only real `sorry` =
+declared Kähler-K3 gap. trusted-from-prover ("verified" DROPPED per operator — Aristotle trusted to
+build). Supersedes WIP checkpoints 6b37872/aae9c14.
+- **1 cgf_convexOn HOLD CLOSED** — search tactics replaced w/ concrete lemmas; clean.
+- **2 GH measure DISCHARGED (the prize, I READ IT):** `integrable_ghKernel` (dominated by exp(−c|v|)
+  decay bound), `ghIntegral_pos`, `isProbabilityMeasure_ghProb` (mass=1 via div_self on PROVED-positive
+  ∫ — DERIVED not assumed), `integrable_ghKernel_tilt` (finite MGF on strip). **NO Bessel-K, no assumed
+  Z.** RUN-4 carried hInt/hMGF DISCHARGED ⇒ exp-family/M=Fisher now over a GENUINE GH probability measure.
+- **3 frontier antitone/convex — GROUNDED from slope law; CARRIED[StrictAnti X(u),StrictMono Y(u)]**
+  (reserve-map monotonicity = the residual Bessel-K-adjacent content; honestly named).
+- **4 Kähler integrability — STILL-OPEN/CONJECTURAL** (single honest named sorry; Mathlib v4.28.0 has no
+  almost-complex/Nijenhuis/Newlander–Nirenberg/Kähler infra to even state it).
+- **5 Courant all-four — PROVED NO-GO:** graph(J−R), R≠0, is symmetric not isotropic ⇒ no single
+  maximal-isotropic Dirac bracket carries dissipation. Settled (impossible as a Dirac), not "open."
+- **TRUE FORMAL FLOOR:** (a) GH reserve-map X(u)/Y(u) monotonicity (Bessel-K-adjacent, carried);
+  (b) Bessel-K normalizer VALUE (not needed); (c) Kähler integrability (Mathlib gap); (d) Courant
+  (settled no-go). EXCLUDED: B1 (ship-gate), C3 spec↔engine (→ PIVOT), "verified" (dropped).
+  **Formal phase at a clean, defensible stopping point → pivot to engine-faithfulness scaffolding.**
+
 ## RUN-4 (close-the-gaps) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
 Audit: `evidence/manager_audit_RUN4_2026-06-09.md`. **Genuine, substantial, HONESTLY-reported upgrade**
 (I read every proof; depth matches claims this time). Canonical tree untouched; correct grep -rnE clean;
