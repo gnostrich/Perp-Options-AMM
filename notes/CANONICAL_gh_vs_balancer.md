@@ -19,6 +19,19 @@ Manager-measured + research-lead independently re-derived from scratch (mpmath/s
 ## REFINED / walked back
 The "Cobb-Douglas/Balancer reserve curve = δ→∞ limit" claim (CLOSEOUT + `evidence/manager_verify_reconcile_2026-06-09.md`) is **window-dependent** (CV(K) falls then rises with δ; sampling-fragile) and yields **no curve identity**. GH reserve elasticity **diverges** as δ→∞ (−2.5/−6.4/−19/−58 at δ=10/100/1e3/1e4, mode), does NOT →−γ. **Balancer is reachable in NO buildable GH limit on the reserve axis.** The only δ-free GH guarantee is the value law −γ.
 
+## CORRECTION (2026-06-09, post-operator) — "warp doesn't transfer" applies to AUTO-equivalence ONLY
+The refutation above kills **equivalence / auto-transfer**: slaving γ=w/(1−w) does NOT make GH's native
+point-slide coincide with / auto-warp like Balancer. **It does NOT refute that the warp goal-seek
+MECHANISM can be IMPLEMENTED on a GH curve.** The warp ("keep the reserves reference, goal-seek a shape
+param so the post-trade slope lands there, continuously") is **family-agnostic** — implementable on any
+curve with a tunable shape param, GH included. Implemented as a **replacement** trade rule (not added to
+the point-slide) it is self-consistent (no double-count); the slippage is then *defined by* the warp
+(curve-dependent, Balancer-style). If the warped param is the **convexity γ**, the value-law exponent
+becomes **state-dependent** (warps per trade, like Balancer) — a deliberate curve/dynamics choice
+(operator-owned, reopens the fixed-γ decision). Constructive well-posed derivation: IN PROGRESS
+(research-lead a676b377; manager to independently check). So: GH does not *auto*-warp; a warp *can be
+built on* GH.
+
 ## PRODUCT FORK (settled — operator-owned)
 **GH** (`value∝S^(−γ)`, γ>1 option pricing, NO Balancer reserve-warp) **OR** **Balancer/CPMM** (the reserve-warp, value-γ=½). **Not both.** The "curve warps on every trade" behavior the operator wanted is a *Balancer-family* property GH structurally lacks. GH was chosen for the perpetual-option pricing law; that choice excludes the Balancer warp.
 
