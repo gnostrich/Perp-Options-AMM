@@ -49,3 +49,28 @@ Merge stays HELD.
 - FULL fork (free δ + βh=0): symmetric Balancer base + both S^(±γ) eigenfunctions, but DROPS the proved
   put-only eigenfunction = settlement-semantics / economic-object change (reopens locked curve).
 - Even MINIMAL unfreezes a pinned constant of the locked GH curve. + knob labeling (direction+semantics).
+
+---
+## ADDENDUM — manager audit of research-lead FULL-fork scoping (2026-06-09, agent a8c28175)
+research-lead returned GO-WITH-CONDITIONS and **revised its own earlier reconcile-doc claim**
+("βh=0 drops the put-only eigenfunction = settlement-semantics change"). I audited the two
+load-bearing checkable claims — BOTH HOLD:
+- **mark() is βh-FREE (γ-only):** `function mark(wing, theta, sNorm, gamma)` in HEAD has no
+  βh/ghBeta/beta. ⇒ option value + smooth-pasting + settlement do NOT depend on skew. Changing βh
+  changes the CURVE shape (reserves/liquidity/slippage), NOT the option pricing.
+- **Lean βh is a free bound variable everywhere** (verified: fb/fb1/esscher_core/density_ratio/
+  gh_slope_law/ghKernel all take βh:ℝ); every `βh=1` is in a COMMENT; strip hyp |t|<αh−βh holds at
+  βh=0. ⇒ βh=0 = trivial instance, SMALL Lean cost (comment edits + optional confirm obligation).
+- Both smooth-pasting branches (Kγ/(γ+1), K(γ+1)/γ) already pass the seam gate on HEAD (βh=1) ⇒ both
+  wings already priced; βh=0 does NOT resurrect a wing (reconcile-doc framing was overstated).
+
+**CORRECTED STAKES (I over-framed earlier):** the FULL fork (βh=0) is **settlement-SOUND**, NOT a
+settlement-semantics breakage. It changes the CURVE'S SYMMETRY / economic posture (symmetric two-sided
+liquidity vs current skewed), which is still an operator-owned economic-object choice (unfreezing a
+pinned constant of the locked GH curve), but LOWER stakes than "reopening settlement semantics."
+MINIMAL (free δ only) = genuine settlement no-op. Lean cost both forks ≈ zero (comment edits).
+
+**VERDICT (manager, audited): FULL fork = GO-WITH-CONDITIONS; conditions are product/labeling calls,
+not soundness.** Build path: unfreeze δ (kurtosis) + βh (skew; βh=0 = symmetric Balancer-shape start),
+keep warp, label knobs as γ (steepness) / δ (kurtosis) — NOT Gaussian "σ". v26d σ-knob framing
+superseded; respec needed. SPEC_vol_knob_NEXT.md §0/§2 Gaussian-σ-as-exact needs the correction-1 caveat.
