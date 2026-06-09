@@ -1,5 +1,82 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, MERTON RUN (engine ITM smooth-pasting = Merton perpetual American; σ↔γ map proved)._
+_Last updated: 2026-06-09, βh=0 FORK SCOPING RUN (settlement soundness + Lean re-proof cost of freeing δ,βh)._
+
+### βh=0 FORK SCOPING — 2026-06-09 (theory+formal scoping; READ-ONLY engine; no git; no new Aristotle submit)
+Task: is the FULL fork (free δ, set βh=0 → symmetric Balancer-shape base) settlement-sound enough to
+ship, and at what Lean re-proof cost? Build on manager's verified reconcile
+(`evidence/manager_verify_reconcile_2026-06-09.md`): CD/Balancer = δ→∞ limit; δ=kurtosis (engine δ=0.08
+fat-tailed ~Laplace); αh=γ+1=1/(1−w); Esscher e^v ⇒ value∝S^(−γ) is δ/βh-FREE. Did NOT re-litigate those.
+
+**VERDICT: GO-WITH-CONDITIONS on FULL fork settlement soundness (confident on the formal/math core;
+the live conditions are operator-owned product calls, not soundness defects).**
+
+**1. Settlement soundness (CONFIDENT):**
+- **Both wings paste C¹ under βh=0 with the SAME closed form already proved.** Re-derived symbolically
+  (sympy): branch A (call-dir, cont a·S^(−γ), S*_A=Kγ/(γ+1)) and branch B (put-dir, cont b·S^(+γ),
+  S*_B=K(γ+1)/γ) BOTH give value 1/(γ+1) at their boundary and slope residual EXACTLY 0. This is the
+  R1 / PH-5 two-branch form ALREADY proved-trusted. βh=0 changes nothing here — the boundaries are γ-only.
+- **The two eigenfunctions S^(±γ) are ALREADY both present as the two char-roots.** MertonSigmaGamma
+  (proved-trusted) shows −γ AND γ+1 are both roots of the char quadratic on the r=q (sum=1) slice,
+  INDEPENDENT of βh. So "both eigenfunctions live" is not new at βh=0 — the engine already realises both
+  boundaries (one per wing). βh=0 makes the kernel EVEN/symmetric; it does NOT add a missing eigenfunction.
+  The current βh=1 is the SKEWED case; the proved put-only "Merton tie" is about which WING the trader
+  holds, not about an eigenfunction being absent.
+- **ITM rule / close=exercise (C1, proved-trusted) stays well-posed** — C1 is universal-over-effective-
+  strikes (sinh_log), boundary is γ-only, no βh dependence; both wings already covered. No ill-posedness.
+- **No-internal-arb / collar-symmetry biconditional (C3) is NATURALLY AT HOME at βh=0.** C3's discharged
+  reflection arrow `markPut θ s = markCall θ(θ²/s)` and the no-arb=reflection-symmetry corollary are the
+  SYMMETRIC (w=½, R_θ-invariant) statement. βh=0 (even kernel) is exactly the symmetric configuration that
+  arrow describes ⇒ βh=0 STRENGTHENS the natural home of the biconditional, does not break it. (Caveat
+  unchanged: C3 still rests on spec-mark↔engine-barrier as the residual link; that is orthogonal to βh.)
+- **NET — which settlement-semantics change at βh=0:** NONE become ill-posed; NONE break no-arb. What
+  changes is the ECONOMIC POSTURE: βh=0 is a symmetric two-sided instrument (both wings equally weighted by
+  the even kernel) vs βh=1's skewed posture. That is a PRODUCT/economic-object decision (CLAUDE §4 locked
+  curve; §7 operator-owned), NOT a soundness defect. Flag to operator, do not decide.
+
+**2. Lean re-instantiation cost for βh=0 = SMALL (CONFIDENT, this is the strong finding).**
+  Every `βh=1` occurrence in the ENTIRE Lean corpus is in a COMMENT (`--`/`/-`/doc prose) — verified by
+  grep across all `formal/aristotle_runs/**/*.lean`. In every actual DECLARATION, βh is a FREE bound
+  variable under the strip hypothesis `|βh|<αh` (GHMeasure) or `αh>|βh|` (UNIFY2). Consequences:
+  - GHMeasure (integrability, prob-measure, finite-MGF, `ghKernel_exponent_le`): βh-GENERIC. βh=0 is the
+    instance βh:=0, trivially satisfies `|0|<αh` since αh=γ+1>0. ZERO re-proof.
+  - esscher_core / density_ratio / gh_slope_law (UNIFY2, GHJ_grounded): the +1 tilt = ·e^v is βh-free
+    ⇒ value∝S^(−γ) unchanged. ZERO re-proof.
+  - MertonSigmaGamma roots / R1 smooth-pasting / C1 ITM / R4 orientation / C3 reflection: γ-only or
+    symmetry statements, βh-independent. ZERO re-proof.
+  - The ONLY edits are DOC/COMMENT updates (the "βh=1" prose lines) — mechanical, no math, no statement.
+    A cheap confirmatory Aristotle obligation (instantiate the strip facts at βh:=0) is OPTIONAL and would
+    be near-trivial; I did NOT submit one this pass (scoping was the deliverable; the genericity is already
+    visible in the proved statements). Scope = SMALL.
+
+**3. MINIMAL fork (free δ, keep βh=1) = settlement-INVARIANT (CONFIRMED).** δ appears only inside
+  ghKernel as a kernel constant; it is δ-free in Esscher (value∝S^(−γ)), γ-only in the boundaries, and the
+  GHMeasure facts hold for all δ (δ enters only via √(δ²+v²)≥|v|, used with any δ). No eigenfunction change
+  (βh=1 put-only posture unchanged), no boundary change, no no-arb change. Lean cost: ZERO (δ already a
+  free var in every ghKernel statement). MINIMAL is the safe fallback — genuinely a no-op for soundness.
+
+**4. Vol↔shape labeling (CONFIRMED manager's correction; honest recommendation):** `γ(γ+1)=2r/σ²` is the
+  GAUSSIAN (δ→∞) slice ONLY; engine (δ=0.08) is fat-tailed (~Laplace, ~2.65 excess kurtosis) and obeys the
+  implicit GH Laplace-exponent root ψ(−γ)=r, NOT the Gaussian formula. HONEST labeling rec:
+  - Label the steepness knob as **γ (steepness/convexity)** directly, OR as **δ (kurtosis/ATM-elbow)** —
+    both are HONEST GH shape knobs. Do NOT label a knob "volatility σ" via the Gaussian inverse
+    γ=(−1+√(1+8r/σ²))/2 (that is a Gaussian-equivalent LENS, not the engine's true vol) UNLESS explicitly
+    marked "Gaussian-equivalent σ (display lens, δ→∞ slice)". No clean closed-form vol↔setting at finite δ;
+    the only exact relation is the implicit ψ(−γ)=r root. SPEC_vol_knob_NEXT.md §2/§0 currently uses the
+    Gaussian σ↔γ as if exact — that labeling needs the manager's correction-1 caveat applied before HEAD
+    promotion (v26d). This is an operator/manager labeling call; I flag it.
+
+**OPERATOR-OWNED (flag via manager, I do NOT decide — CLAUDE §4 locked curve / §7 settlement-semantics):**
+(a) FULL vs MINIMAL vs neither — βh is a pinned constant of the LOCKED GH curve; unfreezing it (even to a
+    sound value) reopens a locked decision. (b) Economic posture: symmetric two-sided (βh=0) vs skewed put
+    (βh=1) instrument. (c) Knob labeling (σ-lens vs γ vs δ; correction-1 caveat). (d) v26d σ-knob promotion
+    is HELD pending (c). NONE of these are soundness blockers — they are product/scope calls.
+
+CONFIDENT: items 1 (C¹ both wings, no-arb survives), 2 (SMALL Lean cost — βh generic), 3 (MINIMAL no-op),
+4 (vol labeling correction). CONJECTURAL/CAVEATED: C3 residual spec-mark↔engine-barrier link (pre-existing,
+βh-orthogonal); the "ψ(−γ)=r exact root" is stated, not Lean-formalized (no Bessel-K in Mathlib — same
+floor as CLOSEOUT). No Aristotle submit this pass (scoping deliverable); canonical tree UNTOUCHED.
+
+---
 
 ### MERTON RUN — 2026-06-09 (theory task: is the ITM solution the Merton perpetual American? pin σ↔γ)
 **Result: ALL THREE CLAIMS CONFIRMED, math independently re-derived (sympy). One NEW obligation queued
