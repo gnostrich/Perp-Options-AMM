@@ -1,8 +1,31 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, REPARAM DROP-IN SPEC (Balancer base + kurtosis/skew knob; NO submit/edit/git)._
+_Last updated: 2026-06-09, RECONCILE PASS (Balancer-δ + wings-vs-ATM resolved; NO submit/edit/git)._
+
+### RECONCILE PASS — 2026-06-09 (resolved the Pass-1 vs Pass-2 δ conflict; manager-requested)
+Built the actual curves (mpmath 35-40 digit, direct integration — not formula-arguing). **Authoritative
+spec is now the v2 body of `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`** (rewritten to match
+the manager header; whole file self-consistent). Pass-1 note `CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`
+got a CORRECTION HEADER. **Three resolved verdicts:**
+- **BALANCER-δ VERDICT: the exact Cobb-Douglas/Balancer RESERVE CURVE is the δ→∞ (Gaussian) limit, NOT
+  δ→0. Pass-1's "δ→0" is REFUTED.** Built it: CV of the CD invariant K=X^w·Y^(1−w) along the GH frontier
+  decreases monotonically with δ (δ=1→0.55, 3→0.32, 10→0.11, 30→0.057; robust 2 windows), never →0 (GH
+  reserves BOUNDED vs CD UNBOUNDED ⇒ coincidence is δ→∞ asymptote only). Reserve log-slopes flatten to
+  CD constants −(1−w),w as δ→∞. CD=log-normal=Gaussian=δ→∞ — consistent with kurtosis direction. δ→0 =
+  Laplace (fat return density), NOT Balancer. (Pass-1 conflated the fat-Laplace symmetric base with the
+  Cobb-Douglas Gaussian curve — opposite δ ends.)
+- **WINGS-vs-ATM VERDICT: δ is MOSTLY an ATM-elbow / return-kurtosis knob, NOT a tradeable-wing knob.**
+  (a) wing power-law EXPONENT γ is δ-INVARIANT (value∝S^(−γ) ∀δ) — δ does NOT re-slope the option wings.
+  (b) δ-sensitivity peaks at ATM (Δslope≈2.3-2.8 at u≈0), decays into wings (≈0.003 at u=−3); far wing
+  |u|≫δ is δ-invariant (√(δ²+v²)→|v|). (c) elbow curvature: δ=0.08→12.3, δ=10→0.30 (δ↓=sharp elbow).
+  (d) wing reserve DEPTH moves OPPOSITE the naive reading: δ↑ (thinner Gaussian returns) leaves MORE
+  depth at OTM (X/Nx at m=2: 0.034→0.220 as δ 0.08→3) via soft elbow. HONEST FINDING for operator: if
+  "kurtosis knob" meant "fatten tradeable wings," δ does NOT do that (γ is the wing knob).
+- **CORRECTED KURTOSIS: TRUE excess kurtosis SATURATES at 3 (Laplace, δ→0), →0 (Gaussian, δ→∞), monotone
+  decreasing in δ.** 3/(δ·αh) is LARGE-δ asymptote ONLY. Numerics (βh=0,αh=4): δ=0.08→2.65, 0.3→1.69,
+  1→0.70, 3→0.25, 10→0.075. Matches manager's δ=0.08,γ=2→2.76. exk∈[0,3].
 
 ### REPARAM DROP-IN SPEC — 2026-06-09 (spec for operator's separate impl session)
-Note: `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`. Builds on the GH-vs-CES analysis note.
+Note: `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (NOW v2 — see reconcile pass above).
 mpmath sanity checks (30-40 digit) run + reported. **KEY (load-bearing) findings:**
 - Esscher tilt `f_{β+1}/f_β=e^v` is EXACT, INDEPENDENT of (αh,βh,δ) ⇒ value∝S^(−γ) survives freeing
   δ/βh (G4 stays green in form; reference value regenerates). d log(slope)/d log(price)=1 all cases.
