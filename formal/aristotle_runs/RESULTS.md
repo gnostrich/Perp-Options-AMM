@@ -15,6 +15,76 @@ diff, math re-derived). Manager may upgrade to "verified" by building canonicall
 
 ---
 
+## RUN 3 — 2026-06-09 (operator-greenlit: UNIFY — ONE metriplectic / Hessian structure)
+
+_STAGE 0 sympy GATE run FIRST (make-or-break, before any submit). Scripts durable under
+`formal/aristotle_runs/UNIFY_stage0/`. Stage 1 = one unified Lean file `UNIFY/Unify.lean` (11
+theorems, 5 obligation blocks A–E). Submit-project = throwaway minimal Mathlib project with canonical
+v4.28.0 pins. Canonical `formal/temporal_lean_verified/` tree NOT touched._
+
+### STAGE 0 VERDICT — **GATE PASSED** (all three; headline)
+- **(0.1) M = Fisher — HOLDS, in the correct coordinate.** The dissipation metric (reserve-response /
+  slope-deviation 2nd-order form of the GH family) EQUALS the Fisher metric ∇²μ of the GH exponential
+  family — but ONLY in the **natural / centered-rapidity coordinate** `s = v = u−μ`, where
+  `dMean/dNatural = Var = Ψ″` (verified numerically to ~1e-14, γ=3, αh=4, δ=0.08). HONEST CAVEAT:
+  in the **raw log-price rapidity u**, the dissipation curvature is just the exponential price
+  `g(u)=e^u`, which is **NOT** Fisher (Var varies 0.134→0.290 while e^u is exp) — they are different
+  functions. So "M=Fisher" is a coordinate-correct (Scope-Lock-1 sNorm/centered) statement, the
+  **STANDARD exponential-family / Bregman-divergence AMM identity** applied to GH, NOT a raw-(x,y) or
+  raw-u identity. The same convex Ψ generates (a) Esscher/price = gradient side, (b) the Legendre dual
+  (symplectic) pair `V″=1/Ψ″`, (c) the dissipation Hessian Ψ″=Fisher. Single-potential unity holds.
+- **(0.2) GENERIC degeneracies — HOLD.** deg1 `J·∇S=0`: `d/ds KL_Bregman(s₀‖s) = (s−s₀)Ψ″(s)`,
+  which vanishes at the operating tilt `s=s₀` (non-vacuous away from it). deg2 `M·∇E=0`: Fisher
+  annihilates the conserved-charge/constant direction (score centered, `E[v]·1` covariance = 0).
+- **(0.3) Rebase-covariance — HOLDS.** The Fisher/dissipation metric in the gauge-invariant sNorm is
+  rebase-invariant (boost u→u+log r cancelled by P→P/r; sNorm fixed). Corroborates PH-6 at metric level.
+
+### STAGE 1 — UNIFY/Unify.lean (project ID a2b3003a-985f-496b-910c-21af96cdeecd) — **proved (trusted-from-prover)**
+11/11 theorems proved server-side (Lean 4.28.0 / Mathlib v4.28.0). AUDIT PASSED:
+- token-scan (`grep -rnE sorry|admit|native_decide|sorryAx|opaque|unsafe|\baxiom\b` on returned
+  `RequestProject/`): **NO forbidden-token hits** (summary .md prose mentions don't count);
+- `#print axioms` per ARISTOTLE_SUMMARY ⊆ {propext, Classical.choice, Quot.sound} for ALL 11;
+- out-of-scope files (`RequestProject.lean`, `lakefile.toml`, `lean-toolchain`) **byte-identical** to
+  submitted; toolchain pin v4.28.0 unchanged;
+- all **theorem signature lines character-identical** submit-vs-return (verified by diff); only
+  `sorry`→proof-body changes. ONE mechanical note (allowed emend, no math): the B1 docstring delimiter
+  `/-- … -/` became a plain block comment `/- … -/` (the prover reformatted the inline-`-/` comment) —
+  comment/formatting only, statement untouched. Trailing-newline removed (cosmetic).
+- math re-derived: B1 `d/ds KL=(s−s₀)Ψ″→0 at s=s₀` (non-vacuous, sympy-confirmed); A1 correctly
+  encodes mean=grad/Fisher=Hess (the `dm/ds=Var` numeric content carried by the Stage-0 gate).
+
+**Per-block honest scope (over-promotion guard):**
+| Block | Theorems | What it proves | Provenance label |
+|---|---|---|---|
+| A (single-potential unity, M=Fisher) | A1–A4 | mean=Ψ′, Fisher=Ψ″, dual `V″=1/Ψ″`, price=k·e^(u−μ)>0, Fisher PSD | **STANDARD** (exp-family/Bregman); A1 is the *structural* mean=grad/Fisher=Hess layer — the GH integral `dm/ds=Var` is the Stage-0 sympy gate, NOT re-proved in Lean |
+| B (GENERIC degeneracies) | B1–B2 | deg1 `d/ds KL=0` at operating tilt (real `HasDerivAt` proof); deg2 `R·0=0` (structural encoding of score-centered) | **STANDARD**; B2 is a minimal/structural encoding (weight is in the score-centered modeling choice, proof is `mul_zero`) |
+| C (boost = Kähler-ω flow) | C1 | `ω(∂,·)=dH(·)` Hessian-pairing form (symplectic IS Kähler-ω of ∇²Ψ) | boost-is-Hamiltonian-flow = STANDARD; the Hessian-interior-is-**KÄHLER** (integrability) claim = **CONJECTURAL** — NOT asserted/proved, only the ω-relation encoded |
+| D (rebase automorphism) | D1–D2 | sNorm rebase-invariant; any F(sNorm) rebase-invariant (metric ω AND port as one) | **STANDARD/GROUNDED** (reuses PH-6 sNorm gauge) |
+| E (Dirac/PH port interface) | E1–E2 | port NECESSARY (no reserve floor, PH-4b shape); port CONDITIONAL solvency (B1 shape, coverage carried) | **NECESSITY only**, NEVER sufficiency; solvency stays EXTRINSIC (B1/operator ship-gate) |
+
+**EXPLICITLY NOT CLAIMED (SPECULATIVE, per Scope Lock 3):** a single Courant/double-bracket object
+making ALL FOUR (J, R, port, metric) native in ONE bracket. NOT asserted achieved. Encoded as separate
+blocks, not one bracket.
+
+**RUN-3 escalations / flags for manager (do not over-promote):**
+1. **M=Fisher is coordinate-conditional** — it is the Bregman/exp-family identity in the centered
+   coordinate, NOT a raw-u identity (raw-u dissipation curvature = e^u ≠ Fisher). State as
+   "Hessian/Fisher unity in the gauge coordinate," not "M=Fisher everywhere."
+2. **Kähler is CONJECTURAL** — Block C proves the symplectic=Kähler-ω *relation* for the Hessian
+   metric, NOT that the GH Hessian interior satisfies the Kähler integrability condition. Do not report
+   the interior as "proven Kähler."
+3. **A1/B2 are structural encodings** — A1 captures mean=grad/Fisher=Hess definitionally (the GH
+   integral content is the Stage-0 sympy gate); B2 is `mul_zero` (the content is the score-centered
+   modeling choice). Honest: the Lean carries the *structure*; the GH-specific numerics are the gate.
+4. **Port/solvency unchanged** — E proves NECESSITY only; B1 real floor stays operator ship-gate.
+   Courant/single-bracket stays SPECULATIVE. GHJ economic-object finding (latent group, not X·Y)
+   carried, not reopened. C3 reflection axiom untouched. No SDE introduced.
+
+archive: formal/aristotle_runs/UNIFY/ · prompt: formal/prompts/aristotle_prompt_unify.md ·
+stage-0 scripts: formal/aristotle_runs/UNIFY_stage0/
+
+---
+
 ## RUN 2 — 2026-06-09 (operator-greenlit: CTPH cleanup/strengthen + GH-grounding push)
 
 _All RUN-2 obligations are STANDALONE files under `formal/aristotle_runs/<name>_*/` that IMPORT the

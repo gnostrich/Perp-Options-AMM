@@ -1,5 +1,35 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, RUN 2 (CTPH cleanup/strengthen + GH-grounding push, 5 obligations)._
+_Last updated: 2026-06-09, RUN 3 (UNIFY: ONE metriplectic/Hessian structure; Stage-0 sympy gate + 1 Lean file)._
+
+### RUN 3 — 2026-06-09 (operator-greenlit UNIFY; SCRATCH-ONLY, canonical tree UNTOUCHED)
+**STAGE 0 sympy GATE PASSED (make-or-break, run FIRST).** Scripts durable: `formal/aristotle_runs/
+UNIFY_stage0/`. (0.1) **M=Fisher HOLDS** — the dissipation/slope-deviation 2nd-order form = Fisher ∇²μ
+of the GH exp family, **in the natural/centered coordinate s=v=u−μ** (`dMean/dNat=Var=Ψ″`, ~1e-14).
+HONEST CAVEAT: in **raw log-price u** the dissipation curvature is e^u, **NOT** Fisher — so M=Fisher is
+the STANDARD Bregman/exp-family identity in the GAUGE coordinate (Scope Lock 1), not a raw-u identity.
+Single convex Ψ generates Esscher/price (grad), Legendre/symplectic (`V″=1/Ψ″`), dissipation Hessian
+(Ψ″=Fisher). (0.2) **GENERIC degeneracies HOLD** — deg1 `d/ds KL=(s−s₀)Ψ″→0` at operating tilt; deg2
+Fisher annihilates the centered-score/charge direction. (0.3) **Rebase-cov HOLDS** in sNorm (boost
+u→u+log r cancelled by P→P/r). Did NOT need the fallback.
+
+**STAGE 1 = UNIFY/Unify.lean (ID a2b3003a) — proved (trusted-from-prover).** 11/11 theorems, 5 blocks
+A–E. Audit PASSED: `grep -rnE` token-scan clean (no sorry/admit/native_decide/sorryAx/opaque/unsafe/
+axiom in returned .lean), axioms ⊆ {propext,Classical.choice,Quot.sound} all 11, out-of-scope files
+byte-identical, pin v4.28.0, all theorem SIGNATURE lines character-identical submit-vs-return (only
+sorry→proof bodies). One ALLOWED emend: B1 docstring `/-- -/`→`/- -/` (comment-only reformatting, no
+math). Math re-derived (B1 `(s−s₀)Ψ″` non-vacuous; A1 = structural mean=grad/Fisher=Hess, GH integral
+content carried by Stage-0 gate). NOT upgraded to "verified" (manager's label).
+
+**Honest scope per block (over-promotion guard):** A (STANDARD exp-family; A1 structural, GH integral =
+Stage-0 gate) · B (STANDARD; B2 = `mul_zero` structural encoding of score-centered) · C (boost-is-Ham-
+flow STANDARD, but **Kähler interior = CONJECTURAL, NOT asserted** — only the symplectic=Kähler-ω
+relation encoded) · D (STANDARD/GROUNDED, reuses PH-6 sNorm) · E (port NECESSARY only, NEVER suff; B1
+extrinsic). **EXPLICITLY NOT CLAIMED:** single Courant/double-bracket all-four-native object
+(SPECULATIVE). **4 flags for manager** (M=Fisher coord-conditional; Kähler conjectural; A1/B2 structural;
+port/solvency/Courant unchanged) — full detail RESULTS.md RUN-3. archive: formal/aristotle_runs/UNIFY/.
+
+---
+_Earlier: 2026-06-09, RUN 2._
 
 ### RUN 2 — 2026-06-09 (operator-greenlit; SCRATCH-ONLY, canonical tree UNTOUCHED)
 **Constraint honored:** all 5 obligations are STANDALONE `formal/aristotle_runs/<name>/<File>.lean`

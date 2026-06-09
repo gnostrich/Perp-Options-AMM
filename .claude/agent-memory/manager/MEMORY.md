@@ -188,13 +188,26 @@ actor). I do **not** see raw prover output and am no longer a courier.
   COMPLETENESS: nothing geometrically extrinsic (every ingredient native/supporting). M=Fisher gets a
   rebase tailwind (rebase form-invariance is Fisher's fingerprint → evidence-for + disqualifier-test;
   still conjectural). No check failed; no new escalation.
-- **BUILD LAUNCHED (agent a09db6d3, background):** STAGE 0 = decisive sympy GATE on **M=Fisher** + GENERIC
-  degeneracies (J∇S=0, M∇E=0). If holds → STAGE 1 Lean obligations (M=Fisher single-potential unity;
-  GENERIC degeneracy; boost=Kähler-ω; rebase automorphism of whole object; ports-as-Dirac). If M=Fisher
-  FAILS → STOP, fallback (Kähler interior + separate R). 3 scope locks carried (sNorm gauge; latent-group
-  not X·Y; port necessity-not-sufficiency / Courant speculative). Scratch only, canonical tree untouched,
-  manager commits + re-audits (CORRECT grep -rnE, not -D). M=Fisher is THE make-or-break; I'll re-derive
-  the sympy myself on return.
+- **BUILD COMPLETE + MANAGER-AUDITED (RUN-3, agent a09db6d3).** Stage-0 GATE PASSED; Stage-1
+  `UNIFY/Unify.lean` 11 thms proved (trusted-from-prover). Audit: `evidence/manager_audit_UNIFY_2026-06-09.md`.
+  - **M=Fisher: I INDEPENDENTLY RE-DERIVED it** (own quadrature, GH density αh=4/βh=1/δ=0.08):
+    dm/ds=Var=Ψ″ to ~1e-10, Var 0.13425→0.28950 — reproduces research-lead exactly. HOLDS. BUT it's the
+    **STANDARD exp-family identity** (GH is a genuine exp family per GHJ_grounded), **coordinate-conditional**
+    (gauge/centered only; raw-u curvature=e^u≠Fisher). Real, not novel-deep.
+  - **DEPTH TEMPER (key finding, I read every proof):** UNIFY.lean is mostly a STRUCTURAL SCAFFOLD —
+    A1 (headline "M=Fisher") is a `rfl` definitional TAUTOLOGY; A2(`f⁻¹f=1`)/B2(`R·0=0`)/C1(`g·w=g·w`)/
+    A3 trivial; content lives in docstrings + the sympy gate. GENUINE Lean theorems: B1 (Bregman
+    stationarity = GENERIC deg1), D1 (sNorm invariance), E1 (port necessity); A4/D2/E2 elementary.
+    **Verification weight is NOT in UNIFY.lean** — it's the sympy M=Fisher (manager-reproduced) + the
+    EARLIER grounded modules (GHJ_grounded/PH3/PH4b/PH6). research-lead disclosed this honestly (no
+    deception); the temper is on DEPTH wording.
+  - **HONEST CLAIM:** metriplectic framing ASSEMBLED + internally CONSISTENT; one potential Ψ organizes
+    price(grad)/dual(Legendre)/dissipation(Hessian=Fisher); GENERIC deg1 genuinely proved; rebase
+    covariant. **NOT** "the unification is formally Lean-verified." Kähler CONJECTURAL (C1 trivial);
+    Courant single-object SPECULATIVE (not claimed); solvency EXTRINSIC (ports necessity-only).
+    trusted-from-prover, NOT verified. **Paper must NOT claim formal verification of the whole.**
+  - Audit clean: canonical tree untouched; correct grep -rnE token-scan clean; standalone project
+    (import Mathlib only); axioms standard three. Scope locks 1/2/3 honored.
 
 ## RUN-2 (CTPH clean + GH-grounding) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
 - Audit: `evidence/manager_audit_aristotle_RUN2_2026-06-09.md`. Canonical tree untouched; base modules
