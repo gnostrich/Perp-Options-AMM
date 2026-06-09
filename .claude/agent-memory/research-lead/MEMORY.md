@@ -1,5 +1,32 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, MERTON-TIE RUN (perpetual-option formal tie + GH-maps discharge; SCRATCH-ONLY)._
+_Last updated: 2026-06-09, REPARAM DROP-IN SPEC (Balancer base + kurtosis/skew knob; NO submit/edit/git)._
+
+### REPARAM DROP-IN SPEC — 2026-06-09 (spec for operator's separate impl session)
+Note: `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`. Builds on the GH-vs-CES analysis note.
+mpmath sanity checks (30-40 digit) run + reported. **KEY (load-bearing) findings:**
+- Esscher tilt `f_{β+1}/f_β=e^v` is EXACT, INDEPENDENT of (αh,βh,δ) ⇒ value∝S^(−γ) survives freeing
+  δ/βh (G4 stays green in form; reference value regenerates). d log(slope)/d log(price)=1 all cases.
+- Balancer = βh=0 member: kernel EVEN in v (reflection-symmetric two-root); αh=γ+1=1/(1−w) EXACTLY
+  (w=γ/(γ+1)) — Balancer is a relabel of the αh axis. "Unreachable" = the βh=1,δ=0.08 PIN, not family.
+- **DIRECTION CORRECTION (brief was backwards):** excess kurtosis = 3/(δ·αh) at βh=0 ⇒ **δ↑ ⇒ THINNER
+  tails (toward Gaussian); δ↓ ⇒ FATTER (Laplace at δ→0).** Gaussian limit is δ→∞ (kernel→exp(−αh v²/2δ)),
+  NOT δ→0. δ→0=symmetric double-exponential (fattest). σ_eff²=ψ″(0)=δαh²/(αh²−βh²)^{3/2} reproduces
+  prior 0.042→0.017 running at engine pins. βh=0 ⇒ ψ even ⇒ ψ(−γ)=ψ(+γ) (symmetric ± eigenfunctions).
+- 4 curve fns: getMP_raw/arbitrageToOracle/tradeUpdate change only by keying tail/CDF/M on (αh,βh,δ)
+  + threading ghBeta/ghDelta as serialized scalars + (βh,δ)-keyed CDF cache; Esscher slope structure
+  + rebase are ORTHOGONAL/invariant. Keep direct-tail + same-table-inversion numerics.
+- FORK: MINIMAL (free δ, keep βh=1) = tail knob on put leg, ZERO settlement change, kernel-const
+  re-instantiation only. FULL (free δ AND βh=0) = symmetric Balancer recovered but DROPS proved
+  put-only eigenfunction = settlement-semantics/economic-object change (operator-owned).
+- **OPERATOR FLAGS:** (1) βh=0 eigenfunction/settlement change; (2) curve reopening even for MINIMAL;
+  (3) knob label — δ is TAILS (and δ↑=thinner, brief backwards), βh is SKEW; (4) ship GH root
+  ψ(−γ)=r (implicit/numeric), NOT Gaussian closed form γ(γ+1)=2r/σ² (δ→∞ slice only).
+- NOT verified: FULL-fork βh=0 Lean re-proof magnitude / two-wing seam / small-δ tail-integral
+  stability at table resolution — implementer regenerates gate reference values empirically.
+
+---
+
+_Earlier: 2026-06-09, MERTON-TIE RUN (perpetual-option formal tie + GH-maps discharge; SCRATCH-ONLY)._
 
 ### MERTON-TIE RUN — 2026-06-09 (operator highest-relevance; canonical tree UNTOUCHED)
 2 standalone submits (throwaway copies; 5 canonical modules byte-identical both archives; pins v4.28.0).
