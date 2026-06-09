@@ -328,6 +328,70 @@ standalone import-Mathlib; axioms standard three; trusted-from-prover (verified 
 - Open GH lift remaining: full GH `AMMCurve` instance (antitone_y/convex_y + discharge T<1/C<1 from the
   GH special functions) — the real next mountain, not done.
 
+## Graph-1 reconciliation brief (2026-06-09, branch claude/optimistic-cerf-29fntq) — TASK-1 IS MOOT
+Operator relayed a brief written against a **stale v26a frame** (assumes graph-1 composite rays + "a
+later build shows 4 individual strike lines"; even references barrier-leg θ_inner / "sold=short colour"
+— barrier removed in v25, GH-only now). HEAD = v26c `6cc73563`. I verified ALL THREE at code level
+(tester dispatched a200408323 for INDEPENDENT live-browser confirmation, read-only):
+- **TASK 1 (pricing regime — the load-bearing precondition): COMPOSITE on BOTH axes; nothing to revert.**
+  Pricing: `legPrice` (1764) spread → `compositeRay(lo,hi)` → ONE θ* → ONE `mark(wing,θ*,sNorm,γ)` →
+  `vsValue`; settlement (`executeBand` 1850/2100+) values each of the **2 legs** (sold/bought) as ONE
+  composite ray (`legValueUnified`/`legPrice`), ITM/American smooth-pasting INSIDE `mark()`/`markEff()`
+  at the single registered ray — **NOT** leg-by-leg over 4 distinct real strikes. Display: drawCurve
+  (3435-3500) already draws 2 composite rays/open band via `thetaStarOf(inner,outer)=√(inner·outer)`
+  (sold colShort + bought colLong) + 2 preview rays. Comment literally "collapsed to composite-ray θ*
+  per leg." ⇒ The "4 individual strike lines" build does NOT exist at HEAD or on any live branch
+  (branches: optimistic-cerf + main only). Reconciliation was already absorbed by the v26c-full
+  Finding-2 live-ray fix. **Outcome = the brief's 3rd (unstated) case: already-reconciled. NO EDIT, NO
+  per-leg STOP. No git action.**
+- **TASK 2 (warp/vol/stepper): γ FROZEN as a hardcoded const `GH_GAMMA=2.0` (line 2259), no live UI
+  knob found in code; δ FROZEN `0.08` inside `ghCalibrate` (line 1624), not exposed.** Pro-forma/stepper
+  chain EXISTS (`leg1State`/`leg2State` from `executeBand` 3122 → `curveTrace` re-trace 3331-3335 →
+  `__previewStep` 3133) but with no live γ control the "re-warp on γ change" can't be user-driven.
+  Tester confirming live whether ANY control is wired. **PRODUCT FLAG (escalate): γ (steepness) and δ
+  (vol) are separate GH params; v26c exposes NEITHER as a live knob. Brief says do NOT add a vol knob
+  this pass — confirm with operator whether a separate vol knob is wanted.**
+- **TASK 3 (portfolio table): UNCHANGED, matches expected.** `#bands-tbody` (9 cols) per band = 1
+  `pf-band-row` (carved-perp origin summary) + ≤4 `pf-comp-row` (inner+outer × SOLD+BOUGHT) + 1
+  `pf-total-row` (single dollar cell) = **≤6 rows/band.** Separate `#perps-tbody` (10 cols) = Perps-tab
+  list, not "the portfolio table." No diff in count/order/labels.
+- **No engine edit performed; no merge; working tree clean.** Awaiting tester live confirmation + an
+  operator product call on the vol knob.
+
+## VOL-KNOB / Merton perpetual mapping (2026-06-09, branch claude/optimistic-cerf-29fntq) — SPEC DRAFTED, build pending operator go
+Drifted from the (moot) graph-1 brief into a live-shape-knob design, then into the right theory frame.
+- **WARP CLARIFIED (operator corrected me twice):** "curve warp" = the Balancer 1st-generalisation
+  (trades skew the pricing curve via weight `w`), NOT a γ/δ knob. In Balancer, `w` did DOUBLE DUTY
+  (set shape AND moved with trades). GH **split** those: shape→γ (and δ), `w` stays the live trade
+  coord (`getW=α/x`, conserved hyperbola in tradeUpdate — INTACT, nothing removed). GH bake swapped
+  the curve FAMILY (Balancer power-form → GH) for value∝S^(−γ) expressivity; the LIVE trace is drawn
+  GH-native (curveTrace via arbitrageToOracle, "retires weight-form for LIVE trace" @3266), with the
+  Balancer w=½ symmetric form kept as the ANCHOR reference. A trade does NOT reshape the live GH curve
+  (arbitrageToOracle depends only on GH scalars+α,β, trade-invariant) → dot slides on fixed curve
+  (the tangent dual). Rebase rescales the frame. γ/δ change = the only true reshape, never fires at runtime.
+- **MERTON RESULT (manager-verified at engine level, /tmp/merton_confirm.cjs):** the engine's ITM/
+  American smooth-pasting IS the **Merton (1973) perpetual American option.** γ = magnitude of the
+  NEGATIVE root λ₋=−γ of ½σ²λ(λ−1)+(r−q)λ−r=0. Confirmed γ∈{1.5,2,3,4}: (1) carry coord
+  d log sNorm/d log S = −γ (≈1e-3); (2) engine S*=K·γ/(γ+1) == Merton boundary (≤1e-11); (3) engine
+  continuation == (1/(γ+1))(S/S*)^(−γ) (≤6e-4). Two wing boundaries ⟹ roots (−γ, γ+1), **sum=1 ⟹
+  r−q=0 (zero-carry slice)**, product ⟹ **γ(γ+1)=2r/σ²**. ⇒ theory-native knob = **volatility σ**
+  (γ,S* derived); **δ has NO perpetual-option meaning** (Merton power law exact) = AMM ATM-smoothing
+  const ⇒ resolves the ill-posed variance-coupling (don't need δ(γ)). δ-coupling-by-fixed-variance
+  was found WELL-POSED only γ≥2 (variance floor below baseline) — superseded by "δ fixed, σ→γ".
+- **research-lead DISPATCHED (bg, agent a71bc3e4):** formal tie of engine smooth-pasting↔Merton;
+  connect to verified R1 seam-C¹; assess formalizing σ↔γ map; paper-claim sign-off. Read-only on engine.
+- **SPEC written:** `specs/SPEC_vol_knob_NEXT.md` — σ-dial primary (γ=(−1+√(1+8r/σ²))/2, clamp(1,4),
+  S*=Kγ/(γ+1) derived), δ fixed; **lock/unlock dual mode** (locked=σ theory-dial; unlocked=raw γ+δ
+  off-theory play) = realises operator's checkbox idea; β read-only=1 (forced by law). Re-warp IN
+  PLACE under open positions (NEW behaviour); ghCalibrate δ→param (only sig touch). Guardrails: S*
+  rule/funding/isOTM/dollar-pipe untouched; G4 must hold each γ; blobs/gates green; tester must confirm
+  pro-forma+stepper re-trace after a σ change.
+- **NOT yet dispatched to intern.** Engine-touching + ⚑ open params (ref rate r[0.05], σ range[6–25%],
+  default σ[12.9%⇒γ=2], β read-only, ratify γ-varies-at-runtime-is-not-settlement-change) → AWAITING
+  operator go. Single-writer clear (only optimistic-cerf + main; no other engine branch open).
+- **Graph-1 brief CLOSED:** Task1 (composite display)=no-op already-done; Task3 (portfolio ≤6 rows)=
+  confirmed unchanged (tester a2004083); Task2 (warp/vol)=became this knob work.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
