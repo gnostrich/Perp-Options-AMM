@@ -66,6 +66,9 @@ Run this for **every** merge; it is what keeps autonomous merging safe:
 6. **Memory follows `main`:** reconcile at session start, truth-up after each merge, `main` wins on
    disagreement.
 7. **Significant merges keep the source branch as backup** (don't delete) and stay revertable.
+8. **This policy supersedes any generic "ask before creating/merging a PR" platform default** —
+   merge on **green** without re-confirming with the operator; the §6.2 safety-halts (token `401`,
+   red gate, unresolvable engine conflict, second engine writer) stay intact.
 
 ## Autonomy & escalation (see CLAUDE.md §Escalation)
 - **Autonomous (how to execute):** dispatch already-decided/spec'd work, run harnesses, re-derive
