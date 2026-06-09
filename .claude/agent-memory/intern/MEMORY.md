@@ -178,6 +178,50 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
 
+## Done — CURVE PLAYGROUND (γ/δ/βh dials, IMPLEMENTED, handed to manager 2026-06-09)
+Build: **`reference/temporal_curve_playground.html`** md5 **`2b20c844020ef5f636f27a4cadca3bb7`**
+(from `engine/builds/temporal_mvp_v26d_volknob.html` `a406a751`; HEAD v26c `6cc73563` + v26d UNTOUCHED).
+Spec: `specs/SPEC_curve_knobs_NEXT.md`. Splices: `/tmp/splice_playground.py` (engine: 5 reps),
+`/tmp/splice_playground_ui.py` (UI panel+block: 2 reps) — all `count==1`, blobs never through;
+display-rescale via direct Edit (drawCurve-only). All blob/parse/IIFE green; run_all EXIT 0.
+- **THE βh FINDING (load-bearing):** the `getMP_raw` RESERVE-tail exponent IS βh-dependent (−1/γ only
+  at βh=1; −1/(γ+1) at βh=0) — that is the SKEW KNOB reshaping the CURVE, by design. **G4 value∝S^−γ
+  is the OPTION-VALUE exponent carried by `mark(wing,θ,sNorm,γ)`, which is βh-FREE closed form** (no
+  βh/bh/ghB in its sig — verified) ⇒ value∝S^−γ holds identically at βh=0 AND βh=1 (manager-verified:
+  Esscher ratio f_{β+1}/f_β=e^v is δ/βh-free; evidence/manager_verify_reconcile_2026-06-09.md L22,58-65).
+  Do NOT confuse the reserve-frontier tail (βh-dependent) with the value exponent (βh-free).
+- **ghCalibrate(X0,Y0,mp0,gamma,delta,betah)** — βh free param (was hard-coded `bh=ah−γ=1`); default
+  `bh=ah−γ` when betah missing (so the 4-arg harness path stays βh=1, gates unchanged); clamp |bh|<ah,
+  else fall back. M/psi/Phi downstream BYTE-IDENTICAL (just reads new bh). Init opens at GH_GAMMA=1.05,
+  GH_DELTA=30, GH_BETAH=0 (Balancer corner; mp0=80000 exact).
+- **setShape(gamma,delta,betah)** — extended; betah default 0, clamp |bh|<γ+1; recomputes M from
+  (γ+1,βh,δ) via ghCalibrate; returns `{gamma,delta,betah}`; spot preserved (getMP_raw=80000 exact).
+- **Panel:** DROPPED σ/r knobs + Merton σ→γ wrapper + lock/unlock; honest number-steppers γ
+  (steepness, floor>1)/δ (kurtosis>0)/βh (skew, |βh|<γ+1). Balancer caveat note encoded. Control
+  block rewritten to read γ/δ/βh directly → setShape → render.
+- **DISPLAY rescale (drawCurve-ONLY, no pricing):** vertical-stretch-about-eq via curve-only `toPxC`
+  (curve/anchor/legs/marker/reserve-dots/strike-ray-DOTS); axes/ticks/mode-ray/strike-ray-LINES stay
+  raw `toPx`. `yStretch=clamp((yEq/xEq)/mpGeomEq, 1, Scap)`, `mpGeomEq=getMP_raw(eq)·e^(−eq.ghMu)`
+  (NaN-loud if ghMu missing). Reads ~45° (box-aspect 0.644) for γ≳1.3. **LIMITATION (honest, flag to
+  tester):** at the exact Balancer floor (γ=1.05) the geometric slope is tiny (ghMu≈18.6), so the
+  ideal stretch (S≈1e8) would push the curve off-frame in 1 point — the cap binds and the curve reads
+  flat-ish there (readable-extent chosen over 45°). Irreducible: the family floor's reserve curve is
+  near-vertical. Tester to judge the Balancer-corner read vs v24. Also: ray-LINES (raw) vs their DOTS
+  (stretched) decouple slightly — dots stay on the curve, lines point at the raw intersection.
+- **drawPricing/drawTrajectory/drawPayoff BYTE-IDENTICAL** (display change is drawCurve-only).
+- **DIFF-CONFIRM locked surfaces BYTE-IDENTICAL:** mark, markFrac, markEff, fundingPerStrike,
+  executeBand, closeBand, isOTM, wingMember, legIsITM, legFraction, vsValue, compositeRay; dollar-pipe
+  token counts unchanged. βh threads ONLY via ghCalibrate (kernel). mark() βh-free confirmed.
+- **GATES:** run_all EXIT 0 — 7 GH PASS γ∈{1.5,2,3,4} (harness βh=1 path), curveTrace 401/401, seam
+  PASS, dir PASS, blob74 `ab663f5c`/svg1113 `c505b08a` intact, 3 scripts parse, IIFE true, longest
+  script line 482. `sigs:false`=expected (ghCalibrate +2 params). My sweep: gates PASS γ∈{1.05..4}
+  AND Balancer default; G4-self-consistency PASS βh∈{0,1} all γ (tol 1e-7; γ=4/βh=0 is 9e-9 — tail-
+  precision noise just over the harness 1e-9, clean at 1e-7); value∝S^−γ (mark) βh-identical.
+- **Open for tester (live):** like-for-like-vs-v24 at Balancer default (note floor limitation above);
+  dials re-warp+redraw all graphs; pro-forma/stepper re-trace; warp intact; no console errors.
+- **NO git** (manager commits). Whole-file md5 echo (`6cc73563`) + blob-1060 echo (`0eff98b2`) in
+  run_all are INFORMATIONAL only (svg at 1113 in v26d-lineage); hard gates are the content-scan.
+
 ## Done — v26d TDZ FIX (FINDING-V26D-1, IMPLEMENTED in place, handed to manager 2026-06-09)
 Build: **`engine/builds/temporal_mvp_v26d_volknob.html`** EDITED IN PLACE → md5 now
 **`a406a75149b1606d7822b4f2bbcc4f84`** (was `16a872ba…`). HEAD `6cc73563` untouched.
