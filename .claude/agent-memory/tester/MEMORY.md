@@ -1,4 +1,40 @@
 # MEMORY — tester
+_Last updated: 2026-06-09, after playground-vs-v24 like-for-like live comparison (READ-ONLY, no git). Prior: v26d-vs-v24 curve side-by-side._
+
+## DONE — 2026-06-09 playground (2b20c844) vs v24 (6f606f52) like-for-like (READ-ONLY, no git)
+Operator-facing: does the new curve_playground read like-for-like with v24 Balancer? Live Chromium,
+reproduced byte-identical x2 (pixel counts + 0 console errors both builds). Both source md5 UNCHANGED
+after testing (playground 2b20c844, v24 6f606f52) — truly read-only. Builds:
+reference/temporal_curve_playground.html (honest dials γ/δ/βh, default Balancer corner βh=0/δ30/γ1.05,
+ghAh 2.05 ghMu -0.360) vs reference/v24_balancer_stable.html.
+
+### KEY FINDING — caveat REFUTED, harder than stated
+- v24 LIVE curve = a balanced curved ~45deg hyperbolic sweep through eq (~10 BTC/$800k). nonblank 10023.
+- Playground at default γ1.05: LIVE teal curve drops near-vertical left then runs FLAT along the
+  bottom-right (hugs axes) — NOT a v24 sweep. nb 11173. The GREY w=1/2 ANCHOR curve (in BOTH builds)
+  is what reads ~45deg, not the live curve.
+- γ→1.3 (nb 11283) and γ→2 (nb 11558): live curve re-warps but becomes MORE asymmetric
+  (steeper-left/flatter-right), NEVER a balanced 45deg. The intern's caveat ("flat at corner, ~45 for
+  γ≳1.3") is **REFUTED on the visual** — the live curve does NOT reach v24-style sweep at ANY γ tested.
+  Geometry: GH slope = getMP_raw·e^(−ghMu) = price ÷ factor that GROWS with γ → higher γ ⇒ flatter on
+  the price-scaled frame (consistent with the γ-gotcha factors 11.7/44.5/749/13780).
+
+### VERDICTS
+(a) Balancer-corner like-for-like does NOT hold, AND does not hold at γ≳1.3 either (live curve).
+(b) Closest match to v24 = the grey w=1/2 ANCHOR (both builds), NOT the live curve at any γ; of live
+    settings γ≈1.3 is least-bad (shown in side_by_side.png).
+(c) Dials WORK — PASS. γ/δ/βh steppers re-warp in place (Store.setShape) + redraw all: γ
+    1.05→1.3→2 nb 11173→11283→11558; γ-stepper stepUp 2→2.0501 redrew; δ30→5 ghMu −0.360→+1.303 nb
+    11283→10853; βh0→0.5 ghBh=0.5 nb→11817; γ floor clamps 1.000 w/ "γ clamped to >1 (locked GH
+    family floor)" note. ZERO pageerrors + 0 console.errors BOTH builds BOTH runs. Clean x2.
+
+### Evidence (evidence/playground_vs_v24/) + README.md
+v24_curve.png, playground_default.png, playground_g1p3.png, playground_g2.png, side_by_side.png
+(labeled L/R), playground_default_full.png, v24_full.png. Harnesses (READ-ONLY):
+engine/verify/pw_playground_vs_v24.mjs (capture+pixel+dials+errors), engine/verify/pw_compose_pg_sbs.mjs.
+Dial wiring: playground L2884-2931 apply()→Store.setShape(g,d,bh)→render(); DOMContentLoaded-deferred
+(TDZ-safe). vk-gamma stepper step .05 min 1.0001 default 1.05 (L1448).
+
 _Last updated: 2026-06-09, after v26d-vs-v24 curve apple-to-apple side-by-side (READ-ONLY illustration). Prior: v26d curve-FRAMING explainer (a406a751)._
 
 ## DONE — 2026-06-09 v26d (GH) vs v24 (Balancer) Pool-Curve side-by-side (READ-ONLY, no git)
