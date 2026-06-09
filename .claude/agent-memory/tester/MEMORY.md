@@ -1,12 +1,72 @@
 # MEMORY — tester
-_Last updated: 2026-06-09, after v26d vol-knob live-browser verification (build 16a872ba). FOUND A FATAL LOAD-ORDER BUG — FLAGGED FAIL to manager._
+_Last updated: 2026-06-09, after v26d vol-knob TDZ-FIX RE-TEST (build a406a751). TDZ FIX CONFIRMED — ALL ITEMS PASS, tester-confirmed clean ×2._
 
-## DONE — 2026-06-09 v26d vol-knob LIVE-BROWSER verify (build 16a872ba33e38843b803d79667b199f5, READ-ONLY)
+## DONE — 2026-06-09 v26d vol-knob TDZ-FIX RE-TEST (build a406a75149b1606d7822b4f2bbcc4f84, READ-ONLY) — FINDING-V26D-1 RESOLVED
+md5 confirmed a406a751 before testing (NEW, post-fix). Fix verified in source: L2960 is now
+`window.addEventListener('DOMContentLoaded', apply)` (was bare `apply()`) — the init draw is deferred
+past `const Viz` (L3444). **RESULT: PASS on every must-pass + regression item. The TDZ blocker is
+gone.** Reproduced byte-identical across 2 runs in all 3 harnesses. Live Chromium.
+
+### Per-item FLAG table (build a406a751)
+1. **No TDZ / no console errors — PASS.** loadErrCount=0, totalErrs=0 at load AND on every sigma
+   change AND view switch (was 9 throws/run before). `page.on('pageerror')` + console-error capture
+   both clean ×2. NOTE: `typeof Viz`/`typeof render` still read "undefined" IN page.evaluate — this
+   is a SCOPE ARTIFACT, not TDZ: Viz is a top-level `const` (L3444) and render a top-level
+   `function` (L4339) in classic `<script id=ui>`, NOT on window, so bare names aren't reachable in
+   evaluate's wrapper (same caveat as the v26c stepper note). Proof they ARE defined+bound: the curve
+   renders, the chart-select listener WORKS (payoff nonblank=111600 on view switch), no pageerror.
+   A TDZ would surface as an uncaught pageerror — there is none.
+2. **Canvases RENDER on load — PASS.** canvas-curve nonblank=11081/322000 (was 0). 4 canvases:
+   curve(700x460), pricing(900x380), payoff(900x420, nonblank=111600), ratio(500x500). Dashboard
+   shot `p1_fixed_A_dashboard_full.png` shows GH hyperbola + labelled axes + white eq-marker on curve
+   + green/red strike rays. Isolated curve crop `p1_fixed_E_canvas_curve_NONBLANK.png` (32612 b, was
+   1486 b uniform-blank) visually confirms GH continuation (not Balancer weight-form, not blank box).
+3. **σ-dial re-warps LIVE curve — PASS.** σ0.129→g2.0019 (def), σ0.30→g1.0001 (floor, flatter
+   curve), σ0.08→g3.4843 (steeper). curveChanged_hi=true, curveChanged_lo=true (pixel sums
+   5561496→5657921→5743750 distinct). γ read-out updates each time. Shots `_F_curve_sigma030`
+   (visibly flatter), `_G_curve_sigma008`.
+4. **★ pro-forma dotted + stepper re-trace after σ — PASS (was INCONCLUSIVE).** Drove the REAL
+   band-builder (Store.addPerp long 100k; band-notional=1, sold-inner 120k/outer 140k, bought-inner
+   68k/outer 50k → previewBand via the bound input listener). `__previewBand` live w/ leg1State,
+   sold/bought thetas 0.3807/1.8829. Stepper: step1 pool x=6.102 (active1) vs step2 pool x=5
+   (active2), distinct pixel sums 5588946 vs 5659008. After σ→0.25 (ghAh 3.0019→2.0001): the
+   pro-forma re-traces (thetas recompute 0.6173/1.3718 on the NEW shape, pixels change), still
+   present, and the stepper STILL toggles distinct shapes. Shots `_K_step1/_L_step2/_M_after_sigma/
+   _N_step1_after_sigma`.
+5. **Curve/portfolio/payoff redraw under open band on σ — PASS.** With band open, σ→0.20: curve
+   redrew (5636992→5710569), payoff redrew (51273249→51283952), portfolio NaN-scan clean
+   (hasNaN=false, hasInfinity=false, poolFinite=true, ghAh 2.158). No stale curve. Shot
+   `_J_band_open_after_sigma`.
+- Regression re-confirm (still PASS): panel renders w/ 5 number steppers (vk-sigma .005/rate .01/
+  gamma-raw .05/delta-raw .01 + unlock checkbox); S* tracks K·γ/(γ+1): out $53,350 ==
+  80000·2.0019/3.0019=53350.21; lock/unlock toggle (Perpetual-option mode ↔ Free shape off-theory,
+  sigma/gamma-raw enable flip); γ>1 floor clamps σ=5→γ1.0001 w/ note, mpFinite, ghAh 2.0001.
+
+VERDICT: **PASS — FINDING-V26D-1 is RESOLVED. v26d a406a751 is visually sound; ship-clear from the
+tester side.** The DOMContentLoaded deferral fixed the load-order TDZ; zero uncaught errors, all
+canvases render and re-warp live, and the pro-forma/stepper item that was inconclusive is now fully
+confirmed against a real band. Browser-confirmed (live Chromium), not fallback.
+
+### Harnesses (engine/verify/, READ-ONLY) — build a406a751
+- `pw_v26d_diag.mjs` (reused, unchanged) — decisive: loadErrCount=0, canvas nonblank=11081, sigma
+  change fires no new error, canvas re-warps.
+- `pw_v26d_fixed.mjs` (NEW) — full per-item: errors/canvases/sigma-rewarp/stepper/band/regression.
+- `pw_v26d_item4.mjs` (NEW) — REAL band-builder pro-forma+stepper re-trace after sigma (item 4).
+- `pw_v26d_shots.mjs` (reused) — regression screenshots; canvasNonblank now 11081 (was 0).
+- Env unchanged: pw 1.56.1 `/opt/node22/lib/node_modules`, ESM `import pkg from`; chrome
+  `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`; `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`.
+- Evidence `evidence/v26d_volknob_ui/`: p{1,2}_fixed_A..N_*.png (all 420-434 KB, NOT blank),
+  p1_fixed_E_canvas_curve_NONBLANK.png (32612 b). Old p*_E_..._BLANK.png are from the prior FAIL run.
+
+---
+
+## SUPERSEDED — 2026-06-09 v26d vol-knob LIVE-BROWSER verify (build 16a872ba33e38843b803d79667b199f5, READ-ONLY)
+_(This FAIL run is the PRIOR build; FINDING-V26D-1 below is now RESOLVED in a406a751 — see top block.)_
 Live Chromium. Manager had Node-verified (blobs/gates green). My job: live UI behaviour Node can't see.
 **RESULT: FAIL — the build is visually broken. A TDZ load-order bug blanks ALL canvases and never
 defines `Viz`/`render`.** Reproduced clean x2 (byte-identical state both runs).
 
-### FINDING-V26D-1 (FAIL, blocker): vol-knob IIFE runs render() before `const Viz` initialises
+### FINDING-V26D-1 (FAIL, blocker — NOW FIXED): vol-knob IIFE runs render() before `const Viz` initialises
 - The vol-knob control-panel IIFE (`<script id="ui">` L2872-2961) ends with `apply()` (L2960) to
   init read-outs. `apply()` calls `render()` (L2942). `render()` ENDS by calling `previewBand()`/
   `Viz.drawAll` (L4410-4412). But `const Viz` is at **L3444 — LATER in the SAME script block** ->
@@ -22,9 +82,8 @@ defines `Viz`/`render`.** Reproduced clean x2 (byte-identical state both runs).
   (L2922-2941) and the vol-knob's own input/change listeners bind (L2956) BEFORE the `render()` throw.
   So the PANEL works and the POOL re-warps (ghAh changes) — but NOTHING redraws and the rest of the
   UI's wiring is dead. A read-out-only check would falsely look "green."
-- Likely one-line fix (intern, not me): defer the init draw past Viz init — drop the load-time
-  `apply()`'s `render()`, or guard render's draw tail, or move the vol-knob IIFE below `const Viz`,
-  or `setTimeout(apply,0)`. MANAGER decides; I do not edit.
+- FIX APPLIED (intern): L2960 changed to `window.addEventListener('DOMContentLoaded', apply)` so the
+  init draw runs after `const Viz` is initialised. Re-tested PASS (top block, build a406a751).
 
 ### Per-item FLAG table (build 16a872ba)
 1. Panel renders — **PASS.** 5 inputs, all `type=number` steppers (native up/down arrows): vk-unlock
@@ -52,12 +111,8 @@ defines `Viz`/`render`.** Reproduced clean x2 (byte-identical state both runs).
 8. No console errors — **FAIL.** Persistent uncaught `"Cannot access 'Viz' before initialization"`
    (x9/run), at load and every sigma change. Reproduced clean x2 identical.
 
-VERDICT: **FAIL — do NOT ship / do NOT merge v26d as-is.** The vol-knob *logic* (sigma->gamma Merton,
-setShape re-warp, floor clamp, lock/unlock, S*) is correct and tester-confirmed; but a TDZ load-order
-bug (vol-knob IIFE apply()->render()->Viz.drawAll before `const Viz` @L3444) throws uncaught, blanks
-EVERY canvas, and leaves Viz/render undefined + later listeners unbound. Exactly the class Node can't
-see (gates are headless engine logic; G4/Merton/seam pass on the math). Items 1/3/6/7 PASS (panel +
-read-outs); items 2/4/5/8 FAIL on render.
+VERDICT (prior build): FAIL — do NOT ship 16a872ba. Items 1/3/6/7 PASS (panel + read-outs); items
+2/4/5/8 FAILed on render. RESOLVED in a406a751 (see top).
 
 ### Repro / harnesses (engine/verify/, READ-ONLY — no engine edits)
 - `pw_v26d_diag.mjs` — decisive: Viz/render undefined, canvas nonblank=0, error at load+sigma.
@@ -209,8 +264,12 @@ in evaluate — click the buttons instead. See 2026-06-09 run.)
 ## File-safety canon
 Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060); 3 `<script>` parse.
 HEAD/v26c_full2 build md5 `6cc73563779a3e030774b7597d0ae187`. v26b HEAD `8df9f8a3…`.
+v26d vol-knob build md5 `a406a75149b1606d7822b4f2bbcc4f84` (TDZ-fixed, tester-confirmed).
 
 ## Evidence
+- `evidence/v26d_volknob_ui/` (2026-06-09): p{1,2}_fixed_A..N_*.png (TDZ-fix re-test, all non-blank),
+  p1_fixed_E_canvas_curve_NONBLANK.png; harnesses pw_v26d_fixed.mjs / pw_v26d_item4.mjs /
+  pw_v26d_diag.mjs. Old p*_*_BLANK.png from the prior FAIL run.
 - `evidence/v26c_verify_4items/` (2026-06-09): curve_2rays.png, portfolio_perps_subtab.png,
   pw_verify_4items.mjs, pw_stepper.mjs.
 - `evidence/v26c_pw/`: 01_inputs, 02_after_execute, 05/06_bands_table, 07_polar_mark_pricing,
