@@ -15,6 +15,76 @@ diff, math re-derived). Manager may upgrade to "verified" by building canonicall
 
 ---
 
+## RUN 4 — 2026-06-09 (operator-greenlit: UNIFY2 — REPLACE the tautological scaffold with REAL theorems)
+
+_Build-authorized push toward 100%. Goal: replace RUN-3 UNIFY's trivial A1 (`Ψ''=Ψ''`), A2
+(`f⁻¹·f=1`), A3 (`k·eˣ=k·eˣ`), B2 (`R·0=0`), C1 (`g·w=g·w`) with genuine content over the REAL GH
+cumulant generating function (Mathlib `cgf`/`mgf`) and the actual GH kernel/boost/Bregman/Fisher.
+Plus Tier-2 frontier (Kähler, Courant) and the standing C3 reflection axiom. SCRATCH ONLY:
+`formal/aristotle_runs/{UNIFY2,C3_reflection,Kahler,Courant}/`; canonical tree UNTOUCHED._
+
+**Submission map:**
+| Item | Project ID | Verdict |
+|---|---|---|
+| Stage-0 probe (Mathlib GH capability) | 0f0a8f0a-d51e-46e0-831c-d51d7cd8848b | proved (trusted-from-prover) — capability finding delivered |
+| UNIFY2 main (de-trivialize A1–C1, #1/#2/#3) | fac1d6e2-d75a-44fc-be62-3126f380a900 | (pending — see below) |
+| C3 reflection arrow (#7) | 303c3de0-ad34-4551-ad32-5e871ff8bd6a | proved (trusted-from-prover) — AXIOM DISCHARGED |
+| Kähler compatibility (Tier-2 #4) | dae504d8-efdc-4728-884a-01ccc64c7b78 | proved (trusted-from-prover) — algebraic; integrability CONJECTURAL |
+| Courant/Dirac (Tier-2 #5) | b4d4656d-3c72-46dc-a60f-0f724ea57d84 | proved (trusted-from-prover) — conservative part; all-four SPECULATIVE-NOT-ACHIEVED |
+
+### STAGE-0 CAPABILITY FINDING (Mathlib v4.28.0, from the probe — decides grounded-vs-carried)
+- **(A) Bessel-K `K_ν`: NOT in Mathlib v4.28.0** (zero declarations; no `Real.besselK`, nothing under
+  `SpecialFunctions.Bessel*`). ⇒ the GH normalizing constant MUST be CARRIED as a named hypothesis.
+- **(B) GH-kernel integrability:** no direct lemma; provable in ~50–100 lines by comparison
+  (`exp(−αh√(δ²+v²)+βh·v) ≤ C·exp(−(αh−|βh|)|v|)`, `integrable_exp_neg_mul_sq`, `Integrable.mono`).
+- **(C) density→ProbabilityMeasure: GROUNDED** — `Measure.withDensity` + `withDensity_apply` +
+  `setLIntegral_univ` → 3-line `IsProbabilityMeasure`. `HasPDF` available.
+- **(D) MGF/CGF + derivative=moment: GROUNDED** — `ProbabilityTheory.mgf`, `cgf`, `hasDerivAt_mgf`,
+  `deriv_mgf`, `deriv_cgf` (= `(∫X·exp(tX))/mgf`), `iteratedDeriv_mgf` (n-th moment),
+  `deriv_mgf_zero` (= mean). `deriv² cgf = variance` is NOT a named lemma but provable from
+  `iteratedDeriv_mgf` at n=2.
+- **(E) differentiate-under-∫: GROUNDED** — `hasDerivAt_integral_of_dominated_loc_of_deriv_le`,
+  `hasDerivAt_integral_pow_mul_exp_real`.
+- **NET:** GH-as-exp-family is GROUNDABLE for the exp-family/cgf identities (Λ'=mean, Λ''=Var=Fisher,
+  convexity, Bregman) over the REAL integral-defined cgf; the GH-SPECIFIC integrability + Bessel-K
+  normalization stay CARRIED named hypotheses. This validated the UNIFY2 design (names confirmed:
+  `cgf`/`mgf`/`integrableExpSet`/`deriv_cgf` all exist with the signatures UNIFY2 uses).
+  Both probe theorems (`ghKernel_pos`, `ghKernel_measurable`) proved clean (axioms ⊆ standard three).
+
+### C3 — reflection arrow DISCHARGED (the standing AXIOM is now a THEOREM)
+`reflection_arrow : markPut θ s = markCall θ (θ²/s)` and the symmetric corollary PROVED over the
+spec's mark definitions (`markCall θ s = if s<θ then s/θ else 1`, `markPut` dual, `reflect θ s=θ²/s`).
+Crux `θ²/s < θ ↔ θ < s` via `div_lt_iff₀`; `split_ifs`+`linarith`/`grind`. `reflect_involution`,
+`reflect_fixes_atm` also proved. Audit: token-clean (3 grep hits = COMMENTS), out-of-scope
+byte-identical, signatures character-identical, axioms ⊆ {propext,Classical.choice,Quot.sound} (no
+`native_decide`; `+decide` is kernel decide). ONE allowed emend: `/-- -/`→`/- -/` docstring delimiter
+(comment-only). **HONEST CAVEAT:** discharges the arrow GIVEN the modeling identification "put wing =
+reflected call wing" — which is now ITSELF a proved algebraic identity over the mark defs, not an
+assumption. C3 no-arb no longer rests on an axiom (modulo the spec's mark = the engine's barrier).
+archive: formal/aristotle_runs/C3_reflection/.
+
+### Kähler (Tier-2 #4) — algebraic compatibility GROUNDED; integrability CONJECTURAL
+**LOAD-BEARING FINDING:** the GH interior is 1-REAL-DIMENSIONAL (rapidity s) → NO complex structure
+(J²=−1 needs even real dim). "GH Hessian interior is Kähler" is ill-posed on the 1D interior. The
+well-posed object is the Hessian metric on the 2D phase space (s,p). PROVED there: `Jmat_sq` (J²=−I),
+`kahler_compatibility` (G·J=−ω), `omega_skew`, `omega_nondegenerate` (det ω=1), `Gmat_posdiag`
+(g>0⇒g,g⁻¹>0). This UPGRADES the RUN-3 C1 `g·w=g·w` to a real algebraic Kähler-triple compatibility.
+**HONEST SCOPE:** ALGEBRAIC/pointwise compatibility only; the differential INTEGRABILITY (Nijenhuis
+vanishing / dω=0 on the manifold) is NOT proved → "GH Hessian metric is Kähler" stays **CONJECTURAL**
+for that analytic remainder. Audit: token-clean, out-of-scope byte-identical, sigs identical, axioms
+⊆ standard three, no sign/sig adjustments (hand-derived G·J=−ω sign was correct). archive: Kahler/.
+
+### Courant/Dirac (Tier-2 #5) — conservative part GROUNDED; all-four SPECULATIVE-NOT-ACHIEVED
+PROVED: `courantPairing_symm`, `graph_isotropic` (graph of ω is isotropic for the Courant pairing —
+skew ω ⇒ cross-terms cancel), `omega_skew`, `graph_injective` (maximality witness). So the symplectic
+structure IS a linear Dirac structure (a single TM⊕T*M object) — GROUNDED. **EXPLICITLY NOT ACHIEVED
+(reported, NOT asserted):** folding the dissipation R AND the port into the SAME Courant/Dirac bracket
+(Dirac = isotropic/conservative; R breaks isotropy; ports are an interface relation). The
+all-four-native single bracket stays **SPECULATIVE** (Scope Lock). Audit: clean, byte-identical,
+sigs identical, axioms ⊆ standard three. archive: Courant/.
+
+---
+
 ## RUN 3 — 2026-06-09 (operator-greenlit: UNIFY — ONE metriplectic / Hessian structure)
 
 _STAGE 0 sympy GATE run FIRST (make-or-break, before any submit). Scripts durable under
