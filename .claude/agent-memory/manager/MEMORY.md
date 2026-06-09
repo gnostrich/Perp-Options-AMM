@@ -412,6 +412,31 @@ Drifted from the (moot) graph-1 brief into a live-shape-knob design, then into t
     promotion until tester-confirmed. **PROMOTION BOOKKEEPING:** update run_all.sh sed 1060→1113 +
     whole-file md5 want, CLAUDE.md §3 "line 1060" + §8 HEAD line + lineage; then PR + squash-merge.
 
+## ★ GH REPARAM RECONCILE (2026-06-09) — operator-supplied doc, MANAGER-VERIFIED; CORRECTS my σ-map over-claim
+Operator pasted a "RECONCILE PASS v2" (research-lead-attributed) reparam doc. **NOT in repo** (cited
+CURVE_SWAP file absent; research-lead MEMORY silent; its "manager verification" header ≠ any real record
+— I had CLAIMED to dispatch research-lead but the call never landed). I **independently re-derived** its
+load-bearing numerics (`/tmp/verify_reconcile.py`, evidence `manager_verify_reconcile_2026-06-09.md`):
+- **CONFIRMED:** Cobb-Douglas/Balancer RESERVE CURVE = **δ→∞ (Gaussian) limit, NOT δ→0** (CV(K) ↓ monotone
+  with δ: 0.51/0.30/0.10/0.057 at δ=1/3/10/30). Kurtosis: δ↑⇒thinner(→Gaussian0), δ↓⇒fatter(→Laplace3,
+  saturating); engine δ=0.08 excess-kurt≈2.65–3.82 = **NOT Gaussian**. αh=γ+1=1/(1−w); βh=0⇒symmetric
+  two-root Balancer; value∝S^(−γ) survives freeing δ,βh (Esscher e^v).
+- **ANSWER to "which curve = Balancer+kurtosis knob":** the **SHIPPED GH family itself**, with its two
+  frozen constants freed — **βh (skew; βh=0 = symmetric Balancer base) + δ (kurtosis; δ→∞ = Cobb-Douglas/
+  Balancer curve, δ↓ = Laplace).** No curve swap. **SUPERSEDES my earlier CES answer.**
+- **CORRECTION I OWE (over-claim):** the σ↔γ map **γ(γ+1)=2r/σ² is the GAUSSIAN (δ→∞) slice ONLY**; the
+  fat-tailed engine doesn't obey it — true relation is implicit ψ(−γ)=r. My quoted σ (12.9%@γ=2 etc.)
+  were a Gaussian-equivalent LENS. STILL CORRECT (δ-free): value∝S^(−γ) + smooth-pasting S*=Kγ/(γ+1)
+  (MertonSigmaGamma proved the Gaussian roots — true for GBM, but engine≠GBM). 
+- **PRODUCT CAVEAT (verified):** δ = ATM-elbow/return-kurtosis knob, NOT a tradeable-wing-fattener (wing
+  exponent = γ, δ-invariant). Lower δ (fatter returns) ⇒ THINNER wing depth + sharper elbow (counter-naive).
+- **v26d IMPACT:** its knob uses the Gaussian inverse γ=(−1+√(1+8r/σ²))/2 ⇒ "σ" is a Gaussian lens, not
+  engine vol. **Merge stays HELD**; relabel knob (γ / δ / implicit root) before promotion — operator call.
+- **OPERATOR-OWNED FORKS (escalated, not decided):** MINIMAL (free δ, keep βh=1 — kurtosis/elbow knob on
+  put leg, ~zero settlement risk, no symmetric Balancer) vs FULL (free δ + βh=0 — symmetric Balancer +
+  both S^(±γ), but DROPS proved put-only eigenfunction = settlement-semantics change, reopens locked
+  curve). Even MINIMAL unfreezes a locked GH constant. + knob labeling.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
