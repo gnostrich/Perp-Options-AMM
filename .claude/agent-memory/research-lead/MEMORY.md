@@ -1,5 +1,51 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, v24↔GH EQUIVALENCE RUN (slippage-function comparison; READ-ONLY engine; no git; sympy/Node only, no Aristotle)._
+_Last updated: 2026-06-09, GH-vs-BALANCER WARP INDEPENDENT CHECK (confirm/refute manager refutation; READ-ONLY engine; no git; sympy+mpmath+live-engine; no Aristotle)._
+
+### GH↔BALANCER WARP CHECK — 2026-06-09 (independent of manager refutation; CONFIRMED the refutation)
+Re-derived from scratch (mpmath exact tails/CDFs `/tmp/gh_*.py`, sympy `/tmp/balancer_vs_gh.py`, live
+engine `/tmp/engine_value_check.cjs`). Manager's harness `verify_gh_balancer_warp.cjs` reproduced
+byte-for-byte; my from-scratch mpmath (independent of the engine table) AGREES with it.
+- **THREE distinct exponents must not be conflated** (universal for reserve-linear-value AMMs):
+  (1) reserve elasticity `d ln y/d ln x`; (2) economic slippage `d ln(value)/d ln(price)` = value law;
+  (3) marginal `d ln(price)/d ln(value)` = −1/γ = reciprocal of (2). My PRIOR pass said GH slippage
+  exponent = −(γ+1); **that is WRONG and is RETRACTED** — the correct relation is (3) = −1/γ.
+- **REFUTATION CONFIRMED (HIGH confidence):** GH reserve elasticity `d ln y/d ln x` is NOT −γ at any δ,
+  and the anti-trend (γ↑ ⇒ GH flattens toward 0) is REAL, not a measurement artifact. Engine δ=0.08
+  βh=1: −0.19/−0.09/−0.02/−0.00 (mpmath @v=3 reproduces these exactly). Plus a STRONGER structural
+  fact the manager didn't state: GH reserve elasticity VARIES by orders of magnitude ALONG the curve
+  (g=2 βh=1: −0.54@v=0.5 → −0.001@v=6) whereas Balancer's is RIGIDLY CONSTANT. So GH is not even a
+  warped power curve — distinct functional family in (x,y). The warp does NOT transfer.
+- **WHY (the deep reason):** GH controls exponent (2) — value∝S^(−γ) holds EXACTLY (live engine:
+  −1.4995/−1.9994/−2.9991/−3.9988 for γ=1.5/2/3/4; mpmath: −γ to 3-4 digits across band). Balancer's
+  defining −w/(1−w)=−γ is exponent (1), the RESERVE axis. Balancer's OWN economic slippage (2) is
+  −(1−w)=−1/(γ+1) at w=γ/(γ+1), NOT −γ. So the two families are matched on DIFFERENT axes; no single
+  Balancer weight reproduces both GH's reserve-elasticity AND GH's value law. γ↔w is a parameter LABEL,
+  not a curve identity. Manager is RIGHT.
+- **δ→∞ RECONCILE (REFINES the CLOSEOUT claim — flag to manager):** GH reserve elasticity does NOT
+  converge to −γ as δ→∞; at the mode (v=0,βh=0,γ=3) it DIVERGES: −2.5/−6.4/−19/−58 for δ=10/100/1e3/1e4.
+  The CLOSEOUT "CD/Balancer reserve curve = δ→∞ limit" rests on a CV(K)=CV(X^w Y^(1−w)) test over a
+  NARROW operating window; that CV drops then RISES with δ (sampling-fragile: 0.36→0.19→0.056→0.034→
+  0.087 over fixed v-band, then noise). CV(K)→small is reserve-SHAPE-similarity over a window, NOT
+  elasticity→−γ and NOT curve identity. Balancer is reachable in NO buildable GH limit on the reserve
+  axis. (The value law −γ is δ-FREE and is the thing GH actually delivers — independent of this.)
+- **½-vs-1 SETTLED (definitive, sympy):** v24 = shifted hyperbola X·Y=k. Its THREE exponents:
+  reserve `d ln y/d ln x`=−1 (=Balancer w=½); slope-vs-sNorm `d ln mp/d ln sNorm`=−2; **value law
+  value=sNorm∝S^(−½) ⇒ γ_value=½.** The TRUE v24 convexity is **γ=½** (matches `ARISTOTLE_hyperbolic_
+  curve.md` and Balancer w=½, and the power-sum γ=½⟹q=−1 byte-identity). The "γ=1" in MEMORY/value-law
+  files is the SAME −(γ+1) error family (reads −2 slope as −(γ+1)⟹γ=1); RETRACTED. `gh_gates_
+  reference.py` "γ=½ invalid for Esscher GH" is ALSO correct — the GH family REQUIRES γ=ah−bh>1 (ψ₁ real),
+  so GH literally cannot be BUILT at γ=½. Reconciliation: v24's value-γ IS ½; v24 IS Balancer-w=½ =
+  conceptually GH-at-γ=½, but γ=½ is OUTSIDE GH's buildable range. No contradiction once you separate
+  the axis (value vs reserve vs slope) and buildability.
+- **CANONICAL STATEMENT (supersedes the contradictory entries):** GH and Balancer/Cobb-Douglas are
+  DISTINCT curve families in (x,y) — they share NO common derivation and NO exact parameter map; the
+  Balancer reserve-warp does NOT transfer to GH. They coincide ONLY at the conceptual point γ=½ /
+  v24 / Balancer-w=½ which GH cannot build (γ>1 required). What GH and v24 SHARE is the universal
+  reserve-linear-value identity slope-vs-value=−1/γ and the mechanism TYPE (point-slide on a fixed
+  curve). GH's value law value∝S^(−γ) (γ>1, CONFIDENT, exact, δ-free) is its genuine generalization
+  beyond v24's fixed γ=½ — achieved by a DIFFERENT curve shape, NOT by warping Balancer. Slaving
+  γ=w/(1−w) dynamically would NOT reproduce the Balancer warp (CONFIDENT). CONJECTURAL/CAVEATED: the
+  δ→∞ CV(K) reserve-shape similarity is window-dependent and does not yield curve identity.
 
 ### v24↔GH EQUIVALENCE — 2026-06-09 (operator-driven theory; reconcile manager's double-count claim)
 Sources: v24 `reference/v24_balancer_stable.html` (tradeUpdate L1617, getMP_raw L1597, hyperbola
