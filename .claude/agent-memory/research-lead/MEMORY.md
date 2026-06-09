@@ -1,5 +1,60 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, RUN 4 (UNIFY2: REPLACE the tautological scaffold with REAL theorems; Tier-2 frontier; C3 axiom discharged)._
+_Last updated: 2026-06-09, CLOSEOUT RUN (collapse remaining formal items to true floor; SCRATCH-ONLY)._
+
+### CLOSEOUT RUN — 2026-06-09 (operator: "spam Aristotle"; canonical tree UNTOUCHED)
+5 standalone submits (`import Mathlib` only → no canonical module imported → byte-identity trivial).
+Scratch `formal/aristotle_runs/CLOSEOUT_{cgf,GHmeasure,frontier,kahler,courant}/`; IDs in
+`CLOSEOUT_SUBMISSION_IDS.txt`; full table RESULTS.md CLOSEOUT section. Audit: token-clean (the only
+`sorry` is the ONE declared Kähler-K3 gap; all other forbidden/search-tactic grep hits are in
+comments), statement-line diffs character-identical submit-vs-return, math re-derived.
+
+1. **cgf_convexOn HARDEN → proved (trusted-from-prover); the one open UNIFY2 HOLD is CLOSED.**
+   `exact?`→`convex_integrableExpSet.interior`; `grind +suggestions`→`(analyticAt_cgf ht).deriv.
+   differentiableAt`. NO search tactic in returned proof; statement unchanged; variance core kept.
+2. **GH integrability/finite-MGF DISCHARGED → "carried" REMOVED for integrability + probability-
+   measure + finite-MGF.** From `ghKernel_exponent_le` (kernel≤exp(−c|v|), c=αh−|βh|>0): T2 `exp(−c|v|)`
+   integrable; T3 `Integrable ghKernel`; T4 `0<∫`; T5 `IsProbabilityMeasure ghProb` (withDensity,
+   normalized, via `ofReal_integral_eq_lintegral_ofReal`+`div_self`); T6 finite MGF on strip |βh+t|<αh
+   (`exp(t·v)·ghKernel βh = ghKernel(βh+t)`). **NO Bessel-K, NO numeric Z used** — the closed-form
+   normalizer VALUE is NOT NEEDED for any structural claim. GH measure is now a genuine probability
+   measure with finite MGF over the REAL kernel, not a carried hypothesis. ghKernel + bound kept exactly.
+3. **frontier antitone_y/convex_y → GROUNDED from slope law; CARRIED[StrictAnti X, StrictMono Y,
+   chain hderiv/hmono].** Slope `g=k·e^(u−μ)` strict-mono+convex grounded; frontier antitone/convex
+   FOLLOW once the (carried, NOT discharged) monotone reserve-coordinate maps X(u),Y(u) + chain are
+   supplied. The carried maps are exactly where GH tail/CDF (Bessel-K-adjacent) still bottoms out.
+4. **Kähler integrability → K1,K2 GROUNDED; K3 STILL-OPEN (Kähler stays CONJECTURAL).** dω=0
+   (`hasDerivAt_const`), const-J Nijenhuis (`mul_zero`) clean. Variable-J(s) integrability = SINGLE
+   named `sorry` + precise Mathlib-gap report: v4.28.0 has NO AlmostComplexStructure/NijenhuisTensor/
+   Newlander–Nirenberg/Kähler-manifold infra → cannot even STATE it. NOT faked. Needs upstream Mathlib.
+5. **Courant all-four → PROVED OBSTRUCTION (no-go); single all-four-native bracket SPECULATIVE-NOT-
+   ACHIEVED (now with a proved reason).** Pairing on graph(A)=(Av)·w+(Aw)·v ⇒ isotropic⇔A skew;
+   graph(J) isotropic (Dirac, recovers RUN-4); graph(J−R) with R≠0 NOT isotropic (=−2(Rv)·w) ⇒ no
+   single maximal-isotropic Dirac bracket carries dissipation R (conservative + resistive = different
+   slots). Mathlib has no Courant/Leibniz-algebroid type ⇒ the non-isotropic all-four object NOT built.
+
+**TRUE REMAINING FLOOR after CLOSEOUT** (what genuinely stays open / carried):
+- GH structural measure theory: **DISCHARGED** (item 2). Only the Bessel-K closed-form normalizer
+  VALUE remains unformalized — and it is NOT needed for any structural claim (prob-measure + finite
+  MGF + cgf machinery all hold without it). STILL-OPEN only if someone needs the explicit M = K_ν ratio
+  number (needs Bessel-K formalized upstream in Mathlib — do not fake).
+- GH **AntitoneOn/ConvexOn AMMCurve instance**: GROUNDED modulo the carried monotone coordinate maps
+  X(u),Y(u) (the GH tail T / CDF C). Those maps need the GH special functions (Bessel-K-adjacent) — the
+  residual carried content, NOT discharged.
+- **Kähler integrability**: CONJECTURAL — Mathlib lacks a.c.s./Nijenhuis/Newlander–Nirenberg (upstream).
+- **Courant all-four single bracket**: SPECULATIVE — the no-go is proved (R breaks isotropy); the
+  Leibniz/Courant-algebroid object that would hold all four is not a Dirac structure and has no Mathlib type.
+- Untouched/excluded (unchanged): B1 real solvency floor (κ extrinsic, operator ship-gate); C3
+  spec↔engine link (engine-faithfulness pivot, not this run); "verified" label (env-blocked — all
+  CLOSEOUT verdicts are trusted-from-prover, NOT verified).
+
+**PROVENANCE CAVEAT for manager:** the cgf archive embeds no `#print axioms` command (the other 4 do).
+Axiom-cleanliness for all 5 is per Aristotle's SUMMARY ({propext,Classical.choice,Quot.sound}); the
+canonical-env build is where `#print axioms` gets independently reproduced — and where Kähler-K3's
+`gh_J_integrable` will (correctly) show `sorryAx`, since it is the one declared-open theorem, not a
+claimed proof. No economic-object/settlement question surfaced; no guardrail tripped.
+
+---
+_Earlier: 2026-06-09, RUN 4 (UNIFY2: REPLACE the tautological scaffold with REAL theorems; Tier-2 frontier; C3 axiom discharged)._
 
 ### RUN 4 — 2026-06-09 (operator BUILD-AUTHORIZED; SCRATCH-ONLY, canonical tree UNTOUCHED)
 **Mission: push unification toward 100% by replacing RUN-3 UNIFY's trivial A1/A2/A3/B2/C1 with real
