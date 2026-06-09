@@ -43,6 +43,48 @@ does not actually do.
 
 ---
 
+## ★ 2026-06-09 MANAGER ADDENDUM — airtight-singular reframe · Kähler/Courant excision · settlement generated
+
+_Authored by the manager (operator-approved 2026-06-09). Records framing corrections established by the
+UNIFY/CLOSEOUT/AIRTIGHT runs (all manager-audited; see `evidence/manager_audit_*.md`). Does NOT retract
+or weaken any PH-1…PH-7 obligation below — it sharpens the framing and marks two frontier items out-of-core._
+
+**(c) Information-geometric reframe (the singular object).** The airtight singular object is the single
+convex potential **μ (the GH cumulant generating function)** and the exponential family it generates —
+an **information-geometric / Hessian (dually-flat)** object. One `μ` generates: price = ∇μ; dissipation
+**R = ∇²μ = Fisher metric**; value-metric = 1/μ″ (Legendre dual); the two symmetries **trade**
+(parameter translation) and **rebase** (degree-0 gauge). All readings are in the **natural/gauge
+coordinate `s = u−μ`** (the gauge is *forced* — in raw log-price the readings do not align). The
+**port-Hamiltonian / symplectic structure is the canonical cotangent *lift*** of this base, NOT a
+second axiom: the cotangent bundle of a Hessian object is forced (no extra data), so the system stays
+**one generator, one airtight object** — `μ → info-geometric base → canonical PH lift`.
+- **Faithfulness/coverage preserved (operator-gated, confirmed):** passivity/no-free-lunch (CTPH), the
+  ports (funding/hedging boundary), and PH-4b ("no reserve floor ⇒ convexity must be funded") are
+  **dynamics on the lift** and remain fully proven — they were never base-level facts. The reframe
+  renames the base honestly; it removes nothing. **Paper/spec headline noun = "information-geometric
+  base + port-Hamiltonian lift," NOT "metriplectic."** (The single-μ core file `SingleCore.lean` confirms
+  this: its 1-D base `omega ≡ 0` — the only skew form on ℝ¹ — so the symplectic reading is degenerate on
+  the base; the nontrivial `ω` (det = 1) lives on the 2-D lift.)
+
+**(b) Kähler / Courant are OUT-OF-CORE (excised).** Neither is part of the singular object:
+- **Kähler integrability** — CONJECTURAL / upstream-blocked: Mathlib v4.28.0 has no
+  AlmostComplexStructure / Nijenhuis / Newlander–Nirenberg machinery to even *state* variable-J
+  integrability (CLOSEOUT). The 1-real-dim base has no complex structure anyway.
+- **Courant all-four single bracket** — PROVED NO-GO: dissipation `R≠0` makes `graph(J−R)` symmetric,
+  not isotropic, so no single maximal-isotropic Dirac bracket carries the dissipation (CLOSEOUT).
+  Conservative and resistive are different slots.
+- These are the same 1-real-dimension fact as the trivial base-`ω`. They are **not leaks** in the core —
+  pretending they are part of it would be the only real leak. Marked out-of-core; not chased.
+
+**Settlement is now GENERATED (PH-5 upgrade).** The AIRTIGHT run (manager re-derived) proved
+`Sstar_{A,B}_forced`: from value-match AND slope-match at an *arbitrary* `S`, the smooth-pasting system
+**uniquely forces** `S* = Kγ/(γ+1)` (call) / `K(γ+1)/γ` (put) — inverting R1. So PH-5 is no longer
+"C¹ as a checked coincidence" but **"C¹ because S* is the uniquely-forced free boundary."** American
+*optimality* is generated at the variational level; the Snell-envelope optimal-stopping identification is
+CARRIED as the standard free-boundary principle (Mathlib has no optimal-stopping/free-boundary machinery).
+Scope: **|Γ|≤1 exact American; |Γ|>1 = labelled approximation** (mutual exclusivity is proved). κ/funding
+status quo; B1 intrinsic solvency stays the operator ship-gate.
+
 ## PH-1 — H ↔ GH curve (stored energy identified with the reserve geometry)
 
 **Informal.** The PH storage function `H` is the pool equity, and its reserve component is the GH

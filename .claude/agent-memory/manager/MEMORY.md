@@ -55,6 +55,52 @@ git history is the mechanical audit trail. Rewrite the changed bits at the end o
   `run_all.sh` gates (seam, dir, slope-identity) already cover part — pivot = harden+complete into a full
   theory-faithfulness layer. **HOLD: operator is finishing config first; do NOT begin the pivot until told.**
 
+## ★ AIRTIGHT-SINGULAR ENDGAME (2026-06-09) — operator decisions LOCKED; formal endgame LAUNCHED
+- Operator reframed the goal (deferring theory-judgment to research-lead, manager keeps verification/
+  escalation): ONE **airtight singular system**. research-lead's proposal (manager-relayed + endorsed):
+  the singular object is **μ alone** (the GH convex cumulant-generating potential) + the exp-family it
+  generates — price=∇μ, R=Fisher=∇²μ, value-metric=1/μ″, trade=parameter-translation, rebase=degree-0
+  gauge — all readings of ONE Hessian geometry, **in the gauge coord s=u−μ** (raw-u breaks it; the gauge
+  is forced = the content). Dirac port is NOT part of the generator. Core/tack-on sort: "LVR"/"funding"/
+  "no-arb" are LABELS on core structural quantities (R=Hessian; the port; the reflection symmetry) —
+  keep the structure, de-prioritize the label. Only genuine internal LEAK = the settlement rule
+  (posited + checked-C¹, not generated). κ + GH reserve-maps = provably-LOCATED external quarantines
+  (PH-4b), not leaks. Kähler/Courant = EXCISE from core (proved obstruction / no-go).
+- **OPERATOR DECISIONS LOCKED:**
+  1. **Settlement = TRUE AMERICAN (cash-out-anytime).** ⇒ DERIVE S*=Kγ/(γ+1) (call) / K(γ+1)/γ (put) as
+     the American optimal-stopping / smooth-pasting free boundary FROM μ (turns PH-5 "checked C¹" →
+     "C¹ because free boundary"). Scope: **|Γ|≤1 exact; |Γ|>1 = labelled approximation** (mutual
+     exclusivity is PROVED, not a choice).
+  2. **Funding = STATUS QUO** (κ external dial; necessary-not-sufficient unchanged; no funding change).
+  3. **Claims = BEST-EFFORTS / extent possible given prover + Mathlib SoTA** — push formalization to the
+     tool limit; label honestly (trusted-from-prover; Mathlib-gap items stay honestly carried/conjectural).
+- **FORMAL ENDGAME LAUNCHED (research-lead; branch `claude/airtight-singular-core` off main 162789d):**
+  Task 1 = settlement-as-generated (collapse the one leak — highest value; algebraic generation = S* is
+  the UNIQUE smooth-pasting solution, inverting R1; optimal-stopping-optimality CARRIED/cited if Mathlib
+  lacks the machinery). Task 2 = single-μ core file (μ as ONE generating field, price/R/ω/trade/rebase as
+  defs OFF it — "singular not federation" made formal). Task 3 = excise Kähler/Courant from core (framing;
+  manager handles the doc). Honesty: settlement stays CHECKED-C¹ not GENERATED until Task 1 lands; never
+  let R=Fisher → "LVR generated". Manager re-derives + audits + commits.
+- **ENDGAME COMPLETE + MANAGER-AUDITED (2026-06-09):** Task 1a settlement GENERATED (I re-derived S*
+  uniqueness by hand — matches; PH-5 now "C¹ because uniquely-forced free boundary"); Task 1b optimality
+  variational-generated + Snell CARRIED, **HARDENED clean** (verified: diff = 3 tactic lines only, no
+  statement change, token-clean, AmericanOptimalityPrinciple still carried structure:Prop/True); Task 2
+  single-μ core type-enforced singular (info-geo reframe: base ω≡0 in 1-D, symplectic is the 2-D lift).
+  Spec addendum (b)+(c) committed (070a3b5). Audits: `evidence/manager_audit_AIRTIGHT_2026-06-09.md`.
+  **MERGING to main (autonomous on green per §6.2).**
+- **Perpetual-option reconciliation (brainstorm, noted `notes/perpetual_option_reconciliation_2026-06-09.md`):**
+  μ = perpetual-option Laplace exponent/pricing symbol; γ = characteristic root (ψ(−γ)=r); value~S^(−γ)
+  = Esscher eigenfunction; S*=Kγ/(γ+1) = Merton smooth-pasting = AIRTIGHT-generated. Merton = Gaussian
+  special case; GH engine = general. Perpetual-option ODE = dynamics on the PH lift, μ = its symbol.
+  ACTIONABLES (held): formal μ=Laplace-exponent tie (queued for research-lead); numeric confirm
+  γ(γ+1)=2r/σ² vs engine + where δ enters (= a first engine-faithfulness gate); knob-spec (σ primary,
+  γ/S* derived, δ fixed) HELD pending confirm. δ ≠ meaningless (measures departure from Gaussian).
+- **NB:** the engine-faithfulness PIVOT remains a SEPARATE, still-HELD step (this endgame is FORMAL
+  theory, not the pivot). Pivot resumes only when the operator lifts that hold.
+- **Governance (verified this session):** PR/merge AUTONOMOUS on green per CLAUDE.md §6 + §6.2 (operator
+  pre-authorized; supersedes "ask before PR"); §6.2 pre-merge gate + safety-halts apply; engine
+  single-writer by changed paths (this branch = non-engine). main HEAD=162789d; engine v26c 6cc73563 intact.
+
 ## Integration status (2026-06-08 reconciliation task)
 - **v26c engine line FOLDED.** Merged `claude/pensive-sagan-WhNLb` (26 commits, the v26b→v26c
   program) into `claude/exciting-volta-82z290` (which sat exactly at `origin/main` 6cb4c92, so it IS
