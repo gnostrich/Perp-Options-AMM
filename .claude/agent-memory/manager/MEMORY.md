@@ -1,6 +1,33 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-08, v26c reconciliation. This is the project's state-of-the-whole; git history
-is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+_Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
+git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+
+## ★ PHASE CHECKPOINT (2026-06-09) — FORMAL PHASE DONE + MERGED TO MAIN; NEXT = engine-faithfulness pivot (HOLD)
+- **(a) FORMAL PHASE IS DONE** (operator-declared clean checkpoint). Port-Hamiltonian formal-verification
+  phase complete: PH recap + consistency vs v26c; Aristotle RUN-1…RUN-4 + closeout, all manager-audited;
+  unification = metriplectic/Hessian-(conj-Kähler) interior driven by ONE convex potential (GH cumulant
+  generating fn) + Dirac port boundary; M=Fisher confirmed (manager-reproduced); GH density now a genuine
+  probability measure w/ finite MGF **without Bessel-K**. Provenance = **trusted-from-prover** (Aristotle
+  compiled + audited; "verified" dropped — local Lean host network-allowlist-blocked).
+  **TRUE FORMAL FLOOR (exactly as scored):**
+  (1) GH reserve-coordinate map X(u)/Y(u) monotonicity behind AMMCurve antitone/convex — Bessel-K-adjacent,
+      CARRIED (named hyps);
+  (2) Bessel-K closed-form normalizer VALUE — NOT needed for any structural claim;
+  (3) Kähler integrability — upstream Mathlib v4.28.0 gap (no almost-complex/Nijenhuis/N–N infra), single
+      honest named sorry, CONJECTURAL;
+  (4) Courant all-four single bracket — PROVED NO-GO (R≠0 breaks isotropy; not a Dirac structure). SETTLED.
+  EXCLUDED (not formal gaps): B1 real solvency floor = operator ship-gate (PH-4b: port necessary, never
+  sufficient); C3 spec↔engine `mark` link → belongs to the PIVOT; "verified" label → environment.
+- **MERGED:** PR #6 squash-merged → **main `15cfa6f`** (gated on: working tree clean+pushed; engine
+  unchanged v26c md5 6cc73563; 7 GH + seam + dir gates GREEN + blobs intact; token 200; PR mergeable_state
+  =clean). Branch `claude/port-hamiltonian-recap-dxskkm` DELETED (remote, HTTP 204). Engine on main intact
+  (md5 6cc73563). research-lead MEMORY updated (RUN-4/closeout). **main HEAD = 15cfa6f; engine still v26c.**
+- **(b) NEXT STEP (a later session resumes): engine-faithfulness scaffolding PIVOT** — build idiot-check
+  gates that verify the LIVE engine reproduces each proven construct (GH-as-exp-family; trade = rapidity
+  translation; R = Fisher = variance; rebase invariance in sNorm; seam C¹ at S*=Kγ/(γ+1); mpGeom =
+  getMP_raw·e^μ; **C3 spec↔engine `mark` identity = where C3's residual gets genuinely closed**). Existing
+  `run_all.sh` gates (seam, dir, slope-identity) already cover part — pivot = harden+complete into a full
+  theory-faithfulness layer. **HOLD: operator is finishing config first; do NOT begin the pivot until told.**
 
 ## Integration status (2026-06-08 reconciliation task)
 - **v26c engine line FOLDED.** Merged `claude/pensive-sagan-WhNLb` (26 commits, the v26b→v26c
