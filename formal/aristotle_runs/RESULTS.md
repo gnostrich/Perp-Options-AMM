@@ -13,6 +13,104 @@ UNBLOCKED.
 zero-cost artifact audit (clean tokens, axioms ⊆ propext/Classical.choice/Quot.sound, no out-of-scope
 diff, math re-derived). Manager may upgrade to "verified" by building canonically.
 
+---
+
+## RUN 2 — 2026-06-09 (operator-greenlit: CTPH cleanup/strengthen + GH-grounding push)
+
+_All RUN-2 obligations are STANDALONE files under `formal/aristotle_runs/<name>_*/` that IMPORT the
+canonical modules; the canonical `formal/temporal_lean_verified/` tree was NOT modified (manager owns
+a separate local-build there). Submit-projects = throwaway copies of the canonical project + one new
+.lean. Every canonical module (Temporal/AMMCurve/Seam/Audit/Main) confirmed BYTE-IDENTICAL in all 5
+returned archives. Toolchain pin v4.28.0 unchanged everywhere._
+
+**RUN-2 submission map (project IDs):**
+| Obligation | Project ID | Verdict |
+|---|---|---|
+| CTPH_clean (Track 1) | a33560b3-0a60-4d53-8284-c9961ed75972 | proved (trusted-from-prover) |
+| GHJ_grounded (Track 2) | 1c0f0a46-f969-44e2-b3fd-35c919427891 | proved (trusted-from-prover) — WATCH-FLAG finding below |
+| GHcoercive_grounded (Track 2) | 02c2e575-95a1-4f98-a8d0-90448a7546c5 | proved (trusted-from-prover) — PARTIAL grounding |
+| PH4b_grounded (Track 2) | f19b24c7-9b65-4e79-b40d-c5c5d68d016e | proved (trusted-from-prover) — PARTIAL grounding |
+| PH3_grounded (Track 2) | 9c66598c-cd09-47ef-9473-d367c3b90ce8 | proved (trusted-from-prover) |
+
+**RUN-2 SUMMARY:** 5/5 audit-passed (token-clean: no sorry/admit/native_decide/sorryAx/opaque/unsafe/
+real-axiom — three grep hits were COMMENTS only; axioms ⊆ {propext,Classical.choice,Quot.sound} per
+each ARISTOTLE_SUMMARY; submitted-vs-returned signatures character-identical; canonical modules
+byte-identical; math independently re-derived in sympy/python). NONE upgraded to "verified."
+
+### Track 1 — CTPH (archive: formal/aristotle_runs/CTPH_clean/)
+- **CTPH IS CLEAN NOW.** The prior fragility flag is RESOLVED: `ct_dissipation_ineq` uses the concrete
+  term `skew_quadForm_zero hJ z` (no `exact?`/search tactic anywhere in source). The dissipation
+  inequality `dH/dt = uᵀy − zᵀRz ≤ uᵀy` (skew-J vanishes via `skew_quadForm_zero`; −zᵀRz ≤ 0 via
+  `psd_quadForm_nonneg`, R PSD; deterministic, NO SDE/Itô) compiles clean.
+- **STRENGTHENED discrete↔continuous link (replaces the near-vacuous existential):** the new
+  `sampled_dissip_nonneg` / `sampled_increment` / `sampled_passivity` are a TIGHT, non-vacuous
+  forward-Euler correspondence. We construct the sampled storage `Hs N = H0 + Σ(supplied−dissipated)`
+  with per-tick `supplied = Δt·uᵀy`, `dissipated = Δt·zᵀRz`, and PROVE (a) `dissipated ≥ 0` DERIVED
+  from R PSD (not assumed), (b) the exact per-tick increment `ΔH = supplied − dissipated` (= Δt·(uᵀy−
+  zᵀRz), the sampled continuous rate), (c) telescoped `Hs N ≤ H0 + Σ supplied` (the Riemann sum of
+  the continuous bound). This genuinely ties OUR per-tick balance to the continuous inequality as its
+  sampled realization.
+  **HONEST SCOPE LIMIT (what is NOT provable cleanly):** the tight version does NOT instantiate the
+  floor-bearing `Temporal.PassiveSystem`, because a general sampled trajectory has NO storage FLOOR
+  (that is B1, external — fabricating one with a `sorry` would fail audit). So the link is stated on
+  the sampled storage directly, NOT as "the engine's unique system." It is the dissipation/balance/
+  telescoping content, which IS the honest tight statement. The B1 floor stays the operator ship-gate.
+
+### Track 2 — GH-grounding push
+**GHJ_grounded (formal/aristotle_runs/GHJ_grounded/) — ⚠ ECONOMIC-OBJECT FINDING (ESCALATE):**
+GH conserves **NO clean nontrivial ALGEBRAIC product invariant** analogous to CPMM's X·Y. Verified
+numerically (γ=3 GH densities): X·Y varies by orders of magnitude along the frontier (5e-9 at u=−3,
+peaks 0.19 at u=0, 1e-4 at u=3) — there is no X·Y=const. Per the guardrail I did NOT fabricate or
+weaken a statement to manufacture one. What GH DOES conserve, now DERIVED from the closed-form
+densities (not asserted): (i) the EXACT Esscher tilt `f_{β+1}(v) = e^v·f_β(v)` (`esscher_core`,
+cross-checked exact in sympy), (ii) the density ratio `f_{β+1}/f_β = (Cβ1/Cβ)·e^v` (`density_ratio`),
+(iii) the GH slope law `slope = (Ny·M/Nx)·(Cβ1/Cβ)·e^(u−μ)` = engine's `getMP_raw·e^(−μ)`
+(`gh_slope_law`), (iv) trade = latent translation `u↦u+δ` scaling the slope by `e^δ`
+(`slope_translation`) — the genuine one-parameter group / skew-J structure. **Bottom line: the
+conserved object is the latent one-parameter group + Esscher tilt, NOT an algebraic X·Y-type
+constant.** This is a settlement-/economic-object characterization the manager should relay to the
+operator: the "GH invariant" is a group/parametrization invariant, not a product invariant. Not a
+failure — but do NOT let it be reported as "GH conserves an X·Y-analogue."
+
+**GHcoercive_grounded (formal/aristotle_runs/GHcoercive_grounded/) — PARTIAL grounding:**
+`X∈(0,Nx)`, `Y∈(0,Ny·M)`, and frontier `y≥0` are now DERIVED from `0<T<1` (T a tail probability) and
+`0<C<1` (C a CDF), with Nx,Ny,M>0 — instead of the prior opaque `hy:∀x,0≤y x` hypothesis. The gate
+field `gh_coercive` has the GH form `Ny·M·Ccdf` with nonnegativity DERIVED from the CDF structure.
+**SCOPE (honest):** the structural facts `0<T<1`/`0<C<1` (that the GH tail/CDF lie in (0,1)) are still
+CARRIED as hypotheses — they are the defining properties of a probability tail/CDF (the GH content),
+NOT the actual GH special-function tables formalized. So this is grounded-via-structural-property:
+real improvement over carrying `0≤y`, but proving the GH density's tail IS in (0,1) from the Bessel/
+hyperbolic closed form remains the bigger OPEN lift. Full GH `AMMCurve` instance (antitone_y/convex_y
+from GH special functions) still OPEN.
+
+**PH4b_grounded (formal/aristotle_runs/PH4b_grounded/) — PARTIAL grounding:**
+GH poolValue bounded ABOVE is now DERIVED: `Nx·T + Ny·M·C ≤ Nx + Ny·M` from `T<1`,`C<1`
+(`gh_value_boundedAbove`) — the bounded-reserve closed form, replacing the asserted `∃B,V≤B`. Fed into
+`gh_no_floor`/`gh_no_floor_grounded`: bounded-above reserves + unbounded obligation ⇒ no intrinsic
+floor (funding port NECESSARY). Same structural-hypothesis caveat as GHcoercive (T<1/C<1 carried).
+**Necessary-not-sufficient PRESERVED:** proves no reserve floor, NOT that funding covers the deficit
+(B1 stays open/external).
+
+**PH3_grounded (formal/aristotle_runs/PH3_grounded/) — GROUNDED (curve closed-form):**
+The GH arb-leak ≥ 0 is DERIVED from the engine's actual GH slope law `g(u)=k·e^(u−μ)` (k=Ny·M/Nx),
+NOT an abstract PSD matrix. `ghSlope_strictMono` (the short-gamma/convexity property, from the closed
+form) ⇒ `gh_arbLeak_density_nonneg` (g(u₂)−g(u)≥0 for u≤u₂) ⇒ `gh_arbLeak_nonneg`
+(`∫_{u₁}^{u₂}(g(u₂)−g(u))du ≥ 0`, the LVR-one-way dissipation). Math re-derived (integral closed form
+g(u₂)(u₂−u₁)−(g(u₂)−g(u₁)) ≥ 0). **Necessary-not-sufficient PRESERVED:** does NOT close solvency/B1.
+
+**RUN-2 escalations for the manager (do not over-promote):**
+1. **GH economic-object finding (relay to operator):** GH's conserved object is the latent
+   one-parameter group + Esscher tilt, NOT an X·Y-style algebraic invariant. Characterization, not a
+   bug; but the "GH invariant" must be labelled as a group/parametrization invariant.
+2. **GH-grounding is PARTIAL where noted:** GHcoercive/PH4b still carry the GH tail/CDF-in-(0,1)
+   structural facts as hypotheses (the actual GH special-function tables are not formalized). PH3 and
+   GHJ are grounded in the actual closed forms (slope law / densities). The full GH `AMMCurve` instance
+   (antitone_y/convex_y from the GH special functions) remains the big OPEN lift.
+3. **B1 unchanged:** real solvency floor stays external/operator ship-gate; CTPH's tight link
+   deliberately does NOT claim a floor. C3 reflection still an axiom (untouched). No SDE introduced.
+
+---
+
 **RUN SUMMARY (2026-06-08, COMPLETE):** 14 obligations submitted, spanning Tiers 1-4 + extras.
 **ALL 14 audited → ALL proved (trusted-from-prover).** ZERO counterexamples, ZERO candidate-fails-audit,
 ZERO still-open. GH-J WATCH-FLAG **not tripped** (GH conserves a clean invariant — latent one-parameter

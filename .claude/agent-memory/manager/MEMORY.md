@@ -151,6 +151,19 @@ actor). I do **not** see raw prover output and am no longer a courier.
   mpGeom=getMP_raw·e^(−ghMu) (ratio==e^ghMu all γ), directional-sign invariant (CALL+++/PUT−−−, mutation
   caught), 7 GH gates PASS. These are the numeric ground-truths R1/R3/R4 candidates must reproduce.
 
+## LABEL POLICY — resolved (operator 2026-06-09: "I trust Aristotle")
+- Operator can't change the env allowlist this session (maybe future). Trusts Aristotle.
+  **RESOLUTION:** `trusted-from-prover` is the standing label and is treated as **SUFFICIENT** (not
+  doubtful, not blocked) — Aristotle's server-side kernel compile + our artifact audit = proven for our
+  purposes; we build on/cite it. **Do NOT write the literal word "verified"** in artifacts (that asserts
+  OUR kernel ran; it didn't). Paper phrasing: "machine-checked by the Aristotle prover (Lean4/Mathlib
+  v4.28.0), audited by us; independent re-build pending toolchain access." Flip to "verified" only if a
+  future session allowlists `release.lean-lang.org` + Mathlib cache and I build locally.
+- **TWO INDEPENDENT AXES — keep distinct:** (1) PROVENANCE = trusted-from-prover (now good per operator);
+  (2) DEPTH = Tier-A curve-grounded vs Tier-B GH-facts-assumed. Trusting Aristotle resolves axis 1 only;
+  it does NOT upgrade axis 2. The watch-flag / economic-object risk lives entirely on axis 2 (the
+  in-progress GH-grounding run). paper must not let trust-in-prover blur into depth-of-claim.
+
 ## Local Lean build — ATTEMPTED, BLOCKED by network allowlist (2026-06-09)
 - To earn the "verified" label (vs trusted-from-prover) I tried to provision a real Lean toolchain.
   **elan installs fine** (4.2.3; raw.githubusercontent + github.com reachable) BUT
@@ -161,6 +174,29 @@ actor). I do **not** see raw prover output and am no longer a courier.
   operator must allowlist `release.lean-lang.org` AND the Mathlib olean cache host (for `lake exe cache
   get`) in the environment network policy; then I can build the Tier-A proofs canonically → "verified".
   elan left installed at `/home/user/.elan` (outside repo) for a future allowlisted run.
+
+## RUN-2 (CTPH clean + GH-grounding) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+- Audit: `evidence/manager_audit_aristotle_RUN2_2026-06-09.md`. Canonical tree untouched; base modules
+  byte-identical; returned SOLUTIONS sorry/admit/native_decide/sorryAx-clean (re-scanned correctly).
+- **METHOD MISS I OWN:** my RUN-1/RUN-2 token-scan used `grep -rnED` — `-D` ate the pattern, scan
+  matched nothing. Caught only by READING files (saw `sorry` in RUN-2 dir-root TEMPLATES). Re-scanned
+  with `grep -rnE`: returned solutions clean; the sorries are in SUBMITTED TEMPLATES (dir-root
+  `<NAME>.lean`), proofs live in `extracted/proj_aristotle/.../<NAME>.lean`. Lesson: token-scan never
+  sufficient alone; always read. HYGIENE: sorry-templates committed under aristotle_runs (NOT in any
+  build path; canonical lib = temporal_lean_verified — no poison).
+- **CTPH HOLD LIFTED:** `exact?` gone from the returned solution (concrete `skew_quadForm_zero hJ z`);
+  dissipation ineq clean; discrete↔continuous strengthened to an honest forward-Euler sampled-storage
+  correspondence (no fabricated floor). Folds trusted-from-prover.
+- **GHJ_grounded / PH3_grounded = GROUNDED** (I verified the GHJ solution proofs: esscher_core/
+  density_ratio/gh_slope_law/slope_translation real, non-vacuous hyps). **GHcoercive/PH4b_grounded =
+  honest PARTIAL** (GH ranges derived modulo T<1/C<1 carried as tail/CDF facts).
+- **ECONOMIC-OBJECT WATCH-FLAG RESOLVED (not tripped in the bad sense):** GH conserves NO X·Y product
+  invariant (by construction — value∝S^(−γ) ≠ constant-product), but DOES conserve the latent rapidity
+  one-parameter group + Esscher tilt (slope=P·e^(u−μ) scaling by e^δ). PH-2 lossless/skew-J HOLDS for GH
+  as a group action. NO engine change. Paper implication: describe PH-2's conserved object as the
+  rapidity-group/Esscher structure, NOT a CPMM X·Y-analogue. Relayed to operator.
+- Open GH lift remaining: full GH `AMMCurve` instance (antitone_y/convex_y + discharge T<1/C<1 from the
+  GH special functions) — the real next mountain, not done.
 
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright

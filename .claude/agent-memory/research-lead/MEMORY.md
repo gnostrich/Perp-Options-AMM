@@ -1,5 +1,45 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-08, BIG AUTONOMOUS RUN (14 obligations submitted to Aristotle). Rewrite at end._
+_Last updated: 2026-06-09, RUN 2 (CTPH cleanup/strengthen + GH-grounding push, 5 obligations)._
+
+### RUN 2 — 2026-06-09 (operator-greenlit; SCRATCH-ONLY, canonical tree UNTOUCHED)
+**Constraint honored:** all 5 obligations are STANDALONE `formal/aristotle_runs/<name>/<File>.lean`
+importing canonical modules; the canonical `formal/temporal_lean_verified/` tree was NOT modified
+(manager doing separate local build there). Submit-projects were throwaway copies (now deleted).
+All 5 returned archives: canonical modules BYTE-IDENTICAL, pin v4.28.0, axioms ⊆ standard three,
+token-clean (3 grep hits were COMMENTS), signatures character-identical submit-vs-return, math
+re-derived. **5/5 proved (trusted-from-prover).** NONE upgraded to "verified" (manager's label).
+IDs: CTPH_clean a33560b3 · GHJ_grounded 1c0f0a46 · GHcoercive_grounded 02c2e575 · PH4b_grounded
+f19b24c7 · PH3_grounded 9c66598c. Full detail in formal/aristotle_runs/RESULTS.md (RUN 2 section).
+
+- **Track 1 CTPH — CLEAN NOW + STRENGTHENED.** Prior `exact?` fragility flag RESOLVED:
+  `ct_dissipation_ineq` uses concrete `skew_quadForm_zero hJ z` (no search tactic in source). Added a
+  TIGHT discrete↔continuous link (`sampled_dissip_nonneg`/`sampled_increment`/`sampled_passivity`)
+  replacing the near-vacuous existential: forward-Euler sampled storage, dissipation DERIVED ≥0 from
+  R PSD, exact per-tick balance ΔH=supplied−dissipated, telescoped to the integrated bound. HONEST
+  LIMIT: does NOT instantiate the floor-bearing PassiveSystem (no general floor = B1, external); link
+  stated on sampled storage directly. archive: formal/aristotle_runs/CTPH_clean/.
+- **Track 2 GHJ_grounded — ⚠ ECONOMIC-OBJECT FINDING (ESCALATED, not patched).** GH conserves NO
+  clean ALGEBRAIC X·Y-style invariant (numerically: X·Y spans orders of magnitude along the frontier).
+  Did NOT fabricate/weaken to manufacture one. DERIVED from the actual closed-form densities instead:
+  Esscher tilt `f_{β+1}=e^v·f_β` (exact, sympy-checked), density ratio `=e^v`, GH slope law
+  `slope=(Ny·M/Nx)·e^(u−μ)=getMP_raw·e^(−μ)`, trade=latent translation scaling slope by e^δ. Conserved
+  object = latent one-parameter group + Esscher tilt, NOT a product invariant. Relay to operator as a
+  characterization. archive: formal/aristotle_runs/GHJ_grounded/.
+- **Track 2 GHcoercive_grounded / PH4b_grounded — PARTIAL grounding.** X∈(0,Nx), Y∈(0,Ny·M), y≥0,
+  poolValue-bounded-above all now DERIVED from `0<T<1` (tail prob) / `0<C<1` (CDF) + Nx,Ny,M>0 —
+  replacing opaque `0≤y` / `∃B,V≤B`. SCOPE: the T<1/C<1 facts are still CARRIED hypotheses (= the
+  defining property of a probability tail/CDF, the GH content), NOT the GH special-function tables
+  formalized. Full GH AMMCurve instance (antitone_y/convex_y from GH special functions) still OPEN —
+  the big lift. PH4b necessary-not-sufficient PRESERVED. archives: GHcoercive_grounded/, PH4b_grounded/.
+- **Track 2 PH3_grounded — GROUNDED (curve closed-form).** GH arb-leak ≥0 DERIVED from the engine's
+  actual slope law g(u)=k·e^(u−μ): strict-mono (convexity) ⇒ leak density ≥0 ⇒ `∫(g(u₂)−g(u))du≥0`
+  (LVR one-way). NOT an abstract PSD matrix. Necessary-not-sufficient PRESERVED (does NOT close B1).
+  archive: formal/aristotle_runs/PH3_grounded/.
+- **Unchanged guardrails honored:** B1 real floor stays operator ship-gate (no fabricated floor); C3
+  reflection still an axiom (untouched); no SDE/stochastic content introduced.
+
+---
+_Earlier: 2026-06-08, BIG AUTONOMOUS RUN (14 obligations submitted to Aristotle)._
 
 ### BIG RUN 2026-06-08 (live) — 14 obligations submitted; auth + ledger durable
 **AUTH (CRITICAL, CHANGED):** `ARISTOTLE_API_KEY` now reads BARE (length 49, starts `a…`, no `<>`).
@@ -254,13 +294,19 @@ reaching past its contract into the raw displaced pool) — caught by type under
   AXIOM, NOT proven. NOT discharged. NOT submitted this run.** Do not report as discharged.
 - **GH gate-discharge** — `coercive` field **proved (trusted-from-prover)** for the GH bounded-reserve
   shape (formal/aristotle_runs/GHcoercive/; `coercive_of_nonneg` matches the AMMCurve.coercive field
-  signature byte-for-byte; lower bound 0). Full GH `AMMCurve` instance (antitone_y/convex_y from the GH
-  special functions) still OPEN — needs the GH density machinery, a bigger lift.
+  signature byte-for-byte; lower bound 0). **RUN-2 GROUNDED FURTHER (PARTIAL):**
+  formal/aristotle_runs/GHcoercive_grounded/ now DERIVES X∈(0,Nx),Y∈(0,Ny·M),y≥0 from T,C∈(0,1)
+  (tail/CDF) rather than asserting 0≤y — but T<1/C<1 still carried as the defining tail/CDF property
+  (GH special-function tables NOT formalized). Full GH `AMMCurve` instance (antitone_y/convex_y from
+  the GH special functions) still OPEN — the bigger lift.
 - **B1** — REAL solvency floor STILL OPEN (κ extrinsic; operator ship-gate). The **conditional
   structure** WAS proven this run (formal/aristotle_runs/B1/): coverage-hypothesis → solvency, coverage
   a CARRIED premise never discharged = the κ-extrinsic limit as a theorem. No fabricated floor.
 - **B3** = PH-3 arb_nonneg → **proved (trusted-from-prover)** as R⪰0 PSD (formal/aristotle_runs/PH3/);
-  NECESSARY-not-sufficient. **B4** = ledger field (carried, unchanged).
+  NECESSARY-not-sufficient. **RUN-2 GROUNDED:** formal/aristotle_runs/PH3_grounded/ derives the leak
+  ≥0 from the engine's actual GH slope law g(u)=k·e^(u−μ) (strict-mono ⇒ ∫(g(u₂)−g(u))du≥0), NOT an
+  abstract PSD matrix. Still necessary-not-sufficient (does NOT close B1). **B4** = ledger field
+  (carried, unchanged).
 
 ## Audit discipline (before folding any returned archive — zero-cost, no toolchain)
 Extract → diff unchanged modules → token-scan (`sorry`/`admit`/`axiom`/`native_decide`/`sorryAx`/
