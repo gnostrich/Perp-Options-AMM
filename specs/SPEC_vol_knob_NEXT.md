@@ -67,7 +67,18 @@ knob. So the theory-native control is **σ**, with γ and S\* derived; this is s
 6. **Tester (live): pro-forma dotted line + stepper re-trace faithfully after a σ change**; curve
    re-warps; portfolio/payoff redraw; no console errors. (tester-confirmed before HEAD promotion.)
 
-## 7. Open params for operator (⚑) — recommended defaults in brackets
+## 8. UX UPDATE — operator GO (2026-06-09)
+- **Number-stepper inputs (`<input type="number">` with up/down arrows), NOT sliders.** Modern in-box steppers.
+- **Editable, not range-bound:** σ, r, and (unlocked) δ are freely typeable — no artificial UI cap. Defaults
+  are starting values, not limits. r [0.05], σ default [≈0.129 ⇒ γ=2] are editable fields.
+- **ONE hard clamp survives — γ > 1** (locked curve family; below it GH/Merton/value∝S^(−γ) and the gates
+  break). Clamp the DERIVED (or unlocked raw) γ at >1 (e.g. ≥1.0001) with a visible note. UPPER side SOFT
+  (allow γ>4; run_all.sh/G4 is the guardrail — STOP-ON-RED if numerics degrade). γ≤1 would reopen the
+  locked family = separate escalation, NOT this pass.
+- δ stepper (unlocked) clamp to a numerically-stable positive range (δ>0; guard the GH table build).
+- So: free entry honoured everywhere EXCEPT the γ>1 architectural floor + numerical-stability guards.
+
+## 7. Open params for operator (⚑) — recommended defaults in brackets [RESOLVED: editable fields, see §8]
 - Reference rate r [0.05] · σ slider range [6–25%] · default σ [12.9% ⇒ γ=2].
 - Confirm β read-only (recommended) vs not exposed at all.
 - Confirm: letting γ vary at runtime within the unchanged S\*=Kγ/(γ+1) rule is parameter-variation,
