@@ -175,6 +175,27 @@ actor). I do **not** see raw prover output and am no longer a courier.
   get`) in the environment network policy; then I can build the Tier-A proofs canonically → "verified".
   elan left installed at `/home/user/.elan` (outside repo) for a future allowlisted run.
 
+## UNIFICATION BUILD — launched 2026-06-09 (sympy-gated), check passed clean
+- **Operator-locked target (2026-06-09):** unify Temporal into ONE structure at **GEOMETRIC COMPLETENESS
+  WITH PORTS** — metriplectic/Hessian-(conj-Kähler) interior (one convex potential μ) + Dirac
+  port-INTERFACE, rebase-covariant in the gauge-invariant sNorm coordinate. Operator explicitly means
+  geometric completeness (nothing OUTSIDE the structure), **NOT solvency-intrinsic** (that's excluded by
+  PH-4b; port = native slot + necessity, never sufficiency; solvency stays extrinsic = B1 ship-gate).
+  Single-all-four-native Courant/double-bracket object stays SPECULATIVE — not asserted.
+- **"One last check" PASSED CLEAN (research-lead, discussion-only):** REBASE covariance of the whole
+  object = clean — J & R legs already proved in Lean (PH-6 rebase_boost_commute + R_form_rebase_invariant);
+  μ/Fisher/ω/ports covariant in sNorm gauge coord (caveat: NOT raw (x,y) — design constraint).
+  COMPLETENESS: nothing geometrically extrinsic (every ingredient native/supporting). M=Fisher gets a
+  rebase tailwind (rebase form-invariance is Fisher's fingerprint → evidence-for + disqualifier-test;
+  still conjectural). No check failed; no new escalation.
+- **BUILD LAUNCHED (agent a09db6d3, background):** STAGE 0 = decisive sympy GATE on **M=Fisher** + GENERIC
+  degeneracies (J∇S=0, M∇E=0). If holds → STAGE 1 Lean obligations (M=Fisher single-potential unity;
+  GENERIC degeneracy; boost=Kähler-ω; rebase automorphism of whole object; ports-as-Dirac). If M=Fisher
+  FAILS → STOP, fallback (Kähler interior + separate R). 3 scope locks carried (sNorm gauge; latent-group
+  not X·Y; port necessity-not-sufficiency / Courant speculative). Scratch only, canonical tree untouched,
+  manager commits + re-audits (CORRECT grep -rnE, not -D). M=Fisher is THE make-or-break; I'll re-derive
+  the sympy myself on return.
+
 ## RUN-2 (CTPH clean + GH-grounding) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
 - Audit: `evidence/manager_audit_aristotle_RUN2_2026-06-09.md`. Canonical tree untouched; base modules
   byte-identical; returned SOLUTIONS sorry/admit/native_decide/sorryAx-clean (re-scanned correctly).
