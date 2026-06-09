@@ -1443,19 +1443,19 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="vk-row vk-title">
                 <span class="vk-mode-label" id="vk-mode-label">Curve shape — honest dials</span>
               </div>
-              <!-- Honest GH dials: γ (steepness), δ (kurtosis), βh (skew). Number-steppers. -->
+              <!-- Honest GH dials: γ (convexity), δ (ATM smoothing), βh (skew). Number-steppers. -->
               <div class="vk-row" id="vk-shape-inputs">
-                <label class="vk-field">γ steepness <input type="number" id="vk-gamma" step="0.05" min="1.0001" value="1.05"></label>
-                <label class="vk-field">δ kurtosis <input type="number" id="vk-delta" step="0.5" min="0.0001" value="30"></label>
+                <label class="vk-field">γ convexity <input type="number" id="vk-gamma" step="0.05" min="1.0001" value="1.05"></label>
+                <label class="vk-field">δ ATM smoothing <input type="number" id="vk-delta" step="0.5" min="0.0001" value="30"></label>
                 <label class="vk-field">βh skew <input type="number" id="vk-betah" step="0.1" value="0"></label>
               </div>
               <div class="vk-row vk-derived">
                 <span class="vk-readout">γ <b id="vk-gamma-out">1.050</b> <small>value∝S^−γ</small></span>
-                <span class="vk-readout">δ <b id="vk-delta-out">30.000</b> <small>kurtosis</small></span>
+                <span class="vk-readout">δ <b id="vk-delta-out">30.000</b> <small>ATM smoothing</small></span>
                 <span class="vk-readout">βh <b id="vk-betah-out">0.000</b> <small>skew</small></span>
                 <span class="vk-readout">S* <b id="vk-sstar-out">—</b></span>
               </div>
-              <div class="vk-note" id="vk-note">≈ Balancer (exact w=½ is γ=1, the family floor; γ&gt;1 ⇒ closest approach, not identical). γ = steepness (value∝S^−γ), δ = kurtosis (δ↑ thinner→Gaussian, δ↓ fatter→Laplace), βh = skew (0 = symmetric). Hard floor γ&gt;1; δ&gt;0; |βh|&lt;γ+1.</div>
+              <div class="vk-note" id="vk-note">≈ Balancer (exact w=½ is γ=1, the family floor; γ&gt;1 ⇒ closest approach, not identical). γ = convexity (value∝S^−γ), δ = ATM smoothing (δ↑ thinner→Gaussian, δ↓ fatter→Laplace), βh = skew (0 = symmetric). Hard floor γ&gt;1; δ&gt;0; |βh|&lt;γ+1.</div>
             </div>
             <div class="legend">
               <div class="legend-item"><span class="swatch" style="border-top-color: #FF85B0;"></span> put curve</div>
@@ -2876,7 +2876,7 @@ kpiOracle.addEventListener('change', () => {
 });
 
 // ── Curve-shape control panel (honest γ/δ/βh dials → re-warp in place) ──────
-// γ (steepness, value∝S^−γ, hard floor γ>1), δ (kurtosis, δ>0), βh (skew,
+// γ (convexity, value∝S^−γ, hard floor γ>1), δ (ATM smoothing, δ>0), βh (skew,
 // default 0 = symmetric Balancer base, |βh|<γ+1). On any change we re-warp the
 // curve IN PLACE (Store.setShape) at the new (γ,δ,βh) and redraw everything.
 // No Gaussian-σ wrapper: vol-targeting is by-shape, not by-formula at finite δ.
@@ -2891,7 +2891,7 @@ kpiOracle.addEventListener('change', () => {
   const noteEl   = document.getElementById('vk-note');
   if (!elGamma || !elDelta) return;   // panel absent (defensive)
   const GMIN = 1.0001;                // hard architectural floor γ>1
-  const BAL_NOTE = "≈ Balancer (exact w=½ is γ=1, the family floor; γ>1 ⇒ closest approach, not identical). γ = steepness (value∝S^−γ), δ = kurtosis (δ↑ thinner→Gaussian, δ↓ fatter→Laplace), βh = skew (0 = symmetric). Hard floor γ>1; δ>0; |βh|<γ+1.";
+  const BAL_NOTE = "≈ Balancer (exact w=½ is γ=1, the family floor; γ>1 ⇒ closest approach, not identical). γ = convexity (value∝S^−γ), δ = ATM smoothing (δ↑ thinner→Gaussian, δ↓ fatter→Laplace), βh = skew (0 = symmetric). Hard floor γ>1; δ>0; |βh|<γ+1.";
   // Active strike for the S* read-out: the live pool spot (sNorm·oracle).
   function activeStrike(){
     const s = Store.state, p = s.pool;
@@ -3652,20 +3652,24 @@ const Viz = (function() {
       }
     }
 
+    // Single pool: both legs' rays on the one graph (sold red, bought green).
+    // v26c-full (Finding-2): build rays LIVE from the dollar strikes
+    // K_inner/K_outer and the LIVE oracle (K/oracleVal), not the stored
+    // entry-frozen b.*.inner. rawSlope = (K/oracleVal)*oracleVal = K, so
+    // the ray + trade-dot land on the marginal-price-K curve point
+    // (= arbitrageToOracle(pool,K), the sNorm(K)-registered mark) for
+    // every gamma; stale entry-theta drift across rebases is gone.
+    // Hoisted above both the open-band loop AND the preview block so the
+    // preview rays use the SAME price-space basis (was: leg*_theta_star,
+    // which are carry/sNorm-space -> drawStrikeRay's theta*oracle inverted
+    // them and swapped the wings).
+    const liveRayTheta = (Ki, Ko) => {
+      const ri = (isFinite(Ki) && Ki > 0 && oracleVal > 0) ? Ki / oracleVal : NaN;
+      const ro = (isFinite(Ko) && Ko > 0 && oracleVal > 0) ? Ko / oracleVal : NaN;
+      return thetaStarOf(ri, ro);
+    };
     for (const b of state.bands) {
       if (b.status !== 'open') continue;
-      // Single pool: both legs' rays on the one graph (sold red, bought green).
-      // v26c-full (Finding-2): build rays LIVE from the dollar strikes
-      // K_inner/K_outer and the LIVE oracle (K/oracleVal), not the stored
-      // entry-frozen b.*.inner. rawSlope = (K/oracleVal)*oracleVal = K, so
-      // the ray + trade-dot land on the marginal-price-K curve point
-      // (= arbitrageToOracle(pool,K), the sNorm(K)-registered mark) for
-      // every gamma; stale entry-theta drift across rebases is gone.
-      const liveRayTheta = (Ki, Ko) => {
-        const ri = (isFinite(Ki) && Ki > 0 && oracleVal > 0) ? Ki / oracleVal : NaN;
-        const ro = (isFinite(Ko) && Ko > 0 && oracleVal > 0) ? Ko / oracleVal : NaN;
-        return thetaStarOf(ri, ro);
-      };
       drawStrikeRay(liveRayTheta(b.sold.K_inner,   b.sold.K_outer),   colShort, false, true);
       drawStrikeRay(liveRayTheta(b.bought.K_inner, b.bought.K_outer), colLong,  false, true);
     }
@@ -3675,8 +3679,11 @@ const Viz = (function() {
       // At step 1 the sold leg has executed and the bought leg is still
       // pending: draw the sold ray solid-preview, the bought ray faint
       // (planned, not yet on the pool). At step 2 both are executed.
-      drawStrikeRay(p.leg1_theta_star, colShort, true, true, 1);
-      drawStrikeRay(p.leg2_theta_star, colLong, true, (step === 2), (step === 1) ? 0.3 : 1);
+      // Preview rays use the price-space dollar strikes carried on p.sold /
+      // p.bought (same basis as the open-band rays), NOT the sNorm-space
+      // leg*_theta_star (which drew inverted + wing-swapped).
+      drawStrikeRay(liveRayTheta(p.sold.K_inner,   p.sold.K_outer),   colShort, true, true, 1);
+      drawStrikeRay(liveRayTheta(p.bought.K_inner, p.bought.K_outer), colLong,  true, (step === 2), (step === 1) ? 0.3 : 1);
     }
 
     // Live reserves point

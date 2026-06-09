@@ -178,6 +178,41 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
 
+## Done — CURVE PLAYGROUND preview-ray basis fix + dial relabels (IMPLEMENTED in place, handed to manager 2026-06-09)
+Build: **`reference/temporal_curve_playground.html`** EDITED IN PLACE → md5 now
+**`b9e7d907a5635428f02cb32c29dc2b3b`** (was `f7fecff4…`). HEAD v26c `6cc73563` + v26d `a406a751` UNTOUCHED.
+DISPLAY/LABEL ONLY — no pricing/engine logic, no blobs. Splice `/tmp/splice_preview_ray.py` (ray block,
+1 rep `count==1`, blobs never through) + 6 label Edits.
+- **FIX 1 (preview strike-ray inversion):** preview rays at the old L3678-79 fed `p.leg1_theta_star`/
+  `p.leg2_theta_star` — those are CARRY/sNorm-space (sNorm∝S^−γ), but `drawStrikeRay` does
+  `rawSlope=theta·oracle` expecting PRICE-space theta → preview rays drew inverted + wing-swapped.
+  FIX: feed the preview rays from the preview band's DOLLAR strikes via the SAME `liveRayTheta(Ki,Ko)
+  = thetaStarOf(Ki/oracleVal, Ko/oracleVal)` the open-band path uses. The preview band object carries
+  `p.sold.K_inner/K_outer` + `p.bought.K_inner/K_outer` (added in v26c-full "carry dollar strikes for
+  regLeg", L3231/3236) → leg1(sold)=`liveRayTheta(p.sold.*)` colShort, leg2(bought)=`liveRayTheta(
+  p.bought.*)` colLong. Step-stepper alpha (`(step===2)`, `(step===1)?0.3:1`) + colors PRESERVED.
+  `liveRayTheta` HOISTED out of the `for(b of bands)` loop to before it so BOTH paths share it; the two
+  open-band `drawStrikeRay(liveRayTheta(b.sold/b.bought…))` DRAW lines are BYTE-IDENTICAL (only their
+  position shifted as the helper moved up). Open-band ray code NOT changed in behaviour.
+- **FIX 2 (dial relabels, UI text only):** "steepness"→**"convexity"** (γ), "kurtosis"→**"ATM smoothing"**
+  (δ — δ does NOT fatten wings). "skew" (βh) unchanged. Renamed visible label text + the rendered
+  tooltip note (HTML `vk-note` L1458 + JS `BAL_NOTE` L2894 which writes to `noteEl.textContent`) + the
+  two describing-comments (HTML L1446, JS L2879). NO JS variable/id renamed (`vk-gamma`/`vk-delta`/
+  `vk-delta-out` etc untouched). `grep -i steepness|kurtosis` → 0 matches.
+- **DIFF SCOPE (git diff = ONLY these):** 6 label strings + the Viz ray block (hoist + preview rewrite).
+  No locked surface in diff — grep of diff for mark/markFrac/markEff/funding/executeBand/closeBand/
+  isOTM/wingMember/legFraction/legPrice/getMP_raw/tradeUpdate/arbitrageToOracle/rebase/setShape/
+  ghCalibrate/drawPayoff/drawPricing/drawCurve/drawStrikeMark = only the moved COMMENT line mentioning
+  `arbitrageToOracle(pool,K)` (text, not code). Pricing/mark/funding/open-band-ray byte-unchanged.
+- **GATES:** `sh verify/run_all.sh ../reference/temporal_curve_playground.html` EXIT 0 — 7 GH PASS
+  γ∈{1.5,2,3,4}, curveTrace 401/401, seam PASS both branches, dir PASS, blob74 `ab663f5c`/svg1113
+  `c505b08a` intact, 3 scripts parse (`all parse:true`, `blob-in-script:false`), IIFE true, longest
+  non-blob line 553. `sigs:false` + whole-md5 echo `6cc73563`/blob-1060 echo `0eff98b2` are
+  INFORMATIONAL (v26d-lineage svg at 1113, ghCalibrate +δ+βh) — hard gate is the content-scan.
+- **Open for tester (live):** preview strike rays now move the CORRECT direction (higher call strike →
+  steeper ray on the call side) and match the open-band rays' basis; dial labels read "convexity"/
+  "ATM smoothing"/"skew". **NO git** (manager commits).
+
 ## Done — CURVE PLAYGROUND drawCurve RESCALE REVERT (IMPLEMENTED in place, handed to manager 2026-06-09)
 Build: **`reference/temporal_curve_playground.html`** EDITED IN PLACE → md5 now
 **`f7fecff4c62b028134190a222167e088`** (was `2b20c844…`). HEAD v26c `6cc73563` + v26d `a406a751` UNTOUCHED.

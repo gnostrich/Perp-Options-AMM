@@ -1,5 +1,62 @@
 # MEMORY — tester
-_Last updated: 2026-06-09, after HONEST-REVERT playground 3-item live verify (f7fecff4, READ-ONLY, no git). Prior: playground-vs-v24 like-for-like._
+_Last updated: 2026-06-09, after RAY-DIRECTION diagnosis (playground f7fecff4 vs v24, READ-ONLY, no git). Prior: HONEST-REVERT 3-item verify._
+
+## DONE — 2026-06-09 RAY-DIRECTION diagnosis (playground f7fecff4 vs v24 6f606f52, READ-ONLY)
+Operator: "strike rays on pool curve move WRONG direction as strike changes." Real bug or convention?
+Live Chromium, both source md5 UNCHANGED after testing (truly read-only). VERDICT: **REAL INVERSION
+in the playground PREVIEW ray** (not just a convention diff). Two distinct bugs, both in the *preview*
+overlay only — the OPEN-band (post-Execute) ray is CORRECT.
+
+### THE FINDING — preview ray uses sNorm-space theta_star (∝ S^−γ, DECREASING in K) ⇒ inverted+swapped
+- drawStrikeRay (L3624): rawSlope = theta·oracle; mode ray slope = beta/alpha = 80000 (=oracle, ATM).
+  Call wing = steep/upper (slope>mode); put wing = shallow/lower (slope<mode).
+- PREVIEW path (L3678-3679) draws p.leg1_theta_star/leg2_theta_star = sim.legN.theta_star, which in
+  v26c comes from regLeg→sNormStrike (CARRY space, sNorm ∝ S^−γ). sNorm DECREASES as K rises (γ>1).
+- OPEN-band path (L3664-3670) draws liveRayTheta = K/oracle (PRICE space). rawSlope = K, INCREASES in K.
+- So the SAME band's preview ray and executed ray move in OPPOSITE directions, and the preview ray is
+  on the WRONG wing side.
+
+### Default band: dir=long ⇒ sold=CALL (red colShort), bought=PUT (green colLong). oracle 80000.
+suggestStrikes(): call K=84000 (1.05·ora), put K=68000 (0.85·ora), N=0.05. Preview band exists at load.
+
+### TABLE — PREVIEW rawSlope (mode=80000). [drawn = what the curve shows]
+                 baseline   K↑ (×↑8000)   side vs mode     direction      ECON-correct?
+PLAYGROUND CALL  78642      76146 (↓)      78642 < 80000    SHALLOWER↓     NO (higher call→shallower & on PUT side)
+PLAYGROUND PUT   84621      81442 (↓)      84621 > 80000    toward mode    SWAPPED (put ray on CALL side)
+V24 CALL         84000      92000 (↑)      84000 > 80000    STEEPER↑       YES (call side, steeper)
+V24 PUT          68000      76000 (↑)      68000 < 80000    toward mode↑   YES (put side)
+(Playground call-DECREASE 84000→76000 ⇒ K now ITM/wrong-wing ⇒ preview rejected → ray vanishes.)
+(Playground put values are the GREEN bought leg; theta* 0.983/1.058 carry-space vs v24 1.05/0.85 price.)
+
+### OPEN-BAND path (playground, after Execute) — CORRECT
+B1 sold_wing=call sold_rawSlope=84000 (>mode, call side); bought_wing=put bought_rawSlope=68000
+(<mode, put side). pg_open_band.png shows the DASHED open rays correct AND the DOTTED preview rays
+inverted crossing them — the visual contradiction the operator likely saw.
+
+### VERDICTS
+1. INVERTED vs v24: YES, in the PREVIEW ray. Increasing call strike moves playground preview ray
+   SHALLOWER; v24 moves it STEEPER. Opposite.
+2. CALL/PUT WING SWAP: YES, in preview. Playground's "call" (red) ray sits BELOW mode (put side);
+   its "put" (green) ray sits ABOVE mode (call side). v24 has them correct (call above, put below).
+3. ECON-sensible: v24 yes (higher call = further up call wing); playground preview no.
+4. ROOT CAUSE: v26c-full registered theta_star in carry/sNorm space (∝ S^−γ) but the ray-draw slope
+   formula rawSlope=theta·oracle assumes PRICE-space theta (K/oracle). The open-band path was patched
+   to liveRayTheta=K/oracle; the PREVIEW path (leg*_theta_star) was NOT — it still feeds sNorm theta*.
+   So preview is inverted; open-band is right. NOT a benign convention diff.
+   FIX LOCALIZATION for intern: playground L3678-3679 preview drawStrikeRay calls feed
+   p.leg1_theta_star/p.leg2_theta_star (carry sNorm); they should feed a price-space ray
+   (K/oracle composite, like liveRayTheta) so preview matches the open-band ray + v24 direction.
+   This is a DISPLAY-only ray-draw basis mismatch (engine pricing untouched).
+
+### Evidence (evidence/ray_direction/) — Read into panel: pg_0_baseline, pg_1_call_increase,
+pg_open_band, v24_0_baseline, v24_1_call_increase. Also pg_2_call_decrease (preview vanishes),
+pg_3/4_put_increase/decrease, v24_2/3/4. Harnesses (READ-ONLY): engine/verify/pw_ray_direction.mjs
+(drives sold-inner/bought-inner inputs, reads preview theta*/rawSlope + screenshots before/after),
+engine/verify/pw_ray_open.mjs (Execute via JS click → open-band rawSlope=K probe).
+FLAG to manager: this is a real bug to fix (preview ray inverted/wing-swapped), escalate fix scope —
+display-only, intern-localizable to L3678-3679. NOT a convention to merely document.
+
+---
 
 ## DONE — 2026-06-09 playground HONEST REVERT verify (md5 f7fecff4c62b028134190a222167e088, READ-ONLY)
 Operator cared about 3 things after the distorting display-rescale was REVERTED (drawCurve back to
