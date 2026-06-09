@@ -2957,7 +2957,7 @@ kpiOracle.addEventListener('change', () => {
   });
   elUnlock.addEventListener('change', () => { syncMode(); apply(); });
   syncMode();
-  apply();   // initialise read-outs to the open default (γ=2)
+  window.addEventListener('DOMContentLoaded', apply);   // init read-outs+draw AFTER Viz is initialised (avoid TDZ)
 })();
 
 // Note: the perp-mark KPI input was removed in v5.2. state.perpMark and

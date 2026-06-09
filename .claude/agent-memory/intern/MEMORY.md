@@ -178,8 +178,37 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
 
+## Done — v26d TDZ FIX (FINDING-V26D-1, IMPLEMENTED in place, handed to manager 2026-06-09)
+Build: **`engine/builds/temporal_mvp_v26d_volknob.html`** EDITED IN PLACE → md5 now
+**`a406a75149b1606d7822b4f2bbcc4f84`** (was `16a872ba…`). HEAD `6cc73563` untouched.
+Splice: `engine/splices/splice_v26d_tdz.py` (1 rep, `count==1`, blobs never through).
+- **The bug (tester FINDING-V26D-1):** vol-knob IIFE ended with SYNCHRONOUS `apply();` at L2960;
+  `apply`→`render`→`Viz.drawAll`, but `const Viz` is at L3444 in the SAME `<script id="ui">` block
+  → TDZ "Cannot access 'Viz' before initialization" thrown during parse, ABORTS the rest of the ui
+  script → Viz never inits, listeners never bind, all canvases blank. Node gates can't see it.
+- **The fix (one line, exactly per brief):** L2960 `  apply();   // initialise read-outs…` →
+  `  window.addEventListener('DOMContentLoaded', apply);   // init read-outs+draw AFTER Viz is
+  initialised (avoid TDZ)`. `apply` is in IIFE closure scope; defers first apply()+render() to
+  DOMContentLoaded (app's own boot is `addEventListener('DOMContentLoaded', init)` at L4657, fires
+  after the whole ui script parses, so Viz exists). No `typeof Viz` guard (render must fail loud);
+  IIFE NOT moved. `git diff` = exactly this 1 line.
+- **TDZ confirmed gone (headless):** (1) static — old sync `apply();` line GONE, new line present,
+  hook index 7549 < Viz index 30889 (deferred before Viz decl), 0 bare top-level `apply();` left.
+  (2) dynamic — vm.runInNewContext of the ui body under a DOM shim that REGISTERS-but-doesn't-fire
+  DOMContentLoaded: NO "Cannot access 'Viz'" throw at top-level eval; 1 DCL listener queued (apply
+  deferred). (3) mechanism repro: OLD ordering throws TDZ, NEW deferred ordering does not and sees
+  an initialised Viz when fired.
+- **File-safety GREEN:** `sh verify/run_all.sh builds/temporal_mvp_v26d_volknob.html` EXIT 0 — 7 GH
+  PASS, seam PASS, dir PASS. blob 74 webp `ab663f5c` intact; svg blob at L1113 `c505b08a` intact
+  (the run_all integrity ECHO checks line 1060, which is now non-blob since the v26d CSS insert
+  shifted svg to 1113 → that echo shows `0eff98b2`, INFORMATIONAL only, NOT the hard gate; harness
+  content-scan `blob-in-script:false`). 3 scripts parse (`all parse:true`), IIFE true, longest
+  non-blob line 553. `sigs:false` is the EXPECTED v26d ghCalibrate(+δ) echo (documented, not gated).
+- **Open for tester:** live browser re-run of the v26d items (canvases now render: curve/payoff/
+  portfolio draw; σ-dial stepper re-trace; S* read-out; lock/unlock; no console TDZ error).
+
 ## Done — v26d VOL-KNOB control panel (IMPLEMENTED, handed to manager 2026-06-09)
-Build: **`engine/builds/temporal_mvp_v26d_volknob.html`** (md5 `16a872ba33e38843b803d79667b199f5`)
+Build: **`engine/builds/temporal_mvp_v26d_volknob.html`** (orig md5 `16a872ba…`; SEE TDZ-FIX above → now `a406a751…`)
 from HEAD v26c `6cc73563`; HEAD untouched. Spec: `specs/SPEC_vol_knob_NEXT.md`. Splices (saved):
 `engine/splices/splice_v26d.py` (6 reps, all `count==1`) + `engine/splices/splice_v26d_css.py` (1 rep).
 Blobs never through. Test: `/tmp/test_v26d.js` (sandbox).
