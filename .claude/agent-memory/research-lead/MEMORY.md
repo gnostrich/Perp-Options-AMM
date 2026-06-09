@@ -1,5 +1,49 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, βh=0 FORK SCOPING RUN (settlement soundness + Lean re-proof cost of freeing δ,βh)._
+_Last updated: 2026-06-09, v24↔GH EQUIVALENCE RUN (slippage-function comparison; READ-ONLY engine; no git; sympy/Node only, no Aristotle)._
+
+### v24↔GH EQUIVALENCE — 2026-06-09 (operator-driven theory; reconcile manager's double-count claim)
+Sources: v24 `reference/v24_balancer_stable.html` (tradeUpdate L1617, getMP_raw L1597, hyperbola
+(x−α)(y−β)=αβ), GH `engine/knowledge/{GH_MATH.md,gh_engine_reference.js}`, paper §AMM-Mechanics.
+Numerics durable in /tmp/slip{,2,3,4,5}.js. KEY FINDINGS:
+- **v24's trade is ALSO a fixed-curve point-slide** — NOT a goal-seek-w warp. tradeUpdate slides
+  (x,y) along the FIXED hyperbola (x−α)(y−β)=αβ with α,β conserved (hyp residual ~1e-16). `w=α/x` is a
+  DERIVED readout of position, not a re-solved shape. Paper "reshape via w" = the Balancer pricing-curve
+  PICTURE re-labels; the TRAJECTORY is fixed. So v24 and GH are the SAME KIND of mechanism (point-slide
+  on a fixed curve), differing only in WHICH curve.
+- **v24 slippage is NOT curve/state-dependent.** Measured d ln(slope)/d ln(sNorm) = −2 EXACTLY at every
+  point (sNorm 0.25→4, w 0.83→0.17). v24 slope ∝ sNorm^(−2). Value (integral) ∝ S^(−1): **γ=1 fixed.**
+  The operator's premise "v24 slippage CHANGES with the curve" is FALSE for the live trajectory — it
+  conflates the fixed-α,β hyperbola (the trade path, const exponent) with the FROZEN-w Balancer family
+  (x^w y^(1−w)=k, slippage exponent −1/w, which DOES vary with w but is NOT the path a trade takes).
+- **GH at γ=1 ≅ v24** (both = CPMM-in-offsets, exponent −2 slope / γ=1 value). **GH at γ>1 is STRICTLY
+  STEEPER** — value ∝ S^(−γ), the tunable knob v24's fixed w=½ cannot reach. The frozen-Balancer weight
+  that LOCALLY reproduces GH-γ is w=γ/(γ+1) (≡ αh=γ+1=1/(1−w) from the βh=0 reconcile; consistent).
+- **EQUIVALENCE VERDICT (CONFIDENT): NOT equivalent at γ>1; equivalent only at γ=1.** Both are
+  fixed-curve point-slides with the SAME mechanism TYPE and the SAME ATM/sNorm=1 reference; they differ
+  in the convexity exponent (v24 pinned γ=1; GH free γ>1). GH already delivers the γ>1 steepness v24 lacks.
+- **Q3 RECONCILIATION (the decisive one): the MANAGER IS RIGHT, the operator's worry is misframed.** GH's
+  point-slide ALREADY carries the full γ>1 slippage (it is BAKED into the GH curve shape via αh=γ+1).
+  Adding a v24-style goal-seek-w reshape ON TOP of GH WOULD double-count: you'd apply convexity twice
+  (once in the GH curve, once in the warp). The operator's "v24 slippage is curve-dependent so GH must be
+  missing it" is incorrect — v24's slippage is a FIXED γ=1 power law, LESS rich than GH's, not a missing
+  ingredient GH needs to import. GH is a strict GENERALIZATION (γ knob), not a lossy reduction.
+- **45°/ATM reference (CONFIDENT): preserved in ECONOMICS, not in geometry.** v24's 45° (y=x) coincides
+  with ATM only because equal-weight w=½ makes equal reserves the mode. GH reserves are unequal at ATM
+  (X0=5,Y0=400000) so there is no literal y=x line — but the ECONOMIC ATM (sNorm=1, S=1, funding=0,
+  density mode) IS preserved. Operator's "45° slope-point reference" = ATM anchor ⇒ preserved.
+- **Q4 WHAT-IT-TAKES: nothing to add for IDENTICAL-to-v24 if "identical" means the same mechanism+ATM
+  behavior — GH already is that, plus a γ knob. To literally REPLICATE v24's exact −2/γ=1 curve, set
+  GH γ=1 (boundary, excluded by §4 locked γ>1). A βh-goal-seek warp is NOT needed and WOULD double-count
+  (Q3). If the operator instead wants the v24 VISUAL (equal-reserve 45° picture), that is a display-frame
+  choice, not a dynamics change — flag as operator-owned, do not implement.**
+
+OPERATOR-OWNED FLAGS (via manager): (a) the premise "v24 slippage is curve-dependent" is a factual
+misunderstanding to correct, not a spec change; (b) whether to expose a γ=1 "v24-compat" mode reopens the
+§4 locked γ>1 — operator call; (c) the 45° equal-reserve VISUAL vs GH's economic-ATM frame is a display
+decision. NONE are soundness defects. CONFIDENT on all four answers (algebra + numerics, machine-precision).
+
+---
+_Earlier: 2026-06-09, βh=0 FORK SCOPING RUN (settlement soundness + Lean re-proof cost of freeing δ,βh)._
 
 ### βh=0 FORK SCOPING — 2026-06-09 (theory+formal scoping; READ-ONLY engine; no git; no new Aristotle submit)
 Task: is the FULL fork (free δ, set βh=0 → symmetric Balancer-shape base) settlement-sound enough to
