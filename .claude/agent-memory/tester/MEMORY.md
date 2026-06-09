@@ -1,4 +1,59 @@
 # MEMORY — tester
+_Last updated: 2026-06-09, after BEHAVIORAL SWEEP (playground b9e7d907 vs v24, READ-ONLY, no git) — preview-ray fix CONFIRMED + PART-B graphs match v24. Prior: RAY-DIRECTION diagnosis (f7fecff4), HONEST-REVERT 3-item verify._
+
+## DONE — 2026-06-09 BEHAVIORAL SWEEP (playground b9e7d907a5635428f02cb32c29dc2b3b vs v24 6f606f52, READ-ONLY)
+Final sweep: confirm the preview-ray fix landed + behavioral-diff the OTHER graphs vs v24. Live
+Chromium, both source md5 UNCHANGED after testing (truly read-only, git clean). errs:[] both builds.
+**ALL PASS** — the inverted/wing-swapped preview ray I diagnosed last run is FIXED; PART-B graphs
+behave like v24 apart from intended diffs.
+
+### PART A — preview-ray fix: **PASS**
+- SOURCE fix (L3676-3687): preview block now feeds `liveRayTheta(p.sold.K_inner,p.sold.K_outer)` =
+  K/oracle (PRICE space), SAME basis as open-band loop (L3666-3674). Old buggy `leg*_theta_star`
+  (carry/sNorm space) gone from canvas path. Exactly the L3678-3679 fix I localized last run.
+- DIRECTION (probe rawSlope, mode=80000): CALL preview baseline 84000 (>mode, call side); call up
+  84000->92000 (STEEPER, further up call side) — matches v24 exactly (v24 84000->92000). Old carry
+  basis (still computable for contrast) 78642->76146 (below mode=wrong put side, DECREASING) confirms
+  inversion no longer drives canvas. Call-DECREASE->76000 ⇒ preview=null (band rejected ITM/wrong-wing,
+  ray vanishes — expected, same as prior run).
+- PIXELS: A_pg_0/1 — RED dotted call ray ABOVE grey mode ray (call side) + rotates UP/steeper on
+  increase; GREEN dotted put ray BELOW mode (put side). Matches v24 A_v24_1 direction.
+- NO-CROSSING: after Execute, open-band DASHED call ray (84000) + re-armed preview DOTTED call ray
+  (86000) BOTH call side above mode, fanned same way, NO crossing (A_pg_3_open_plus_preview.png).
+  The visual contradiction the operator saw is resolved.
+- DIAL LABELS: "γ convexity" / "δ ATM smoothing" / "βh skew" (L1448-1450). hasSteepness=false,
+  hasKurtosis=false. PASS.
+
+### PART B — behavioral diff vs v24: **PASS (only intended diffs)**
+- PRICING (Mark Across Strikes): structurally identical — same axes (mark 0-1.00 y; "strike polar
+  angle φ / $K via lens" x with identical $ ticks 21,436/46,188/80,000/138,564/298,564), same dual
+  wing (pink put rising->mode, teal call falling), peak 1.00 @ φ_m near 45/$80k, green put dot + red
+  call dot w/ drop-lines. Only diff: v24 has a DOTTED reference overlay hugging the solid; pg shows
+  the registered GH solid (mode mark @ K=$80k). Intended GH/registration/mark diff. No unexpected
+  structural divergence.
+- PAYOFF: same axes ("Position equity $" y, "Perp mark price % change from entry" x), same objects
+  (teal payoff floor->kink->linear, grey comparison line, dashed mode/liq markers, dotted h-ref). Two
+  intended diffs ONLY: x-range pg -50%..+200% vs v24 -50%..+50% (confirmed wider); carry-based marks
+  (kink/marker cluster position). y auto-scales ($18,371 vs $5,400) as consequence of wider x.
+  Nothing else off.
+- PORTFOLIO TABLE: same v24 structure (1 summary/band + <=4 component + total, <=6 rows). Columns
+  match modulo intended registration: v24 "Entry equity / Orig strike" + "Attrib P&L / Eff strike";
+  pg "Entry equity / Strike" + "Attrib P&L" — pg DROPPED the "Eff strike" sub-column (L4459: "Eff
+  strike dropped — under from-strike intrinsic it always equals [orig]") and renamed Orig->Strike.
+  Intended registration diff, NOT an unexpected divergence.
+- CONSOLE: clean — errs:[] both builds (0 pageerror + 0 console.error). (drawTrajectory byte-identical
+  to v24 per brief — skipped.)
+
+### Harnesses (engine/verify/, READ-ONLY) + evidence (evidence/playground_v24_behavioral/)
+- pw_playground_v24_behavioral.mjs (PART A dir+labels + PART B chart/table probe both builds),
+  pw_playground_ray_coexist.mjs (Execute->open+preview ray same-side/no-cross probe).
+- PNGs: A_pg_0_baseline / A_pg_1_call_increase / A_pg_2_call_decrease / A_pg_3_open_plus_preview /
+  A_v24_0_baseline / A_v24_1_call_increase / B_{pg,v24}_pricing / B_{pg,v24}_payoff.
+VERDICT: preview ray FIXED (price-space, matches open ray + v24, no crossing); labels right; PART-B
+graphs behave like v24 apart from intended curve/registration/mark/x-range diffs. No engine edits, no
+git. Tester-confirmed (live Chromium).
+
+---
 _Last updated: 2026-06-09, after RAY-DIRECTION diagnosis (playground f7fecff4 vs v24, READ-ONLY, no git). Prior: HONEST-REVERT 3-item verify._
 
 ## DONE — 2026-06-09 RAY-DIRECTION diagnosis (playground f7fecff4 vs v24 6f606f52, READ-ONLY)
