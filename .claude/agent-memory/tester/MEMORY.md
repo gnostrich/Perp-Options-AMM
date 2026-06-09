@@ -1,5 +1,35 @@
 # MEMORY — tester
-_Last updated: 2026-06-09, after v26d vol-knob TDZ-FIX RE-TEST (build a406a751). TDZ FIX CONFIRMED — ALL ITEMS PASS, tester-confirmed clean ×2._
+_Last updated: 2026-06-09, after v26d curve-FRAMING explainer (build a406a751, READ-ONLY illustration). Prior: v26d TDZ-FIX RE-TEST (all PASS)._
+
+## DONE — 2026-06-09 v26d Pool-Curve FRAMING explainer (build a406a751, READ-ONLY, no git)
+Task: explainer screenshots showing the live GH pool curve LOOKS flat because a tall (eq×3) frame
+squishes a real bounded curve + cuts the bend off the right. Build md5 a406a751 confirmed unchanged
+before AND after (truly read-only). Live Chromium, 0 pageerrors, ranges byte-reproduced ×2 (not flaky).
+Extracted the page's OWN curve points (reproduced `curveTrace` via Engine.arbitrageToOracle over
+mp0·e^(−6..6); anchor via w=½ + Engine.getDepth) and re-plotted on fresh canvases.
+
+### Numbers (confirmed/corrected the manager's)
+- Equilibrium (10 BTC, $800k); oracle $80k; γ(ghAh)=3.0019. Frame = eq×3 = (30 BTC, $2.4M).
+- Live GH curve y-span $400,000–$817,822 (✓ ~$400k–$818k). x-span 5.00–2890.7 BTC
+  (manager said ~2874; measured **2891** at e^+6 endpoint — minor correction).
+- Visible window x≤30: $ moves $778,862→$817,822 = **~$39k** (manager said ~$30k — minor correction).
+  Both corrections CONFIRM the thesis. The real bend is at x≫30 BTC, off the right edge.
+- Vol-deform: σ=0.20→γ≈2.16 (bends early), σ=0.10→γ≈3.70 (bend pushed far right); curve visibly reshapes.
+
+### Deliverables (evidence/v26d_curve_framing/) + README.md
+- `as_is.png` (dashboard context) / `as_is_canvas.png` (700×460 chart): flat-looking teal = live GH
+  curve; grey = w=½ anchor (drives the $2.4M y-axis); green/red dashed = strike rays; white = eq.
+- `same_data_two_frames.png` (KEY): (a) current frame [0–30 BTC, 0–$2.4M] flat; (b) auto-fit
+  [0–3006 BTC, $384k–$834k] = genuine bending GH curve. SAME extracted data.
+- `visible_window_zoom.png`: x≤30, y auto-fit $773k–$824k — a gentle bend, NOT literally flat.
+- `deforms_with_vol.png`: two vols on shared axes, curve reshapes with σ.
+- Harness `engine/verify/pw_v26d_framing.mjs` (NEW). Method caveat: frame re-fits eq×3 each draw so
+  __curveFrame can't be overridden — extract+replot. UI `snapshot`/`Viz` not bare-reachable in
+  evaluate (Engine/Store ARE); rebuild snap with Engine.getDepth or the w=½ anchor comes back empty.
+
+VERDICT: explainer delivered, all 4 screenshots + README; manager's framing thesis CONFIRMED, two
+round numbers corrected upward (x-top 2891 not 2874; window-$ ~$39k not ~$30k). READ-ONLY clean.
+
 
 ## DONE — 2026-06-09 v26d vol-knob TDZ-FIX RE-TEST (build a406a75149b1606d7822b4f2bbcc4f84, READ-ONLY) — FINDING-V26D-1 RESOLVED
 md5 confirmed a406a751 before testing (NEW, post-fix). Fix verified in source: L2960 is now
