@@ -81,6 +81,20 @@ git history is the mechanical audit trail. Rewrite the changed bits at the end o
   defs OFF it — "singular not federation" made formal). Task 3 = excise Kähler/Courant from core (framing;
   manager handles the doc). Honesty: settlement stays CHECKED-C¹ not GENERATED until Task 1 lands; never
   let R=Fisher → "LVR generated". Manager re-derives + audits + commits.
+- **ENDGAME COMPLETE + MANAGER-AUDITED (2026-06-09):** Task 1a settlement GENERATED (I re-derived S*
+  uniqueness by hand — matches; PH-5 now "C¹ because uniquely-forced free boundary"); Task 1b optimality
+  variational-generated + Snell CARRIED, **HARDENED clean** (verified: diff = 3 tactic lines only, no
+  statement change, token-clean, AmericanOptimalityPrinciple still carried structure:Prop/True); Task 2
+  single-μ core type-enforced singular (info-geo reframe: base ω≡0 in 1-D, symplectic is the 2-D lift).
+  Spec addendum (b)+(c) committed (070a3b5). Audits: `evidence/manager_audit_AIRTIGHT_2026-06-09.md`.
+  **MERGING to main (autonomous on green per §6.2).**
+- **Perpetual-option reconciliation (brainstorm, noted `notes/perpetual_option_reconciliation_2026-06-09.md`):**
+  μ = perpetual-option Laplace exponent/pricing symbol; γ = characteristic root (ψ(−γ)=r); value~S^(−γ)
+  = Esscher eigenfunction; S*=Kγ/(γ+1) = Merton smooth-pasting = AIRTIGHT-generated. Merton = Gaussian
+  special case; GH engine = general. Perpetual-option ODE = dynamics on the PH lift, μ = its symbol.
+  ACTIONABLES (held): formal μ=Laplace-exponent tie (queued for research-lead); numeric confirm
+  γ(γ+1)=2r/σ² vs engine + where δ enters (= a first engine-faithfulness gate); knob-spec (σ primary,
+  γ/S* derived, δ fixed) HELD pending confirm. δ ≠ meaningless (measures departure from Gaussian).
 - **NB:** the engine-faithfulness PIVOT remains a SEPARATE, still-HELD step (this endgame is FORMAL
   theory, not the pivot). Pivot resumes only when the operator lifts that hold.
 - **Governance (verified this session):** PR/merge AUTONOMOUS on green per CLAUDE.md §6 + §6.2 (operator
