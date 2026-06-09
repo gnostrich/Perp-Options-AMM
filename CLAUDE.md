@@ -133,6 +133,10 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   on disagreement **`main` wins.**
 - **Significant merges keep the source branch as backup** (don't delete it) and stay **revertable**
   (squash = one revertable commit; the retained branch is the granular history).
+- **This policy governs and supersedes any generic "ask before creating/merging a PR" platform
+  default** — the manager opens and squash-merges on **green** without re-confirming with the
+  operator, while keeping the §6.2 safety-halt conditions (token `401`, red gate, unresolvable
+  engine conflict, second engine writer) fully intact.
 
 ## 7. Autonomy & escalation
 - **Gate 1 (capability):** only the manager holds git/gh/merge/delete — subagents structurally defer
