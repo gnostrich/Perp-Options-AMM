@@ -1,5 +1,56 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, GH-vs-BALANCER WARP INDEPENDENT CHECK (confirm/refute manager refutation; READ-ONLY engine; no git; sympy+mpmath+live-engine; no Aristotle)._
+_Last updated: 2026-06-09, WARP-GOAL-SEEK-ON-GH CONSTRUCTION (operator pivot from refutation; READ-ONLY engine; no git; pure-python GH (engine-faithful) + sympy; no Aristotle)._
+
+### WARP-GOAL-SEEK-ON-GH — 2026-06-09 (constructive; the warp IS family-agnostic, and on GH it IS the point-slide)
+Engine-faithful GH numerics rebuilt in pure python (`/tmp/warp_derive.py` mirrors gh_engine_reference.js:
+trapezoid CDF tables in v=u-μ, A&S Bessel-K1, ghCalibrate; M=1.268303997 @g=3 matches ref; slope law
+|dy/dx|=P·e^(u−μ) verified to 1e-10). sympy Balancer side `/tmp/balancer_warp.py`. THE answer:
+- **(1) WHICH param: γ (αh=γ+1), CONFIRMED the manager's hypothesis.** γ is the convexity = faithful
+  Balancer-w analog (Balancer w IS its convexity; local map w=γ/(γ+1) ⟺ αh=γ+1, canonical note). δ
+  (kurtosis) and βh (skew) also move the slope monotonically at a fixed reserve (all three are invertible
+  candidates) but only γ is the convexity/value-law knob, so γ is THE faithful warp param.
+- **(2) THE GOAL-SEEK: monotone 1-D root-find, well-posed.** slope@fixed-reserve is strictly DECREASING
+  in γ (open reserve: 6.8e4 @g=1.2 → 1.7e-2 @g=6) ⇒ unique γ per target slope; round-trips to 5e-10.
+  In-range: capped at the HIGH-slope end by the γ>1 floor (slope→3.45e5 as γ→1+); slope→0 as γ→∞.
+  Calibration (Bessel/M) stays valid to γ≈11 (P→0+ but positive; breaks ~11.25) — far above locked (1,4).
+  No closed form (GH CDF has no elementary inverse) but a single monotone bisection, same cost class as
+  the existing _invTail/_invB1 the engine already runs per trade. δ-warp also monotone (slope↑ with δ),
+  βh-warp monotone in the strip |βh|<αh — both well-posed too, but not the convexity knob.
+- **(3+5) THE DECISIVE STRUCTURAL FACT — the warp on GH IS the point-slide (NO double-count, no new
+  state-dependence). HIGH CONFIDENCE.** Sampled the actual (reserve X, slope) pairs ALONG the fixed-γ
+  point-slide trajectory and asked "what γ does the warp goal-seek imply at each point?" → γ ≡ const =
+  the slide's own γ, to 5e-10, for γ=1.5/2/3/4. PROVEN symbolically for Balancer (along fixed-w slide,
+  p·x/y = w/(1−w) = const ⇒ warp re-reads same w; canonical-note "re-solving w continuously == fixed-curve
+  slide" confirmed). DEEP REASON: in a 1-param convexity family, "goal-seek the convexity to pass through
+  (point, slope)" has a UNIQUE answer, and the locus of (point,slope) a fixed member generates IS that
+  member's own graph ⇒ the seek returns that member's parameter. The warp reshapes ONLY if you feed it a
+  (point,slope) OFF the member's graph — i.e. an EXTERNAL target slope DECOUPLED from the reserves. So
+  "keep reserves reference fixed AND goal-seek γ to bring the slope to the reference" = the trade slides
+  along the GH curve and γ stays the calibrated constant. Replacing point-slide WITH warp = NO-OP. ⇒ NO
+  double-count (it is literally one mechanism), AND value∝S^(−γ) does NOT become state-dependent.
+- **(4) STATE-DEPENDENT γ only under a DIFFERENT (non-physical) target.** If instead you PIN the marginal
+  slope at a constant m* (the open-reserve slope) while reserves move — a target decoupled from the
+  reserves — γ* DOES warp (2.88→3.13 over S∈[0.7,1.5]) and value-γ becomes state-dependent (the
+  Balancer-flavored behavior the operator imagined). But that target forces the marginal price flat as
+  reserves change, which no real swap does (it is not "the slope a trade produces"). This is the version
+  that would reopen the locked γ-fixed/value-law decision — it is a DIFFERENT MECHANISM, not the warp
+  applied faithfully. OPERATOR-OWNED: which target defines "the reference point." Faithful warp (slope =
+  what the trade produces) = current GH, no change, no decision reopened. Decoupled-slope target = new
+  state-dependent-γ dynamics = reopens §4 locked γ>1/value-law + needs fresh no-arb/settlement work.
+- **SLIPPAGE (re-derived CAREFULLY; prior −(γ+1) error AVOIDED).** Three exponents, GH=warp identical:
+  value-law dlnV/dlnP = −γ (EXACT, fixed: −1.4994/−1.9992/−2.9988/−3.9985); slope-vs-value dlnP/dlnV =
+  −1/γ (−0.667/−0.500/−0.333/−0.250 — canonical identity #3, NOT −(γ+1)); reserve-elasticity dlny/dlnx =
+  NON-constant, ≠ −γ (GH≠Balancer in (x,y), consistent with CANONICAL_gh_vs_balancer.md). v24 Balancer
+  w=½: value-γ=½, reserve-elas −1. The faithful warp produces the SAME slippage as the current GH
+  point-slide (same mechanism). Scripts durable: /tmp/warp_*.py.
+- **CONFIDENT:** param=γ; goal-seek monotone/invertible/in-range; warp==point-slide (5e-10) ⇒ no
+  double-count + value-law stays fixed. **CONJECTURAL/OPERATOR-OWNED:** whether the operator wants the
+  decoupled-slope target (genuine state-dependent γ, reopens locked decisions) vs the faithful target
+  (no-op). No-arb/settlement implications only arise under the decoupled target (not analyzed here — would
+  need a fresh pass). No engine edits, no git, no Aristotle this pass.
+
+---
+_Earlier: 2026-06-09, GH-vs-BALANCER WARP INDEPENDENT CHECK (confirm/refute manager refutation)._
 
 ### GH↔BALANCER WARP CHECK — 2026-06-09 (independent of manager refutation; CONFIRMED the refutation)
 Re-derived from scratch (mpmath exact tails/CDFs `/tmp/gh_*.py`, sympy `/tmp/balancer_vs_gh.py`, live

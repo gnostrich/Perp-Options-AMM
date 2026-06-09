@@ -32,6 +32,23 @@ becomes **state-dependent** (warps per trade, like Balancer) — a deliberate cu
 (research-lead a676b377; manager to independently check). So: GH does not *auto*-warp; a warp *can be
 built on* GH.
 
+## WARP RESOLUTION (2026-06-09, research-lead derived + manager partial-verified) — the no-free-lunch
+Porting the v24 warp goal-seek onto GH, derived well-posed:
+- **FAITHFUL warp = the point-slide (no-op).** Goal-seeking the convexity γ so the slope at the reserves
+  reference = the slope the trade ACTUALLY produces returns the curve's OWN γ at every step (research-lead,
+  5e-10; = the paper's Balancer tangency, generalized). So "importing v24's warp into GH" yields the GH
+  trade already there — no new behavior, no visible reshape. γ is the right param (αh=γ+1; the w-analog);
+  slope is strictly monotone in γ (well-posed) — manager-verified via the gotcha factors e^μ=11.7/44.5/749/13780.
+- **VISIBLE reshape requires a DECOUPLED target** (pin the marginal slope at a constant m* independent of
+  reserves). THEN γ warps per trade ⇒ value-law becomes STATE-DEPENDENT (the Balancer flavor). But that
+  target holds marginal price flat as reserves move (no real swap does this) and REOPENS the §4 locked
+  γ-fixed/value-law decision + needs fresh no-arb/settlement analysis.
+- **DICHOTOMY (no free lunch):** faithful warp (already there, no reshape, value-law fixed) OR decoupled-
+  slope warp (visible reshape, state-dependent value-law, reopens locks). NOT both.
+- Manager verification status: −1/γ, value-γ=γ, monotonicity = manager-verified; the exact "warp≡slide
+  5e-10" = research-lead's (structurally sound via tangency), to be independently re-checked + the goal-seek
+  DEFINITION nailed (calibration-anchor subtlety) BEFORE any build on it. The dichotomy itself is robust.
+
 ## PRODUCT FORK (settled — operator-owned)
 **GH** (`value∝S^(−γ)`, γ>1 option pricing, NO Balancer reserve-warp) **OR** **Balancer/CPMM** (the reserve-warp, value-γ=½). **Not both.** The "curve warps on every trade" behavior the operator wanted is a *Balancer-family* property GH structurally lacks. GH was chosen for the perpetual-option pricing law; that choice excludes the Balancer warp.
 
