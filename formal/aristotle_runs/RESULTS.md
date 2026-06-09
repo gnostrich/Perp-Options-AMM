@@ -27,7 +27,7 @@ Plus Tier-2 frontier (Kähler, Courant) and the standing C3 reflection axiom. SC
 | Item | Project ID | Verdict |
 |---|---|---|
 | Stage-0 probe (Mathlib GH capability) | 0f0a8f0a-d51e-46e0-831c-d51d7cd8848b | proved (trusted-from-prover) — capability finding delivered |
-| UNIFY2 main (de-trivialize A1–C1, #1/#2/#3) | fac1d6e2-d75a-44fc-be62-3126f380a900 | (pending — see below) |
+| UNIFY2 main (de-trivialize A1–C1, #1/#2/#3) | fac1d6e2-d75a-44fc-be62-3126f380a900 | proved (trusted-from-prover) — TAUTOLOGY REPLACED; 2 emend flags |
 | C3 reflection arrow (#7) | 303c3de0-ad34-4551-ad32-5e871ff8bd6a | proved (trusted-from-prover) — AXIOM DISCHARGED |
 | Kähler compatibility (Tier-2 #4) | dae504d8-efdc-4728-884a-01ccc64c7b78 | proved (trusted-from-prover) — algebraic; integrability CONJECTURAL |
 | Courant/Dirac (Tier-2 #5) | b4d4656d-3c72-46dc-a60f-0f724ea57d84 | proved (trusted-from-prover) — conservative part; all-four SPECULATIVE-NOT-ACHIEVED |
@@ -50,6 +50,49 @@ Plus Tier-2 frontier (Kähler, Courant) and the standing C3 reflection axiom. SC
   normalization stay CARRIED named hypotheses. This validated the UNIFY2 design (names confirmed:
   `cgf`/`mgf`/`integrableExpSet`/`deriv_cgf` all exist with the signatures UNIFY2 uses).
   Both probe theorems (`ghKernel_pos`, `ghKernel_measurable`) proved clean (axioms ⊆ standard three).
+
+### UNIFY2 (TIER-1 #1/#2/#3) — the TAUTOLOGICAL SCAFFOLD is REPLACED with REAL theorems
+**All 10 targets PROVED (trusted-from-prover); audit PASSED.** This REPLACES the RUN-3 trivialities:
+- **A1 (was `Ψ''=Ψ''`) → `cgf_deriv_mean_and_variance`:** `HasDerivAt (cgf X μ) ((∫X·exp(tX))/mgf) t`
+  — the REAL derivative of the actual Mathlib cumulant generating function = the tilted mean. GROUNDED.
+- **A4 (was abstract `0≤R·z²`) → `cgf_convexOn`:** `ConvexOn ℝ (interior (integrableExpSet X μ)) (cgf X μ)`,
+  proved via `iteratedDeriv_two_cgf_eq_integral` showing `cgf'' = ∫(X−mean)²·exp/mgf ≥ 0`. REAL
+  variance-nonneg / Fisher-PSD over the integral cgf. GROUNDED.
+- **A2 (was `f⁻¹·f=1`) / A3 (was `k·eˣ=k·eˣ`) → `mgf_pos` + `ghKernel_logderiv` + `ghKernel_exponent_le`:**
+  real `0<mgf` (`ProbabilityTheory.mgf_pos`), real `HasDerivAt` of the GH log-exponent
+  (`βh−αh·v/√(δ²+v²)`), and the REAL integrability bound `−αh√(δ²+v²)+βh·v ≤ −(αh−|βh|)·|v|`
+  (via `Real.abs_le_sqrt`). GROUNDED.
+- **B2 (was `R·0=0`) → `deg2_score_centered`:** `deriv (cgf X μ) s = (∫X·exp(sX))/mgf` — the REAL
+  mean-of-tilt / score-centering identity, NOT `R·0=0`. GROUNDED.
+- **C1 (was `g·w=g·w`) → `boost_is_hamiltonian`:** real `HasDerivAt (½gs²) (g·s)` — the energy
+  differential IS the metric contraction. GROUNDED. (The KÄHLER upgrade is the separate Kähler run.)
+- **B1 deg1 (`deg1_bregman_grad`/`deg1_vanishes_at_operating_tilt`):** real `deriv D_Λ = (s−s₀)Λ''`,
+  vanishing at the operating tilt. GROUNDED. **#3 (GENERIC degeneracies over real boost/KL/Fisher)
+  is folded here** — deg1 over the real Bregman of the cgf, deg2 over the real mgf-weighted mean.
+- **D1/D2/E1/E2:** my own hand-proofs, kept (rebase automorphism + port NECESSITY/conditional).
+
+**WHAT IS NOW GROUNDED vs CARRIED (honest depth):**
+- GROUNDED (real Lean over real objects): all the exp-family/cgf identities (`cgf'=mean`,
+  `cgf''=Var=Fisher≥0`, convexity, Bregman gradient, score-centering, mgf positivity) over the
+  ACTUAL Mathlib integral-defined `cgf`/`mgf`; the GH kernel positivity/measurability/log-derivative/
+  integrability-bound over the ACTUAL GH kernel. Independently re-derived numerically (γ=3, αh=4,
+  δ=0.08): `cgf'=mean` and `cgf''=var≥0` confirmed at t∈{0,0.3,−0.5}.
+- CARRIED [named]: the GH-SPECIFIC **finite-MGF / integrability finiteness on the strip** and the
+  **Bessel-K normalizing constant** (`∫f=1`) — Mathlib v4.28.0 has NO Bessel-K (Stage-0). The Lean
+  exposes the integrability BOUND (the GH content) rather than asserting `∫=1`; the actual finiteness/
+  normalization is the carried GH-measure fact. So UNIFY2 is GROUNDED for the exp-family structure and
+  CARRIED for the GH normalization — a genuine theorem, not a tautology, not fully GH-closed.
+
+**AUDIT:** token-clean (1 grep hit = comment); out-of-scope (`RequestProject.lean`/lakefile/toolchain)
+BYTE-IDENTICAL; all theorem+def signatures CHARACTER-IDENTICAL submit-vs-return; `#print axioms` ⊆
+{propext,Classical.choice,Quot.sound} for ALL 10 (per ARISTOTLE_SUMMARY, no `native_decide`/`sorryAx`);
+NO COULD-NOT-CLOSE; NO statement weakening; math re-derived. ONE allowed proof-only emend
+(`sNorm_rebase_invariant` tactic fixed for 4.28.0 — statement unchanged).
+**TWO EMENDATION FLAGS (fragile search tactics left in source; compiled server-side, harden on
+canonical build — NOT audit failures):** A4 (`cgf_convexOn`) line 93 leaves `exact?` (the
+`integrableExpSet` convexity lemma — likely `ProbabilityTheory.convex_integrableExpSet`); line 99
+leaves `grind +suggestions` (cgf analyticity on the interior). Manager: replace both with the
+concrete lemmas before a canonical build. NOT upgraded to "verified." archive: UNIFY2/.
 
 ### C3 — reflection arrow DISCHARGED (the standing AXIOM is now a THEOREM)
 `reflection_arrow : markPut θ s = markCall θ (θ²/s)` and the symmetric corollary PROVED over the

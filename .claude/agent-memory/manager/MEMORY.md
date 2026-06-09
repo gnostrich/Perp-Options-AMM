@@ -209,6 +209,29 @@ actor). I do **not** see raw prover output and am no longer a courier.
   - Audit clean: canonical tree untouched; correct grep -rnE token-scan clean; standalone project
     (import Mathlib only); axioms standard three. Scope locks 1/2/3 honored.
 
+## RUN-4 (close-the-gaps) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
+Audit: `evidence/manager_audit_RUN4_2026-06-09.md`. **Genuine, substantial, HONESTLY-reported upgrade**
+(I read every proof; depth matches claims this time). Canonical tree untouched; correct grep -rnE clean;
+standalone import-Mathlib; axioms standard three; trusted-from-prover (verified still env-blocked).
+- **UNIFY2 = Tier-1 prize: GROUNDED (structure) + CARRIED (GH normalization).** RUN-3 tautologies
+  REPLACED with real theorems over Mathlib's actual `cgf`/`mgf` + real GH kernel: `cgf_deriv_mean_and_variance`
+  (real A1, HasDerivAt cgf = tilted mean), `deg2_score_centered` (real mean-of-tilt, not R·0=0),
+  `boost_is_hamiltonian` (real ½gs²→gs), `ghKernel_pos/measurable/logderiv/exponent_le` (real GH facts).
+  CARRIED (honestly named): GH finite-MGF/∫=1 (Bessel-K) — **Mathlib v4.28.0 has NO Bessel-K** (probe
+  confirmed) = formalization gap not math doubt. **HOLD: `cgf_convexOn` has live `exact?`(L93)+`grind
+  +suggestions`(L99)** — fragile (CTPH-class), core deriv²≥0 clean, harden by replacing the 2 helper steps.
+- **C3 (#7): reflection AXIOM DISCHARGED** (real algebraic identity markPut θ s = markCall θ(θ²/s));
+  residual = "spec-mark = engine-barrier" link. Report "arrow discharged," NOT "C3 fully closed."
+- **Kähler (#4): algebraic Kähler triple GROUNDED (J²=−I, compat, ω skew det=1, G pos); integrability
+  (Nijenhuis) CONJECTURAL.** GH interior 1-real-dim. Upgrades C1.
+- **Courant (#5): linear Dirac GROUNDED (graph ω maximal isotropic); all-four single bracket
+  SPECULATIVE-NOT-ACHIEVED** (honestly reported).
+- **Distance to 100%:** scaffold→theorem-grade for the structure, carried at GH-measure boundary.
+  Remaining: Bessel-K ∫=1 (Mathlib lift or carried), cgf_convexOn harden, Kähler integrability (frontier),
+  Courant all-four (speculative), C3 spec↔engine link, "verified" (env-blocked). EXCLUDED: solvency
+  intrinsic (PH-4b; ports necessity-only). Minor: stray host project c019735d not in ledger (no repo impact).
+- Supersedes WIP checkpoint ac98480.
+
 ## RUN-2 (CTPH clean + GH-grounding) — research-lead 5/5, MANAGER-AUDITED (2026-06-09)
 - Audit: `evidence/manager_audit_aristotle_RUN2_2026-06-09.md`. Canonical tree untouched; base modules
   byte-identical; returned SOLUTIONS sorry/admit/native_decide/sorryAx-clean (re-scanned correctly).

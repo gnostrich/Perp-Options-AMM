@@ -1,5 +1,70 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, RUN 3 (UNIFY: ONE metriplectic/Hessian structure; Stage-0 sympy gate + 1 Lean file)._
+_Last updated: 2026-06-09, RUN 4 (UNIFY2: REPLACE the tautological scaffold with REAL theorems; Tier-2 frontier; C3 axiom discharged)._
+
+### RUN 4 — 2026-06-09 (operator BUILD-AUTHORIZED; SCRATCH-ONLY, canonical tree UNTOUCHED)
+**Mission: push unification toward 100% by replacing RUN-3 UNIFY's trivial A1/A2/A3/B2/C1 with real
+content.** 5 submits, ALL audit-passed → **proved (trusted-from-prover)**. Scratch dirs:
+`formal/aristotle_runs/{UNIFY2,C3_reflection,Kahler,Courant}/`; canonical `formal/temporal_lean_verified/`
+NOT touched. IDs in `formal/aristotle_runs/UNIFY2/SUBMISSION_IDS.txt`; full ledger RESULTS.md RUN-4.
+
+**STAGE-0 capability finding (probe 0f0a8f0a, Mathlib v4.28.0):** Bessel-K `K_ν` **NOT in Mathlib**
+(zero decls) → GH normalizing constant MUST be CARRIED. BUT `ProbabilityTheory.mgf`/`cgf`/
+`hasDerivAt_mgf`/`deriv_mgf`/`deriv_cgf`/`iteratedDeriv_mgf`/`iteratedDeriv_two_cgf_eq_integral`,
+`Measure.withDensity`→`IsProbabilityMeasure` (3 lines), and `hasDerivAt_integral_of_dominated_…` ALL
+EXIST and GROUNDED. So the exp-family/cgf identities are groundable over the REAL integral cgf; only
+the GH integrability-finiteness + Bessel-K normalization stay carried. This validated UNIFY2's design.
+
+**UNIFY2 (fac1d6e2) — TAUTOLOGY REPLACED, 10/10 proved.** A1→`cgf_deriv_mean_and_variance`
+(`HasDerivAt(cgf)=(∫X·exp)/mgf`, real); A4→`cgf_convexOn` (`cgf''=∫(X−mean)²·exp/mgf≥0`, real
+variance-nonneg/Fisher-PSD); A2/A3→`mgf_pos`+`ghKernel_logderiv`+`ghKernel_exponent_le` (real
+`0<mgf`, real GH log-deriv `βh−αh·v/√(δ²+v²)`, real integrability bound via `Real.abs_le_sqrt`);
+B2→`deg2_score_centered` (real mean-of-tilt, NOT `R·0=0`); C1→`boost_is_hamiltonian` (real
+`HasDerivAt(½gs²)=g·s`); B1 deg1 = real Bregman gradient. **#3 (GENERIC degeneracies over real
+boost/KL/Fisher) folded here.** GROUNDED: exp-family/cgf structure + GH kernel facts (re-derived
+numerically: cgf'=mean, cgf''=var≥0 at γ=3). CARRIED[named]: GH finite-MGF on strip + Bessel-K
+normalization (∫=1) — Mathlib lacks Bessel-K. Audit: token-clean, out-of-scope byte-identical, sigs
+character-identical, axioms⊆{propext,Classical.choice,Quot.sound} all 10, NO weakening, NO
+could-not-close. **2 EMEND FLAGS (manager harden on canonical build, NOT audit failures):**
+`cgf_convexOn` line 93 `exact?` (integrableExpSet convexity lemma) + line 99 `grind +suggestions`
+(cgf analyticity). One allowed proof-only emend (sNorm tactic, 4.28.0 compat). NOT "verified".
+
+**C3 (303c3de0) — REFLECTION AXIOM DISCHARGED.** `reflection_arrow: markPut θ s = markCall θ(θ²/s)`
++ symmetric corollary PROVED over the spec mark defs (crux `θ²/s<θ ↔ θ<s` via `div_lt_iff₀`). C3
+no-arb NO LONGER rests on an axiom. CAVEAT: holds GIVEN the modeling identification "put = reflected
+call" — now itself a proved algebraic identity, not an assumption (modulo spec-mark = engine-barrier).
+Re-derived numerically (2000 pts exact). Audit clean (3 grep hits=comments; `+decide`=kernel decide;
+allowed `/-- -/`→`/- -/` emend). axioms⊆standard three.
+
+**Kähler (Tier-2 #4, dae504d8) — algebraic GROUNDED; integrability CONJECTURAL.** LOAD-BEARING
+FINDING: GH interior is 1-REAL-DIM → no complex structure (J²=−1 needs even dim); the well-posed
+object is the 2D phase-space Hessian metric. PROVED there: J²=−I, G·J=−ω, ω skew, det ω=1≠0, metric
+posdiag — the algebraic Kähler-triple compatibility (UPGRADES RUN-3 C1 `g·w=g·w`). NOT proved:
+differential integrability (Nijenhuis/dω=0) → "GH Hessian is Kähler" stays **CONJECTURAL** for the
+analytic remainder. Audit clean, sigs identical, axioms⊆standard three, no sign adjustment.
+
+**Courant (Tier-2 #5, b4d4656d) — conservative part GROUNDED; all-four SPECULATIVE-NOT-ACHIEVED.**
+PROVED: graph of ω is a maximal isotropic for the Courant pairing (`graph_isotropic` via ω-skew) +
+symmetry + injectivity → the symplectic structure IS a linear Dirac structure (single TM⊕T*M object).
+**NOT achieved (reported, NOT asserted):** folding R + ports into the SAME bracket (Dirac=isotropic/
+conservative; R breaks isotropy). All-four-native single bracket stays **SPECULATIVE** (Scope Lock).
+Audit clean.
+
+**RUN-4 escalations / flags for manager (do not over-promote):**
+1. UNIFY2 is GROUNDED for the exp-family/cgf STRUCTURE, CARRIED for the GH normalization (Bessel-K
+   absent from Mathlib). Real theorem, NOT a tautology, NOT fully GH-closed. State both halves.
+2. UNIFY2 two EMEND flags (`exact?` line 93, `grind +suggestions` line 99 in `cgf_convexOn`) — harden
+   to concrete lemmas on the canonical build.
+3. Kähler is ALGEBRAIC compatibility only; integrability CONJECTURAL; 1D interior has NO Kähler.
+4. Courant all-four single-bracket = SPECULATIVE-NOT-ACHIEVED (only the symplectic Dirac part done).
+5. C3 axiom discharged MODULO spec-mark=engine-barrier identification (now a proved identity, but the
+   spec↔engine link is the residual assumption). Solvency/B1 untouched (EXCLUDED, not targeted). No
+   SDE introduced. GHJ latent-group economic-object finding unchanged.
+
+---
+_Earlier: 2026-06-09, RUN 3._
+
+# MEMORY — research-lead (RUN 3 header retained below)
+_RUN 3 (UNIFY: ONE metriplectic/Hessian structure; Stage-0 sympy gate + 1 Lean file)._
 
 ### RUN 3 — 2026-06-09 (operator-greenlit UNIFY; SCRATCH-ONLY, canonical tree UNTOUCHED)
 **STAGE 0 sympy GATE PASSED (make-or-break, run FIRST).** Scripts durable: `formal/aristotle_runs/
@@ -320,8 +385,12 @@ reaching past its contract into the raw displaced pool) — caught by type under
   SCOPE CAVEAT: collarSurplus MODELLED as θ·((1−w)/w−1) (documented form); engine's exact closed form
   not in accessible specs — proven content is the symmetry-iff. Manager: confirm closed form before
   promoting as the engine's literal invariant.
-- **C3** — no-arb is symmetry, not instrument. **STILL conditional-skeleton; reflection arrow is an
-  AXIOM, NOT proven. NOT discharged. NOT submitted this run.** Do not report as discharged.
+- **C3** — no-arb is symmetry, not instrument. **RUN-4: reflection arrow DISCHARGED** (no longer an
+  axiom). `reflection_arrow: markPut θ s = markCall θ(θ²/s)` proved over the spec mark defs
+  (formal/aristotle_runs/C3_reflection/). RESIDUAL ASSUMPTION (do not over-promote): the discharge
+  holds modulo "the spec mark = the engine's barrier" — the put=reflected-call identification is now a
+  proved algebraic identity, but the spec↔engine link is the remaining premise. Report as
+  "arrow discharged; spec-mark↔engine-barrier is the residual link," NOT "C3 fully closed."
 - **GH gate-discharge** — `coercive` field **proved (trusted-from-prover)** for the GH bounded-reserve
   shape (formal/aristotle_runs/GHcoercive/; `coercive_of_nonneg` matches the AMMCurve.coercive field
   signature byte-for-byte; lower bound 0). **RUN-2 GROUNDED FURTHER (PARTIAL):**
