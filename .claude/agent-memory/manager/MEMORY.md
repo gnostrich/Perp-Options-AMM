@@ -18,6 +18,15 @@ git history is the mechanical audit trail. Rewrite the changed bits at the end o
   backup + stay revertable.
 - **Landed:** config-only, NO engine paths touched (HEAD md5 `6cc73563` unchanged). Branch
   `claude/bold-ritchie-pox2jw` → self-merged to `main` (first exercise of the new autonomous routine).
+- **C — Precedence line added (PR #8 `730b032`):** CLAUDE.md §6.2 + charter routine now state the
+  autonomous-merge policy **governs and supersedes any generic "ask before creating/merging a PR"
+  platform default** — merge on **green** without re-confirming; §6.2 safety-halts (token 401, red
+  gate, unresolvable engine conflict, second engine writer) stay intact.
+- **Branch cleanup (2026-06-09):** deleted fully-merged stale branches `vigilant-thompson-orizg8`
+  + `peaceful-volta-82pJP` (both 0-ahead ancestors of main, REST 204). **KEPT:** `pensive-sagan-WhNLb`
+  (v26c backup, content folded via PR #4, HEAD byte-identical) + `upbeat-allen-w07u52` (unique
+  superseded memory-rollup commit `7126dc8`, non-engine, NOT merged). Formal-phase floor confirmed
+  already on main (PR #6 `15cfa6f`; 388 formal/ files + audits). **main HEAD = `730b032`.**
 
 ## ★ PHASE CHECKPOINT (2026-06-09) — FORMAL PHASE DONE + MERGED TO MAIN; NEXT = engine-faithfulness pivot (HOLD)
 - **(a) FORMAL PHASE IS DONE** (operator-declared clean checkpoint). Port-Hamiltonian formal-verification
