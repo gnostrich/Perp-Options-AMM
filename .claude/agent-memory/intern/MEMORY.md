@@ -178,6 +178,45 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
 
+## Done — CURVE PLAYGROUND anchor-inherits-GH + no-default-preview-band (IMPLEMENTED in place, handed to manager 2026-06-09)
+Build: **`reference/temporal_curve_playground.html`** EDITED IN PLACE → md5 now
+**`dbbcc79bcfe6e41c1f66de275b20dd38`** (was `b9e7d907…`). HEAD v26c `6cc73563` + v26d `a406a751` UNTOUCHED.
+DISPLAY/INIT ONLY — no pricing/engine/funding/blobs. Splice `/tmp/splice_anchor_preview.py` (2 reps,
+both `count==1`, blobs never through). git diff = EXACTLY 2 lines.
+- **FIX 1 (anchor inherits GH shape params):** L3504 anchor draw
+  `curveTraceExplicit(0.5, snap.depth, modeSlope)` (OLD Balancer w=½ weight-form, IGNORES γ/δ/βh)
+  → **`curveTrace(snap)`** (GH-native trace via `arbitrageToOracle`, INHERITS shape params + rescales
+  on rebase — the same machinery the live curve uses). CONFIRMED GH nuance: a trade SLIDES the
+  operating point along the FIXED GH locus (does NOT reshape, unlike Balancer), so the anchor trace is
+  now the SAME call as livePts (`curveTrace(snap)`) → anchor curve COINCIDES with the live curve locus
+  at init AND always (playground keeps a single `state.pool`, no stored untraded reference); only
+  styling differs (grey colTertiary/0.4 behind vs coloured/1.0 on top), and the live MARKER shows the
+  deviation. That coincidence is CORRECT per the brief. NOTE for manager: if a VISIBLY-separating
+  frozen pre-trade anchor were wanted, that needs storing a reference-pool snapshot = a state/arch
+  change, NOT display-only — out of this brief's scope; did not do it. `modeSlope` still used (mode
+  ray + segment colour); `curveTraceExplicit` now defined-but-unused (left intact, comment L3447
+  slightly stale but harmless — not in scope to touch). `fundingPerStrike` does NOT use the drawn
+  anchor → untouched.
+- **FIX 2 (open with NO default preview band):** `init()` L4630 — commented out `suggestStrikes();`
+  (which prefilled `sold-inner`/`bought-inner`/`band-notional='0.05'` → `render()`→`previewBand()`
+  auto-created a default band on load). Now the band inputs stay EMPTY (placeholders only) →
+  `previewBand()` bails at the `!ksOK || !(N_sell>0)` guard (L3210) → `__previewBand=null` → clean
+  teal/pink curve on open, no green/red leg overlay/rays. Band machinery FULLY INTACT: `suggestStrikes`
+  fn still defined (now dead — was init-only, no UI button); input listeners L3380-81 still feed
+  `previewBand()` → user creates a band by typing inner strikes + notional.
+- **DIFF SCOPE (git diff = ONLY these 2 lines):** anchor-draw line + init suggestStrikes call. NO
+  pricing/mark/markFrac/markEff/funding/executeBand/closeBand/isOTM/wingMember/legFraction/legPrice/
+  getMP_raw/tradeUpdate/arbitrageToOracle/rebase touched (confirmed in diff).
+- **GATES:** `sh verify/run_all.sh ../reference/temporal_curve_playground.html` EXIT 0 — 7 GH PASS
+  γ∈{1.5,2,3,4}, curveTrace 401/401 (slope err 7e-15), seam PASS both branches, dir PASS, splice-level
+  slippage OK, blob74 `ab663f5c`/svg1113 `c505b08a` intact, 3 scripts parse (`all parse:true`,
+  `blob-in-script:false`, maxScriptLine 482), IIFE Engine+Viz true. Whole-md5 echo `6cc73563`/blob-1060
+  echo `0eff98b2` + `sigs:false` are INFORMATIONAL (v26d-lineage svg at 1113, ghCalibrate +δ+βh) — hard
+  gate is the content-scan.
+- **Open for tester (live):** anchor curve now matches the live GH shape at init (overlays the live
+  curve; reshapes when γ/δ/βh dials change); opens CLEAN (no preview band on load); user can still
+  build a band by entering inner strikes + notional. **NO git** (manager commits).
+
 ## Done — CURVE PLAYGROUND preview-ray basis fix + dial relabels (IMPLEMENTED in place, handed to manager 2026-06-09)
 Build: **`reference/temporal_curve_playground.html`** EDITED IN PLACE → md5 now
 **`b9e7d907a5635428f02cb32c29dc2b3b`** (was `f7fecff4…`). HEAD v26c `6cc73563` + v26d `a406a751` UNTOUCHED.

@@ -3501,7 +3501,7 @@ const Viz = (function() {
     const xMax_raw = window.__curveFrame.xMax;
     const yMax_raw = window.__curveFrame.yMax;
 
-    const anchorPts = curveTraceExplicit(0.5, snap.depth, modeSlope);
+    const anchorPts = curveTrace(snap);   // GH reference curve inheriting shape params (was Balancer w=1/2 weight-form)
     const livePts   = curveTrace(snap);
 
     // Trace BOTH legs of the band so the full journey is visible at once:
@@ -4627,7 +4627,7 @@ function init_post_reset() {
 
 function init() {
   init_post_reset();
-  suggestStrikes();
+  // suggestStrikes();  // FIX: do NOT auto-create a default preview band on open (clean curve on load); band machinery intact, user configures a band manually
   Store.log('info', 'Hint: drag oracle on the KPI strip, click "Run Arbitrage" to restore pool equilibrium, then advance time to accrue funding.');
   render();
 }
