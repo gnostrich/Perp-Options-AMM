@@ -358,6 +358,40 @@ later build shows 4 individual strike lines"; even references barrier-leg θ_inn
 - **No engine edit performed; no merge; working tree clean.** Awaiting tester live confirmation + an
   operator product call on the vol knob.
 
+## VOL-KNOB / Merton perpetual mapping (2026-06-09, branch claude/optimistic-cerf-29fntq) — SPEC DRAFTED, build pending operator go
+Drifted from the (moot) graph-1 brief into a live-shape-knob design, then into the right theory frame.
+- **WARP CLARIFIED (operator corrected me twice):** "curve warp" = the Balancer 1st-generalisation
+  (trades skew the pricing curve via weight `w`), NOT a γ/δ knob. In Balancer, `w` did DOUBLE DUTY
+  (set shape AND moved with trades). GH **split** those: shape→γ (and δ), `w` stays the live trade
+  coord (`getW=α/x`, conserved hyperbola in tradeUpdate — INTACT, nothing removed). GH bake swapped
+  the curve FAMILY (Balancer power-form → GH) for value∝S^(−γ) expressivity; the LIVE trace is drawn
+  GH-native (curveTrace via arbitrageToOracle, "retires weight-form for LIVE trace" @3266), with the
+  Balancer w=½ symmetric form kept as the ANCHOR reference. A trade does NOT reshape the live GH curve
+  (arbitrageToOracle depends only on GH scalars+α,β, trade-invariant) → dot slides on fixed curve
+  (the tangent dual). Rebase rescales the frame. γ/δ change = the only true reshape, never fires at runtime.
+- **MERTON RESULT (manager-verified at engine level, /tmp/merton_confirm.cjs):** the engine's ITM/
+  American smooth-pasting IS the **Merton (1973) perpetual American option.** γ = magnitude of the
+  NEGATIVE root λ₋=−γ of ½σ²λ(λ−1)+(r−q)λ−r=0. Confirmed γ∈{1.5,2,3,4}: (1) carry coord
+  d log sNorm/d log S = −γ (≈1e-3); (2) engine S*=K·γ/(γ+1) == Merton boundary (≤1e-11); (3) engine
+  continuation == (1/(γ+1))(S/S*)^(−γ) (≤6e-4). Two wing boundaries ⟹ roots (−γ, γ+1), **sum=1 ⟹
+  r−q=0 (zero-carry slice)**, product ⟹ **γ(γ+1)=2r/σ²**. ⇒ theory-native knob = **volatility σ**
+  (γ,S* derived); **δ has NO perpetual-option meaning** (Merton power law exact) = AMM ATM-smoothing
+  const ⇒ resolves the ill-posed variance-coupling (don't need δ(γ)). δ-coupling-by-fixed-variance
+  was found WELL-POSED only γ≥2 (variance floor below baseline) — superseded by "δ fixed, σ→γ".
+- **research-lead DISPATCHED (bg, agent a71bc3e4):** formal tie of engine smooth-pasting↔Merton;
+  connect to verified R1 seam-C¹; assess formalizing σ↔γ map; paper-claim sign-off. Read-only on engine.
+- **SPEC written:** `specs/SPEC_vol_knob_NEXT.md` — σ-dial primary (γ=(−1+√(1+8r/σ²))/2, clamp(1,4),
+  S*=Kγ/(γ+1) derived), δ fixed; **lock/unlock dual mode** (locked=σ theory-dial; unlocked=raw γ+δ
+  off-theory play) = realises operator's checkbox idea; β read-only=1 (forced by law). Re-warp IN
+  PLACE under open positions (NEW behaviour); ghCalibrate δ→param (only sig touch). Guardrails: S*
+  rule/funding/isOTM/dollar-pipe untouched; G4 must hold each γ; blobs/gates green; tester must confirm
+  pro-forma+stepper re-trace after a σ change.
+- **NOT yet dispatched to intern.** Engine-touching + ⚑ open params (ref rate r[0.05], σ range[6–25%],
+  default σ[12.9%⇒γ=2], β read-only, ratify γ-varies-at-runtime-is-not-settlement-change) → AWAITING
+  operator go. Single-writer clear (only optimistic-cerf + main; no other engine branch open).
+- **Graph-1 brief CLOSED:** Task1 (composite display)=no-op already-done; Task3 (portfolio ≤6 rows)=
+  confirmed unchanged (tester a2004083); Task2 (warp/vol)=became this knob work.
+
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
    Chromium, 0 console errors; build md5 unchanged 89ae89e9).** Verdicts: (1) Slippage display PASS
