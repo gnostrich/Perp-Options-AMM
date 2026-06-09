@@ -1,4 +1,79 @@
 # MEMORY — tester
+_Last updated: 2026-06-09, after v26d vol-knob live-browser verification (build 16a872ba). FOUND A FATAL LOAD-ORDER BUG — FLAGGED FAIL to manager._
+
+## DONE — 2026-06-09 v26d vol-knob LIVE-BROWSER verify (build 16a872ba33e38843b803d79667b199f5, READ-ONLY)
+Live Chromium. Manager had Node-verified (blobs/gates green). My job: live UI behaviour Node can't see.
+**RESULT: FAIL — the build is visually broken. A TDZ load-order bug blanks ALL canvases and never
+defines `Viz`/`render`.** Reproduced clean x2 (byte-identical state both runs).
+
+### FINDING-V26D-1 (FAIL, blocker): vol-knob IIFE runs render() before `const Viz` initialises
+- The vol-knob control-panel IIFE (`<script id="ui">` L2872-2961) ends with `apply()` (L2960) to
+  init read-outs. `apply()` calls `render()` (L2942). `render()` ENDS by calling `previewBand()`/
+  `Viz.drawAll` (L4410-4412). But `const Viz` is at **L3444 — LATER in the SAME script block** ->
+  Temporal-Dead-Zone. So `Viz.drawAll` throws **"Cannot access 'Viz' before initialization"**, an
+  UNCAUGHT exception that **aborts the rest of `<script id="ui">`** — so `const Viz` (L3444) never
+  runs, the `chart-select` listener (L4324) and many other listeners after L2960 never bind.
+- Live proof (`pw_v26d_diag.mjs`): after load `typeof Viz === "undefined"`, `typeof render ===
+  "undefined"`; `canvas-curve` getImageData **nonblank=0 (TOTALLY BLANK)**; same after a sigma change
+  (canvas stays 0/0). Error fires at load AND on every sigma change (3 throws in the short diag, 9 in
+  the fuller run). Dashboard screenshot `p1_A_dashboard_full.png`: the "POOL STATE — LIVE" curve area
+  is empty/black — no GH curve, no axes, no marker, no rays.
+- WHY read-outs still update: `apply()` does `Store.setShape()` + sets gamma/S*/sigma/delta text
+  (L2922-2941) and the vol-knob's own input/change listeners bind (L2956) BEFORE the `render()` throw.
+  So the PANEL works and the POOL re-warps (ghAh changes) — but NOTHING redraws and the rest of the
+  UI's wiring is dead. A read-out-only check would falsely look "green."
+- Likely one-line fix (intern, not me): defer the init draw past Viz init — drop the load-time
+  `apply()`'s `render()`, or guard render's draw tail, or move the vol-knob IIFE below `const Viz`,
+  or `setTimeout(apply,0)`. MANAGER decides; I do not edit.
+
+### Per-item FLAG table (build 16a872ba)
+1. Panel renders — **PASS.** 5 inputs, all `type=number` steppers (native up/down arrows): vk-unlock
+   (checkbox), vk-sigma (step .005), vk-rate (.01), vk-gamma-raw (.05), vk-delta-raw (.01). Locked
+   mode: sigma/r editable; gamma `2.0019`/S* `$53,350`/delta `0.0800`/beta `1` read-only.
+   `p1_B_panel_locked_readouts.png`.
+2. sigma re-warps LIVE curve — **FAIL (curve).** sigma->gamma math + pool re-warp work: ghAh
+   s0.129->3.0019, s0.30->2.0001 (lower g), s0.08->4.484 (higher g); sample-trace shifts huge (rel
+   0.95 hi, 89 lo). But the CURVE NEVER REDRAWS (canvas blank, Finding-1). gamma read-out updates
+   correctly. Engine side right; the VISUAL re-bend the item demands does not happen.
+3. S* tracks dial — **PASS (read-out).** sigma0.129: S* out `$53,350` == K*g/(g+1)=80000*2.0019/3.0019
+   = 53350.21. Floor case sigma5->g1.0001->S* `$40,002`. (Read-out only; panel renders, canvas doesn't.)
+4. pro-forma dotted + stepper re-trace after sigma — **FAIL.** Canvas dead => no dotted pro-forma/
+   preview render at all; the draw path throws. Cannot confirm the must-pass behaviour — visually
+   absent. INCONCLUSIVE on stepper *logic* through dead UI, FAIL on the *rendered* behaviour.
+5. Curve re-warps under open bands; 3 graphs redraw — **FAIL.** No graph redraws (blank). Pool stays
+   finite (poolFinite=true, mp=80000, no NaN cells in the 11-cell portfolio table), but nothing draws.
+6. Lock/unlock toggle — **PASS.** Check "Free shape": modeLabel->"Free shape (off-theory)", sigma
+   input disabled, gamma-raw/delta-raw enabled, unlocked-inputs un-hidden, derived-sigma shown
+   (`0.1291`). Edit gamma-raw 2->3: gamma-out `3.0000`, sigma-out `0.0913`, ghAh->4. Uncheck restores.
+   `p1_C_panel_unlocked.png`. (Toggle listener binds before the throw, so it survives.)
+7. gamma>1 hard floor — **PASS.** sigma=5 -> gamma clamps `1.0001`, note "gamma clamped to >1 (locked
+   GH/Merton family floor). sigma would imply gamma<=1…", ghAh=2.0001, mp finite (no NaN).
+   `p1_D_gamma_floor.png`.
+8. No console errors — **FAIL.** Persistent uncaught `"Cannot access 'Viz' before initialization"`
+   (x9/run), at load and every sigma change. Reproduced clean x2 identical.
+
+VERDICT: **FAIL — do NOT ship / do NOT merge v26d as-is.** The vol-knob *logic* (sigma->gamma Merton,
+setShape re-warp, floor clamp, lock/unlock, S*) is correct and tester-confirmed; but a TDZ load-order
+bug (vol-knob IIFE apply()->render()->Viz.drawAll before `const Viz` @L3444) throws uncaught, blanks
+EVERY canvas, and leaves Viz/render undefined + later listeners unbound. Exactly the class Node can't
+see (gates are headless engine logic; G4/Merton/seam pass on the math). Items 1/3/6/7 PASS (panel +
+read-outs); items 2/4/5/8 FAIL on render.
+
+### Repro / harnesses (engine/verify/, READ-ONLY — no engine edits)
+- `pw_v26d_diag.mjs` — decisive: Viz/render undefined, canvas nonblank=0, error at load+sigma.
+- `pw_v26d_shots.mjs` — evidence screenshots x2 + item 1/3/6/7 read-out confirms.
+- `pw_v26d_volknob.mjs` — fuller harness; had a self-bug (passed readPanel as fn not readPanel() ->
+  empty panel dicts); superseded by the two above. Its canvas timeouts were the same blank bug.
+- Env: pw 1.56.1 global `/opt/node22/lib/node_modules`; ESM `import pkg from '.../playwright/index.js';
+  const {chromium}=pkg;`; `executablePath:/opt/pw-browsers/chromium-1194/chrome-linux/chrome`;
+  `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`. Build md5 16a872ba (unchanged; no engine edit).
+- Evidence dir `evidence/v26d_volknob_ui/`: p{1,2}_A_dashboard_full.png (blank curve area),
+  _B_panel_locked_readouts.png, _C_panel_unlocked.png, _D_gamma_floor.png, _E_canvas_curve_BLANK.png
+  (1486 b uniform-blank), + p{1,2}_0x curve/proforma shots (all 1486 b = blank).
+
+---
+
+# MEMORY — tester
 _Last updated: 2026-06-09, after composite-curve 4-item READ-ONLY verification on HEAD 6cc73563._
 
 ## DONE — 2026-06-09 composite-curve 4-item verification (HEAD 6cc73563, READ-ONLY)
