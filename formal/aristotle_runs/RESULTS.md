@@ -1,5 +1,77 @@
 # Aristotle run ledger — big autonomous run 2026-06-08
 
+> **NAV:** newest run is the MERTON-TIE RUN (2026-06-09) immediately below. A proposed consolidated
+> provenance INDEX over ALL runs is drafted at `formal/aristotle_runs/INDEX_DRAFT.md` (manager review).
+
+---
+
+## MERTON-TIE RUN — 2026-06-09 (operator highest-relevance: Merton formal tie + GH-grounding leftover; SCRATCH-ONLY)
+
+2 standalone submits (throwaway copies of the canonical tree + one new `import Mathlib` module each;
+all 5 canonical modules BYTE-IDENTICAL in both returned archives; pins `v4.28.0` unchanged). Scratch
+`formal/aristotle_runs/{MERTON_tie,GHMaps}/`; IDs in `MERTON_SUBMISSION_IDS.txt`. Prompts
+`formal/prompts/aristotle_prompt_{merton_tie,ghmaps}.md`. Stage-0 sympy gate run FIRST (Vieta + GH
+exponent + Gaussian limit + curvature), all confirmed before submit.
+
+| ID | name | target | verdict | depth | dir |
+|----|------|--------|---------|-------|-----|
+| f1fd0e4b | MERTON_tie | μ=GH Laplace exponent, γ=char root ψ(−γ)=r, S*=Merton boundary, γ(γ+1)=2r/σ² Gaussian slice | **proved (trusted-from-prover)** | GROUNDED (G1–G4) + CARRIED[2 Prop fields] | MERTON_tie/ |
+| 9e52bb1f | GHMaps | DISCHARGE carried StrictAnti X / StrictMono Y from density-positivity (Bessel-K-FREE) | **proved (trusted-from-prover)** | GROUNDED — carried hyps discharged | GHMaps/ |
+
+### MERTON_tie (f1fd0e4b) — the perpetual-option ⟺ info-geometry tie, GROUNDED + 2 carried fields.
+7/7 targets proved. **Stage-0 (sympy, mine, before submit):** Vieta sum ⇔ r=q; Vieta product ⇔
+γ(γ+1)=2r/σ²; put radicand `(γ+1)²−(1−γ)²=4γ` (in-strip), call radicand `(γ+1)²−(γ+2)²=−(2γ+3)`
+(OUT of strip — the GH asymmetry, the load-bearing honest finding); `psiJump → (σ²/2)((β+θ)²−β²)`
+in the α=k,δ=σ²k,k→∞ limit (1e-6); `ψ''(0)=δα²/(α²−β²)^{3/2}` symbolic match.
+- **GROUNDED (real Lean):** `gh_put_root_in_strip` (4γ≥0), `gh_call_root_out_of_strip` (−(2γ+3)<0,
+  the asymmetry — GH natively carries ONLY the put eigenfunction S^(−γ); the two-root sum=1 is a
+  Gaussian artifact, NOT a GH identity), `merton_vieta_sum` (⇔ r=q), `merton_vieta_prod` (⇔ γ(γ+1)=
+  2r/σ², the σ-knob Gaussian SLICE), `sigmaEff2_closed_form` (genuine `HasDerivAt` 2nd-deriv = ψ''(0),
+  through `deriv_sqrt`/`deriv_div`), `gaussian_limit_quadratic` (real `Filter.Tendsto`, rationalize +
+  divide-by-k), `Sstar_is_merton_boundary` (value+slope match ⇒ S=Kγ/(γ+1), real derivation).
+- **CARRIED (`structure : Prop`, True fields, NOT axioms):** `GHIsLaplaceExponent` (ψ = the genuine
+  cgf of the GH/NIG law with the Bessel-K normalizer — Mathlib gap) and `GaussianLimitOfGH` (full
+  distributional GH→Normal limit). The exponent's quadratic-coefficient identity (G3) IS grounded;
+  only the distributional/normalizer layer is carried.
+- **AUDIT PASS:** token-scan = 3 `grind` only (the disclosed FRAGILE flags, lines 72/99/117 — axiom-
+  clean, statements correct, NOT audit failures); zero sorry/admit/axiom/native_decide/sorryAx/opaque/
+  unsafe; all 8 signatures CHARACTER-IDENTICAL submit-vs-return (`hγ:1<γ`, `hδ:0≤δ` retained though
+  unused — NO weakening); `#print axioms` block over all 6 named targets, Aristotle reports ⊆
+  {propext,Classical.choice,Quot.sound}; 5 canonical modules byte-identical; math re-derived (sympy).
+  **3 EMEND FLAGS (manager harden on canonical build):** `grind`@72 (rpow↔sqrt³ algebra in
+  sigmaEff2), @99 (field_simp step in gaussian_limit), @117 (final linear solve in Sstar). No math.
+
+### GHMaps (9e52bb1f) — CLOSEOUT-carried monotone maps DISCHARGED (Bessel-K-FREE). GROUNDED.
+9/9 proved, fully token-CLEAN (zero fragile tactics). The CLOSEOUT_frontier run carried `StrictAnti X`
+/ `StrictMono Y` as bare hypotheses calling them "Bessel-K-adjacent" — they are NOT. This run DERIVES
+them from `ghKernel_pos` (density positivity, already proved) + `ghKernel_continuous` via FTC-2
+(`intervalIntegral.integral_hasDerivAt_right`) and the derivative-sign criterion
+(`strictMono_of_deriv_pos` / `strictAnti_of_deriv_neg`). `ghCDF_strictMono`, `ghTail_strictAnti`,
+`X_strictAnti`, `Y_strictMono`, `frontier_antitone_discharged` (X strictly down + Y strictly up as u
+rises = the AMM frontier, matches GH_MATH.md). **What stays carried after this: ONLY the Bessel-K
+normalizer VALUE M=K_ν ratio** — and it is NOT needed for any monotonicity/structural claim (only
+0<Nx, 0<NyM enter). **AUDIT PASS:** token-clean (one `simp +decide` = kernel decide, allowed), all
+9 signatures character-identical, `#print axioms` over 5 named targets ⊆ standard three, 5 canonical
+modules byte-identical, pins intact. **1 mechanical signature EMEND (allowed, no math):** `ghKernel`
+marked `noncomputable` (required for `Real.sqrt`); `ghKernel_pos` body `positivity`→`unfold; positivity`.
+
+### MERTON-RUN escalations / flags (do not over-promote):
+1. **σ-KNOB RECOMMENDATION (operator decision — flag, do NOT decide).** The Gaussian-slice relation
+   `γ(γ+1)=2r/σ²` is now formally GROUNDED (`merton_vieta_prod`), AND the GH curvature `ψ''(0)=
+   δα²/(α²−β²)^{3/2}` is grounded. BUT `γ(γ+1)=2r/σ²` is strictly the GAUSSIAN slice; the engine-pinned
+   GH (α=γ+1,β=1,δ=0.08) does NOT obey it exactly (numeric: σ_eff² varies 0.042→0.017 over γ=1.5→4;
+   the put-root ψ(−γ) sets r via the free drift m, not a clean γ(γ+1)σ²/2). RECOMMEND: σ as the
+   theory-/trader-native primary knob with γ,S* derived and δ fixed — but ship the GH σ→γ map (full
+   exponent), NOT the Gaussian closed form, behind any slider. The UI-knob LABEL is the operator's call.
+2. **GH asymmetry finding (faithfulness-relevant):** with β=1 the GH curve natively carries ONLY the
+   put eigenfunction S^(−γ); the symmetric call root γ+1 leaves the analyticity strip. The clean
+   two-root Merton symmetry (sum=1 ⇒ r=q) is a Gaussian-limit property, not a GH identity. Relevant to
+   the |Γ|≤1-exact / |Γ|>1-approx scope (consistent with it; not a new decision).
+3. Carried fields are honestly the distributional/Bessel-K layer; the algebraic + curvature + limit
+   content is grounded. B1/κ untouched; no settlement-semantics or economic-object question surfaced.
+
+---
+
 _Maintained by research-lead. Updated AFTER each obligation. Raw prover/poll output stays in the
 agent context; this is the distilled durable record. Archives saved under
 `formal/aristotle_runs/<obligation_id>/`._

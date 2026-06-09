@@ -1,5 +1,41 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, AIRTIGHT RUN (settlement-as-generated + single-μ core; SCRATCH-ONLY)._
+_Last updated: 2026-06-09, MERTON-TIE RUN (perpetual-option formal tie + GH-maps discharge; SCRATCH-ONLY)._
+
+### MERTON-TIE RUN — 2026-06-09 (operator highest-relevance; canonical tree UNTOUCHED)
+2 standalone submits (throwaway copies; 5 canonical modules byte-identical both archives; pins v4.28.0).
+Scratch `formal/aristotle_runs/{MERTON_tie,GHMaps}/`; IDs in `MERTON_SUBMISSION_IDS.txt`; prompts
+`formal/prompts/aristotle_prompt_{merton_tie,ghmaps}.md`. Stage-0 sympy gate run FIRST (all confirmed).
+
+1. **MERTON_tie (f1fd0e4b) — perpetual-option ⟺ info-geometry tie. proved (trusted-from-prover);
+   GROUNDED (G1–G4) + CARRIED[2 Prop fields].** μ = the GH Laplace exponent `ψ(θ)=mθ+δ(√(α²−β²)−
+   √(α²−(β+θ)²))` (engine pins α=γ+1,β=1,δ=0.08); γ = the characteristic root ψ(−γ)=r; S*=Kγ/(γ+1) =
+   Merton smooth-pasting. 7 GROUNDED: put radicand=4γ (in-strip), call radicand=−(2γ+3) (OUT — the GH
+   asymmetry: β=1 ⇒ GH natively carries ONLY put eigenfunction S^(−γ); the two-root sum=1 is a GAUSSIAN
+   artifact, NOT a GH identity), `merton_vieta_sum`⇔r=q, `merton_vieta_prod`⇔γ(γ+1)=2r/σ² (Gaussian
+   SLICE), `sigmaEff2_closed_form` (real HasDerivAt ψ''(0)=δα²/(α²−β²)^{3/2}), `gaussian_limit_quadratic`
+   (real Tendsto), `Sstar_is_merton_boundary` (value+slope⇒S=Kγ/(γ+1)). CARRIED (structure:Prop, NOT
+   axiom): `GHIsLaplaceExponent` (ψ=cgf w/ Bessel-K normalizer) + `GaussianLimitOfGH` (distributional
+   limit). **3 EMEND flags (grind @72/99/117, no math) — manager harden on canonical build.** Audit
+   PASS (sigs char-identical, byte-identical, axioms⊆std three).
+2. **GHMaps (9e52bb1f) — CLOSEOUT-carried StrictAnti X / StrictMono Y DISCHARGED. proved (trusted-
+   from-prover); GROUNDED, fully token-CLEAN.** Derived from `ghKernel_pos`+continuity via FTC-2 +
+   deriv-sign criterion (NO Bessel-K). 9/9. After this run, ONLY the Bessel-K normalizer VALUE M=K_ν
+   ratio stays carried — and it is NOT needed for any monotonicity/structural claim (only 0<Nx,0<NyM
+   enter). 1 mechanical emend (`noncomputable ghKernel`). The frontier `AMMCurve` instance is now
+   grounded down to the M-value alone. Audit PASS.
+
+**σ-KNOB RECOMMENDATION (operator decision — FLAGGED, not decided):** γ(γ+1)=2r/σ² now grounded but it
+is the GAUSSIAN slice; engine-pinned GH does NOT obey it exactly (σ_eff² varies 0.042→0.017 over γ).
+RECOMMEND σ primary knob, γ/S* derived, δ fixed — but ship the GH σ→γ map (full exponent), NOT the
+Gaussian closed form. UI-knob LABEL = operator's call. No settlement/economic-object question surfaced.
+
+**RETENTION:** proposed consolidated provenance INDEX drafted at `formal/aristotle_runs/INDEX_DRAFT.md`
+(result→meaning→depth→archive→status over all ~172 scattered theorems). NOT relocated to `formal/`
+unilaterally — manager review. See return for the full retention assessment + fold proposal.
+
+---
+
+_Earlier: 2026-06-09, AIRTIGHT RUN (settlement-as-generated + single-μ core; SCRATCH-ONLY)._
 
 ### AIRTIGHT RUN — 2026-06-09 (operator BUILD-AUTHORIZED; canonical tree UNTOUCHED)
 4 standalone submits (`import Mathlib`, throwaway copies; all 5 canonical modules byte-identical in
