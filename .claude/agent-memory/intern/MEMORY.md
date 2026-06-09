@@ -1,8 +1,11 @@
 # MEMORY — intern
-_Last updated: 2026-06-08, bootstrap. Rewrite changed bits at task end._
+_Last updated: 2026-06-09. Rewrite changed bits at task end._
 
 ## Engine
-- Canonical: **`engine/builds/HEAD_temporal_mvp_v26a.html`** (md5 `89ae89e9…`). Work from this.
+- Canonical HEAD: **`engine/builds/HEAD_temporal_mvp_v26c.html`** (md5 `6cc73563…`). Work from this.
+  (Prior: v26a `89ae89e9`. The whole-file md5 echo in run_all.sh line 8/9-10 keys off HEAD's line
+  74/1060; line 1060 is NOT gated — informational only. The HARD gate is the harness JS, which scans
+  scripts by content, not fixed blob lines.)
 - 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`. `getSNorm`=(x−α)/α;
   `getDepth` is display-only/stale (left so by design). State carries scalar `gh*` params
   (`ghP,ghNx,ghNy,ghM,ghMu,ghAh,ghBh,ghDelta`); the CDF table lives in a module cache keyed by shape,
@@ -174,6 +177,44 @@ blobs never through). Whole-md5 `6cc73563779a3e030774b7597d0ae187`. Diff vs sour
   sigs/IIFE true, no blob-in-script. **Open for tester:** visual — payoff chart leg marks now match
   the bands table at the live spot; asymmetric -90%..+200% frame; naked/capped leg shapes.
   **Open for manager:** verify sample-match + registration-only diff before tester pass + HEAD promo.
+
+## Done — v26d VOL-KNOB control panel (IMPLEMENTED, handed to manager 2026-06-09)
+Build: **`engine/builds/temporal_mvp_v26d_volknob.html`** (md5 `16a872ba33e38843b803d79667b199f5`)
+from HEAD v26c `6cc73563`; HEAD untouched. Spec: `specs/SPEC_vol_knob_NEXT.md`. Splices (saved):
+`engine/splices/splice_v26d.py` (6 reps, all `count==1`) + `engine/splices/splice_v26d_css.py` (1 rep).
+Blobs never through. Test: `/tmp/test_v26d.js` (sandbox).
+- **σ-dial control panel** in the curve canvas-wrap (before legend). Number-stepper `<input type=number>`
+  (NOT sliders, per §8). Locked default "Perpetual-option mode": editable **σ** (0.129) + **r** (0.05);
+  read-only derived **γ**, **S\*** (=K·γ/(γ+1) at live spot), **δ**(=0.08 "ATM smoothing"), **β=1**.
+  Unlock checkbox "Free shape — off-theory": exposes editable raw **γ**,**δ**; σ becomes derived. CSS
+  `.vol-knob` added in `<style>` (after `.preview-w-readout .w-skew`, line ~607).
+- **σ→γ map** (UI, block 3): `γ=(−1+√(1+8r/σ²))/2`; γ→σ inverse `σ=√(2r/(γ(γ+1)))` for the unlocked
+  read-out. **HARD floor γ>1** (clamp 1.0001, visible note). Upper side soft. δ>0 guard (clamp 0.0001).
+- **Engine sig touch (THE ONLY ONE):** `ghCalibrate(X0,Y0,mp0,gamma,delta)` — δ 5th param, `if(!(delta>0))
+  delta=0.08`. Body math (ah/bh/…) byte-preserved; init caller stays 4-arg → byte-identical open. The
+  `sigs:false` echo in verify_v26a_mine.js is EXPECTED (only the ghCalibrate regex; other 4 curve fns
+  `grep -cF`=1 each). Not gated.
+- **Live re-warp IN PLACE — new Store mutator `setShape(gamma,delta)`** (after setOracle; exported).
+  Re-calibrates at CURRENT operating point: X=x−α, Y=y−β, mp0=`Engine.getMP_raw(p)`; reassigns ONLY
+  gh* scalars (ghAh/ghBh/ghDelta/ghMu/ghNx/ghNy/ghP/ghM/ghU0), KEEPS x,y,α,β,oracle + all bands/perps.
+  Re-anchors `_baseline_k` (depth shape-dependent). NaN-guard on every cal scalar → keeps old shape on
+  failure (loud). γ>1 floor + δ>0 re-enforced inside setShape (defense-in-depth vs UI). UI `apply()`
+  calls setShape then `render()` (full redraw → curve/payoff/portfolio + previewBand re-trace).
+- **Dollar/settlement pipe NOT touched** — setShape never enters executeBand/closeBand/funding/isOTM/
+  markFrac/drawStrikeMark; it only reshapes the curve scalars. §6 stop NOT triggered (re-warp in place
+  needed NO dollar-path change). Diff vs HEAD = 7 hunks ONLY (CSS, HTML panel, ghCalibrate sig,
+  GH_GAMMA comment, setShape, export line, UI block). grep of diff content for all locked-surface fn
+  names = empty (one comment string mentioning arbitrageToOracle, not an edit).
+- **Verification:** `sh verify/run_all.sh builds/temporal_mvp_v26d_volknob.html` EXIT 0 — 7 GH PASS
+  γ∈{1.5,2,3,4}, seam PASS both branches, dir PASS, blobs `ab663f5c`/`c505b08a` multiset-OK (svg
+  shifted to line 1113 by the CSS-above-blob insert; content byte-identical), 3 scripts parse, IIFE
+  true, longest non-blob line 553. **Sandbox test PASS:** G4 value∝S^−γ holds each γ∈{1.2,1.5,2,3,4}
+  (d log sNorm/d log S = −γ, relerr ~4e-4); setShape preserves spot |d|=0 (exact); δ threaded (0.15→
+  ghDelta=0.15); γ>1 floor (0.5→1.0001); S\*=K·γ/(γ+1) finite; σ=0.129/r=0.05→γ=2.00.
+- **Open for tester (live UI):** pro-forma dotted line + step-1/step-2 stepper re-trace after a σ change;
+  curve re-warps in place under open bands; portfolio/payoff redraw; S\* read-out tracks the dial; no
+  console errors; lock/unlock toggles input visibility. (Code leaves it ABLE to re-trace — render()
+  re-runs previewBand which rebuilds leg1State/leg2State + curveTrace on the new pool.)
 
 ## Done — v26b payoff x-range widen (DISPLAY-ONLY, handed to manager 2026-06-08)
 Build: **`engine/builds/temporal_mvp_v26b_xrange.html`** (from HEAD `8df9f8a3`; HEAD untouched).

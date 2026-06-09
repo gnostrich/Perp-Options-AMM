@@ -391,6 +391,26 @@ Drifted from the (moot) graph-1 brief into a live-shape-knob design, then into t
   operator go. Single-writer clear (only optimistic-cerf + main; no other engine branch open).
 - **Graph-1 brief CLOSED:** Task1 (composite display)=no-op already-done; Task3 (portfolio ≤6 rows)=
   confirmed unchanged (tester a2004083); Task2 (warp/vol)=became this knob work.
+- **RESULTS (2026-06-09 eve) — both bg agents done, manager-audited (`evidence/manager_audit_MertonSigmaGamma_2026-06-09.md`):**
+  - **research-lead (a71bc3e4):** ALL 3 Merton claims CONFIRMED (sympy re-derive, matches my numeric).
+    New Lean obligation **MertonSigmaGamma → proved (trusted-from-prover), MANAGER-AUDITED CLEAN**
+    (token-clean, import-Mathlib-only, root_neg/root_pos genuine `ring` proofs of the two boundary
+    exponents on r=q slice; sum/product = light algebra; no weakening; no #print axioms→summary-only).
+    R1 (C¹ smooth-pasting) + MertonSigmaGamma = full Merton identification. FOLDED.
+    **PAPER CLAIM cleared (operator sign-off when paper drafts):** "Temporal's perpetual options are
+    priced by the Merton perpetual-American solution; γ is the characteristic exponent, set by vol via
+    γ(γ+1)=2r/σ² on the r=q slice" — MUST state the r=q scope (no full (σ,r,q) freedom; CLAIM 3).
+  - **intern (a182335c): v26d DELIVERED + manager-Node-VERIFIED** →
+    `engine/builds/temporal_mvp_v26d_volknob.html` md5 `16a872ba33e38843b803d79667b199f5` (HEAD untouched).
+    Blobs intact (webp@74, svg@1113 byte-identical — moved from 1060 by CSS above it; content-hook
+    unaffected). run_all exit 0 (GH+seam+dir). G4/Merton holds on v26d (S*=Kγ/(γ+1) exact). Diff=7
+    expected hunks; ghCalibrate δ-param (body preserved); `setShape` re-warp-in-place (no dollar-path
+    touch, §6 not tripped); locked surfaces byte-UNTOUCHED. **Number-stepper UI, editable σ/r, γ>1 hard
+    floor / soft upper, lock/unlock dual mode.**
+  - **NEXT: tester live UI pass DISPATCHED** (σ stepper re-warps curve; pro-forma dotted + stepper
+    re-trace after σ change; graphs redraw; lock/unlock; γ>1 note; 0 console errors). HOLD HEAD
+    promotion until tester-confirmed. **PROMOTION BOOKKEEPING:** update run_all.sh sed 1060→1113 +
+    whole-file md5 want, CLAUDE.md §3 "line 1060" + §8 HEAD line + lineage; then PR + squash-merge.
 
 ## Open threads (what | owner | status)
 1. **Tester browser re-run on HEAD** | tester | **DONE 2026-06-08 (tester-confirmed, live Playwright
