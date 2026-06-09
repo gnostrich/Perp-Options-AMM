@@ -5,9 +5,10 @@ _Last updated: 2026-06-09, AIRTIGHT RUN (settlement-as-generated + single-μ cor
 4 standalone submits (`import Mathlib`, throwaway copies; all 5 canonical modules byte-identical in
 every returned archive). Scratch `formal/aristotle_runs/AIRTIGHT_{probe_optstop,T1a_invert,T1b_optimality,T2_singlecore}/`;
 IDs in `AIRTIGHT_SUBMISSION_IDS.txt`; full table RESULTS.md AIRTIGHT section. Prompts
-`formal/prompts/aristotle_prompt_airtight_*.md`. Audit: token-clean (the only search tactics are 2
-`grind` in T1b GENERATED bodies = FRAGILE flags, axiom-clean), unscoped byte-identical, pins intact,
-axioms ⊆ {propext,Classical.choice,Quot.sound} all targets, math re-derived.
+`formal/prompts/aristotle_prompt_airtight_*.md`. Audit: token-clean (the only search tactics WERE 2
+`grind` in T1b GENERATED bodies + 1 pre-existing `aesop` helper = FRAGILE flags, axiom-clean — ALL
+THREE NOW HARDENED 2026-06-09 via T1b HARDEN run 7dec6a1b, file CLEAN), unscoped byte-identical, pins
+intact, axioms ⊆ {propext,Classical.choice,Quot.sound} all targets, math re-derived.
 
 **PROBE (c9bd9638) — Mathlib v4.28.0 optimal-stopping CAPABILITY FINDING.** EXISTS: stoppedValue,
 optional-stopping/-sampling, hitting times (`hittingBtwn`/`hittingAfter`; old `hitting` gone),
@@ -29,8 +30,15 @@ the deterministic value-maximizing-boundary fragment IS (toolkit assembly).
    of holder's value-over-boundaries, via monotone-up/antitone-down each wing). CARRIED:
    `AmericanOptimalityPrinciple` = `structure : Prop` (NOT axiom) with `True` field = the Snell-envelope
    optimal-stopping identification Mathlib lacks. So optimality is generated at the variational/free-
-   boundary level, carried at the stochastic optimal-stopping level. **2 FRAGILE FLAGS** (manager
-   harden; axiom-clean): line 92 `grind +qlia`, line 145 `grind`.
+   boundary level, carried at the stochastic optimal-stopping level. **2 FRAGILE FLAGS — RESOLVED
+   2026-06-09 (T1b HARDEN, ID 7dec6a1b, proved/trusted-from-prover).** line 92 `grind +qlia`→
+   `right; field_simp; ring`; line 145 `grind`→`exact ⟨(Sstar_A_pos hK (by linarith)).le, le_rfl⟩`;
+   Aristotle ALSO hardened a pre-existing line-73 `aesop`→`exact Or.inl hB.ne'` I had missed. Audit:
+   diff-vs-original = exactly those 3 tactic lines (no statement/struct/sig touched), token-scan ZERO
+   search tactics, 5 siblings byte-identical, pins intact, axioms ⊆ standard three (3 concrete
+   replacements can't regress the set). Clean archive `AIRTIGHT_T1b_optimality_clean/extracted/
+   proj_clean_aristotle/`. File now CLEAN. Summary's "removed hK≠0" line = STALE carried text (no real
+   sig change). Manager to fold over the T1b archive.
 3. **T2 (84a6a417) — SINGLE-μ CORE ("singular, not federation"). proved (trusted-from-prover);
    GROUNDED. Type-checks as ONE object off c.μ.** `structure MetriplecticCore` with ONE field μ
    (+hμ C², +hconvex μ″≥0 = single metric source). All primitives `def`s of c.μ: price=∇μ,
