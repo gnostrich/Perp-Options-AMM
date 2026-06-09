@@ -1,5 +1,37 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, RECONCILE PASS (Balancer-δ + wings-vs-ATM resolved; NO submit/edit/git)._
+_Last updated: 2026-06-09, HETEROGENEOUS-WEIGHT DERIVATION (closed-form implied density; NO submit/edit/git)._
+
+### HETEROGENEOUS-WEIGHT DERIVATION — 2026-06-09 (operator: closed form from x,y,w; DERIVE not approx)
+Note: `notes/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
+**Closed form (headline):** Balancer with position-dependent w(u) (u=log p−log P):
+  q(u)=log p = u + log(w(u)/(1−w(u))) + const ;  d log p/du = 1 + w'(u)/(w(u)(1−w(u))) ;
+  implied log-price density f_q = f_u(u(q)) / [1 + w'/(w(1−w))].
+The weight enters ONLY through w'/(w(1−w)) = d log-odds(w)/du (the score). Constant w ⇒ linear warp ⇒
+Gaussian preserved (skew=kurt=0, numerically 1e-8). Heterogeneous w ⇒ nonlinear warp ⇒ skew+kurtosis.
+**Profile→moments map:** wing exponents γ_±=w_±/(1−w_±) (w flattens in wings ⇒ clean value∝S^(−γ_±),
+dγ_loc/du→1e-10 at |u|=8); CONVEXITY=(γ_-+γ_+)/2; SKEW=γ_+−γ_-; KURTOSIS=transition sharpness w'(0)/δ.
+**VERDICT: GENERALIZES GH (not recover).** GH = the specific √-sigmoid σ_GH(v)=(1+v/√(δ²+v²))/2 (latent
+score β−αv/√(δ²+v²)); reproduces prior-note GH kurtosis EXACTLY (δ=0.08→2.6530, 0.3→1.6885, 1→0.6961,
+3→0.2472). Concrete NON-GH member: tanh-score β−α·tanh(v/δ) — SAME wing decay (α−|β|), DIFFERENT
+kurtosis (1.2184 √ vs 1.2000 tanh) ⇒ distinct valid distribution. Monotone+smooth+power-law-wings do
+NOT force √ (tanh counterexample). RECOVER only under the extra inverse-Gaussian-mixing constraint
+(GH's defining property) — a separate modeling assumption, flagged.
+**AMM-VALIDITY gate on w(u):** w∈(0,1) [antitone]; dq/du=1+w'/(w(1−w))>0 i.e. w'>−w(1−w) [convex,
+suff: w'≥0]; w_±∈(0,1) finite [coercive]. Numerically: monotone-incr w ⇒ valid; sharply-decreasing w ⇒
+dq/du=−8<0 ⇒ INVALID/excluded.
+**DENSITY-OBJECT AMBIGUITY (load-bearing honesty):** 3 objects differ. (1) pushforward f_q (USED) —
+kurtosis SIGN is NEGATIVE/platykurtic (warp steepens ATM). (2) reserve-curvature −dX/dp — IMPROPER for
+pure Balancer (unbounded reserves, non-integrable at p=0; needs both legs / GH bounded tail/CDF). (3)
+latent f_β — POSITIVE/leptokurtic (Laplace-ward). Wing power-law lives in value-exponent γ_loc=w/(1−w),
+NOT reserve tail. Kurtosis sign flips by object ⇒ any label must name the object.
+**OPERATOR FLAGS:** (1) curve-member choice operator-owned; (2) density-object ambiguity changes the
+answer (esp. kurtosis sign) — UI/paper label must name object, consistent w/ prior δ=ATM-elbow finding;
+(3) asymmetric w_± = independent γ_± = both S^(±γ) eigenfunctions = βh=0/two-root settlement-semantics
+change (FULL fork from REPARAM note; heterogeneous w is the GENERAL mechanism behind that fork; single-γ
+engine β=1 is the w_-=w_+ slice); (4) validity is a HARD type gate not a tuning knob.
+
+---
+_Earlier: 2026-06-09, RECONCILE PASS (Balancer-δ + wings-vs-ATM resolved; NO submit/edit/git)._
 
 ### RECONCILE PASS — 2026-06-09 (resolved the Pass-1 vs Pass-2 δ conflict; manager-requested)
 Built the actual curves (mpmath 35-40 digit, direct integration — not formula-arguing). **Authoritative
