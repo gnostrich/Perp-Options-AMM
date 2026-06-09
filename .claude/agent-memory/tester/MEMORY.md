@@ -1,4 +1,35 @@
 # MEMORY — tester
+_Last updated: 2026-06-09, after v26d-vs-v24 curve apple-to-apple side-by-side (READ-ONLY illustration). Prior: v26d curve-FRAMING explainer (a406a751)._
+
+## DONE — 2026-06-09 v26d (GH) vs v24 (Balancer) Pool-Curve side-by-side (READ-ONLY, no git)
+Task: direct apple-to-apple side-by-side of the live Pool-Curve chart, v24 reference vs current, so
+the GH-vs-Balancer visual difference is plain. Live Chromium, 0 pageerrors both builds. Both builds
+md5-confirmed UNCHANGED before+after (v26d a406a751, v24 upload 6f606f52) — truly read-only.
+
+- **v24 LOADED FROM OPERATOR'S UPLOAD PATH** `/root/.claude/uploads/ef05e72b-…/4f8ec7e5-temporal_mvp_v24_rebase_fixed_2_1.html`
+  (md5 6f606f52, byte-IDENTICAL to repo fallback engine/builds/temporal_mvp_v24_rebase_fixed_2.html
+  — verified, so fallback would have been equivalent). Current = engine/builds/temporal_mvp_v26d_volknob.html.
+- Both: curve view is default-active canvas-wrap (`canvas-curve` 700×460) on default Transact page —
+  loads on open, no nav needed. v24 draws via curveTraceExplicit(snap.w,…) (Balancer weight-form);
+  v26d via curveTrace→Engine.arbitrageToOracle (GH native). Same canvas IDs across both.
+- Measured (page's own Engine, reproduces prior framing run): eq 10 BTC/$800k, oracle $80k, γ≈3,
+  frame eq×3 = 30 BTC/$2.4M. GH live curve real range x 5.0–2890.7 BTC, y $400,000–$817,822. v24
+  canvas nonblank 10027, v26d 11093 (both render).
+
+### Deliverables (evidence/v26d_vs_v24_curve/) + README.md — all 4 visually confirmed
+1. `v24_curve.png` — Balancer: visibly curved ~45° hyperbolic sweep through eq.
+2. `current_curve.png` — GH: live teal curve reads nearly FLAT at ~$800k; grey w=½ anchor curve
+   drives the $2.4M y-axis (anchor present in BOTH builds).
+3. `side_by_side.png` — labelled L/R ("v24 — Balancer weight-form" / "current (v26d) — GH native");
+   difference obvious at a glance.
+4. `current_slope_corrected.png` — SAME GH data, y-axis auto-fit to curve range (y $392k–$834k,
+   x 0–2949 BTC): a genuine well-formed hyperbola. Proves it IS a real curve, ~44× shallower in
+   price-scaled axes (γ=2 gotcha |dy/dx|=getMP_raw·e^(−μ) = price÷~44.5; manager-verified, SHOWN not proven).
+
+VERDICT: illustration delivered, 4 PNGs + README, thesis SHOWN (GH-native curve flattens because
+geometric slope = price÷~44.5 while both frames scale to price). READ-ONLY clean, no engine edit.
+Harnesses (READ-ONLY): engine/verify/pw_v26d_vs_v24_curve.mjs, engine/verify/pw_compose_sbs.mjs.
+
 _Last updated: 2026-06-09, after v26d curve-FRAMING explainer (build a406a751, READ-ONLY illustration). Prior: v26d TDZ-FIX RE-TEST (all PASS)._
 
 ## DONE — 2026-06-09 v26d Pool-Curve FRAMING explainer (build a406a751, READ-ONLY, no git)
