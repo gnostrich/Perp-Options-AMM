@@ -2,6 +2,23 @@
 _Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
 git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
 
+## ★ GOVERNANCE CHANGE (2026-06-09) — AUTONOMOUS PR MGMT + CONCURRENCY/MERGE POLICY (config-only, self-merged)
+- **A — PR management is now FULLY AUTONOMOUS (operator pre-authorized).** Manager opens/squash-merges/
+  deletes branches with NO operator approval, **including strategic merges to `main`**, bounded ONLY by
+  the green gate. Retired the "no PR unless asked / stop for operator's go" rules. Edited: CLAUDE.md §6
+  (3rd bullet) + §6.1 ("Open a PR" header) + manager charter (Git/GitHub bullet + GitHub-ops header).
+- **B — Concurrency & merge policy (the safety harness for A).** New `docs/concurrency_policy.md` (full
+  text) + CLAUDE.md **§6.2** + charter "Standing merge routine". Rules: trunk-based short-lived branches,
+  `main` only integration point; **single-writer on engine** (detect engine-touching by *changed paths*
+  not branch name → defer if one's already open); manager sole merge authority, **serialized one-at-a-time**;
+  pre-merge gate = verify token → check `mergeable_state` → if not `clean` merge main into branch + re-run
+  run_all.sh + file-safety gate in branch → merge only when **clean AND green**, never force-push; conflicts
+  = union-resolve non-engine + re-test, **engine conflict can't cleanly resolve → STOP/report** (safety halt);
+  memory follows main (reconcile@start, truth-up@merge, main wins); significant merges keep source branch as
+  backup + stay revertable.
+- **Landed:** config-only, NO engine paths touched (HEAD md5 `6cc73563` unchanged). Branch
+  `claude/bold-ritchie-pox2jw` → self-merged to `main` (first exercise of the new autonomous routine).
+
 ## ★ PHASE CHECKPOINT (2026-06-09) — FORMAL PHASE DONE + MERGED TO MAIN; NEXT = engine-faithfulness pivot (HOLD)
 - **(a) FORMAL PHASE IS DONE** (operator-declared clean checkpoint). Port-Hamiltonian formal-verification
   phase complete: PH recap + consistency vs v26c; Aristotle RUN-1…RUN-4 + closeout, all manager-audited;

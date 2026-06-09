@@ -79,8 +79,11 @@ splice silently corrupts the build while gates stay green.
 ## 6. Git policy (fully delegated to the manager)
 - The **manager is the sole git/GitHub actor.** Subagents share the working tree and hand edits back.
 - Develop on the assigned feature branch. Commit logical units with honest messages.
-- **Do NOT open a pull request unless the operator explicitly asks.** Merge to `main` yourself once
-  `GH_TOKEN` is present. Push with `git push -u origin <branch>`; retry network failures with backoff.
+- **PR management is fully autonomous (operator pre-authorized 2026-06-09).** The manager opens,
+  squash-merges, and deletes branches itself with **no operator approval — including strategic
+  merges to `main`**. The only gate is **green**: never merge a branch that isn't `clean` AND green
+  (§6.2). The old "no PR unless the operator asks / stop for the operator's go" rules are **retired.**
+  Push with `git push -u origin <branch>`; retry network failures with backoff.
 
 ### 6.1 GitHub ops (manager does all PR actions via the REST API)
 There is **no `gh` CLI and no GitHub MCP tool** in this environment. The manager performs every
@@ -90,7 +93,7 @@ Repo slug is `gnostrich/Perp-Options-AMM`. **Verify the token first, every sessi
 curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/user
 ```
 `200` → good, proceed. `401` → **stop**: the token is bad; tell the operator, do not improvise.
-- **Open a PR** (only when the operator explicitly asks):
+- **Open a PR** (autonomous — no operator approval needed):
   ```sh
   curl -s -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
     https://api.github.com/repos/gnostrich/Perp-Options-AMM/pulls \
@@ -109,6 +112,27 @@ curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" http
     https://api.github.com/repos/gnostrich/Perp-Options-AMM/git/refs/heads/<branch>
   ```
 Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
+
+### 6.2 Concurrency & merge policy (this is what keeps §6 autonomy safe — full text: `docs/concurrency_policy.md`)
+- **Trunk-based, short-lived branches; `main` is the only integration point.** Branch → land →
+  delete; don't let branches age. Merge `main` in early rather than diverging.
+- **Single-writer on the engine.** Before opening an **engine-touching** branch — detected by
+  *changed paths* (any edit to the HEAD HTML, anything under `engine/`, or the file-safety gate),
+  **not** by branch name — check open branches/PRs; if one already touches the engine, **defer**
+  until it lands. One engine writer at a time. Non-engine work may run in parallel.
+- **Manager is sole merge authority and serializes merges — one at a time.** Never run two merges
+  concurrently; finish or halt one before starting the next.
+- **Before every merge:** (1) verify token (§6.1, expect `200`); (2) check the PR's
+  `mergeable_state`; (3) if it isn't `clean`, **merge `main` into the branch** and re-run
+  `engine/verify/run_all.sh` **and** the file-safety gate **in the branch**; (4) squash-merge
+  **only when `clean` AND green**. **Never force-push.**
+- **Conflicts:** auto-resolve **non-engine** conflicts by **union (keep both)** then re-test. An
+  **engine** conflict it can't cleanly resolve → **STOP and report** (a safety halt, not a request
+  for approval; do not patch toward green).
+- **Memory follows `main`:** reconcile agent memory at session start; truth-up after every merge;
+  on disagreement **`main` wins.**
+- **Significant merges keep the source branch as backup** (don't delete it) and stay **revertable**
+  (squash = one revertable commit; the retained branch is the granular history).
 
 ## 7. Autonomy & escalation
 - **Gate 1 (capability):** only the manager holds git/gh/merge/delete — subagents structurally defer

@@ -31,8 +31,12 @@ only to you.
   (`sorry`/`admit`/`axiom`/`native_decide`/`sorryAx`/`opaque`/`unsafe`), read the proofs, confirm
   no statement was weakened or given false hypotheses, re-check the math independently.
 - **Git/GitHub (you alone).** Commit logical units with honest messages on the working branch.
-  **Do NOT open a pull request unless the operator explicitly asks.** Merge to `main` yourself
-  once `GH_TOKEN` is present. Subagents never push — they hand edits back through the working tree.
+  **PR management is fully autonomous (operator pre-authorized 2026-06-09):** you open,
+  squash-merge, and delete branches yourself with **no operator approval — including strategic
+  merges to `main`**. The only gate is **green** — never merge a branch that isn't `clean` AND
+  green (the concurrency & merge policy below / CLAUDE.md §6.2). The old "no PR unless asked / stop
+  for the operator's go" rules are retired. Subagents never push — they hand edits back through the
+  working tree.
 
 ### GitHub ops — do PR actions yourself via the REST API (no `gh`, no MCP)
 This environment has **no `gh` CLI and no GitHub MCP tool**. Perform every PR action against
@@ -40,12 +44,28 @@ This environment has **no `gh` CLI and no GitHub MCP tool**. Perform every PR ac
 **Verify the token first** — `curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer
 $GH_TOKEN" https://api.github.com/user`: `200` proceed, `401` stop and tell the operator the token
 is bad. Then:
-- **Open a PR** (operator-asked only): `POST .../repos/gnostrich/Perp-Options-AMM/pulls` with
-  `{"title","head":"<branch>","base":"main","body"}`; capture `.number`.
+- **Open a PR** (autonomous — no operator approval): `POST .../repos/gnostrich/Perp-Options-AMM/pulls`
+  with `{"title","head":"<branch>","base":"main","body"}`; capture `.number`.
 - **Merge:** `PUT .../pulls/<number>/merge` with `{"merge_method":"squash"}`.
 - **Delete branch:** `DELETE .../git/refs/heads/<branch>`.
 Each call carries `-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json"`.
 See CLAUDE.md §6.1 for the full commands. Don't hunt for `gh` or MCP GitHub tools — use these.
+
+### Standing merge routine (concurrency & merge policy — full text `docs/concurrency_policy.md`, binding summary CLAUDE.md §6.2)
+Run this for **every** merge; it is what keeps autonomous merging safe:
+1. **Trunk-based, short-lived branches; `main` is the only integration point.** Branch → land → delete.
+2. **Single-writer on the engine.** Before opening an **engine-touching** branch — detected by
+   *changed paths* (HEAD HTML / anything under `engine/` / the file-safety gate), **not** branch name —
+   check open branches/PRs and **defer** if one already touches the engine. One engine writer at a time.
+3. **Serialize merges — one at a time.** You are sole merge authority; never run two merges concurrently.
+4. **Pre-merge gate:** verify token (`200`) → check `mergeable_state` → if not `clean`, merge `main`
+   into the branch and re-run `engine/verify/run_all.sh` **and** the file-safety gate **in the branch**
+   → squash-merge **only when `clean` AND green**. **Never force-push.**
+5. **Conflicts:** union-resolve **non-engine** conflicts (keep both) + re-test; an **engine** conflict
+   you can't cleanly resolve → **STOP and report** (safety halt, not approval; don't patch toward green).
+6. **Memory follows `main`:** reconcile at session start, truth-up after each merge, `main` wins on
+   disagreement.
+7. **Significant merges keep the source branch as backup** (don't delete) and stay revertable.
 
 ## Autonomy & escalation (see CLAUDE.md §Escalation)
 - **Autonomous (how to execute):** dispatch already-decided/spec'd work, run harnesses, re-derive
