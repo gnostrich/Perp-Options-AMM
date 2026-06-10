@@ -27,6 +27,26 @@ portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note
   swap by PREMIUM/cash (current) vs NOTIONAL/contracts (operator's intuition → would make the claim hold,
   = an engine change).** Relayed as a design fork (not "you're wrong"); skeptic vet offered. TEST-ONLY: no
   build edit; `notes/research/WARP_premium_and_spread_shortcut_2026-06-10.md` + evidence/v27_premwarp/. HEAD 1eebfcd6.
+- **★★ WARP-FIDELITY GAP CONFIRMED — operator VINDICATED (entries 31–33; research-lead aeeb28a9 +
+  skeptic #16 a5f08194, both re-read paper+engine; manager-verified engine side). LOCKED.** The PAPER
+  applies the curve-reshaping Trade Formula **per leg, at each strike's OWN trade point (ray∩curve)**,
+  continuously (paper L43/51/89/147/151; L209 path-integral; L288 continuous closed-form = unwritten
+  PLACEHOLDER). ⇒ **strike-DEPENDENT** warp (same cash leg warps ~27× differently K=1.5→8). The ENGINE
+  (HEAD v27 AND v24) **drops this**: `executeLeg`→`tradeUpdate(state,dy)` warps at SPOT, strike never an
+  arg ⇒ φ′ bit-identical across strikes (strike-INDEPENDENT). v24 worse (α,β invariant, scalar w, pure
+  dot-slide). So the engine's premium-only/strike-independent warp = a **fidelity gap, NOT intended
+  design**; operator's intuition is paper-faithful. **#14 AMENDED by the skeptic (owns it):** its
+  per-trade transformation findings (α/β, φ-recenter, tangency, referent, τ-static) STAND, but
+  "premise faithful / #16 met" was too broad — it never checked WHERE the swap is anchored or
+  continuity; **#16 NOT fully met.** **FIX SCOPE (skeptic): discrete-at-trade-point = NOT monumental**
+  — building blocks exist (`arbitrageToOracle(s,K)` locates the trade point; `tradeUpdate` warps there;
+  verified trade-point warp φ′≈−0.055 @K=4 vs −0.006 @spot, ~9×). One genuine subtlety: ONE global φ
+  reconciled across the trade-point AND the reserves point (the (α,β)-flow question). FULL continuous
+  integral = separate, bigger, [needs-Aristotle] (placeholder). **DECISION = OPERATOR-TIER (§7 curve/
+  economic-object): anchor the warp at the trade-point vs spot — a real engine change, NOT calibration,
+  NOT a manager call.** Verdict `notes/skeptic/VERDICT_WARP_continuous_strikedep_2026-06-10.md`. Aristotle
+  query for the existing continuous derivation (entry 33, agent af44bb67) RUNNING. HEAD untouched 1eebfcd6
+  (test-only; no build edit until operator authorizes the fix).
 **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
 canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
 an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in

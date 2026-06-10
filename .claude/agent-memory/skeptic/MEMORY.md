@@ -522,3 +522,59 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - Widening Δw past ≈τ/2 flips the elbow-warp SIGN (φ-recenter reverses: −0.046→+0.087 at τ=0.3 as
   Δw 0.15→0.30) — |ratio|>1 achievable but as the OPPOSITE deformation, not a v24 match. Table
   reproduced exact: Δw=0.30,τ=0.3 → −0.9180. (`/tmp/skeptic_sweep_finer3.js`)
+
+16. **2026-06-10 — WARP paper-vs-engine continuous/at-trade-point gap (verdict #16; REVISES my own #14)** →
+   `notes/skeptic/VERDICT_WARP_continuous_strikedep_2026-06-10.md`. Research-lead asked me to confirm
+   BEFORE the operator sees it (it revises #14). Artifact = `notes/research/WARP_paper_vs_engine_continuous_2026-06-10.md`.
+   Operator entries 31+32: paper warp = continuous + at the strike's trade point ⇒ more warp/dollar
+   further-OTM; engine drops it; "v24 also cheating"; "not a monumental fix." **VERDICT: PASS — operator
+   RIGHT on all counts; note's core CONFIRMED and UNDER-cited; #14 narrowed (not retracted); no FLAG.**
+   **Re-derived vs LIVE paper + LIVE engine source** (`/tmp/skeptic_warp_{run,run2,fixscope}.js`,
+   `/tmp/skeptic_v24_run.js`). **(1) PAPER reading CONFIRMED + note under-cited it:** the note cites
+   L33/39/43/51/89+L288-placeholder (all verbatim-correct); the STRONGEST sentences it MISSED are L147
+   ("legs are recorded against their trade points … reshaping via w … conservation at each leg") + L151
+   ("each leg is a swap … at a trade point … the Trade Formula applies leg by leg") — removes all doubt
+   the reshape is per-leg-trade-point, not spot. L288 placeholder verbatim-confirmed ("〈Retained from
+   prior draft — closed-form integration of the cash leg along the conservation hyperbola. To be carried
+   forward.〉"). dw/dy=β/y² is NOT in paper — note DERIVES it as Δy→0 limit of paper's discrete
+   Δw=β·Δy/(y·y′) (L85), tagged [analytic], fair. Continuity also in paper at L209 ("proceeds = path
+   integral of marginal price along the curve"). Surface tension noted: Trade Formula (L81) writes "global
+   state … live y", L43/147/151 resolve it at-trade-point. **(2) STRIKE-DEP CONFIRMED structurally; note
+   DIGITS not reproducible (pool state un-pinned in artifact).** My rebuild (x=y=10,τ=0.5,w∈[.55,.75],φ=0)
+   same Δy=0.3 at each strike's trade point → Δφ −0.0107/−0.0121/−0.0548/−0.288 (K=1.5/2.5/4/8) = ~27×
+   spread, grows deep-OTM call wing; rate dw/dy 0.040/0.029/0.021/0.012. Note's 0.011/0.005/−0.066/−1.39
+   NOT reproduced (different state) — flagged as illustrative-not-canonical (minor, non-blocking).
+   "same premium" 2nd-effect caveat honest. **(3) ENGINE DROPS IT CONFIRMED bit-level:** executeLeg L1844
+   → tradeUpdate(state,dy) at SPOT; strike enters ONLY premium V; tradeUpdate(L1723) takes only (s,dy), no
+   strike arg; φ′=−0.00611737 BIT-IDENTICAL across θ=1.2/3.0/8.0 at fixed dy. **(4) #14 SELF-AMEND:** #14's
+   verified findings (conserved (α,β), φ-recenter, referent, tangency, τ-static) STAND within scope; but
+   #14's sweeping "premise has NOT drifted" + "#16 acceptance clause MET" OVER-REACHED — it checked the
+   per-trade TRANSFORMATION, never WHERE the swap is anchored (spot vs trade point) or continuity. I OWN
+   the scoping silence — it's exactly team-blind-spot pattern #4 (true label, narrower object) committed
+   by ME. Amend #14 to "transformation faithful; anchoring/continuity unexamined; #16 NOT fully met."
+   **(5) v24 CONFIRMED also-cheating + FURTHER from paper:** v24 tradeUpdate(L1617) holds α,β invariant,
+   strike absent (identical x′/w′ across K), AND w is a single SCALAR (no per-ray field). v24 misses BOTH
+   paper features; v27 fixed the field (w(u;φ) varies by ray) but still warps at spot. **(6) FIX-SCOPE:**
+   discrete-at-trade-point = MODEST (blocks exist: arbitrageToOracle(s,K) locates trade point + tradeUpdate
+   warps there; verified φ′=−0.0548 @K=4 trade-pt vs −0.0061 @spot, ~9×) — anchor warp at
+   arbitrageToOracle(state,θ) not state. GENUINE subtlety I won't gloss: warp at trade point yields post
+   AT the trade point (one φ′); reconciling one global φ across trade-point AND reserves point = real
+   design (the (α,β)-defines-a-flow Q). FULL continuous integral (L288 placeholder) = separate, bigger,
+   [needs-Aristotle]. Anchoring choice = curve/economic-object = OPERATOR-TIER (§7), not calibration, not
+   manager call. Verbatim channel HELD (entries 31/32). Convergence-alarm LOW (note self-adversarially
+   revises a prior TEAM verdict — mine; under-cites own evidence; honest labels; #14 not called "wrong";
+   no build asserted). NOTE-QUALITY flag (non-blocking): (ii) Δφ table un-reproducible w/o pinned state.
+
+## Claims mine-to-defend (verdict #16 — warp continuous/at-trade-point)
+- PAPER L147/L151 (verbatim) apply the Trade-Formula reshape AT EACH LEG'S TRADE POINT, leg by leg —
+  stronger than the note's own L43/51 citations. L288 = continuous-integral PLACEHOLDER (verbatim).
+- ENGINE (v27): tradeUpdate(state,dy) at SPOT, strike never an arg; φ′ bit-identical across strikes at
+  fixed dy (−0.00611737 @θ=1.2/3.0/8.0). Strike enters ONLY the premium. STRIKE-INDEPENDENT warp.
+- STRIKE-DEP under at-trade-point anchoring is REAL: same Δy=0.3 → ~27× Δφ spread across K (via dw/dy=β/y²
+  at each ray). The note's SPECIFIC digit table is NOT reproducible without the pool state (illustrative).
+- v24 warps at spot AND with a single SCALAR w (no field) — further from the paper than v27; both miss
+  the at-trade-point anchoring. Operator's "v24 also cheating" CONFIRMED.
+- FIX: discrete-at-trade-point is modest (arbitrageToOracle+tradeUpdate exist), with a real one-global-φ
+  reconciliation subtlety; full continuous integral is separate/bigger. Anchoring = OPERATOR-TIER.
+- **#14 AMENDED BY ME:** findings stand in scope; "premise faithful/#16 met" framing too broad — it never
+  checked swap anchoring or continuity. (Self-instance of blind-spot pattern #4.)
