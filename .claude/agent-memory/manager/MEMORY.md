@@ -323,6 +323,16 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   "v27==v24 at every τ" is a single-step identity, NOT a τ→∞ convergence. 2 open lemmas honestly carried.
   **Net: premise SOUND/built-right; the magnitude gap is the frozen-wings design cap, not a flaw.**
   Skeptic now free → dispatched the queued SWEEP full-table verify (ceiling 0.9999 / sign-flip).
+- **★ SWEEP FULL-TABLE VERIFY — skeptic #15 (agent ab0889e5, `VERDICT_WARP_kurtosis_sweep_FINER`): BOTH
+  finer claims PASS on an independent code path; sweep chain CLOSED.** (1) Elbow ceiling PASS — same-sign
+  ratio never ≥1.0 at any τ (0.3→1000); true supremum = 1.0 NEVER attained, approached only as curve→flat
+  Balancer (vanishing kurtosis); "0.9999" = research-lead's finite-grid max (τ≤3), not oversold (note prose
+  says "only approaches"). (2) Sign-trap PASS — exact reproduction (Δw0.30,τ0.3→−0.9180; v24 w always ↑,
+  v27 φ crosses positive for Δw>~0.15 = opposite bend, not a match). **VERDICT STANDS: NO usable design-
+  valid τ matches v24's full warp.** No new FLAG; convergence-alarm LOW. **ENTIRE WARP INVESTIGATION
+  CLOSED + VERIFIED:** premise FAITHFUL (#14), sweep core manager-verified, finer table skeptic-verified
+  (#15). The fork (a: kurtosis-knob + elbow-local warp / b: global warp = unfreeze wings = give up the
+  knob) is the standing operator-tier decision. AWAITING operator (a)/(b). HEAD v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

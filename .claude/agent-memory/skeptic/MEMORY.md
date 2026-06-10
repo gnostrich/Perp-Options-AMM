@@ -491,3 +491,34 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - tangency (pricing slope == trajectory slope) holds on (W) by the SAME algebra as Balancer (≤7e-16);
   getMP_raw has no e^−ghMu (warp in WEIGHT not SCORE). Live build is faithful, not just the note.
 - The τ-invariance of v27-x'==v24-x' (TEST 4) is a single-step identity, NOT Balancer-limit convergence.
+
+15. **2026-06-10 — WARP kurtosis-sweep FINER table claims (verdict #15, operator entry 26 close-out)** →
+   `notes/skeptic/VERDICT_WARP_kurtosis_sweep_FINER_2026-06-10.md`. Final link to close the τ-sweep
+   chain: the sweep CORE (γ₋<1 at symmetric match; wing leverage ~1/u³) was manager-re-derived; #14
+   verified the premise faithful; this pass = the two finer table claims, anchored to my #13
+   reconcile baseline but not yet independently checked. **BOTH PASS** on a fresh code path
+   (`/tmp/skeptic_sweep_finer{,2,3}.js` — NOT a rerun of warp_sweep_*.js; v27 fns transcribed vs
+   live engine wField L1631-1644/tradeUpdate L1719-1741). **CLAIM 1 (elbow ceiling): PASS w/
+   precision footnote.** Structural claim CORRECT + load-bearing: same-sign elbow ratio NEVER
+   reaches/exceeds 1.0 at ANY setting (ratio>1 = false for τ 0.3→1000), approaches 1 from below ONLY
+   as curve degenerates to flat Balancer (max same-sign ratio at smallest admissible Δw, dw/du(0)→0
+   = vanishing kurtosis). FOOTNOTE: the literal "0.9999" is the research-lead's FINITE-GRID max —
+   warp_sweep_5.js caps τ≤3.0, giving 0.99990 at τ=3/Δw=0.02/f=2% (I reproduced 0.999898 same point).
+   Extend τ-grid → sup climbs 0.99996(τ=100)/0.999996(τ=1000); true sup = 1.0 NEVER attained. NOT a
+   flag — note's prose L114 already says it "only approaches" 1.0 "as the curve degenerates toward
+   flat ordinary Balancer." **CLAIM 2 (sign trap): PASS, exact reproduction.** Whole decoupling table
+   (τ=0.3, 10% trade) byte-level: +0.2508/−0.9180/−2.1637/−4.0583/−5.2950 (note +0.251/−0.918/−2.164/
+   −4.058/−5.295). Named case Δw=0.30,τ=0.3 → ratio −0.9180 confirmed. MECHANISM confirmed: v24 w
+   moves UP 0.5→0.5455 always; v27 φ' is NEGATIVE at matched Δw=0.15 (−0.046), crosses POSITIVE for
+   Δw>~0.15 (+0.087 at 0.30) → curve bends OPPOSITE = different deformation, not a match. **Overall
+   "NO usable τ match" verdict STANDS** — finer claims corroborate the manager-verified core + my #13
+   reconcile, no contradiction. No new FLAG. Convergence-alarm LOW. Symmetric-(10,10)/w_mid=0.5
+   caveat carried (note honest, L181-184); asymmetric γ>1 pool = separate sweep, structure carries.
+
+## Claims mine-to-defend (verdict #15 — sweep finer)
+- Same-sign (correct-direction) v27/v24 elbow ratio NEVER reaches or exceeds 1.0 at any (τ,Δw,f);
+  sup→1.0 from below ONLY as dw/du(0)→0 (flat-Balancer degeneration, kurtosis gone). "0.9999" is a
+  τ≤3 grid-max, not the true sup (which is 1.0, never attained). (`/tmp/skeptic_sweep_finer2.js`)
+- Widening Δw past ≈τ/2 flips the elbow-warp SIGN (φ-recenter reverses: −0.046→+0.087 at τ=0.3 as
+  Δw 0.15→0.30) — |ratio|>1 achievable but as the OPPOSITE deformation, not a v24 match. Table
+  reproduced exact: Δw=0.30,τ=0.3 → −0.9180. (`/tmp/skeptic_sweep_finer3.js`)
