@@ -66,3 +66,21 @@ _Context: this policy (`docs/transcription_policy.md`, CLAUDE.md §2.2) + this f
 _Context: during the fork brainstorm. Two directives: (a) manager to drop jargon-dense relay;
 (b) locate the operator↔research conversation about the 90°→180° angular/distribution view of
 constant-product/Balancer and kurtosis via polar/hyperbolic angle._
+
+## 9
+> "Good instinct — and this one I can actually check, so let me show you why it works rather than just nod.
+> In the hyperbolic angle, the asymptote problem disappears — by construction. Write v = δ·sinh(θ), so √(δ²+v²) = δ·cosh(θ). The whole GH log-density collapses to one clean term:
+> −αh·δ·cosh(θ) + βh·δ·sinh(θ)  =  −δ·√(αh²−βh²)·cosh(θ − φ),  with tanh(φ) = βh/αh.
+> (I verified the identity — A·cosh(θ−φ) with A·cosh φ = αh, A·sinh φ = βh gives A = √(αh²−βh²).) That's a genuinely nice payoff:
+> 	•	the whole shape is a single cosh(θ − φ) — the messy (αh, βh, δ) collapse,
+> 	•	skew is a pure shift φ = atanh(βh/αh) of the angle — exactly your "tilt,"
+> 	•	scale/kurtosis is the amplitude δ·√(αh²−βh²),
+> 	•	and the asymptotes are automatic: cosh's arms are exponential in θ, which is linear in v (since v ~ δe^θ/2 out there) — so the straight walls / power-law wings are preserved for every setting. That's the precise thing |v|^d broke and the hyperbolic angle keeps for free. So your "it'd do the trick" is right.
+> And your "d=2 = Gaussian" has a clean reading here too: the Gaussian is the small-angle limit. Near θ=0, cosh(θ) ≈ 1 + θ²/2 — the quadratic ("²") part — which is exactly the parabola/Gaussian. The full cosh (all the higher even powers) is the departure into kurtosis. So "Gaussian = the order-2 piece of cosh" is a faithful version of your d=2, inside an asymptote-preserving frame — not the |v|^d thing that snapped the wings.
+> Where I'll stop short of agreeing until I derive it: the exact "one circular degree → d hyperbolic-degrees" map, and whether a single d cleanly indexes the kurtosis with d=2 the symmetric point. The right bridge is almost certainly the Gudermannian — the function that maps the bounded circular strike-ray angle (your 90° quadrant, 45° = ATM, straight from the paper) to this unbounded hyperbolic angle. That's the literal "circular-90° ↔ hyperbolic" translator your polar map wants. But I'm not going to assert the d-law off the top — I've over-claimed twice.
+> So: the hyperbolic angle is the correct lens, the cosh(θ−φ) form is the concrete prize (skew = shift, kurtosis = amplitude, asymptotes free), and the clean d you're after is the Gudermannian map's gear ratio. Want me to have that worked out exactly — the Gudermannian bridge from the strike-ray angle to the hyperbolic angle, the resulting d↔kurtosis law, and a check that it keeps value∝S^(−γ) and lines up with the weight-warp? That's the derivation that turns this into the parameterization you'd build."
+
+_Context: operator pasted this quoted text (a research-voice message from the 90°→180°/polar-angle
+conversation thread referenced in entry 8) into the brainstorm — implicitly green-lighting the
+closing offer: derive the Gudermannian bridge, the d↔kurtosis law, and the value∝S^(−γ) +
+weight-warp consistency checks._

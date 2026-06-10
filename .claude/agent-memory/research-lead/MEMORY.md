@@ -1,6 +1,21 @@
 # MEMORY — research-lead
 _Last updated: 2026-06-10, KURTOSIS-KNOB κ DERIVATION (Balancer-native single-κ profile; NO submit/edit/git)._
 
+> ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
+> Two flagship claims recorded below as facts are **BROKEN** (skeptic inaugural verdict,
+> manager-verified independently — `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`):
+> 1. **"κ:=δ EXACTLY / engine = one (W) setting" is FALSE at curve level** — live-engine test:
+>    w_eff vs ln(y/x) is non-monotone; the engine is not a (W)-member at ANY τ. Kernel-in-SCORE
+>    (GH) ≠ kernel-in-WEIGHT ((W)).
+> 2. **"NO clean algebraic invariant exists" is FALSE** — explicit closed form
+>    `x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k` is a first integral of the (W) law
+>    (manager: analytic + RK4 4.8e-13).
+> Also: Object-L kurtosis numbers below are the β=0 slice — at the engine pin β=1: skew +0.92,
+> excess kurt 3.285 (∉[0,3]); and the δ-dial at β=1 is a COUPLED (skew,kurt) dial (skeptic
+> stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
+> endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
+> task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
 ### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
 Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
 Realizes the paper's `(w,κ)` Future-Directions conjecture in implementable form.
