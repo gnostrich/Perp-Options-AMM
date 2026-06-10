@@ -9,6 +9,12 @@ and every delta is keyed to the named feature it touches (`docs/feature_inventor
 entry existing AND carrying the feature mapping** — an unmapped or lazy entry is a red, bounced,
 not waived. Backfill written by the manager from verified evidence._
 
+_OPERATOR-VOICE layer added 2026-06-10 (operator-directed; tester-owned). Operator's mandate,
+verbatim: **"if the tester is responsible for version control then apart from just taking
+screenshots and checking the UX, he has to take full responsibility to even scan the chats
+transcripts to distill my objections to each version, open questions etc."** (operator directive
+2026-06-10, relayed verbatim in the tester dispatch; encoded in `.claude/agents/tester.md` L44–53)._
+
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
@@ -47,8 +53,92 @@ EVIDENCE:       evidence/ paths, gate runs, tester verdict
 
 ## ⭐ OPERATOR OPEN QUESTIONS (rolling — tester-maintained from transcripts; the skeptic
 audits this list against the raw transcripts to catch unresolved-presented-as-resolved)
-_Backfill pass pending (tester dispatched 2026-06-10). Until populated, this list is INCOMPLETE
-by construction — do not treat absence here as "no objection exists."_
+
+> **PROVENANCE / HONESTY NOTE on the transcript record itself (tester, 2026-06-10 backfill):**
+> `history/transcript_journal.txt` is a catalog of session SUMMARIES (last entry 2026-06-06);
+> `history/session_tree_note.md` (4100 ln) is the append-only canonical note of the
+> **pre-GH era** (composite-ray v24 / v25-american / convexity-knob arc) and **ends at the
+> curve-shape pivot**. **The GH-era sessions that produced the very versions this ledger covers
+> (v25 GH bake, v26a, v26b, v26c — 2026-06-08; governance/AIRTIGHT — 2026-06-09; pain-point
+> conversation — 2026-06-10) have NO raw transcript in `history/`.** Their operator voice
+> survives only secondhand: manager `MEMORY.md` (rulings, mostly paraphrase), session-summary
+> stubs `docs/context/chats/*.md`, and a handful of quote fragments. Items below are labelled
+> **[verbatim-transcript]**, **[manager-recorded paraphrase]**, or **[summary-stub]** accordingly.
+> Recommendation: export the 2026-06-08/09/10 chat transcripts into `history/` so this layer can
+> be audited against raw words, not reconstructions.
+
+### OPEN (operator asked / objected; no recorded resolution)
+
+1. **Curve / kurtosis-knob decision (the project motive) — OPEN, operator tier.** [#2, #3]
+   The operator asked for the kurtosis knob ("…the kurtosis knob the operator asked
+   [for]" — `notes/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md:93` [manager/lead-recorded; no
+   verbatim transcript]). Sub-questions awaiting the operator:
+   - WHICH curve is on the table: the (W) weight-profile family vs GH δ-unfreeze — the note
+     "contains TWO different curves … and the bridge between them is broken. The operator's curve
+     decision must pick which is actually on the table" (`notes/KURTOSIS_KNOB…:20-22`;
+     research-lead reconcile queued).
+   - Knob LABEL/sign: "Do NOT ship 'τ up = fatter.' The exposed label is the operator's call"
+     (`notes/KURTOSIS_KNOB…:282-284`).
+   - Whether the paper's "log/exponential-curve invariant" is the τ→0 Laplace member — "a wording
+     call — flag to operator" (`notes/KURTOSIS_KNOB…:175-176`).
+   - ERA-REVERSAL for the skeptic's record: 2026-06-01-era transcript says "Rohan does not want
+     kurtosis; BL on the fixed Balancer curve is the mechanism"
+     (`history/session_tree_note.md:1056-1057` [verbatim-transcript context]) — superseded by the
+     2026-06-10 motive ("purpose = kurtosis knob", feature_inventory §motive). Not an open
+     contradiction; recorded so nobody cites the old position as current.
+2. **B1 solvency ship-gate — OPEN (the known hole).** [#13] Operator ship-gate; "B1 ship-gate
+   (funding-coverage sweep, κ extrinsic) — still the open solvency prize" (manager
+   `MEMORY.md:681` [manager-recorded]). Lineage: a live-engine check battery "surfaced a real
+   solvency gap" (`history/transcript_journal.txt:53`, 2026-06-03 session). No operator ruling
+   recorded that closes it; geometry provably cannot (PH-4b necessary-not-sufficient).
+3. **γ/σ calibration tier — OPEN product call.** [#6, #7] Operator's three-tier frame from the
+   pre-GH era: "Three product tiers (Rohan): HTML knob open; prod fixed-at-bootstrap; oracle-fed
+   vol (hardest — vol feed reshapes convexity+funding, needs hardening)"
+   (`history/session_tree_note.md:1918-1921` [transcript, recorded as Rohan's]). GH-era follow-on:
+   "σ-knob rec flagged to operator (ship GH σ→γ map, not Gaussian closed form)" (manager
+   `MEMORY.md:16` [manager-recorded]) — no recorded operator ruling on the tier or the σ→γ map.
+4. **Engine-faithfulness PIVOT — HELD by operator instruction.** [#12] "operator is finishing
+   config first; do NOT begin the pivot until told" (manager `MEMORY.md:163` [manager-recorded]).
+   Standing hold; resumes only on operator lift.
+5. **|Γ|>1 "labelled approximation" rider — tracked, verify the label actually ships.** [#7]
+   Operator decision LOCKED 2026-06-09: "Settlement = TRUE AMERICAN (cash-out-anytime) … Scope:
+   |Γ|≤1 exact; |Γ|>1 = labelled approximation (mutual exclusivity is PROVED, not a choice)"
+   (manager `MEMORY.md:177-180` [manager-recorded]). The engine runs γ>1 (true-American regime)
+   by locked architecture — i.e. the regime the operator said must carry an explicit
+   approximation LABEL on replication claims. Tester has NOT verified any such label in UI or
+   paper claims. Not a defect finding; a rider the skeptic should keep against paper/UI claims.
+6. **Layer-2 honest-dollar slippage $ — DEFERRED (attribution caveat).** [#10, #11] Deferral is
+   recorded manager-side ("route reserve-USD through the existing carved-perp settlement chain;
+   reuse, don't improvise" — `MEMORY.md:575-576`); no operator words on it found in transcripts.
+   AMBIGUOUS-ATTRIBUTION whether the deferral was operator-voiced or manager-proposed-unopposed.
+7. **Stale-era operator questions never explicitly closed (possibly mooted by pivots — saying so
+   honestly rather than silently dropping):** auto-protect sizing Q14 ("is D8=0.3 to become a
+   derived OUTPUT … or kept as a CEILING") and Q15 (where the extra protection value comes from)
+   — `history/session_tree_note.md:562-568` [transcript-era]. Backend/auto-protect scope (CTO
+   side); no resolution recorded anywhere in the repo. OPEN-stale.
+8. **Ops minor:** `$ARISTOTLE_API_KEY` stored wrapped in literal angle brackets — "escalate to
+   operator" (`MEMORY.md:290`). OPEN-minor.
+
+### RESOLVED / RULED (kept here so the skeptic can check none were quietly re-opened or
+mis-claimed; full per-version detail in the entries below)
+
+- **Finding-2 (ratio-peg vs dollar-anchored strike)** — RESOLVED. Origin verbatim-adjacent:
+  "Live decision left to Rohan: Finding 2 — strike as ratio peg (UX fix) vs dollar-anchored
+  '$120k call' (engine change)" (`docs/context/chats/og-manager-clone-1.md:18-20`
+  [summary-stub]); original tester finding `history/session_tree_note.md:3444-3458`. Operator
+  RULED 2026-06-08 ("align the chart strike-ray to the live dollar strike … it's a display bug",
+  `MEMORY.md:505-506` [manager-recorded paraphrase]); ABSORBED in v26c uniform registration
+  (tester-confirmed live: chart ray = K/oracle_now, no entry-θ drift; `evidence/v26c_pw/`).
+- **Slippage magnitude vs collar aggressiveness** — RULED-parked: "operator parked for later"
+  (`MEMORY.md:510-511` [manager-recorded paraphrase]). Carried as ACCEPTED in the v25→v26a entry
+  + standing reconciliation list. Parked ≠ resolved — re-surface if collar UX ships.
+- **Provenance label policy** — RULED: "I trust Aristotle" (operator 2026-06-09,
+  `MEMORY.md:360` [quote fragment, manager-recorded]); re-verify gate relaxed ("no re-verifies
+  required", `MEMORY.md:294`).
+- **2026-06-10 pain points (3)** — all addressed same day: skeptic agent live, this DIFF_LEDGER
+  live + hardened, formal/INDEX.md promoted. Operator approval fragment: "yes to all"
+  (`MEMORY.md:32`); hardening fragment: "diligent… feature-level… so I don't ever have to keep
+  inventory" (`MEMORY.md:44-45`) [quote fragments, manager-recorded].
 
 ---
 
@@ -64,6 +154,21 @@ by construction — do not treat absence here as "no objection exists."_
 **UNDESIRABLE:**
 - Slippage magnitude scales hard with collar aggressiveness (0.2 BTC wide collar → 3463%, pool
   spot → ~$0). Display contract correct, magnitude input-driven — **ACCEPTED (operator parked)**.
+**OPERATOR-VOICE:** **None found verbatim in transcripts for this transition** (searched
+`history/transcript_journal.txt` + `history/session_tree_note.md` end-to-end — both end before
+the GH era; the v25-GH/v26a session "OG manager: HTML refinement chat" 2026-06-08 exists only as
+the summary stub `docs/context/chats/og-manager-html-refinement.md`, which records work, not
+operator objections). Secondhand items attributable to this transition:
+- RULED-parked [manager-recorded paraphrase]: collar-aggressiveness slippage magnitude —
+  "operator parked for later" (`MEMORY.md:510-511`). Matches the ACCEPTED flag above.
+- Lineage objection (pre-GH, same feature family #2/#6 — the operator's standing demand that the
+  curve VISIBLY show the right convexity): Rohan flagged the option-pricing curve **"looked the
+  same instead of steeper (american-style implies steeper)"**
+  (`history/session_tree_note.md:3460-3461` [verbatim-transcript]) — second time a green-grader
+  build needed the operator's eye (first: raw-cash settlement, `:3213` "Caught by Rohan's Q").
+  RESOLVED in its own era (intern6 chart-shape pass, `:3484-3502`); carried here because the
+  v26a "GH continuation, not Balancer weight-form" render check is the GH-era descendant of this
+  exact operator demand.
 **EVIDENCE:** `evidence/v26a_pw/`, `evidence/CROSSCHECK_slipfix_numbers.md`, `evidence/slipfix_*`.
 
 ## v26a → v26b (ITM / American smooth-pasting)   [status: demoted (was HEAD)]
@@ -82,6 +187,32 @@ by construction — do not treat absence here as "no objection exists."_
   capped-spread divergence — logic correct, pixels identical (DISPLAY-COVERAGE flag).
   **RECONCILED-in-v26c** (x-range −90%..+200%, clears both free boundaries).
 **NEUTRAL:** bands table §5 — 9 cells, "Attrib P&L"/"Strike" renames, empty 4th td.
+**OPERATOR-VOICE:** (no raw transcript of the v26b session exists in `history/`; items below are
+manager-recorded except where marked verbatim)
+- OBJECTION→caught-our-defect, RESOLVED(evidence): **the operator caught the manager's call/put
+  LABEL swap** on the put-wing boundary in the v26b dispatch (`MEMORY.md:532` "Operator caught my
+  call/put LABEL swap on (b)") — chasing it exposed the deeper engine wing-tag inversion; fix =
+  boundaries bound to the GEOMETRIC S-direction, not the tag string
+  (`evidence/wing_tag_inversion_trace.md`; seam gate directional A:S*<K / B:S*>K green).
+- RULED [manager-recorded]: **ITM second-wing boundary RATIFIED (operator 2026-06-08)** —
+  `θ/sNorm` branch pastes at `S*=K·(γ+1)/γ` (intrinsic 1−K/S), `sNorm/θ` branch at `S*=K·γ/(γ+1)`
+  (intrinsic 1−S/K), "Bind by S-direction, NOT the inverted tag" (`MEMORY.md:650-652`).
+- RULED [manager-recorded]: ITM "park" NOT preserved — "Operator also confirmed the ITM 'park' is
+  NOT preserved — v26b deletes it (effK=K always)" (`MEMORY.md:507-509`).
+- RULED [manager-recorded]: HEAD promotion "operator pre-authorized contingent on tester-clean"
+  (`MEMORY.md:236`); tester delivered clean (af25ead5) → promoted.
+- RULED 2026-06-09, retro-confirms this build's semantics [manager-recorded]: "Settlement = TRUE
+  AMERICAN (cash-out-anytime)" with S* DERIVED from μ (`MEMORY.md:176-180`).
+- Lineage verbatim (the settlement convention #7/#11 descends from — pre-GH transcript):
+  - **"I buy a discount IOU to receive 1 BTC after 12 months, on dollar margin"** — the
+    operator's two-layer mental model that RULED settlement Fork C (BTC closing spot × notional)
+    (`history/session_tree_note.md:921-923`).
+  - **"same carved slice everything — that's why it retains fraction-of-perp pricing"** — the
+    operator's question/objection that caught the v25-american pass-3 settlement skipping the
+    carved-slice convention after the manager had called it shippable
+    (`history/session_tree_note.md:3206-3207`; manager's own log: "Caught by Rohan's Q" `:3213`).
+  - **"initial not closing, escrowed not appropriated"** — operator pin of the settlement basis
+    (carve-time equity + escrowed attributable P&L) (`history/session_tree_note.md:3753-3754`).
 **EVIDENCE:** `evidence/v26b_pw/` (tester af25ead5), seam-gate runs, manager Node verification.
 
 ## v26b → v26c (uniform strike registration θ=sNorm(K))   [status: HEAD-promoted 2026-06-08]
@@ -102,6 +233,30 @@ by construction — do not treat absence here as "no objection exists."_
 **UNDESIRABLE:**
 - Payoff ray-legend text overprint — cosmetic. **OPEN** (intern polish item, non-blocking).
 - Exec crossover sweep resolution 84005 vs 84000 — cosmetic. **ACCEPTED** (sweep granularity).
+**OPERATOR-VOICE:** (no raw transcript of the v26c session in `history/`; manager-recorded
+except where marked)
+- The driving OBJECTION is the operator's own (origin in the pre-GH transcript + summary stub):
+  the American strike reading as a ratio peg — tester Finding-2, logged as needing "Rohan's
+  product intent" (`history/session_tree_note.md:3444-3458` [verbatim-adjacent transcript]);
+  "Live decision left to Rohan: Finding 2 — strike as ratio peg (UX fix) vs dollar-anchored
+  '$120k call' (engine change)" (`docs/context/chats/og-manager-clone-1.md:18-20` [summary-stub]).
+  **RESOLVED(evidence):** operator ruling 2026-06-08 (display-bug/dollar-anchor,
+  `MEMORY.md:505-506`) + v26c absorption, tester-confirmed live (bands cross at
+  oracle=poolMark=K=120000 exactly; live ray; `evidence/v26c_pw/`).
+- RULED [manager-recorded]: **strike-basis, not directional** — "Operator RULED (2026-06-08):
+  NOT directional — a strike-basis mismatch … Fix: θ_strike=sNorm(K) via
+  getSNorm(arbitrageToOracle(state,K)) … Authorized reopening of funding" (`MEMORY.md:582-586`;
+  evidence `evidence/strike_basis_fix_verification.md`).
+- RULED [manager-recorded], same day, superseding the funding-reopen authorization: **"funding
+  stays LOCKED/untouched"** — the "→0 deep ITM" target was a mistaken extrinsic-carry overlay;
+  θ-swap flips funding's sign ⇒ must not be touched; fix scope = mark path + chart-ray
+  registration ONLY (`MEMORY.md:592-597`). [#9 protected]
+- RULED [manager-recorded]: **scope fork (A) — registration must be UNIFORM** — "one mark on the
+  curve; display@K + execution@oracle₀²/K + chart@old = three strikes = screen lies about what
+  trades" (`MEMORY.md:605-607`; exact wording AMBIGUOUS-ATTRIBUTION operator-vs-manager — the
+  RULING attribution is unambiguous, the phrasing may be the manager's).
+- RULED [manager-recorded]: **drawPayoff re-base to carry basis NOW (before HEAD)** — ruled (i),
+  2026-06-08 (`MEMORY.md:623-626`); landed as v26c_full2, chart-mark==table verified 8.6e-11.
 **EVIDENCE:** `evidence/v26c_pw/`, dollar-pipe byte-identical check, manager audits in MEMORY +
 `run_all.sh` green (7 GH + seam + dir).
 
