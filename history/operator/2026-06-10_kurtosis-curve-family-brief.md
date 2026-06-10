@@ -89,3 +89,17 @@ _Context: while the formal-corpus audit's keep-vs-store decision is pending, ope
 _Context: operator chooses Reading A (curve-intrinsic value law) for settlement on the new curve — value ∝ S^(−γ_local) by definition, so S*=K·γ_local/(γ_local+1) is exact everywhere by construction and the rebuild gate passes; the accepted tradeoff is that the value law is asserted (definitional), not derived from the dynamic optimal-stopping problem (Reading B). Settlement-semantics ruling, operator-tier (§7). Transcribed verbatim._
 
 > a
+
+---
+
+## Entry 12 — 2026-06-10
+_Context: operator confirms the pricing mechanism for perpetual options at each strike — the saturating fraction min(slope, 1/slope) per wing (engine `markFrac` = min(s/θ, θ/s) ∈ (0,1], with the American premium layered on top in `mark`). Comprehension/alignment check; manager verified against HEAD v26c. (Transcribed a turn late — §2.2 corrigendum, my miss.) Transcribed verbatim._
+
+> ok just to make sure you have context of how we're pricing the perpetual options at each strike (min of slope or its reciprocal) ... aligned/
+
+---
+
+## Entry 13 — 2026-06-10
+_Context: operator asks the manager to enumerate what remains pending. Transcribed verbatim._
+
+> ok what more is pending ?
