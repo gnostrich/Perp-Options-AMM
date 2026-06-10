@@ -1,5 +1,44 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-09, HETEROGENEOUS-WEIGHT DERIVATION (closed-form implied density; NO submit/edit/git)._
+_Last updated: 2026-06-10, KURTOSIS-KNOB κ DERIVATION (Balancer-native single-κ profile; NO submit/edit/git)._
+
+### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
+Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
+Realizes the paper's `(w,κ)` Future-Directions conjecture in implementable form.
+**FORM DELIVERED = (b) WEIGHT-PROFILE, not a closed-form invariant.** FLAG (confident): NO clean
+algebraic `F(x,y;w,κ)=k` exists that rounds the ATM elbow AND keeps wings exact power-laws — the elbow
+warp is non-monomial; Cobb-Douglas `K=X^w Y^(1−w)` is constant ONLY for constant w (verified 4.6e-41).
+Clean invariant exists only at the constant-w BASE. Weight-profile is the engine-native form (GH is
+already built this way).
+**THE PROFILE (W):** `w(u;w₋,w₊,κ)=w_mid+(Δw/2)·u/√(κ²+u²)`, w_mid=(w₋+w₊)/2, Δw=w₊−w₋;
+`w'(0)=Δw/(2κ)` = ATM sharpness = the knob; `w'=O(κ²/|u|³)→0` in wings. Elbow kernel u/√(κ²+u²) IS the
+GH score-kernel (2σ_GH−1) ⇒ **κ:=δ EXACTLY** (engine δ=0.08 = setting κ=0.08).
+**`(w,κ)` ROLE SPLIT:** convexity=w_mid (γ̄), SKEW=Δw (Δγ=γ₊−γ₋, the existing w tilt), KURTOSIS=κ (ATM
+elbow only). γ_±=w_±/(1−w_±) are the wing exponents, FIXED, κ does NOT move them.
+**ASYMPTOTE PRESERVATION (the load-bearing req, CONFIRMED):** γ_loc(±100κ) BYTE-IDENTICAL across
+κ∈{0.05,1,30} (err 3.12e-5/1.25e-4) ⇒ κ = pure horizontal elbow-rescale, wing exponent κ-independent;
+dγ_loc/du→0 in wings. Analytic: rounding O(1) at ATM, vanishes 1/|u|³ in wings. NOT a tail-exponent
+deformation.
+**ENDPOINTS:** κ→∞ = plain Balancer (constant w, dq/du→1, Gaussian/δ→∞ — consistent w/ prior reconcile
+that CD=δ→∞ NOT δ→0); κ→0 = sharp-elbow LAPLACE = the paper's "log/exponential-curve invariant" (kernel
+exp(−α√(κ²+v²))→exp(−α|v|)).
+**KURTOSIS LAW + SIGN PINNED:** Object L (LATENT driver f∝exp(−α√(κ²+v²))) = TRUE excess kurtosis
+saturating ∈[0,3], →3 (κ→0 Laplace), →0 (κ→∞ Gaussian), monotone DEC in κ; reproduces prior GH numbers
+(κ=0.08→2.6530, 0.3→1.6885, 1→0.6961, 3→0.2472). 3/(κα)=large-κ asymptote only. SMALL κ=LEPTOKURTIC,
+fatness dial=1/κ. Object P (pushforward implied-price) = PLATYKURTIC, OPPOSITE sign (κ=0.3→−1.116).
+RECOMMEND label tracks Object L; do NOT ship "κ up=fatter" (backwards). Label = operator's call.
+**ENGINE INTEGRATION (minimal):** add ghKappa(≡ghDelta) scalar; key tail/CDF cache + √(κ²+v²) kernel on
+κ; recompute M,Φ at κ. rebase/conservation/Esscher slope-law/value∝S^(−γ)/seam-boundary S*=Kγ/(γ+1) all
+κ-INVARIANT (kernel-orthogonal). Lean: above-AMMCurve-contract untouched; re-instantiate kernel-constant
+layer only.
+**FLAGS:** (1) curve choice + knob exposure = operator; (2) no clean invariant — profile is the form;
+(3) label sign object-dependent (track L, 1/κ=fatness); (4) ASYMMETRIC-w SETTLEMENT FORK SURFACED — κ
+holds w₋,w₊ fixed (orthogonal to fork); independent w₋≠w₊ = both S^(±γ_±) live = βh=0/two-root settlement
+change (REPARAM FULL fork). Ship κ with skew held = MINIMAL/safe; freeing skew = separate operator move.
+(5) paper's "capital-efficiency conserved as κ varies" NOT proven (consistent w/ value-law κ-invariance,
+but a conservation proof is separate). No engine/git/submit this pass.
+
+---
+_Earlier: 2026-06-09, HETEROGENEOUS-WEIGHT DERIVATION (closed-form implied density; NO submit/edit/git)._
 
 ### HETEROGENEOUS-WEIGHT DERIVATION — 2026-06-09 (operator: closed form from x,y,w; DERIVE not approx)
 Note: `notes/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
