@@ -30,6 +30,54 @@ _Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
 
+## Done — v27 (W) KURTOSIS CURVE (SPEED RUN, implemented, handed to manager 2026-06-10)
+Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (from v24
+`temporal_mvp_v24_rebase_fixed_2.html`; NOTE v24 is PRE-GH — no ghCalibrate/CDF, no ghMu; HEAD v26c
+untouched). Authority: `notes/research/BUILD_SPEC_wcurve_2026-06-10.md`. Splices: `/tmp/splice_wk.py`
+(13 reps), `/tmp/splice_wk_ui.py` (4 reps) — all `count==1`, blobs never through. One trailing HTML-only
+Edit (arb sim-aid + #16 honesty note). Blobs `ab663f5c`/`c505b08a` intact; 3 scripts parse; IIFE intact;
+longest non-blob line 553. Diff vs v24 = exactly the intended regions (no blob lines 74/1060).
+- **THE (W) simplification (verified):** marginal price == geometric slope EXACTLY on (W) —
+  `getMP_raw=(w/(1−w))(y/x)`, NO `e^(−ghMu)` factor (that's GH-only, absent in v24). Self-check FD slope
+  matches getMP_raw to 4.3e-7. Comment warns future GH cross-port not to reintroduce the factor.
+- **4 curve fns → (W)** (`wField` = wMid+½dW·u/√(τ²+u²), u=ln(y/x); gLoc=w/(1−w)): `getMP_raw`,
+  `tradeUpdate` (R-simple #16), `rebase` (carry-shift P→P/r via arb inverse), `arbitrageToOracle`
+  (bisection inverse, 200 iters, F-level placement; round-trip 1.5e-15). New `sNormStrike` ported.
+  **Compat layer:** state authoritative scalars = `{x,y,tau,wMinus,wPlus}`; `alpha=x·w`,`beta=y·(1−w)`
+  re-stamped on every returned state (`_stampAB`) so the ~22 display/frame/LP/invariant read sites keep
+  working. `getW`→`wField`. `wField` falls back to `alpha/x` ONLY if scalars absent (pre-(W) state).
+- **mark:** `mark(wing,θ,sNorm,gamma)` smooth-pasting (Reading A, S*=K·g/(g+1)); **collapses to bare
+  `markFrac=min(s/θ,θ/s)` when gamma absent/≤1** — so display paths (payoff chart) keep v24 no-premium
+  behavior; pricing path (legPrice) passes `g=gLoc(state)`. **T5 simplification:** γ_loc taken at LIVE
+  reserves, NOT strike's registered carry position (strike-position refinement deferred — labeled).
+- **τ UI knob ADDED** (Settings → "(W) Curve Shape"): range slider 0.05–3 (`tau-input`) + readout +
+  wing-weight numeric inputs `wminus-input`/`wplus-input` + live γ_loc status. Store `setTau` (static,
+  clears `__curveFrame`), `setWingWeights`. Listeners redraw via `Viz.drawAll`.
+- **#4 γ>1 GUARD (UI):** `setWingWeights` clamps w_± to (0.501, 0.95) — w≤½ ⇒ γ_loc≤1 violates lock;
+  clamp reflected back into the inputs so the UI can NEVER show a γ<1 weight. Self-check + headless:
+  `setWingWeights(0.40,0.80)` → w₋ clamped 0.501, γ_loc=3.99. Pool default τ=0.3, w_±=0.70 (γ_loc ATM
+  2.33). Note: w_mid=0.5 would give ATM γ=1 (violates lock), so wings start symmetric >0.5.
+- **Chart:** `curveTraceW` traces the curve with the position-dependent weight FIELD (F-level walk) so
+  the ATM elbow rounds with τ while wing exponents stay frozen. `curveTrace` dispatches to it when the
+  snap carries (W) scalars (else legacy). Frozen-wing geometry: symmetric (dW=0) is exact to machine
+  prec everywhere; asymmetric tail exponent → w_±/(1−w_±) with residual O(1/τ²·1/u²)→0 (NOT a defect —
+  the u=8 finite-u tail residual ~0.8% is the geometric approach, confirmed |diff|·u²=const).
+- **#5 trade mechanic — R-simple, LABELED HONESTLY** (hard skeptic check): code comment in tradeUpdate
+  + UI sim-aid both state "reserves move on a FIXED curve — NOT the full trades-reshape-the-curve warp
+  (weight-field re-centering u→u−φ, OPEN)." NOT presented as the full warp.
+- **Dollar pipe UNTOUCHED** (§5 hard-stop): executeLeg/closeBand settlement chain byte-unchanged.
+- **Gates:** GH `run_all` does NOT apply (pre-GH). New `engine/verify/wcurve_selfcheck.js` (12 checks:
+  price==slope, arb round-trip, frozen wings sym+asym, elbow rounds, γ>1 guard both directions, seam
+  value+slope @ sNorm*, S*=K·g/(g+1)) — **12 PASS 0 FAIL**; SKIPs-as-pass on pre-(W) builds (no wField
+  export) so HEAD stays green. Did NOT fake/invoke GH gates.
+- **Theory-risk/OPEN (flagged to operator via manager):** (T1/T2) tradeUpdate R-simple — R-paper strong
+  warp (w→φ map) OPEN/#16. (T3) rebase carry-covariance-in-q lemma PROPOSED-only, not Lean. (T4) funding
+  price-anchor p=P + γ→±γ_loc adopted; correct-economic-anchor not proven; γ_loc at-spot not at-strike
+  (T5). (T5) γ_loc-at-strike refinement deferred (used at-live-reserves). Reading A locked (not B). τ
+  label direction (smaller=fatter) is operator's final call. **Open for tester:** browser/visual — τ
+  slider rounds the ATM elbow with wings frozen (overlay two τ); γ<1 wing weight clamps in the UI;
+  trade mechanic honesty note visible.
+
 ## Done (don't redo)
 - GH swap (v25), v26a barrier-remnant fixes (inline slip price, curve-draw, eq marker → engine),
   slippage units fix (both `legSlipFrac`/`legSlipUsd` → mpGeom; old `margPrice` removed; comment
