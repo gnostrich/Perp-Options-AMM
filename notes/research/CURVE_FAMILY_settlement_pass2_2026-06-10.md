@@ -1,5 +1,19 @@
 # Curve-family settlement — PASS 2 (the one narrow question)
 
+> ## ⚠ CORRECTION HEADER (manager, 2026-06-10 — READ BEFORE §5)
+> Skeptic FLAG-OVERSELL on the §5 magnitude (`notes/skeptic/VERDICT_CURVE_FAMILY_PASS2_2026-06-10.md`),
+> **manager-confirmed by re-derivation** (`/tmp/verify_pass2_mag.py`): the "bounded few-percent (3–6%),
+> gate substantially passable" headline is a **single-parameter-point** result. My re-derivation
+> reproduces the base case (w_mid=0.7,Δw=0.2 → +6.0–6.2%, S*_dyn 63.66/65.32 byte-match) AND the
+> skeptic's counter-case: a **wider skew band (w_mid=0.6,Δw=0.3) gives +12% on this same Gaussian-slice
+> machinery** — double the headline — *before* any full-GH-ψ effect the note already flags. So the
+> magnitude is **PARAMETER-DEPENDENT, not a settled "few percent"** (it grows with skew-band width Δw
+> and with 1/τ). **What STANDS (skeptic PASS, manager-reproduced):** the qualitative verdict — value is
+> a genuine blend through the elbow under Reading B; the correction is `γ_loc′/(2γ_loc+1)` (real,
+> lnS-free, not a retrofit); pass-1's catastrophe is NOT reinstated; settlement is exact on the wings /
+> under Reading A / for wing-registered strikes. Only the §5 "small/substantially-passable" SIZE claim
+> is corrected to parameter-dependent (base ~6%, wider skew ~12%, full-GH-ψ TBD).
+
 _research-lead, 2026-06-10. Notes-only theory pass; NO engine edit, NO submit, NO git. Follows the
 manager CORRECTION HEADER on `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`, the skeptic
 verdict `notes/skeptic/VERDICT_CURVE_FAMILY_2026-06-10.md`, and the manager audit

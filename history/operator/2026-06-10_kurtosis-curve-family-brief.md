@@ -68,3 +68,10 @@ _Context: after the manager's plain-English explanation of smooth pasting + the 
 _Context: operator asks for a non-disruptive plain-English status update (no decision demanded). Transcribed verbatim (typos preserved)._
 
 > nondisruotive simple englksh status update
+
+---
+
+## Entry 9 — 2026-06-10
+_Context: operator extends the cold-storage scope to the formal/Lean corpus — add to the skeptic's queue a verify-and-cold-storage pass over the math/Lean that is inconsistent with the established core / not true to the objective (the project did many Lean proofs/theorems "framing things"). Transcribed verbatim (typos preserved)._
+
+> alsso meantimea add to skeptic's queue to verify and coldstorage the math / lean thats inconsistent with the core stuff we establighed ---- we did innumerable lean proofs / theorems etc. framing things --- whats actually true to the objective

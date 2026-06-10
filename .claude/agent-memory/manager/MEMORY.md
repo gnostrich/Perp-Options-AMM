@@ -80,6 +80,30 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   **ESCALATION the skeptic flagged (I must carry to operator):** inventory #4 carry / #5 rebase /
   #9 funding are **LOCKED contracts** (CLAUDE §4) — a locked contract not transferring to the new
   curve is **operator-tier "Changed"**, NOT an ordinary research to-do. Frame to operator as such.
+- **★ SETTLEMENT PASS-2 DONE + skeptic-audited + manager-reproduced (2026-06-10).** Note
+  `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md` (agent afb1d5c6); skeptic verdict
+  `notes/skeptic/VERDICT_CURVE_FAMILY_PASS2_2026-06-10.md` (agent a48db476). **VERDICT (qual.,
+  skeptic-PASS + I reproduced):** under the dynamic optimal-stopping reading (Reading B = team's own
+  MERTON_tie/AIRTIGHT frame) the value is a genuine BLEND through the elbow (Riccati slope ≠ γ_loc);
+  correction `γ_loc′/(2γ_loc+1)` (real, lnS-free, NOT pass-1's artifact); EXACT on wings / under
+  Reading A (curve-intrinsic value-law, but asserts not derives) / for wing-registered strikes.
+  **MAGNITUDE — skeptic FLAG-OVERSELL, manager-confirmed (`/tmp/verify_pass2_mag.py`):** "few-percent /
+  substantially passable" is a SINGLE-PARAM-POINT result. base (0.7,0.2)=+6%; **wider skew (0.6,0.3)=+12%**
+  same machinery, before full-GH-ψ. Parameter-dependent (↑ with Δw and 1/τ); exact-GH = [needs-numeric].
+  **I OVERSOLD this to the operator** in the status update ("a few percent, small/bounded") — corrected.
+  Pass-2 note carries a manager CORRECTION HEADER; evidence audit appended. **Settlement = Reading-A-vs-B
+  SEMANTICS FORK, operator-tier (§7, ITM-rule class) — escalate, do NOT present as small/passable.**
+- **★ FORMAL/LEAN COLD-STORAGE AUDIT — operator entry 9 (2026-06-10): "verify and coldstorage the
+  math/lean thats inconsistent with the core stuff we established … whats actually true to the
+  objective."** This ANSWERS the skeptic's section-C ask-operator item (formal tree pruning was
+  ASK-gated; operator now authorizes). DISPATCHED to skeptic (bg). Brief: audit formal/ corpus
+  (PH/Kähler/Courant/UNIFY/MERTON/GHJ/etc.) against the objective + established core; classify
+  KEEP (true-to-objective / load-bearing) vs COLD-STORAGE (inconsistent-with-core / off-objective
+  framing) vs ASK-OPERATOR; MOVE-not-delete; do-NOT-break the live provenance (formal/INDEX.md,
+  MANAGER_VERIFICATION) without re-pointing; flag anything that's an operator product call. Skeptic
+  PROPOSES; manager re-derives (token-scan/diff, trusted-from-prover discipline) + executes moves +
+  surfaces ambiguous to operator. Same move-not-delete/reversible conditions as the 2026-06-10 docs
+  cold-storage.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

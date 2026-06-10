@@ -161,6 +161,31 @@ inventory, operator answered — remaining live tail = every curve note must dis
    Existence-vs-survival separation CLEAN. Most honest artifact + self-adversarial (lands gate-NOT-
    cleared against team momentum) ⇒ convergence-alarm LOW.
 
+6. **2026-06-10 — CURVE_FAMILY settlement PASS-2 note (verdict #6)** →
+   `notes/skeptic/VERDICT_CURVE_FAMILY_PASS2_2026-06-10.md`. Answers the narrow Q I isolated in #5.
+   **2× PASS (attack failed):** (a) Riccati setup re-derived from scratch — `p'=2r/σ²+p−p²` with
+   μ=−σ²/2 EXACT; `-p`=value log-log slope sound; backward-from-wing isolates the decaying mode;
+   divergence reproduced (τ=0.3 u=0: my −p=2.861 dev+0.527 vs note +0.498; τ-scaling τ=0.05→1.49
+   vs note 1.406). Verdict "single-power-through-elbow=NO under Reading B" CORRECT. (b) the
+   `γ_loc'/(2γ_loc+1)` correction is NOT a retrofit — I hand-linearized the Riccati (p=−γ+d ⇒ RHS
+   d(1+2γ)−d²; adiabatic ⇒ d=−γ'/(2γ+1)), lnS-free, correct +sign, matches solved Riccati ~1e-2 in
+   smooth elbows. Pass-1 +16% table stays RETRACTED (item 6 satisfied, verified). **1× FLAG-OVERSELL
+   (the live one):** "bounded few-percent 3–6%, gate substantially passable" is a SINGLE-PARAM-POINT
+   result. S*-table is a rigorous brentq solve (reproduced: τ=0.05 S*_dyn 63.62 vs note 63.66) — but
+   re-running the SAME Gaussian-slice machinery on a wider band (wmid0.6/Δw0.3, γ_loc∈[1,1.86])
+   gives +12–13% shift, ~2× the headline, BEFORE any GH-ψ effect. Base 6% is a geometric accident:
+   put S* lands at u*≈−0.45 (elbow edge, dev~0.25) not the u=0 ATM peak (dev 1.4); widening Δw moves
+   S* deeper. **1× FLAG-OMISSION (soft):** Δw-sensitivity of the magnitude dropped from frame (the
+   Gaussian-slice caveat IS prominent and honest, but model-dependence has a 2nd axis the note
+   doesn't state). **Reading A vs B fork = LEGITIMATE not a dodge** — note plainly says A "asserts
+   rather than derives" and names B as the team's OWN locked frame (MERTON_tie/AIRTIGHT); routing to
+   operator as settlement-tier (=ITM rule class) correct. Nuance for operator: Reading A trades a
+   PROVED settlement story for an asserted one. **Inventory/creep-back CLEAN** (#7 operator-tier, #6
+   put-only consistent w/ CLAUDE.md β=1 only-put, no retracted claim back, needs-Aristotle ledger
+   honest = NEW lemma not re-instantiation). Convergence-alarm LOW (self-adversarial again).
+   **NEW MINE-TO-DEFEND:** S*-shift Δw-sensitivity (~6%→~13% as Δw 0.2→0.3, Gaussian slice, brentq);
+   the `γ_loc'/(2γ_loc+1)` linearization (hand-derived, correct); put S* sits at elbow EDGE not peak.
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
@@ -206,6 +231,12 @@ inventory, operator answered — remaining live tail = every curve note must dis
 7. **Verification digits with no reproducible map:** manager's commit cited "skew 0.571→0.068
   pushforward PASS" with the space unnamed; unplaceable in any natural pushforward I built.
   A verification claim that can't be re-run is narration with digits. Demand map+script.
+8. **Single-parameter-point magnitudes sold as "the" answer (verdict #6).** The settlement-shift
+  note ran ONE param set (wmid0.7/Δw0.2 → 3–6%) and reported it as the bounded-magnitude verdict;
+  a wider band (Δw0.3) on the SAME machinery doubled it to ~13%. A rigorous solve (brentq, byte-
+  reproducible) is still an oversell if the parameter it's most sensitive to is held fixed and
+  unswept. Sibling of pattern #3 (β=0-vs-β=1): always ask "swept over which knob?" before accepting
+  a magnitude as the answer — re-run it across Δw / w_mid / β / the GH-vs-slice gap myself.
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's

@@ -56,6 +56,20 @@ that it solved a self-consistent object — it does not.
   manager on claims) did its job. Note carries a manager CORRECTION HEADER; §2.3 magnitude + "gate
   blocks rebuild" framing RETRACTED pending the narrower question.
 
+## ★ PASS-2 verification (2026-06-10) — settlement blend + magnitude
+Re-derived `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md` (`/tmp/verify_pass2_mag.py`):
+- **Qualitative verdict CONFIRMED:** under the dynamic optimal-stopping reading (Reading B), value is
+  a genuine blend through the elbow (Riccati slope −p ≠ curve γ_loc); base case S*_dyn 65.32 (τ=0.3) /
+  63.66 (τ=0.05) reproduce the note byte-close; shift vs local fixed point +6.2% / +6.0%. Settlement
+  EXACT on wings / under Reading A / wing-registered strikes. The `γ_loc′/(2γ_loc+1)` correction is real.
+- **Skeptic FLAG-OVERSELL CONFIRMED (magnitude parameter-dependent):** wider skew band
+  (w_mid=0.6,Δw=0.3) → +12.1% (τ=0.3) / +11.8% (τ=0.05) / +8.3% (τ=1.0) on the SAME Gaussian-slice
+  generator — ~2× the base headline, before any full-GH-ψ effect. So "few percent / substantially
+  passable" is NOT settled truth; magnitude grows with Δw and 1/τ; exact-GH elbow size = [needs-numeric].
+- **I told the operator "a few percent, small and bounded" in a status update — that was OVERSOLD;**
+  corrected to the operator. Note carries a manager CORRECTION HEADER. Settlement remains a Reading-A-vs-B
+  semantics fork (operator-tier, §7) — escalated, NOT presented as small/passable.
+
 ## Provenance
 Numeric + analytic by manager (both the original reproduction AND the correction). Nothing
 trusted-from-prover or verified. Curve note NOT merged to main; the skeptic FLAG stands on §2.3/§2.5
