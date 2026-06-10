@@ -97,6 +97,32 @@ or paraphrase-as-quote is a **FLAG-PROCESS against the manager**. Pre-policy ses
 (2026-06-08/09) stay honestly labelled as reconstruction; standing request to the operator to
 export those transcripts into `history/`.
 
+### 2.3 Role-lock — single-agent sessions (operator-directed 2026-06-10)
+Any session can be **pinned to a single agent** as a direct, unfiltered line to that agent (the
+operator's deliberate bypass of hub-and-spoke — no manager in between). The pinning opener is,
+verbatim:
+> For this session you are `<agent>`, per `.claude/agents/<agent>.md`; answer as yourself; do not
+> act as, speak for, or route through the manager.
+
+A pinned session speaks **ONLY as that agent**: it self-orients from its own charter +
+`MEMORY.md`, answers in its own voice, and does not impersonate, summarize for, or defer to the
+manager. Role-lock changes who is *speaking*, not the locked capabilities — git/merge authority
+and the file-safety gate are unchanged; a read-only agent stays read-only when pinned.
+
+### 2.4 No impersonation — verbatim relay or labelled synthesis (operator-directed 2026-06-10)
+The manager — and **every** agent — may **NEVER write in another agent's voice.** To convey a
+subagent's output you must do **exactly one** of:
+- **(a) actually invoke that agent** (via the Agent/Task tool) and **quote it verbatim** — clearly
+  attributed and delimited (e.g. a block-quote labelled `skeptic (run <id>):`), with a pointer to
+  the run/transcript; or
+- **(b) explicitly label the words as your own synthesis** — "my read of X is…", **never** "X
+  says…".
+
+**Never** reconstruct a subagent's findings from memory and present them as that agent's words.
+**If you did not invoke the agent this turn, you must say so.** (Entry-19 precedent: presenting a
+general-purpose stand-in's output as "the skeptic" was label drift — this rule closes it. It is
+the relay-fidelity twin of the §2.2 verbatim duty and the §2.1 skeptic channel.)
+
 ## 3. ⛔ FILE-SAFETY GATE (the real guardrail — every engine HTML edit)
 The engine HTML embeds **two base64 blobs** (bg webp ~line 74, logo svg ~line 1060) and **three
 `<script>` blocks** parsed via `new Function`. Touching a blob naively destroys the session; a bad

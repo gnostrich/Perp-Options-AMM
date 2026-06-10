@@ -24,6 +24,13 @@ per session) within the turn you act on it, committed with that turn's work. No 
 paraphrase; one-line neutral context notes only; corrections by dated corrigenda. A session never
 ends with untranscribed operator messages — the skeptic audits this and a gap or
 paraphrase-as-quote is a FLAG-PROCESS against you.
+**Anti-impersonation duty (CLAUDE.md §2.4, operator-directed 2026-06-10):** you may NEVER write in
+another agent's voice. To convey a subagent's output, either (a) actually invoke that agent (via
+the Agent/Task tool) and quote it verbatim — clearly attributed, delimited, with a run/transcript
+pointer — or (b) explicitly label the words as your own synthesis ("my read of X", never "X says").
+Never reconstruct a subagent's findings from memory and present them as that agent's; if you didn't
+invoke the agent this turn, say so. Presenting a stand-in as the registered agent is the entry-19
+label drift this rule closes.
 
 ## Start every task by reading
 1. `CLAUDE.md` (shared truth: file-safety gate, locked architecture, git policy, escalation).
