@@ -70,10 +70,17 @@ warp family; Esscher slope-law even fails mid-curve for (W)):
 
 ## 5. Base, sequencing, prerequisites
 - **Reference base = v24** (`engine/builds/temporal_mvp_v24_rebase_fixed_2.html`), chosen by the
-  operator for how the curve-warp shows on UX (entry 2). ⚠ Manager finding: v24's own curve is the
-  **barrier** family (not Balancer, not GH) and it has **no smooth-pasting** — so v24 is the
-  **UX/scaffold/shell** reference; its curve is replaced by the new family, and settlement (#7),
-  strike-reg (#8), anchor/funding are re-derive work.
+  operator for how the curve-warp shows on UX (entry 2). **CORRECTED 2026-06-10 (intern code-read,
+  entry 18):** v24's reserve curve is the **constant-product / Balancer-type shifted hyperbola**
+  `(x−α)(y−β)=αβ`, `w=α/x`, `getMP_raw=w·y/((1−w)·x)` (true |dy/dx|, no price/slope gotcha) — i.e. the
+  **Balancer base the (W) curve generalizes** (operator's "sort of pure balancer" was right). My
+  earlier "v24 = barrier curve" was a grep-count mislabel — the 39 `barrier` hits are an option-type
+  MODE (barrier-vs-spread), not the reserve curve. v24 has **no smooth-pasting** (the "jump ATM"
+  caveat holds). The 4 curve fns to swap to (W): `getMP_raw` (~1597), `tradeUpdate` (~1617, Identity-IV
+  hyperbola), `rebase` (~1629), `arbitrageToOracle` (~1640); pricing `mark` (~1601); NO kurtosis knob
+  in the UI yet (must be ADDED). Settlement (#7), strike-reg (#8), anchor/funding = re-derive work.
+  Blobs match v26c canonical (file-safety gate works on the v27 build file). GH `run_all` gates N-A
+  (v24 pre-GH) ⇒ the build needs (W)-appropriate gates.
 - **Sequencing:** engine-faithfulness pivot = DONE (5 faith gates HARD, manager-verified); the
   paper's w-warp build (ruling 2) is the standing next build; this curve family is its curve.
 - **Prerequisite before research-lead works this:** research-lead MEMORY is QUARANTINED (still

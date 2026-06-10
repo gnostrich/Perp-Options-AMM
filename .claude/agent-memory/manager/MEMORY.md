@@ -28,13 +28,16 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   - **(ii) RESOLVED → v24 is the reference base** (operator: "best reference because its sort of
     pure balancer … this version im comfortable with because how the curve warps actually and shows
     on UX"; caveats: "lags an edit or two on settlements (jump ATM)", "anchor curve and funding
-    must generalise when we swap the curve"). **MANAGER FINDING (verified on disk):** v24 =
-    `temporal_mvp_v24_rebase_fixed_2.html` is the **BARRIER** curve (39 `barrier` refs, **0**
-    `balancer`, no `ghCalibrate`/`ghDelta` → not GH), with **no smooth-pasting** (0 `smoothpast`/
-    `freeBoundary` — confirms the "jump ATM" caveat). So "pure balancer" is the operator's loose
-    label; v24's role = UX/scaffold/shell reference (the curve is replaced by the new kurtosis
-    family anyway). One-line heads-up given to operator; settlement (#7), strike-reg (#8), anchor
-    curve, funding all = re-derive-on-new-curve work (matches the brief's "re-derive, don't assume").
+    must generalise when we swap the curve"). **MANAGER FINDING — CORRECTED 2026-06-10 (entry 18
+    intern code-read; my earlier claim was WRONG):** v24's reserve curve is the **constant-product /
+    Balancer-type shifted hyperbola** `(x−α)(y−β)=αβ`, weight `w=α/x`, `getMP_raw=w·y/((1−w)·x)`
+    (the true `|dy/dx|` — NO price/slope gotcha, that's GH-only). **NOT a "barrier curve"** — the
+    39 `barrier` string hits I grep-counted are an OPTION-TYPE MODE (line 1613 "barrier swap" /
+    1650 `isBarrier`: barrier-vs-spread payoff), not the reserve curve. **The operator's "sort of
+    pure balancer" was RIGHT; my "v24 = barrier curve" was a grep-count mislabel — owned to the
+    operator.** Still: no `ghCalibrate` (pre-GH, correct) and no smooth-pasting (0 `smoothpast`/
+    `freeBoundary` — the "jump ATM" caveat holds). v24 = the Balancer BASE the (W) curve generalizes
+    (not just a UX shell). Settlement (#7), strike-reg (#8), anchor/funding = re-derive-on-new-curve.
   - **(i) RESOLVED → "1a" = the curve's LOOK / geometry** (elbow roundness), NOT a 4th-moment
     statistic. Knob is a curve-shape object.
   - **(iii) RESOLVED via the polar-lens analogy** (operator entry 3 + source transcript
@@ -174,6 +177,19 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   "drift apart ~2–7×" — operator correctly read it as just CURVATURE (price-per-reserve sensitivity,
   ~1/τ in the elbow), no discrepancy. Aligns with the skeptic FLAG-OVERSELL. The true carry point is
   only coordinate hygiene (use the price coordinate), NOT an economic problem. Corrected to operator.
+- **★ SPEED-RUN BUILD (operator entry 18: full (W) build off v24 ASAP ~1hr, autonomy, skeptic theory-risk
+  within core charter).** 3 streams dispatched concurrently. **Intern setup/recon DONE (agent a0303d8f):**
+  WIP file `engine/builds/temporal_mvp_v27_wkurtosis_WIP.html` = byte-identical v24 copy (md5 6f606f52,
+  committed seed). **Blobs MATCH v26c canonical** (ab663f5c@74 / c505b08a@1060) ⇒ file-safety gate works
+  on v27 unchanged. 3 scripts parse (engine 1577–2101 / state 2105–2540 / ui 2544–4259), IIFE intact.
+  v24 curve = constant-product/Balancer hyperbola (see v24 correction above). 4 fns to swap: getMP_raw
+  ~1597, tradeUpdate ~1617, rebase ~1629, arbitrageToOracle ~1640; mark ~1601; NO knob in UI (must ADD).
+  **GATE NOTE:** GH `run_all` errors on v27 (no ghCalibrate — expected, v24 pre-GH, NOT corruption) ⇒
+  build needs (W)-appropriate gates, not GH ones. **research-lead BUILD_SPEC (agent ac0fe81f) still
+  running; skeptic posture locked (a11a73ed, POSTURE_SPEEDRUN).** NEXT: spec lands → intern-2 builds (W)
+  curve+knob+pricing+settlement+trade-warp into v27 (file-safety HARD, STOP-ON-RED) → I re-derive +
+  skeptic fast charter/honesty pass + tester live → hand operator. Deliverable floor: playable
+  knob+pricing core guaranteed; trade-warp if it lands safely; honest labels on what's theory-risk.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
