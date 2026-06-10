@@ -169,6 +169,13 @@ _Context: operator adds that the manager can deliver whenever it's ready (no rus
 
 ---
 
+## Entry 24 — 2026-06-10
+_Context: responding to the warp-visibility fork, operator directs a diagnostic — compare v27's per-trade warp magnitude against v24 (the ordinary Balancer curve the operator is comfortable with), starting v27 at the kurtosis implied by the ordinary Balancer curve, to see if they're the same order of magnitude. Transcribed verbatim._
+
+> compare with v24 and see if we have similar order of magnitude when we start with the same kurtosis implied by the ordinary balancer curve sort
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
