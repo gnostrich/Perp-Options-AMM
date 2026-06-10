@@ -129,6 +129,20 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   objective mapping, did NOT re-derive proofs. ON EXECUTION: I token-scan/diff the actual moves
   (trusted-from-prover discipline) + re-point INDEX/MANAGER_VERIFICATION/RESULTS/DIFF_LEDGER + truth-up
   both memories.
+- **★ OPERATOR DELEGATED THE PENDING DECISIONS TO THE SKEPTIC (entry 14: "give these to the skeptic
+  and let him take a call") — SKEPTIC RULED + MANAGER EXECUTED (2026-06-10,
+  `notes/skeptic/VERDICT_DELEGATED_DECISIONS_2026-06-10.md`):**
+  - **A1 PH/Kähler/Courant framing → KEEP-as-motivation, annotate.** EXECUTED: added `[motivation-layer]`
+    section to `formal/INDEX.md` (tags rows T2/CTPH/PH3/PH4b/kahler/courant; PH6+B1 stay load-bearing KEEP).
+  - **A2 superseded run-twins → LEAVE, annotate only.** EXECUTED: INDEX note (annotate-not-move; INDEX
+    already cites superseders). NO formal file moved.
+  - **B 3 HELD docs → KEEP in place, no ref edits** (cited from do-not-touch engine tree; move = split-brain
+    pointer around the price-vs-slope gotcha doc). No action.
+  - **C next curve work → PROCEED NOW**, order #4 carry → {#5,#9,#11} parallel → #16 last. EXECUTED:
+    dispatched research-lead (agent abee6437) for **#4 carry ONLY** (deps wait on it), traps as gate
+    (dq/du≠1; β=1-not-β=0; escalate non-transfer as "locked-contract-does-not-transfer"). On return:
+    I re-derive + skeptic pass before merge; then dispatch the parallel batch.
+  Cold-storage docs run (16 archived) stands. All four calls owned by skeptic; manager executed mechanics only.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

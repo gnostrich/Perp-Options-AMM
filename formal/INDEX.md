@@ -21,6 +21,25 @@ remains the append-style run ledger (narrative detail); THIS file is the navigab
 
 ## Status legend: ✅ grounded · ⚠ carried · ❓ conjectural · ⛔ obstruction/no-go
 
+## ⟢ MOTIVATION-LAYER tag (skeptic ruling 2026-06-10, `notes/skeptic/VERDICT_DELEGATED_DECISIONS_2026-06-10.md`; truth-to-objective audit `VERDICT_FORMAL_TRUTH_TO_OBJECTIVE_2026-06-10.md`)
+Two ORTHOGONAL axes — do not conflate: **provenance** (every row is trusted-from-prover) vs
+**truth-to-objective** (relevance to what we are building: the curve-warp / kurtosis-knob AMM and its
+locked contracts). The operator delegated the keep-vs-store call to the skeptic; ruling = **KEEP in
+place, annotate (do NOT move)**.
+- **`[motivation-layer]`** — trusted-from-prover but **OFF the curve/kurtosis objective**: the
+  port-Hamiltonian / metriplectic / Kähler / Courant **framing** = rows **T2** (single-μ metriplectic
+  core), **CTPH** (continuous-time PH), **PH3** (LVR leak ≥0), **PH4b** (no-floor), **kahler**
+  (conjectural), **courant** (obstruction). Kept as the paper's conservation-law motivation;
+  **not load-bearing for the build**. (PH6 rebase = contract #5 and B1 solvency = ship-gate #13 are
+  NOT motivation-layer — they straddle locked contracts and stay load-bearing KEEP.)
+- **On-objective / load-bearing (KEEP, untagged):** the settlement spine R1 / T1a / T1b / MERTON_tie;
+  the curve/slippage/Esscher results R2–R5, GHJ, GHmeasure, frontier, GHMaps, C3; PH6, B1.
+- **Superseded run-twins** (bare `UNIFY/`, `UNIFY_stage0/`, non-grounded `GHJ/GHcoercive/PH3/PH4b/CTPH`,
+  pre-harden `T1b_optimality/`, RUN-4 `Courant/Kahler/`, `probe_optstop/`) are **retained in place,
+  annotate-not-move** — this INDEX already cites the superseding (`_grounded`/`_clean`/CLOSEOUT)
+  versions in each row; physically moving them buys only tidiness against the cgf/MERTON discharge-chain
+  hazard, so annotation dominates.
+
 | Result (headline thm) | Meaning | Depth | Archive (returned .lean) | Run |
 |---|---|---|---|---|
 | `valueMatch_A` / `slopeMatch_A` (R1) | PH-5 C¹ smooth-pasting at S*=Kγ/(γ+1), both wings | ✅ GROUNDED | R1/extracted/.../R1.lean | big 06-08 |
