@@ -21,9 +21,13 @@ skeptic enforces this).
 1. **Engine-faithfulness pivot UN-HELD and ordered FIRST** — built and gated before any new
    theory work (the live engine must reproduce every proven construct; the unproved spec↔engine
    gap is where the dodging lived).
-2. **Trades bend the curve: YES.** A trade should reshape the curve itself, not only move the
-   pool along a fixed curve. This is a standing UNIMPLEMENTED requirement (inventory item 16) —
-   today's engine and all proposed families are fixed-curve; no design note may imply otherwise.
+2. **Trades bend the curve: YES — and it is w that a trade changes** (entry 16 verbatim: "yes its
+   w that the trade changes (while x and y also change to be faithful to actual reserves, refer
+   the paper) and that warps it"). Reference spec = the paper's Trade Formula (α=x·w, β=y·(1−w)
+   individually conserved; w=α/x derived; paper line 33: "Trades skew the AMM curve instead of
+   moving the reserves point along it"). Standing UNIMPLEMENTED requirement (inventory item 16) —
+   today's engine moves a point on a fixed curve and does NOT implement the paper's core trade
+   mechanic; no design note may imply otherwise. Build target sequenced AFTER the pivot.
 3. **Kurtosis = "steepness / flatness of the curve, we set it so the curve is appropriate for
    pricing perpetual american style options for an asset of some vol, and it isn't / doesn't have
    to be changed by trades."** The knob is the curve's geometry, vol-calibrated at setup, static

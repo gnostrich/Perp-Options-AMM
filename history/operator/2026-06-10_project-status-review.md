@@ -147,3 +147,13 @@ trades. Skeptic note pinned in charter (objective discipline)._
 _Context: rebuke of the manager's word "lean" (meant as tilt/skew; collides with Lean the
 theorem prover). Second vocabulary violation by the manager in one session. Word retired;
 question restated using only the operator's own terms (w, skew)._
+
+## 16
+> yes its w that the trade changes (while x and y also change to be faithful to actual reserves,
+> refer the paper) and that warps it
+
+_Context: completes ruling 2. The warp-with-trades requirement is now fully specified: a trade
+changes w AND x,y (reserves faithful), per the paper's Trade Formula (α=x·w and β=y·(1−w)
+individually conserved; w=α/x derived; paper line 33: "Trades skew the AMM curve instead of
+moving the reserves point along it"). The current GH engine does not do this — build target
+after the pivot._
