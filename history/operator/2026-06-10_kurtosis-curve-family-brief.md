@@ -131,3 +131,10 @@ _Context: operator pushes back on the manager's "a step in reserves can be ~2–
 _Context: operator asks when they can get a working version to play with. Timeline/scope question. Transcribed verbatim._
 
 > ok if we're good when can i actually get a version to play around with!?
+
+---
+
+## Entry 18 — 2026-06-10
+_Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
+
+> fast track all 3 concurrently and get me the whole thing off the v24 base asap, my target is around 1 more hour of work, and you have autonomy --- let the skeptic know that we want to prioritise speed in this run, and that he can take some theory-risk allowing this to build, as long as it meets the core charter I set with him
