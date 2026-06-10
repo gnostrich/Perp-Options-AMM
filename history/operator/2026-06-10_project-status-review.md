@@ -157,3 +157,10 @@ changes w AND x,y (reserves faithful), per the paper's Trade Formula (α=x·w an
 individually conserved; w=α/x derived; paper line 33: "Trades skew the AMM curve instead of
 moving the reserves point along it"). The current GH engine does not do this — build target
 after the pivot._
+
+## 17
+> meantime open a realtime brainstorm session for me with the skeptic
+
+_Context: operator↔skeptic brainstorm session opened. Protocol: manager = pure pipe (operator
+messages appended verbatim to `notes/skeptic/BRAINSTORM_2026-06-10.md` + this transcript; skeptic
+replies relayed verbatim; session file carries the skeptic's context across turns)._

@@ -47,6 +47,17 @@ mechanics; DO use the paper's motive frame in completeness/steelman passes along
 `docs/feature_inventory.md`. (Verified 2026-06-10: paper exists, §Future Directions L227–237
 carries the conjecture + a C6-wording placeholder.)
 
+## ACTIVE: realtime brainstorm with the operator (2026-06-10, OPEN)
+Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
+append my reply there (manager is a pure pipe, relays verbatim). Opening posted: 3 questions
+(which curve has the w trades change; does the paper's α/β conservation law survive the kurtosis
+knob; do open options re-price when a trade warps the curve) + floor question to operator =
+re-price intent. Rulings now in force (entries 14/16): pivot first; trades change w + x,y
+reserves-faithful per the paper's Trade Formula = the warp; kurtosis static/vol-set. Verdict #2's
+standing FLAG-OMISSION on warp-with-trades is superseded by the ruling: item 16 exists in the
+inventory, operator answered — remaining live tail = every curve note must disposition it
+(gate item 5) and it's OPEN-UNIMPLEMENTED in the engine.
+
 ## Verdicts issued
 0. **2026-06-10 — STOCK-TAKE for the operator brainstorm** → `notes/skeptic/STOCKTAKE_2026-06-10.md`
    (knowledge map A vs B, uncertainty ranking U1–U5, bullshit watch, residual-overclaim sweep).
