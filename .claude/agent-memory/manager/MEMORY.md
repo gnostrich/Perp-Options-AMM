@@ -1,6 +1,18 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
 
 ## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
+**CURRENT HEAD md5 = `1eebfcd6f6ff4f4e3df5f745ac145f19`** (promotion `b245bfda` → UX-restore
+`9d22cffd` [entry 29: v24 defaults back — x=10/oracle 80k/y≈303448 no-load-arb equilibrium/φ₀=u₀
+elbow-at-carry; lp-y-delta dynamic; LIQ-PRICE sane; τ slider→stepper] → DISPLAY-FIX `1eebfcd6`
+[clickable spinners un-hidden; Spot KPI + header → marginal basis $80,000.00/1.0000; svg blob line
+1060→1064, md5 canonical — run_all blob check now LINE-AGNOSTIC]). **OPERATOR-PLAYABLE: tester-
+confirmed ×2** (load at $80k → curve renders → τ arrows click-step 0.05 + canvas redraws → trades
+execute w/ live readouts → over-size gets honest frozen-wing banner; 0 console errors). Gates green
+both branches (v27 selfcheck 21/21 [HARD]; demoted v26c GH suite via explicit path). **OPEN (honest):**
+warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; anchor-overlay viz (optional —
+makes the elbow-local warp legible); y0=303,448-vs-800,000 default delta = the one entry-29 item
+LEFT FOR OPERATOR RULING (equilibrium-at-load chosen, γ>1 makes v24's exact y impossible);
+portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note-only per entry 28).
 **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
 canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
 an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in

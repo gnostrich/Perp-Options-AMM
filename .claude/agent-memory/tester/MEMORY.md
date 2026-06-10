@@ -1,10 +1,32 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the entry-29 UX-restore operator-playability test (build
-`9d22cffd`) + ledger entry._
+_Last updated: 2026-06-10, after the FAST display-fix spot-check (build `1eebfcd6`) + ledger entry._
 
-## ★★★ MOST RECENT — UX-RESTORE `9d22cffd` TESTED: OPERATOR-PLAYABLE = YES, two UX flags OPEN
-HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `9d22cffd6a0f002f359eed81d7157203`
-(UX-restore on the promoted v27 line; was `b245bfda`). Live Playwright, operator-style (real
+## ★★★★ MOST RECENT — DISPLAY-FIX `1eebfcd6` SPOT-CHECK: 3/3 PASS ×2 — operator's exact ask MET
+HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `1eebfcd6f6ff4f4e3df5f745ac145f19`
+(display fix on `9d22cffd`; CSS + display wiring only, engine math untouched). Live Playwright ×2,
+byte-identical verdicts, 0 console errors. File-safety GREEN — NOTE: **svg blob line shifted
+1060→1064** (new CSS above it; line-md5 still `c505b08a…` canonical, webp `ab663f5c…` L74);
+3 scripts parse.
+**Verdicts:** (1) τ spinner arrows VISIBLE + MOUSE-CLICKABLE (CSS L331-337 inner-spin-button) —
+up-click 0.30→0.35, curve redraws (canvas dataURL diff), down-click back; ALL settings/perp number
+inputs show spinners (real ids: tau-input, wminus-input, wplus-input, perp-margin, kappa-input,
+tick-hours — NOT wneg/wpos). PASS. (2) kpi-spot-usd $80,000.00 / kpi-spot 1.0000 at load
+(getMP_raw basis, L4304-4306; was $30,344.83/0.3793 y/x). PASS. (3) hdr-pool-spot
+"spot $80,000.00" (L4256 — manager fixed unflagged header same basis). PASS.
+**Both my entry-29 OPEN residuals (spinner CSS, Spot basis) → RECONCILED-in-`1eebfcd6` in the
+ledger** (+ new display-fix entry, table rows #1/#3/#15 re-rowed, item 0b updated). Transcript
+re-scanned: no operator entries after 29 — entry-29 clauses (updown arrows, v24 values) now MET;
+y0 default-delta still the only OPEN-for-ruling from that objection.
+**Gotchas:** #tau-input is on the Settings SUBTAB — harness must `click('.tab[data-subtab=
+"settings"]')` before locating it (scrollIntoViewIfNeeded times out otherwise). wcurve-status text
+is τ-invariant at 2dp (γ_loc(ATM)=2.64 at τ 0.30 and 0.35) — use canvas dataURL diff as the
+update evidence, not the status string.
+**Repro:** `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_ux_spotcheck.mjs`
+(exit 0 = all pass). Evidence `evidence/v27_ux/D_01..D_08` + `trace_ux_spotcheck.json`.
+
+## Prior — UX-RESTORE `9d22cffd` TESTED: OPERATOR-PLAYABLE = YES, two UX flags (since RECONCILED in `1eebfcd6`)
+Build md5 `9d22cffd6a0f002f359eed81d7157203` (UX-restore on the promoted v27 line; was
+`b245bfda`; superseded by `1eebfcd6` above). Live Playwright, operator-style (real
 clicks/keys), ×2 byte-identical, 0 console errors. Blobs canonical, 3 scripts parse.
 **Verdicts (full detail in DIFF_LEDGER UX-restore entry):**
 - Load PASS: oracle 80000, marginal $80,000.000 at load, curve fracW 0.981, lp-y-delta $0.00

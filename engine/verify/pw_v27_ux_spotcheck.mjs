@@ -42,6 +42,8 @@ if (hdrBox) await page.screenshot({ path: path.join(evid, 'D_03_hdr_pool_spot_cr
   clip: { x: Math.max(0, hdrBox.x - 40), y: Math.max(0, hdrBox.y - 40), width: 700, height: 120 } });
 
 // ---- Item 1: tau spinner mouse-click ----
+await page.click('.tab[data-subtab="settings"]');
+await page.waitForTimeout(400);
 const tau = page.locator('#tau-input');
 await tau.scrollIntoViewIfNeeded();
 const before = await page.evaluate(() => ({
@@ -87,7 +89,7 @@ trace.tau = {
 // ---- Other settings fields show spinners (computed-style probe + closeups) ----
 trace.spinnerStyle = await page.evaluate(() => {
   const out = {};
-  for (const id of ['tau-input', 'wneg-input', 'wpos-input', 'perp-margin', 'w-neg', 'w-pos']) {
+  for (const id of ['tau-input', 'wminus-input', 'wplus-input', 'perp-margin', 'kappa-input', 'tick-hours']) {
     const el = document.getElementById(id);
     if (!el) { out[id] = 'missing'; continue; }
     out[id] = getComputedStyle(el, '::-webkit-inner-spin-button').appearance

@@ -18,11 +18,11 @@ transcripts to distill my objections to each version, open questions etc."** (op
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
-| # | Feature (inventory) | Current state (as of v27 HEAD **UX-restore build `9d22cffd`**, 2026-06-10; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
+| # | Feature (inventory) | Current state (as of v27 HEAD **display-fix build `1eebfcd6`**, 2026-06-10; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
 |---|---|---|---|---|
-| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side) | UX-restore `9d22cffd` | DESIRABLE — v24 feel restored; Spot-KPI value flag OPEN |
+| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side). **Display-fix `1eebfcd6`: Spot($)/Spot KPI + hdr-pool-spot re-pointed to the marginal getMP_raw — $80,000.00 / 1.0000 / "spot $80,000.00" at load (v24 values)** | display-fix `1eebfcd6` | DESIRABLE — v24 feel restored; Spot-KPI basis RECONCILED-in-`1eebfcd6` (y0 delta OPEN-for-ruling) |
 | 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED by operator ruling (override, not resolved) |
-| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **FLAG: the clickable up/down ARROWS are CSS-hidden on the settings panel** (L326-328 webkit-appearance:none) — mouse-click stepping is dead on τ (band inputs DO show clickable arrows) | UX-restore `9d22cffd` | DESIRABLE math/control; arrow-affordance OPEN (operator asked for updown arrows) |
+| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | display-fix `1eebfcd6` | DESIRABLE — stepper complete; operator's updown-arrows ask MET |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
 | 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled | v27 | OPEN lemma — theory-risk-accepted |
 | 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 | DESIRABLE — Reading A ruled |
@@ -34,7 +34,7 @@ changed, every entry, no exceptions)
 | 12 | getMP_raw price-coord gotcha | HEAD (v27): price == geometric slope EXACTLY on (W) (no e^μ factor); code comment warns against re-introducing the GH factor on a cross-port | v27 | DESIRABLE — moot by construction, warning kept |
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
-| 15 | File-safety gate | UX-restore build `9d22cffd`: blobs canonical `ab663f5c…`/`c505b08a…` (line-md5, tester re-verified), 3 scripts parse; selfcheck 21/21 (manager); 0 console errors live ×2 | UX-restore `9d22cffd` | DESIRABLE — stable |
+| 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | display-fix `1eebfcd6` | DESIRABLE — stable |
 | 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED(operator, entry 28) |
 
 ## Entry template
@@ -112,7 +112,7 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    per-trade warp IS subtle on screen); the operator promoted with that fact on the table — an
    override, not a fix. Residual polish OPEN: anchor-overlay / amplified-warp viz.
 
-0b. **★ v29-objection (entry 29) — "not able to play with it" / v24-UX-divergence / no-sliders — LARGELY ADDRESSED by the UX-restore (`9d22cffd`), two residuals OPEN.** [#1, #3]
+0b. **★ v29-objection (entry 29) — "not able to play with it" / v24-UX-divergence / no-sliders — ADDRESSED; both residuals RECONCILED in display-fix `1eebfcd6`.** [#1, #3]
    Verbatim (`history/operator/2026-06-10_kurtosis-curve-family-brief.md` Entry 29
    [verbatim-transcript]): "do a quick UX test, I dont know what you did in the past but i'm not
    able to play with it. why has anything in the UX changed from the v24 case including default
@@ -123,6 +123,12 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    CSS-hidden — mouse-click stepping dead on the knob the instruction was about (keyboard arrows
    work); (ii) Spot ($) KPI reads $30,344.83 (raw reserve ratio y/x) where v24 showed $80,000 —
    the first dollar number on screen still diverges from v24. See the UX-restore entry below.
+   **★ UPDATE (display-fix `1eebfcd6`, 2026-06-10): both residuals RECONCILED (tester live ×2)** —
+   (i) spinner CSS un-hidden: τ up-arrow mouse-click steps 0.30→0.35 + curve redraws
+   (D_04/D_06); (ii) Spot($)/Spot read $80,000.00 / 1.0000 at load (marginal basis, D_02) and
+   hdr-pool-spot reads "spot $80,000.00" (same basis, D_03). The operator's updown-arrows +
+   $80k-world ask is MET. Remaining from the v24-divergence clause: y0 default-delta only
+   (OPEN-for-ruling).
 1. **Curve / kurtosis-knob family — RULED to (W) + Reading A; sub-flags below.** [#2, #3, #6]
    The curve family is now RULED: the (W) weight-profile family on the v24 base (Entry 2 "v24 is
    the best reference because its sort of pure balancer", Entry 4 "yes" to the polar-lens
@@ -669,6 +675,66 @@ YES (load → curve at $80k → step knob → trade, ×2 clean); two UX flags OP
 
 ---
 
+## v27 UX-restore `9d22cffd` → DISPLAY-FIX `1eebfcd6` (3 display fixes after the entry-29 UX verdict: τ spinner CSS, Spot KPI basis, header spot basis)   [status: HEAD (in-place display fix on the promoted line); tester FAST spot-check live ×2]
+_Tester live-Playwright Chromium 2026-06-10, FAST spot-check scoped to the 3 fixes, reproduced ×2
+with byte-identical verdicts. Build `HEAD_temporal_mvp_v27_wkurtosis.html` md5
+`1eebfcd6f6ff4f4e3df5f745ac145f19`. File-safety GREEN: blob line-md5s `ab663f5c…` (webp L74) /
+`c505b08a…` (svg now at L1064 — line number shifted by the new CSS, content canonical), 3 scripts
+parse (36808/26679/83563 chars), 0 console/page errors._
+
+**FEATURES:** #3 (τ stepper arrows un-hidden — `.field-input-wrap` spinner CSS L331-337 now
+inner-spin-button/opacity 1, settings panel + perp form), #1/display (Spot + Spot($) KPI re-pointed
+to the marginal `getMP_raw` — display wiring only, L4304-4306), #1/display (hdr-pool-spot same
+marginal basis, L4256 — a header line I had NOT flagged; the manager fixed it same-basis in the
+same pass). **None beyond** — CSS + display wiring only, engine math untouched (#2, #4–#14, #16
+not in scope; #13 still the open ship-gate); #15 file-safety re-verified.
+
+**PER-ITEM VERDICTS:**
+- **1. τ up/down arrows MOUSE-CLICKABLE — PASS (tester-confirmed ×2, pixel + value + canvas).**
+  Arrows now VISIBLE on the τ field (`D_04_tau_field_closeup_now.png` vs the `C_08` hidden-arrow
+  baseline). Real mouse click on the up arrow steps **0.30→0.35** and the CURVE REDRAWS (canvas
+  dataURL differs pre/post); down-click returns 0.35→0.30. Computed-style probe: ALL settings/perp
+  number inputs now show spinners (tau, wminus, wplus, perp-margin, kappa, tick-hours — all
+  opacity 1); pixel sample `D_08_other_field_spinner.png` (kappa + tick-hours, arrows visible).
+  Observation (not a flag): the wcurve-status text "γ_loc(ATM)=2.64 · wings γ₋=1.50, γ₊=5.67" is
+  identical at τ=0.30 and 0.35 at displayed precision — the canvas redraw is the binding evidence
+  of the live update.
+- **2. Spot KPI reads the $80k world at load — PASS (tester-confirmed ×2, pixel + DOM + live
+  engine).** `kpi-spot-usd` = **$80,000.00**, `kpi-spot` = **1.0000** (was $30,344.83 / 0.3793 raw
+  y/x). Live cross-check: `Store.state.oracle`=80000, `Engine.getMP_raw(pool)`=80000.00000000001 —
+  the KPI now equals the marginal. `D_02_kpi_spot_crop.png` (SPOT 1.0000 · SPOT($) $80,000.00 ·
+  W(DERIVED) 0.7250 · DEPTH K 170.83 — kpi-w stays the honest (W) weight per the code comment).
+- **3. hdr-pool-spot — PASS (tester-confirmed ×2, pixel + DOM).** Header reads exactly
+  **"spot $80,000.00"** (same `getMP_raw` basis, L4256). `D_03_hdr_pool_spot_crop.png`.
+- **No console/page errors, both runs.** (Harness needed one nav fix — click the Settings subtab
+  before reaching τ; harness bug, not a build finding.)
+
+**DESIRABLE:** all three operator-facing display residuals closed; the entry-29 ask — clickable
+up/down arrows + the $80k world on screen — is now MET end-to-end. [#1, #3]
+**UNDESIRABLE:** none new found in scope. (Carried OPENs unchanged: y0=303,448.28 default-delta
+OPEN-for-ruling [#1]; unported GH-line items D2/D9/D10/D11/D13/D14/D16; #13 ship-gate; funding
+theory-risk [#9].)
+**NEUTRAL:** svg blob line number 1060→1064 (CSS insertion above it; content md5 canonical).
+
+**OPERATOR-VOICE:** no new operator entries since 29
+(`history/operator/2026-06-10_kurtosis-curve-family-brief.md` ends at Entry 29, re-checked this
+run). This pass answers Entry 29's two clauses that were OPEN [verbatim-transcript]: "I mentioned
+also I dont want sliders anymore just updown arrows with appropriate sesicitivty" → up/down-arrow
+CLICKABILITY now MET (was the open residual; evidence D_04/D_06 + click-step ×2); "why has
+anything in the UX changed from the v24 case including default parameters?" → the Spot/Spot($)/
+header readouts now show the v24 load values ($80,000.00 / 1.0000) — KPI-value divergence
+RESOLVED(evidence: D_02/D_03 + live DOM ×2). Still pending from that clause: the y0=303,448.28
+default-parameter delta — OPEN-for-ruling, unchanged by this pass.
+
+**EVIDENCE:** `evidence/v27_ux/` — D_01_load_kpis, D_02_kpi_spot_crop, D_03_hdr_pool_spot_crop,
+D_04_tau_field_closeup_now (arrows visible; baseline C_08 = hidden), D_05_tau_field_hover,
+D_06_tau_after_upclick (value 0.35), D_07_full_after_upclick, D_08_other_field_spinner,
+trace_ux_spotcheck.json. Harness `engine/verify/pw_v27_ux_spotcheck.mjs` (run from `engine/`,
+PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers). **VERDICT: 3/3 PASS ×2, 0 console errors — the
+operator's exact ask (clickable up/down arrows, $80k world) is MET.**
+
+---
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
@@ -683,8 +749,8 @@ YES (load → curve at $80k → step knob → trade, ×2 clean); two UX flags OP
 | Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — default now asymmetric x10/y12 w₋0.60/w₊0.85 Δw0.25; τ + trades live on load |
 | Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — label now states the strong-form φ warp ships (tester-confirmed verbatim) |
 | Oracle/pool-default blast radius: lp-y-delta shows −$799,988 (hardcoded y−800000 baseline, L4295) + Create-Perp LIQ price −9995.56 (degenerate at oracle 4.44 / $1000 margin) | v27 render-fix (`b245bfda`, oracle→4.44 un-gated default) | **RECONCILED in UX-restore `9d22cffd`** — lp-y-delta = dynamic `_initial_y` baseline (L4311), reads $0.00 at load / $156.20 after the test trade; Create-Perp LIQ sane at $80k defaults: 8.0×, long $70,000.00 / short $90,000.00 (tester-confirmed live ×2) |
-| Spot KPI basis: “Spot ($)” shows $30,344.83 = raw reserve ratio y/x, NOT the pool marginal ($80,000) — v24 showed $80,000 at load; first dollar number the operator sees contradicts the $80k world (kpi-spot 0.3793 / kpi-w 0.7250 same basis) | UX-restore `9d22cffd` (exposed by equilibrium-at-load y0) | OPEN — intern: point kpi-spot/kpi-spot-usd at the marginal (getMP_raw) or relabel honestly |
-| τ (and all settings-panel/perp-form) number inputs: up/down spinner ARROWS hidden by CSS (`.field-input-wrap … ::-webkit-inner-spin-button { -webkit-appearance:none }` L326-328) — mouse-click stepping dead on τ (verified: click ×2 no-ops; band-price inputs with the L938-950 visible-spinner CSS DO step 120000→120500 on click); keyboard arrows work | v24 base CSS, carried into v27; bites NOW because the operator's no-sliders ruling makes arrows the only knob affordance | OPEN — one-line CSS fix: give .field-input-wrap inputs the same inner-spin-button treatment (at least τ) |
+| Spot KPI basis: “Spot ($)” shows $30,344.83 = raw reserve ratio y/x, NOT the pool marginal ($80,000) — v24 showed $80,000 at load; first dollar number the operator sees contradicts the $80k world (kpi-spot 0.3793 / kpi-w 0.7250 same basis) | UX-restore `9d22cffd` (exposed by equilibrium-at-load y0) | **RECONCILED in display-fix `1eebfcd6`** — kpi-spot/kpi-spot-usd re-pointed to the marginal getMP_raw (display wiring only, L4304-4306): reads **$80,000.00 / 1.0000** at load, tester pixel+DOM ×2 (`D_02_kpi_spot_crop.png`); hdr-pool-spot fixed to the same basis (L4256, `D_03_hdr_pool_spot_crop.png` — the header line I had not flagged, manager caught it same pass) |
+| τ (and all settings-panel/perp-form) number inputs: up/down spinner ARROWS hidden by CSS (`.field-input-wrap … ::-webkit-inner-spin-button { -webkit-appearance:none }` L326-328) — mouse-click stepping dead on τ (verified: click ×2 no-ops; band-price inputs with the L938-950 visible-spinner CSS DO step 120000→120500 on click); keyboard arrows work | v24 base CSS, carried into v27; bites NOW because the operator's no-sliders ruling makes arrows the only knob affordance | **RECONCILED in display-fix `1eebfcd6`** — `.field-input-wrap` spinner CSS un-hidden (L331-337, inner-spin-button + opacity 1): τ up-arrow MOUSE-CLICK steps 0.30→0.35 and the curve redraws (canvas diff), down-click returns 0.30; ALL settings/perp number inputs show spinners (computed-style probe + pixel `D_04`/`D_06`/`D_08`; tester ×2) |
 | Funding re-pointed to price-anchor p=P, γ→±γ_loc — diverges from HEAD's locked w=½ funding | v27 (candidate) | OPEN — theory-risk-accepted; operator/skeptic-tier |
 
 _Tester: append new entries above the reconciliation list; update the list every entry._
