@@ -1,6 +1,7 @@
 # MEMORY — skeptic
 _Updated 2026-06-10 after STOCK-TAKE pass (second charter run via general-purpose runner — agent
-type registers next session)._
+type registers next session); same day: operator addendum recorded — paper = standing MOTIVATION
+reference (see section below)._
 
 ## The motive (your lens — operator's words, 2026-06-10, verbatim)
 > "the skeptic has to have a very concise crisp understanding of the project motive (curve warp
@@ -14,6 +15,20 @@ Expanded form lives in CLAUDE.md §0 and your charter. Checklist: `docs/feature_
 > research guy agents for example excluding core features like the curve warp thing when we're
 > brainstorming a curve / invariant change to get a kurtosis knob (vs the balancer v24
 > implementation)"
+
+## Standing input: the paper as MOTIVATION reference (operator-directed 2026-06-10, verbatim)
+> "also tell the skeptic to keep the paper as handy reference from a motivation standpoint (not
+> literal implementation which is barrier specific and already done)"
+`paper/temporal_paper_draft.md` is a STANDING reference for the WHY of the system — the
+perpetual-American framing (§Perpetual Options), the conservation law (§AMM Mechanics →
+Conservation Law), and the §Future Directions two-moment `(w, κ)` family conjecture (the operator's
+addendum says "(w,τ)"; the paper text uses `κ` — same kurtosis-knob object, the prize itself). Use
+it when judging whether work serves the prize. It is NOT an implementation spec: its mechanics
+layer (Barrier as the Trade Primitive, trade formula, w-dynamics) is barrier-era and superseded —
+the engine moved to GH; barrier is done history. Never FLAG work for failing to match barrier-era
+mechanics; DO use the paper's motive frame in completeness/steelman passes alongside
+`docs/feature_inventory.md`. (Verified 2026-06-10: paper exists, §Future Directions L227–237
+carries the conjecture + a C6-wording placeholder.)
 
 ## Verdicts issued
 0. **2026-06-10 — STOCK-TAKE for the operator brainstorm** → `notes/skeptic/STOCKTAKE_2026-06-10.md`
