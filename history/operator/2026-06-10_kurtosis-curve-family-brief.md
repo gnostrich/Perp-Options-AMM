@@ -155,6 +155,20 @@ _Context: operator asks again for a non-disruptive status update, just after the
 
 ---
 
+## Entry 22 — 2026-06-10
+_Context: operator asks whether the build file was pushed for access. (It is: branch claude/exciting-archimedes-txs2wx, engine/builds/temporal_mvp_v27_wkurtosis_WIP.html, local==origin a53af8a.) Transcribed verbatim._
+
+> did you push so I can access the file? if not would ask whether you can?
+
+---
+
+## Entry 23 — 2026-06-10
+_Context: operator adds that the manager can deliver whenever it's ready (no rush). Manager recommends waiting for the tester's in-flight visual re-check before handing over. Transcribed verbatim._
+
+> or you can do whenever ready for me
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
