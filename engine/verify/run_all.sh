@@ -5,9 +5,12 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v27_wkurtosis.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 9d22cffd6a0f002f359eed81d7157203 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
-echo -n "blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): "; sed -n '74p'   "$HEAD" | md5sum | awk '{print $1}'
-echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$HEAD" | md5sum | awk '{print $1}'
+echo -n "whole-file md5 (want 1eebfcd6f6ff4f4e3df5f745ac145f19 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+# Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
+# shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
+BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')
+echo "blob line-md5 multiset (want ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291): $BLOBQ"
+[ "$BLOBQ" = "ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291 " ] || { echo "BLOB CHECK FAILED"; exit 1; }
 
 # ── Build-type dispatch (HEAD = v27 (W)-curve since 2026-06-10, operator entry 28) ──
 # (W)/pre-GH builds (no ghCalibrate) are gated by the wcurve selfcheck [HARD GATE,

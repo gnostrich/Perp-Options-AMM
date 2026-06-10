@@ -323,14 +323,18 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
     outline: none;
     padding: 0;
   }
+  /* Number inputs: native up/down spinner VISIBLE and mouse-clickable
+     (operator entry 29: up/down arrows) — mirrors the working band bound-input
+     spinner CSS (.profit-row-content) below. Was -webkit-appearance:none
+     (v24-inherited), which left tau & co. keyboard-only. Dead input[type="range"]
+     rule removed (no range inputs remain — tau is a number input). */
   .field-input-wrap input[type="number"]::-webkit-inner-spin-button,
   .field-input-wrap input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none; margin: 0;
-  }
-  .field-input-wrap input[type="range"] {
-    width: 100%;
-    accent-color: var(--c-temporal);
-    margin: 0;
+    -webkit-appearance: inner-spin-button;
+    appearance: inner-spin-button;
+    opacity: 1;
+    height: 22px;
+    margin-left: 2px;
   }
   .field-right {
     display: flex; align-items: center; justify-content: center;
@@ -4248,7 +4252,8 @@ function render() {
   const k = Engine.getDepth(p);
 
   // Header
-  document.getElementById('hdr-pool-spot').textContent = `spot ${fmtUSD(sNorm * s.oracle, 2)}`;
+  // (W) header spot: same marginal basis as kpi-spot (sNorm*oracle is the raw reserve ratio, wrong on (W))
+  document.getElementById('hdr-pool-spot').textContent = `spot ${fmtUSD(Engine.getMP_raw(p), 2)}`;
   document.getElementById('hdr-pf-status').textContent = `${s.bands.filter(b => b.status === 'open').length} open bands · ${s.bands.length} total`;
 
   // Invariants
@@ -4291,8 +4296,14 @@ function render() {
   }
 
   // KPI strip
-  document.getElementById('kpi-spot').textContent = fmtNum(sNorm, 4);
-  document.getElementById('kpi-spot-usd').textContent = fmtUSD(sNorm * s.oracle, 2);
+  // (W) display basis: the pool's MARGINAL = getMP_raw = g_loc*(y/x), NOT the raw
+  // reserve ratio (sNorm*oracle). At w=1/2 (v24) they coincided; with w>1/2 they
+  // don't — the dollar spot must read the $80k world. Unitless spot = marginal
+  // relative to oracle_initial (1.0000 at load; legacy import w/o it goes NaN, loud).
+  // Display wiring ONLY — engine math untouched. kpi-w below stays the honest (W) weight.
+  const mpSpot = Engine.getMP_raw(p);
+  document.getElementById('kpi-spot').textContent = fmtNum(mpSpot / s.oracle_initial, 4);
+  document.getElementById('kpi-spot-usd').textContent = fmtUSD(mpSpot, 2);
   document.getElementById('kpi-w').textContent = fmtNum(w, 4);
   document.getElementById('kpi-depth').textContent = fmtNum(k, 2);
   document.getElementById('kpi-t').textContent = `${s.t}h`;

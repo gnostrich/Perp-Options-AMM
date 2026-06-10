@@ -1,10 +1,12 @@
 # MEMORY — intern
-_Last updated: 2026-06-10 (v27 UX fix / defaults revert). Rewrite changed bits at task end._
+_Last updated: 2026-06-10 (v27 spinner-CSS + spot-KPI basis fix). Rewrite changed bits at task end._
 
 ## Engine
 - Canonical: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** (md5
-  `9d22cffd6a0f002f359eed81d7157203` after the 2026-06-10 UX fix; manager re-pins
-  run_all/INTEGRITY/BUILD_LINEAGE). (W) kurtosis curve build (pre-GH lineage from v24 —
+  `29cd56bf83060f4b21a328bb79f03c57` after the 2026-06-10 spinner+KPI fix; manager re-pins
+  run_all/INTEGRITY/BUILD_LINEAGE). ⚠ svg blob line shifted 1060→**1064** (CSS region grew
+  4 lines) — line-layer md5s unchanged (`ab663f5c`@74, `c505b08a`@1064); pins that hardcode
+  1060 need the manager re-pin. (W) kurtosis curve build (pre-GH lineage from v24 —
   NO ghCalibrate/ghMu on this branch; gate = `verify/wcurve_selfcheck.js` 21 PASS).
   GH-lineage v26c (`6cc73563…`) remains in builds/ as history. (v26a/v26b notes below
   are history of landed work.)
@@ -33,6 +35,25 @@ _Last updated: 2026-06-10 (v27 UX fix / defaults revert). Rewrite changed bits a
 `getMP_raw` = price coordinate, NOT slope. Use `mpGeom = getMP_raw·e^(−s.ghMu)` for anything compared
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
+
+## Done — v27 SPINNER CSS + SPOT-KPI BASIS (tester residuals, handed to manager 2026-06-10)
+Build: **`HEAD_temporal_mvp_v27_wkurtosis.html`** edited via copy-then-promote (9d22cffd →
+**29cd56bf83060f4b21a328bb79f03c57**). Splice `/tmp/splice_v27_kpi_spinner.py` (2 reps, count==1,
+blobs never through). NO git (manager re-pins). Diff = exactly the 2 regions.
+- **(1) Spinners clickable:** `.field-input-wrap input[type=number]` spinner CSS (old L326-329)
+  `-webkit-appearance:none` → mirrors the working `.profit-row-content` block
+  (`-webkit-appearance/appearance: inner-spin-button; opacity:1; height:22px; margin-left:2px`).
+  **Deleted the dead `input[type="range"]` rule** (old L330-334; grep-confirmed zero range inputs
+  remain). Net +4 lines → svg blob now line 1064.
+- **(2) Spot KPI basis (L4294-5 old):** `kpi-spot-usd` = `fmtUSD(Engine.getMP_raw(p))` (=$80,000.00
+  at load) and `kpi-spot` = `fmtNum(getMP_raw/s.oracle_initial,4)` (=1.0000) — on (W) w>½ the
+  marginal g_loc·(y/x) ≠ y/x; old sNorm·oracle showed $30,344.83. `kpi-w` untouched (honest weight).
+  Legacy import w/o oracle_initial → NaN (loud). Headless-verified 80000.00 / 1.0000 / old 30344.83.
+- **FLAGGED, out of scope (same wrong basis, NOT in brief):** header `hdr-pool-spot` (L4251)
+  still reads `sNorm*s.oracle` → shows "spot $30,344.83" while the KPI says $80,000.00. Manager
+  call whether to align it (one-liner, same mpSpot basis).
+- Safety: blobs `ab663f5c`/`c505b08a` intact (74/1064), 3 scripts parse (655/499/1804 lines),
+  IIFE intact, longest non-blob line 553, `wcurve_selfcheck` **21 PASS 0 FAIL**.
 
 ## Done — v27 UX FIX / defaults revert (operator entry 29, handed to manager 2026-06-10)
 Build: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** edited IN PLACE per brief
