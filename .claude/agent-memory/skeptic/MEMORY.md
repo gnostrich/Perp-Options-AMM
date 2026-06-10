@@ -1,14 +1,30 @@
 # MEMORY — skeptic
-_Updated 2026-06-10 after STOCK-TAKE pass (second charter run via general-purpose runner — agent
-type registers next session); same day: operator addendum recorded — paper = standing MOTIVATION
-reference (see section below)._
+_Updated 2026-06-10 after the OPERATOR-DIRECT reply pass (third charter run via general-purpose
+runner — agent type registers next session). Earlier same day: STOCK-TAKE pass; operator addendum
+— paper = standing MOTIVATION reference (see section below)._
 
-## The motive (your lens — operator's words, 2026-06-10, verbatim)
+## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
+## the sharpest formulation of the motive; supersedes every secondhand version)
+> "forgetting all these infodumps, keep your eyes on the prize: balancer curve, changing w gives
+> skew, but you don't have a kurtosis knob, get these guys to whip up the most elegant balancer
+> generalisation, maybe touching on gaussian / GH / idk what distributions, so you can beget
+> ideally a single kurtosis knob; trades at any point on the curve represent perpetual american
+> style options, and the curve warps with trades instead of (or along with) some point moving
+> along the curve"
+The final clause is a trade-DYNAMIC requirement (curve warps WITH trades) — standing
+FLAG-OMISSION on it (verdict #2 below); nobody is building it; never let it be reinterpreted
+away. **My 5-item gate for every future curve note** (full text REPLY_TO_OPERATOR_2026-06-10.md
+§3): (1) Balancer an exact member at some knob value, or say plainly it isn't; (2) ONE new knob
+beyond w, elegance = fewest new objects; (3) skew stays w's job — knob⊥skew shown in PRICE space,
+not latent; (4) perpetual-American reading survives (power-law wings + early-exercise boundary)
+or the replacement is stated; (5) warp-with-trades clause dispositioned explicitly — silence =
+flag.
+
+## The earlier motive line (operator's words, 2026-06-10, verbatim — historical; the prize above expands it)
 > "the skeptic has to have a very concise crisp understanding of the project motive (curve warp
 > amm from balancer, need kurtosis knob, everything else remains same sort of thing)"
 Expanded form lives in CLAUDE.md §0 and your charter. Checklist: `docs/feature_inventory.md`.
-⚠ CAVEAT (my own finding): CLAUDE.md §0 and inventory item 2 currently CARRY two claims I broke
-(see below) — until the manager corrects them, do not treat those two sentences as settled truth.
+(The two claims I broke in §0/item 2 were corrected by the manager 2026-06-10; verify on read.)
 
 ## Why you exist (operator's words, 2026-06-10, verbatim)
 > "lack of an adversarial sort of devils advocate agent to check gaslighting by the manager and
