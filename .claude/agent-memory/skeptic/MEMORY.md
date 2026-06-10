@@ -76,6 +76,26 @@ carries the conjecture + a C6-wording placeholder.)
    to (W)), 1× FLAG-PROCESS (manager re-derived only F2, narrated the broken headliners into
    shared truth same day). Both broken claims live in CLAUDE.md §0 + inventory item 2 → handed
    to manager for correction (I don't edit those).
+2. **2026-06-10 — OPERATOR-DIRECT reply (prize statement, transcript entry 10)** →
+   `notes/skeptic/REPLY_TO_OPERATOR_2026-06-10.md` (relayed unedited) +
+   `notes/skeptic/FLAGS_2026-06-10_warp_with_trades.md`. **Core finding (checked in CODE, not
+   docs):** TODAY a trade moves a point along a FIXED curve — HEAD v26c `tradeUpdate` (line 1720)
+   returns `{...s, x, y}` with every shape param untouched; `arbitrageToOracle` (1747) same;
+   `rebase` (1734) is fired only by `setOracle` (2371) — oracle-driven, shape-preserving (u
+   invariant), NOT trade-driven; `fundingTick` (2642) is ledger-only, never touches the curve.
+   Branch A ((W) level set F=k), branch B (δ set at deployment), and the in-flight cosh/
+   Gudermannian derivation are ALL fixed-curve designs. Only partial: the Esscher reading
+   (inventory #14, trade = tilt-parameter translation ⇒ implied DENSITY re-tilts per trade) —
+   a re-description of point-motion, not a mechanism; reserve-space curve never changes.
+   ⇒ **STANDING FLAG-OMISSION:** the operator's warp-with-trades clause is a requirement NOBODY
+   is building and NO artifact dispositions; clears only when (a) feature_inventory gains the
+   item, (b) the operator answers strong-reading-vs-tilt-reading, (c) notes disposition it (gate
+   item 5). **WATCH FLAG-OVERSELL on the running Gudermannian/cosh derivation:** "skew = pure
+   shift φ" / "kurtosis = amplitude" are LATENT-θ claims; Jacobian δ·cosh(θ) breaks symmetry in
+   price space, and my β=1 numbers show the dial coupling skew+kurt — demand the pushforward
+   check (vary amplitude, hold φ, measure price-space skew) or the label "latent-only"; and the
+   derivation is GH-internal, so "balancer generalisation" is unearned until the bridge to the
+   weight slot is SHOWN (broken-bridge verdict stands).
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **Asymptote preservation (KURTOSIS F2):** γ_loc(±100τ) τ-independent, errs 3.12e-5/1.25e-4
