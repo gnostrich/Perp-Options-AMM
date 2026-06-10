@@ -1,5 +1,36 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, WARP kurtosis SWEEP (notes-only; NO submit/edit/git; operator entry 26)._
+_Last updated: 2026-06-10, PREMIUM-WARP + SPREAD-SHORTCUT verify (notes-only; NO submit/edit/git; operator entry 30)._
+
+### PREMIUM-WARP MONOTONICITY + VS-SHORTCUT — 2026-06-10 (operator entry 30; TEST-ONLY; NO submit/edit/git; builds md5-unchanged)
+Note: `notes/research/WARP_premium_and_spread_shortcut_2026-06-10.md`. Engines sliced read-only to
+`/tmp/engine_{v24,v27}.js` (Node vm). v24 md5 6f606f52, v27 HEAD md5 1eebfcd6 (matches operator).
+Scripts `/tmp/check1c.js` (engine executeLeg path, authoritative), `/tmp/check1b.js` (dy∝notional
+sensitivity), `/tmp/check1_dymono.js`, `/tmp/check2.js`, `/tmp/check2_analytic.js`. Pools = shipped
+v27 default (x0=10,tau=0.3,wMinus=.60,wPlus=.85,oracle=80000,equil y0,phi0=ln(y0/x0)) + matched-wMid
+v24 (w=0.725, equil-at-load); γ@spot=2.6364 both.
+**CHECK 1 VERDICT = NO (both v24 AND v27), against the operator's verbatim claim — with a clean
+reframe.** LOAD-BEARING ENGINE FACT [analytic, identical both builds]: executeLeg sets the cash leg
+`dy = V_usd = N·m·oracle = PREMIUM·oracle`; tradeUpdate depends ONLY on dy ⇒ warp is a one-to-one
+fn of premium (no separate strike channel). Warp monotone-increasing in |dy| (verified). So:
+(A) const PREMIUM ⇒ dy fixed ⇒ **warp FLAT, not increasing**; (B) const NOTIONAL ⇒ dy=N·m·oracle
+falls further OTM ⇒ **warp + premium + slippage all DECREASE**. The operator's intuition IS the
+const-notional column. "Same premium ⇒ same warp" exactly because premium IS the warp control here.
+The operator's "more warp further OTM" appears ONLY under a NOTIONAL-sized leg (dy∝N: const-premium
+then ⇒ N rises ⇒ warp STRICTLY increases, both builds — /tmp/check1b.js). **NO build difference in
+the monotonicity verdict** — v27 elbow-local φ-warp vs v24 uniform w=α/x changes only metric/
+magnitude (v27 |Δφ|≈2.1e-2 vs v24 |Δw|≈5.5e-2 at matched premium). **FLAG (operator/economic-object):
+which leg the AMM swaps — premium-leg (current) vs notional-leg — is the operator's call; it flips
+the Check-1 answer.**
+**CHECK 2 VERDICT = HOLDS exactly (both builds), residual ≤2.2e-16.** Same-leg same-wing VS on
+(θ₁,θ₂) = single AMM tx at θ*=√(θ₁θ₂) carrying the value diff. θ* strictly between (strict AM-GM).
+EXACT trig identity in the strictly-OTM markFrac branch: N(m₁−m₂)=N·sNorm(1/θ₁−1/θ₂)=N·mark(θ*)·2sinh|δ|
+(call; put symmetric). Build-independent — mark OTM branch byte-identical v24(L24-27)/v27(L58-61).
+DOMAIN CAVEAT (flag, not failure): exact only OTM power-law branch; ITM/v27-smooth-paste-premium
+breaks the bare identity — the ITM extension IS the Lean-proved compositeRay_ITM_substitution (C1).
+Nothing submitted/built/git; builds md5-unchanged post-task. Manager re-derives; tester runs live/visual.
+
+---
+_Earlier: 2026-06-10, WARP kurtosis SWEEP (notes-only; NO submit/edit/git; operator entry 26)._
 
 ### WARP KURTOSIS SWEEP (#16-adjacent) — 2026-06-10 (operator entry 26; notes-only; NO submit/edit/git)
 Note: `notes/research/WARP_kurtosis_sweep_2026-06-10.md`. Scripts `/tmp/warp_sweep_{1..5}.js` (Node float64).

@@ -1,5 +1,29 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the FAST display-fix spot-check (build `1eebfcd6`) + ledger entry._
+_Last updated: 2026-06-10, after the ENTRY-30 TEST-ONLY premium-warp + composite-ray verification on HEAD `1eebfcd6` (no build edit)._
+
+## ★★★★★ MOST RECENT — ENTRY-30 TEST-ONLY (HEAD `1eebfcd6`, NO build edit, operator live-playing)
+Live Playwright ×2, 0 console errors. Harness `engine/verify/pw_v27_premium_warp.mjs`; evidence
+`evidence/v27_premwarp/` (R1/R2 C1 near/far curve crops, C2 spread setup, v24_load.png, trace_premwarp.json).
+- **CHECK 2 (vertical spread → single composite-ray tx): PASS exact.** Sold-call K1=$96k/K2=$120k:
+  θ*=√(θ₁θ₂)=1.341641 (between θ₁=1.2/θ₂=1.5), δ=0.111572, V=vsValue(N,m*,δ) residual 0.0e0,
+  legPrice spread branch agrees, UI mode pill "SPR", pv-sold-theta=1.3416. Confirmed.
+- **CHECK 1 (premium-controlled warp): operator's claim NOT reproduced — FLAGGED to manager.**
+  Operator (entry30 verbatim, kurtosis-curve-family-brief.md:217): constant premium + further OTM ⇒
+  warp MORE. LIVE: at CONSTANT premium ($1624.78) the warp is BYTE-IDENTICAL across the OTM ladder
+  ($88k→$112k): φ-shift 3.8429e-3, 0.436px, slip 0.9716% at EVERY rung. Does NOT increase further OTM.
+  Constant-NOTIONAL contrast (:219) DOES hold (further OTM ⇒ warps less, premium+slip shrink).
+  ROOT CAUSE (structural): `tradeUpdate(s,dy)` (v27 L1723) takes ONLY dy; strike θ never an arg;
+  dy=±premium; β=y(1-w_field)/α=x·w fixed by entry state ⇒ φ′=f(entry,dy) alone ⇒ premium-only warp,
+  no strike-dependence. NOT a render artifact (engine truth + px re-projection both ×2).
+- **v24 live contrast:** v24 has NO phi at all; tradeUpdate(s,dy) keeps α=5/β=400000 INVARIANT — point
+  slides on a FIXED Balancer hyperbola (the "dot sliding" the operator forbade for v27). Strike also
+  absent from v24 trade step. So NEITHER build has the strike-dependent premium-warp the operator describes.
+- **Ledger:** TEST-ONLY observation entry appended (explicitly "behavioral verification on HEAD
+  `1eebfcd6`, no build edit"; no version/promotion change), feature-keyed #2/#16 + none-beyond; new
+  OPEN operator question "-1" added; table rows #2/#16 carry the obs note (no STATE change). OPERATOR-VOICE
+  cites :217/:219/:223 verbatim; CHECK-1 marked OPEN (cannot resolve without engine change or operator ruling).
+- **Repro:** `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_premium_warp.mjs`.
+
 
 ## ★★★★ MOST RECENT — DISPLAY-FIX `1eebfcd6` SPOT-CHECK: 3/3 PASS ×2 — operator's exact ask MET
 HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `1eebfcd6f6ff4f4e3df5f745ac145f19`

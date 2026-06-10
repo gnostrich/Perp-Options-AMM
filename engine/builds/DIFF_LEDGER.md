@@ -21,7 +21,7 @@ changed, every entry, no exceptions)
 | # | Feature (inventory) | Current state (as of v27 HEAD **display-fix build `1eebfcd6`**, 2026-06-10; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
 |---|---|---|---|---|
 | 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side). **Display-fix `1eebfcd6`: Spot($)/Spot KPI + hdr-pool-spot re-pointed to the marginal getMP_raw — $80,000.00 / 1.0000 / "spot $80,000.00" at load (v24 values)** | display-fix `1eebfcd6` | DESIRABLE — v24 feel restored; Spot-KPI basis RECONCILED-in-`1eebfcd6` (y0 delta OPEN-for-ruling) |
-| 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED by operator ruling (override, not resolved) |
+| 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; visual subtlety ACCEPTED (override). **ENTRY-30 obs: warp is premium-driven only (φ=f(dy=±premium)); constant-premium-further-OTM does NOT warp more — operator CHECK-1 claim NOT reproduced, see OPEN -1** |
 | 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | display-fix `1eebfcd6` | DESIRABLE — stepper complete; operator's updown-arrows ask MET |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
 | 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled | v27 | OPEN lemma — theory-risk-accepted |
@@ -35,7 +35,7 @@ changed, every entry, no exceptions)
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
 | 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | display-fix `1eebfcd6` | DESIRABLE — stable |
-| 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED(operator, entry 28) |
+| 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; ACCEPTED(operator). **ENTRY-30: composite-ray spread→single-tx at θ*=√(θ₁θ₂) CONFIRMED exactly (residual 0); but premium-controlled warp NOT reproduced (strike not in tradeUpdate) — OPEN -1** |
 
 ## Entry template
 ```
@@ -66,6 +66,21 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
 > paraphrase]**, or **[summary-stub]** accordingly.
 
 ### OPEN (operator asked / objected; no recorded resolution)
+
+-1. **★ ENTRY 30 — premium-controlled warp NOT reproduced on HEAD `1eebfcd6` (the central CHECK-1
+   claim).** [#2, #16] Operator `[verbatim-transcript]`
+   `history/operator/2026-06-10_kurtosis-curve-family-brief.md:217`: *"for same premium (perp option
+   price * notional) as you sell further OTM inner bound, the curve would warp more."* **tester
+   live-verified ×2: at CONSTANT premium the curve warp is byte-IDENTICAL across the OTM ladder
+   (φ-shift 3.8429e-3, 0.436px, slip 0.9716% at every rung) — it does NOT increase further OTM.**
+   Root cause is structural: engine `tradeUpdate(s, dy)` (L1723) takes only the cash delta; the
+   strike θ is never an argument, so φ′ = f(entry-state, dy=±premium) alone. The notional-constant
+   contrast (:219) DOES hold (further-OTM ⇒ warps less, premium+slip shrink). The composite-ray
+   "AMM tx shortcut" (:223) is CONFIRMED exactly. **Status: OPEN — manager to escalate to operator;
+   the engine has no strike-dependence in the warp. NOT a render artifact (engine-state truth +
+   px re-projection both reproduce ×2). Evidence `evidence/v27_premwarp/`, harness
+   `engine/verify/pw_v27_premium_warp.mjs`. CANNOT be marked resolved without an engine change or
+   an operator ruling that the current premium-only warp is acceptable.**
 
 0. **★ v27 — the operator's SIGNED visual acceptance test: item-3 (trades-warp) NOT met on
    screen — BLOCKER OVERRIDDEN BY OPERATOR RULING (entry 28, HEAD-promoted anyway); recorded
@@ -732,6 +747,68 @@ D_06_tau_after_upclick (value 0.35), D_07_full_after_upclick, D_08_other_field_s
 trace_ux_spotcheck.json. Harness `engine/verify/pw_v27_ux_spotcheck.mjs` (run from `engine/`,
 PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers). **VERDICT: 3/3 PASS ×2, 0 console errors — the
 operator's exact ask (clickable up/down arrows, $80k world) is MET.**
+
+---
+
+## TEST-ONLY observation — premium-controlled warp + composite-ray spread (operator entry 30)   [status: BEHAVIORAL VERIFICATION on HEAD `1eebfcd6`, NO build edit / NO version change / NO promotion]
+
+**Provenance:** live Playwright Chromium on `HEAD_temporal_mvp_v27_wkurtosis.html` md5
+`1eebfcd6f6ff4f4e3df5f745ac145f19` (operator live-playing HEAD; zero versioning churn requested).
+Real UI driven (Add Perp → Trade Bands), rendered DOM read, warp truth read from the live page
+`Engine`/`Store`. Reproduced clean ×2 (byte-identical), 0 console errors. **No build file touched.**
+Harness `engine/verify/pw_v27_premium_warp.mjs`; evidence `evidence/v27_premwarp/`.
+
+**CHECK 2 — vertical spread == single composite-ray AMM tx: CONFIRMED (tester-confirmed, exact).**
+[#16, composite-ray identity] Sold-call vertical K1=$96,000 / K2=$120,000, N=0.5. The live spread
+path resolves to ONE AMM tx at θ*=√(θ₁θ₂)=**1.341641** (engine `compositeRay` matches to
+residTheta=0.0e0; θ* lies BETWEEN θ₁=1.2000 and θ₂=1.5000 — confirmed). Value carries the
+difference via `vsValue(N, m*, δ)=N·m*·2·sinh|δ|`, δ=½ln(θ₂/θ₁)=**0.111572**; executed
+V_sell=0.00372346 (asset) == vsValue identity to **residV=0.0e0**; `legPrice` spread branch agrees
+exactly. UI renders mode pill "**SPR**", `pv-sold-theta`=1.3416, `pv-sold-V`=$297.88, slip 0.1776%,
+Transact enabled. Screenshots `R1_C2_spread_setup.png` (spread + audit strip), `R1_C2_curve.png`.
+**VERDICT: PASS — the spread executes as the single composite-ray tx, no residual.**
+
+**CHECK 1 — premium-controlled warp: the operator's claim is NOT reproduced on this engine — FLAG.**
+[#2, #16, warp-with-trades] Operator (entry 30, `[verbatim-transcript]`
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md:217,219`): *"for same premium (perp
+option price * notional) as you sell further OTM inner bound, the curve would warp more"* … *"when
+you go further holding notional the same it warps less because the price of option reduces and
+total premium and slippage also would reduce so you have to check premium same not notional same."*
+- **The notional-CONSTANT contrast HOLDS (operator's secondary claim, correct on screen).** Sold-call
+  inner-OTM ladder $88k→$112k at N=0.5 BTC: premium $1624.78→$1276.61 ↓, slippage 0.9716%→0.7627% ↓,
+  warp (sold-leg φ-shift) 3.843e-3→3.021e-3 ↓ / curve px-displacement 0.436px→0.343px ↓. Further OTM
+  at constant notional ⇒ warps LESS, premium+slippage shrink — exactly as the operator described.
+- **The constant-PREMIUM primary claim FAILS (the central ask).** Holding premium=$1624.78 (scaling N
+  0.500→0.636 BTC across the same ladder): the warp is **byte-IDENTICAL at every rung** — φ-shift
+  3.8429e-3, px-displacement 0.436px, slippage 0.9716% — it does NOT increase further OTM. Visually
+  the near ($88k) and far ($112k) constant-premium curves are indistinguishable (`R1_C1_curve_near_
+  constprem.png` vs `R1_C1_curve_far_constprem.png` — only the red sold-call ray angle differs; the
+  curve body + post-trade dotted curve are the same warp).
+- **ROOT CAUSE (engine, structural):** `tradeUpdate(s, dy)` (L1723) takes only the cash delta dy; the
+  strike θ is NEVER an argument. dy = ±V_usd = ±premium (executeLeg L1850). β=y·(1−w_field) and α=x·w
+  are fixed by the ENTRY state, so φ′ is a pure function of (entry state, dy) ⇒ **constant premium ⇒
+  constant φ-warp regardless of how far OTM the strike sits.** On this (W) strong-form engine the warp
+  is set by the cash moved, not the strike. The operator's intuition (further-OTM-at-equal-premium
+  warps MORE) implies a strike-dependence in the warp that the current engine does not have.
+- **NOT a render artifact** — the φ truth is read directly from the live engine state, and the px
+  metric re-projects curveTraceW on the live canvas extents; both agree and reproduce ×2.
+
+**OPERATOR-VOICE (entry 30, all `[verbatim-transcript]` `…kurtosis-curve-family-brief.md`):**
+- :217 *"for same premium (perp option price * notional) as you sell further OTM inner bound, the
+  curve would warp more"* — **NOT reproduced on HEAD `1eebfcd6` (constant premium ⇒ identical warp).
+  OPEN — surfaced to manager; engine has no strike-dependence in the warp. Cannot mark resolved.**
+- :219 *"holding notional the same it warps less … so you have to check premium same not notional
+  same"* — notional-constant half CONFIRMED on screen; the premium-constant instruction was followed
+  and is what exposes the gap.
+- :223 *"the 'AMM tx shortcut' … two options in the same leg constituting a vertical spread amount to
+  a single AMM tx at some point between them for the value difference"* — **CONFIRMED exactly** (θ*
+  between, value=difference via vsValue, residual 0).
+
+**Feature-key:** touches #16 (warp-with-trades) and #2 (curve warp). **none beyond** #16/#2 (CHECK 1)
+and #16/composite-ray identity (CHECK 2) — no other inventory feature changed (TEST-ONLY, no edit).
+**Table rows:** #2 and #16 carry an added observation note (no STATE change — HEAD unchanged, no
+edit); the CHECK-1 gap is logged as a new OPEN operator question (manager to escalate). #16 also
+gains the composite-ray PASS confirmation.
 
 ---
 

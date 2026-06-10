@@ -13,6 +13,20 @@ warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; anchor-overl
 makes the elbow-local warp legible); y0=303,448-vs-800,000 default delta = the one entry-29 item
 LEFT FOR OPERATOR RULING (equilibrium-at-load chosen, γ>1 makes v24's exact y impossible);
 portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note-only per entry 28).
+- **★ TEST-ONLY CHECKS (operator entry 30, HEAD untouched 1eebfcd6) — research-lead a8b91a4c + tester
+  a4a1bfff + MANAGER CODE-READ, all three AGREE.** **CHECK 2 (vertical spread = single AMM tx): PASS
+  exactly, both builds** — spread on (θ₁,θ₂) → one tx at composite ray θ*=√(θ₁θ₂) (strictly between)
+  carrying the value difference `vsValue=N·m*·2sinh|δ|`; residual ~1e-16 (= Lean C1). Caveat: exact only
+  in the strictly-OTM power-law branch; ITM / v27 γ>1 mark → use C1 extension. **CHECK 1 (constant-premium
+  → more warp OTM): operator's claim INVERTED for this engine — warp = f(premium) ONLY, strike-independent.**
+  Code fact I verified: `executeLeg` sets `dy = N·m·oracle` (premium in cash); `tradeUpdate(s, dy)` takes
+  ONLY the cash delta — strike is NOT an argument; φ′=f(entry, dy). ⇒ constant premium ⇒ constant dy ⇒
+  **constant warp** (tester: byte-identical curves across the OTM ladder; research-lead: flat both builds).
+  Operator's "more warp OTM" = their model warp∝notional; engine is warp∝premium(cash). v24 same (warp=f(dy),
+  no strike; v24 also the fixed-hyperbola dot-slide). **ECONOMIC-OBJECT FORK (operator-tier): size the AMM
+  swap by PREMIUM/cash (current) vs NOTIONAL/contracts (operator's intuition → would make the claim hold,
+  = an engine change).** Relayed as a design fork (not "you're wrong"); skeptic vet offered. TEST-ONLY: no
+  build edit; `notes/research/WARP_premium_and_spread_shortcut_2026-06-10.md` + evidence/v27_premwarp/. HEAD 1eebfcd6.
 **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
 canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
 an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in
