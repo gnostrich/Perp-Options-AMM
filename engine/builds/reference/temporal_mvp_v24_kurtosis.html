@@ -3262,7 +3262,16 @@ const Viz = (function() {
     const xMax_raw = window.__curveFrame.xMax;
     const yMax_raw = window.__curveFrame.yMax;
 
-    const anchorPts = curveTraceExplicit(0.5, snap.depth, modeSlope);
+    // Anchor (reference) curve — INHERITS the pool's kurtosis/tilt profile (same
+    // geometric family as the live curve) but FROZEN at the baseline anchor
+    // (state._baseline_alpha/_beta, rebase-maintained) so trades do NOT warp it.
+    // Reshapes when you move the τ/tilt sliders; stays put when you trade. (Δw=0
+    // falls back to the symmetric w=½ reference, = plain v24.)
+    const anchorPts = (snap.ghTau !== undefined && snap.ghTilt)
+      ? curveTraceTau({ ghMid: snap.ghMid, ghTilt: snap.ghTilt, ghTau: snap.ghTau,
+                        ghX0: state._baseline_alpha, ghY0: state._baseline_beta,
+                        alpha: state._baseline_alpha, beta: state._baseline_beta })
+      : curveTraceExplicit(0.5, snap.depth, modeSlope);
     const livePts   = curveTrace(snap);
 
     // Trace BOTH legs of the band so the full journey is visible at once:
