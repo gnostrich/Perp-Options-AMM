@@ -183,6 +183,13 @@ _Context: operator asks for a non-disruptive status update while the v24-vs-v27 
 
 ---
 
+## Entry 26 — 2026-06-10
+_Context: after the skeptic reconcile (v24 warps; v27 warps 30–1000× less at the matched setting), operator conjectures there is a kurtosis (τ) setting where v27's curve-warp magnitude COMPARES to v24's — believes the natural polar-lens structure makes a good setting exist ("too natural not to"). Directs the manager to check. Transcribed verbatim._
+
+> now, here's where the interesting part lies, and what you should check: is there a kurtosis where this compares to v24's curve warp ; because of the natural polar lens view i'm assuming we've built our thing on, I personally think there should be settings where it works well, its too natural not to
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
