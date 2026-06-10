@@ -1,9 +1,41 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the v27 RENDER-FIX RE-RUN (visual-acceptance re-test)._
+_Last updated: 2026-06-10, after the v27 HEAD-PROMOTION ledger entry + the operator-ordered
+v24→v26c feature-level diff (entry 28)._
 
-## ★ MOST RECENT — v27 RENDER-FIX RE-RUN (build `b245bfda…`, was `3914c7f4…`) — VISUAL-ACCEPTANCE = FAIL (2 of 3)
-Live Playwright Chromium, reproduced clean ×2 (0 console errors). **NOT HEAD** (HEAD stays v26c
-`6cc73563`). File-safety GREEN (blobs canonical `ab663f5c…`/`c505b08a…`; 3 scripts parse). The
+## ★★ MOST RECENT — v27 IS HEAD (operator ruling, entry 28) + the v24→v26c desirables note
+**HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` (`b245bfda`), PROMOTED 2026-06-10 by
+OPERATOR RULING** (entry 28 verbatim, `history/operator/2026-06-10_kurtosis-curve-family-brief.md`:
+"firstly, commit this version to head because theres nothing useful since v24 -- in parallel let
+the testing / versioning guy do a feature level diff … apart from this core … make note for
+future reference"). **The ruling OVERRIDES my item-3 trades-warp visual blocker — recorded in the
+ledger as OVERRIDDEN-not-resolved** (entry-26 conjecture checked & DISCONFIRMED first: no τ
+matches v24's global warp with frozen wings; warp is elbow-local by design). v26c demoted to
+`builds/temporal_mvp_v26c.html` (`6cc73563`), GH line retained, full GH suite green
+(`run_all.sh builds/temporal_mvp_v26c.html`); run_all default routes (W)→`wcurve_selfcheck.js`
+(21 PASS, re-run by me at promotion); HEAD blobs canonical (re-checked).
+
+### What I wrote (2026-06-10, this task)
+1. **DIFF_LEDGER.md** — v27 entry CANDIDATE→HEAD-PROMOTED; new promotion entry (feature-keyed
+   #1-16 + none-beyond, OPERATOR-VOICE with entries 24/26/27/28 verbatim); feature-state table
+   fully re-rowed to v27-HEAD states; item-0 blocker re-titled OVERRIDDEN; reconciliation list
+   updated (+4 new OPEN rows from the diff findings).
+2. **`engine/builds/NOTES_v24_to_v26c_desirables.md`** — the operator's ordered feature-level
+   diff, D1–D17, categorized (a) already-in-v27 / (b) portable-not-in-HEAD / (c) GH-dead. Byte-
+   checked against the actual builds, not lineage notes. KEY (b) FINDINGS (live in HEAD today):
+   - **drawPayoff N_buy state-vs-pool NaN-fallback bug PRESENT in HEAD** (L4034; v26c fixed it,
+     v27 inherited the v24 site) — D14.
+   - Slippage $-tooltip honesty label (reserve-USD wording) not carried — HEAD ships v24 wording
+     (L1176) — D2.
+   - Payoff x-range back to ±50% (xMin/xMax L~4011) + naked leg capped at 1 in legFraction —
+     v26b/c free-boundary coverage unported — D9/D10.
+   - **sNormStrike is export-only in v27** (def L1790 + export L2254, zero call sites; no regLeg;
+     payoff sweeps price-ratio (1+r)) — one-mark uniformity + all-γ crossover@K UNVERIFIED on
+     (W); dir_gate.js not exercised on (W) builds — D11/D13/D16.
+   - Already-present (a): smooth-pasting port (markFrac L1666), live K/oNow rays (L2077 — in the
+     v24 base itself), NaN-loud registration, engine-sampled curveTraceW, snapshot completeness.
+
+## Prior — v27 RENDER-FIX RE-RUN (build `b245bfda…`, was `3914c7f4…`) — VISUAL-ACCEPTANCE was FAIL (2 of 3), since OVERRIDDEN by entry 28
+Live Playwright Chromium, reproduced clean ×2 (0 console errors). File-safety GREEN (blobs canonical `ab663f5c…`/`c505b08a…`; 3 scripts parse). The
 render fix landed: curveTraceW centers on 0.5·(u₀+φ) straddling op-point+elbow; default pool now
 asymmetric x10/y12 (u₀≈0.18) w₋0.60/w₊0.85 τ0.3 oracle→4.44; #16 label states strong-form ships.
 
@@ -12,7 +44,7 @@ asymmetric x10/y12 (u₀≈0.18) w₋0.60/w₊0.85 τ0.3 oracle→4.44; #16 labe
 - **2 τ knob = PASS** elbow visibly rounds (~36px vs prior ~0.9px), wings frozen (slope-angle Δ
   0.0001°@u−10, 0°@u+10 — frame-independent math). FIXED. (Caveat: axes rescale w/ τ via α/β, so
   the clean evidence is the slope-angle math, not raw band pixels.)
-- **3 trades-WARP = FAIL (BLOCKER, the HEADLINE).** Via REAL UI band-execute the curve shifts only
+- **3 trades-WARP = FAIL (was the BLOCKER — now OVERRIDDEN by operator entry 28; fact stands).** Via REAL UI band-execute the curve shifts only
   ≈0.5px (φ:0→0.0011); 6 cumulative max trades → φ≈0.029 / ≈1px. Still a DOT SLIDING, not a warp —
   exactly what the operator forbade. ROOT CAUSE: NOT a render bug (curveTraceW IS φ-dependent
   in-frame, verified at fixed x); an admissible (W) trade on this default pool produces sub-pixel φ.

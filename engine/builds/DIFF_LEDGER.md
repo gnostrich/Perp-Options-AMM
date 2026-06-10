@@ -18,24 +18,24 @@ transcripts to distill my objections to each version, open questions etc."** (op
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
-| # | Feature (inventory) | Current state (as of v26c HEAD `6cc73563`; v27 = CANDIDATE off v24, not HEAD) | Last changed | Verdict |
+| # | Feature (inventory) | Current state (as of v27 HEAD `b245bfda`, OPERATOR-promoted 2026-06-10 entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
 |---|---|---|---|---|
-| 1 | Balancer base | HEAD runs GH (= one warp setting). **v27 CANDIDATE returns to the literal Balancer base (v24): F = x^w·y^(1−w) with position-dependent w(u) — the (W) family.** τ→∞ recovers plain Balancer | v27 (candidate) | DESIRABLE in candidate — Balancer is now the literal substrate |
-| 2 | Curve warp w(u) | HEAD: implicit via GH score kernel. **v27 CANDIDATE: explicit (W) weight-field w(u;φ), warp = field-center φ shift; engine-correct (selfcheck). RENDER-FIX RE-RUN (`b245bfda`): curve now renders across frame, but the trade-warp is STILL screen-invisible (≈0.5–1px; φ sub-pixel on the default pool) — the "dot sliding" the operator forbade** | v27 render-fix re-run | CANDIDATE — engine PASS, UI warp-visibility FAIL (BLOCKER) |
-| 3 | Kurtosis knob τ | HEAD: NOT in engine. **v27 CANDIDATE: τ slider LIVE (0.05–3), engine-correct (elbow rounds, wings τ-independent). RENDER-FIX RE-RUN (`b245bfda`): NOW VISIBLY rounds the ATM elbow (~36px elbow delta vs prior ~0.9px) with wings frozen (slope-angle Δ 0.0001°/0° at u=±10) — tester-confirmed on screen** | v27 render-fix re-run | CANDIDATE — engine PASS, **UI now PASS** (knob visible) |
-| 4 | Carry P=Ny/Nx, q=ln p | HEAD live. v27: carry = price leg q=ln p; reads via getMP_raw; engine consistent (selfcheck) | v25 (HEAD); v27 carry-reframe (candidate) | DESIRABLE — stable |
-| 5 | Rebase (P→P/r) | HEAD live. **v27 CANDIDATE: rebase = carry-shift q→q−ln r (NOT rigid x→r·x); warp∘rebase-commute is OPEN/[needs-Aristotle], deliberately NOT implemented as coupled** | v25 (HEAD); v27 reframe (candidate) | CANDIDATE — theory-risk-accepted, lemma OPEN |
-| 6 | Pricing law value∝S^(−γ) | HEAD live (G4). v27: value∝S^(−γ_loc) under Reading A; wings exact power; elbow per Reading A (operator-ruled, Entry 11 "a") | v25 (HEAD); v27 γ_loc (candidate) | DESIRABLE — Reading A operator-ruled |
-| 7 | ITM American smooth-pasting | HEAD live both wings. **v27 CANDIDATE: smooth-pasting mark ported to v24 with g→γ_loc; seam value/slope match @ sNorm* (selfcheck PASS); payoff renders** | v26b (HEAD); v27 γ_loc port (candidate) | CANDIDATE — seam gate PASS (Node) |
-| 8 | Uniform strike registration θ=sNorm(K) | HEAD live. v27: sNormStrike via (W) arbitrageToOracle inverse; selfcheck round-trip 1.46e-15 | v26c (HEAD); v27 (W)-inverse (candidate) | CANDIDATE — Node PASS; not UI-confirmed at K this run |
-| 9 | Funding | HEAD locked. **v27 CANDIDATE: funding re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — DIVERGES from HEAD's locked w=½ funding; correct-economic-anchor NOT proven** | v27 (candidate) | CANDIDATE — theory-risk; not exercised in UI this run |
-| 10 | Slippage basis (mpGeom) | HEAD: mpGeom=getMP_raw·e^(−ghMu). **v27 CANDIDATE: collapses to mpGeom=getMP_raw (no e^−ghMu — proven absent on (W), selfcheck L4 rel 4.33e-7)** | v27 (candidate) | DESIRABLE — simpler, proven |
-| 11 | Dollar/settlement pipe | Byte-identical reuse from v24 base (no new path); curve-independent | — (unchanged) | DESIRABLE — stable (reuse) |
-| 12 | getMP_raw price-coord gotcha | v27: on (W) price == geometric slope EXACTLY (no e^μ factor); selfcheck L4. Code comment warns against re-introducing the GH factor on a cross-port | v27 (candidate) | DESIRABLE — gotcha #12 honored, factor absent |
-| 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged; v27 geometry does not close it (not claimed) | — | OPEN — the known hole |
-| 14 | Esscher tilt / rapidity group | v27: strong-form trade = WEIGHT-slot field-center translation φ (the latent-translation analogue); no X·Y invariant claimed | v27 (candidate) | DESIRABLE — grounded |
-| 15 | File-safety gate | v27 blobs = canonical md5s `ab663f5c…`/`c505b08a…` (identical to v24 base); 3 scripts parse; tester-verified GREEN | 2026-06-08 re-pin | DESIRABLE — stable |
-| 16 | **Warp-with-trades (strong-form)** | **v27 CANDIDATE: IMPLEMENTED (strong-form R-paper) — engine-correct (selfcheck WARP a–f PASS; live engine φ moves, α/β conserved, trajectory exact). RENDER-FIX RE-RUN (`b245bfda`): real-UI band-execute now redraws the curve and a trade DOES change it, but only ≈0.5–1px (φ sub-pixel on the default pool); cumulative 6 max trades → φ≈0.029 / ≈1px. STILL reads as a dot sliding, not a warp — the operator's signed acceptance FAILS on item-3** | v27 render-fix re-run | CANDIDATE — engine PASS, **UI warp-visibility FAIL (BLOCKER)** |
+| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. GH (score-kernel) line demoted at v26c, retained intact | v27 promotion (entry 28) | DESIRABLE — Balancer is the literal substrate |
+| 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED by operator ruling (override, not resolved) |
+| 3 | Kurtosis knob τ | HEAD: τ slider LIVE (0.05–3); elbow VISIBLY rounds (~36px silhouette delta) with wings frozen (slope-angle Δ≤0.0001° at u=±10) — tester-confirmed on screen | v27 render-fix (`b245bfda`) | DESIRABLE — engine + UI PASS |
+| 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
+| 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled | v27 | OPEN lemma — theory-risk-accepted |
+| 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 | DESIRABLE — Reading A ruled |
+| 7 | ITM American smooth-pasting | HEAD (v27): ported with g→γ_loc (Reading A); seam value/slope selfcheck PASS; mark/markFrac split present. NOT carried from the GH line: payoff naked-leg uncap + x-range −90..+200 (HEAD payoff caps at 1, ±50%) — NOTES D9/D10 | v27 (+ Task-2 diff) | HEAD — seam PASS; 2 GH-line payoff upgrades unported (noted for future) |
+| 8 | Uniform strike registration θ=sNorm(K) | HEAD (v27): sNormStrike ((W) inverse) defined+exported (round-trip 1.46e-15, NaN-loud) but **export-only — no regLeg wiring**; payoff sweeps price-ratio (1+r); the v26c one-mark-across-display/exec/chart guarantee + all-γ crossover@K are UNVERIFIED on (W) — NOTES D11/D13/D16 | v27 (+ Task-2 diff) | PARTIAL — function present, uniform wiring unported (noted for future) |
+| 9 | Funding | HEAD (v27): re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — diverges from the GH line's locked w=½ funding; φ-anchor/funding lemma OPEN [needs-Aristotle] | v27 | OPEN — theory-risk; not UI-exercised |
+| 10 | Slippage basis (mpGeom) | HEAD (v27): mpGeom collapses to getMP_raw (price==slope on (W), proven, selfcheck L4). NOT carried: v26a's honest $-tooltip ("Layer-1 reserve-USD, not trader honest-dollar") — HEAD ships the v24 tooltip — NOTES D2 | v27 (+ Task-2 diff) | DESIRABLE math; $-label honesty unported (noted) |
+| 11 | Dollar/settlement pipe | Reused byte-identical from the v24 base; curve-independent | — (unchanged) | DESIRABLE — stable (reuse) |
+| 12 | getMP_raw price-coord gotcha | HEAD (v27): price == geometric slope EXACTLY on (W) (no e^μ factor); code comment warns against re-introducing the GH factor on a cross-port | v27 | DESIRABLE — moot by construction, warning kept |
+| 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
+| 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
+| 15 | File-safety gate | HEAD blobs canonical `ab663f5c…`/`c505b08a…` (tester re-verified at promotion), 3 scripts parse; selfcheck 21 PASS; demoted v26c GH suite green | 2026-06-10 promotion | DESIRABLE — stable |
+| 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED(operator, entry 28) |
 
 ## Entry template
 ```
@@ -67,8 +67,9 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
 
 ### OPEN (operator asked / objected; no recorded resolution)
 
-0. **★ v27 — the operator's SIGNED visual acceptance test is NOT met on screen — OPEN (BLOCKER
-   for play-with / HEAD).** [#2, #3, #16] The operator's acceptance is explicitly *visual*:
+0. **★ v27 — the operator's SIGNED visual acceptance test: item-3 (trades-warp) NOT met on
+   screen — BLOCKER OVERRIDDEN BY OPERATOR RULING (entry 28, HEAD-promoted anyway); recorded
+   overridden-NOT-resolved.** [#2, #3, #16] The operator's acceptance is explicitly *visual*:
    "Acceptance (your signed test, orthogonality relaxed): one number → turn it → **elbow visibly
    rounds → wings don't move** → static → options read off as perpetual-American → **trades warp
    the curve, not a dot sliding**." (`history/operator/2026-06-10_kurtosis-curve-family-brief.md`
@@ -95,9 +96,21 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    (`bigwarp_post.png`). The post-trade dotted overlay sits on top of the solid curve; the trade
    reads as **"a dot sliding" — exactly what the operator said it must NOT be.** Root cause of (3)
    is NOT the renderer (math verified φ-dependent in-frame) — an admissible (W) trade on this pool
-   produces a sub-pixel φ. **VISUAL-ACCEPTANCE = FAIL (item-3, the HEADLINE, OPEN).** Still NOT
+   produces a sub-pixel φ. **VISUAL-ACCEPTANCE = FAIL (item-3, the HEADLINE).** Still NOT
    operator-playable for the signed test. Needs a much higher per-trade φ gain or an amplified/
    animated warp viz.
+   **★ FINAL STATUS (entry 28, 2026-06-10): OVERRIDDEN — HEAD-promoted by operator ruling.**
+   Diagnostic chain the operator ordered and saw before ruling: entry 24 "compare with v24 and see
+   if we have similar order of magnitude…" [verbatim-transcript] → reconcile: v24 warps, v27 warps
+   30–1000× less at the matched setting; entry 26 conjecture "is there a kurtosis where this
+   compares to v24's curve warp … I personally think there should be settings where it works
+   well, its too natural not to" [verbatim-transcript] → verified sweep answer: NO — no τ matches
+   v24's global warp while keeping wings frozen (the warp is elbow-local BY DESIGN of the
+   frozen-wing geometry); entry 27 premise cross-check → skeptic-verified FAITHFUL to paper+v24.
+   Operator then ruled (entry 28 [verbatim-transcript]): "firstly, commit this version to head
+   because theres nothing useful since v24". My item-3 visual finding stands as FACT (the
+   per-trade warp IS subtle on screen); the operator promoted with that fact on the table — an
+   override, not a fix. Residual polish OPEN: anchor-overlay / amplified-warp viz.
 
 1. **Curve / kurtosis-knob family — RULED to (W) + Reading A; sub-flags below.** [#2, #3, #6]
    The curve family is now RULED: the (W) weight-profile family on the v24 base (Entry 2 "v24 is
@@ -141,6 +154,18 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
 ### RESOLVED / RULED (kept here so the skeptic can check none were quietly re-opened or
 mis-claimed; full per-version detail in the entries below)
 
+- **★ v27 HEAD PROMOTION — RULED (entry 28 [verbatim-transcript], 2026-06-10):** "firstly,
+  commit this version to head because theres nothing useful since v24 -- in parallel let the
+  testing / versioning guy do a feature level diff to confirm any potentially desirable changes
+  we made since apart from this core, and simply make note for future reference." OVERRIDES the
+  tester's visual-layer blocker (item 0 above — recorded overridden-NOT-resolved). Executed by
+  the manager 2026-06-10: HEAD = `HEAD_temporal_mvp_v27_wkurtosis.html` (`b245bfda`); v26c
+  demoted to `temporal_mvp_v26c.html` (`6cc73563`), GH line retained, suite green. The ordered
+  feature-level diff is DELIVERED: `engine/builds/NOTES_v24_to_v26c_desirables.md`.
+- **Entry-26 conjecture ("is there a kurtosis where this compares to v24's curve warp … too
+  natural not to") — CHECKED, DISCONFIRMED:** verified sweep found NO τ matching v24's global
+  warp magnitude with frozen wings (warp is elbow-local by design); reported to the operator
+  before the entry-28 ruling. Evidence: manager/lead sweep, BUILD_LINEAGE.md HEAD row.
 - **Curve family = (W) on v24 base** — RULED (Entries 2/4/5 [verbatim-transcript]).
 - **Settlement = Reading A** — RULED (Entry 11 "a" [verbatim-transcript]).
 - **Strong-form trades-warp is the build target (R-paper, not R-simple)** — RULED build-it
@@ -283,7 +308,7 @@ except where marked)
 `run_all.sh` green (7 GH + seam + dir).
 
 
-## v26c (HEAD, GH line) → v27 (W) kurtosis curve + strong-form trades-warp, off v24 base   [status: CANDIDATE — NOT promoted; HEAD stays v26c `6cc73563`]
+## v26c (HEAD, GH line) → v27 (W) kurtosis curve + strong-form trades-warp, off v24 base   [status: HEAD-PROMOTED 2026-06-10 by OPERATOR RULING (entry 28) — see the promotion entry below; tester visual-layer blocker OVERRIDDEN, not resolved]
 _Tester live-Playwright pass 2026-06-10. Build `temporal_mvp_v27_wkurtosis_WIP.html` md5
 `3914c7f423a9e988e664f901a352a6e1`. This is a WIP candidate off the v24 Balancer base — a
 PARALLEL line, not a successor edit of v26c. Promotion is an operator-tier call (separate)._
@@ -460,13 +485,93 @@ operator-playable for the signed test.** New harnesses: `engine/verify/pw_v27_re
 
 ---
 
+## v27 `b245bfda` CANDIDATE → HEAD (operator promotion, entry 28)   [status: HEAD-promoted 2026-06-10 — OPERATOR RULING, overriding the tester's visual-layer blocker]
+_No byte change to the build — same `b245bfda` the render-fix re-run verified. This entry records
+the STATUS transition, the promotion-time re-verification, the override, and the operator-ordered
+v24→v26c feature-level diff. Executed by the manager; tester re-verified this run._
+
+**FEATURES:** #1/#2/#3/#16 (the (W) core + τ knob + strong-form warp become HEAD), #7/#8/#10
+(Task-2 diff findings — GH-line items NOT carried into HEAD, now on record), #5/#9 (open lemmas
+carried into HEAD as theory-risk), #11/#15 (verified stable at promotion), #13 (untouched, still
+the open ship-gate); #4/#6/#12/#14 unchanged from the candidate entry (restated in the table).
+**None beyond.**
+
+**DESIRABLE:**
+- The (W) family, τ knob, and strong-form trades-warp are now canonical HEAD — engine-verified
+  (selfcheck 21 PASS, re-run by tester at promotion) with τ-elbow + curve render tester-confirmed
+  on screen (render-fix re-run, items 1/2). [#1, #2, #3, #16]
+- GH line demoted INTACT: `temporal_mvp_v26c.html` (`6cc73563`) retained, full GH suite green
+  this run (`run_all.sh builds/temporal_mvp_v26c.html` — 7 gates + seam + dir + faith) — every
+  unported desirable keeps a working, gated reference implementation. [#15]
+- `run_all.sh` default now routes (W) builds to `wcurve_selfcheck.js` [HARD]; GH builds fall
+  through to the full GH suite — both lines stay gated. [#15]
+- File-safety at promotion: HEAD blobs canonical (`ab663f5c…`/`c505b08a…` line-md5, tester
+  re-checked), 3 scripts parse, whole-file md5 `b245bfda`. [#15]
+
+**UNDESIRABLE:**
+- **★ Trades-warp visual subtlety (the former BLOCKER) — OVERRIDDEN by operator ruling (entry
+  28), ACCEPTED(operator), NOT resolved.** Per-trade warp ≈0.5–1px; verified elbow-local by
+  design (sweep: no τ matches v24's global warp with frozen wings). Residual polish OPEN:
+  anchor-overlay / amplified-warp viz (not added). [#2, #16]
+- **drawPayoff N_buy `state`-vs-`state.pool` NaN-fallback PRESENT in HEAD** (inherited from the
+  v24 base; was diagnosed+fixed on the GH line in v26c; HEAD L4034 byte-identical to the buggy
+  site; display-only — N_buy silently falls back to N_sell). **OPEN** — NOTES D14. [#7]
+- **Slippage $-tooltip honesty label NOT carried** — HEAD ships the v24 wording; the v26a
+  "Layer-1 reserve-USD, not trader honest-dollar" label is on the demoted line only. **OPEN
+  (minor)** — NOTES D2. [#10]
+- **Payoff chart: x-range back to ±50% and naked leg capped at 1** — the v26b/v26c free-boundary
+  coverage upgrades unported. **OPEN (minor)** — NOTES D9/D10. [#7]
+- **Registration export-only:** no `regLeg` wiring; payoff sweeps price-ratio (1+r); one-mark
+  uniformity + all-γ crossover@K UNVERIFIED on (W). **OPEN** — NOTES D11/D13/D16. [#8]
+- lp-y-delta hardcode (engine L4295, y−800000 stale baseline) + degenerate default Create-Perp
+  LIQ-PRICE readout — carried from the render-fix re-run. **OPEN.** [display, #11-adjacent]
+- Funding re-point (price-anchor p=P, ±γ_loc) + warp∘rebase-commute + φ-anchor/funding lemmas —
+  carried into HEAD as theory-risk-accepted; lemmas OPEN [needs-Aristotle]. [#5, #9]
+
+**NEUTRAL:** file renames (`HEAD_temporal_mvp_v27_wkurtosis.html`; prior HEAD →
+`temporal_mvp_v26c.html`); BUILD_LINEAGE/INTEGRITY rows updated by the manager.
+
+**OPERATOR-VOICE:** (all [verbatim-transcript],
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md`)
+- **THE RULING, entry 28:** "firstly, commit this version to head because theres nothing useful
+  since v24 -- in parallel let the testing / versioning guy do a feature level diff to confirm
+  any potentially desirable changes we made since apart from this core, and simply make note for
+  future reference." RULED + EXECUTED (this entry + the NOTES file are the execution).
+- Entry 24 (diagnostic order): "compare with v24 and see if we have similar order of magnitude
+  when we start with the same kurtosis implied by the ordinary balancer curve sort" — DONE
+  (v24 warps; v27 30–1000× less at matched setting).
+- Entry 26 (conjecture): "is there a kurtosis where this compares to v24's curve warp ; because
+  of the natural polar lens view i'm assuming we've built our thing on, I personally think there
+  should be settings where it works well, its too natural not to" — CHECKED, DISCONFIRMED
+  (no such τ with frozen wings); operator ruled promotion with this answer in hand.
+- Entry 27: "also meantime if the research guy is idle let him cross verify the geometric
+  premise / principle of the curve warp is correct in the version we're working on vs the paper's
+  intuition and v24" — DONE (skeptic-verified premise FAITHFUL; research-lead corroboration was
+  to follow per manager note).
+- The entry-1 SIGNED acceptance test: items 1/2 met on screen; item 3 ("trades warp the curve,
+  not a dot sliding") remains UNMET on screen — promotion is the operator's override of his own
+  test, recorded as such, not as a fix.
+
+**EVIDENCE:** this run — `md5sum` HEAD `b245bfda…`; blob line-md5s `ab663f5c…`/`c505b08a…`;
+`wcurve_selfcheck.js` 21 PASS/0 FAIL; demoted v26c full GH suite green; byte-level diff findings
+in `engine/builds/NOTES_v24_to_v26c_desirables.md` (grep/sed line refs per item). Prior visual
+evidence: `evidence/v27_pw/` (render-fix re-run). **Cross-link: the operator-ordered v24→v26c
+feature-level diff = `engine/builds/NOTES_v24_to_v26c_desirables.md` (D1–D17, categorized
+already-present / portable / GH-dead).**
+
+---
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
 | Payoff ray-legend overprint (cosmetic) | v26c | OPEN — intern polish, non-blocking |
 | Collar-aggressiveness slippage magnitude | v26a (exposed) | ACCEPTED — operator parked |
 | (W) curve/knob not visually legible (sliver curve; τ invisible) | v27 (`3914c7f4`) | **RECONCILED in v27 render-fix (`b245bfda`)** — curve renders across frame (item 1 PASS) + τ visibly rounds elbow with frozen wings (item 2 PASS), tester-confirmed |
-| **(W) trades-WARP not visually legible — a trade is a "dot sliding," not a curve warp (φ sub-pixel on default pool: ≈0.5px/band, ≈1px after 6 max trades)** | v27 (`3914c7f4`); persists in `b245bfda` | **OPEN — BLOCKER for play-with/HEAD (the HEADLINE acceptance item); needs higher per-trade φ gain or amplified/animated warp viz** |
+| **(W) trades-WARP not visually legible — a trade is a "dot sliding," not a curve warp (φ sub-pixel on default pool: ≈0.5px/band, ≈1px after 6 max trades)** | v27 (`3914c7f4`); persists in `b245bfda` | **OVERRIDDEN — operator ruling entry 28 (HEAD-promoted): warp verified elbow-local/subtle BY DESIGN (no τ matches v24's global warp with frozen wings); ACCEPTED(operator). Residual polish OPEN: anchor-overlay / amplified-warp viz (not added)** |
+| drawPayoff N_buy `state`→`state.pool` NaN-fallback (display-only; N_buy silently = N_sell) — fixed on GH line in v26c, bug present in HEAD | v24 base, carried into v27 HEAD | OPEN — one-line port; NOTES D14 |
+| Slippage $-tooltip honesty ("Layer-1 reserve-USD, not trader honest-dollar") not carried — HEAD ships v24 wording | v27 HEAD (unported v26a label) | OPEN (minor) — NOTES D2 |
+| Payoff chart coverage: x-range ±50% (v26c had −90..+200) + naked leg capped at 1 (v26b/c uncapped intrinsic) | v27 HEAD (unported v26b/c upgrades) | OPEN (minor) — NOTES D9/D10 |
+| Strike registration export-only: no regLeg wiring; one-mark uniformity + all-γ crossover@K unverified on (W) | v27 HEAD | OPEN — NOTES D11/D13/D16 |
 | Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — default now asymmetric x10/y12 w₋0.60/w₊0.85 Δw0.25; τ + trades live on load |
 | Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — label now states the strong-form φ warp ships (tester-confirmed verbatim) |
 | Oracle/pool-default blast radius: lp-y-delta shows −$799,988 (hardcoded y−800000 baseline, L4295) + Create-Perp LIQ price −9995.56 (degenerate at oracle 4.44 / $1000 margin) | v27 render-fix (`b245bfda`, oracle→4.44 un-gated default) | OPEN — non-NaN but absurd readouts; intern fix (rebase the y-delta baseline; sanity the toy default margin/notional) |
