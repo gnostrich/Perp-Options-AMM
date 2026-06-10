@@ -57,3 +57,12 @@ items; GH-era transcript gap flagged) and the skeptic stock-take dispatch (in fl
 > then make a transcription policy so the skeptic and tester can see my messages
 
 _Context: this policy (`docs/transcription_policy.md`, CLAUDE.md §2.2) + this file._
+
+## 8
+> firstly, speak in my language. refer the research guy and the chat we had about constant product
+> / balancer mapped from 90 to 180 degrees to view as a distribution, then how to change kurtosis
+> by polar angle view hyperbolic angke etc. are you able or not to find that conversation
+
+_Context: during the fork brainstorm. Two directives: (a) manager to drop jargon-dense relay;
+(b) locate the operator↔research conversation about the 90°→180° angular/distribution view of
+constant-product/Balancer and kurtosis via polar/hyperbolic angle._
