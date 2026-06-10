@@ -1,9 +1,13 @@
 # MEMORY — intern
-_Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
+_Last updated: 2026-06-10 (v27 UX fix / defaults revert). Rewrite changed bits at task end._
 
 ## Engine
-- Canonical: **`engine/builds/HEAD_temporal_mvp_v26c.html`** (md5 `6cc73563779a3e030774b7597d0ae187`).
-  Work from this. (v26a/v26b notes below are history of landed work.)
+- Canonical: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** (md5
+  `9d22cffd6a0f002f359eed81d7157203` after the 2026-06-10 UX fix; manager re-pins
+  run_all/INTEGRITY/BUILD_LINEAGE). (W) kurtosis curve build (pre-GH lineage from v24 —
+  NO ghCalibrate/ghMu on this branch; gate = `verify/wcurve_selfcheck.js` 21 PASS).
+  GH-lineage v26c (`6cc73563…`) remains in builds/ as history. (v26a/v26b notes below
+  are history of landed work.)
 - 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`. `getSNorm`=(x−α)/α;
   `getDepth` is display-only/stale (left so by design). State carries scalar `gh*` params
   (`ghP,ghNx,ghNy,ghM,ghMu,ghAh,ghBh,ghDelta`); the CDF table lives in a module cache keyed by shape,
@@ -30,7 +34,34 @@ _Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
 
+## Done — v27 UX FIX / defaults revert (operator entry 29, handed to manager 2026-06-10)
+Build: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** edited IN PLACE per brief
+(b245bfda → **9d22cffd6a0f002f359eed81d7157203**). Splice `/tmp/splice_v27_uxfix.py` (6 reps, all
+count==1, blobs never through). NO git (manager re-pins gate md5s).
+- **Reverted the 80000→4.44 pool/oracle rescale** (was MY earlier render fix — wrong approach,
+  broke v24 feel + dollar KPIs). New defaults derived in `initialState()`: x0=10, oracle=
+  oracle_initial=perpMark=80000, wings stay 0.60/0.85, τ=0.3. **y0 = x0·oracle·(1−wMid)/wMid ≈
+  303448.28 (NOT 800000)** — on (W) with w>½ the marginal is γ_loc·(y/x)>y/x, so y=800000 would
+  force a big load-arb; equilibrium-at-load chosen (commented in code). **phi0 = ln(y0/x0) ≈
+  10.32** puts the elbow AT carry/ATM; op-point-centered trace window shows it w/o rescaling.
+  alpha=x0·wMid=7.25, beta=y0·(1−wMid) (exact at u0=phi0). `_baseline_alpha/_beta` stamped from
+  the same consts (drift=0 at load). Verified headless: getMP_raw(pool)=80000.000, arb no-op,
+  liq-price default perp sane ($70k long / $90k short @8×).
+- **lp-y-delta hardcode fixed** (~L4309): `p.y−800000` → `p.y−s._initial_y` (new state field
+  captured at init; $0.00 at load; legacy imports w/o it go NaN — loud).
+- **NO SLIDERS (operator):** `tau-input` `type="range" step=0.01` → `type="number" step=0.05`
+  (min 0.05/max 3/value 0.3, id+input/change wiring unchanged — spinners fire both). Confirmed
+  the ONLY range input in the file; all other inputs already number-type w/ sensible steps
+  (weights 0.01 in (0.51,0.95), oracle step 100). Dead CSS rule for range left (harmless).
+- **Static `wcurve-status` text** updated to match defaults (γ_ATM 2.64, γ₋ 1.50, γ₊ 5.67) —
+  was stale 2.33×3; live `_wcurveStatus()` overwrites at boot anyway.
+- Safety: blobs `ab663f5c`/`c505b08a` intact, 3 scripts parse, IIFE intact, longest script line
+  482, diff = exactly 6 regions, `wcurve_selfcheck` **21 PASS 0 FAIL**.
+
 ## Done — v27 RENDER/DEFAULT/LABEL fix (knob+warp now VISIBLE; handed to manager 2026-06-10)
+**PARTIALLY REVERTED 2026-06-10 (entry 29):** the pool/oracle 80000→4.44 rescale in item (2) was
+the wrong fix and is now reverted (see UX-fix section above). Trace-window (1) and label (3)
+survive.
 Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (in place). Splice:
 `/tmp/splice_v27_render.py` (count==1 each, blobs never through). Tester root cause: default pool
 sat at u0=ln(800000/10)≈11.3 (off `curveTraceW`'s fixed u∈[−6,6] window → flat sliver) AND symmetric

@@ -5,7 +5,7 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v27_wkurtosis.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want b245bfda6a493af0a7017309f1acd3f3 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 9d22cffd6a0f002f359eed81d7157203 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 echo -n "blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): "; sed -n '74p'   "$HEAD" | md5sum | awk '{print $1}'
 echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$HEAD" | md5sum | awk '{print $1}'
 

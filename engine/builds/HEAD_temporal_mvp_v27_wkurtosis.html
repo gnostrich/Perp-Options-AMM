@@ -1320,7 +1320,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           <div class="field-row two-col" style="margin-bottom: 6px;">
             <div class="field-label">KURTOSIS τ</div>
             <div class="field-input-wrap">
-              <input type="range" id="tau-input" min="0.05" max="3" step="0.01" value="0.3">
+              <input type="number" id="tau-input" min="0.05" max="3" step="0.05" value="0.3">
               <span id="tau-readout" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">0.30</span>
               <div class="sim-aid-label">ATM-elbow roundness, vol-set at setup; STATIC — not changed by trades. Smaller τ = sharper elbow (leptokurtic); larger τ → plain Balancer. Wings (tail exponents) are frozen across τ.</div>
             </div>
@@ -1339,7 +1339,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="sim-aid-label">call-side weight · must be &gt; 0.5 so γ_loc &gt; 1 (locked). Clamped.</div>
             </div>
           </div>
-          <div class="sim-aid-label" id="wcurve-status" style="padding: 2px 8px 0;">γ_loc(ATM)=2.33 · wings γ₋=2.33, γ₊=2.33</div>
+          <div class="sim-aid-label" id="wcurve-status" style="padding: 2px 8px 0;">γ_loc(ATM)=2.64 · wings γ₋=1.50, γ₊=5.67</div>
         </div>
         <div class="panel-section">
           <div class="panel-section-title">Loop Controls</div>
@@ -2277,17 +2277,29 @@ const Engine = (function() {
 const Store = (function() {
 
   function initialState() {
+    // v24-feel defaults: 10 BTC at the BTC-$80k dollar scale — the kpi-oracle input
+    // shows 80000 and STATE MUST MATCH IT (operator UX ruling 2026-06-10; the earlier
+    // 80000->4.44 rescale broke the v24 feel + dollar KPIs and is reverted here).
+    const x0 = 10.0, tau0 = 0.3, wMinus0 = 0.60, wPlus0 = 0.85, oracle0 = 80000.0;
+    const wMid0 = 0.5 * (wMinus0 + wPlus0);
+    // y0 != 800000 ON PURPOSE: with w > 1/2 everywhere (gamma_loc > 1 lock) the marginal
+    // is gamma_loc*(y/x) > y/x, so y=800000 at oracle 80000 would force a big arb on
+    // load; equilibrium-at-load chosen instead: marginal == oracle
+    //   => y0 = x0*oracle0*(1-wMid0)/wMid0  (~303448.28).
+    const y0 = x0 * oracle0 * (1 - wMid0) / wMid0;
+    // Field center AT the live operating point (phi0 = ln(y0/x0) ~ 10.32 — the natural
+    // polar-lens choice): the tau elbow sits at carry/ATM and the op-point-centered
+    // trace window renders it WITHOUT rescaling the pool.
+    const phi0 = Math.log(y0 / x0);
     return {
-      // Deep deployment: x=10 BTC at $80k → y=$800k cash, w=0.5.
       // (W) kurtosis curve: tau (ATM-elbow roundness, vol-set/static), wing weights
       // wMinus/wPlus (>0.5 each so g_loc>1 — see calibration guard). alpha/beta are
-      // DERIVED (x·w, y·(1-w)); kept for display compatibility. w_mid=0.5 ⇒ ATM g_loc=1
-      // would violate the lock, so wings start ASYMMETRIC and >0.5 (wMinus=0.60,
-      // wPlus=0.85): Delta-w=0.25 keeps tau live + trades in-range; the operating
-      // point sits NEAR the elbow (u0=ln(y/x)~0.18) so the warp renders on-frame.
-      pool: { x: 10.0, y: 12.0, tau: 0.3, wMinus: 0.60, wPlus: 0.85, phi: 0.0, alpha: 7.625, beta: 2.55 },
-      oracle: 4.44,
-      oracle_initial: 4.44,
+      // DERIVED (x·w, y·(1-w)); at u0 = phi0 the field reads exactly wMid0, so these
+      // stamps are consistent with _stampAB.
+      pool: { x: x0, y: y0, tau: tau0, wMinus: wMinus0, wPlus: wPlus0, phi: phi0,
+              alpha: x0 * wMid0, beta: y0 * (1 - wMid0) },
+      oracle: oracle0,
+      oracle_initial: oracle0,
       // Perp mark — layer-3 reference (formal-spec §1.4). MVP-collapsed
       // numerically to the oracle here; used only by the carved-slice
       // P&L (the carved slice is a perp, not an option). Production
@@ -2300,7 +2312,7 @@ const Store = (function() {
       // for the OTM/ITM regime test. Defaults to the oracle's value but is
       // independently editable from the KPI panel; a rebase moves the
       // oracle and NOT the perp mark.
-      perpMark: 4.44,
+      perpMark: oracle0,
       t: 0,
       kappa: 0.02,
       tick_hours: 1,
@@ -2323,9 +2335,11 @@ const Store = (function() {
       eventLog: [],
 
       // Invariant baselines (rescale on rebase per §4 of rebasing note)
-      _baseline_alpha: 7.0,
-      _baseline_beta:  240000.0,
-      _baseline_k:     null
+      // Stamped from the SAME derived defaults so drift reads 0 at load.
+      _baseline_alpha: x0 * wMid0,
+      _baseline_beta:  y0 * (1 - wMid0),
+      _baseline_k:     null,
+      _initial_y: y0   // captured at init — baseline for the LP "Pool y delta" readout
     };
   }
 
@@ -4292,7 +4306,9 @@ function render() {
   // y/x (= 2y), the same expression Store.liquidity() uses — NOT the
   // oracle (W8b). lp-x-usd above stays oracle-valued by its label.
   document.getElementById('lp-pool-value').textContent = fmtUSD(p.y + p.x * (p.y / p.x), 2);
-  document.getElementById('lp-y-delta').textContent = fmtUSD(p.y - 800000, 2);
+  // Baseline = dynamic initial y captured at init (s._initial_y), NOT a hardcode:
+  // reads $0.00 at load, honest drift after. Legacy imports lacking it go NaN (loud).
+  document.getElementById('lp-y-delta').textContent = fmtUSD(p.y - s._initial_y, 2);
 
   renderPerps();
   renderBands();
