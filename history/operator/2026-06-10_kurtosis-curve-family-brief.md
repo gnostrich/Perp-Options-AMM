@@ -176,6 +176,13 @@ _Context: responding to the warp-visibility fork, operator directs a diagnostic 
 
 ---
 
+## Entry 25 — 2026-06-10
+_Context: operator asks for a non-disruptive status update while the v24-vs-v27 warp-magnitude comparison is in flight. Transcribed verbatim (typo preserved)._
+
+> nondisruptive statis update?
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
