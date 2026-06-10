@@ -211,6 +211,21 @@ _Context: operator tried to play with the promoted v27 HEAD and couldn't; object
 
 ---
 
+## Entry 30 — 2026-06-10
+_Context: operator is playing with HEAD (test-only, NO changes / no versioning while they play) and orders two routine checks for research-lead + tester. (1) Expected warp behavior — at CONSTANT PREMIUM (option price × notional), selling further OTM (inner bound further out) warps the curve MORE; at constant NOTIONAL it warps LESS (option price drops ⇒ premium & slippage drop) — so the check must hold premium constant, not notional; run on v24 AND the new v27. (2) Separately verify the 'AMM tx shortcut': two options in the same leg forming a vertical spread reduce to a single AMM tx at a point between them for the value difference between the two options. Transcribed verbatim._
+
+> ok, so while i test it have research guy and tester do a routine check on expected warp behavior: for same premium (perp option price * notional) as you sell further OTM inner bound, the curve would warp more
+>
+> when you go further holding notional the same it warps less because the price of option reduces and total premium and slippage also would reduce so you have to check premium same not notional same
+>
+> do this for v24 and latest version we just did
+>
+> separately also verify the 'AMM tx shortcut' thing where two options in the same leg constituting a vertical spread amount to a single AMM tx at some point between them for the value difference between the options constituting the vertical spread
+>
+> test only no changes, im playing around with the head thing so dont want any versioning issues
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
