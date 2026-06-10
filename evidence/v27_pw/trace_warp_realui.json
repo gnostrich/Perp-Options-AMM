@@ -1,0 +1,96 @@
+{
+  "runA": {
+    "tag": "A",
+    "errs": [],
+    "prePool": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.625,
+      "beta": 2.55,
+      "oracle": 4.44
+    },
+    "afterPerp": {
+      "long": 10002.22,
+      "short": 5000
+    },
+    "previewBandSet": true,
+    "executeEnabled": true,
+    "warnMsg": "",
+    "executed": true,
+    "postPool": {
+      "x": 9.993323342194314,
+      "y": 12.03022163402352,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0.0011443696268326753,
+      "alpha": 7.8991875199243955,
+      "beta": 2.520974976090726,
+      "oracle": 4.44
+    },
+    "phiMoved": 0.0011443696268326753,
+    "item3_warpFull": {
+      "mean": 0.55,
+      "max": 7,
+      "n": 312
+    },
+    "item3_warpElbow": {
+      "mean": 0.54,
+      "max": 7,
+      "n": 160
+    },
+    "litPre": 1945,
+    "litPost": 994
+  },
+  "runB": {
+    "tag": "B",
+    "errs": [],
+    "prePool": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.625,
+      "beta": 2.55,
+      "oracle": 4.44
+    },
+    "afterPerp": {
+      "long": 10002.22,
+      "short": 5000
+    },
+    "previewBandSet": true,
+    "executeEnabled": true,
+    "warnMsg": "",
+    "executed": true,
+    "postPool": {
+      "x": 9.993323342194314,
+      "y": 12.03022163402352,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0.0011443696268326753,
+      "alpha": 7.8991875199243955,
+      "beta": 2.520974976090726,
+      "oracle": 4.44
+    },
+    "phiMoved": 0.0011443696268326753,
+    "item3_warpFull": {
+      "mean": 0.55,
+      "max": 7,
+      "n": 312
+    },
+    "item3_warpElbow": {
+      "mean": 0.54,
+      "max": 7,
+      "n": 160
+    },
+    "litPre": 1945,
+    "litPost": 994
+  }
+}

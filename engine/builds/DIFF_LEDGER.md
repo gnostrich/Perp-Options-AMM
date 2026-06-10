@@ -21,8 +21,8 @@ changed, every entry, no exceptions)
 | # | Feature (inventory) | Current state (as of v26c HEAD `6cc73563`; v27 = CANDIDATE off v24, not HEAD) | Last changed | Verdict |
 |---|---|---|---|---|
 | 1 | Balancer base | HEAD runs GH (= one warp setting). **v27 CANDIDATE returns to the literal Balancer base (v24): F = x^w·y^(1−w) with position-dependent w(u) — the (W) family.** τ→∞ recovers plain Balancer | v27 (candidate) | DESIRABLE in candidate — Balancer is now the literal substrate |
-| 2 | Curve warp w(u) | HEAD: implicit via GH score kernel. **v27 CANDIDATE: explicit (W) weight-field w(u;φ), warp = field-center φ shift; engine-correct (selfcheck), but NOT visually legible in any chart (see v27 entry)** | v27 (candidate) | CANDIDATE — engine PASS, UI FAIL |
-| 3 | Kurtosis knob τ | HEAD: NOT in engine. **v27 CANDIDATE: τ slider LIVE (0.05–3), engine-correct (elbow rounds, wings τ-independent per selfcheck + my live engine read), but NOT visually legible at the default pool geometry** | v27 (candidate) | CANDIDATE — engine PASS, UI FAIL |
+| 2 | Curve warp w(u) | HEAD: implicit via GH score kernel. **v27 CANDIDATE: explicit (W) weight-field w(u;φ), warp = field-center φ shift; engine-correct (selfcheck). RENDER-FIX RE-RUN (`b245bfda`): curve now renders across frame, but the trade-warp is STILL screen-invisible (≈0.5–1px; φ sub-pixel on the default pool) — the "dot sliding" the operator forbade** | v27 render-fix re-run | CANDIDATE — engine PASS, UI warp-visibility FAIL (BLOCKER) |
+| 3 | Kurtosis knob τ | HEAD: NOT in engine. **v27 CANDIDATE: τ slider LIVE (0.05–3), engine-correct (elbow rounds, wings τ-independent). RENDER-FIX RE-RUN (`b245bfda`): NOW VISIBLY rounds the ATM elbow (~36px elbow delta vs prior ~0.9px) with wings frozen (slope-angle Δ 0.0001°/0° at u=±10) — tester-confirmed on screen** | v27 render-fix re-run | CANDIDATE — engine PASS, **UI now PASS** (knob visible) |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD live. v27: carry = price leg q=ln p; reads via getMP_raw; engine consistent (selfcheck) | v25 (HEAD); v27 carry-reframe (candidate) | DESIRABLE — stable |
 | 5 | Rebase (P→P/r) | HEAD live. **v27 CANDIDATE: rebase = carry-shift q→q−ln r (NOT rigid x→r·x); warp∘rebase-commute is OPEN/[needs-Aristotle], deliberately NOT implemented as coupled** | v25 (HEAD); v27 reframe (candidate) | CANDIDATE — theory-risk-accepted, lemma OPEN |
 | 6 | Pricing law value∝S^(−γ) | HEAD live (G4). v27: value∝S^(−γ_loc) under Reading A; wings exact power; elbow per Reading A (operator-ruled, Entry 11 "a") | v25 (HEAD); v27 γ_loc (candidate) | DESIRABLE — Reading A operator-ruled |
@@ -35,7 +35,7 @@ changed, every entry, no exceptions)
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged; v27 geometry does not close it (not claimed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | v27: strong-form trade = WEIGHT-slot field-center translation φ (the latent-translation analogue); no X·Y invariant claimed | v27 (candidate) | DESIRABLE — grounded |
 | 15 | File-safety gate | v27 blobs = canonical md5s `ab663f5c…`/`c505b08a…` (identical to v24 base); 3 scripts parse; tester-verified GREEN | 2026-06-08 re-pin | DESIRABLE — stable |
-| 16 | **Warp-with-trades (strong-form)** | **v27 CANDIDATE: IMPLEMENTED (strong-form R-paper) — trade conserves α,β, moves (x,y), re-centers field φ'=u'−z; engine-correct (selfcheck WARP a–f PASS: α/β conserved, on-trajectory resid 0, φ moves, wing-cap rejects, path-independent, round-trip 1.78e-15; my live engine confirms φ 0→10.59, w 0.85→0.75, trajectory exact). BUT the warp is NOT visually legible in any chart (the operator's signed "trades warp the curve, not a dot sliding" acceptance test FAILS on screen)** | v27 (candidate) | CANDIDATE — engine PASS, UI acceptance-test FAIL (BLOCKER) |
+| 16 | **Warp-with-trades (strong-form)** | **v27 CANDIDATE: IMPLEMENTED (strong-form R-paper) — engine-correct (selfcheck WARP a–f PASS; live engine φ moves, α/β conserved, trajectory exact). RENDER-FIX RE-RUN (`b245bfda`): real-UI band-execute now redraws the curve and a trade DOES change it, but only ≈0.5–1px (φ sub-pixel on the default pool); cumulative 6 max trades → φ≈0.029 / ≈1px. STILL reads as a dot sliding, not a warp — the operator's signed acceptance FAILS on item-3** | v27 render-fix re-run | CANDIDATE — engine PASS, **UI warp-visibility FAIL (BLOCKER)** |
 
 ## Entry template
 ```
@@ -78,15 +78,26 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    can i actually get a version to play around with!?" (Entry 17, line 133 [verbatim-transcript]).
    **Tester FINDING (live Playwright, this run):** the engine is correct (selfcheck 21 PASS; my
    live-engine read confirms τ rounds the elbow in γ_loc, wings τ-independent, and a trade moves
-   φ 0→10.59 / w 0.85→0.75 on the exact trajectory) — **but none of it renders legibly.** In the
-   Pool Curve (x,y) view the operating point sits at u₀=ln(800000/10)≈11.3, far outside the
-   curve-trace window [−6,6] and far from the elbow (u≈0); the visible curve is a flat sliver and
-   τ=0.10 vs 2.50 are indistinguishable to the eye, pre-/post-trade are pixel-identical
-   (warpFullDiff=0). In Mark-Across-Strikes the peak is τ-invariant to ≈0.94px and the trade
-   leaves it unchanged. So the three headline acceptance items (elbow rounds / wings frozen /
-   trades-warp-not-a-dot) are **engine-true but screen-invisible.** OPEN — needs a frame/geometry
-   fix (curve-trace window must straddle the elbow at the live operating point, or a realistic
-   default pool with u₀ near 0) before the operator can "play around with" it and sign the test.
+   φ 0→10.59 / w 0.85→0.75 on the exact trajectory) — **but none of it rendered legibly** in the
+   ORIGINAL run (build `3914c7f4`): operating point at u₀≈11.3, off the [−6,6] trace window, sliver
+   curve, τ indistinguishable, pre-/post-trade pixel-identical (warpFullDiff=0).
+   **★ UPDATE — RENDER-FIX RE-RUN (build `b245bfda`, 2026-06-10, this turn): PARTIALLY MET (2 of 3).**
+   The fix (curveTraceW centers the window on 0.5·(u₀+φ), straddling BOTH the live operating point
+   and the elbow; default pool now asymmetric x10/y12 u₀≈0.18, w₋0.60/w₊0.85, oracle→4.44; #16 label
+   updated) lands two headline items: **(1) curve renders across the frame** (fracW 0.937/fracH 0.93,
+   GH-continuation, NOT a sliver — `A_R01_default_curve.png`); **(2) τ visibly rounds the elbow**
+   (elbow silhouette ≈36px vs the prior ≈0.9px; `A_R02`τ0.05 vs `A_R03`τ3.0 clearly differ;
+   frame-independent slope-angle math confirms it is the ELBOW rounding (Δ up to 13° at u∈[−2,+0.5])
+   while WINGS stay frozen (Δ 0.0001° u=−10, 0° u=+10)). **(3) the trades-warp is STILL
+   screen-invisible** — driven through the REAL UI band-execute (prior render()/Viz harness calls
+   were silent no-ops — see methodology note in the v27 entry), the live curve shifts ≈0.5px
+   (φ:0→0.0011) for a normal band, and 6 cumulative max-size trades reach only φ≈0.029 / ≈1px
+   (`bigwarp_post.png`). The post-trade dotted overlay sits on top of the solid curve; the trade
+   reads as **"a dot sliding" — exactly what the operator said it must NOT be.** Root cause of (3)
+   is NOT the renderer (math verified φ-dependent in-frame) — an admissible (W) trade on this pool
+   produces a sub-pixel φ. **VISUAL-ACCEPTANCE = FAIL (item-3, the HEADLINE, OPEN).** Still NOT
+   operator-playable for the signed test. Needs a much higher per-trade φ gain or an amplified/
+   animated warp viz.
 
 1. **Curve / kurtosis-knob family — RULED to (W) + Reading A; sub-flags below.** [#2, #3, #6]
    The curve family is now RULED: the (W) weight-profile family on the v24 base (Entry 2 "v24 is
@@ -351,7 +362,10 @@ via (W) inverse), #9 (funding re-pointed to price-anchor p=P, γ→±γ_loc — 
 - **SIGNED ACCEPTANCE TEST [verbatim-transcript], Entry 1 (line 14):** "Acceptance (your signed
   test, orthogonality relaxed): one number → turn it → elbow visibly rounds → wings don't move →
   static → options read off as perpetual-American → trades warp the curve, not a dot sliding."
-  **STATUS: OPEN — NOT MET on screen** (see BLOCKER above; engine-true but screen-invisible). The
+  **STATUS: PARTIALLY MET after the `b245bfda` render fix — FAIL overall.** "elbow visibly rounds
+  → wings don't move" = MET on screen (items 1,2 PASS, tester-confirmed). "trades warp the curve,
+  not a dot sliding" = STILL NOT MET (item 3: φ sub-pixel, the trade is a dot sliding). See the v27
+  render-fix re-run sub-entry below. The
   acceptance is explicitly visual, reinforced Entry 2 (line 28) "v24 is the best reference because
   … how the curve warps actually and shows on UX" and Entry 19 (line 140) "no point without
   trades-warp thing … this is half the job."
@@ -364,8 +378,9 @@ via (W) inverse), #9 (funding re-pointed to price-anchor p=P, γ→±γ_loc — 
   whole thing off the v24 base asap … you have autonomy … prioritise speed … take some
   theory-risk allowing this to build, as long as it meets the core charter").
 - **OPEN question [verbatim-transcript], Entry 17 (line 133):** "ok if we're good when can i
-  actually get a version to play around with!?" — the answer this run is: NOT YET playable for
-  the signed test, because the warp/knob don't render (BLOCKER). Surfaced, not resolved.
+  actually get a version to play around with!?" — answer after the `b245bfda` render fix: the KNOB
+  is now playable (elbow rounds visibly on screen) but the FULL signed test is NOT YET met because
+  the trades-WARP still reads as a dot sliding (item-3 BLOCKER). Surfaced, not resolved.
 - **OPEN [verbatim-transcript], Entry 3 (line 35):** "steepness and kurtosis are interchangerable
   words from my perspective" — confirms the knob concept; the explicit τ-sign LABEL is still the
   operator's call (lead-flagged), unresolved.
@@ -378,6 +393,71 @@ PASS/0 FAIL (incl WARP block). File-safety GREEN (blobs canonical, 3 scripts). R
 (no flakiness). **VERDICT: engine layer PASS; UI/visual acceptance FAIL (3 OPEN blockers). CANDIDATE
 — do NOT HEAD-promote on the visual layer until the curve/warp render legibly.**
 
+### ▶ v27 RENDER-FIX RE-RUN (build `b245bfda6a493af0a7017309f1acd3f3`, 2026-06-10) — operator's SIGNED VISUAL-ACCEPTANCE re-test
+_Tester live-Playwright Chromium, reproduced clean ×2 (identical numbers, 0 console errors / 0
+pageerrors). File-safety GREEN: blobs canonical `ab663f5c…`/`c505b08a…`, 3 scripts parse._
+
+**WHAT CHANGED (manager-verified self-check 21/21 unchanged):** (a) `curveTraceW` now centers the
+trace window on `0.5·(u₀+φ)` with half-width `0.5·|u₀−φ|+6`, straddling BOTH the live operating
+point and the elbow (was fixed u∈[−6,6]); (b) the default pool is asymmetric near the elbow —
+`x:10, y:12` (u₀≈0.182), `w₋0.60/w₊0.85` (Δw 0.25), `tau:0.3`, `oracle→4.44`; (c) the #16 label
+now states the strong-form warp SHIPS.
+
+**PER-ITEM VISUAL VERDICTS (FLAG):**
+- **1. Curve renders across the frame — PASS (tester-confirmed).** Default load: fracW 0.937,
+  fracH 0.93, 6937 lit px, GH-continuation shape with the white eq-marker on the curve, put/call
+  wings + strike rays. NOT a sliver. `A_R01_default_curve.png`. (Fixes the prior sliver FAIL.)
+- **2. Kurtosis knob τ — PASS (tester-confirmed).** τ=0.05 vs τ=3.0 visibly differ to the eye
+  (`A_R02_curve_tau_005` vs `A_R03_curve_tau_300`): the ATM elbow rounds. Elbow silhouette delta
+  ≈35.7px (max 226) vs the prior ≈0.9px non-effect. The frame-independent slope-angle math
+  confirms it is the ELBOW that rounds (Δ up to ~13° at u∈[−2,+0.5]) while the WINGS stay frozen
+  (Δ 0.0001° at u=−10, 0° at u=+10) — matches the spec "wings stay exact power-laws." (Caveat:
+  the axes also rescale with τ via α/β, so part of the raw band-pixel delta is frame motion, not
+  pure shape; the slope-angle math is the clean evidence that the elbow-rounds/wings-frozen claim
+  holds.)
+- **3. The warp (HEADLINE) — FAIL (tester-confirmed FAIL). BLOCKER.** Driven through the REAL UI
+  (add perp → Trade-Bands subtab → band sold-call K=6 / bought-put K=3 → `#btn-execute`), the
+  trade DOES now redraw and shift the live curve — but only **≈0.5px** (mean 0.55, max 7;
+  reproduced exactly ×2), because the band moves φ only 0→0.0011. A sequence of 6 max-size in-band
+  trades accumulates φ to just ≈0.029 and ≈1px cumulative warp (max 8px, `bigwarp_post.png`). The
+  post-trade dotted overlay (`A_W02_preview_dotted.png`, legend Δw=−0.00251) sits visually ON the
+  solid curve. The trade reads as **"a dot sliding," which the operator explicitly forbade.** ⚠
+  METHODOLOGY NOTE / why the prior 0px was an artifact too: `Engine` and `Store` ARE reachable in
+  `page.evaluate`, but **`Viz` and `render` are NOT** (both `undefined`, not on `window`) — so my
+  prior `render()`/`Viz.drawAll()` calls from the harness were SILENT no-ops and never redrew the
+  canvas. The warp must be driven through the app's own UI event handlers (which hold Viz/render
+  in scope). The 0px in the original run conflated "render broken" with "harness didn't redraw" —
+  this re-run isolates it: the renderer IS φ-aware (curveTraceW point set verified φ-dependent
+  in-frame: at fixed x the y-value moves substantially with φ), but an admissible (W) trade on
+  this default pool produces a sub-pixel φ. ROOT CAUSE = per-trade φ gain too small, NOT a render
+  bug. Fix space = pool/Δw geometry with higher φ sensitivity, or an amplified/animated warp viz.
+- **4. In-band executes / over-size frozen-wing message — PASS (tester-confirmed).** Over-size
+  trade (dy=50·y) REJECTED with reason `wing-range`; in-band band executes (`#btn-execute`
+  enabled, click lands, pool moves). tester-confirmed live.
+- **5. Pricing/payoff + KPIs with the new default pool + oracle=4.44 — PASS-with-flags
+  (tester-confirmed).** Pricing "Mark Across Strikes" renders a clean tent (pink put-wing → peak
+  ψ=1 at mode → teal call-wing decay, 8175 lit px, `A_R06_pricing.png`); Payoff Simulator renders
+  cleanly (83236 lit px, `A_R07_payoff.png`). **No NaN / no Infinity in any KPI.** Internally
+  consistent toy-pool readouts: kpi-spot-usd $1.18 (=sNorm0.266·4.44), lp-x-usd $44.40 (=10·4.44),
+  lp-pool-value $24.00 (=y+x·y/x=12+12). **TWO oracle-default blast-radius oddities to FLAG
+  (non-NaN, but absurd-on-screen):** (i) `lp-y-delta` reads **−$799,988.00** — engine L4295
+  hardcodes `p.y − 800000`, a v24-era baseline; with the new y=12 it's nonsense. (ii) Create-Perp
+  `LIQ PRICE −9995.56` — degenerate for the default 0.1 BTC / $1000-margin perp at oracle 4.44
+  (margin ≫ notional → liq price far negative). Both are preview readouts, not crashes, but the
+  un-gated oracle/pool default change exposed them.
+- **6. No console errors; reproduced ×2 — PASS.** 0 console errors, 0 pageerrors across all views
+  and the trade/guard paths in BOTH runs; item-3 ≈0.5px result identical to the pixel across runs
+  (not flaky).
+
+**VISUAL-ACCEPTANCE: FAIL.** Two of three headline items now PASS on screen (curve renders; τ
+rounds the elbow with frozen wings) — a real improvement over the prior all-invisible FAIL — but
+the **HEADLINE warp (item 3) still does NOT render legibly**: a trade is a dot sliding, not a
+curve warp, which is the operator's signed "this is half the job" deliverable. **v27 is NOT yet
+operator-playable for the signed test.** New harnesses: `engine/verify/pw_v27_render_accept.mjs`
+(items 1–6, default pool, ×2) + `pw_v27_warp_realui.mjs` (real-UI band-execute warp). Evidence:
+`evidence/v27_pw/A_R01..A_R07`, `A_W01..A_W03`, `bigwarp_post.png`, `trace_render_accept.json`,
+`trace_warp_realui.json`. Self-check 21/21 unchanged (manager-verified). File-safety GREEN.
+
 ---
 
 ## Standing reconciliation list (all OPEN undesirables, one place)
@@ -385,9 +465,11 @@ PASS/0 FAIL (incl WARP block). File-safety GREEN (blobs canonical, 3 scripts). R
 |---|---|---|
 | Payoff ray-legend overprint (cosmetic) | v26c | OPEN — intern polish, non-blocking |
 | Collar-aggressiveness slippage magnitude | v26a (exposed) | ACCEPTED — operator parked |
-| **(W) warp/knob engine-true but NOT visually legible (curve-trace window vs operating point u₀≈11.3; signed acceptance test fails on screen)** | v27 (candidate) | **OPEN — BLOCKER for play-with/HEAD; needs frame/curve-trace fix** |
-| Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (candidate) | OPEN — needs asymmetric default |
-| Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (candidate) | OPEN — intern label fix (honesty) |
+| (W) curve/knob not visually legible (sliver curve; τ invisible) | v27 (`3914c7f4`) | **RECONCILED in v27 render-fix (`b245bfda`)** — curve renders across frame (item 1 PASS) + τ visibly rounds elbow with frozen wings (item 2 PASS), tester-confirmed |
+| **(W) trades-WARP not visually legible — a trade is a "dot sliding," not a curve warp (φ sub-pixel on default pool: ≈0.5px/band, ≈1px after 6 max trades)** | v27 (`3914c7f4`); persists in `b245bfda` | **OPEN — BLOCKER for play-with/HEAD (the HEADLINE acceptance item); needs higher per-trade φ gain or amplified/animated warp viz** |
+| Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — default now asymmetric x10/y12 w₋0.60/w₊0.85 Δw0.25; τ + trades live on load |
+| Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — label now states the strong-form φ warp ships (tester-confirmed verbatim) |
+| Oracle/pool-default blast radius: lp-y-delta shows −$799,988 (hardcoded y−800000 baseline, L4295) + Create-Perp LIQ price −9995.56 (degenerate at oracle 4.44 / $1000 margin) | v27 render-fix (`b245bfda`, oracle→4.44 un-gated default) | OPEN — non-NaN but absurd readouts; intern fix (rebase the y-delta baseline; sanity the toy default margin/notional) |
 | Funding re-pointed to price-anchor p=P, γ→±γ_loc — diverges from HEAD's locked w=½ funding | v27 (candidate) | OPEN — theory-risk-accepted; operator/skeptic-tier |
 
 _Tester: append new entries above the reconciliation list; update the list every entry._

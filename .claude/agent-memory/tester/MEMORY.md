@@ -1,25 +1,41 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the v27 (W) kurtosis CANDIDATE live-browser pass._
+_Last updated: 2026-06-10, after the v27 RENDER-FIX RE-RUN (visual-acceptance re-test)._
 
-## ★ MOST RECENT — v27 (W) kurtosis + strong-form trades-warp CANDIDATE (build `3914c7f4…`, off v24)
-Live Playwright Chromium pass. **NOT HEAD** (HEAD stays v26c `6cc73563`); v27 is a PARALLEL
-candidate off the v24 Balancer base. File-safety GREEN (blobs canonical `ab663f5c…`/`c505b08a…`
-IDENTICAL to v24 base; 3 scripts parse). `wcurve_selfcheck.js` = 21 PASS/0 FAIL (incl WARP a–f).
-Reproduced clean ×2 (identical numbers, 0 console errors — not flaky).
+## ★ MOST RECENT — v27 RENDER-FIX RE-RUN (build `b245bfda…`, was `3914c7f4…`) — VISUAL-ACCEPTANCE = FAIL (2 of 3)
+Live Playwright Chromium, reproduced clean ×2 (0 console errors). **NOT HEAD** (HEAD stays v26c
+`6cc73563`). File-safety GREEN (blobs canonical `ab663f5c…`/`c505b08a…`; 3 scripts parse). The
+render fix landed: curveTraceW centers on 0.5·(u₀+φ) straddling op-point+elbow; default pool now
+asymmetric x10/y12 (u₀≈0.18) w₋0.60/w₊0.85 τ0.3 oracle→4.44; #16 label states strong-form ships.
 
-### THE HEADLINE FINDING (FLAG to manager): engine-true, screen-INVISIBLE
-The (W) features are CORRECT in the engine but DO NOT RENDER LEGIBLY — the operator's SIGNED
-visual acceptance test FAILS on screen. Operator's words verbatim
-(`history/operator/2026-06-10_kurtosis-curve-family-brief.md` Entry 1 L14): "one number → turn it
-→ elbow visibly rounds → wings don't move → static → … → trades warp the curve, not a dot sliding."
-- **Pool Curve (x,y) view:** operating point sits at u₀=ln(800000/10)≈11.3, FAR outside the
-  curveTraceW window u∈[−6,6] AND far from the elbow (u≈0). Rendered curve = a flat sliver on the
-  axis. τ=0.10 vs 2.50 indistinguishable to the eye; pre/post-trade pixel-identical
-  (warpFullDiff=0px) despite engine φ moving 0→10.59, w 0.85→0.75, on-trajectory resid 0.
-- **Mark-Across-Strikes:** peak τ-invariant to ≈0.94px; trade leaves it unchanged.
-- ROOT CAUSE = frame/curve-trace geometry: the curve-trace window must straddle the elbow at the
-  LIVE operating point (or use a realistic default pool with u₀≈0). Engine is fine; the CHART is
-  the bug. This gates play-with/HEAD.
+### VERDICTS (per the operator's signed test)
+- **1 curve-across-frame = PASS** (fracW 0.937/0.93; GH continuation, not a sliver). FIXED.
+- **2 τ knob = PASS** elbow visibly rounds (~36px vs prior ~0.9px), wings frozen (slope-angle Δ
+  0.0001°@u−10, 0°@u+10 — frame-independent math). FIXED. (Caveat: axes rescale w/ τ via α/β, so
+  the clean evidence is the slope-angle math, not raw band pixels.)
+- **3 trades-WARP = FAIL (BLOCKER, the HEADLINE).** Via REAL UI band-execute the curve shifts only
+  ≈0.5px (φ:0→0.0011); 6 cumulative max trades → φ≈0.029 / ≈1px. Still a DOT SLIDING, not a warp —
+  exactly what the operator forbade. ROOT CAUSE: NOT a render bug (curveTraceW IS φ-dependent
+  in-frame, verified at fixed x); an admissible (W) trade on this default pool produces sub-pixel φ.
+  Fix = higher per-trade φ gain (pool/Δw geometry) or amplified/animated warp viz.
+- **4 in-band exec / over-size frozen-wing msg = PASS.**
+- **5 pricing+payoff+KPI = PASS-with-flags.** No NaN/Inf. Toy readouts consistent (spot $1.18,
+  lp-x-usd $44.40, pool-value $24). TWO oracle-default blast-radius oddities (FLAGGED): lp-y-delta
+  = −$799,988 (L4295 hardcodes y−800000, stale v24 baseline) + Create-Perp LIQ −9995.56 (degenerate
+  0.1BTC/$1000-margin at oracle 4.44). Non-NaN but absurd; un-gated default exposed them.
+- **6 no console errors; ×2 reproducible (not flaky).**
+
+### ⚠ METHODOLOGY GOTCHA (carries forward — important)
+In `page.evaluate`, **`Engine` and `Store` are reachable, but `Viz` and `render` are NOT**
+(undefined, not on window — different scope). My ORIGINAL v27 harness called `render()`/`Viz.drawAll()`
+from evaluate → SILENT no-ops → canvas never redrew → the "0px warp" was partly a HARNESS artifact,
+not proof the render was broken. To test the warp you MUST drive a real trade through the app's own
+UI handlers (add perp → Trade-Bands subtab → fill band → #btn-execute). The τ knob "worked" before
+only because it went through the real tau-input event handler.
+
+### PRIOR FINDING (original run `3914c7f4`) — now superseded by the re-run above
+Original run: op-point at u₀≈11.3 off the [−6,6] window → sliver curve, τ invisible, warp 0px. The
+sliver + τ-invisible + degenerate-default + stale-label findings are now RECONCILED in `b245bfda`;
+only the trades-WARP-invisibility persists (and is now correctly root-caused to sub-pixel φ, not frame).
 
 ### Other v27 OPEN findings (all in DIFF_LEDGER reconciliation list)
 - **Degenerate default pool:** ships SYMMETRIC wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, EVERY trade
@@ -39,17 +55,20 @@ visual acceptance test FAILS on screen. Operator's words verbatim
 - Engine warp/knob all correct via my LIVE page-engine reads (φ moves, trajectory exact,
   path-independent, round-trip 1.78e-15, elbow rounds in γ_loc, wings τ-near-frozen).
 
-### v27 repro
-`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_wkurtosis.mjs`
-(and `pw_v27_pricing.mjs`). MUST set asym wings first (0.60/0.85) or every feature is dead.
-**PLAYWRIGHT MODULE GOTCHA (NEW):** playwright is GLOBAL at `/opt/node22/lib/node_modules`, NOT in
-engine/node_modules. ESM `import 'playwright'` won't resolve via NODE_PATH. FIX: symlinked it in —
-`ln -s /opt/node22/lib/node_modules/playwright engine/node_modules/playwright` (+ playwright-core).
-Harness must run from `engine/`. (v26c memory's "tmp under engine/ resolves node_modules" is stale —
-that node_modules didn't exist; I created the symlinks.)
-Evidence: `evidence/v27_pw/` (01-08, 20-23, trace.json, trace_pricing.json).
-DIFF_LEDGER v27 entry written (CANDIDATE, feature-keyed #1-16 + none-beyond, table rows updated,
-OPERATOR-VOICE from the FIRST raw-verbatim operator transcript, reconciliation list +4 OPEN).
+### v27 render-fix re-run repro
+`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_render_accept.mjs`
+(items 1-6 on the DEFAULT asym pool, ×2 — no wing-setting workaround needed now) +
+`node verify/pw_v27_warp_realui.mjs` (real-UI band-execute warp test). Default pool already asym
+(0.60/0.85) so the knob/trades are live on load.
+**PLAYWRIGHT MODULE GOTCHA:** playwright is GLOBAL at `/opt/node22/lib/node_modules`; symlinked into
+`engine/node_modules/playwright` (+ playwright-core) — re-create if missing. Harness must run from
+`engine/`.
+Evidence: `evidence/v27_pw/A_R01..A_R07`, `A_W01..A_W03`, `bigwarp_post.png`, `trace_render_accept.json`,
+`trace_warp_realui.json` (plus prior 01-08/20-23 from `3914c7f4`).
+DIFF_LEDGER updated: v27 render-fix RE-RUN sub-entry appended (per-item FLAGs + methodology note),
+feature-state rows #2/#3/#16 updated, reconciliation list split (3 RECONCILED in `b245bfda`, 1
+trades-warp BLOCKER still OPEN, +1 new oracle-default-blast-radius OPEN), OPERATOR-VOICE acceptance
+status set to PARTIALLY-MET / FAIL.
 
 ---
 
