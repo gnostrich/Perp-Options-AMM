@@ -107,6 +107,13 @@ function tradeUpdate(s, dy) {
   `tau, wMinus, wPlus`.
 - **What it replaces in v24:** the α/β-as-stored-fields version. Now α/β are frozen *per trade* at
   the live weight, the hyperbola move is identical algebra, and the post-trade weight is re-derived.
+- **✅ SUPERSEDED 2026-06-10 — R-paper is now DEFINED, BUILD THE STRONG FORM.** The composition gap
+  below is CLOSED: `notes/research/TRADE_WARP_strongform_2026-06-10.md` (skeptic-GREEN, manager-verified)
+  gives the closed-form field re-centering `φ'=ln(y'/x')−z` (R-paper). Skeptic TEST B proved **R-simple
+  VIOLATES α/β conservation** (the field-center MUST move) — so the build implements the **strong-form
+  warp**, NOT R-simple, plus the frozen-wing trade-size guard. The R-simple text below is retained only
+  as the (now-rejected) minimal fallback. Build caveat: no `(x,y,φ)` rebase that implies warp∘rebase
+  commute (lemma OPEN).
 - **⚠ THE COMPOSITION GAP `[theory-risk-accepted]` — flag, do not stall:** how the
   conserved-(α,β)-at-pre-weight hyperbola move composes with the (W) **weight-field re-centering** is
   the genuinely open seam. Two readings, pick the SIMPLE one to allow the build: **(R-simple, ADOPT)**

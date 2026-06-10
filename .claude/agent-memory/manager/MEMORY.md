@@ -232,6 +232,17 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   φ-anchor/funding) [needs-Aristotle], not blockers. **SKEPTIC mandatory pass DISPATCHED; on PASS the
   build RESUMES** — intern drops the strong-form warp into the v27 scaffold (replacing R-simple) +
   wing-range guard, then tester + my re-verify before any HEAD promotion. HEAD still v26c.
+  **★ SKEPTIC GREEN-TO-RESUME (agent a16ba26a, `notes/skeptic/VERDICT_TRADE_WARP_strongform_2026-06-10.md`):
+  the standing #16 acceptance-clause FLAG CLEARS — it's a REAL warp.** Decisive (skeptic TEST B): at the
+  same post-trade reserves, strong-form `w(u';φ')=0.697171`==α/β-conservation `w*` (machine zero) vs
+  R-simple `0.690620` — **R-simple VIOLATES α/β conservation; the φ-move is the UNIQUE conservation-
+  consistent trade** ⇒ replacing R-simple is correct, not cosmetic. Clean: R-simple-mischaracterizes-
+  Balancer correction RIGHT (TEST E); wing cap honest; labels honest; all 16 dispositioned; discarded-
+  variant diagnosis FAIR (HEAD 1729). Non-blocking FLAG-OVERSELL: the note's "Balancer to 1e-13 @ τ≥5"
+  is a near-tautology (single (W) step = Balancer-at-local-w); genuine τ→∞ limit ~1/τ² (don't cite 1e-13
+  as convergence). Build caveat: NO `(x,y,φ)` rebase implying warp∘rebase commute (lemma OPEN). Warp note
+  + BUILD_SPEC carry correction headers. **BUILD RESUMING: intern dispatched to integrate strong-form
+  warp + wing guard into v27** → then tester (browser) + my re-verify → HEAD/ship candidate.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

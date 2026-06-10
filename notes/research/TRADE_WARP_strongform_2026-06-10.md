@@ -1,5 +1,21 @@
 # Strong-form trades-warp on the (W) kurtosis curve — the field weight-update map
 
+> ## ✅ SKEPTIC GREEN + manager re-derivation (2026-06-10 — read first)
+> Skeptic verdict `notes/skeptic/VERDICT_TRADE_WARP_strongform_2026-06-10.md`: **GREEN-TO-RESUME-BUILD;
+> the standing #16 acceptance-clause FLAG CLEARS** — this is a real warp (skeptic TEST B: at the same
+> post-trade reserves, strong-form `w(u';φ')=0.697171` == the α/β-conservation-demanded `w*` to machine
+> zero, whereas R-simple gives `0.690620` — **R-simple VIOLATES α/β conservation**, so the strong-form
+> φ-move is the *unique* conservation-consistent trade; dropping R-simple is correct, not cosmetic).
+> Manager re-derived independently (`evidence/manager_audit_TRADE_WARP_2026-06-10.md`). Two corrections,
+> neither fatal:
+> 1. **FLAG-OVERSELL (non-blocking):** the "τ→∞ recovers Balancer to 1e-13 at τ≥5" digit is a
+>    near-tautology (a single (W) trade step IS a Balancer trade with `w` frozen at the live local
+>    weight). The framing "τ→∞ recovers Balancer (w→w_mid)" is correct, but the genuine limit converges
+>    only ~1/τ² (6.6e-3 @ τ=5, 3.3e-5 @ τ=1000) — do NOT cite 1e-13 as a τ=5 convergence proof.
+> 2. **Build caveat:** the warp∘rebase-commute and φ-anchor/funding lemmas are OPEN (`[needs-Aristotle]`).
+>    The v27 build must NOT implement an `(x,y,φ)` rebase that *implies* commutation — leave that
+>    undefined/flagged until the lemma lands.
+
 _research-lead, 2026-06-10. PRIORITY derivation (build HELD until this lands)._
 _Notes-only. NO engine edit, NO git, NO Aristotle submit. Theory-risk accepted on the periphery;_
 _the warp mechanism itself is defined rigorously below._

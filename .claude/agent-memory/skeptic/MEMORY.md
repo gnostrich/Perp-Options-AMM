@@ -377,3 +377,41 @@ inventory, operator answered — remaining live tail = every curve note must dis
   canonical `temporal_lean_verified/` tree (separate from the `aristotle_runs/` scratch). The
   `_grounded`/`_clean`/`CLOSEOUT_` dirs SUPERSEDE the bare-name twins; INDEX already cites the
   superseding versions. Don't audit-fail trusted-from-prover here — that axis is settled.
+
+12. **2026-06-10 — TRADE_WARP strong-form note (verdict #12, SPEED posture)** →
+   `notes/skeptic/VERDICT_TRADE_WARP_strongform_2026-06-10.md`. The artifact that RESOLVES standing
+   #16. **Verdict: GREEN-TO-RESUME-BUILD. #16 FLAG-OMISSION CLEARS** (was live since verdicts
+   #2/#3/#11). Map: `w(u;φ)=w_mid+(Δw/2)(u−φ)/√(τ²+(u−φ)²)`; trade conserves α=x·w,β=y·(1−w) ⇒
+   `w*=1−β/y'`, `x'=α/w*`, `φ'=ln(y'/x')−z`, `z=t·τ/√(1−t²)`, `t=(w*−w_mid)/(Δw/2)`. **DECISIVE
+   FINDING (TEST B, mine to defend):** at the SAME post-trade point, strong-form w(u';φ')=0.697171
+   (==wstar from α/β-conservation, d=0) but R-simple w(u';0)=0.690620 — R-simple is OFF BY 6.6e-3,
+   i.e. R-simple ACTUALLY VIOLATES the α/β conservation that defines the trade. So R-simple isn't
+   merely "weaker"; it's conservation-INCONSISTENT ⇒ replacing it in v27 is correct, not aesthetic.
+   TEST A: field moves at points away from reserves (ATM u=0 weight +2.1e-2 on one trade) ⇒ genuine
+   curve reshape, not dot-slide. **All re-derived (mine):** Step4 consistency d=0; trajectory resid
+   ≤1.4e-14; φ closed-form==root-find ≤5.8e-16; tangency at MOVED-φ post-trade point diff 8.9e-16
+   (note only showed φ=0, I extended); wings frozen w(±∞;φ)=0.52/0.72 ∀φ exact; round-trip 3.6e-16;
+   path-indep 0.0; wing cap dy∈(−3.798,+2.060). **1× FLAG-OVERSELL (narrow, non-blocking):** the
+   warp4 "Balancer to 1e-13 at τ≥5" row is a NEAR-TAUTOLOGY — a single (W) trade step IS a Balancer
+   trade with w frozen at the live local weight (Step3 x'=α/w* on identical hyperbola), so it matches
+   Balancer-at-local-w to machine zero at ANY τ; the GENUINE τ→∞ limit (vs Balancer-at-w_mid)
+   converges only ~1/τ² (diff 6.6e-3 at τ=5, 3.3e-5 at τ=1000). Tagged [numeric] so not a theorem-
+   dress; mgr framing "τ→∞ recovers Balancer" correct; don't cite the 1e-13 as a τ=5 convergence
+   proof. **Open lemmas (a) warp∘rebase commute (b) φ-anchor/funding — correctly [needs-Aristotle],
+   correctly NOT-blockers, NOT dressed done; no flag on labelling.** Build caveat: v27 must NOT
+   implement an (x,y,φ) rebase and imply it commutes — undefined until lemma (a). **R-simple-
+   mischaracterizes-Balancer correction VERIFIED RIGHT** (TEST E: plain Balancer w 0.55→0.585 under
+   a trade; conserved object IS the trajectory hyperbola). Discarded-variant diagnosis FAIR (HEAD
+   line 1729 returns {...s,x,y} shape-untouched; kernel-in-SCORE = my verdict #1 fact; GH credited
+   faithful not broken). Wing cap honestly flagged not buried (mgr exercised rejection). **Inventory
+   all 16 present, pattern-#6 CLEAN.** Convergence-alarm LOW (self-adversarial; mgr re-ran rejection
+   + trajectory, not narrated; every digit reproduced). On GREEN: intern drops strong-form into v27
+   replacing R-simple + wing-range guard; then tester + my re-verify before HEAD promotion.
+   **STANDING #16 FLAG-OMISSION (verdicts #2/#3/#11): now CLEARED.**
+
+## Claims mine-to-defend (verdict #12 — strong-form warp)
+- R-simple is conservation-INCONSISTENT (off 6.6e-3 from wstar at the post-trade point), NOT just
+  the weak reading — the strong-form φ-move is the unique α/β-consistent trade. (TEST B)
+- The strong-form warp moves the whole pricing curve (ATM weight +2.1e-2/trade), is a real reshape.
+- warp4's "1e-13 at τ≥5 Balancer" = single-step tautology, NOT a τ→∞ convergence (that's ~1/τ²).
+- Tangency (pricing slope==trajectory slope) survives a MOVED φ (8.9e-16), not just φ=0.
