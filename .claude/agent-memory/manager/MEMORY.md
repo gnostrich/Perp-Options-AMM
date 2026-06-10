@@ -35,8 +35,22 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
     label; v24's role = UX/scaffold/shell reference (the curve is replaced by the new kurtosis
     family anyway). One-line heads-up given to operator; settlement (#7), strike-reg (#8), anchor
     curve, funding all = re-derive-on-new-curve work (matches the brief's "re-derive, don't assume").
-  - **(i) + (iii) RESTATED in plain language to operator** (operator asked "tldr, make the language
-    simpler so i can respond"); AWAITING operator answers.
+  - **(i) RESOLVED → "1a" = the curve's LOOK / geometry** (elbow roundness), NOT a 4th-moment
+    statistic. Knob is a curve-shape object.
+  - **(iii) RESOLVED via the polar-lens analogy** (operator entry 3 + source transcript
+    `2026-06-10_project-status-review.md` entries 8/9/18). Operator's model: Balancer viewed
+    90°→180° as a distribution; kurtosis changed by bending through a HYPERBOLIC angle (not a
+    straight one). In the cosh(θ−φ) collapse (entry 9): **skew = the angle shift φ, which is
+    determined by trading (x, y, w)** — i.e. dynamic, the w-warp of #16, NOT a static dial;
+    **steepness ≡ kurtosis = the amplitude**, ONE static knob set once for vol. So "one-parameter"
+    = one static shape knob (steepness=kurtosis=amplitude); skew is emergent from trades.
+  - **⚠ PARAMETERIZATION IMPLICATION (manager read, to reconcile, operator-tier):** this is NOT the
+    skeptic's 3-static-DOF (W) split (w_mid/Δw/τ). Operator's frame = 1 static knob + skew-from-
+    trading (hyperbolic-angle / cosh(θ−φ) lens). The (W) existence proof still satisfies the
+    GEOMETRY yardstick, but the operator's actual model is the polar/hyperbolic-angle one. The
+    specific cosh/Gudermannian closed form must STILL earn its place (operator's standing trig flag
+    + skeptic's GUDERMANNIAN verdict: the "d-law" already failed to earn its place once). My
+    plain-English read-back sent to operator for confirm before any build.
 - **Sequencing reminder:** CLAUDE §0 ruling-1 pivot = DONE; ruling-2 w-warp build = NEXT;
   this curve-family research target slots into/alongside that, operator-gated.
 
