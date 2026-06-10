@@ -1,0 +1,314 @@
+{
+  "runA": {
+    "tag": "A",
+    "engineReachable": true,
+    "defaultPool": {
+      "pool": {
+        "x": 10,
+        "y": 12,
+        "tau": 0.3,
+        "wMinus": 0.6,
+        "wPlus": 0.85,
+        "phi": 0,
+        "alpha": 7.625,
+        "beta": 2.55
+      },
+      "oracle": 4.44,
+      "oracle_initial": 4.44,
+      "perpMark": 4.44,
+      "mp": 4.51207573917694,
+      "u0": 0.1823215567939546
+    },
+    "kpis": {
+      "kpi-oracle": "4.44",
+      "lp-x-usd": "$44.40",
+      "wcurve-status": "γ_loc(ATM)=3.76 · wings γ₋=1.50, γ₊=5.67",
+      "nanLike": [],
+      "sampleVals": [
+        "0.0500 BTC Notional",
+        "— %",
+        "0.0100 %",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "free eq $1,000.00 · carved $0.00 (0.0%) · free notional $10,000",
+        "free eq $500.00 · carved $0.00 (0.0%) · free notional $5,000",
+        "$12.00",
+        "10.000000 BTC",
+        "$44.40",
+        "$24.00",
+        "−$799,988.00",
+        "—",
+        "—",
+        "6.2500e-1",
+        "−239997.4500",
+        "0"
+      ]
+    },
+    "item1_defaultCurve": {
+      "lit": 6937,
+      "fracW": 0.937,
+      "fracH": 0.93,
+      "spanX": 656,
+      "spanY": 428
+    },
+    "tauLow": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.05,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 8.45549044386759,
+      "beta": 1.8534114673588915
+    },
+    "tauHigh": {
+      "x": 10,
+      "y": 12,
+      "tau": 3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.325827411595758,
+      "beta": 3.2090071060850907
+    },
+    "item2_tauElbow": {
+      "mean": 35.661,
+      "max": 226,
+      "n": 224
+    },
+    "item2_tauLeftWing": {
+      "mean": 57.16,
+      "max": 415,
+      "n": 81
+    },
+    "item2_tauRightWing": {
+      "mean": 38.945,
+      "max": 75,
+      "n": 91
+    },
+    "preTrade": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.8991875199243955,
+      "beta": 2.5209749760907254
+    },
+    "warpDirect": {
+      "dy": -0.5410228359512459,
+      "before": {
+        "phi": 0,
+        "w": 0.7899187519924395
+      },
+      "after": {
+        "phi": -0.023441496352621924,
+        "w": 0.78
+      },
+      "phiMoved": 0.023441496352621924,
+      "wMoved": 0.009918751992439523
+    },
+    "postTrade": {
+      "x": 10.127163487082559,
+      "y": 11.458977164048754,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": -0.023441496352621924,
+      "alpha": 7.899187519924396,
+      "beta": 2.5209749760907254
+    },
+    "item3_warpFull": {
+      "mean": 0,
+      "max": 0,
+      "n": 640
+    },
+    "item3_warpElbow": {
+      "mean": 0,
+      "max": 0,
+      "n": 224
+    },
+    "item4_overSize": {
+      "rejected": true,
+      "reason": "wing-range"
+    },
+    "item4_inBand": {
+      "executed": true,
+      "newW": 0.72
+    },
+    "item5_pricingLit": 8175,
+    "item5_payoffLit": 83236,
+    "label16": "Trade mechanic (#16): trades RESHAPE the curve — the strong-form φ warp ships: a trade re-centers the weight field (u→u−φ′) so the elbow visibly moves (τ, wing weights frozen; per-trade α=x·w, β=y·(1−w) conserved). Still OPEN [needs-Aristotle]: the warp∘rebase-commute and funding-under-moved-φ lemmas.",
+    "consoleErrors": []
+  },
+  "runB": {
+    "tag": "B",
+    "engineReachable": true,
+    "defaultPool": {
+      "pool": {
+        "x": 10,
+        "y": 12,
+        "tau": 0.3,
+        "wMinus": 0.6,
+        "wPlus": 0.85,
+        "phi": 0,
+        "alpha": 7.625,
+        "beta": 2.55
+      },
+      "oracle": 4.44,
+      "oracle_initial": 4.44,
+      "perpMark": 4.44,
+      "mp": 4.51207573917694,
+      "u0": 0.1823215567939546
+    },
+    "kpis": {
+      "kpi-oracle": "4.44",
+      "lp-x-usd": "$44.40",
+      "wcurve-status": "γ_loc(ATM)=3.76 · wings γ₋=1.50, γ₊=5.67",
+      "nanLike": [],
+      "sampleVals": [
+        "0.0500 BTC Notional",
+        "— %",
+        "0.0100 %",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "—",
+        "free eq $1,000.00 · carved $0.00 (0.0%) · free notional $10,000",
+        "free eq $500.00 · carved $0.00 (0.0%) · free notional $5,000",
+        "$12.00",
+        "10.000000 BTC",
+        "$44.40",
+        "$24.00",
+        "−$799,988.00",
+        "—",
+        "—",
+        "6.2500e-1",
+        "−239997.4500",
+        "0"
+      ]
+    },
+    "item1_defaultCurve": {
+      "lit": 6937,
+      "fracW": 0.937,
+      "fracH": 0.93,
+      "spanX": 656,
+      "spanY": 428
+    },
+    "tauLow": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.05,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 8.45549044386759,
+      "beta": 1.8534114673588915
+    },
+    "tauHigh": {
+      "x": 10,
+      "y": 12,
+      "tau": 3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.325827411595758,
+      "beta": 3.2090071060850907
+    },
+    "item2_tauElbow": {
+      "mean": 35.661,
+      "max": 226,
+      "n": 224
+    },
+    "item2_tauLeftWing": {
+      "mean": 57.16,
+      "max": 415,
+      "n": 81
+    },
+    "item2_tauRightWing": {
+      "mean": 38.945,
+      "max": 75,
+      "n": 91
+    },
+    "preTrade": {
+      "x": 10,
+      "y": 12,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": 0,
+      "alpha": 7.8991875199243955,
+      "beta": 2.5209749760907254
+    },
+    "warpDirect": {
+      "dy": -0.5410228359512459,
+      "before": {
+        "phi": 0,
+        "w": 0.7899187519924395
+      },
+      "after": {
+        "phi": -0.023441496352621924,
+        "w": 0.78
+      },
+      "phiMoved": 0.023441496352621924,
+      "wMoved": 0.009918751992439523
+    },
+    "postTrade": {
+      "x": 10.127163487082559,
+      "y": 11.458977164048754,
+      "tau": 0.3,
+      "wMinus": 0.6,
+      "wPlus": 0.85,
+      "phi": -0.023441496352621924,
+      "alpha": 7.899187519924396,
+      "beta": 2.5209749760907254
+    },
+    "item3_warpFull": {
+      "mean": 0,
+      "max": 0,
+      "n": 640
+    },
+    "item3_warpElbow": {
+      "mean": 0,
+      "max": 0,
+      "n": 224
+    },
+    "item4_overSize": {
+      "rejected": true,
+      "reason": "wing-range"
+    },
+    "item4_inBand": {
+      "executed": true,
+      "newW": 0.72
+    },
+    "item5_pricingLit": 8175,
+    "item5_payoffLit": 83236,
+    "label16": "Trade mechanic (#16): trades RESHAPE the curve — the strong-form φ warp ships: a trade re-centers the weight field (u→u−φ′) so the elbow visibly moves (τ, wing weights frozen; per-trade α=x·w, β=y·(1−w) conserved). Still OPEN [needs-Aristotle]: the warp∘rebase-commute and funding-under-moved-φ lemmas.",
+    "consoleErrors": []
+  }
+}
