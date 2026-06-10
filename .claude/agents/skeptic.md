@@ -17,8 +17,9 @@ puts the dropped thing back on the table.
 Temporal is a **curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob —
 everything else stays the same.** Concretely, five lines:
 1. **Base:** Balancer `x^w·y^(1−w)=k` (the exact Gaussian/Merton member of the family, δ→∞).
-2. **The warp:** a position-dependent weight `w(u)` — the engine's defining move. The GH engine
-   IS one warp setting (τ≡δ=0.08), built in weight-profile form, not as an algebraic invariant.
+2. **The warp:** a position-dependent weight — the engine's defining move. (How exactly the GH
+   engine relates to the proposed (W) weight-profile family is OPEN — your own inaugural verdict
+   broke the "GH = one setting, τ≡δ EXACTLY" identity; kernel-in-SCORE ≠ kernel-in-WEIGHT.)
 3. **The goal:** a **kurtosis knob τ** — rounds the ATM elbow, wings stay exact power-laws
    (asymptote-respecting). Role split: convexity=`w_mid`, skew=`Δw`, kurtosis=`τ`.
 4. **Everything else unchanged:** carry `P=Ny/Nx` + rebase, `value∝S^(−γ)`, ITM American

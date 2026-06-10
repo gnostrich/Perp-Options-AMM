@@ -51,6 +51,33 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
   true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
   env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **★ SKEPTIC INAUGURAL VERDICT (2026-06-10) — 2× FLAG-WRONG CONFIRMED; shared truth CORRECTED.**
+  Retroactive review of KURTOSIS_KNOB note (run honestly labeled "skeptic-charter via
+  general-purpose runner" — agent type registers next session). Verdict:
+  `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`. **I verified BOTH FLAG-WRONGs independently
+  before acting:**
+  1. "No clean algebraic invariant exists" — FALSE. `x^{w_mid}y^{1−w_mid}e^{−(Δw/2)√(τ²+ln²(y/x))}=k`
+     is a closed-form first integral of the weight-profile law. MY verification: analytic
+     (∂lnF/∂x=w(v)/x, ∂lnF/∂y=(1−w(v))/y ⇒ exactly the (W) Balancer law) + RK4 constancy 4.8e-13,
+     wings exact CD monomials. The note's argument (CD monomial not constant ⇒ nothing exists) = non sequitur.
+  2. "τ:=δ EXACTLY / engine = one (W) setting" — FALSE at curve level, STRONGER than skeptic stated:
+     live v26c engine w_eff=pX/(pX+Y) vs ũ=ln(y/x) is NON-MONOTONE (0.125→0.293→0.022→0.497), ũ
+     saturates ≈12.0 ⇒ engine is not a (W)-member at ANY τ. Kernel-in-SCORE (GH) ≠ kernel-in-WEIGHT ((W)).
+  3. FLAG-OVERSELL confirmed-by-reading: Object-L "[0,3]"/2.653 are β=0 slice; engine β=1 → skew
+     +0.92, excess kurt 3.285. FLAG-OMISSION: items #8/#9/#13 absent; #4 carry mis-stated.
+  **FLAG-PROCESS against ME — I own it:** I re-derived exactly ONE claim (F2, which held) and
+  narrated the two confident headliners straight into CLAUDE.md §0 + inventory item 2 the same day.
+  Charter says the cleaner and more confident, the harder I check — I did the opposite. Pattern is
+  now 3-for-3 (CURVE_SWAP δ-direction, RUN-3 rfl, this): confidence markers anti-correlate with
+  verification. The skeptic's whole reason to exist, proven on day one.
+  **CORRECTED (this session):** CLAUDE.md §0 (GH↔τ-family relation now OPEN), inventory items 2+3
+  (counterexample recorded; β=1 caveat), skeptic charter motive line 2, DISPUTE HEADER appended to
+  the kurtosis note (CURVE_SWAP precedent). **SURVIVED attack (settled):** asymptote preservation
+  F2, kurtosis sign-split + "never ship τ-up=fatter", (W) endpoints, β=0 table values, §5 REPARAM
+  δ-unfreeze path.
+  **QUEUED:** research-lead substantive reconcile of the note (it contains TWO curves — (W) §§1–4
+  vs GH δ-unfreeze §5 — with a broken bridge; the operator's curve decision needs to know which is
+  on the table). Skeptic MEMORY self-updated (verdicts/patterns/method notes) — confirmed.
 - **OPERATOR PAIN POINTS (2026-06-10) + dispositions (as proposed pre-approval):**
   1. **No adversarial/devil's-advocate agent** — failure mode is real and documented in-repo (#13's
      wrong δ-direction needing a correction header; RUN-3 UNIFY rfl-tautology depth-temper). PROPOSED:

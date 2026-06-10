@@ -7,12 +7,15 @@ a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produ
 
 ## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
 **A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else stays
-the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight `w(u)` is the warp
-(the current GH engine = ONE warp setting, τ≡δ=0.08); the kurtosis knob `τ` rounds the ATM elbow
-with wings staying exact power-laws; carry/rebase, value∝S^(−γ), ITM smooth-pasting, funding, and
-the dollar pipe are unchanged. The curve/invariant decision is always the operator's. Full
-checklist: `docs/feature_inventory.md` — design/brainstorm notes must disposition every item there
-(the skeptic enforces this).
+the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the warp; the
+kurtosis knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
+value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are unchanged. The curve/invariant
+decision is always the operator's. ⚠ HOW the current GH engine relates to the proposed τ-family is
+**OPEN** — the "GH = one (W) setting, τ≡δ EXACTLY" identity was BROKEN by the skeptic 2026-06-10
+(manager-verified on the live engine: GH puts the kernel in the latent SCORE, (W) in the WEIGHT —
+different curves; see `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`). Full checklist:
+`docs/feature_inventory.md` — design/brainstorm notes must disposition every item there (the
+skeptic enforces this).
 
 ## 1. The store is the filesystem (not a chat ledger)
 The old multi-chat world re-emitted a `TEMPORAL-CONTEXT-LEDGER` snapshot every reply. **Obsolete.**

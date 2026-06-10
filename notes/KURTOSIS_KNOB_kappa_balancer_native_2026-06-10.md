@@ -1,5 +1,26 @@
 # Single-parameter, asymptote-respecting kurtosis knob `τ` on the Balancer curve
 
+> ## ⚠ DISPUTE HEADER (2026-06-10, skeptic inaugural verdict — manager-verified; appended by manager)
+> Two flagship claims of this note are **BROKEN** (full verdict:
+> `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`; manager re-derived both independently):
+> 1. **§0 "no clean algebraic single-`τ` invariant exists" — FALSE.** Explicit counterexample:
+>    `x^{w_mid}·y^{1−w_mid}·exp(−(Δw/2)·√(τ²+ln²(y/x))) = k` is a closed-form first integral of
+>    the weight-profile law (manager: analytic derivation ∂lnF/∂x=w(v)/x, ∂lnF/∂y=(1−w(v))/y +
+>    RK4 constancy 4.8e-13; wings = exact CD monomials at w∓). The §0 argument only showed the
+>    *unmodified CD monomial* isn't constant — a non sequitur.
+> 2. **"τ:=δ EXACTLY / engine = the single setting τ=0.08" — FALSE at curve level.** GH puts the
+>    kernel in the latent SCORE; (W) puts it in the WEIGHT — different curves. Manager check on
+>    the live v26c engine: w_eff vs ln(y/x) is non-monotone (0.125→0.293→0.022→0.497) with
+>    ũ saturating ≈12.0 ⇒ the engine curve is NOT a (W)-member at ANY τ.
+> Also: Object-L kurtosis numbers / "[0,3]" are the β=0 slice (engine β=1: skew +0.92, excess kurt
+> 3.285); inventory items #8/#9/#13 were not dispositioned; §5's survival claims are carried from
+> REPARAM (the δ-unfreeze), not shown for (W). **What SURVIVED attack:** asymptote preservation
+> (F2), the kurtosis sign-split + "never ship τ-up=fatter" warning, the (W) endpoint structure,
+> the β=0 table values, and §5's REPARAM-based δ-unfreeze path itself.
+> **Net: this note contains TWO different curves — the (W) profile (§§1–4) and the GH δ-unfreeze
+> (§5) — and the bridge between them is broken. The operator's curve decision must pick which is
+> actually on the table. research-lead owes a substantive reconcile (queued).**
+
 _2026-06-10, research-lead. DELIVERABLE: a concrete, buildable, single-parameter `τ` that adds
 asymptote-preserving kurtosis to the Balancer curve `x^w·y^(1−w)=k`, realizing the paper's
 Future-Directions `(w, τ)` conjecture in implementable form. **No engine edits, no Aristotle submits,
