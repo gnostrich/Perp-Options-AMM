@@ -34,8 +34,10 @@ Here the repository is the durable store:
   audits returned proofs. (Aristotle is external — not an agent.)
 - **intern** — HTML/engine implementation; surgical, blob-safe edits.
 - **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts. Owns the
-  behavioral diff ledger (`engine/builds/DIFF_LEDGER.md`) — populated at every build verification;
-  HEAD promotion is gated on the entry existing.
+  behavioral diff ledger (`engine/builds/DIFF_LEDGER.md`) — **the operator's inventory of record**:
+  every build verification appends a feature-keyed entry (inventory #1–#15 + explicit "none
+  beyond") AND updates the rolling feature-state table; HEAD promotion is gated on the entry
+  existing with its feature mapping.
 - **paper** — AfT/WINE/FMBC drafting from locked decisions.
 - **skeptic** — adversarial red-team (added 2026-06-10, operator-directed). Read-only; mandatory
   completeness-and-steelman pass on every brainstorm/design note AND manager audit report before

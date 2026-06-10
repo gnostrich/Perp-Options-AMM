@@ -41,6 +41,12 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   (2) **DIFF_LEDGER live** (`engine/builds/DIFF_LEDGER.md`): tester-owned behavioral deltas per
   version transition (desirable/undesirable/neutral + reconciliation list); HEAD promotion now
   gated on the entry existing; v25→v26a→v26b→v26c BACKFILLED by me from verified evidence.
+  **HARDENED same day (operator: "diligent… feature-level… so I don't ever have to keep
+  inventory"):** ledger = the operator's INVENTORY OF RECORD. Every entry feature-keyed to
+  inventory #1–#15 + explicit "none beyond"; new rolling FEATURE-STATE TABLE (15 rows, backfilled
+  to v26c state) tester-updated every entry; candidates included not just promotions; my gate now
+  = entry exists AND carries the feature mapping (lazy/unmapped → bounce). tester charter +
+  CLAUDE §2 updated.
   (3) **formal/INDEX.md PROMOTED** (from INDEX_DRAFT, retired): MERTON/GHMaps rows resolved
   (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
   true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
