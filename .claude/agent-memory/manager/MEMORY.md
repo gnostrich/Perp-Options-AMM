@@ -1,6 +1,29 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-10 SESSION CLOSE (branch claude/project-status-review-aumiss → squash-merged
-to main). This is the project's state-of-the-whole; git history is the mechanical audit trail._
+_Last updated: 2026-06-10 (branch claude/ecstatic-planck-ridcyr → PR #22 squash-merged to main
+`9c633445`; governance config-only). This is the project's state-of-the-whole; git history is the
+mechanical audit trail._
+
+## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
+Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two
+locations, autonomous self-merge per §6.2 (token 200, mergeable_state clean):
+- **CLAUDE.md §2.3 Role-lock (single-agent sessions):** any session can be pinned to one agent as a
+  direct, unfiltered line (operator's deliberate hub-and-spoke bypass). Verbatim pinning opener
+  documented ("For this session you are <agent>, per .claude/agents/<agent>.md; answer as yourself;
+  do not act as, speak for, or route through the manager"). Pinned session speaks ONLY as that
+  agent; locked capabilities (git/merge authority, file-safety gate) unchanged — read-only stays
+  read-only.
+- **CLAUDE.md §2.4 No impersonation / verbatim-relay:** manager AND every agent may NEVER write in
+  another agent's voice. Convey a subagent's output by EITHER (a) actually invoke the agent + quote
+  verbatim, attributed/delimited, with a run/transcript pointer, OR (b) explicitly label as own
+  synthesis ("my read of X", never "X says"). No reconstructing findings from memory as that
+  agent's; if not invoked this turn, must say so. Closes the entry-19 stand-in-as-skeptic drift.
+- **manager charter** — anti-impersonation duty paragraph mirroring §2.4.
+- **Transcript:** `history/operator/2026-06-10_role-lock-anti-impersonation.md` (new session file,
+  operator opener verbatim, §2.2).
+- **Process note (own it):** I did NOT route this through the skeptic — it's a directly-specified
+  operator governance edit, not a brainstorm/design note or audit report (the §2.1 mandatory-pass
+  triggers). Flagged honestly rather than fabricating a verdict (consistent with the new §2.4 I
+  just landed). **main HEAD = 9c633445; engine still v26c 6cc73563.**
 
 ## ★★ NEXT SESSION PICKUP (read this first)
 1. **The registered `skeptic` agent exists NOW** (charter landed on main; today it ran as labeled
