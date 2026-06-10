@@ -7,8 +7,21 @@ the polar-lens analogy in `history/operator/2026-06-10_project-status-review.md`
 Companion: `notes/skeptic/BRIEF_kurtosis_curve_family_2026-06-10.md` (skeptic disposition + flags)._
 
 **STATUS: framing CONFIRMED; this is a research TARGET, not a build authorization.** Curve/invariant
-is operator-tier. The exact closed-form function is OPEN, the contract-survival proofs are unproven,
-and the rebuild is gated (see §4–§5). Nothing here authorizes an engine edit.
+is operator-tier. The exact closed-form function is OPEN, the contract-survival proofs are unproven
+(except settlement, now decided — below), and the rebuild is gated (see §4–§5). Nothing here
+authorizes an engine edit.
+
+**★ SETTLEMENT DECISION — LOCKED (operator, 2026-06-10, transcript entry 11 = "a" → Reading A).**
+Settlement on the new curve uses the **curve-intrinsic value law**: value ∝ S^(−γ_local) by
+definition, γ_local = w(u)/(1−w(u)) the curve's local exponent. Therefore the American smooth-pasting
+boundary `S* = K·γ_local(S*)/(γ_local(S*)+1)` is **exact everywhere by construction** (wings AND
+elbow) ⇒ **the rebuild gate (#7) PASSES.** Accepted tradeoff (operator-chosen, recorded honestly):
+Reading A *asserts* the value law rather than *deriving* it from the dynamic optimal-stopping problem
+(Reading B = the team's MERTON/AIRTIGHT frame, under which the elbow value is a blend and S* is a
+parameter-dependent ~6–12%+ approximation there — see `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md`
++ skeptic VERDICT_CURVE_FAMILY_PASS2). Formal obligation under Reading A is the trivial `Sstar_forced`
+restatement at γ:=γ_local(S*) (immediate from AIRTIGHT T1a; not yet submitted). Reading B / wing-only
+registration are NOT the chosen path.
 
 ## 1. The vision (plain)
 Take plain Balancer and view it as a distribution (the 90°→180° "polar" view). To add kurtosis, bend
@@ -44,8 +57,9 @@ inherited (the skeptic's brief §2.2 found these are currently asserted-by-carry
 warp family; Esscher slope-law even fails mid-curve for (W)):
 - **Carry** `P=Ny/Nx`, `u=log price − log P` (#4) and **rebase** (P→P/r, θ→θ/r, anchor w=½) (#5).
 - **Pricing law** value∝S^(−γ), γ∈(1,4) — the one accuracy gate, G4 (#6).
-- **American smooth-pasting** S*=Kγ/(γ+1) call / K(γ+1)/γ put, seam C¹ (#7). **GATE: prove
-  closed-form settlement survives on the new curve BEFORE any rebuild** (operator, brief).
+- **American smooth-pasting** S*=Kγ/(γ+1) call / K(γ+1)/γ put, seam C¹ (#7). **GATE: RESOLVED
+  (operator 2026-06-10 → Reading A, curve-intrinsic value law) — settlement is exact closed-form
+  everywhere by construction; gate PASSES.** See the SETTLEMENT DECISION block at top.
 - **Uniform strike registration** θ=sNorm(K), crossover@K all γ (#8).
 - **Funding** = slope-deviation vs the w=½ anchor (#9) — must generalise when `w` is a field
   (operator entry 2: "anchor curve and funding must generalise when we swap the curve").

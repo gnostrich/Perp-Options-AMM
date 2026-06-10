@@ -82,3 +82,10 @@ _Context: operator extends the cold-storage scope to the formal/Lean corpus — 
 _Context: while the formal-corpus audit's keep-vs-store decision is pending, operator asks the manager to explain the settlement decision (Reading A vs Reading B / wing-registered strikes) in plain English. Transcribed verbatim._
 
 > explain the settlement decision in the meantime
+
+---
+
+## Entry 11 — 2026-06-10
+_Context: operator chooses Reading A (curve-intrinsic value law) for settlement on the new curve — value ∝ S^(−γ_local) by definition, so S*=K·γ_local/(γ_local+1) is exact everywhere by construction and the rebuild gate passes; the accepted tradeoff is that the value law is asserted (definitional), not derived from the dynamic optimal-stopping problem (Reading B). Settlement-semantics ruling, operator-tier (§7). Transcribed verbatim._
+
+> a

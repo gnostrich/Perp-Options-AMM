@@ -93,6 +93,14 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   **I OVERSOLD this to the operator** in the status update ("a few percent, small/bounded") — corrected.
   Pass-2 note carries a manager CORRECTION HEADER; evidence audit appended. **Settlement = Reading-A-vs-B
   SEMANTICS FORK, operator-tier (§7, ITM-rule class) — escalate, do NOT present as small/passable.**
+  **★ RESOLVED (operator entry 11 = "a", 2026-06-10): SETTLEMENT = READING A (curve-intrinsic value
+  law).** value ∝ S^(−γ_local) by definition ⇒ `S*=K·γ_local/(γ_local+1)` exact everywhere by
+  construction ⇒ **rebuild gate (#7) PASSES.** Accepted tradeoff (recorded honestly): Reading A
+  ASSERTS the value law, doesn't derive it from optimal-stopping (Reading B). Formal obligation =
+  trivial Sstar_forced restatement at γ:=γ_local (immediate from AIRTIGHT T1a; not yet submitted).
+  Recorded in `specs/SPEC_kurtosis_curve_family_TARGET.md` (SETTLEMENT DECISION block + #7 RESOLVED).
+  **Unblocks the remaining brief contracts to re-derive on the new curve: carry #4, rebase #5,
+  funding #9, dollar pipe #11, warp-with-trades #16 — then the build (operator-gated).**
 - **★ FORMAL/LEAN COLD-STORAGE AUDIT — operator entry 9 (2026-06-10): "verify and coldstorage the
   math/lean thats inconsistent with the core stuff we established … whats actually true to the
   objective."** This ANSWERS the skeptic's section-C ask-operator item (formal tree pruning was
