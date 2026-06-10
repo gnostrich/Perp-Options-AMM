@@ -1,6 +1,51 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
-git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+_Last updated: 2026-06-10, project stock-take + operator pain-point review (branch
+claude/project-status-review-aumiss). This is the project's state-of-the-whole; git history is the
+mechanical audit trail. Rewrite the changed bits at the end of every task._
+
+## ★ STOCK-TAKE + OPERATOR PAIN-POINT REVIEW (2026-06-10) — reconciled to main `eaaa2d0`
+- **Memory had gone stale** (ended at 2026-06-09 checkpoint); reconciled against main per §6.2.
+  Events since the checkpoint, all merged, all non-engine (HEAD v26c `6cc73563` untouched throughout):
+  - **#11 AIRTIGHT endgame** (settlement generated, single-μ core) — already recorded below.
+  - **#12 MERTON-TIE + GHMaps run (research-lead, manager-audited in-commit):** μ=GH Laplace exponent
+    tie GROUNDED (Vieta sum⇔r=q, prod⇔γ(γ+1)=2r/σ²; I re-derived by hand); `Sstar_is_merton_boundary`;
+    **GH asymmetry finding:** β=1 GH natively carries ONLY the put eigenfunction S^(−γ) — call root
+    γ+1 leaves the analyticity strip; two-root symmetry is Gaussian-limit, not GH. GHMaps DISCHARGED
+    the CLOSEOUT-carried StrictAnti X/StrictMono Y (Bessel-K-free) ⇒ only the Bessel-K normalizer
+    VALUE stays carried (needed for nothing structural). 3 `grind` emend flags (no-math).
+    σ-knob rec flagged to operator (ship GH σ→γ map, not Gaussian closed form). INDEX_DRAFT.md
+    provenance map drafted — promotion to formal/INDEX.md was HELD for operator; **operator's 2026-06-10
+    pain-point 3 = greenlight signal, promote it.**
+  - **#13–#20 CURVE/INVARIANT BRAINSTORM thread (kurtosis knob; notes only, operator's call per §4 lock):**
+    `CURVE_SWAP_GH_vs_CES` (#13, carries CORRECTION HEADER — its δ→0=Balancer claim was WRONG);
+    `REPARAM_balancer_kurtosis_dropin` v1+v2 (#14/#15, reconciled: **Cobb-Douglas/Balancer = δ→∞
+    Gaussian limit, NOT δ→0**; δ→0 = Laplace; δ = ATM-elbow/kurtosis knob, wing exponent γ is
+    δ-invariant); `HETEROGENEOUS_WEIGHT_implied_density` (#17, the WARP structure: w(u) ⇒ nonlinear
+    monotone warp of the latent density; constant w = linear warp = Gaussian preserved; heterogeneous-w
+    warp GENERALIZES GH); `KURTOSIS_KNOB` (#18, the deliverable: single-knob weight profile
+    `w(u;w₋,w₊,τ)=w_mid+(Δw/2)·u/√(τ²+u²)`, elbow kernel = GH score kernel ⇒ **τ:=δ EXACTLY**;
+    FLAG confident: NO clean algebraic invariant F(x,y;w,τ)=k exists — elbow warp is non-monomial;
+    role split: convexity=w_mid, skew=Δw, kurtosis=τ; asymptote-preserving confirmed; kurtosis-sign
+    gotcha: latent leptokurtic vs pushforward platykurtic — label = operator call); #20 notation
+    de-collide (κ→τ; k=CD invariant; K=strike reserved; δ-vs-composite-ray-δ collision flagged unfixed).
+    **No engine edit, no decision taken — curve/invariant change remains operator-tier.**
+- **OPERATOR PAIN POINTS (2026-06-10) + dispositions:**
+  1. **No adversarial/devil's-advocate agent** — failure mode is real and documented in-repo (#13's
+     wrong δ-direction needing a correction header; RUN-3 UNIFY rfl-tautology depth-temper). PROPOSED:
+     6th agent `skeptic` — read-only red-team, mandatory pass on brainstorm/design notes BEFORE merge,
+     audits against a canonical feature inventory (so core structures like the w(u) warp can't be
+     silently dropped), steelmans excluded alternatives, gets operator questions verbatim not
+     manager-summarized. Roster change = operator decision, charter drafted on request.
+  2. **No behavioral diff ledger across versions** — BUILD_LINEAGE has md5+what, but desirable/
+     undesirable behavioral deltas live buried in memories (e.g. v26b frame-refit "keep", payoff
+     legend overprint regression). PROPOSED: `engine/builds/DIFF_LEDGER.md`, per-version-transition
+     desirable/undesirable/neutral + reconciliation status; tester populates at verification, manager
+     gates HEAD promotion on the entry existing.
+  3. **Lean/Aristotle docs "not saved/organised"** — saved YES (38 run dirs, 162 .lean, all prompts,
+     RESULTS.md ledger, 6+ manager audits, all on main); organised PARTIALLY: INDEX_DRAFT.md still in
+     scratch (held for operator), RESULTS.md is a grow-forever append log, MERTON/GHMaps rows say
+     "pending verdict" though resolved, no paper-claim→theorem crosswalk. ACTION: promote
+     formal/INDEX.md + update stale rows + formal/README.md layout guide (greenlit by this pain point).
 
 ## ★ GOVERNANCE CHANGE (2026-06-09) — AUTONOMOUS PR MGMT + CONCURRENCY/MERGE POLICY (config-only, self-merged)
 - **A — PR management is now FULLY AUTONOMOUS (operator pre-authorized).** Manager opens/squash-merges/
