@@ -139,3 +139,11 @@ pivot un-held, ordered built+gated before any new theory work. RULING 2: YES —
 bend the shape of the curve itself. RULING 3: kurtosis = steepness/flatness of the curve, set
 once so the curve prices perpetual-American options for an asset of a given vol; NOT changed by
 trades. Skeptic note pinned in charter (objective discipline)._
+
+## 15
+> what the fuck is trades bend the lean? are you deliberately conflating words? lean is the math
+> prover's language
+
+_Context: rebuke of the manager's word "lean" (meant as tilt/skew; collides with Lean the
+theorem prover). Second vocabulary violation by the manager in one session. Word retired;
+question restated using only the operator's own terms (w, skew)._
