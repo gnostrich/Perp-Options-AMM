@@ -2,6 +2,32 @@
 _Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
 git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
 
+## ★★ SESSION CLOSE-OUT (2026-06-10) — STOP: WRONG CURVE OBJECT. Operator-blocking decision open. ★★
+- **CRITICAL — everything built since v24 is premised on a possibly-WRONG object; operator says it's "of no
+  use."** The build (`temporal_mvp_v24_kurtosis.html`) implements a **STATIC** τ-curve: a trade moves the
+  reserves point ALONG a fixed-shape curve (tradeUpdate carries profile+anchor unchanged via {...s}).
+- **What the operator ACTUALLY wants (the real spec, finally surfaced):** a trade should **WARP THE CURVE'S
+  SHAPE AT THE POINT IT LANDS** — rewrite the local convexity where the trade happens; the set kurtosis is
+  only the STARTING shape; the curve **accumulates warp as a function of trade history (path-dependent).**
+  The original brief "think through the transaction state update… like the way the curve warps" meant
+  *the trade warps the curve*, NOT *the bent shape determines the trade*. Manager misread it as a static
+  shape and built the whole stack (notes, closed-form, sliders, anchor, tester) on that wrong premise.
+- **THE OPEN DECISION (operator-owned, blocks ALL further work):** does the warp **CONSERVE** something
+  (round-trip trade restores the curve, no value leak — reversible) **or** is it **path-dependent /
+  irreversible**? That conserve-or-not choice IS the economic object. **Do NOT build anything until the
+  operator answers.** Re-derive from scratch against the right object once pinned.
+- **Process lesson (own it):** the "does a trade reshape the curve or just traverse it" question is the
+  central *what-are-we-building* call — must be escalated FIRST, never silently defaulted to the
+  conventional AMM (fixed-invariant) reading. Repeated operator pushback was met with refinement of the
+  wrong object instead of stopping to re-pin the object. That is the miss.
+- **Possibly-salvageable infra (NOT the curve law):** the v24 mechanics extraction; the engine-splice
+  method + gh* collision-free naming; the slider wiring + chart-trace-through-engine plumbing; the
+  spread-shortcut pricing-identity (curve-agnostic). The static-curve MATH (closed-form W(u), Newton
+  inversion, asymptote proofs) is built on the wrong premise — treat as reference, not deliverable.
+- **GIT:** all on `claude/v24-kurtosis-migration` (HEAD 055e02f), pushed, clean. **13 commits ahead of
+  main; NOTHING merged to main** (correct — the object is unresolved/operator-owned). HEAD v26c untouched
+  (md5 6cc73563). v24 reference (`_rebase_fixed`, 6f606f52) intact; kurtosis build is a separate file.
+
 ## ★ BRAINSTORM PHASE (2026-06-10) — KURTOSIS KNOB τ + v24 MIGRATION (operator-driven, curve/economic-object territory)
 - **Context:** operator running deep theory brainstorms (PH-native vs info-geo object; GH vs CES; corner
   geometry 90°→180° = kurtosis). Concrete goal landed: a single asymptote-respecting **kurtosis knob `τ`**
