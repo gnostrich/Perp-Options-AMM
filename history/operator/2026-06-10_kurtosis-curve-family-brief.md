@@ -134,6 +134,13 @@ _Context: operator asks when they can get a working version to play with. Timeli
 
 ---
 
+## Entry 18 — 2026-06-10
+_Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim. ⟨Manager corrigendum 2026-06-10: mistakenly appended at end-of-file during the speed-run turn; relocated to its chronological slot here, operator text unchanged.⟩_
+
+> fast track all 3 concurrently and get me the whole thing off the v24 base asap, my target is around 1 more hour of work, and you have autonomy --- let the skeptic know that we want to prioritise speed in this run, and that he can take some theory-risk allowing this to build, as long as it meets the core charter I set with him
+
+---
+
 ## Entry 19 — 2026-06-10
 _Context: operator picks Option 2 (HOLD the build — no point without the trades-warp), and directs the manager to put another agent (research-lead) on the strong-form trades-warp derivation/generalisation, referencing the paper + v24 (slope goal-seek / α,β conservation law for weight updation). Notes the trades-warp is "half the job", and that there's a PRIOR discarded variant (another curve put in, discarded because the warp didn't work) — a reference to learn from. Transcribed verbatim._
 
@@ -240,7 +247,7 @@ _Context: operator adds two hypotheses to the in-flight read-only investigation 
 
 ---
 
-## Entry 18 — 2026-06-10
-_Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
+## Entry 33 — 2026-06-10
+_Context: operator confirms the trade-point-anchoring fix is precisely their intuition; says the continuous-case derivation is "on aristotle somewhere" — directs research-lead to query our existing Aristotle projects to find it; and pins the invariant: if it must be derived, it's with respect to the POINT AT WHICH THE TRADE IS HAPPENING (the trade point = ray∩curve), NOT spot / the 45° slope point / pool-reserves point / any other point. Transcribed verbatim._
 
-> fast track all 3 concurrently and get me the whole thing off the v24 base asap, my target is around 1 more hour of work, and you have autonomy --- let the skeptic know that we want to prioritise speed in this run, and that he can take some theory-risk allowing this to build, as long as it meets the core charter I set with him
+> "— the likely fix is to anchor each leg's warp at its ray∩curve trade point instead of spot (a contained change to the trade path), " precisely my intuition; and the continuous case thing is on aristotle somewhere if the reseaech guy is able to query our projects out there may find it; but yes if need to derive its with respect to the point at which the trade is happening, not spot or 45 degree slope point / pool reserves point or any other point
