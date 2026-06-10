@@ -268,6 +268,17 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   the oracle-default change (→4.44) has dollar-pipe/KPI blast radius (not a gated surface; self-check uses
   own pools) — tester to confirm KPIs/pricing render sane. **TESTER RE-RUN DISPATCHED** to confirm
   visible knob+warp. HEAD still v26c.
+  **★ TESTER RE-RUN #2 (agent ac5e1fa4): knob+frame PASS, trades-warp VISUAL FAIL (BLOCKER).** Curve
+  fills frame ✓; knob rounds elbow ~36px + wings frozen ✓ (slope-angle math); guards + pricing PASS,
+  no NaN. **Warp moves φ only ~0.5px/normal band, ~1px/6-max-trades → reads as a dot-slide** (the
+  signed no-go). NOT a render bug (curveTraceW is φ-dependent) — admissible (W) trade on this default
+  pool gives sub-pixel φ; the reshape scales with trade-size-relative-to-pool (φ can be large near a
+  wing where z=t·τ/√(1−t²)→∞, but this pool's trades stay far from the wing). 2 KPI oddities (non-NaN,
+  oracle-default blast radius): lp-y-delta −$799,988 (L4295 hardcodes p.y−800000); Create-Perp LIQ
+  PRICE −9995.56 (degenerate default perp @oracle4.44). **ESCALATED to operator (warp-visibility fork
+  — signed-acceptance + honesty/presentation call):** (a) tune demo pool/trade so a trade visibly +
+  honestly reshapes the curve (+ before/after compare); (b) labeled warp-emphasis viz (amplify/animate);
+  (c) accept subtle warp (mechanism verified). KPI bugs fixed in the same pass regardless. HEAD v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
