@@ -1,5 +1,57 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the OPERATOR-VOICE backfill of DIFF_LEDGER.md._
+_Last updated: 2026-06-10, after the v27 (W) kurtosis CANDIDATE live-browser pass._
+
+## ★ MOST RECENT — v27 (W) kurtosis + strong-form trades-warp CANDIDATE (build `3914c7f4…`, off v24)
+Live Playwright Chromium pass. **NOT HEAD** (HEAD stays v26c `6cc73563`); v27 is a PARALLEL
+candidate off the v24 Balancer base. File-safety GREEN (blobs canonical `ab663f5c…`/`c505b08a…`
+IDENTICAL to v24 base; 3 scripts parse). `wcurve_selfcheck.js` = 21 PASS/0 FAIL (incl WARP a–f).
+Reproduced clean ×2 (identical numbers, 0 console errors — not flaky).
+
+### THE HEADLINE FINDING (FLAG to manager): engine-true, screen-INVISIBLE
+The (W) features are CORRECT in the engine but DO NOT RENDER LEGIBLY — the operator's SIGNED
+visual acceptance test FAILS on screen. Operator's words verbatim
+(`history/operator/2026-06-10_kurtosis-curve-family-brief.md` Entry 1 L14): "one number → turn it
+→ elbow visibly rounds → wings don't move → static → … → trades warp the curve, not a dot sliding."
+- **Pool Curve (x,y) view:** operating point sits at u₀=ln(800000/10)≈11.3, FAR outside the
+  curveTraceW window u∈[−6,6] AND far from the elbow (u≈0). Rendered curve = a flat sliver on the
+  axis. τ=0.10 vs 2.50 indistinguishable to the eye; pre/post-trade pixel-identical
+  (warpFullDiff=0px) despite engine φ moving 0→10.59, w 0.85→0.75, on-trajectory resid 0.
+- **Mark-Across-Strikes:** peak τ-invariant to ≈0.94px; trade leaves it unchanged.
+- ROOT CAUSE = frame/curve-trace geometry: the curve-trace window must straddle the elbow at the
+  LIVE operating point (or use a realistic default pool with u₀≈0). Engine is fine; the CHART is
+  the bug. This gates play-with/HEAD.
+
+### Other v27 OPEN findings (all in DIFF_LEDGER reconciliation list)
+- **Degenerate default pool:** ships SYMMETRIC wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, EVERY trade
+  wing-range-rejected. Had to set asym (0.60/0.85) to exercise anything. Needs asym default.
+- **Stale UI label:** "Trade mechanic (#16)" sim-aid (engine L1352-1357) still says strong-form
+  is OPEN / "reserves slide on a FIXED curve" — but the engine SHIPS the strong-form φ warp.
+  Misleading honesty-label; intern must update. (No "fully proven" overclaim — that's clean.)
+- **#9 funding** re-pointed to price-anchor p=P, γ→±γ_loc — DIVERGES from HEAD's locked w=½
+  funding [theory-risk-accepted]; not exercised in UI this run.
+
+### What PASSED (engine layer + the guards that DO render)
+- γ>1 guard: wing weight ≤½ clamps to 0.501 in UI (HTML min 0.51 + JS clamp reflects back; status
+  shows γ₋=1.00). tester-confirmed live.
+- Wing-range guard: over-size trade REJECTED with verbatim "trade exceeds frozen-wing range —
+  split or widen Δw"; in-band executes. tester-confirmed live.
+- Payoff simulator renders cleanly (91094 lit px, no NaN/blank); pricing view renders.
+- Engine warp/knob all correct via my LIVE page-engine reads (φ moves, trajectory exact,
+  path-independent, round-trip 1.78e-15, elbow rounds in γ_loc, wings τ-near-frozen).
+
+### v27 repro
+`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_wkurtosis.mjs`
+(and `pw_v27_pricing.mjs`). MUST set asym wings first (0.60/0.85) or every feature is dead.
+**PLAYWRIGHT MODULE GOTCHA (NEW):** playwright is GLOBAL at `/opt/node22/lib/node_modules`, NOT in
+engine/node_modules. ESM `import 'playwright'` won't resolve via NODE_PATH. FIX: symlinked it in —
+`ln -s /opt/node22/lib/node_modules/playwright engine/node_modules/playwright` (+ playwright-core).
+Harness must run from `engine/`. (v26c memory's "tmp under engine/ resolves node_modules" is stale —
+that node_modules didn't exist; I created the symlinks.)
+Evidence: `evidence/v27_pw/` (01-08, 20-23, trace.json, trace_pricing.json).
+DIFF_LEDGER v27 entry written (CANDIDATE, feature-keyed #1-16 + none-beyond, table rows updated,
+OPERATOR-VOICE from the FIRST raw-verbatim operator transcript, reconciliation list +4 OPEN).
+
+---
 
 ## ★ NEW STANDING DUTY (operator-directed 2026-06-10) — OPERATOR-VOICE layer of DIFF_LEDGER
 Operator's mandate, verbatim: "if the tester is responsible for version control then apart from

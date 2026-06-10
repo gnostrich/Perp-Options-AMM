@@ -148,6 +148,13 @@ _Context: operator asks for a non-disruptive status update (no decision demanded
 
 ---
 
+## Entry 21 — 2026-06-10
+_Context: operator asks again for a non-disruptive status update, just after the tester's live browser pass found the (W) features are engine-correct but invisible on screen (render-window + default-pool bug) — the visual acceptance test fails until the display is fixed. Transcribed verbatim._
+
+> nondisruptive status update?
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 

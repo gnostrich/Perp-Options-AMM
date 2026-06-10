@@ -18,23 +18,24 @@ transcripts to distill my objections to each version, open questions etc."** (op
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
-| # | Feature (inventory) | Current state (as of v26c HEAD `6cc73563`) | Last changed | Verdict |
+| # | Feature (inventory) | Current state (as of v26c HEAD `6cc73563`; v27 = CANDIDATE off v24, not HEAD) | Last changed | Verdict |
 |---|---|---|---|---|
-| 1 | Balancer base | Conceptual base only; engine runs GH (= one warp setting). Theory tie nailed in notes #13–#20 (CD = δ→∞ Gaussian limit) | — (never in engine) | n/a — theory grounded |
-| 2 | Curve warp w(u) | Live implicitly via GH score kernel (curve-baked v25); explicit weight-profile form is the τ-knob PROPOSAL (notes only) | v25 (GH bake) | DESIRABLE — stable |
-| 3 | Kurtosis knob τ (≡δ) | **NOT in engine**; δ pinned 0.08. Buildable spec exists (KURTOSIS_KNOB note, w(u;w₋,w₊,τ)); awaiting operator curve decision | — (proposal) | PENDING — operator tier |
-| 4 | Carry P=Ny/Nx, u=log p−log P | Live, load-bearing, unchanged v25→v26c | v25 | DESIRABLE — stable |
-| 5 | Rebase (P→P/r, θ→θ/r, w=½) | Live, unchanged; PH-6 legs proved (trusted-from-prover) | v25 | DESIRABLE — stable |
-| 6 | Pricing law value∝S^(−γ) | Live; G4 accuracy gate green at v26c, all γ∈{1.5,2,3,4} | v25 | DESIRABLE — stable |
-| 7 | ITM American smooth-pasting | Live both wings, seam C¹ (value 0.000%, slope ≤0.0005%); boundaries bound by S-direction | v26b | DESIRABLE |
-| 8 | Uniform strike registration θ=sNorm(K) | Live across display/exec/payoff; crossover@K all γ; Finding-2 absorbed | v26c | DESIRABLE |
-| 9 | Funding (w=½ slope-deviation, LOCKED) | Untouched; v26b markFrac split kept it bit-identical; dir_gate guards sign | locked (pre-v25) | DESIRABLE — locked |
-| 10 | Slippage basis (mpGeom) | Live; % basis-independent, $=reserve-USD; magnitude-vs-collar item parked | v26a | DESIRABLE; 1 ACCEPTED flag |
-| 11 | Dollar/settlement pipe | Byte-identical through v26c (guardrail verified); Layer-2 honest-$ deferred | — (unchanged) | DESIRABLE — stable |
-| 12 | getMP_raw price-coord gotcha | Doctrine + partially gated (slope-identity in run_all); full faithfulness gate = HELD pivot | — | GUARDED — pivot pending |
-| 13 | Solvency boundary (B1) | OPEN ship-gate; only conditional proved; κ extrinsic | — | OPEN — the known hole |
-| 14 | Esscher tilt / rapidity group | Embodied by trade path; GROUNDED in Lean (GHJ); no X·Y invariant (by design) | v25 | DESIRABLE — stable |
-| 15 | File-safety gate | Live hook, pinned to v26c md5s; negative-controlled | 2026-06-08 re-pin | DESIRABLE — stable |
+| 1 | Balancer base | HEAD runs GH (= one warp setting). **v27 CANDIDATE returns to the literal Balancer base (v24): F = x^w·y^(1−w) with position-dependent w(u) — the (W) family.** τ→∞ recovers plain Balancer | v27 (candidate) | DESIRABLE in candidate — Balancer is now the literal substrate |
+| 2 | Curve warp w(u) | HEAD: implicit via GH score kernel. **v27 CANDIDATE: explicit (W) weight-field w(u;φ), warp = field-center φ shift; engine-correct (selfcheck), but NOT visually legible in any chart (see v27 entry)** | v27 (candidate) | CANDIDATE — engine PASS, UI FAIL |
+| 3 | Kurtosis knob τ | HEAD: NOT in engine. **v27 CANDIDATE: τ slider LIVE (0.05–3), engine-correct (elbow rounds, wings τ-independent per selfcheck + my live engine read), but NOT visually legible at the default pool geometry** | v27 (candidate) | CANDIDATE — engine PASS, UI FAIL |
+| 4 | Carry P=Ny/Nx, q=ln p | HEAD live. v27: carry = price leg q=ln p; reads via getMP_raw; engine consistent (selfcheck) | v25 (HEAD); v27 carry-reframe (candidate) | DESIRABLE — stable |
+| 5 | Rebase (P→P/r) | HEAD live. **v27 CANDIDATE: rebase = carry-shift q→q−ln r (NOT rigid x→r·x); warp∘rebase-commute is OPEN/[needs-Aristotle], deliberately NOT implemented as coupled** | v25 (HEAD); v27 reframe (candidate) | CANDIDATE — theory-risk-accepted, lemma OPEN |
+| 6 | Pricing law value∝S^(−γ) | HEAD live (G4). v27: value∝S^(−γ_loc) under Reading A; wings exact power; elbow per Reading A (operator-ruled, Entry 11 "a") | v25 (HEAD); v27 γ_loc (candidate) | DESIRABLE — Reading A operator-ruled |
+| 7 | ITM American smooth-pasting | HEAD live both wings. **v27 CANDIDATE: smooth-pasting mark ported to v24 with g→γ_loc; seam value/slope match @ sNorm* (selfcheck PASS); payoff renders** | v26b (HEAD); v27 γ_loc port (candidate) | CANDIDATE — seam gate PASS (Node) |
+| 8 | Uniform strike registration θ=sNorm(K) | HEAD live. v27: sNormStrike via (W) arbitrageToOracle inverse; selfcheck round-trip 1.46e-15 | v26c (HEAD); v27 (W)-inverse (candidate) | CANDIDATE — Node PASS; not UI-confirmed at K this run |
+| 9 | Funding | HEAD locked. **v27 CANDIDATE: funding re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — DIVERGES from HEAD's locked w=½ funding; correct-economic-anchor NOT proven** | v27 (candidate) | CANDIDATE — theory-risk; not exercised in UI this run |
+| 10 | Slippage basis (mpGeom) | HEAD: mpGeom=getMP_raw·e^(−ghMu). **v27 CANDIDATE: collapses to mpGeom=getMP_raw (no e^−ghMu — proven absent on (W), selfcheck L4 rel 4.33e-7)** | v27 (candidate) | DESIRABLE — simpler, proven |
+| 11 | Dollar/settlement pipe | Byte-identical reuse from v24 base (no new path); curve-independent | — (unchanged) | DESIRABLE — stable (reuse) |
+| 12 | getMP_raw price-coord gotcha | v27: on (W) price == geometric slope EXACTLY (no e^μ factor); selfcheck L4. Code comment warns against re-introducing the GH factor on a cross-port | v27 (candidate) | DESIRABLE — gotcha #12 honored, factor absent |
+| 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged; v27 geometry does not close it (not claimed) | — | OPEN — the known hole |
+| 14 | Esscher tilt / rapidity group | v27: strong-form trade = WEIGHT-slot field-center translation φ (the latent-translation analogue); no X·Y invariant claimed | v27 (candidate) | DESIRABLE — grounded |
+| 15 | File-safety gate | v27 blobs = canonical md5s `ab663f5c…`/`c505b08a…` (identical to v24 base); 3 scripts parse; tester-verified GREEN | 2026-06-08 re-pin | DESIRABLE — stable |
+| 16 | **Warp-with-trades (strong-form)** | **v27 CANDIDATE: IMPLEMENTED (strong-form R-paper) — trade conserves α,β, moves (x,y), re-centers field φ'=u'−z; engine-correct (selfcheck WARP a–f PASS: α/β conserved, on-trajectory resid 0, φ moves, wing-cap rejects, path-independent, round-trip 1.78e-15; my live engine confirms φ 0→10.59, w 0.85→0.75, trajectory exact). BUT the warp is NOT visually legible in any chart (the operator's signed "trades warp the curve, not a dot sliding" acceptance test FAILS on screen)** | v27 (candidate) | CANDIDATE — engine PASS, UI acceptance-test FAIL (BLOCKER) |
 
 ## Entry template
 ```
@@ -54,74 +55,85 @@ EVIDENCE:       evidence/ paths, gate runs, tester verdict
 ## ⭐ OPERATOR OPEN QUESTIONS (rolling — tester-maintained from transcripts; the skeptic
 audits this list against the raw transcripts to catch unresolved-presented-as-resolved)
 
-> **PROVENANCE / HONESTY NOTE on the transcript record itself (tester, 2026-06-10 backfill):**
-> `history/transcript_journal.txt` is a catalog of session SUMMARIES (last entry 2026-06-06);
-> `history/session_tree_note.md` (4100 ln) is the append-only canonical note of the
-> **pre-GH era** (composite-ray v24 / v25-american / convexity-knob arc) and **ends at the
-> curve-shape pivot**. **The GH-era sessions that produced the very versions this ledger covers
-> (v25 GH bake, v26a, v26b, v26c — 2026-06-08; governance/AIRTIGHT — 2026-06-09; pain-point
-> conversation — 2026-06-10) have NO raw transcript in `history/`.** Their operator voice
-> survives only secondhand: manager `MEMORY.md` (rulings, mostly paraphrase), session-summary
-> stubs `docs/context/chats/*.md`, and a handful of quote fragments. Items below are labelled
-> **[verbatim-transcript]**, **[manager-recorded paraphrase]**, or **[summary-stub]** accordingly.
-> Recommendation: export the 2026-06-08/09/10 chat transcripts into `history/` so this layer can
-> be audited against raw words, not reconstructions.
+> **PROVENANCE / HONESTY NOTE on the transcript record itself (tester, 2026-06-10 backfill +
+> v27 update):** `history/transcript_journal.txt` is a catalog of session SUMMARIES (last entry
+> 2026-06-06); `history/session_tree_note.md` (4100 ln) is the append-only canonical note of the
+> **pre-GH era** and **ends at the curve-shape pivot**. **NEW (v27): `history/operator/` now
+> carries verbatim per-§2.2 transcripts — `2026-06-10_kurtosis-curve-family-brief.md` (20
+> entries) is the FIRST raw-verbatim operator record for the work this candidate implements.**
+> The GH-era sessions (v25 GH bake, v26a/b/c — 2026-06-08; governance — 2026-06-09) still have NO
+> raw transcript. Items below are labelled **[verbatim-transcript]**, **[manager-recorded
+> paraphrase]**, or **[summary-stub]** accordingly.
 
 ### OPEN (operator asked / objected; no recorded resolution)
 
-1. **Curve / kurtosis-knob decision (the project motive) — OPEN, operator tier.** [#2, #3]
-   The operator asked for the kurtosis knob ("…the kurtosis knob the operator asked
-   [for]" — `notes/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md:93` [manager/lead-recorded; no
-   verbatim transcript]). Sub-questions awaiting the operator:
-   - WHICH curve is on the table: the (W) weight-profile family vs GH δ-unfreeze — the note
-     "contains TWO different curves … and the bridge between them is broken. The operator's curve
-     decision must pick which is actually on the table" (`notes/KURTOSIS_KNOB…:20-22`;
-     research-lead reconcile queued).
-   - Knob LABEL/sign: "Do NOT ship 'τ up = fatter.' The exposed label is the operator's call"
-     (`notes/KURTOSIS_KNOB…:282-284`).
-   - Whether the paper's "log/exponential-curve invariant" is the τ→0 Laplace member — "a wording
-     call — flag to operator" (`notes/KURTOSIS_KNOB…:175-176`).
-   - ERA-REVERSAL for the skeptic's record: 2026-06-01-era transcript says "Rohan does not want
-     kurtosis; BL on the fixed Balancer curve is the mechanism"
-     (`history/session_tree_note.md:1056-1057` [verbatim-transcript context]) — superseded by the
-     2026-06-10 motive ("purpose = kurtosis knob", feature_inventory §motive). Not an open
-     contradiction; recorded so nobody cites the old position as current.
-2. **B1 solvency ship-gate — OPEN (the known hole).** [#13] Operator ship-gate; "B1 ship-gate
-   (funding-coverage sweep, κ extrinsic) — still the open solvency prize" (manager
-   `MEMORY.md:681` [manager-recorded]). Lineage: a live-engine check battery "surfaced a real
-   solvency gap" (`history/transcript_journal.txt:53`, 2026-06-03 session). No operator ruling
-   recorded that closes it; geometry provably cannot (PH-4b necessary-not-sufficient).
-3. **γ/σ calibration tier — OPEN product call.** [#6, #7] Operator's three-tier frame from the
-   pre-GH era: "Three product tiers (Rohan): HTML knob open; prod fixed-at-bootstrap; oracle-fed
-   vol (hardest — vol feed reshapes convexity+funding, needs hardening)"
-   (`history/session_tree_note.md:1918-1921` [transcript, recorded as Rohan's]). GH-era follow-on:
-   "σ-knob rec flagged to operator (ship GH σ→γ map, not Gaussian closed form)" (manager
-   `MEMORY.md:16` [manager-recorded]) — no recorded operator ruling on the tier or the σ→γ map.
-4. **Engine-faithfulness PIVOT — HELD by operator instruction.** [#12] "operator is finishing
-   config first; do NOT begin the pivot until told" (manager `MEMORY.md:163` [manager-recorded]).
-   Standing hold; resumes only on operator lift.
-5. **|Γ|>1 "labelled approximation" rider — tracked, verify the label actually ships.** [#7]
-   Operator decision LOCKED 2026-06-09: "Settlement = TRUE AMERICAN (cash-out-anytime) … Scope:
-   |Γ|≤1 exact; |Γ|>1 = labelled approximation (mutual exclusivity is PROVED, not a choice)"
-   (manager `MEMORY.md:177-180` [manager-recorded]). The engine runs γ>1 (true-American regime)
-   by locked architecture — i.e. the regime the operator said must carry an explicit
-   approximation LABEL on replication claims. Tester has NOT verified any such label in UI or
-   paper claims. Not a defect finding; a rider the skeptic should keep against paper/UI claims.
-6. **Layer-2 honest-dollar slippage $ — DEFERRED (attribution caveat).** [#10, #11] Deferral is
-   recorded manager-side ("route reserve-USD through the existing carved-perp settlement chain;
-   reuse, don't improvise" — `MEMORY.md:575-576`); no operator words on it found in transcripts.
-   AMBIGUOUS-ATTRIBUTION whether the deferral was operator-voiced or manager-proposed-unopposed.
-7. **Stale-era operator questions never explicitly closed (possibly mooted by pivots — saying so
-   honestly rather than silently dropping):** auto-protect sizing Q14 ("is D8=0.3 to become a
-   derived OUTPUT … or kept as a CEILING") and Q15 (where the extra protection value comes from)
-   — `history/session_tree_note.md:562-568` [transcript-era]. Backend/auto-protect scope (CTO
-   side); no resolution recorded anywhere in the repo. OPEN-stale.
-8. **Ops minor:** `$ARISTOTLE_API_KEY` stored wrapped in literal angle brackets — "escalate to
-   operator" (`MEMORY.md:290`). OPEN-minor.
+0. **★ v27 — the operator's SIGNED visual acceptance test is NOT met on screen — OPEN (BLOCKER
+   for play-with / HEAD).** [#2, #3, #16] The operator's acceptance is explicitly *visual*:
+   "Acceptance (your signed test, orthogonality relaxed): one number → turn it → **elbow visibly
+   rounds → wings don't move** → static → options read off as perpetual-American → **trades warp
+   the curve, not a dot sliding**." (`history/operator/2026-06-10_kurtosis-curve-family-brief.md`
+   Entry 1, line 14 [verbatim-transcript]). Re-stated: v24 chosen "because how the curve warps
+   actually and **shows on UX**" (Entry 2, line 28 [verbatim-transcript]); "no point without
+   trades-warp thing … this is half the job" (Entry 19, line 140 [verbatim-transcript]); "when
+   can i actually get a version to play around with!?" (Entry 17, line 133 [verbatim-transcript]).
+   **Tester FINDING (live Playwright, this run):** the engine is correct (selfcheck 21 PASS; my
+   live-engine read confirms τ rounds the elbow in γ_loc, wings τ-independent, and a trade moves
+   φ 0→10.59 / w 0.85→0.75 on the exact trajectory) — **but none of it renders legibly.** In the
+   Pool Curve (x,y) view the operating point sits at u₀=ln(800000/10)≈11.3, far outside the
+   curve-trace window [−6,6] and far from the elbow (u≈0); the visible curve is a flat sliver and
+   τ=0.10 vs 2.50 are indistinguishable to the eye, pre-/post-trade are pixel-identical
+   (warpFullDiff=0). In Mark-Across-Strikes the peak is τ-invariant to ≈0.94px and the trade
+   leaves it unchanged. So the three headline acceptance items (elbow rounds / wings frozen /
+   trades-warp-not-a-dot) are **engine-true but screen-invisible.** OPEN — needs a frame/geometry
+   fix (curve-trace window must straddle the elbow at the live operating point, or a realistic
+   default pool with u₀ near 0) before the operator can "play around with" it and sign the test.
+
+1. **Curve / kurtosis-knob family — RULED to (W) + Reading A; sub-flags below.** [#2, #3, #6]
+   The curve family is now RULED: the (W) weight-profile family on the v24 base (Entry 2 "v24 is
+   the best reference because its sort of pure balancer", Entry 4 "yes" to the polar-lens
+   read-back, Entry 5 "start" [verbatim-transcript]). Settlement RULED Reading A: "a" (Entry 11
+   [verbatim-transcript]). Speed-run + theory-risk authorized: "fast track all 3 concurrently …
+   you have autonomy … prioritise speed … take some theory-risk allowing this to build, as long
+   as it meets the core charter" (Entry 18, line 154 [verbatim-transcript]). Build held until the
+   trades-warp landed: "option 2: no point without trades-warp" (Entry 19 [verbatim-transcript]).
+   STILL-OPEN sub-flags carried from the build spec / strong-form note:
+   - **Knob LABEL/sign — OPEN, operator's call.** v27 ships "Smaller τ = sharper elbow
+     (leptokurtic); larger τ → plain Balancer." The lead flagged the label is the operator's call
+     (`notes/research/BUILD_SPEC_wcurve_2026-06-10.md` §6); operator Entry 3 "steepness and
+     kurtosis are interchangeable words from my perspective" [verbatim-transcript] but no explicit
+     sign ruling. OPEN.
+   - **τ default = 0.3 (slider) but the DEFAULT POOL ships SYMMETRIC wings w₋=w₊=0.70 ⇒ Δw=0 ⇒
+     the (W) warp is DEGENERATE (τ does nothing, every trade is wing-range-rejected).** A new
+     undesirable, see v27 entry. Operator never specified a default pool config — OPEN (needs an
+     asymmetric default so the features are live out of the box).
+2. **B1 solvency ship-gate — OPEN (the known hole).** [#13] Unchanged; v27 does not touch it.
+3. **γ/σ calibration tier — OPEN product call.** [#6, #7] Unchanged. v27's γ_loc is wing-set at
+   setup (w₋,w₊), no oracle-fed vol; the tier ruling is still pending.
+4. **Engine-faithfulness PIVOT — SUPERSEDED by the v27 speed-run on the (W) line.** [#12] The
+   pivot was HELD ("do NOT begin the pivot until told", `MEMORY.md:163`); the operator instead
+   ordered the (W) build off v24 (Entry 18 [verbatim-transcript]). Recorded so the old HOLD is
+   not cited stale; the (W) candidate is the active line.
+5. **|Γ|>1 "labelled approximation" rider — STILL un-verified in UI/paper.** [#7] v27 runs γ_loc>1
+   (true-American regime). I did NOT find any approximation LABEL in the v27 UI. Rider stands.
+6. **Layer-2 honest-dollar slippage $ — DEFERRED (unchanged).** [#10, #11] v27 reuses the v24
+   dollar pipe byte-for-byte; no Layer-2 path. Unchanged.
+7. **Warp∘rebase-commute + φ-anchor/funding-under-moved-φ — OPEN [needs-Aristotle].** [#5, #9]
+   The strong-form note flags both lemmas OPEN (`TRADE_WARP_strongform_2026-06-10.md` §v.2–3);
+   v27 deliberately does NOT couple φ in rebase to avoid asserting commutation (engine comment
+   lines 1716-1718, 1753-1755). Load-bearing for the frame; not closed. OPEN.
+8. **Settlement Reading A vs B — RULED A, B deferred (operator-tier).** [#6] Entry 11 "a"
+   [verbatim-transcript]. If the operator later wants B, the mark exponent picks up the elbow
+   blend correction. Recorded; not re-opened.
+9. **Stale-era operator questions (auto-protect Q14/Q15) + Ops minor (`$ARISTOTLE_API_KEY`
+   brackets) — OPEN-stale / OPEN-minor.** [unchanged from prior list]
 
 ### RESOLVED / RULED (kept here so the skeptic can check none were quietly re-opened or
 mis-claimed; full per-version detail in the entries below)
 
+- **Curve family = (W) on v24 base** — RULED (Entries 2/4/5 [verbatim-transcript]).
+- **Settlement = Reading A** — RULED (Entry 11 "a" [verbatim-transcript]).
+- **Strong-form trades-warp is the build target (R-paper, not R-simple)** — RULED build-it
+  (Entry 19 [verbatim-transcript]) + lead's strong-form note skeptic-GREEN + manager-re-derived.
 - **Finding-2 (ratio-peg vs dollar-anchored strike)** — RESOLVED. Origin verbatim-adjacent:
   "Live decision left to Rohan: Finding 2 — strike as ratio peg (UX fix) vs dollar-anchored
   '$120k call' (engine change)" (`docs/context/chats/og-manager-clone-1.md:18-20`
@@ -156,8 +168,7 @@ mis-claimed; full per-version detail in the entries below)
   spot → ~$0). Display contract correct, magnitude input-driven — **ACCEPTED (operator parked)**.
 **OPERATOR-VOICE:** **None found verbatim in transcripts for this transition** (searched
 `history/transcript_journal.txt` + `history/session_tree_note.md` end-to-end — both end before
-the GH era; the v25-GH/v26a session "OG manager: HTML refinement chat" 2026-06-08 exists only as
-the summary stub `docs/context/chats/og-manager-html-refinement.md`, which records work, not
+the GH era; the v25-GH/v26a session "OG manager: HTML refinement chat" 2026-06-08 exists only as the summary stub `docs/context/chats/og-manager-html-refinement.md`, which records work, not
 operator objections). Secondhand items attributable to this transition:
 - RULED-parked [manager-recorded paraphrase]: collar-aggressiveness slippage magnitude —
   "operator parked for later" (`MEMORY.md:510-511`). Matches the ACCEPTED flag above.
@@ -260,6 +271,113 @@ except where marked)
 **EVIDENCE:** `evidence/v26c_pw/`, dollar-pipe byte-identical check, manager audits in MEMORY +
 `run_all.sh` green (7 GH + seam + dir).
 
+
+## v26c (HEAD, GH line) → v27 (W) kurtosis curve + strong-form trades-warp, off v24 base   [status: CANDIDATE — NOT promoted; HEAD stays v26c `6cc73563`]
+_Tester live-Playwright pass 2026-06-10. Build `temporal_mvp_v27_wkurtosis_WIP.html` md5
+`3914c7f423a9e988e664f901a352a6e1`. This is a WIP candidate off the v24 Balancer base — a
+PARALLEL line, not a successor edit of v26c. Promotion is an operator-tier call (separate)._
+
+**FEATURES:** #1 (Balancer is now the literal base), #2 (explicit (W) weight-field warp w(u;φ)),
+#3 (kurtosis knob τ — LIVE slider), #5 (rebase reframed to carry-shift; warp∘rebase OPEN),
+#6 (value∝S^(−γ_loc), Reading A), #7 (smooth-pasting mark ported with g→γ_loc), #8 (sNormStrike
+via (W) inverse), #9 (funding re-pointed to price-anchor p=P, γ→±γ_loc — DIVERGES from HEAD lock),
+#10 (slippage mpGeom collapses to getMP_raw, no e^−ghMu), #11 (dollar pipe reused byte-identical),
+#12 (getMP_raw == geometric slope exactly), #14 (φ-translation = weight-slot Esscher analogue),
+#15 (file-safety), **#16 (warp-with-trades NOW IMPLEMENTED, strong-form R-paper)**. **None beyond.**
+(#4 carry, #13 solvency: #4 consistent/unchanged-in-spirit, #13 untouched/still OPEN.)
+
+**DESIRABLE (engine layer — Node-verified, my live-engine reads):**
+- **#16 warp-with-trades IMPLEMENTED (strong-form).** `tradeUpdate` conserves α=x·w, β=y·(1−w),
+  moves (x,y), and re-centers the field φ'=u'−z. selfcheck WARP a–f all PASS; my live engine on
+  the running page: in-band trade moved φ 0→10.59, local w 0.85→0.75, reserves stayed on the
+  trajectory hyperbola (x−α)(y−β)=αβ to resid 0, path-independent, round-trip 1.78e-15. This is
+  the operator's "half the job" (Entry 19) — engine-correct. [#16, #2]
+- **#3 kurtosis knob τ LIVE + engine-correct.** τ slider (0.05–3, default 0.3). My live-engine
+  read: ATM γ_loc τ-invariant (2.636 at both τ=0.10 and 2.50 — ATM = w_mid always, correct), the
+  elbow rounds (γ_loc at u=0.3: 5.39→2.84 across τ), wings near-frozen (wingL γ 1.500→1.524,
+  wingR 5.666→5.505 — the few-% elbow-tail bleed the spec predicts). selfcheck "wings FROZEN
+  across tau maxDiff=0" + "ELBOW rounds with tau" PASS. [#3]
+- **#10 slippage simplifies (proven).** mpGeom=getMP_raw·e^(−ghMu) collapses to getMP_raw — no
+  e^ghMu factor on (W) (price == geometric slope exactly, selfcheck L4 rel 4.33e-7). [#10, #12]
+- **#1/#11/#15 base + reuse + safety.** Literal Balancer base; dollar pipe reused byte-identical;
+  blobs canonical md5s `ab663f5c…`/`c505b08a…` (identical to v24), 3 scripts parse — tester-
+  verified GREEN. [#1, #11, #15]
+- **#7 smooth-pasting + #8 registration ported.** seam value/slope match @ sNorm* (selfcheck
+  PASS); arbitrageToOracle (W) inverse round-trips 1.46e-15; payoff simulator renders cleanly
+  (91094 lit px, no NaN/blank). [#7, #8]
+- **γ>1 guard works in UI.** Wing-weight ≤½ clamps to 0.501 (HTML min 0.51 + JS clamp reflects
+  back into the input + status shows γ₋=1.00); cannot show γ<1. tester-confirmed live. [#6]
+- **Wing-range guard honest.** Over-size trade REJECTED with verbatim message "trade exceeds
+  frozen-wing range — split or widen Δw" (engine + executeLeg path); in-band trade executes.
+  tester-confirmed live. [#16]
+
+**UNDESIRABLE:**
+- **★ BLOCKER (#2,#3,#16) — the operator's SIGNED visual acceptance test FAILS on screen. OPEN.**
+  Engine-true, screen-invisible. In the **Pool Curve (x,y)** view the operating point sits at
+  u₀=ln(800000/10)≈11.3, FAR outside the curve-trace window u∈[−6,6] and far from the elbow
+  (u≈0); the rendered curve is a flat sliver hugging the axis. τ=0.10 vs 2.50 are
+  indistinguishable to the eye (`evidence/v27_pw/02,03`); pre-/post-trade curves are
+  pixel-identical (warpFullDiff=0px, `05,06`) despite φ moving 10.59. In **Mark-Across-Strikes**
+  the peak is τ-invariant to ≈0.94px (`20,21`) and the trade leaves it unchanged (warpDiff=0,
+  `22,23`). So "elbow visibly rounds / wings don't move / trades warp the curve not a dot sliding"
+  are NOT demonstrable. **OPEN** — needs a curve-trace/frame fix so the window straddles the elbow
+  at the live operating point (or a realistic default pool with u₀≈0) before the operator can play
+  with it. This is the gating finding for HEAD/play-with.
+- **DEGENERATE DEFAULT POOL (#2,#3,#16) — OPEN.** Default ships SYMMETRIC wings w₋=w₊=0.70 ⇒ Δw=0
+  ⇒ the (W) warp is degenerate: w is constant, τ does literally nothing, and EVERY trade is
+  wing-range-rejected (empty band (0.7,0.7)). All (W) features are dead out-of-the-box; I had to
+  set asymmetric wings (w₋=0.60, w₊=0.85) to exercise anything. Operator never specified a default
+  config. **OPEN** — needs an asymmetric default so the knob/warp are live on load.
+- **STALE/CONTRADICTORY UI LABEL (#16) — OPEN (honesty).** The "Trade mechanic (#16)" sim-aid
+  label (engine lines 1352-1357) still reads "reserves move on a FIXED curve — the reserves point
+  slides along a fixed warp … This is NOT the full trades-reshape-the-curve warp … that strong
+  form is OPEN." But the engine SHIPS the strong form (φ re-centering, verified). The label
+  describes the abandoned R-simple weak form and calls the strong form "OPEN" when it is
+  implemented — a misleading honesty-label regression. **OPEN** — intern must update the label to
+  match the strong-form engine. (No "fully proven" overclaim found; that part is clean.)
+- **#9 funding DIVERGES from HEAD's lock — flagged, not exercised.** v27 re-points funding to
+  price-anchor p=P with γ→±γ_loc [theory-risk-accepted]; HEAD #9 is LOCKED at the w=½
+  slope-deviation. Not exercised in this UI run (no funding-tick visual). Carry as theory-risk
+  CANDIDATE divergence; operator/skeptic-tier. **OPEN.**
+
+**NEUTRAL:**
+- New Settings panel "(W) Curve Shape · kurtosis": τ slider + w₋/w₊ inputs + γ_loc status line.
+- Chart selector drops GH-specific views; keeps Pool Curve / Mark Across Strikes / (Δφ_C,Δφ_P)
+  Trajectory / Payoff Simulator.
+- No console errors / no pageerrors across all views and the trade/guard paths (clean).
+
+**OPERATOR-VOICE:** (FIRST raw-verbatim operator transcript for the work a ledger entry covers —
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md`, 20 entries, per §2.2)
+- **SIGNED ACCEPTANCE TEST [verbatim-transcript], Entry 1 (line 14):** "Acceptance (your signed
+  test, orthogonality relaxed): one number → turn it → elbow visibly rounds → wings don't move →
+  static → options read off as perpetual-American → trades warp the curve, not a dot sliding."
+  **STATUS: OPEN — NOT MET on screen** (see BLOCKER above; engine-true but screen-invisible). The
+  acceptance is explicitly visual, reinforced Entry 2 (line 28) "v24 is the best reference because
+  … how the curve warps actually and shows on UX" and Entry 19 (line 140) "no point without
+  trades-warp thing … this is half the job."
+- **RULED [verbatim-transcript]:** curve family = (W) on v24 base (Entry 2/4/5: "v24 is the best
+  reference because its sort of pure balancer"; "yes"; "start"). Settlement = Reading A (Entry 11:
+  "a"). Build the strong form (Entry 19, line 140: "option 2: no point without trades-warp …
+  slope goal-seek / conservation law alpha beta … for weight updation … this is half the job …
+  we already have a variant that put in another curve but we discarded because warp didn't work").
+  Speed-run + theory-risk (Entry 18, line 154: "fast track all 3 concurrently and get me the
+  whole thing off the v24 base asap … you have autonomy … prioritise speed … take some
+  theory-risk allowing this to build, as long as it meets the core charter").
+- **OPEN question [verbatim-transcript], Entry 17 (line 133):** "ok if we're good when can i
+  actually get a version to play around with!?" — the answer this run is: NOT YET playable for
+  the signed test, because the warp/knob don't render (BLOCKER). Surfaced, not resolved.
+- **OPEN [verbatim-transcript], Entry 3 (line 35):** "steepness and kurtosis are interchangerable
+  words from my perspective" — confirms the knob concept; the explicit τ-sign LABEL is still the
+  operator's call (lead-flagged), unresolved.
+
+**EVIDENCE:** `evidence/v27_pw/` (01_initial, 02/03 curve τ low/high, 04 wing-clamp, 05/06
+pre/post-trade curve, 07 pricing, 08 payoff, 20/21 pricing τ low/high, 22/23 pricing pre/post,
+trace.json + trace_pricing.json with all live-engine numbers). Harnesses
+`engine/verify/pw_v27_wkurtosis.mjs` + `pw_v27_pricing.mjs`. Node: `wcurve_selfcheck.js` = 21
+PASS/0 FAIL (incl WARP block). File-safety GREEN (blobs canonical, 3 scripts). Reproduced clean
+(no flakiness). **VERDICT: engine layer PASS; UI/visual acceptance FAIL (3 OPEN blockers). CANDIDATE
+— do NOT HEAD-promote on the visual layer until the curve/warp render legibly.**
+
 ---
 
 ## Standing reconciliation list (all OPEN undesirables, one place)
@@ -267,5 +385,9 @@ except where marked)
 |---|---|---|
 | Payoff ray-legend overprint (cosmetic) | v26c | OPEN — intern polish, non-blocking |
 | Collar-aggressiveness slippage magnitude | v26a (exposed) | ACCEPTED — operator parked |
+| **(W) warp/knob engine-true but NOT visually legible (curve-trace window vs operating point u₀≈11.3; signed acceptance test fails on screen)** | v27 (candidate) | **OPEN — BLOCKER for play-with/HEAD; needs frame/curve-trace fix** |
+| Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (candidate) | OPEN — needs asymmetric default |
+| Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (candidate) | OPEN — intern label fix (honesty) |
+| Funding re-pointed to price-anchor p=P, γ→±γ_loc — diverges from HEAD's locked w=½ funding | v27 (candidate) | OPEN — theory-risk-accepted; operator/skeptic-tier |
 
 _Tester: append new entries above the reconciliation list; update the list every entry._
