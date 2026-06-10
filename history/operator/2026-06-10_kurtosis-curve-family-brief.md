@@ -103,3 +103,10 @@ _Context: operator confirms the pricing mechanism for perpetual options at each 
 _Context: operator asks the manager to enumerate what remains pending. Transcribed verbatim._
 
 > ok what more is pending ?
+
+---
+
+## Entry 14 — 2026-06-10
+_Context: operator redirects — rather than the manager funneling the pending decisions back to the operator, hand them to the skeptic and let the skeptic take the call (the manager then executes). Transcribed verbatim._
+
+> what are you doing ? give these to the skeptic and let him take a call
