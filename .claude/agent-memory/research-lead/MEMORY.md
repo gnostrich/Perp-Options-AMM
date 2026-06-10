@@ -1,5 +1,44 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, GUDERMANNIAN BRIDGE derivation (notes-only; NO submit/edit/git) + TRUTH-UP of broken entries._
+_Last updated: 2026-06-10, CURVE-FAMILY derivation pass (notes-only; NO submit/edit/git) + memory DEQUARANTINE truth-up._
+
+### CURVE-FAMILY DERIVATION — 2026-06-10 (operator greenlit "start"; manager-relayed; notes-only, NO submit/edit/git)
+Note: `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`. Target spec
+`specs/SPEC_kurtosis_curve_family_TARGET.md`. mpmath/python float64 numerics + analytic.
+**PART 0 DEQUARANTINE DONE (this task, before any derivation):** the three Part-0 corrections are
+now encoded as live truth at the top of this file and the stale assertions struck inline below.
+Confirmed: (1) closed-form invariant EXISTS (was "none"); (2) τ:=δ / engine=one (W) setting is
+FALSE at curve level; (3) the "invariances-hold-by-carry" blanket is DROPPED — carry/rebase/
+value-law/seam/funding are NOT established for a warp family (Esscher d-law fails mid-curve for (W)).
+**PART 1 (conjecture, operator's hyperbolic-angle lens):** the curve is the level set
+`F(x,y)= x^{w_mid}·y^{1−w_mid}·exp(−A·cosh(η−φ)) = k`, with hyperbolic angle η defined by
+ũ=ln(y/x)=τ·sinh η (the operator's 90°→180° "polar" view; η is the hyperbolic angle replacing the
+straight one). (a) ONE static amplitude/steepness/kurtosis knob = **A** (operator entry 9:
+"scale/kurtosis is the amplitude"); set once for vol, trade-invariant. (b) **Skew = φ, the angle
+SHIFT produced by trading** — a trade changes w (x,y follow real reserves, paper Trade Formula),
+which moves w_mid/φ; static A is untouched. (c) **Wings frozen** because cosh's arms are
+exponential in η which is ~linear in ũ in the wings ⇒ exact CD monomials x^{w₋}y^{1−w₋} /
+x^{w₊}y^{1−w₊}, A-independent (the |v|^d wing-snapper avoided; verified). **WHICH FORM:** the
+non-trig √-kernel `exp(−(Δw/2)√(τ²+ln²(y/x)))` and the cosh-angle `exp(−A cosh(η−φ))` are the SAME
+curve (η=asinh(ln(y/x)/τ); √(τ²+ũ²)=τ cosh η — exact algebraic identity, no membership owed). The
+cosh form EARNS its place ONLY as the operator's geometric lens/coordinate (skew=shift, kurtosis=
+amplitude read off directly); the √ form is the cleaner thing to compute/build with. Trig does NOT
+introduce new content (honors the standing Gudermannian flag — d was amplitude relabeled).
+**PART 2 (rebuild gate — does closed-form American settlement survive?):** VERDICT =
+**SURVIVES ANALYTICALLY on each frozen wing; the seam C¹ check is the open obligation.** On a wing
+the curve is exact CD with constant local weight w₋ (put side) / w₊ (call side) ⇒ wing value law is
+exact power S^(−γ_±), γ_±=w_±/(1−w_±); the GH/Merton smooth-pasting algebra (value+slope match ⇒
+S*=Kγ/(γ+1) call / K(γ+1)/γ put, continuation a·S^(−γ)) carries VERBATIM on the wing because the
+wing is a pure power law — settlement is a wing object, and the wings are knob-frozen. **OBSTRUCTION
+(precise):** if the strike K registers in the ATM elbow region (|ũ|≲τ) rather than out on a wing,
+the local exponent is NOT constant (γ_loc varies through the elbow) and the closed-form S* is not
+guaranteed — needs either (i) confirmation that the relevant strikes sit in the frozen-wing regime,
+or (ii) a seam re-derivation at non-constant γ_loc. This is numeric-to-settle first, Aristotle-Lean
+to certify. **FLAGS for operator (via manager):** curve/knob choice is operator-tier; whether the
+traded-strike band lives in the frozen wings vs the elbow is the load-bearing settlement question;
+skew-as-φ-from-trading is the operator's frame but the w-trade→φ map composition with the paper
+Trade Formula is UNIMPLEMENTED (inventory #16, OPEN). No engine/git/submit this pass.
+
+---
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -98,7 +137,9 @@ invariances hold for the GH δ-UNFREEZE (branch B) as REPARAM derivations — la
 derived-not-engine-verified (no δ≠0.08 engine ever built); they do NOT transfer to the (W) family
 (Esscher d log slope/du=1 fails mid-curve in (W); carry/rebase/seam for (W) = UNKNOWN). Lean:
 above-AMMCurve-contract untouched; re-instantiate kernel-constant layer only (branch B).
-**FLAGS:** (1) curve choice + knob exposure = operator; (2) no clean invariant — profile is the form;
+**FLAGS:** (1) curve choice + knob exposure = operator; (2) ✗CORRECTED — a clean closed-form
+invariant DOES exist (`x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k`); the old "no clean
+invariant, profile is the only form" is FALSE (skeptic counterexample, manager-verified, RK4 4.8e-13);
 (3) label sign object-dependent (track L, 1/κ=fatness); (4) ASYMMETRIC-w SETTLEMENT FORK SURFACED — κ
 holds w₋,w₊ fixed (orthogonal to fork); independent w₋≠w₊ = both S^(±γ_±) live = βh=0/two-root settlement
 change (REPARAM FULL fork). Ship κ with skew held = MINIMAL/safe; freeing skew = separate operator move.
