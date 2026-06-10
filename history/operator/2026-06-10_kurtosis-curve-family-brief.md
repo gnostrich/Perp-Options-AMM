@@ -197,6 +197,13 @@ _Context: operator asks, in parallel ("meantime, if the research guy is idle"), 
 
 ---
 
+## Entry 28 — 2026-06-10
+_Context: after the warp investigation closed (premise faithful; no τ matches v24's full warp; fork a/b presented), operator rules: promote the current v27 build to HEAD — judging "nothing useful since v24" — and in parallel have the tester do a feature-level diff of the post-v24 line to confirm/record any desirable changes besides this core, as notes for future reference. This is an operator HEAD-promotion ruling (overrides the tester's visual-layer blocker; recorded honestly). Transcribed verbatim._
+
+> firstly, commit this version to head because theres nothing useful since v24 -- in parallel let the testing / versioning guy do a feature level diff to confirm any potentially desirable changes we made since apart from this core, and simply make note for future reference
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 

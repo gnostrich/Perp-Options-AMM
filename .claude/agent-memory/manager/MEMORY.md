@@ -1,4 +1,22 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
+
+## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
+**`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
+canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
+an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in
+BUILD_LINEAGE + ledger). v27 = (W) kurtosis curve off the **v24 Balancer base** (NOT GH): √-kernel
+weight field, static τ knob (elbow rounds / wings frozen), **strong-form φ trades-warp**
+(conservation-unique, skeptic #14 premise-faithful), wing-range guard, γ>1 clamp, Reading-A
+settlement, price==slope (e^(−ghMu) gotcha GH-only). **Gate re-pinned (manager-run, both green):**
+`run_all.sh` default → v27 with a build-type branch — (W) builds → `wcurve_selfcheck.js` 21 PASS
+[HARD, exit-1-on-fail]; GH builds (explicit path, e.g. demoted `temporal_mvp_v26c.html` `6cc73563`)
+→ full GH suite (still green). Blobs canonical/unchanged across v24→v27. CLAUDE.md §4 (curve
+REOPENED note) + §8 + BUILD_LINEAGE + INTEGRITY updated. **GH line v25→v26c retained intact**
+(operator may mine it later — see tester feature-diff below). KNOWN-OPEN on v27: warp∘rebase-commute
++ φ-anchor/funding lemmas [needs-Aristotle]; elbow-local warp (verified ceiling vs v24); anchor-
+overlay viz; lp-y-delta hardcode; default LIQ-PRICE readout. Tester dispatched: ledger promotion
+entry + **feature-level diff of the v24→v26c line (operator: confirm desirable changes "apart from
+this core", note for future reference)**.
 _Last updated: 2026-06-10 (branch claude/exciting-archimedes-txs2wx; persisted operator's
 kurtosis-curve-family brief as a skeptic-authored note — NOT yet merged to main). This is the
 project's state-of-the-whole; git history is the mechanical audit trail._

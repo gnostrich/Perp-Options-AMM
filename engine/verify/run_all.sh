@@ -3,11 +3,24 @@
 # Run from the engine/ package root:  sh verify/run_all.sh [path-to-build.html]
 # With no arg it validates the canonical HEAD; the file-safety hook passes the edited file.
 set -e
-HEAD=${1:-builds/HEAD_temporal_mvp_v26c.html}
+HEAD=${1:-builds/HEAD_temporal_mvp_v27_wkurtosis.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 6cc73563779a3e030774b7597d0ae187): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want b245bfda6a493af0a7017309f1acd3f3 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 echo -n "blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): "; sed -n '74p'   "$HEAD" | md5sum | awk '{print $1}'
 echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$HEAD" | md5sum | awk '{print $1}'
+
+# ── Build-type dispatch (HEAD = v27 (W)-curve since 2026-06-10, operator entry 28) ──
+# (W)/pre-GH builds (no ghCalibrate) are gated by the wcurve selfcheck [HARD GATE,
+# exit 1 on any FAIL: 12 core + 9 strong-form-warp checks]. GH builds (ghCalibrate
+# present, e.g. builds/temporal_mvp_v26c.html) fall through to the full GH suite.
+if ! grep -q "ghCalibrate" "$HEAD"; then
+  echo ""
+  echo "================ (W)-curve build -> wcurve_selfcheck.js [HARD GATE] ================"
+  node verify/wcurve_selfcheck.js "$HEAD"
+  echo ""
+  echo "(W) build green. (GH suite N/A here; pass a GH build path explicitly to exercise it.)"
+  exit 0
+fi
 
 # verifiers read fixed filenames in cwd -> stage HEAD under the names they expect
 SCRATCH=$(mktemp -d)

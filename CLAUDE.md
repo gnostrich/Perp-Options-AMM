@@ -147,7 +147,14 @@ splice silently corrupts the build while gates stay green.
   toward green, do **not** merge. (Re-derive against geometry; comments lie.)
 
 ## 4. Locked architecture (don't reopen unless the operator does)
-- Curve-baked **GH only, γ>1, no barrier** (barrier's exponent is outside the GH family; δ won't
+**⚠ THE OPERATOR REOPENED THE CURVE 2026-06-10 (entry 28): HEAD is now the (W) kurtosis curve
+(v27), NOT GH.** The GH-specific lines below describe the demoted GH line (v25→v26c, retained,
+suite still green) and stay as its record; v27's architecture = `specs/SPEC_kurtosis_curve_family_TARGET.md`
+(√-kernel weight field, static τ knob, strong-form φ trades-warp, Reading-A settlement, γ>1 via
+w_±>½, wing-range guard; on (W) price==slope — the e^(−ghMu) gotcha is GH-only). Carry/rebase/
+funding/dollar-pipe contracts remain binding on v27 (carry = the price leg `q=ln p`, skeptic-ruled
+inheritance); warp∘rebase-commute + φ-anchor/funding lemmas are OPEN [needs-Aristotle].
+- _(GH line, demoted)_ Curve-baked **GH only, γ>1, no barrier** (barrier's exponent is outside the GH family; δ won't
   recover it). 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`.
 - **Carry P = Ny/Nx** load-bearing: `u = log(price) − log P`; rebase recomputes P→P/r. Anchor w=½;
   strike ray θ→θ/r on rebase; convexity knob γ∈(1,4).
@@ -250,16 +257,19 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v26c.html` — **canonical HEAD** (md5 `6cc73563…`); v26c lands the
-  **uniform strike registration** in the curve's carry coordinate (`θ=sNorm(K)` via `sNormStrike`=
-  getSNorm∘arbitrageToOracle) across the display mark, execution/settlement value, and the payoff
-  chart — the OTM→ITM crossover now lands at the dollar strike K for all γ (was drifting to
-  oracle₀²/K for γ>1). The chart strike-RAY stays live `K/oracle` (a price-space object); funding/
-  isOTM/wingMember stay price-measure (already at K). Permanent `dir_gate.js` (crossover@K +
-  directional-consistency + mixed-basis control). **Finding-2 is absorbed** (live chart ray). Builds
-  on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
-  byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
-  cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
+- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `b245bfda…`,
+  **PROMOTED 2026-06-10 by operator ruling, entry 28** — "nothing useful since v24", overriding the
+  tester's visual-layer blocker). **(W) kurtosis curve off the v24 Balancer base** (NOT a GH
+  descendant): √-kernel weight-field invariant; static τ kurtosis knob (elbow rounds, wings frozen
+  exact power-laws); **strong-form trades-warp** (φ field-recenter, α=x·w/β=y·(1−w) conserved —
+  skeptic-verified the unique conservation-consistent trade; premise faithful to paper+v24, #14) +
+  wing-range guard; γ>1 via w_±>½ clamp; Reading-A settlement (S*=K·γ_loc/(γ_loc+1), exact by
+  construction); on (W) **price==slope** (the e^(−ghMu) gotcha is GH-only). Gate =
+  `engine/verify/wcurve_selfcheck.js` (21 PASS [HARD], wired as run_all's (W) branch). Known-OPEN:
+  warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; warp is elbow-local (verified —
+  cannot match v24's global magnitude with frozen wings); anchor-overlay viz, lp-y-delta hardcode,
+  default LIQ-PRICE readout. **Prior HEAD demoted to `temporal_mvp_v26c.html`** (`6cc73563…`,
+  GH-line endpoint, suite still green via explicit path).
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
   tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.

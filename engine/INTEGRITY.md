@@ -8,9 +8,10 @@
 | (v26a fixes) | `951d16eb` | v25_gh + the 3 barrier-remnant fixes (inline slippage, curve-draw, marker) |
 | (slippage WIP head) | `2c0337e8` | v26a + slippage work-in-progress (the splice base) |
 | `temporal_mvp_v26a.html` | `89ae89e9` | slipfix — the blob-layer reconcile below was verified on this build; **demoted, succeeded by v26b then v26c** |
-| **`HEAD_temporal_mvp_v26c.html`** | **`6cc73563`** | **current canonical HEAD** — uniform strike registration θ=sNorm(K); see `BUILD_LINEAGE.md` for the full v26b→v26c lineage |
+| `temporal_mvp_v26c.html` | `6cc73563` | uniform strike registration θ=sNorm(K); GH-line endpoint — **demoted 2026-06-10 on v27 promotion (operator entry 28)** |
+| **`HEAD_temporal_mvp_v27_wkurtosis.html`** | **`b245bfda`** | **current canonical HEAD** — (W) kurtosis curve off the v24 Balancer base (static τ knob, strong-form φ trades-warp, Reading-A settlement); gate = `wcurve_selfcheck.js` 21 PASS; see `BUILD_LINEAGE.md` |
 
-The two blobs are unchanged across the entire lineage (v24 → v26c). That is the file-safety invariant; it has held.
+The two blobs are unchanged across the entire lineage (v24 → v26c → v27). That is the file-safety invariant; it has held.
 
 ## The blob-layer resolution (a phantom thread, now CLOSED)
 For weeks the "blob ledger" showed two apparently-conflicting blob md5 sets, framed as "minified broken cut" vs "canonical original." **They are the same blobs measured at different layers.** Verified on `89ae89e9`:

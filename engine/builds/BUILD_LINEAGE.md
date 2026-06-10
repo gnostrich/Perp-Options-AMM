@@ -14,10 +14,13 @@ show exactly what each step changed.
 | temporal_mvp_v26b_xrange.html | `570ef23ff89d931b8394e8f38c9d17a5` | + payoff chart x-range ±50%→±200% (2 display lines); Node-verified; browser-visual deferred; not HEAD |
 | temporal_mvp_v26c_strikereg.html | `(see git)` | + strike registration in curve coordinate θ=sNorm(K) — **DISPLAY mark path (`pfComponents`) only**; new permanent `dir_gate.js` (crossover@K + directional consistency, negative-controlled). Manager-verified Node level. **SCOPE-PARTIAL (superseded by v26c_full).** Not HEAD. |
 | temporal_mvp_v26c_full.html | `8f7b3ffb…` | + UNIFORM strike registration (operator ruling A): execution/settlement path + chart strike-ray (`drawStrikeRay`, = Finding-2 absorbed) all carry-registered via `regLeg`/`sNormStrike`; `drawStrikeMark`/funding/isOTM left (price-measure). Manager-verified Node level. **superseded by v26c_full2.** Not HEAD. |
-| **HEAD_temporal_mvp_v26c.html** | `6cc73563779a3e030774b7597d0ae187` | (was `temporal_mvp_v26c_full2.html`) + UNIFORM strike registration `θ=sNorm(K)` across display mark + execution/settlement + payoff chart; chart strike-ray live K/oracle (price-space); `drawPayoff` re-based to carry (chart marks == table, |diff| 8.6e-11); x-range −90%..+200%. Permanent `dir_gate.js` (crossover@K + directional + mixed-basis). **current canonical HEAD** — manager-verified Node level (7 GH + seam + dir_gate PASS, dollar-pipe byte-identical, premium delta re-derived, §6 not tripped) + **UI tester-confirmed** (bands cross@K, live ray no entry-θ drift, payoff==table |diff|0.0, no v26b regression; clean ×2). **Finding-2 absorbed; wing-tag/strike-basis saga closed.** |
+| temporal_mvp_v26c.html | `6cc73563779a3e030774b7597d0ae187` | (was `HEAD_temporal_mvp_v26c.html` / `temporal_mvp_v26c_full2.html`) + UNIFORM strike registration `θ=sNorm(K)` across display mark + execution/settlement + payoff chart; chart strike-ray live K/oracle; permanent `dir_gate.js`; Finding-2 absorbed. Manager-verified + UI tester-confirmed. **Prior HEAD — demoted 2026-06-10 on v27 promotion (operator entry 28: "nothing useful since v24"); endpoint of the GH line (v25→v26c), retained in full; GH suite still green via `run_all.sh builds/temporal_mvp_v26c.html`.** |
+| **HEAD_temporal_mvp_v27_wkurtosis.html** | `b245bfda6a493af0a7017309f1acd3f3` | **(W) kurtosis curve off the v24 Balancer base** (NOT a GH descendant): √-kernel weight-field invariant; static τ kurtosis knob (elbow rounds, wings frozen exact power-laws); **strong-form trades-warp** (φ field-recenter; α=x·w, β=y·(1−w) conserved per trade — skeptic-verified the UNIQUE conservation-consistent trade; curve reshapes, not dot-slide) + wing-range guard; γ>1 (w_±>½) UI clamp; Reading-A settlement (S*=K·γ_loc/(γ_loc+1) exact by construction); price==slope on (W) (no e^(−ghMu) gotcha). Gate = `wcurve_selfcheck.js` 21 PASS/0 FAIL [HARD]. **current canonical HEAD — PROMOTED 2026-06-10 by OPERATOR RULING (entry 28), overriding the tester's visual-layer blocker** (warp is elbow-local ⇒ subtle on screen; per the verified sweep it CANNOT match v24's global warp magnitude with frozen wings — operator-accepted). Premise skeptic-verified FAITHFUL to paper+v24 (#14). OPEN (honest): warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; anchor-overlay viz not yet added; lp-y-delta hardcode + degenerate default LIQ-PRICE readouts (tester-flagged); funding re-pointed to price-anchor [theory-risk-accepted]. |
 
-Predecessor (pre-GH, in notes context only): `temporal_mvp_v24_rebase_fixed_2.html` was the
-barrier-curve build before the GH swap — not included; superseded by v25_gh.
+Predecessor / base: `temporal_mvp_v24_rebase_fixed_2.html` — the constant-product/Balancer-type
+hyperbola build (`(x−α)(y−β)=αβ`, w=α/x; the "barrier" strings are an option-type mode, not the
+curve). It is the BASE of HEAD v27; the GH line (v25→v26c) branched from it 2026-06-07/08 and was
+demoted intact 2026-06-10 (operator entry 28).
 
 ## Blob baseline (canonical = LINE layer — verify against THIS)
 Both blobs must be byte-identical across every safe edit. Canonical check = the whole-line md5
@@ -34,9 +37,9 @@ line layer canonical.)
 
 ## Quick integrity check (any build)
 ```sh
-md5sum builds/HEAD_temporal_mvp_v26a.html                      # expect 89ae89e9...
-sed -n '74p'   builds/HEAD_temporal_mvp_v26a.html | md5sum     # expect ab663f5c...
-sed -n '1060p' builds/HEAD_temporal_mvp_v26a.html | md5sum     # expect c505b08a...
+md5sum builds/HEAD_temporal_mvp_v27_wkurtosis.html             # expect b245bfda...
+sed -n '74p'   builds/HEAD_temporal_mvp_v27_wkurtosis.html | md5sum   # expect ab663f5c...
+sed -n '1060p' builds/HEAD_temporal_mvp_v27_wkurtosis.html | md5sum   # expect c505b08a...
 ```
 Then `verify/run_all.sh` for parse + 7 gates + curveTrace + slope/slippage checks.
 
