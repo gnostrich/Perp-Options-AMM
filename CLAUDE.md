@@ -5,6 +5,15 @@
 (GH)** reserve curve. The deliverable is one HTML file; a CTO (external human) propagates the math to
 a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produced this repo.
 
+## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
+**A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else stays
+the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight `w(u)` is the warp
+(the current GH engine = ONE warp setting, τ≡δ=0.08); the kurtosis knob `τ` rounds the ATM elbow
+with wings staying exact power-laws; carry/rebase, value∝S^(−γ), ITM smooth-pasting, funding, and
+the dollar pipe are unchanged. The curve/invariant decision is always the operator's. Full
+checklist: `docs/feature_inventory.md` — design/brainstorm notes must disposition every item there
+(the skeptic enforces this).
+
 ## 1. The store is the filesystem (not a chat ledger)
 The old multi-chat world re-emitted a `TEMPORAL-CONTEXT-LEDGER` snapshot every reply. **Obsolete.**
 Here the repository is the durable store:
@@ -20,12 +29,19 @@ Here the repository is the durable store:
 
 ## 2. Team (hub-and-spoke; the operator talks only to the manager)
 - **manager** — main thread. Design authority, independent verifier (re-derives every number, never
-  rubber-stamps), **sole git/GitHub actor**, escalation hub. Delegates to the four below.
+  rubber-stamps), **sole git/GitHub actor**, escalation hub. Delegates to the five below.
 - **research-lead** — states Lean conjectures precisely, relays to the external prover **Aristotle**,
   audits returned proofs. (Aristotle is external — not an agent.)
 - **intern** — HTML/engine implementation; surgical, blob-safe edits.
-- **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts.
+- **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts. Owns the
+  behavioral diff ledger (`engine/builds/DIFF_LEDGER.md`) — populated at every build verification;
+  HEAD promotion is gated on the entry existing.
 - **paper** — AfT/WINE/FMBC drafting from locked decisions.
+- **skeptic** — adversarial red-team (added 2026-06-10, operator-directed). Read-only; mandatory
+  completeness-and-steelman pass on every brainstorm/design note AND manager audit report before
+  merge, audited against `docs/feature_inventory.md`; receives operator questions VERBATIM (a
+  manager paraphrase = FLAG-PROCESS); verdicts are FLAGs appended unedited, disagreements escalate
+  to the operator unreconciled.
 - **CTO** — external human (Go backend); an address, not an agent.
 
 ## 3. ⛔ FILE-SAFETY GATE (the real guardrail — every engine HTML edit)
@@ -165,12 +181,15 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
   byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
   cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
-  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses,
+  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
+  tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
-  `prompts/` + `MANAGER_VERIFICATION.md`. `paper/` draft + docx. `notes/`, `history/`
+  `prompts/` + `MANAGER_VERIFICATION.md` + **`INDEX.md`** (canonical provenance map over all Aristotle
+  results — start there) + `README.md` (layout). `paper/` draft + docx. `notes/`, `history/`
   (`session_tree_note.md`), `evidence/`. `docs/` operating protocol, personas, orientation, briefs,
-  historical context. `.claude/` agents, agent-memory, hooks, commands, settings.
+  historical context, `feature_inventory.md` (the skeptic's checklist). `.claude/` agents,
+  agent-memory, hooks, commands, settings.
 
 ## Glossary
 GH = generalized-hyperbolic curve · mpGeom = `getMP_raw·e^(−ghMu)` (geometric marginal) · carry

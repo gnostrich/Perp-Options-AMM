@@ -29,7 +29,23 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
     gotcha: latent leptokurtic vs pushforward platykurtic — label = operator call); #20 notation
     de-collide (κ→τ; k=CD invariant; K=strike reserved; δ-vs-composite-ray-δ collision flagged unfixed).
     **No engine edit, no decision taken — curve/invariant change remains operator-tier.**
-- **OPERATOR PAIN POINTS (2026-06-10) + dispositions:**
+- **OPERATOR APPROVED ALL THREE (2026-06-10, "yes to all") — EXECUTED same session:**
+  (1) **skeptic agent LIVE** (`.claude/agents/skeptic.md`): read-only red-team; mandatory pass on
+  brainstorm/design notes AND my audit reports pre-merge; audits vs `docs/feature_inventory.md`
+  (new, 15 items); operator questions reach it VERBATIM (paraphrase = FLAG-PROCESS); verdicts
+  appended unedited, disagreements escalate unreconciled. Operator's extra requirement honored:
+  charter leads with the CRISP MOTIVE — "curve-warp AMM grown out of Balancer, purpose = kurtosis
+  knob, everything else stays the same" — also added as **CLAUDE.md §0** (shared truth, so the
+  motive can't get lost across agents) + verbatim in skeptic MEMORY. Roster now 6; CLAUDE §2 +
+  manager/tester charters updated.
+  (2) **DIFF_LEDGER live** (`engine/builds/DIFF_LEDGER.md`): tester-owned behavioral deltas per
+  version transition (desirable/undesirable/neutral + reconciliation list); HEAD promotion now
+  gated on the entry existing; v25→v26a→v26b→v26c BACKFILLED by me from verified evidence.
+  (3) **formal/INDEX.md PROMOTED** (from INDEX_DRAFT, retired): MERTON/GHMaps rows resolved
+  (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
+  true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
+  env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **OPERATOR PAIN POINTS (2026-06-10) + dispositions (as proposed pre-approval):**
   1. **No adversarial/devil's-advocate agent** — failure mode is real and documented in-repo (#13's
      wrong δ-direction needing a correction header; RUN-3 UNIFY rfl-tautology depth-temper). PROPOSED:
      6th agent `skeptic` — read-only red-team, mandatory pass on brainstorm/design notes BEFORE merge,

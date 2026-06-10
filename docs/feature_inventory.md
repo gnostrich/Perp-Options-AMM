@@ -1,0 +1,43 @@
+# Canonical feature inventory — the skeptic's checklist
+
+_Created 2026-06-10 (operator-directed). This is the list of load-bearing structures that every
+brainstorm / design note / spec touching the curve, invariant, settlement, or economics MUST
+explicitly disposition. The skeptic audits notes against this file; a silently absent item is a
+FLAG-OMISSION. Keep this file short and current — it is a lens, not an encyclopedia._
+
+## ⭐ The motive (one breath)
+**A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else
+stays the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight `w(u)` is
+the warp (the GH engine = one setting, τ≡δ=0.08); τ rounds the ATM elbow with wings staying exact
+power-laws; carry/rebase, value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are
+**unchanged**. The curve/invariant decision is the operator's.
+
+## Disposition rule
+Every in-scope note carries a line per item: **Considered** (analyzed in the note) / **Changed**
+(the note proposes altering it — escalation tier!) / **Excluded(why)** / **N-A(why)**. No silent
+absences.
+
+## The inventory
+
+| # | Feature | Why load-bearing (one line) |
+|---|---------|------------------------------|
+| 1 | **Balancer base** `x^w·y^(1−w)=k` | The family's exact base; Gaussian/Merton slice; = δ→∞ limit (NOT δ→0 — that's Laplace). |
+| 2 | **The curve warp** `w(u)` (position-dependent weight) | The engine's defining move; GH is one warp setting; engine-native form is the weight profile, NOT an algebraic invariant (none exists — proved structurally, KURTOSIS_KNOB note §0). |
+| 3 | **Kurtosis knob τ** (≡ GH δ) | The project goal; ATM-elbow rounding, asymptote-respecting; role split convexity=w_mid / skew=Δw / kurtosis=τ; sign gotcha: latent leptokurtic vs pushforward platykurtic. |
+| 4 | **Carry** `P = Ny/Nx`, `u = log(price) − log P` | Load-bearing coordinate; raw-u breaks the gauge structure — the gauge coord s=u−μ is forced. |
+| 5 | **Rebase** (P→P/r, θ→θ/r, anchor w=½) | Degree-0 gauge; rebase covariance holds in sNorm, NOT raw (x,y); PH-6 proved legs. |
+| 6 | **Pricing law** value ∝ S^(−γ), γ∈(1,4) | The one accuracy gate (G4); β=1 GH carries ONLY the put eigenfunction (call root leaves the strip — two-root symmetry is Gaussian-limit, not GH). |
+| 7 | **ITM American smooth-pasting** | Settlement semantics (operator tier): S*=Kγ/(γ+1) call-side / K(γ+1)/γ put-side, bound by S-direction not wing tag; seam C¹ gate; |Γ|≤1 exact / >1 labelled approximation. |
+| 8 | **Uniform strike registration** θ=sNorm(K) (v26c) | One mark on the curve across display/execution/chart; crossover@K for all γ; Finding-2 absorbed here. |
+| 9 | **Funding** = slope-deviation vs w=½ anchor | LOCKED, orthogonal to intrinsic; θ-swap flips its sign — must not be touched by mark/strike changes. |
+| 10 | **Slippage basis** mpGeom = getMP_raw·e^(−ghMu) | % is basis-independent; $ = Layer-1 reserve-USD; THE gotcha lives here. |
+| 11 | **Dollar / settlement pipe** (stage-2→3) | §6 HARD STOP if a new dollar path is needed; byte-identical guardrail in past passes. |
+| 12 | **THE gotcha:** getMP_raw is a price coordinate, NOT the slope | |dy/dx| = getMP_raw·e^(−ghMu); a price/slope conflation passes every self-consistency gate. |
+| 13 | **Solvency boundary** | B1 real floor = operator ship-gate; port/funding is necessary-never-sufficient (PH-4b); κ extrinsic. Don't let any note imply geometry closes solvency. |
+| 14 | **Esscher tilt / latent rapidity group** | Trade = parameter translation; GH conserves NO X·Y-product invariant — never describe the conserved object as a CPMM analogue. |
+| 15 | **File-safety gate** (blobs, splices, script blocks) | Process item, but "the analysis implies an engine edit" must reckon with it; blobs never enter context. |
+
+## Maintenance
+Owner: manager (edits on operator direction or when a locked decision changes). The skeptic FLAGS
+inventory staleness too — if a note legitimately needed an item this list lacks, that's a
+FLAG-PROCESS against the inventory itself.

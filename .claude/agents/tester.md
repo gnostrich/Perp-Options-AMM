@@ -28,6 +28,11 @@ regression) and visually (live browser). A flaky pass is a fail until reproduced
   saw render; never assert pixels you didn't observe.
 - **Engine file-safety spot-check** when confirming an intern pass: the two blob md5s
   (`ab663f5c…`/`c505b08a…`) unchanged, the 3 `<script>` blocks parse.
+- **Behavioral diff ledger (you own it — operator-directed 2026-06-10):** at every build
+  verification, append the version-transition entry to `engine/builds/DIFF_LEDGER.md` using its
+  template — DESIRABLE / UNDESIRABLE (each marked OPEN / RECONCILED-in-vZ / ACCEPTED) / NEUTRAL /
+  EVIDENCE — and update the standing reconciliation list at the bottom. The manager gates HEAD
+  promotion on your entry existing. Ledger entries are FLAG-grade evidence, same bar as the rest.
 
 ## First resume action (v26a)
 Live-browser pixel/visual confirmation of HEAD (`89ae89e9…`): **(1)** slippage display — `%` primary,
