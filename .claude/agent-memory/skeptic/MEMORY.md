@@ -271,6 +271,28 @@ inventory, operator answered — remaining live tail = every curve note must dis
    carry wiring, or mark/oracle semantics — manager may NOT do those without operator ratification.
    Convergence-alarm LOW (self-adversarial note, all digits reproduced).
 
+11. **2026-06-10 — BUILD_SPEC_wcurve FAST core-charter pass (verdict #11, SPEED posture)** →
+   `notes/skeptic/VERDICT_BUILD_SPEC_wcurve_2026-06-10.md`. The first BUILD spec (intern building
+   concurrently off v24). **Verdict: GREEN-TO-BUILD + 1 standing FLAG-OMISSION (NOT ship-gating).**
+   Verbatim channel HELD (acceptance test "trades warp the curve, not a dot sliding" verified
+   against history/operator/2026-06-10_kurtosis-curve-family-brief.md entry 1; entry 3 = "skew
+   determined by x y w (trading)", polar-lens skew=φ → strong form). **#16 trade-warp honesty
+   PASS:** spec builds R-simple (dot sliding on FIXED weight field) and does NOT dress it as the
+   warp — labelled `[theory-risk-accepted]` T2, §1.2 ⚠ box + §8.1 name R-paper (field re-center,
+   w→φ) as the OPEN strong form in plain English. **The standing FLAG-OMISSION:** R-simple IS the
+   "dot sliding" the operator's signed test rules OUT; spec is honest in §1.2/§8.1 but §0 header
+   does NOT state in one sentence that THIS build fails the acceptance clause. Speed posture →
+   LET-RIDE (labelled, theory-risk authorized, R-paper relayed deferred) so it does NOT gate ship;
+   but the manager MUST relay the plain sentence "this build ships the dot-sliding reading; the
+   curve-reshaping form you signed for is deferred/OPEN" to the operator (relay duty, not redesign).
+   #16 FLAG-OMISSION persists (continuous from verdict #2/#3). **Inventory all 16 present** (re-
+   counted myself; no "all 15" stale-count, pattern #6 clean; #13 solvency thin=w_±>½ wing-lock,
+   #14 Esscher N-A-by-behavior — no CPMM X·Y invariant asserted). **Labels PASS** (T1–T5 theory-
+   risk tagged, L1–L9 proven incl. manager's two re-derived; γ>1/w_±>½ stated as hard §8.3 calib
+   constraint). **No dead headliner** (no τ≡δ EXACTLY / no-invariant / GH=one-(W)-setting; §0.1
+   correctly = kernel-in-SCORE(GH) vs kernel-in-WEIGHT((W))). Did NOT re-derive the two manager-
+   confirmed formulas (mark==slope no-e^−ghMu; γ_loc>1⟺w>½) per dispatch. Convergence-alarm LOW.
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
