@@ -300,11 +300,16 @@ skeptic's w_eff/τ_implied membership test on a constructed curve — none run, 
 
 ---
 
-## 6. Feature-inventory disposition (all 15; per `docs/feature_inventory.md`)
+## 6. Feature-inventory disposition (all 16; per `docs/feature_inventory.md`)
+
+_[Count + rows 1 and 16 amended by the MANAGER 2026-06-10 per skeptic VERDICT_GUDERMANNIAN
+(halt-class FLAG-OMISSION on item 16 + gate-item-1 wording demand); the note was drafted against
+the 15-item inventory hours before item 16 landed — overlap explains, doesn't excuse: the
+manager's verification also missed it. Amendments marked ⊕.]_
 
 | # | Feature | Disposition |
 |---|---------|-------------|
-| 1 | Balancer base | **Considered.** The base is where the bridge is fully exact (ũ = log price); base = A→∞/amplitude corner (Gaussian δ→∞, NOT δ→0 — direction preserved). |
+| 1 | Balancer base | **Considered.** The base is where the bridge is fully exact (ũ = log price); base = A→∞/amplitude corner (Gaussian δ→∞, NOT δ→0 — direction preserved). ⊕ Plain sentence (skeptic gate item 1): **Balancer/CD is NOT an exact member of the family at any finite knob setting; it is the A→∞ limit.** |
 | 2 | Curve warp | **Considered.** §5.2: cosh-in-own-angle parallel across SCORE vs WEIGHT slots; broken identity re-asserted as broken; no new membership claim. |
 | 3 | Kurtosis knob τ | **Considered (the subject).** Single-d law fails; knob = cosh amplitude A; exact law §3; β=1 numbers given alongside β=0 (skeptic pattern 3 honored). |
 | 4 | Carry P=Ny/Nx, u=log p−log P | **Considered.** The θ-frame attaches to the centered/gauge coordinate v (downstream of carry); for branch B nothing changes (same family). (W)'s carry story remains UNKNOWN (stock-take §1.3) — not touched, not claimed. |
@@ -319,6 +324,7 @@ skeptic's w_eff/τ_implied membership test on a constructed curve — none run, 
 | 13 | Solvency boundary | **Considered (last time's omission, explicit now).** §5 item 5: amplitude dial moves m=2 wing depth 6.7× at β=1 (0.085→0.563) — bigger than the published β=0 swing. Mechanism visible in the frame: mass migrates along the cosh arms as A falls. B1 floor re-prices at ANY shipped setting; stays extrinsic, operator ship-gate; geometry does NOT close solvency. |
 | 14 | Esscher / latent group | **Considered.** Tilt = linear re-aim of (φ,A) in span{cosh,sinh} (exact, §2); conserved object remains the latent one-parameter group — no X·Y/CPMM-analogue description used. |
 | 15 | File-safety gate | **N-A (notes-only).** No engine edit; any future knob implementation goes through splice recipe + gates + single-engine-writer policy. |
+| 16 | Warp-with-trades clause (operator, verbatim) | ⊕ **Considered — and this frame does NOT provide it.** The cosh(θ−φ) frame is a re-coordinatization of a STATIC curve: the knob (amplitude A) is set at deployment, trades move the point along the fixed curve, exactly the design class the operator's clause questions. The clause remains OPEN per inventory item 16 — the operator's plain-English question (does a trade bend the curve itself, yes or no?) is PENDING with the operator. No claim made or implied that this frame satisfies the operator's sentence. |
 
 ---
 

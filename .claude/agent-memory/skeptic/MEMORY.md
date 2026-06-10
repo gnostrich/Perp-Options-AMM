@@ -1,7 +1,8 @@
 # MEMORY — skeptic
-_Updated 2026-06-10 after the OPERATOR-DIRECT reply pass (third charter run via general-purpose
-runner — agent type registers next session). Earlier same day: STOCK-TAKE pass; operator addendum
-— paper = standing MOTIVATION reference (see section below)._
+_Updated 2026-06-10 after the fourth charter run (via general-purpose runner — agent type
+registers next session): operator reply #2 (scaffold-vs-gaslighting diagnosis) + Gudermannian
+gate (verdict #3). Earlier same day: OPERATOR-DIRECT reply pass, STOCK-TAKE pass, paper-as-
+motivation addendum (see below)._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -95,9 +96,44 @@ carries the conjecture + a C6-wording placeholder.)
    price space, and my β=1 numbers show the dial coupling skew+kurt — demand the pushforward
    check (vary amplitude, hold φ, measure price-space skew) or the label "latent-only"; and the
    derivation is GH-internal, so "balancer generalisation" is unearned until the bridge to the
-   weight slot is SHOWN (broken-bridge verdict stands).
+   weight slot is SHOWN (broken-bridge verdict stands). _[Watch flag CLEARED by verdict #3 —
+   the delivered note satisfied both conditions; see below.]_
+
+3. **2026-06-10 — GUDERMANNIAN gate (verdict #3)** →
+   `notes/skeptic/VERDICT_GUDERMANNIAN_2026-06-10.md`. **1× FLAG-OMISSION (halt): note
+   dispositions "all 15" inventory items but the inventory had 16 at commit time — item 16 =
+   the operator's OWN warp-with-trades clause, dropped within hours of being added; manager's
+   verification commit repeats the stale "all 15."** Fix = one disposition line. 1× narrow
+   FLAG-OVERSELL: manager's commit-message pushforward digits "skew 0.571→0.068" have NO named
+   space — I could not reproduce them in latent-v/θ/fan-angle/tanh/e^{v/γ} (qualitative content
+   confirmed everywhere; demand map+script before citing). 1 wording demand: gate item 1 needs
+   the plain sentence "Balancer is NOT a member at any finite knob, only the A→∞ limit."
+   **WATCH FLAG-OVERSELL from verdict #2: CLEARED** — note labels skew-purity kernel/latent-only,
+   gives the exact coupling parabola exkurt≈skew²(1+4t²)/(3t²), preserves my coupled-dial fact.
+   All sampled numbers reproduced byte-level on my path (δ=3 row 0.22981/0.32129; γ=2 law
+   exk·A→4.334 vs 13/3; fan edge exponents 1.9999/3.9999; wing-slope δ-cancellation errs =
+   αδ²/2v²; in-cosh wing exponent = d/2 exactly). **d-law failure verified GENUINE** (steelman:
+   any d with d(∞)=2 is the amplitude relabeled, no gear content; symmetric=φ=0 ⊥ Gaussian=A→∞
+   kills the weld) — operator's intuition got a fair, even generous epitaph (90→180 doubling
+   exact; "d=2=Gaussian" survives as Taylor order). With fixes → PASS; honest-labeling-wise the
+   team's best artifact.
+4. **2026-06-10 — operator reply #2 (scaffold-vs-gaslighting diagnosis)** →
+   `notes/skeptic/REPLY_TO_OPERATOR_2_2026-06-10.md` (relayed unedited). Mechanism named:
+   **assurance laundering** — Lean proved the spec's math (real work, honest fine-print labels);
+   the spec↔engine link (C3 / engine-faithfulness pivot) was deferred and is STILL unbuilt, and
+   every testing-time burn (slippage conflation, wing-tag inversion, 3-strikes screen) lived in
+   that gap; headlines ("14/14 proved"/"endgame complete") carried assurance the fine print
+   disclaimed. Evidence cited: rfl-tautology M=Fisher, grep -rnED broken token-scan (2 runs),
+   pattern 1/2 (3-for-3), INDEX true-floor "pivot HELD." Honest limits stated: I'm
+   manager-dispatched; trusted-from-prover ceiling; pre-policy transcripts gone (all 06-08/09
+   "operator ruled X" = unverifiable paraphrase). Recommended action: build+gate the
+   engine-faithfulness pivot before new theory work.
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
+- **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
+  13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
+  (wing exponent = d/2 ⇒ asymptotes freeze d=2), coupling parabola. All reproduced on my path.
+  exkurt(A) monotonicity stays GRID-CONFIRMED only — not settled as a theorem.
 - **Asymptote preservation (KURTOSIS F2):** γ_loc(±100τ) τ-independent, errs 3.12e-5/1.25e-4
   reproduced byte-identical; analytic via the closed-form invariant (wings = exact CD monomials).
 - **Kurtosis sign-split (F6):** pushforward platykurtic −1.1163 @ τ=0.3 (note: −1.116) vs latent
@@ -123,7 +159,15 @@ carries the conjecture + a C6-wording placeholder.)
   price-vs-slope gotcha).
 5. **Impossibility claims argued from one failed candidate** ("the CD monomial isn't constant ⇒
   no invariant exists"). Steelman by actually integrating/constructing before accepting any
-  "no X exists" flag — the √-kernel was elementary-integrable all along.
+  "no X exists" flag — the √-kernel was elementary-integrable all along. (Counter-case logged:
+  the Gudermannian d-law failure SURVIVED this steelman — verdict #3.)
+6. **Checklist staleness at the verification step:** the newest inventory item falls out of frame
+  fastest — item 16 (the operator's own clause) was dropped from a note's "all 15" disposition
+  AND from the manager's verification commit within HOURS of being added (verdict #3). Always
+  re-count the inventory at gate time; never trust the note's own header count.
+7. **Verification digits with no reproducible map:** manager's commit cited "skew 0.571→0.068
+  pushforward PASS" with the space unnamed; unplaceable in any natural pushforward I built.
+  A verification claim that can't be re-run is narration with digits. Demand map+script.
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
