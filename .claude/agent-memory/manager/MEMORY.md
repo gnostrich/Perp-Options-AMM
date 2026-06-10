@@ -1,6 +1,49 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
+_Last updated: 2026-06-09 — SESSION CLOSE (operator opening a new session). State-of-the-whole below;
 git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+
+## ★★ SESSION-CLOSE STATE (READ FIRST, 2026-06-09) — branch `claude/optimistic-cerf-29fntq` @ `1bbd0a4`
+**Branch/merge:** ALL session work on `claude/optimistic-cerf-29fntq` (remote tip `1bbd0a4`, fully pushed,
+verified). **NOT merged to main. Production HEAD untouched = v26c `6cc73563`.** (Note: container restarted
+mid-session; local had sat stale at 6009f8f, fast-forwarded to 1bbd0a4 — nothing lost, all on remote.)
+
+**Session arc:** graph-1 brief (Task-1 moot, already composite) → vol-knob spec + Merton-σ→γ fold
+(MertonSigmaGamma, audited) → reconcile pass (manager-verified) → **playground build** `reference/
+temporal_curve_playground.html` (honest γ/δ/βh dials, fixed preview rays, clean open, teal/pink colors;
+NODE+tester verified; CANDIDATE, NOT HEAD) → deep **GH-vs-Balancer / curve-warp investigation**.
+
+**★ THE LIVE OPEN DECISION (operator-owned, awaiting explicit authorization):** operator wants the **v24/
+paper curve-warp implemented on the GH curve** ("change nothing else"). **VERIFIED CONCLUSION (canonical:
+`notes/CANONICAL_gh_vs_balancer.md`):** the faithful warp on GH = the existing point-slide (NO-OP, no
+visible reshape); the **visible reshape REQUIRES the value-law exponent to ride the weight (state-dependent
+γ via γ=w/(1−w))** — which RETIRES the locked fixed-value-law invariant that **accuracy gate G4 enforces**
+(so the file-safety hook BLOCKS any version that keeps G4). So "warp on GH ⟺ value-law stops being fixed"
+= a §4-locked-curve / §7-economic-object change. **I told the operator I'll implement it the instant they
+explicitly say "retire the fixed value-law, I want the warp knowing the exponent rides the weight."**
+That authorization had NOT been given when the session closed. If given next session: slave γ=w/(1−w) live,
+redraw on trades, adjust/retire G4 — on this branch, revertable. (Caveat: I measured γ=w/(1−w) gives an
+ANTI-trend vs Balancer's shape, so the reshape may not LOOK like v24.)
+
+**Canonical truths settled this session (`notes/CANONICAL_gh_vs_balancer.md`, manager+research-lead verified):**
+GH and Balancer are DISTINCT (x,y) families; warp does NOT auto-transfer; **v24 value-γ=½, GH value-γ>1 — no
+overlap** (γ=1 floor GH can't build). Three-exponent conflation was the root of months of circling: reserve-
+elasticity (Balancer −w/(1−w); GH non-constant≠−γ) vs value-law (−γ) vs slope-vs-value (**−1/γ**, NOT −(γ+1)).
+RETRACTED: "v24=γ=1" and "GH slippage=−(γ+1)" (both same error). The "CD/Balancer=δ→∞" claim REFINED (window-
+dependent CV(K), no curve identity). v24 knowledge files (γ=1/−(γ+1)) need operator-authorized correction.
+
+**Parked HEAD-promotion items (operator was driving toward HEAD v27 before the warp tangent):** (1) ANCHOR
+verdict — anchor=live (current, GH-honest) vs frozen-reference; (2) production default preset (rec γ=2/βh=0/
+δ=0.08, editable); then promote playground→`HEAD_temporal_mvp_v27.html`, legacy-folder v26c/v26d, update
+CLAUDE §8/run_all/lineage + re-pin gate, merge to main. All blocked on the warp decision (same curve).
+
+**TRUST/PROCESS LESSONS (operator asked "did you gaslight me" — own these):** I over-claimed repeatedly
+(σ-map γ(γ+1)=2r/σ² was Gaussian-slice-only; "GH completely different"; the display RESCALE was a curve
+distortion I added+disavowed; "rescale broke colors" mis-attributed; a βh-warp idea retracted; framed a
+refutation at the wrong target). **The operator's perception was right nearly every time; my confident
+framing was the thing that was wrong.** GOING FORWARD: state confidence levels explicitly; flag the GH-vs-
+Balancer gap plainly; NEVER touch display without flagging; weight the operator's eyes heavily; verify
+EVERYTHING (caught two research-lead errors this session by re-deriving). research-lead erred twice
+(−(γ+1); a slippage exponent) — independently re-check its numbers.
 
 ## ★ GOVERNANCE CHANGE (2026-06-09) — AUTONOMOUS PR MGMT + CONCURRENCY/MERGE POLICY (config-only, self-merged)
 - **A — PR management is now FULLY AUTONOMOUS (operator pre-authorized).** Manager opens/squash-merges/
