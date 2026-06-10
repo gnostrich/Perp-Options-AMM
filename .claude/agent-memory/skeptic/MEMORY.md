@@ -219,6 +219,30 @@ inventory, operator answered — remaining live tail = every curve note must dis
    both memories. RISK: don't archive a result the rebuild gate or the GHMaps↔frontier↔GHmeasure↔cgf
    discharge chain leans on.
 
+9. **2026-06-10 — DELEGATED pending decisions (operator entry 14, verbatim: "what are you doing ?
+   give these to the skeptic and let him take a call")** →
+   `notes/skeptic/VERDICT_DELEGATED_DECISIONS_2026-06-10.md`. Operator handed me the CALL (decide,
+   not flag) on the ASK-OPERATOR items I'd deferred in verdicts #7/#8. I DECIDED all four; manager
+   executes mechanics. **A1 (PH/Kähler/Courant framing cluster, my Bucket 2B): KEEP-as-motivation
+   IN PLACE, annotate INDEX `[motivation-layer]`, do NOT store** — paper is a standing motivation
+   ref so "is PH the motivation" is already answered; asymmetric cost (storing the paper's own
+   story = real loss; keeping = clutter an annotation cures). **A2 (aristotle_runs/ 2A superseded
+   twins): LEAVE IN PLACE, annotate INDEX/RESULTS only** — INDEX already cites the superseding
+   versions; a move buys only tidiness vs the UNIFY2/cgf/MERTON discharge-chain hazard; annotation
+   dominates. **B (3 HELD docs incl. 00_ORCHESTRATOR_START_HERE): KEEP IN PLACE, no ref edits** —
+   cited from the do-not-touch engine tree (INTEGRITY/SOURCE_OF_TRUTH route to it for THE
+   price-vs-slope gotcha); the offered move-+-update-non-engine-refs split = split-brain pointer
+   set; a relocation is an engine-tree/file-safety task, not a docs pass. **C (next curve work):
+   PROCEED NOW** (settlement locked Reading A, gate precondition met), dependency order #4 carry →
+   {#5 rebase, #9 funding, #11 dollar pipe parallel} → #16 warp-with-trades last; treat each as
+   "re-derive a LOCKED contract on new curve" (operator-tier on non-transfer). Traps front-loaded:
+   #4 dq/du≠1 Jacobian, #9 w=½-anchor ambiguity when w is a FIELD, #16 paper-Trade-Formula(scalar
+   w)→weight-FIELD-update map UNDEFINED (GH-SCORE↔(W)-WEIGHT bridge broken), β=1-not-β=0 check,
+   escalate-non-transfer-as-"locked-contract-does-not-transfer". **Net: 3 annotate-don't-move + 1
+   go.** Theme: the reversible-move latitude is real but in A1/A2/B the move's only benefit is
+   tidiness vs live-provenance risk — so I defaulted to annotate, not move, even when empowered to
+   move. Verbatim channel: entry 14 verified against history/operator/ (held, no FLAG-PROCESS).
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
