@@ -141,6 +141,13 @@ _Context: operator picks Option 2 (HOLD the build — no point without the trade
 
 ---
 
+## Entry 20 — 2026-06-10
+_Context: operator asks for a non-disruptive status update (no decision demanded), while the strong-form trades-warp derivation has just returned and the manager is verifying it. Transcribed verbatim (typo preserved)._
+
+> nondisruprive status update?
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 

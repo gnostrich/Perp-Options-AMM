@@ -1,5 +1,43 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, (W) BUILD SPEC speed-run (notes-only; NO submit/edit/git; theory-risk ACCEPTED)._
+_Last updated: 2026-06-10, STRONG-FORM TRADES-WARP derivation (notes-only; NO submit/edit/git; PRIORITY, build HELD)._
+
+### STRONG-FORM TRADES-WARP (#16, R-paper) — 2026-06-10 (operator PRIORITY; build HELD until landed; notes-only)
+Note: `notes/research/TRADE_WARP_strongform_2026-06-10.md`. Scripts `/tmp/warp{1..8}.py` (python float64).
+**DELIVERED: the strong-form trade→(W)-weight-field→reshaped-curve map is DEFINED (R-paper no longer
+open).** R-simple (BUILD_SPEC §1.2 adopted reading) was a MISCHARACTERISATION — even plain Balancer's
+*pricing* curve `x^w y^(1−w)=k` skews under a trade (w,k both move, verified v24); the genuinely fixed
+object is the **trajectory hyperbola `(x−α)(y−β)=αβ`**, the two tangent at the reserves point. The
+strong form lifts that picture to the field.
+**THE MAP [analytic, closed form]:** field center φ (φ=0 at deploy), `w(u;φ)=w_mid+(Δw/2)(u−φ)/√(τ²+(u−φ)²)`.
+Conserve `α=x·w(u;φ)`, `β=y·(1−w(u;φ))` (shifted-field local weight). Given cash leg dy:
+(1) y'=y+dy; (2) β-cons ⇒ **w*=1−β/y'** (new local weight); (3) α-cons ⇒ **x'=α/w*** (dx forced,
+Balancer-identical); (4) reshape ⇒ **φ' = ln(y'/x') − z**, z=t·τ/√(1−t²), t=(w*−w_mid)/(Δw/2) — UNIQUE
+iff w*∈(w_−,w_+). Reserves faithful, curve skews, τ untouched. **Step-4 ≡ paper's slope-goal-seek**
+(independent root-find matches closed form 8e-16).
+**CONSISTENCY [numeric/analytic, all PASS]:** trajectory=(x−α)(y−β)=αβ to 1e-15 (reserves ride the
+SAME hyperbola as Balancer; φ slaved to position); tangency = algebraic identity (pricing slope ≡
+trajectory slope, 0.0); round-trip 1.8e-15; path-independent 0.0 (⇒ α,β genuine flow invariants);
+marginal price monotone in dy; τ static (never written, γ_+ pre=post); wings frozen (w(±∞;φ)
+shift-invariant); τ→∞ recovers Balancer dx to 1e-13.
+**THE ONE OBSTRUCTION [precise, NOT fatal]:** w*=1−β/y' must stay in (w_−,w_+); outside ⇒ no finite φ
+(curve can't skew past frozen wings). Bounds single-trade cash: y'∈(β/(1−w_−), β/(1−w_+)). Natural
+size cap from frozen wings — unblock by wider Δw (calibration), order-splitting (engine trades
+incrementally), or saturate-at-wing clamp. Operator/calibration-tier guard.
+**DISCARDED VARIANT = GH line v25_gh→v26c (current HEAD). WHY warp failed:** GH puts the kernel in the
+latent SCORE ⇒ NO scalar weight handle for a trade to move. GH `tradeUpdate` (HEAD line 1720) reads
+(x,y) off FIXED tail/CDF tables keyed on static (ghAh,ghBh,ghDelta,ghMu) and returns {...s,x,y} —
+shape NEVER written (point on fixed field). Balancer's warp handle is `w=α/x` (paper: "w is what the
+pool's pricing actually moves"); GH has no `w=α/x` analogue to slave. (W) avoids this BY
+CONSTRUCTION: φ is the weight-field d.o.f. that IS slaved to the reserves point — kernel-in-WEIGHT.
+**needs-Aristotle (flagged, NOT pinned this pass):** (1) (α,β)-first-integral lemma + reserves-projection
+=(x−α)(y−β)=αβ (short, algebraic, Mathlib-tractable, no special fns); (2) trades commute with
+carry-shift rebase on (W) (numeric+Lean, load-bearing for frame well-definedness, OPEN). **Flags to
+operator:** R-paper now defined (replace BUILD_SPEC §1.2 R-simple); frozen-wing trade-size cap;
+φ=0/anchor-under-moved-φ interaction with funding (operator-tier); Reading A/B untouched. Nothing
+submitted/verified. Skeptic pass + manager re-derive precede build resume.
+
+---
+_Earlier: 2026-06-10, (W) BUILD SPEC speed-run (notes-only; NO submit/edit/git; theory-risk ACCEPTED)._
 
 ### (W) BUILD SPEC — 2026-06-10 (operator SPEED RUN, autonomy granted, theory-risk accepted; notes-only)
 Doc: `notes/research/BUILD_SPEC_wcurve_2026-06-10.md`. The intern's implementation contract for the (W)

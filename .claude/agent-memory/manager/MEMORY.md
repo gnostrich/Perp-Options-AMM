@@ -216,6 +216,22 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   Tester browser pass DEFERRED until pre-ship (build will change when warp lands). Intern theory-risk
   flags: funding uses live-reserves γ_loc not strike-registered carry (T4/T5); rebase covariance lemma
   PROPOSED-only; τ label direction (small τ = fatter) = operator's final call.
+- **★★ STRONG-FORM TRADES-WARP SOLVED + MANAGER-VERIFIED (agent a659a677, 2026-06-10) — the open #16
+  half is cracked.** `notes/research/TRADE_WARP_strongform_2026-06-10.md`; my audit
+  `evidence/manager_audit_TRADE_WARP_2026-06-10.md` (`/tmp/verify_warp.py`). **The map:** field
+  `w(u;φ)=w_mid+(Δw/2)(u−φ)/√(τ²+(u−φ)²)`; trade conserves `α=x·w`,`β=y·(1−w)` ⇒ `w*=1−β/y'`,
+  `x'=α/w*`, `φ'=ln(y'/x')−z`, `z=t·τ/√(1−t²)`, `t=(w*−w_mid)/(Δw/2)` (= paper slope-goal-seek,
+  field-lifted). **I re-derived ALL:** field consistency |d|=0, SAME trajectory hyperbola conserved
+  2.8e-17 (hand-proof too), **pricing curve REshapes (φ moves) = a warp NOT a point-slide**,
+  path-indep 0.0, τ→∞→Balancer, wing-range cap correctly rejects over-size trades. **CORRECTS the
+  BUILD_SPEC's R-simple "fixed field" framing** (even plain Balancer's pricing curve skews; the
+  conserved object is the trajectory hyperbola). **Meets the operator's "warp not a dot sliding"
+  acceptance clause** (pending skeptic). **Discarded variant = GH line v25→v26c** — HEAD tradeUpdate
+  (~1720) reads fixed GH tables, never writes the shape (kernel-in-SCORE ⇒ no w to move); CONFIRMED
+  in code. Caveats: frozen-wing trade-size cap (calibration); 2 open lemmas (warp∘rebase commute;
+  φ-anchor/funding) [needs-Aristotle], not blockers. **SKEPTIC mandatory pass DISPATCHED; on PASS the
+  build RESUMES** — intern drops the strong-form warp into the v27 scaffold (replacing R-simple) +
+  wing-range guard, then tester + my re-verify before any HEAD promotion. HEAD still v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
