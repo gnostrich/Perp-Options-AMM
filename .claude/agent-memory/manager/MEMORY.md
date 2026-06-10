@@ -51,6 +51,16 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
   true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
   env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **★ TRANSCRIPTION POLICY (operator-directed 2026-06-10): "make a transcription policy so the
+  skeptic and tester can see my messages."** NEW standing manager duty (CLAUDE.md §2.2 + full text
+  `docs/transcription_policy.md`): every operator message VERBATIM (case/typos/ellipses, no
+  cleanup) → `history/operator/<date>_<session-slug>.md`, append-only, one file/session, appended
+  in the turn acted on + committed with that turn's work; replies NOT transcribed; corrections =
+  dated corrigenda. tester cites as [verbatim-transcript]; skeptic audits + can demand the live
+  session file — gap/paraphrase-as-quote = FLAG-PROCESS against me. THIS session backfilled
+  verbatim from live context (7 entries: `history/operator/2026-06-10_project-status-review.md`).
+  2026-06-08/09 sessions remain reconstruction — STANDING ASK: operator exports those transcripts
+  into history/. **From now on: transcribe every operator message every turn, no exceptions.**
 - **★ GOVERNANCE (operator-directed 2026-06-10, after the inaugural verdict): SKEPTIC > MANAGER
   on claims.** CLAUDE.md NEW §2.1: operator > skeptic > manager > others on truth claims/labels/
   completeness. A standing skeptic FLAG = HALT condition on me (no merge / HEAD promotion /

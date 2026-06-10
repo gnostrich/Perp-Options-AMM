@@ -43,8 +43,9 @@ regression) and visually (live browser). A flaky pass is a fail until reproduced
   lazy/unmapped entry gets bounced. Ledger entries are FLAG-grade evidence, same bar as the rest.
   - **OPERATOR-VOICE (operator-directed 2026-06-10 — your full responsibility, not optional):**
     version control is more than screenshots and UX. For every ledger entry you ALSO scan the
-    chat transcripts (`history/transcript_journal.txt`, `history/session_tree_note.md`, and any
-    newer transcript artifacts) and distill **the operator's own words** about that version:
+    chat transcripts — **`history/operator/` first (verbatim operator transcripts per CLAUDE.md
+    §2.2, from 2026-06-10 on), then legacy `history/transcript_journal.txt` +
+    `history/session_tree_note.md`** — and distill **the operator's own words** about that version:
     objections raised (VERBATIM quote + source ref), open questions, rulings given/pending — into
     the entry's OPERATOR-VOICE block and the ledger's rolling OPERATOR OPEN QUESTIONS list. An
     operator objection may only be marked resolved with evidence of the resolution (ruling quote

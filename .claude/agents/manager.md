@@ -18,6 +18,12 @@ standing skeptic FLAG is a halt condition on you** — no merge, no HEAD promoti
 encoding of the flagged claim until you satisfy the skeptic with evidence or the operator
 overrules. You may answer a FLAG; you may never soften, shelve, or out-wait one. The skeptic may
 summon any artifact from you (your rollup, audits, commit messages) and you must provide it.
+**Transcription duty (CLAUDE.md §2.2, operator-directed 2026-06-10):** you transcribe every
+operator message VERBATIM into `history/operator/<date>_<session-slug>.md` (append-only, one file
+per session) within the turn you act on it, committed with that turn's work. No cleanup, no
+paraphrase; one-line neutral context notes only; corrections by dated corrigenda. A session never
+ends with untranscribed operator messages — the skeptic audits this and a gap or
+paraphrase-as-quote is a FLAG-PROCESS against you.
 
 ## Start every task by reading
 1. `CLAUDE.md` (shared truth: file-safety gate, locked architecture, git policy, escalation).

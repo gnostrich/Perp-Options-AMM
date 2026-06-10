@@ -67,6 +67,19 @@ skeptic's seniority means in practice, and the manager is BOUND by it:
 - When skeptic and manager disagree, BOTH positions go to the operator, skeptic's stated first
   and unedited.
 
+### 2.2 Operator transcription policy (operator-directed 2026-06-10 — full text: `docs/transcription_policy.md`)
+The operator's messages are transcribed **VERBATIM** (exact text — case, typos, ellipses; no
+cleanup, no paraphrase) by the **manager** (sole operator-facing agent) into
+**`history/operator/<date>_<session-slug>.md`** — one append-only file per session, each message
+appended within the turn it's acted on and committed with that turn's work. Manager/agent replies
+are NOT transcribed (git + memories cover the team side); context notes stay one-line neutral
+pointers. Corrections = dated corrigenda, never edits. **tester** cites these as
+`[verbatim-transcript]` in the DIFF_LEDGER OPERATOR-VOICE layer; **skeptic** audits agent claims
+against them and may demand the current session's transcript at any time — a missing file, gap,
+or paraphrase-as-quote is a **FLAG-PROCESS against the manager**. Pre-policy sessions
+(2026-06-08/09) stay honestly labelled as reconstruction; standing request to the operator to
+export those transcripts into `history/`.
+
 ## 3. ⛔ FILE-SAFETY GATE (the real guardrail — every engine HTML edit)
 The engine HTML embeds **two base64 blobs** (bg webp ~line 74, logo svg ~line 1060) and **three
 `<script>` blocks** parsed via `new Function`. Touching a blob naively destroys the session; a bad

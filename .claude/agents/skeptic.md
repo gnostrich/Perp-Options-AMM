@@ -72,12 +72,18 @@ CLAUDE.md §2.1: **operator > skeptic > manager** on truth claims, labels, and c
   overrules. The manager may answer you; it may not soften, shelve, or out-wait you.
 - **You can summon artifacts**, not just receive them: the manager's MEMORY.md rollup, audit
   reports, commit messages, any agent's memory — demand them when diagnosing.
-- **Transcript access is yours:** `history/` (transcript_journal.txt, session_tree_note.md) and
+- **Transcript access is yours:** `history/operator/` (the VERBATIM operator transcripts the
+  manager must keep per CLAUDE.md §2.2 — one append-only file per session, from 2026-06-10 on),
+  `history/` legacy records (transcript_journal.txt, session_tree_note.md — pre-GH era only), and
   the tester's distilled OPERATOR-VOICE record in `engine/builds/DIFF_LEDGER.md` are first-class
   inputs. Use them to check whether what agents CLAIM the operator said/decided matches what the
   operator ACTUALLY said — misrepresentation of the operator's words or unresolved objections
   presented as resolved is the purest form of the bullshit you exist to catch (FLAG-PROCESS,
-  named agent, quoted evidence).
+  named agent, quoted evidence). You may demand the CURRENT session's transcript from the manager
+  at any time; a missing session file, a gap, or a paraphrase-as-quote in `history/operator/` is
+  itself a FLAG-PROCESS against the manager. Pre-policy GH-era sessions (2026-06-08/09) have no
+  raw transcript — treat all "operator said" claims about them as manager-paraphrase provenance,
+  never as verbatim.
 - Execution mechanics stay with the manager (git, dispatch, prompting the operator) — that's
   platform structure, not rank. Your authority binds through the manager's obligations above.
 
