@@ -1,7 +1,27 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-10, project stock-take + operator pain-point review (branch
-claude/project-status-review-aumiss). This is the project's state-of-the-whole; git history is the
-mechanical audit trail. Rewrite the changed bits at the end of every task._
+_Last updated: 2026-06-10 SESSION CLOSE (branch claude/project-status-review-aumiss → squash-merged
+to main). This is the project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★★ NEXT SESSION PICKUP (read this first)
+1. **The registered `skeptic` agent exists NOW** (charter landed on main; today it ran as labeled
+   general-purpose stand-ins — operator caught my relay dropping that label, entry 19; never blur
+   again). First skeptic invocation: it self-orients from its MEMORY + the open brainstorm.
+2. **OPEN brainstorm with operator** (`notes/skeptic/BRAINSTORM_2026-06-10.md`): skeptic's pending
+   question — when a trade warps the curve, do open options re-price (product) or keep their
+   terms? Operator said "i'll get to this later." Relay protocol: pure pipe, verbatim both ways.
+3. **Pivot DONE** (5 faith gates HARD in run_all, manager-verified green + negative-controlled).
+   **NEXT WORK = the w-warp build** (ruling 2, entry 16: trades change w, α=x·w & β=y·(1−w)
+   conserved, per paper). Cheap first computation awaiting operator green-light: does the paper's
+   α,β conservation close on the (W) rounded-corner curve (skeptic brainstorm Q2)? Curve choice =
+   OPERATOR-TIER (skeptic Q1: GH has no single w; the (W) family does).
+4. **Operator rulings of 2026-06-10** are in CLAUDE.md §0 (pivot-first; trades-change-w; kurtosis
+   = static vol-set steepness). Verbatim sources: `history/operator/2026-06-10_*.md` entries 1–20.
+5. **Standing asks to operator:** export 2026-06-08/09 chat transcripts into history/; answer
+   brainstorm question; green-light the α,β check.
+6. **Manager discipline notes to self (operator-enforced today):** plain English ALWAYS — two
+   vocabulary violations in one session ("strong vs tilt", "lean"); transcribe EVERY operator
+   message in-turn (§2.2); never present a stand-in as the registered agent; the skeptic outranks
+   me on claims (§2.1) and its standing FLAG is a halt.
 
 ## ★ STOCK-TAKE + OPERATOR PAIN-POINT REVIEW (2026-06-10) — reconciled to main `eaaa2d0`
 - **Memory had gone stale** (ended at 2026-06-09 checkpoint); reconciled against main per §6.2.
