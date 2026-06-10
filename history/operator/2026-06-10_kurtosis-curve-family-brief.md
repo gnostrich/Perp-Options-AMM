@@ -33,3 +33,10 @@ _Context: operator answers the manager's relay of the skeptic's three FLAGs — 
 _Context: operator answers the plain-language flags 1 and 3. Flag 1 → "1a" (the curve's look / geometry, not a 4th-moment statistic). Flag 3 → skew is trading-determined (x, y, w); steepness and kurtosis are one and the same knob from the operator's perspective; points to the polar-lens analogy (this transcript's source file `2026-06-10_project-status-review.md` entries 8/9/18: Balancer viewed 90°→180° as a distribution, kurtosis changed via hyperbolic angle; skew = angle shift φ, scale/kurtosis = amplitude). Transcribed verbatim._
 
 > 1a; 3 skew determined by x y w (trading), steepness and kurtosis are interchangerable words from my perspective, refer to my polar lens analogy for clarification
+
+---
+
+## Entry 4 — 2026-06-10
+_Context: operator confirms the manager's plain-English read-back of the polar-lens vision (one static shape knob = steepness = kurtosis = amplitude, set once for vol; skew dynamic, produced by trading via the w-warp; hyperbolic-angle lens with frozen power-law wings; exact closed form left open to earn its place). Manager to feed this framing into the research scaffold as the locked target. Transcribed verbatim._
+
+> yes

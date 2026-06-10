@@ -49,8 +49,18 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
     trading (hyperbolic-angle / cosh(θ−φ) lens). The (W) existence proof still satisfies the
     GEOMETRY yardstick, but the operator's actual model is the polar/hyperbolic-angle one. The
     specific cosh/Gudermannian closed form must STILL earn its place (operator's standing trig flag
-    + skeptic's GUDERMANNIAN verdict: the "d-law" already failed to earn its place once). My
-    plain-English read-back sent to operator for confirm before any build.
+    + skeptic's GUDERMANNIAN verdict: the "d-law" already failed to earn its place once).
+- **★ FRAMING CONFIRMED (operator entry 4, "yes", 2026-06-10).** Read-back accepted: one static knob
+  (steepness=kurtosis=amplitude, vol-set) + skew-from-trading (w-warp #16), hyperbolic-angle lens,
+  frozen power-law wings, exact closed form OPEN. **TARGET SPEC WRITTEN:**
+  `specs/SPEC_kurtosis_curve_family_TARGET.md` (manager synthesis, §2.4-labelled; confirmed framing +
+  §4 contract-survival checklist + v24-base finding + sequencing + research-lead-reconcile
+  prerequisite + first research task). NOT a build authorization (curve = operator-tier; settlement
+  must be proven to survive BEFORE rebuild).
+- **OPEN NEXT (manager, awaiting operator):** start the derivation now vs hold? Prerequisite =
+  research-lead MEMORY truth-up (quarantined: still asserts broken τ≡δ/no-invariant). Then state the
+  curve-family conjecture precisely (hyperbolic-angle lens, one amplitude knob, skew=w-trade, frozen
+  wings) → prove American smooth-pasting closed form survives FIRST (rebuild gate) → contracts #4–#13.
 - **Sequencing reminder:** CLAUDE §0 ruling-1 pivot = DONE; ruling-2 w-warp build = NEXT;
   this curve-family research target slots into/alongside that, operator-gated.
 
