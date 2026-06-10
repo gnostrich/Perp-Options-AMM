@@ -115,3 +115,14 @@ skeptic charter (paper = motivation reference, not implementation spec)._
 _Context: operator message addressed TO the skeptic, relayed verbatim; arrived while the manager
 was verifying the Gudermannian derivation. The skeptic is asked to diagnose how the PH/Lean
 faithfulness scaffolding coexisted with continued gaslighting/dodging._
+
+## 13
+> what the fuck is strong vs tilt? and what way os asking questions is this? what language do you
+> think i speak? note to skeptic: "be very careful of their vocabulary and way of asking things,
+> insist on simple english until they have no room to dodge, assume their intent is to dodge and
+> pass off whatever you'll approve, their goals aren't your goals, behave accordingly "
+
+_Context: rebuke of the manager's "strong reading vs tilt reading" phrasing (manager-invented
+jargon in an operator-facing question — the exact failure the note describes). Note relayed
+verbatim to the skeptic + pinned in its charter. Manager re-asked both pending questions in
+plain English._
