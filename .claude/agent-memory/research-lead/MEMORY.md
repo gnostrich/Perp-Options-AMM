@@ -1,5 +1,40 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, CURVE-FAMILY derivation pass (notes-only; NO submit/edit/git) + memory DEQUARANTINE truth-up._
+_Last updated: 2026-06-10, CURVE-FAMILY settlement PASS 2 (notes-only; NO submit/edit/git)._
+
+### CURVE-FAMILY SETTLEMENT — PASS 2, 2026-06-10 (notes-only; NO submit/edit/git; skeptic-gated)
+Note: `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md`. Settles the ONE narrow question the
+skeptic isolated (pass-1 "+16% blow-up" was a RETRACTED artifact — do NOT re-derive it). Scripts
+`/tmp/elbow_riccati.py`, `/tmp/elbow_consequence.py`, `/tmp/elbow_wkb.py` (numpy/scipy float64, Riccati).
+**THE QUESTION:** is the perpetual-American continuation value locally a single power `a·S^(−γ_loc)`
+THROUGH the elbow, or a genuine blend (slope ≠ curve's w/(1−w))?
+**SETUP:** value = eigenfunction of the curve-induced perpetual generator (the locked MERTON_tie/
+AIRTIGHT frame). Constant-coeff wing ⇒ exact single power [analytic]; variable-coeff elbow ⇒ no
+single-power solution [analytic]. Computed via Riccati for the slope p=d lnV/dx (`p′=2r/σ²+p−p²`,
+backward from right wing, decaying branch) on a Gaussian-SLICE generator with local-exponent
+calibration σ²(x)=2r/(γ_loc(γ_loc+1)). ⚠ Gaussian slice, NOT full GH ψ — qualitative verdict
+generator-independent; elbow MAGNITUDES are model-dependent [numeric].
+**VERDICT — single-power-through-elbow: NO (under the dynamic/optimal-stopping reading = team's locked
+frame).** Dynamic slope −p MATCHES γ_loc to ~1e-4..1e-6 on wings, DIVERGES by O(1) in elbow (peak
++0.50 at τ=0.3; +1.41 at τ=0.05). Blend scales 1/τ (sharper elbow=bigger blend). Genuine blend
+correction `−p ≈ γ_loc + γ_loc′/(2γ_loc+1)` [analytic, 1st-order] — THE consistent home of the term
+pass-1 fumbled (lnS-free, lives in the value's Riccati, real). Matches solved Riccati to ~1e-2 in
+smooth elbows.
+**THE FORK (operator-tier, settlement-semantics):** Reading A (curve-intrinsic value law: slope:=−γ_loc
+by definition) ⇒ S*=K·γ_loc/(γ_loc+1) EXACT everywhere, gate PASSES. Reading B (dynamic eigenfunction,
+= MERTON_tie/AIRTIGHT locked frame) ⇒ value is a blend, inherited fixed point is a FEW-PERCENT
+APPROX in elbow, not exact. Which reading = venue settlement definition = operator's call.
+**CONSEQUENCE (lands AGAINST rebuild-blocking momentum):** S* shift dynamic-vs-localFP only ~3–6%,
+S* bounded ~60–68, NO blow-up. Pass-1 catastrophe stays RETRACTED. Gate EXACT on wings; few-%
+approx in elbow under Reading B. Clean recovery = wing-registered strikes (|u_K|≫τ) = product/
+calibration call. **needs-Aristotle (only if Reading B + exact-in-elbow wanted):** NOT the inherited
+Sstar_forced (assumes constant-exp single power) — either (a) a smooth-pasting STABILITY error-bound
+lemma |S*_dyn−K γ_loc/(γ_loc+1)|≤C·γ_loc′/(2γ_loc+1) (a BUILD; Mathlib lacks free-boundary stability)
+or (b) Reading A: Sstar_forced restated with γ:=γ_loc(S*) fixed point (immediate from T1a). NO submit
+this pass — statement PROPOSED not assumed; pin only after operator picks reading. Nothing
+trusted-from-prover/verified. Skeptic pass pending before merge.
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY derivation pass 1 (notes-only) + memory DEQUARANTINE truth-up._
 
 ### CURVE-FAMILY DERIVATION — 2026-06-10 (operator greenlit "start"; manager-relayed; notes-only, NO submit/edit/git)
 Note: `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`. Target spec

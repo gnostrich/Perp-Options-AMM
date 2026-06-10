@@ -91,7 +91,25 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   specifics, superseded brainstorm forks) — operator is the authority on what they're "not aligned
   with". Plan: put the proposal to the skeptic the moment it's free (do NOT run two skeptic sessions
   on one branch — memory write-collision), then execute on its OK (surface the list to operator if
-  ambiguous). AWAITING skeptic availability.
+  ambiguous).
+  **★ SKEPTIC RULED + PARTIAL EXECUTION DONE (2026-06-10, `notes/skeptic/VERDICT_COLDSTORAGE_2026-06-10.md`):**
+  ruling = OK-WITH-CONDITIONS (move-not-delete; no in-file stripping of correction headers — they're
+  the audit evidence; hard DO-NOT-TOUCH = history/, engine/, CLAUDE.md+memories, live contracts
+  feature_inventory/policies/DIFF_LEDGER/formal-INDEX/MANAGER_VERIFICATION, notes/skeptic/* + curve
+  note, paper/). **EXECUTED the reference-safe archive-whole subset** → `archive/cold_storage_2026-06-10/`
+  (16 files; MANIFEST there; fully reversible git mv; engine untouched; no live file edited except
+  this memory). **PROVENANCE FLAG-PROCESS resolved:** the untracked VERDICT_COLDSTORAGE I committed
+  IS the a93364f9 skeptic run's own working-tree write (content matches its returned ruling) —
+  genuinely skeptic-authored, no impersonation; confirmed, not overwritten.
+  **HELD (live refs — my verification caught what the skeptic's "self-contained" understated):**
+  `docs/00_ORCHESTRATOR_START_HERE.md` (cited by engine/INTEGRITY + engine/knowledge — engine tree
+  can't be edited in a docs pass), `docs/context/chats/og-*.md`+`orchestrator.md` (cited by DIFF_LEDGER
+  live + tester MEMORY + bootstrap-roles command), `docs/context/02_RESUME_STATE.md` (bootstrap-roles
+  command). **ESCALATED to operator** (await): keep-vs-move the 3 held; section-C ask-operator items
+  (REPARAM/HETEROGENEOUS B-MINIMAL-vs-FULL forks = operator product call, skeptic won't archive;
+  evidence PNGs v26a/b; formal/aristotle_runs pruning). NOTE: my memory's deep historical sections
+  (~lines 700+) still name some now-archived docs (STATE_snapshot_v26a, specs/historical/*,
+  INTERN_SPLICE_NOTE) — those now resolve under `archive/cold_storage_2026-06-10/`.
 - **★ DERIVATION DISPATCHED (operator entry 5 = "start", 2026-06-10).** research-lead launched in
   background (agent `a65816fc`) with a 3-part brief: (0) MANDATORY memory truth-up (lifts the
   quarantine — drop broken τ≡δ/no-invariant/all-κ-invariant; encode skeptic's manager-verified
