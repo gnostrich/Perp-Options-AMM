@@ -74,10 +74,17 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   derived-NOT-engine-verified (no δ≠0.08 engine ever built). Skeptic verified the verbatim channel
   against history/operator/ — held, no FLAG-PROCESS.
 - **★ OPERATOR RULINGS (2026-06-10, transcript entry 14 — VERBATIM SOURCE, encoded CLAUDE.md §0):**
-  (1) **PIVOT UN-HELD + FIRST:** engine-faithfulness gates built+gated BEFORE any new theory work
-  (skeptic's recommended action, operator: "1 yes"). INTERN DISPATCHED (bg) — faith gates under
-  engine/verify/ (Esscher/trade-translation, rebase-sNorm invariance, C3 mark-reflection, Merton
-  γ-σ tie, Fisher where engine-checkable), negative-controlled, wired into run_all; HTML untouched.
+  (1) **PIVOT UN-HELD + FIRST → DELIVERED + MANAGER-VERIFIED same session (commit 29c25ef):**
+  5 faith gates live as HARD gates in run_all (esscher trade=tilt-translation 1.1e-3; rebase
+  sNorm-invariance 5.6e-16; reflection markPut==markCall(θ²/s) 6.2e-16 — **C3 spec↔engine residual
+  numerically CLOSED on the live engine**; merton (γ,σ_eff) pins + ghM==GH-integral 5.2e-10 +
+  strip asymmetry; fisher nearest-engine-computable identities ≤1.3e-5, no-faked-green where
+  direct κ'' doesn't exist). I ran run_all myself EXIT=0 + hand-checked negative controls
+  (--mutate exit 1). Zero tolerance-tuning, zero STOP findings. HTML untouched (6cc73563).
+  Tester independent re-run = welcome, not blocking (harness-only). NEXT after this: the w-warp
+  build (ruling 2 spec) — design question (w-warp × kurtosis-knob geometry) is OPERATOR-TIER;
+  skeptic brainstorm Q1/Q2 are the entry points; the α,β-conservation-on-(W)-curve check is the
+  cheap first computation when operator green-lights.
   (2) **TRADES BEND THE CURVE: YES** (inventory 16 RULED; OPEN-UNIMPLEMENTED — all current/proposed
   designs are fixed-curve). (3) **KURTOSIS = curve steepness/flatness, vol-calibrated at setup,
   static under trades** (operator's exact words in CLAUDE §0) ⇒ knob = geometry, NOT trader-moment;
