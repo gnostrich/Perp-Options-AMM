@@ -51,6 +51,17 @@ git history is the mechanical audit trail. Rewrite the changed bits at the end o
   2sinh/bundling port VERBATIM. Care-point: getSNorm must keep sNorm=spot moneyness. Flags: vertical-spread
   ≠ collar/band (the band's 2 sequential tradeUpdates are intentional PRICING path-dependence, also τ-safe);
   ITM legs settle-to-cash (curve-free); actual engine swap = future file-safety-gated pass (NOT done).
+- **CONSOLIDATED BUILD NOTE (2026-06-10, commit dcc11eb):** `notes/V24_TAU_MIGRATION_buildnote_2026-06-10.md`
+  = the single actionable migration note (readiness, curve, 4-fn verbatim-vs-τ table, spread shortcut,
+  safety net + test plan, operator forks). **getSNorm CORRECTION:** `getSNorm=(x−α)/α` is curve-INDEPENDENT
+  (ports verbatim — verified 40 dps: reduces to v24 `√(β/(αo))`, stays monotone via the τ-arb); earlier
+  "re-derive getSNorm" was overcautious — the real care-point is strike registration through the τ-arb
+  (`θ=getSNorm(arbitrageToOracle(K))`, crossover at K). **READINESS: curve mechanics + spread shortcut
+  COMPLETE+verified.** Remaining: (1) calibration map (template=HEAD ghCalibrate, not derived); (2) actual
+  engine edit (file-safety-gated, not done). **STRATEGIC FORK surfaced to operator (not decided): an ACTIVE
+  τ requires finite GH wings (Δw≠0) = essentially the HEAD v26c GH curve (already exists, proven, δ=0.08) —
+  so build path = PORT HEAD's GH curve fns into v24 + expose δ→τ (reuse) vs REIMPLEMENT the weight-profile
+  form. Same curve either way. Plus wing/settlement-fork + ship + label = operator-owned.**
 - **STATE:** branch `claude/v24-kurtosis-migration` has v24 staged (ba00ef6) + τ note (6876cd9), pushed.
   **NOT merged to main** — this is brainstorm/derivation territory, curve/economic-object choice is
   operator-owned; offer merge, don't auto-merge a strategic curve decision. v24 ref build md5 6f606f52.
