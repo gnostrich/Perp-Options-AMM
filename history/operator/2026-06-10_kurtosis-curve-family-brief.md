@@ -233,6 +233,13 @@ _Context: operator responds to the Check-1 finding (engine warp = f(premium), st
 
 ---
 
+## Entry 32 — 2026-06-10
+_Context: operator adds two hypotheses to the in-flight read-only investigation — (1) the fix (engine → paper's continuous strike-dependent warp) is probably NOT monumental from here; (2) v24 is likely "also cheating" (also doesn't faithfully implement the paper's continuous warp). Both consistent with existing evidence (tester saw v24's tradeUpdate keeps α,β invariant = strike-independent dot-slide). Manager folding into the running research-lead investigation + a fix-scope estimate. Transcribed verbatim._
+
+> i suspect that it isn't a monumental fix from here but yeah its likely that v24 is also cheating on this one
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
