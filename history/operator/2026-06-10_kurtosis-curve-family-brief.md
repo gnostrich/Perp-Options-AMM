@@ -117,3 +117,10 @@ _Context: operator redirects — rather than the manager funneling the pending d
 _Context: while the manager reports the carry (#4) finding (carry contract does not transfer cleanly to the (W) curve), operator asks what "carry" means. Terminology/comprehension question. Transcribed verbatim._
 
 > wdym by 'carry'?
+
+---
+
+## Entry 16 — 2026-06-10
+_Context: operator pushes back on the manager's "a step in reserves can be ~2–7× a step in price" framing — reads it as just the curve's curvature (how fast price changes as the strike ray moves in angle) and doesn't see a discrepancy of that magnitude. (Operator's intuition aligns with the skeptic's FLAG-OVERSELL on the note's reasoning; manager over-dramatized "drift apart".) Transcribed verbatim._
+
+> explain: a step in reserves can be ~2–7× a step in price --- i just see that there is curvature, and curvature determines how quickly price changes as the strike ray moves around in angle .... and i don't intuitively see any discrepancy of this magnitude

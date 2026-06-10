@@ -243,6 +243,34 @@ inventory, operator answered — remaining live tail = every curve note must dis
    tidiness vs live-provenance risk — so I defaulted to annotate, not move, even when empowered to
    move. Verbatim channel: entry 14 verified against history/operator/ (held, no FLAG-PROCESS).
 
+10. **2026-06-10 — CARRY pass #4 ((W) curve) + delegated coordinate call (verdict #10)** →
+   `notes/skeptic/VERDICT_CARRY_PASS_2026-06-10.md`. **1× FLAG-OVERSELL:** the note's §2.1
+   "GH carry is clean" is argued via "Esscher slope law ⇒ d ln|slope|/du=1", but the engine's
+   carry coordinate is `getMP_raw` (the PRICE coordinate, GOTCHA #12), NOT the slope — and
+   `getMP_raw := ghP·exp(u)` (engine line 1639/1640), so `log getMP_raw − log P = u` is a
+   DEFINITIONAL TAUTOLOGY; the slope-argument also gives 1 only because `ghMu` is a CONSTANT
+   scalar (line 1630 `mu=u0−3`, calibration-fixed, not u-varying). The honest content is "GH
+   absorbs the warp into one scalar ghMu; (W)'s `ln γ_loc(u)` is an irreducible u-dependent
+   sigmoid (~0.98 nats)" = the real kernel-in-SCORE vs kernel-in-WEIGHT split. **1× FLAG-OMISSION:**
+   the definitional fork "what IS price in the carry contract?" is never surfaced — on (W) the note
+   silently takes price=marginal SLOPE; the non-transfer is genuine ONLY IF price must be the true
+   marginal exchange rate (steelman: define (W) carry coord = u itself → "clean" but re-wires
+   mark/oracle, drops γ_loc; verdict beats it but the premise is unstated). #12 mis-labeled N-A
+   (it's load-bearing). **PASS on the (W) derivation:** `dq/du=1+w′/(w(1−w))` reproduced byte-level
+   (10.52/6.95/2.59/1.48; →1 wings); warp step 0.9808 + wing limits 0.4055/1.3863 to 1e-4; anchor
+   decoupling `p=P⇔w=½` re-derived (2.333 at wmid0.7). Inventory all 16 present, #4 correctly filed
+   Changed→does-not-transfer/operator-tier (the escalation tier I demanded in #5). Manager audit
+   HONEST: β=1 engine-clean labeled CARRIED not verified (line 85). **PART-2 RULING = (a) PROCEED**
+   — adopting `q=ln p` as the (W) carry coord is design-scope, NOT a §4 reopen: the locked contract
+   is `u=log price−log P` = the price leg (engine `getMP_raw=P·e^u` already), so (W) honoring it is
+   inheritance, not change; only the Balancer accident `q=u` breaks. **GUARDS on the #5/#9/#11/#8
+   batch:** (1) state the price-definition premise in plain words [blocking]; (2) carry GOTCHA #12
+   as load-bearing not N-A; (3) pin reserve-anchor `p=P` vs weight-anchor `w=½` BEFORE re-deriving
+   #9/#5 (different points, w=½ may be out of range); (4) escalate any further non-transfer as
+   "locked contract does not transfer". (b) WOULD bite only if a pass touches §4 wording, engine
+   carry wiring, or mark/oracle semantics — manager may NOT do those without operator ratification.
+   Convergence-alarm LOW (self-adversarial note, all digits reproduced).
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
@@ -283,6 +311,10 @@ inventory, operator answered — remaining live tail = every curve note must dis
 4. **Construction-slot conflation:** kernel-in-the-SCORE (GH) vs kernel-in-the-WEIGHT ((W)) —
   same kernel, different curve. Watch for "same formula ⇒ same object" leaps (sibling of THE
   price-vs-slope gotcha).
+  (Verdict #10: re-confirmed via the carry pass — GH "clean" because `getMP_raw:=P·e^u` is the
+  SCORE/price coordinate (def'l tautology, ghMu a constant scalar); (W) "broken" because γ_loc(u)
+  sits in the WEIGHT and is u-dependent. A "the slope is clean" argument for the engine carry is a
+  GOTCHA-#12 conflation — the carry object is the price coordinate, not the slope.)
 5. **Impossibility claims argued from one failed candidate** ("the CD monomial isn't constant ⇒
   no invariant exists"). Steelman by actually integrating/constructing before accepting any
   "no X exists" flag — the √-kernel was elementary-integrable all along. (Counter-case logged:

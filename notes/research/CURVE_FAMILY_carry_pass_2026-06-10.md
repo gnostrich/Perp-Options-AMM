@@ -1,5 +1,25 @@
 # Curve-family carry pass (#4) — carry on the (W) warp curve
 
+> ## ⚠ CORRECTION HEADER (manager, 2026-06-10 — read first)
+> Skeptic pass `notes/skeptic/VERDICT_CARRY_PASS_2026-06-10.md` + manager engine-check (HEAD v26c
+> lines 1630/1639/1640). Two corrections; the (W) math itself PASSED (dq/du reproduced byte-level):
+> 1. **The "GH carry is clean" reasoning here is mis-derived (FLAG-OVERSELL).** This note argues it
+>    via the Esscher *slope* law. But the engine carry coordinate is `getMP_raw`, the PRICE coordinate
+>    (GOTCHA #12), *defined* as `ghP·exp(u)` with `ghMu` a constant scalar — so `log getMP_raw − log P
+>    = u` IDENTICALLY ⇒ `dq/du=1` on GH is a **definitional tautology**, not a slope result. #12 is
+>    load-bearing here, NOT N-A. (Manager-confirmed at the cited engine lines.)
+> 2. **The result is INHERITANCE, not a locked-architecture change (skeptic PART-2 call: PROCEED,
+>    within (W)-design scope — does NOT reopen CLAUDE §4).** The locked contract is `u = log price −
+>    log P` = the **price leg**, which the engine already IS; only the Balancer *accident* `q=u`
+>    breaks. So the note's "locked contract does not transfer / operator-tier" framing is downgraded:
+>    the downstream #5/#9/#11/#8 batch proceeds in `q=ln p` under 4 guards (state the price-definition
+>    premise in plain words; carry #12 as load-bearing; pin reserve-anchor `p=P` vs weight-anchor
+>    `w=½` first; escalate any further non-transfer).
+> 3. **Plain-language caution (manager): `dq/du`>1 is just CURVATURE, not a pathology** — it is the
+>    local price-per-reserve sensitivity, = how fast price moves along the rounded middle; it is 1 on
+>    the wings and scales as ~1/τ in the elbow (sharper knob ⇒ larger). The real point is only
+>    coordinate hygiene (use the price coordinate, not the reserve ratio); no economic discrepancy.
+
 _research-lead, 2026-06-10. Notes-only theory pass; **NO engine edit, NO submit, NO git**. Authorized
 by skeptic ruling `notes/skeptic/VERDICT_DELEGATED_DECISIONS_2026-06-10.md` item C: dependency order
 **#4 carry FIRST** → then {#5 rebase, #9 funding, #11 dollar pipe} in parallel → #16 last. This pass =

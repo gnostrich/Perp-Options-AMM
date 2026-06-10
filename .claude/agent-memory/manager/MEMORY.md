@@ -158,6 +158,22 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   is adopting `q=ln p` for the (W) design within delegated scope, or does it reopen CLAUDE §4 locked
   architecture → operator). Evidence appended `evidence/manager_audit_CURVE_FAMILY_2026-06-10.md`.
   Carry note NOT merged to main pending skeptic pass.
+- **★ SKEPTIC CARRY VERDICT + manager engine-check (2026-06-10, `notes/skeptic/VERDICT_CARRY_PASS_2026-06-10.md`).**
+  PART 1: PASS on the (W) derivation (reproduced byte-level); **FLAG-OVERSELL on the note's "GH carry
+  clean" REASONING** — it used the slope, but the engine carry coord `getMP_raw` is the PRICE
+  coordinate (GOTCHA #12), defined `ghP·exp(u)` with constant `ghMu` (I confirmed at HEAD v26c lines
+  1630/1639/1640) ⇒ `dq/du=1` on GH is a DEFINITIONAL tautology; #12 is load-bearing, was mislabeled
+  N-A. PART 2 CALL: **(a) PROCEED** — adopting `q=ln p` as the (W) carry coordinate is INHERITANCE of
+  the locked price-leg contract, NOT a §4 reopen ⇒ does NOT need operator ratification; downgrades the
+  note's "does-not-transfer/operator-tier" drama. 4 guards for the #5/#9/#11/#8 batch (state price-def
+  premise plainly; #12 load-bearing; pin reserve-anchor p=P vs weight-anchor w=½ first; escalate further
+  non-transfers). (b) bites only if we touch §4 wording / engine carry wiring / mark-oracle semantics
+  → operator. Carry note carries a manager CORRECTION HEADER. **#5/#9/#11/#8 batch NOT yet dispatched**
+  — operator is actively questioning the framing (entry 16); holding until they're satisfied.
+- **★ MANAGER OVERSELL OWNED (entry 16):** I told the operator the carry effect was reserves/price
+  "drift apart ~2–7×" — operator correctly read it as just CURVATURE (price-per-reserve sensitivity,
+  ~1/τ in the elbow), no discrepancy. Aligns with the skeptic FLAG-OVERSELL. The true carry point is
+  only coordinate hygiene (use the price coordinate), NOT an economic problem. Corrected to operator.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
