@@ -279,6 +279,18 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   — signed-acceptance + honesty/presentation call):** (a) tune demo pool/trade so a trade visibly +
   honestly reshapes the curve (+ before/after compare); (b) labeled warp-emphasis viz (amplify/animate);
   (c) accept subtle warp (mechanism verified). KPI bugs fixed in the same pass regardless. HEAD v26c.
+  **★ v24-vs-v27 WARP COMPARISON (operator entry 24, agent af823df8) — headline WRONG, manager caught it.**
+  Research-lead claimed "v24 ≡ 0 reshape, pure dot-slide, operator's 'v24 warps' premise FALSE (Metric A
+  dot-slide ratio v27/v24=1.000)." **WRONG-OBJECT:** Metric B measured the conserved α,β trajectory, NOT
+  what v24 DRAWS. v24 renders `curveTraceExplicit(snap.w,snap.depth)` (live moving w=α/x) + fixed w=0.5
+  ANCHOR overlay (L3113-3115/3164-3165). **I verified (`/tmp/v24_render_warp.py`): v24's rendered curve
+  reshapes 0.0099%@1% / 0.906%@10% — NONZERO, SAME ORDER as v27 (~0.004%/~2.6%).** So operator's premise
+  HOLDS (v24's drawn curve warps; live-vs-anchor divergence = the visible warp); "premise false"
+  CONTRADICTS skeptic TEST E; **answer to operator's question = YES, same order of magnitude.** v27
+  sub-pixel gap ⇒ likely the missing ANCHOR-OVERLAY viz (v24 has it, v27 doesn't) = honest fix, not
+  amplification (likely makes fork-(b) unnecessary). Correction header on the note. **DEFINITIONAL KNOT
+  (trajectory vs pricing curve) ROUTED TO SKEPTIC** (its TEST E has a stake) before operator relay / viz
+  build. HEAD v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

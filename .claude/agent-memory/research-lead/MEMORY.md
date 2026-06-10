@@ -1,5 +1,30 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, STRONG-FORM TRADES-WARP derivation (notes-only; NO submit/edit/git; PRIORITY, build HELD)._
+_Last updated: 2026-06-10, WARP v24-vs-v27 numeric compare (notes-only; NO submit/edit/git; operator entry 24)._
+
+### WARP v24-vs-v27 COMPARE (#16-adjacent) — 2026-06-10 (operator entry 24; notes-only; NO submit/edit/git)
+Note: `notes/research/WARP_v24_vs_v27_compare_2026-06-10.md`. Scripts `/tmp/warp_cmp_{1..7}.js` (Node float64).
+Engines sandboxed: v24 `temporal_mvp_v24_rebase_fixed_2.html`, v27 `temporal_mvp_v27_wkurtosis_WIP.html`.
+**QUESTION:** does v27's per-trade warp match v24's at "kurtosis implied by ordinary Balancer"? (tester saw
+v27 sub-pixel "dot slide".) **MATCHED SETTING:** ordinary Balancer (v24, w=0.5 anchor) implied local
+curvature `dw/du=1/4` [analytic, = numeric 0.250]. Match v27 at center: `w_mid=0.5, Δw=τ/2`
+(wMinus=0.5−τ/4, wPlus=0.5+τ/4, phi=0); headline τ=0.3 ⇒ (0.425,0.575). Same pool x=10,y=10 (u=0,w=0.5),
+same trade dy=f·y. v27 derived (alpha,beta)=(5,5)=v24; post-trade (x,y) BYTE-IDENTICAL (shared trajectory
+hyperbola).
+**VERDICT — TWO warp metrics:** (A) operating-point dot-slide Δln(mp)/Δu: **v27≡v24, ratio 1.0000 EXACT,
+τ-independent** (the visual the operator likes IS reproduced exactly). (B) genuine curve RESHAPE at fixed
+ref: **v24≡0 EXACTLY** (alpha,beta conserved ⇒ pure dot-slide on a FIXED curve, v24 does NOT warp the
+curve), v27 small reshape (1% trade ≈4e−5 ln(mp) ≈0.004% curve shift; → smaller as τ↑). Same order of
+mag? **dot-slide YES (identical); reshape N/A (v24=0, v27 adds the mechanic v24 never had).**
+**FORK IMPLICATION = RENDER-SCALE / default-pool, NOT a fundamental v27 weakness.** Dot-slide (v24-comfort
+visual) identical ⇒ if not visibly moving it's render-window/pool, not magnitude. The new reshape is small
+BY DESIGN (frozen wings, static τ); larger reshape = calibration (smaller τ / wider Δw) = operator-tier.
+**FLAG (load-bearing premise correction):** "v24's trades warp the curve" is FALSE at curve level — v24 is
+a PURE DOT-SLIDE (alpha,beta conserved). What the operator likes IS the dot-slide; v27 matches it exactly.
+Manager must relay this reframe. Match-def (w_mid=0.5 ordinary-Balancer pt, not γ>1) flagged; dot-slide
+identity is match-def-INDEPENDENT (follows from shared hyperbola). Nothing submitted/built/git. Manager re-derives.
+
+---
+_Earlier: 2026-06-10, STRONG-FORM TRADES-WARP derivation (notes-only; NO submit/edit/git; PRIORITY, build HELD)._
 
 ### STRONG-FORM TRADES-WARP (#16, R-paper) — 2026-06-10 (operator PRIORITY; build HELD until landed; notes-only)
 Note: `notes/research/TRADE_WARP_strongform_2026-06-10.md`. Scripts `/tmp/warp{1..8}.py` (python float64).
