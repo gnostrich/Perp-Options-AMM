@@ -34,6 +34,23 @@ git history is the mechanical audit trail. Rewrite the changed bits at the end o
   - **Operator-owned flags surfaced (NOT decided):** (1) whether to ship τ at all (reopens locked GH curve);
     (2) skew Δw≠0 = the SETTLEMENT FORK (two-root/βh=0) — τ orthogonal, safe to ship with skew held;
     (3) expose 1/τ=fatness (object L), do NOT ship "τ up=fatter" (backwards).
+- **CLOSED-FORM REFINEMENT (2026-06-10, commit 864b278):** the local-weight integral CLOSES —
+  `W(u)=∫w=w_mid·u+(Δw/2)(√(τ²+u²)−τ)`, so the curve has a single closed-form parametric + implicit
+  transcendental eq `X·Y=X₀Y₀·exp[(2w_mid−1)u]·exp[Δw(√(τ²+u²)−τ)]` (Balancer baseline × kurtosis elbow).
+  No quadrature; forward map = one √; only the trade INVERSION needs a 1-D Newton solve (as v24 inverts
+  its quadratic). Refines "numeric integration" framing (no ALGEBRAIC invariant still holds — it's
+  transcendental). Nuance: kurtosis (τ=corner sharpness) rides on elbow size Δw; GH engine always has an
+  elbow (Δγ=1, Esscher βh=1). Manager-verified 50 dps (W=quad 1e-51; implicit=param 0–2e-44; Δw=0⇒const).
+- **SPREAD-SHORTCUT RECONCILIATION (2026-06-10, commit 325951f):** `notes/SPREAD_SHORTCUT_tau_reconciliation_2026-06-10.md`.
+  v24's "shortcut AMM tx" = vertical spread (2 strikes, same wing) → ONE effective tx via composite-ray
+  identity (θ*=√(θ_i θ_o), δ=½log(θ_hi/θ_lo), V=N·mark(θ*)·2sinh(δ), one tradeUpdate; v24 L1600–1697).
+  **Manager-verified (50 dps) the shortcut is CURVE-AGNOSTIC → swaps into the τ-curve cleanly (GREEN):**
+  (A) composite-ray/mark pricing identity is pure moneyness, τ-free (|mark(lo)−mark(hi)|==mark(θ*)2sinh(δ)
+  err≤6.7e-52 any sNorm); (B) bundle-2-into-1 state update exact on τ-curve via 1-D path-independence
+  (seq==net, err=0.0). Only `getSNorm`+`tradeUpdate` get τ-versions (already derived); composite ray/mark/
+  2sinh/bundling port VERBATIM. Care-point: getSNorm must keep sNorm=spot moneyness. Flags: vertical-spread
+  ≠ collar/band (the band's 2 sequential tradeUpdates are intentional PRICING path-dependence, also τ-safe);
+  ITM legs settle-to-cash (curve-free); actual engine swap = future file-safety-gated pass (NOT done).
 - **STATE:** branch `claude/v24-kurtosis-migration` has v24 staged (ba00ef6) + τ note (6876cd9), pushed.
   **NOT merged to main** — this is brainstorm/derivation territory, curve/economic-object choice is
   operator-owned; offer merge, don't auto-merge a strategic curve decision. v24 ref build md5 6f606f52.
