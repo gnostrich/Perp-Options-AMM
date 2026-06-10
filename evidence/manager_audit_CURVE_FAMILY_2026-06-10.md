@@ -33,6 +33,30 @@ note's formula is correct.
   inherited for elbow strikes; whether a *different* closed form exists for the elbow continuation
   (note §2.5 path 2) is genuinely OPEN. Where strikes register (wing vs elbow) is operator/calibration.
 
+## ★ CORRECTION (2026-06-10, post-skeptic) — I OWN A MISS
+The skeptic's §2.1 pass FLAG-OVERSELL'd §2.3, and **I re-derived it (`/tmp/verify_skeptic.py`) and the
+skeptic is RIGHT.** My first audit (above) reproduced §2.3's *arithmetic* (87.349…) but did NOT check
+that it solved a self-consistent object — it does not.
+- **The inconsistency:** §2.3 differentiates the literal power `V=c·S^(−γ(S))` → `V′/V=−γ/S−γ′·lnS`.
+  But §2.2 *defines* `γ_loc` as the value's log-log slope (`−d logV/d logS`), under which
+  `V′/V=−γ_loc/S` with NO `γ′` term. The note's "γ(S)" (power) and "γ_loc" (log-log slope) are
+  DIFFERENT objects. Numeric demo: for a varying-exponent V, at S=80 the power γ=2.18 but the true
+  log-log slope is 4.08 — they are not equal.
+- **Consistent smooth-pasting** (intrinsic K−S, value+slope match, γ_loc := −S·V′/V at S*):
+  `S* = K·γ_loc(S*)/(γ_loc(S*)+1)` — a clean closed-form fixed point, **γ′ absent.** Across the elbow
+  (w∈[0.6,0.8] ⇒ γ_loc∈[1.5,4]) S* is bounded **60–80** (ATM γ_loc=2.333 → S*=70). The 87–98 table is
+  the artifact of the inconsistent slope.
+- **Corrected status of the GATE:** the obstruction is **OVERSTATED**. Closed-form settlement is NOT
+  demonstrably fragile in the elbow; the inherited fixed-point relation still holds locally. The
+  REAL open question is narrower: *does value remain locally a single power with exponent γ_loc
+  through the elbow, or only piecewise?* — never cleanly posed in the note.
+- **My miss (own it):** charter = the more confident the claim, the harder I check; §2.3 wore the
+  numbers and I verified the numbers, not the modeling consistency. 2nd time today the
+  confident-magnitude piece broke (skeptic's "blind-spot pattern #1"). The §2.1 ordering (skeptic >
+  manager on claims) did its job. Note carries a manager CORRECTION HEADER; §2.3 magnitude + "gate
+  blocks rebuild" framing RETRACTED pending the narrower question.
+
 ## Provenance
-Numeric + analytic by manager. Nothing trusted-from-prover or verified this pass. Curve note NOT yet
-merged to main — pending the skeptic adversarial verdict (§2.1 mandatory pass before merge).
+Numeric + analytic by manager (both the original reproduction AND the correction). Nothing
+trusted-from-prover or verified. Curve note NOT merged to main; the skeptic FLAG stands on §2.3/§2.5
+and is a §2.1 halt on promoting "gate fails" as truth — resolved here by retraction, not by out-waiting.

@@ -1,5 +1,19 @@
 # Curve-family derivation (pass 1) — kurtosis warp on Balancer
 
+> ## ⚠ CORRECTION HEADER (manager, 2026-06-10 — READ BEFORE §2)
+> The skeptic FLAG-OVERSELL'd §2.3/§2.5 and **I re-derived it and agree** (`/tmp/verify_skeptic.py`;
+> verdict `notes/skeptic/VERDICT_CURVE_FAMILY_2026-06-10.md`; audit `evidence/manager_audit_CURVE_FAMILY_2026-06-10.md`).
+> **§2.3's "+16% blow-up" table solves an INCONSISTENT object:** it differentiates the literal
+> power `V=c·S^(−γ(S))`, picking up a `−γ′·lnS` term, but §2.2 *defines* `γ_loc` as the log-log
+> slope of value (`−d logV/d logS`), under which `V′/V = −γ_loc/S` with **no `γ′` term**. Under the
+> consistent definition the perpetual-American boundary stays the clean closed-form fixed point
+> **`S* = K·γ_loc(S*)/(γ_loc(S*)+1)`** (γ′ does NOT enter), giving S* bounded ~60–80 across the elbow
+> — NOT 87–98. **So the obstruction is OVERSTATED; the closed form is NOT demonstrably fragile.**
+> The genuinely open question is narrower (and the note never cleanly posed it): *does the value
+> function stay locally a single power with exponent γ_loc THROUGH the elbow, or only piecewise?*
+> The "survives on wings" result (§2.2 wing leg) stands. §2.3's magnitude and the "gate fails-as-
+> inherited / blocks the rebuild" framing are RETRACTED pending that narrower question.
+
 _research-lead, 2026-06-10. Notes-only theory pass; NO engine edit, NO submit, NO git. Operator
 greenlit ("start") via the manager. Target spec: `specs/SPEC_kurtosis_curve_family_TARGET.md`.
 Prior-claim corrections honored: `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`, CLAUDE.md §0,

@@ -62,18 +62,24 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   `x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k`; **lens** = cosh hyperbolic-angle form (exact
   identity √(τ²+u²)=τ·cosh(asinh(u/τ)) — adds NO DOF). One static knob = amplitude (steepness=kurtosis)
   in the symmetric fixed-wing reading; skew = angle shift φ from the w-trade (#16, UNIMPLEMENTED);
-  wings = exact CD monomials, τ-independent (frozen). **REBUILD GATE = NOT CLEARED:** closed-form
-  American settlement S*=Kγ/(γ+1) survives ONLY on the frozen wings (constant γ_±); in the ATM elbow
-  γ_loc varies ⇒ inherited closed form does not apply, and the most-traded strikes sit in the elbow.
-  **I RE-DERIVED ALL NUMBERS MYSELF** (`evidence/manager_audit_CURVE_FAMILY_2026-06-10.md`,
-  /tmp/verify_curvefamily.py): settlement 75.000/87.349/96.146/97.955 (γ′=0/.01/.05/.10, γ=3,K=100),
-  invariant std 1.1e-13, cosh id ~1e-14, wings exact, elbow width 0.85/2.80/6.19 — ALL MATCH +
-  analytic smooth-pasting hand-check. NUANCE: §2.3 magnitude is a LINEARIZED heuristic; the rigorous
-  load-bearer is §2.2 structural (solid). **Skeptic §2.1 adversarial pass IN FLIGHT (agent a8986778)**
-  — curve note + evidence committed to feature branch, NOT merged to main pending that verdict.
-  Resolution paths for the gate (operator-tier): (i) engineer traded-strike band into the frozen
-  wings (calibration); (ii) find a generalized closed-form free boundary for the elbow (open analytic);
-  (iii) Aristotle-certify the seam once a boundary is pinned.
+  wings = exact CD monomials, τ-independent (frozen).
+  **★ SETTLEMENT GATE — status CORRECTED by skeptic, manager-confirmed (2026-06-10):** the note's
+  "gate NOT cleared / fails-as-inherited in the elbow" verdict was **OVERSTATED.** Skeptic FLAG-OVERSELL
+  (`notes/skeptic/VERDICT_CURVE_FAMILY_2026-06-10.md`): §2.3's +16% table differentiates the literal
+  power `V=c·S^(−γ(S))` (extra `−γ′·lnS` term) but §2.2 *defines* γ_loc as value's log-log slope
+  (`V′/V=−γ_loc/S`, NO γ′ term) — inconsistent objects. **I RE-DERIVED (`/tmp/verify_skeptic.py`) and
+  AGREE:** consistent smooth-pasting ⇒ `S*=K·γ_loc(S*)/(γ_loc(S*)+1)`, γ′ absent, S* bounded ~60–80
+  across the elbow (NOT 87–98). **Closed form is NOT demonstrably fragile; obstruction RETRACTED.**
+  Real open question is narrower (never cleanly posed): *does value stay locally a single power with
+  exponent γ_loc THROUGH the elbow, or only piecewise?* "Survives on wings" stands. My first audit
+  reproduced §2.3's ARITHMETIC but not its modeling consistency — **my miss, owned** (2nd confident-
+  magnitude break today; §2.1 skeptic>manager did its job). Note carries a manager CORRECTION HEADER;
+  evidence audit appended. (My earlier re-derivation of the OTHER numbers — invariant 1.1e-13, cosh
+  ~1e-14, wings exact, elbow width 0.85/2.80/6.19 — all still hold; only §2.3's S*-table is the
+  artifact.)
+  **ESCALATION the skeptic flagged (I must carry to operator):** inventory #4 carry / #5 rebase /
+  #9 funding are **LOCKED contracts** (CLAUDE §4) — a locked contract not transferring to the new
+  curve is **operator-tier "Changed"**, NOT an ordinary research to-do. Frame to operator as such.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

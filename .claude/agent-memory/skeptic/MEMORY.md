@@ -140,6 +140,27 @@ inventory, operator answered — remaining live tail = every curve note must dis
    "operator ruled X" = unverifiable paraphrase). Recommended action: build+gate the
    engine-faithfulness pivot before new theory work.
 
+5. **2026-06-10 — CURVE_FAMILY_derivation note (verdict #5)** →
+   `notes/skeptic/VERDICT_CURVE_FAMILY_2026-06-10.md`. **2× FLAG-OVERSELL on the settlement gate
+   (the operator's hard gate):** (a) §2.3 +16% table reproduces byte-level (87.349/96.146/97.955)
+   but solves the LITERAL ansatz V=c·S^{-g(S)} whose slope -g/S-g'·lnS CONTRADICTS the note's OWN
+   §2.2 definition of γ_loc as the local log-log slope (which gives V'=V·(-γ_loc/S), NO g'lnS term);
+   under the consistent definition the smooth-paste boundary stays the closed-form fixed point
+   S*=K·γ_loc(S*)/(γ_loc(S*)+1) (I solved it: honest S*~60-66 across τ for wmid=0.7/Δw=0.2, NOT
+   87-98). Obstruction OVERSTATED. (b) §2.5 path-2 UNDERSELLS the rescue: BC is LOCAL, boundary
+   relation immediate; the real open Q (note never poses it) is the narrower "is value LOCALLY a
+   single power with exponent γ_loc through the elbow." Net: gate is OPEN on a sharper question,
+   not "blocked by a 16% obstruction." **PASS w/ attack on §1:** invariant constancy reproduced
+   (logF std 3.1e-13, 3 param sets), cosh/√ identity exact (5e-14 over 1e5 samples) ⇒ ZERO new DOF,
+   lens-not-content HONEST, trig flag genuinely honored (no Gudermannian d smuggled); wing-freeze
+   τ-indep confirmed. §1.3a self-flags the Δw-vs-τ two-handle (one-knob oversell pre-empted by note).
+   **§0/creep-back CLEAN** (no τ≡δ, no "no invariant", no by-carry). **Inventory:** all 16 present,
+   no silent absences; BUT #4 carry / #5 rebase / #9 funding are softened from escalation — a LOCKED
+   contract failing to transfer is operator-tier "Changed", filed as ordinary "OPEN/not-worked";
+   manager must escalate as "locked contract does not transfer", not as a research to-do.
+   Existence-vs-survival separation CLEAN. Most honest artifact + self-adversarial (lands gate-NOT-
+   cleared against team momentum) ⇒ convergence-alarm LOW.
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
@@ -154,6 +175,12 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - **(W) endpoints:** τ→∞ = constant-w CD, τ→0 = Laplace step — exact in the closed form.
 - **REPARAM v2's core** (CD = δ→∞; Esscher slope law δ/β-free; δ = ATM-elbow knob) — leaned on
   it, consistent with everything I computed; not independently attacked end-to-end.
+
+- **CURVE_FAMILY note §1 (2026-06-10):** √-kernel invariant first-integral (logF std ~3e-13),
+  cosh/√ change-of-variable exact (bijective, zero new DOF), wing-freeze τ-independent. Settled.
+  Also settled-as-MINE: the consistent smooth-paste BC is S*=K·γ_loc(S*)/(γ_loc(S*)+1) (local
+  condition); the +16% g'·lnS slope is an inconsistent literal-ansatz artifact — don't let it
+  re-enter as a "settlement is fragile" claim.
 
 ## Team blind-spot patterns observed
 1. **Confidence markers anti-correlate with verification.** "EXACTLY / confident / structural"
