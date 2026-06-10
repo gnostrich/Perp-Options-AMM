@@ -9,34 +9,47 @@ now encoded as live truth at the top of this file and the stale assertions struc
 Confirmed: (1) closed-form invariant EXISTS (was "none"); (2) τ:=δ / engine=one (W) setting is
 FALSE at curve level; (3) the "invariances-hold-by-carry" blanket is DROPPED — carry/rebase/
 value-law/seam/funding are NOT established for a warp family (Esscher d-law fails mid-curve for (W)).
-**PART 1 (conjecture, operator's hyperbolic-angle lens):** the curve is the level set
-`F(x,y)= x^{w_mid}·y^{1−w_mid}·exp(−A·cosh(η−φ)) = k`, with hyperbolic angle η defined by
-ũ=ln(y/x)=τ·sinh η (the operator's 90°→180° "polar" view; η is the hyperbolic angle replacing the
-straight one). (a) ONE static amplitude/steepness/kurtosis knob = **A** (operator entry 9:
-"scale/kurtosis is the amplitude"); set once for vol, trade-invariant. (b) **Skew = φ, the angle
-SHIFT produced by trading** — a trade changes w (x,y follow real reserves, paper Trade Formula),
-which moves w_mid/φ; static A is untouched. (c) **Wings frozen** because cosh's arms are
-exponential in η which is ~linear in ũ in the wings ⇒ exact CD monomials x^{w₋}y^{1−w₋} /
-x^{w₊}y^{1−w₊}, A-independent (the |v|^d wing-snapper avoided; verified). **WHICH FORM:** the
-non-trig √-kernel `exp(−(Δw/2)√(τ²+ln²(y/x)))` and the cosh-angle `exp(−A cosh(η−φ))` are the SAME
-curve (η=asinh(ln(y/x)/τ); √(τ²+ũ²)=τ cosh η — exact algebraic identity, no membership owed). The
-cosh form EARNS its place ONLY as the operator's geometric lens/coordinate (skew=shift, kurtosis=
-amplitude read off directly); the √ form is the cleaner thing to compute/build with. Trig does NOT
-introduce new content (honors the standing Gudermannian flag — d was amplitude relabeled).
+**PART 1 (conjecture, operator's hyperbolic-angle lens):** THE CURVE = the √-kernel level set
+`F(x,y)= x^{w_mid}·y^{1−w_mid}·exp(−(Δw/2)·√(τ²+ln²(y/x))) = k` (first integral of the Balancer
+local-weight law −dy/dx=(w/(1−w))(y/x), w(u)=w_mid+(Δw/2)·u/√(τ²+u²), u=ln(y/x)). THE LENS = the
+hyperbolic-angle form `exp(−(Δwτ/2)·cosh(η−φ))` with η=asinh(u/τ), via the EXACT identity
+√(τ²+u²)=τ·cosh η (the operator's 90°→180° polar view). Same curve, algebraic change of variable,
+no membership owed. (a) ONE static amplitude/steepness/kurtosis knob = ATM sharpness w′(0)=Δw/2τ;
+set once for vol, trade-invariant. **CAVEAT (flag): "one knob" is exact only in the symmetric
+fixed-wing reading — otherwise Δw (skew spread) and τ (elbow width) are TWO geometric handles.**
+(b) **Skew = φ, the angle SHIFT (η→η−φ) produced by trading** — a trade changes w (x,y follow real
+reserves, paper Trade Formula); static amplitude untouched. The w-trade→φ map is OPEN (#16). (c)
+**Wings frozen** — √(τ²+u²)→|u| ⇒ F→exact CD monomials x^{w₊}y^{1−w₊} (u→+∞) / x^{w₋}y^{1−w₋}
+(u→−∞), γ_±=w_±/(1−w_±) τ-INDEPENDENT (wing weights exact to machine precision). **WHICH FORM:**
+state the family with the √-kernel invariant; narrate it with the angle lens. Trig EARNS its place
+ONLY as the lens (skew=shift, kurtosis=amplitude read off directly), introduces NO new content
+(honors the standing Gudermannian flag — the d was amplitude relabeled; no extra dial in the angle).
 **PART 2 (rebuild gate — does closed-form American settlement survive?):** VERDICT =
-**SURVIVES ANALYTICALLY on each frozen wing; the seam C¹ check is the open obligation.** On a wing
-the curve is exact CD with constant local weight w₋ (put side) / w₊ (call side) ⇒ wing value law is
-exact power S^(−γ_±), γ_±=w_±/(1−w_±); the GH/Merton smooth-pasting algebra (value+slope match ⇒
-S*=Kγ/(γ+1) call / K(γ+1)/γ put, continuation a·S^(−γ)) carries VERBATIM on the wing because the
-wing is a pure power law — settlement is a wing object, and the wings are knob-frozen. **OBSTRUCTION
-(precise):** if the strike K registers in the ATM elbow region (|ũ|≲τ) rather than out on a wing,
-the local exponent is NOT constant (γ_loc varies through the elbow) and the closed-form S* is not
-guaranteed — needs either (i) confirmation that the relevant strikes sit in the frozen-wing regime,
-or (ii) a seam re-derivation at non-constant γ_loc. This is numeric-to-settle first, Aristotle-Lean
-to certify. **FLAGS for operator (via manager):** curve/knob choice is operator-tier; whether the
-traded-strike band lives in the frozen wings vs the elbow is the load-bearing settlement question;
-skew-as-φ-from-trading is the operator's frame but the w-trade→φ map composition with the paper
-Trade Formula is UNIMPLEMENTED (inventory #16, OPEN). No engine/git/submit this pass.
+**GATE NOT CLEARED. Survives closed-form on the FROZEN WINGS only; FAILS-as-inherited in the ATM
+elbow, where the most-traded band lives.** On a wing the curve is exact CD with constant local weight
+(w₋ put / w₊ call) ⇒ exact power S^(−γ_±), γ_±=w_±/(1−w_±); the GH/Merton smooth-pasting algebra
+(value+slope ⇒ S*=Kγ/(γ+1), continuation a·S^(−γ)) carries VERBATIM there [analytic]. **In the elbow
+(|u|≲τ) γ_loc=w/(1−w) VARIES** ⇒ continuation is NOT a single power ⇒ inherited S* not guaranteed.
+**Magnitude re-derived [numeric]:** a boundary exponent slope γ′=0.01 shifts S* from 75.0 to 87.3
+(~16%) at γ=3,K=100; γ′_loc(0)=(Δw/2τ)/(1−w_mid)² is O(1)+ in the elbow. **Elbow width [numeric]:**
+τ=0.3 → γ′_loc>1e-2 spans |u|<2.8 (price within ~16× of carry); τ=0.05 → |u|<0.85 (~2.3×). ATM/
+near-ATM strikes sit IN the elbow ⇒ inherited closed form does NOT carry to the operative region.
+Three resolution paths (note §2.5): (i) [needs-numeric/operator] confirm the traded strike band is
+wing-registered (|u_K|≫τ) for the chosen τ — a product/calibration call; (ii) [needs-analytic] find a
+generalized closed-form free boundary for the varying-exponent continuation (open, plausible given the
+elementary integral); (iii) [needs-Aristotle] certify the seam C¹ once a boundary is pinned (cf.
+AIRTIGHT T1a Sstar_forced / PH-5). **FLAGS for operator (via manager):** curve/knob choice
+operator-tier; the rebuild gate currently BLOCKS the rebuild absent (i)/(ii); WHERE strikes register
+(wing vs elbow) is the load-bearing settlement decision, operator/calibration-tier; "one amplitude
+knob" exact only in the symmetric fixed-wing reading (Δw vs τ are two handles otherwise); skew-as-φ-
+from-trading is the operator's frame but the paper-Trade-Formula→φ map is UNIMPLEMENTED (#16, OPEN);
+carry/rebase/funding for the warp family are OPEN/not-shown (do NOT carry from GH). **Numerics
+re-verified THIS pass (numpy/scipy float64, mpmath unavailable):** invariant logF const std 1.4e-13;
+cosh identity 9e-16; wing weights exact; C¹ match ≤7e-15; boundary-shift + elbow-width tables in note.
+Note `notes/research/CURVE_FAMILY_derivation_2026-06-10.md` now WRITTEN (prior header referenced it
+before it existed on disk; the earlier Part-2 "seam-is-the-only-open-obligation" framing UNDERSOLD the
+obstruction and is REPLACED by the gate-not-cleared verdict above). No engine/git/submit this pass;
+nothing trusted-from-prover/verified.
 
 ---
 
