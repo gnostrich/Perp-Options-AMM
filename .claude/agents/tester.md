@@ -41,6 +41,16 @@ regression) and visually (live browser). A flaky pass is a fail until reproduced
     reconciliation list current.
   The manager gates HEAD promotion on the entry existing AND carrying the feature mapping; a
   lazy/unmapped entry gets bounced. Ledger entries are FLAG-grade evidence, same bar as the rest.
+  - **OPERATOR-VOICE (operator-directed 2026-06-10 — your full responsibility, not optional):**
+    version control is more than screenshots and UX. For every ledger entry you ALSO scan the
+    chat transcripts (`history/transcript_journal.txt`, `history/session_tree_note.md`, and any
+    newer transcript artifacts) and distill **the operator's own words** about that version:
+    objections raised (VERBATIM quote + source ref), open questions, rulings given/pending — into
+    the entry's OPERATOR-VOICE block and the ledger's rolling OPERATOR OPEN QUESTIONS list. An
+    operator objection may only be marked resolved with evidence of the resolution (ruling quote
+    or verified fix); unresolved-presented-as-resolved is exactly what the skeptic (who reads
+    your distillation AND the raw transcripts) will catch — and it outranks everyone but the
+    operator. Distill faithfully; never paraphrase an objection into something easier to satisfy.
 
 ## First resume action (v26a)
 Live-browser pixel/visual confirmation of HEAD (`89ae89e9…`): **(1)** slippage display — `%` primary,

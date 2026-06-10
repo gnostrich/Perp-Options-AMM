@@ -33,13 +33,22 @@ changed, every entry, no exceptions)
 ## Entry template
 ```
 ## vX → vY (<one-line scope>)   [status: HEAD-promoted / candidate / demoted]
-FEATURES:     inventory #s touched (and "none beyond" — explicit), per docs/feature_inventory.md
-DESIRABLE:    behavioral improvements, with the number/evidence that shows it [feature #]
-UNDESIRABLE:  regressions/costs, each marked OPEN / RECONCILED-in-vZ / ACCEPTED(why) [feature #]
-NEUTRAL:      visible changes that are neither (renames, layout)
-EVIDENCE:     evidence/ paths, gate runs, tester verdict
+FEATURES:       inventory #s touched (and "none beyond" — explicit), per docs/feature_inventory.md
+DESIRABLE:      behavioral improvements, with the number/evidence that shows it [feature #]
+UNDESIRABLE:    regressions/costs, each marked OPEN / RECONCILED-in-vZ / ACCEPTED(why) [feature #]
+NEUTRAL:        visible changes that are neither (renames, layout)
+OPERATOR-VOICE: the operator's OWN words on this version, distilled from transcripts — objections
+                (VERBATIM quote + source ref), open questions, rulings given/pending; each marked
+                OPEN / RESOLVED(evidence) / RULED(quote). Never paraphrase into something easier.
+EVIDENCE:       evidence/ paths, gate runs, tester verdict
 + update the FEATURE-STATE TABLE rows for every feature # listed
++ update the OPERATOR OPEN QUESTIONS rolling list below
 ```
+
+## ⭐ OPERATOR OPEN QUESTIONS (rolling — tester-maintained from transcripts; the skeptic
+audits this list against the raw transcripts to catch unresolved-presented-as-resolved)
+_Backfill pass pending (tester dispatched 2026-06-10). Until populated, this list is INCOMPLETE
+by construction — do not treat absence here as "no objection exists."_
 
 ---
 

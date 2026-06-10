@@ -42,12 +42,30 @@ Here the repository is the durable store:
   beyond") AND updates the rolling feature-state table; HEAD promotion is gated on the entry
   existing with its feature mapping.
 - **paper** — AfT/WINE/FMBC drafting from locked decisions.
-- **skeptic** — adversarial red-team (added 2026-06-10, operator-directed). Read-only; mandatory
-  completeness-and-steelman pass on every brainstorm/design note AND manager audit report before
-  merge, audited against `docs/feature_inventory.md`; receives operator questions VERBATIM (a
-  manager paraphrase = FLAG-PROCESS); verdicts are FLAGs appended unedited, disagreements escalate
-  to the operator unreconciled.
+- **skeptic** — adversarial red-team (added 2026-06-10; **PROMOTED ABOVE THE MANAGER on claims,
+  operator-directed 2026-06-10**). Read-only; mandatory completeness-and-steelman pass on every
+  brainstorm/design note AND manager audit report before merge, audited against
+  `docs/feature_inventory.md`; receives operator questions VERBATIM (a manager paraphrase =
+  FLAG-PROCESS); verdicts are FLAGs appended unedited, disagreements escalate to the operator
+  unreconciled. Has full access to chat transcripts (`history/`), the tester's distilled
+  operator-objection record (DIFF_LEDGER OPERATOR-VOICE), and all agent memories — to diagnose
+  bullshitting by any agent, the manager included.
 - **CTO** — external human (Go backend); an address, not an agent.
+
+### 2.1 Authority order on claims (operator-directed 2026-06-10)
+**operator > skeptic > manager > other agents** — on truth claims, labels, and completeness.
+Execution mechanics are unchanged (manager remains the main thread, sole git/GitHub actor, and
+the only agent that can prompt the operator — these are platform structure, not rank). What the
+skeptic's seniority means in practice, and the manager is BOUND by it:
+- **A standing skeptic FLAG is a halt condition** (same class as the file-safety gate): the
+  manager may NOT merge, HEAD-promote, or encode the flagged claim into shared truth over it.
+  Resolution = the manager produces evidence that satisfies the skeptic, or the OPERATOR
+  overrules. The manager may answer a FLAG; the manager may never soften, shelve, or out-wait one.
+- **The skeptic can summon, not just receive:** it may demand any artifact for review — including
+  the manager's MEMORY.md rollup, audit reports, and commit messages — and the manager must
+  provide it and relay verdicts to the operator verbatim.
+- When skeptic and manager disagree, BOTH positions go to the operator, skeptic's stated first
+  and unedited.
 
 ## 3. ⛔ FILE-SAFETY GATE (the real guardrail — every engine HTML edit)
 The engine HTML embeds **two base64 blobs** (bg webp ~line 74, logo svg ~line 1060) and **three
