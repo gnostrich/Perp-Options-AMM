@@ -1,17 +1,80 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, KURTOSIS-KNOB κ DERIVATION (Balancer-native single-κ profile; NO submit/edit/git)._
+_Last updated: 2026-06-10, GUDERMANNIAN BRIDGE derivation (notes-only; NO submit/edit/git) + TRUTH-UP of broken entries._
+
+> ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
+> **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
+> struck inline below (✗CORRECTED markers in the KURTOSIS-KNOB section). Do not re-assert them.
+> Two flagship claims recorded below as facts are **BROKEN** (skeptic inaugural verdict,
+> manager-verified independently — `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`):
+> 1. **"κ:=δ EXACTLY / engine = one (W) setting" is FALSE at curve level** — live-engine test:
+>    w_eff vs ln(y/x) is non-monotone; the engine is not a (W)-member at ANY τ. Kernel-in-SCORE
+>    (GH) ≠ kernel-in-WEIGHT ((W)).
+> 2. **"NO clean algebraic invariant exists" is FALSE** — explicit closed form
+>    `x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k` is a first integral of the (W) law
+>    (manager: analytic + RK4 4.8e-13).
+> Also: Object-L kurtosis numbers below are the β=0 slice — at the engine pin β=1: skew +0.92,
+> excess kurt 3.285 (∉[0,3]); and the δ-dial at β=1 is a COUPLED (skew,kurt) dial (skeptic
+> stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
+> endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
+> task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
+### GUDERMANNIAN BRIDGE — 2026-06-10 (operator entries 8–9; notes-only; skeptic-gated)
+Note: `notes/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
+checked (~1e-38) AND derived; β=0 AND β=1 throughout (skeptic pattern 3 honored).
+**THE BRIDGE (exact):** strike-ray angle ψ (45°=ATM, tan ψ=y/x), χ=ψ−45°: `ũ=ln(y/x)=gd⁻¹(2χ)` —
+the 90°→180° "fan opening" IS the forced doubling σ=2χ (gd maps ℝ onto exactly 180°); ATM↦ũ=0;
+ATM gear dũ/dχ=2 EXACTLY, parameter-free. GH leg θ=asinh(v/δ) has the same asinh form; composite
+ATM gear = 2/δ (=25 at engine). SLOT HONESTY: chain fully exact only on the CPMM base (ũ=log price);
+on GH the distribution view attaches at the LATENT leg (kernel-in-SCORE ≠ reserve-ray — no gluing).
+Fan inherits measure p_χ = f·2cosh ũ with EDGE POWER-LAWS ε^(α−β−1) call / ε^(α+β−1) put
+(= ε^(γ−1)/ε^(γ+1) at pin; γ>1 lock ⟺ pinch-off at call edge). Verified 1.9999/3.9999.
+**d-LAW VERDICT: NO clean single-d↔kurtosis law (not forced).** Four readings of d: geometric gear
+=2 universal (no parameter); composite gear 2/δ is a knob but Gaussian point is gear→0 NOT 2;
+in-cosh gear d gives wings exp(−c·v^(d/2)) ⇒ **d FROZEN at 2 by asymptote preservation** (d≠2 =
+the |v|^d wing-snapper; verified p=d/2 exactly); Taylor reading "Gaussian = order-2 piece of cosh"
+true but not a dial. Also "Gaussian/symmetric point" conflates two axes: symmetric=φ=0(β=0),
+Gaussian=A→∞ — orthogonal in (φ,A). **REPLACEMENT = AMPLITUDE LAW:** A=δ√(α²−β²); exact at all A
+via Bessel-K cgf (Z=2δcoshφ·K₁(A), cgf from log[K₁(δζ_t)/ζ_t]; matches quadrature 10 digits);
+large-A: skew≈3tanhφ/√A, **exkurt≈(3/A)(1+4tanh²φ)** (β=1,γ=3: exk·A→3.75 ✓; γ=2: →13/3 ✓; β=0:
+→3 ✓); A→0 endpoint = asym-Laplace (3.6644 at pin, 4.08 at γ=2). Monotone-dec in A:
+GRID-CONFIRMED only (no analytic proof — flag if load-bearing).
+**RECONCILE (skeptic stock-take key question):** angle frame IS the pure coordinate system —
+δ-dial moves A only, φ/a/b (wing slopes a=α−β=γ, b=α+β) are δ-free; kernel log-density exactly
+symmetric about θ=φ at every A. BUT moment functionals stay coupled at φ≠0: A-dial traces
+exkurt≈skew²(1+4t²)/(3t²) in moment space (verified →0.9996). **The frame REFRAMES the impurity
+(coupling lives in moment coordinates, not the dial), it does NOT dissolve it** — skeptic fact (a)
+exact and untouched. Branch-B knob honest IFF labeled amplitude/shape dial; NOT honest as pure
+moment-kurtosis at β=1 (purity needs β=0 = FULL fork = settlement change). Which kurtosis = U1 =
+operator's sentence. Esscher-in-θ: tilt = linear re-aim of (φ,A) in span{cosh,sinh} (exact,
+8e-38) ⇒ value∝S^(−γ) amplitude-proof; γ = a = call-wing slope, A-free; wing slopes δ-free with
+correction αδ²/2v² (verified).
+**FORKS:** cosh(θ−φ) frame = clean RE-COORDINATIZATION of branch B (same family, bijection
+(α,β,δ)↔(a,b,A) — algebraic identity, no membership test owed). Branch A (W): structural PARALLEL
+only — (W) log-invariant = w_mid·lnx+(1−w_mid)·lny−(Δwτ/2)cosh η, weight = w_mid+(Δw/2)tanh η,
+ũ=τsinh η (exact, 9e-41): both branches = "amplitude × cosh of own hyperbolic angle" but in
+DIFFERENT SLOTS (score vs weight/invariant) — broken bridge stays broken, NO identity claimed.
+**SOLVENCY (#13, explicit):** m=2 X-depth at β=1: 0.0845→0.5630 over δ=0.08→3 (6.7×; reproduces
+skeptic); β=0 reproduces REPARAM 0.034→0.220. B1 re-prices at any shipped setting; extrinsic,
+NOT closed. #8 strike-reg + #9 funding dispositioned: no change proposed; survival on a built
+δ≠0.08 engine = open engine checks (dir_gate/seam/G4 re-reference owed). Full 15-item table in note.
+
+---
 
 ### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
 Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
 Realizes the paper's `(w,κ)` Future-Directions conjecture in implementable form.
-**FORM DELIVERED = (b) WEIGHT-PROFILE, not a closed-form invariant.** FLAG (confident): NO clean
-algebraic `F(x,y;w,κ)=k` exists that rounds the ATM elbow AND keeps wings exact power-laws — the elbow
-warp is non-monomial; Cobb-Douglas `K=X^w Y^(1−w)` is constant ONLY for constant w (verified 4.6e-41).
-Clean invariant exists only at the constant-w BASE. Weight-profile is the engine-native form (GH is
-already built this way).
+**✗CORRECTED (2026-06-10 truth-up — claim was BROKEN, skeptic counterexample, manager-verified):**
+~~NO clean algebraic `F(x,y;w,κ)=k` exists~~ — FALSE. The closed form
+`x^{w_mid}·y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k` IS a first integral of the (W) law (analytic +
+RK4 4.8e-13). The 4.6e-41 check only showed the unmodified CD monomial is non-constant under variable
+w (true); the impossibility inference was a non sequitur. (Angle form: the exponent =
+−(Δwτ/2)cosh η with ũ=τsinh η — see GUDERMANNIAN BRIDGE entry above.)
 **THE PROFILE (W):** `w(u;w₋,w₊,κ)=w_mid+(Δw/2)·u/√(κ²+u²)`, w_mid=(w₋+w₊)/2, Δw=w₊−w₋;
-`w'(0)=Δw/(2κ)` = ATM sharpness = the knob; `w'=O(κ²/|u|³)→0` in wings. Elbow kernel u/√(κ²+u²) IS the
-GH score-kernel (2σ_GH−1) ⇒ **κ:=δ EXACTLY** (engine δ=0.08 = setting κ=0.08).
+`w'(0)=Δw/(2κ)` = ATM sharpness = the knob; `w'=O(κ²/|u|³)→0` in wings.
+**✗CORRECTED (2026-06-10 truth-up — claim was BROKEN at curve level, every β):** ~~κ:=δ EXACTLY
+(engine = setting κ=0.08)~~ — FALSE. Live-engine w_eff vs ln(y/x) is non-monotone; τ_implied runs
+0.012→2.41; the engine is not a (W) member at ANY τ. Kernel-in-SCORE (GH) ≠ kernel-in-WEIGHT ((W)).
+The kernel-SHAPE correspondence survives only as an analogy (shared cosh-in-own-angle structure).
 **`(w,κ)` ROLE SPLIT:** convexity=w_mid (γ̄), SKEW=Δw (Δγ=γ₊−γ₋, the existing w tilt), KURTOSIS=κ (ATM
 elbow only). γ_±=w_±/(1−w_±) are the wing exponents, FIXED, κ does NOT move them.
 **ASYMPTOTE PRESERVATION (the load-bearing req, CONFIRMED):** γ_loc(±100κ) BYTE-IDENTICAL across
@@ -21,15 +84,20 @@ deformation.
 **ENDPOINTS:** κ→∞ = plain Balancer (constant w, dq/du→1, Gaussian/δ→∞ — consistent w/ prior reconcile
 that CD=δ→∞ NOT δ→0); κ→0 = sharp-elbow LAPLACE = the paper's "log/exponential-curve invariant" (kernel
 exp(−α√(κ²+v²))→exp(−α|v|)).
-**KURTOSIS LAW + SIGN PINNED:** Object L (LATENT driver f∝exp(−α√(κ²+v²))) = TRUE excess kurtosis
-saturating ∈[0,3], →3 (κ→0 Laplace), →0 (κ→∞ Gaussian), monotone DEC in κ; reproduces prior GH numbers
-(κ=0.08→2.6530, 0.3→1.6885, 1→0.6961, 3→0.2472). 3/(κα)=large-κ asymptote only. SMALL κ=LEPTOKURTIC,
+**KURTOSIS LAW + SIGN PINNED (⚠ β=0 SLICE — truth-up 2026-06-10):** Object L (LATENT driver
+f∝exp(−α√(κ²+v²))) = TRUE excess kurtosis ∈[0,3] **at β=0 ONLY**; engine pin β=1 gives skew +0.92,
+exkurt 3.285, range (0, 3.6644] at γ=3 — and the δ-dial at β=1 is a COUPLED (skew,kurt) dial in
+moment space (one-knob amplitude trace, exkurt≈skew²(1+4t²)/(3t²) — see GUDERMANNIAN entry).
+β=0 numbers (κ=0.08→2.6530, 0.3→1.6885, 1→0.6961, 3→0.2472) correct as symmetric-slice facts.
+3/(κα)=large-κ asymptote only; general large-A law: exkurt≈(3/A)(1+4tanh²φ). SMALL κ=LEPTOKURTIC,
 fatness dial=1/κ. Object P (pushforward implied-price) = PLATYKURTIC, OPPOSITE sign (κ=0.3→−1.116).
 RECOMMEND label tracks Object L; do NOT ship "κ up=fatter" (backwards). Label = operator's call.
 **ENGINE INTEGRATION (minimal):** add ghKappa(≡ghDelta) scalar; key tail/CDF cache + √(κ²+v²) kernel on
-κ; recompute M,Φ at κ. rebase/conservation/Esscher slope-law/value∝S^(−γ)/seam-boundary S*=Kγ/(γ+1) all
-κ-INVARIANT (kernel-orthogonal). Lean: above-AMMCurve-contract untouched; re-instantiate kernel-constant
-layer only.
+κ; recompute M,Φ at κ. **⚠ truth-up:** rebase/conservation/Esscher slope-law/value∝S^(−γ)/seam
+invariances hold for the GH δ-UNFREEZE (branch B) as REPARAM derivations — label
+derived-not-engine-verified (no δ≠0.08 engine ever built); they do NOT transfer to the (W) family
+(Esscher d log slope/du=1 fails mid-curve in (W); carry/rebase/seam for (W) = UNKNOWN). Lean:
+above-AMMCurve-contract untouched; re-instantiate kernel-constant layer only (branch B).
 **FLAGS:** (1) curve choice + knob exposure = operator; (2) no clean invariant — profile is the form;
 (3) label sign object-dependent (track L, 1/κ=fatness); (4) ASYMMETRIC-w SETTLEMENT FORK SURFACED — κ
 holds w₋,w₊ fixed (orthogonal to fork); independent w₋≠w₊ = both S^(±γ_±) live = βh=0/two-root settlement

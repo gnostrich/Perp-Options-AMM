@@ -5,6 +5,35 @@
 (GH)** reserve curve. The deliverable is one HTML file; a CTO (external human) propagates the math to
 a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produced this repo.
 
+## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
+**A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else stays
+the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the warp; the
+kurtosis knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
+value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are unchanged. The curve/invariant
+decision is always the operator's. ⚠ HOW the current GH engine relates to the proposed τ-family is
+**OPEN** — the "GH = one (W) setting, τ≡δ EXACTLY" identity was BROKEN by the skeptic 2026-06-10
+(manager-verified on the live engine: GH puts the kernel in the latent SCORE, (W) in the WEIGHT —
+different curves; see `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`). Full checklist:
+`docs/feature_inventory.md` — design/brainstorm notes must disposition every item there (the
+skeptic enforces this).
+
+**Operator rulings 2026-06-10 (transcript entry 14, verbatim source `history/operator/`):**
+1. **Engine-faithfulness pivot UN-HELD and ordered FIRST** — built and gated before any new
+   theory work (the live engine must reproduce every proven construct; the unproved spec↔engine
+   gap is where the dodging lived).
+2. **Trades bend the curve: YES — and it is w that a trade changes** (entry 16 verbatim: "yes its
+   w that the trade changes (while x and y also change to be faithful to actual reserves, refer
+   the paper) and that warps it"). Reference spec = the paper's Trade Formula (α=x·w, β=y·(1−w)
+   individually conserved; w=α/x derived; paper line 33: "Trades skew the AMM curve instead of
+   moving the reserves point along it"). Standing UNIMPLEMENTED requirement (inventory item 16) —
+   today's engine moves a point on a fixed curve and does NOT implement the paper's core trade
+   mechanic; no design note may imply otherwise. Build target sequenced AFTER the pivot.
+3. **Kurtosis = "steepness / flatness of the curve, we set it so the curve is appropriate for
+   pricing perpetual american style options for an asset of some vol, and it isn't / doesn't have
+   to be changed by trades."** The knob is the curve's geometry, vol-calibrated at setup, static
+   under trading — NOT a trader-measured statistic (the moment-coupling at β=1 is therefore not a
+   defect of the knob as the operator defines it).
+
 ## 1. The store is the filesystem (not a chat ledger)
 The old multi-chat world re-emitted a `TEMPORAL-CONTEXT-LEDGER` snapshot every reply. **Obsolete.**
 Here the repository is the durable store:
@@ -20,13 +49,53 @@ Here the repository is the durable store:
 
 ## 2. Team (hub-and-spoke; the operator talks only to the manager)
 - **manager** — main thread. Design authority, independent verifier (re-derives every number, never
-  rubber-stamps), **sole git/GitHub actor**, escalation hub. Delegates to the four below.
+  rubber-stamps), **sole git/GitHub actor**, escalation hub. Delegates to the five below.
 - **research-lead** — states Lean conjectures precisely, relays to the external prover **Aristotle**,
   audits returned proofs. (Aristotle is external — not an agent.)
 - **intern** — HTML/engine implementation; surgical, blob-safe edits.
-- **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts.
+- **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts. Owns the
+  behavioral diff ledger (`engine/builds/DIFF_LEDGER.md`) — **the operator's inventory of record**:
+  every build verification appends a feature-keyed entry (inventory #1–#15 + explicit "none
+  beyond") AND updates the rolling feature-state table; HEAD promotion is gated on the entry
+  existing with its feature mapping.
 - **paper** — AfT/WINE/FMBC drafting from locked decisions.
+- **skeptic** — adversarial red-team (added 2026-06-10; **PROMOTED ABOVE THE MANAGER on claims,
+  operator-directed 2026-06-10**). Read-only; mandatory completeness-and-steelman pass on every
+  brainstorm/design note AND manager audit report before merge, audited against
+  `docs/feature_inventory.md`; receives operator questions VERBATIM (a manager paraphrase =
+  FLAG-PROCESS); verdicts are FLAGs appended unedited, disagreements escalate to the operator
+  unreconciled. Has full access to chat transcripts (`history/`), the tester's distilled
+  operator-objection record (DIFF_LEDGER OPERATOR-VOICE), and all agent memories — to diagnose
+  bullshitting by any agent, the manager included.
 - **CTO** — external human (Go backend); an address, not an agent.
+
+### 2.1 Authority order on claims (operator-directed 2026-06-10)
+**operator > skeptic > manager > other agents** — on truth claims, labels, and completeness.
+Execution mechanics are unchanged (manager remains the main thread, sole git/GitHub actor, and
+the only agent that can prompt the operator — these are platform structure, not rank). What the
+skeptic's seniority means in practice, and the manager is BOUND by it:
+- **A standing skeptic FLAG is a halt condition** (same class as the file-safety gate): the
+  manager may NOT merge, HEAD-promote, or encode the flagged claim into shared truth over it.
+  Resolution = the manager produces evidence that satisfies the skeptic, or the OPERATOR
+  overrules. The manager may answer a FLAG; the manager may never soften, shelve, or out-wait one.
+- **The skeptic can summon, not just receive:** it may demand any artifact for review — including
+  the manager's MEMORY.md rollup, audit reports, and commit messages — and the manager must
+  provide it and relay verdicts to the operator verbatim.
+- When skeptic and manager disagree, BOTH positions go to the operator, skeptic's stated first
+  and unedited.
+
+### 2.2 Operator transcription policy (operator-directed 2026-06-10 — full text: `docs/transcription_policy.md`)
+The operator's messages are transcribed **VERBATIM** (exact text — case, typos, ellipses; no
+cleanup, no paraphrase) by the **manager** (sole operator-facing agent) into
+**`history/operator/<date>_<session-slug>.md`** — one append-only file per session, each message
+appended within the turn it's acted on and committed with that turn's work. Manager/agent replies
+are NOT transcribed (git + memories cover the team side); context notes stay one-line neutral
+pointers. Corrections = dated corrigenda, never edits. **tester** cites these as
+`[verbatim-transcript]` in the DIFF_LEDGER OPERATOR-VOICE layer; **skeptic** audits agent claims
+against them and may demand the current session's transcript at any time — a missing file, gap,
+or paraphrase-as-quote is a **FLAG-PROCESS against the manager**. Pre-policy sessions
+(2026-06-08/09) stay honestly labelled as reconstruction; standing request to the operator to
+export those transcripts into `history/`.
 
 ## 3. ⛔ FILE-SAFETY GATE (the real guardrail — every engine HTML edit)
 The engine HTML embeds **two base64 blobs** (bg webp ~line 74, logo svg ~line 1060) and **three
@@ -165,12 +234,15 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
   byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
   cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
-  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` in `engine/`. `engine/verify/` harnesses,
+  Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
+  tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
-  `prompts/` + `MANAGER_VERIFICATION.md`. `paper/` draft + docx. `notes/`, `history/`
+  `prompts/` + `MANAGER_VERIFICATION.md` + **`INDEX.md`** (canonical provenance map over all Aristotle
+  results — start there) + `README.md` (layout). `paper/` draft + docx. `notes/`, `history/`
   (`session_tree_note.md`), `evidence/`. `docs/` operating protocol, personas, orientation, briefs,
-  historical context. `.claude/` agents, agent-memory, hooks, commands, settings.
+  historical context, `feature_inventory.md` (the skeptic's checklist). `.claude/` agents,
+  agent-memory, hooks, commands, settings.
 
 ## Glossary
 GH = generalized-hyperbolic curve · mpGeom = `getMP_raw·e^(−ghMu)` (geometric marginal) · carry

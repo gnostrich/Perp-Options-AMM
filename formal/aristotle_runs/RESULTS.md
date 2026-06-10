@@ -1,7 +1,8 @@
 # Aristotle run ledger — big autonomous run 2026-06-08
 
-> **NAV:** newest run is the MERTON-TIE RUN (2026-06-09) immediately below. A proposed consolidated
-> provenance INDEX over ALL runs is drafted at `formal/aristotle_runs/INDEX_DRAFT.md` (manager review).
+> **NAV:** newest run is the MERTON-TIE RUN (2026-06-09) immediately below. The consolidated
+> provenance INDEX over ALL runs is **`formal/INDEX.md`** (PROMOTED from the draft 2026-06-10,
+> operator-greenlit; the scratch `INDEX_DRAFT.md` is retired). Layout guide: `formal/README.md`.
 
 ---
 

@@ -1,6 +1,188 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
-git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
+_Last updated: 2026-06-10 SESSION CLOSE (branch claude/project-status-review-aumiss → squash-merged
+to main). This is the project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★★ NEXT SESSION PICKUP (read this first)
+1. **The registered `skeptic` agent exists NOW** (charter landed on main; today it ran as labeled
+   general-purpose stand-ins — operator caught my relay dropping that label, entry 19; never blur
+   again). First skeptic invocation: it self-orients from its MEMORY + the open brainstorm.
+2. **OPEN brainstorm with operator** (`notes/skeptic/BRAINSTORM_2026-06-10.md`): skeptic's pending
+   question — when a trade warps the curve, do open options re-price (product) or keep their
+   terms? Operator said "i'll get to this later." Relay protocol: pure pipe, verbatim both ways.
+3. **Pivot DONE** (5 faith gates HARD in run_all, manager-verified green + negative-controlled).
+   **NEXT WORK = the w-warp build** (ruling 2, entry 16: trades change w, α=x·w & β=y·(1−w)
+   conserved, per paper). Cheap first computation awaiting operator green-light: does the paper's
+   α,β conservation close on the (W) rounded-corner curve (skeptic brainstorm Q2)? Curve choice =
+   OPERATOR-TIER (skeptic Q1: GH has no single w; the (W) family does).
+4. **Operator rulings of 2026-06-10** are in CLAUDE.md §0 (pivot-first; trades-change-w; kurtosis
+   = static vol-set steepness). Verbatim sources: `history/operator/2026-06-10_*.md` entries 1–20.
+5. **Standing asks to operator:** export 2026-06-08/09 chat transcripts into history/; answer
+   brainstorm question; green-light the α,β check.
+6. **Manager discipline notes to self (operator-enforced today):** plain English ALWAYS — two
+   vocabulary violations in one session ("strong vs tilt", "lean"); transcribe EVERY operator
+   message in-turn (§2.2); never present a stand-in as the registered agent; the skeptic outranks
+   me on claims (§2.1) and its standing FLAG is a halt.
+
+## ★ STOCK-TAKE + OPERATOR PAIN-POINT REVIEW (2026-06-10) — reconciled to main `eaaa2d0`
+- **Memory had gone stale** (ended at 2026-06-09 checkpoint); reconciled against main per §6.2.
+  Events since the checkpoint, all merged, all non-engine (HEAD v26c `6cc73563` untouched throughout):
+  - **#11 AIRTIGHT endgame** (settlement generated, single-μ core) — already recorded below.
+  - **#12 MERTON-TIE + GHMaps run (research-lead, manager-audited in-commit):** μ=GH Laplace exponent
+    tie GROUNDED (Vieta sum⇔r=q, prod⇔γ(γ+1)=2r/σ²; I re-derived by hand); `Sstar_is_merton_boundary`;
+    **GH asymmetry finding:** β=1 GH natively carries ONLY the put eigenfunction S^(−γ) — call root
+    γ+1 leaves the analyticity strip; two-root symmetry is Gaussian-limit, not GH. GHMaps DISCHARGED
+    the CLOSEOUT-carried StrictAnti X/StrictMono Y (Bessel-K-free) ⇒ only the Bessel-K normalizer
+    VALUE stays carried (needed for nothing structural). 3 `grind` emend flags (no-math).
+    σ-knob rec flagged to operator (ship GH σ→γ map, not Gaussian closed form). INDEX_DRAFT.md
+    provenance map drafted — promotion to formal/INDEX.md was HELD for operator; **operator's 2026-06-10
+    pain-point 3 = greenlight signal, promote it.**
+  - **#13–#20 CURVE/INVARIANT BRAINSTORM thread (kurtosis knob; notes only, operator's call per §4 lock):**
+    `CURVE_SWAP_GH_vs_CES` (#13, carries CORRECTION HEADER — its δ→0=Balancer claim was WRONG);
+    `REPARAM_balancer_kurtosis_dropin` v1+v2 (#14/#15, reconciled: **Cobb-Douglas/Balancer = δ→∞
+    Gaussian limit, NOT δ→0**; δ→0 = Laplace; δ = ATM-elbow/kurtosis knob, wing exponent γ is
+    δ-invariant); `HETEROGENEOUS_WEIGHT_implied_density` (#17, the WARP structure: w(u) ⇒ nonlinear
+    monotone warp of the latent density; constant w = linear warp = Gaussian preserved; heterogeneous-w
+    warp GENERALIZES GH); `KURTOSIS_KNOB` (#18, the deliverable: single-knob weight profile
+    `w(u;w₋,w₊,τ)=w_mid+(Δw/2)·u/√(τ²+u²)`, elbow kernel = GH score kernel ⇒ **τ:=δ EXACTLY**;
+    FLAG confident: NO clean algebraic invariant F(x,y;w,τ)=k exists — elbow warp is non-monomial;
+    role split: convexity=w_mid, skew=Δw, kurtosis=τ; asymptote-preserving confirmed; kurtosis-sign
+    gotcha: latent leptokurtic vs pushforward platykurtic — label = operator call); #20 notation
+    de-collide (κ→τ; k=CD invariant; K=strike reserved; δ-vs-composite-ray-δ collision flagged unfixed).
+    **No engine edit, no decision taken — curve/invariant change remains operator-tier.**
+- **OPERATOR APPROVED ALL THREE (2026-06-10, "yes to all") — EXECUTED same session:**
+  (1) **skeptic agent LIVE** (`.claude/agents/skeptic.md`): read-only red-team; mandatory pass on
+  brainstorm/design notes AND my audit reports pre-merge; audits vs `docs/feature_inventory.md`
+  (new, 15 items); operator questions reach it VERBATIM (paraphrase = FLAG-PROCESS); verdicts
+  appended unedited, disagreements escalate unreconciled. Operator's extra requirement honored:
+  charter leads with the CRISP MOTIVE — "curve-warp AMM grown out of Balancer, purpose = kurtosis
+  knob, everything else stays the same" — also added as **CLAUDE.md §0** (shared truth, so the
+  motive can't get lost across agents) + verbatim in skeptic MEMORY. Roster now 6; CLAUDE §2 +
+  manager/tester charters updated.
+  (2) **DIFF_LEDGER live** (`engine/builds/DIFF_LEDGER.md`): tester-owned behavioral deltas per
+  version transition (desirable/undesirable/neutral + reconciliation list); HEAD promotion now
+  gated on the entry existing; v25→v26a→v26b→v26c BACKFILLED by me from verified evidence.
+  **HARDENED same day (operator: "diligent… feature-level… so I don't ever have to keep
+  inventory"):** ledger = the operator's INVENTORY OF RECORD. Every entry feature-keyed to
+  inventory #1–#15 + explicit "none beyond"; new rolling FEATURE-STATE TABLE (15 rows, backfilled
+  to v26c state) tester-updated every entry; candidates included not just promotions; my gate now
+  = entry exists AND carries the feature mapping (lazy/unmapped → bounce). tester charter +
+  CLAUDE §2 updated.
+  (3) **formal/INDEX.md PROMOTED** (from INDEX_DRAFT, retired): MERTON/GHMaps rows resolved
+  (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
+  true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
+  env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **★ SKEPTIC STOCK-TAKE LANDED (2026-06-10, `notes/skeptic/STOCKTAKE_2026-06-10.md`) — the
+  brainstorm map.** Key NEW numerics (β=1 engine pin, calibrated vs notes' β=0 digits):
+  (1) B's δ-dial at β=1 = COUPLED (skew,kurt) dial — skew +0.99→+0.07 co-moves w/ excess kurt
+  3.66→0.03; clean role split & "[0,3]" are β=0-only (purity costs the FULL fork = settlement
+  change); (2) δ DOES round the elbow at β=1 (curvature 9.31→0.66) — REPARAM elbow claim now
+  holds at engine pin; (3) wing reserve depth swings ~7× across the dial at β=1 (X/Nx@moneyness-2
+  0.085→0.563) ⇒ any shipped knob RE-PRICES the B1 floor (un-dispositioned, both branches);
+  (4) deployment asymmetry: B-MINIMAL contains today's engine exactly, A at NO setting.
+  Branch-A honest ledger: wings SHOWN; carry BROKEN-as-stated; Esscher slope law BROKEN mid-curve;
+  rebase/seam(LOCKED item)/funding(ill-posed when w is a field)/strike-reg/solvency UNKNOWN;
+  (W) reserves UNBOUNDED (GH solvency frame doesn't transfer); A's only computed kurtosis object
+  is PLATYkurtic. Decisive inputs: U1 (FREE, highest leverage) which kurtosis does the operator
+  mean — fat-tail return density→only B(FULL/β=0) shown / elbow-rounding→both, B-MINIMAL wins on
+  compat / fatter tradeable wings→NEITHER (γ is the wing knob, stop if that's the intent);
+  U4 (FREE) skew-coupling tolerable? no→B-MINIMAL out, fight = B-FULL vs A; U2/U3 (~days) (W)
+  carry+rebase / value-fn+seam — invariant makes tractable; either failing kills A.
+  **Residuals fixed/handled:** inventory line-11 motive paragraph carried the broken τ≡δ verbatim
+  → FIXED (this commit). **research-lead MEMORY NOT truthed-up (still asserts κ:=δ EXACTLY / no
+  invariant exists / all κ-invariant) → research-lead QUARANTINED from the brainstorm until its
+  reconcile (which MUST include memory truth-up) runs.** B invariance suite label:
+  derived-NOT-engine-verified (no δ≠0.08 engine ever built). Skeptic verified the verbatim channel
+  against history/operator/ — held, no FLAG-PROCESS.
+- **★ OPERATOR RULINGS (2026-06-10, transcript entry 14 — VERBATIM SOURCE, encoded CLAUDE.md §0):**
+  (1) **PIVOT UN-HELD + FIRST → DELIVERED + MANAGER-VERIFIED same session (commit 29c25ef):**
+  5 faith gates live as HARD gates in run_all (esscher trade=tilt-translation 1.1e-3; rebase
+  sNorm-invariance 5.6e-16; reflection markPut==markCall(θ²/s) 6.2e-16 — **C3 spec↔engine residual
+  numerically CLOSED on the live engine**; merton (γ,σ_eff) pins + ghM==GH-integral 5.2e-10 +
+  strip asymmetry; fisher nearest-engine-computable identities ≤1.3e-5, no-faked-green where
+  direct κ'' doesn't exist). I ran run_all myself EXIT=0 + hand-checked negative controls
+  (--mutate exit 1). Zero tolerance-tuning, zero STOP findings. HTML untouched (6cc73563).
+  Tester independent re-run = welcome, not blocking (harness-only). NEXT after this: the w-warp
+  build (ruling 2 spec) — design question (w-warp × kurtosis-knob geometry) is OPERATOR-TIER;
+  skeptic brainstorm Q1/Q2 are the entry points; the α,β-conservation-on-(W)-curve check is the
+  cheap first computation when operator green-lights.
+  (2) **TRADES BEND THE CURVE: YES** (inventory 16 RULED; OPEN-UNIMPLEMENTED — all current/proposed
+  designs are fixed-curve). (3) **KURTOSIS = curve steepness/flatness, vol-calibrated at setup,
+  static under trades** (operator's exact words in CLAUDE §0) ⇒ knob = geometry, NOT trader-moment;
+  the β=1 moment-coupling is not a defect under this definition. OPEN DESIGN Q (operator-tier,
+  after pivot): WHAT do trades bend if not the steep/flat setting — the lean/tilt (paper-era
+  w-dynamics)? Do NOT decide; ask when pivot lands. Skeptic notes pinned in charter same session:
+  objective discipline ("ruthlessly true to your objective, ask me when in doubt") + vocabulary
+  discipline (plain English, invented terms = dodge vector — "strong vs tilt" was MY violation,
+  owned). **Skeptic flags this session: ALL RESOLVED** (item-16 omission → note amended ⊕; my
+  commit-digit mislabel → evidence/manager_corrigendum_gudermannian; wording demand → plain
+  sentence added). Gudermannian note = PASSED its gate after fixes.
+- **★ TRANSCRIPTION POLICY (operator-directed 2026-06-10): "make a transcription policy so the
+  skeptic and tester can see my messages."** NEW standing manager duty (CLAUDE.md §2.2 + full text
+  `docs/transcription_policy.md`): every operator message VERBATIM (case/typos/ellipses, no
+  cleanup) → `history/operator/<date>_<session-slug>.md`, append-only, one file/session, appended
+  in the turn acted on + committed with that turn's work; replies NOT transcribed; corrections =
+  dated corrigenda. tester cites as [verbatim-transcript]; skeptic audits + can demand the live
+  session file — gap/paraphrase-as-quote = FLAG-PROCESS against me. THIS session backfilled
+  verbatim from live context (7 entries: `history/operator/2026-06-10_project-status-review.md`).
+  2026-06-08/09 sessions remain reconstruction — STANDING ASK: operator exports those transcripts
+  into history/. **From now on: transcribe every operator message every turn, no exceptions.**
+- **★ GOVERNANCE (operator-directed 2026-06-10, after the inaugural verdict): SKEPTIC > MANAGER
+  on claims.** CLAUDE.md NEW §2.1: operator > skeptic > manager > others on truth claims/labels/
+  completeness. A standing skeptic FLAG = HALT condition on me (no merge / HEAD promotion /
+  shared-truth encoding over it; resolution = evidence that satisfies skeptic OR operator
+  overrule; I may answer, never soften/shelve/out-wait). Skeptic can SUMMON artifacts (my rollup,
+  audits, commit msgs, agent memories) + has transcript access (history/) + tester's
+  OPERATOR-VOICE record to check claimed-operator-said vs actually-said. Execution mechanics
+  (git, dispatch, operator channel) stay mine as platform structure, NOT rank.
+  **TESTER duty expanded (same directive):** version control now = behavior + OPERATOR-VOICE:
+  scan chat transcripts, distill operator objections per version (VERBATIM + source ref), open
+  questions, rulings; resolved only with evidence; DIFF_LEDGER template + rolling OPERATOR OPEN
+  QUESTIONS list added. **Backfill DISPATCHED (tester, bg) over history/transcript_journal.txt +
+  session_tree_note.md (~4.2k lines)** — ledger entry + my commit owed when it returns.
+- **★ SKEPTIC INAUGURAL VERDICT (2026-06-10) — 2× FLAG-WRONG CONFIRMED; shared truth CORRECTED.**
+  Retroactive review of KURTOSIS_KNOB note (run honestly labeled "skeptic-charter via
+  general-purpose runner" — agent type registers next session). Verdict:
+  `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`. **I verified BOTH FLAG-WRONGs independently
+  before acting:**
+  1. "No clean algebraic invariant exists" — FALSE. `x^{w_mid}y^{1−w_mid}e^{−(Δw/2)√(τ²+ln²(y/x))}=k`
+     is a closed-form first integral of the weight-profile law. MY verification: analytic
+     (∂lnF/∂x=w(v)/x, ∂lnF/∂y=(1−w(v))/y ⇒ exactly the (W) Balancer law) + RK4 constancy 4.8e-13,
+     wings exact CD monomials. The note's argument (CD monomial not constant ⇒ nothing exists) = non sequitur.
+  2. "τ:=δ EXACTLY / engine = one (W) setting" — FALSE at curve level, STRONGER than skeptic stated:
+     live v26c engine w_eff=pX/(pX+Y) vs ũ=ln(y/x) is NON-MONOTONE (0.125→0.293→0.022→0.497), ũ
+     saturates ≈12.0 ⇒ engine is not a (W)-member at ANY τ. Kernel-in-SCORE (GH) ≠ kernel-in-WEIGHT ((W)).
+  3. FLAG-OVERSELL confirmed-by-reading: Object-L "[0,3]"/2.653 are β=0 slice; engine β=1 → skew
+     +0.92, excess kurt 3.285. FLAG-OMISSION: items #8/#9/#13 absent; #4 carry mis-stated.
+  **FLAG-PROCESS against ME — I own it:** I re-derived exactly ONE claim (F2, which held) and
+  narrated the two confident headliners straight into CLAUDE.md §0 + inventory item 2 the same day.
+  Charter says the cleaner and more confident, the harder I check — I did the opposite. Pattern is
+  now 3-for-3 (CURVE_SWAP δ-direction, RUN-3 rfl, this): confidence markers anti-correlate with
+  verification. The skeptic's whole reason to exist, proven on day one.
+  **CORRECTED (this session):** CLAUDE.md §0 (GH↔τ-family relation now OPEN), inventory items 2+3
+  (counterexample recorded; β=1 caveat), skeptic charter motive line 2, DISPUTE HEADER appended to
+  the kurtosis note (CURVE_SWAP precedent). **SURVIVED attack (settled):** asymptote preservation
+  F2, kurtosis sign-split + "never ship τ-up=fatter", (W) endpoints, β=0 table values, §5 REPARAM
+  δ-unfreeze path.
+  **QUEUED:** research-lead substantive reconcile of the note (it contains TWO curves — (W) §§1–4
+  vs GH δ-unfreeze §5 — with a broken bridge; the operator's curve decision needs to know which is
+  on the table). Skeptic MEMORY self-updated (verdicts/patterns/method notes) — confirmed.
+- **OPERATOR PAIN POINTS (2026-06-10) + dispositions (as proposed pre-approval):**
+  1. **No adversarial/devil's-advocate agent** — failure mode is real and documented in-repo (#13's
+     wrong δ-direction needing a correction header; RUN-3 UNIFY rfl-tautology depth-temper). PROPOSED:
+     6th agent `skeptic` — read-only red-team, mandatory pass on brainstorm/design notes BEFORE merge,
+     audits against a canonical feature inventory (so core structures like the w(u) warp can't be
+     silently dropped), steelmans excluded alternatives, gets operator questions verbatim not
+     manager-summarized. Roster change = operator decision, charter drafted on request.
+  2. **No behavioral diff ledger across versions** — BUILD_LINEAGE has md5+what, but desirable/
+     undesirable behavioral deltas live buried in memories (e.g. v26b frame-refit "keep", payoff
+     legend overprint regression). PROPOSED: `engine/builds/DIFF_LEDGER.md`, per-version-transition
+     desirable/undesirable/neutral + reconciliation status; tester populates at verification, manager
+     gates HEAD promotion on the entry existing.
+  3. **Lean/Aristotle docs "not saved/organised"** — saved YES (38 run dirs, 162 .lean, all prompts,
+     RESULTS.md ledger, 6+ manager audits, all on main); organised PARTIALLY: INDEX_DRAFT.md still in
+     scratch (held for operator), RESULTS.md is a grow-forever append log, MERTON/GHMaps rows say
+     "pending verdict" though resolved, no paper-claim→theorem crosswalk. ACTION: promote
+     formal/INDEX.md + update stale rows + formal/README.md layout guide (greenlit by this pain point).
 
 ## ★ GOVERNANCE CHANGE (2026-06-09) — AUTONOMOUS PR MGMT + CONCURRENCY/MERGE POLICY (config-only, self-merged)
 - **A — PR management is now FULLY AUTONOMOUS (operator pre-authorized).** Manager opens/squash-merges/

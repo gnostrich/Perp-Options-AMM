@@ -1,5 +1,53 @@
 # MEMORY — tester
-_Last updated: 2026-06-08, after live v26c_full2 uniform-strike-registration browser confirmation._
+_Last updated: 2026-06-10, after the OPERATOR-VOICE backfill of DIFF_LEDGER.md._
+
+## ★ NEW STANDING DUTY (operator-directed 2026-06-10) — OPERATOR-VOICE layer of DIFF_LEDGER
+Operator's mandate, verbatim: "if the tester is responsible for version control then apart from
+just taking screenshots and checking the UX, he has to take full responsibility to even scan the
+chats transcripts to distill my objections to each version, open questions etc."
+At EVERY ledger entry I now ALSO: scan `history/` transcripts (+ any newer transcript artifacts),
+distill the operator's OWN words (objections VERBATIM + file:line ref / open questions / rulings),
+fill the entry's OPERATOR-VOICE block + the rolling ⭐ OPERATOR OPEN QUESTIONS list. RESOLVED only
+with evidence (ruling quote or verified fix). Skeptic audits my distillation against raw
+transcripts and OUTRANKS everyone but the operator — unresolved-presented-as-resolved is the
+named failure. Never paraphrase an objection into something easier. Provenance labels I use:
+[verbatim-transcript] / [manager-recorded paraphrase] / [summary-stub].
+
+### Backfill DONE (2026-06-10) — what I wrote and where it came from
+- Read end-to-end: `history/transcript_journal.txt` (105 ln, session-summary catalog, last entry
+  2026-06-06) and `history/session_tree_note.md` (4100 ln, canonical PRE-GH note: composite-ray
+  v24 / v25-american / convexity-knob arc, ends at the curve-shape pivot). Swept `notes/`,
+  `docs/` (incl. `docs/context/chats/*.md` summary stubs), manager `MEMORY.md`, feature inventory.
+- Wrote: OPERATOR-VOICE blocks on all 3 backfilled entries + populated the rolling list
+  (8 OPEN items + 4 RESOLVED/RULED items with evidence) + a provenance/honesty note. Mandate
+  quote added to the ledger header.
+- Key verbatim operator quotes recovered (all session_tree_note.md unless noted):
+  "hid and aggregated away information" (:353, old portfolio); "I buy a discount IOU to receive
+  1 BTC after 12 months, on dollar margin" (:921-923, Fork-C settlement ruling); "same carved
+  slice everything — that's why it retains fraction-of-perp pricing" (:3206-3207, caught the
+  pass-3 settlement gap); "looked the same instead of steeper (american-style implies steeper)"
+  (:3460-3461, chart-shape objection); "initial not closing, escrowed not appropriated" (:3754);
+  fragments via manager MEMORY: "yes to all" (:32), "diligent… feature-level… so I don't ever
+  have to keep inventory" (:44-45), "I trust Aristotle" (:360).
+- Finding-2 chain fully evidenced: origin transcript :3444-3458 → og-manager-clone-1.md:18-20 →
+  operator ruling 2026-06-08 (manager MEMORY:505-506) → v26c absorption (my live confirmation).
+
+### ★ THE HONESTY GAP I FLAGGED (do not lose this)
+**The GH-era sessions are NOT in `history/`.** transcript_journal stops 2026-06-06;
+session_tree_note ends pre-GH. So v25-GH / v26a / v26b / v26c (2026-06-08), governance + AIRTIGHT
+(2026-06-09), and the pain-point conversation (2026-06-10) have NO raw transcript — operator
+voice for the exact versions the ledger covers is secondhand (manager MEMORY paraphrase +
+docs/context/chats stubs + quote fragments). Today's directives reach me only via charters and
+manager memory. Recommended to manager/operator: export the 2026-06-08/09/10 transcripts into
+`history/` so the skeptic can audit raw words, not reconstructions.
+
+### Watch-items I carry from the backfill
+- Rolling-list item 5: operator's "|Γ|≤1 exact; |Γ|>1 = labelled approximation" rider
+  (MEMORY:177-180) vs engine locked at γ>1 — nobody has verified an approximation LABEL actually
+  ships in UI/paper claims. Keep against future paper/UI passes.
+- Kurtosis era-reversal recorded (old "Rohan does not want kurtosis" :1056-1057 vs new motive
+  "purpose = kurtosis knob") — superseded, not open; recorded so it can't be cited stale.
+- Slippage-magnitude collar item is PARKED not resolved — re-surface if collar UX ships.
 
 ## DONE — live v26c_full2 browser confirmation (build 6cc73563…)
 Ran **live Playwright Chromium** against `builds/temporal_mvp_v26c_full2.html`. Build md5
@@ -95,3 +143,4 @@ v26c_full2 build md5 `6cc73563779a3e030774b7597d0ae187`. v26b HEAD `8df9f8a3…`
 07_polar_mark_pricing, 08/08b/08c_curve_strikeray*, 09/09b_payoff_rebased*, **11_bands_table_crop**
 (ITM legible), **12_bands_table_OTM_crop** (OTM legible), trace.json (all DOM + live-engine numbers,
 sweeps, drift table, chart-vs-table diffs). Harness `engine/verify/pw_v26c_visual.mjs`.
+`engine/builds/DIFF_LEDGER.md` — my ledger incl. OPERATOR-VOICE layer (backfilled 2026-06-10).

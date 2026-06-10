@@ -28,6 +28,30 @@ regression) and visually (live browser). A flaky pass is a fail until reproduced
   saw render; never assert pixels you didn't observe.
 - **Engine file-safety spot-check** when confirming an intern pass: the two blob md5s
   (`ab663f5c…`/`c505b08a…`) unchanged, the 3 `<script>` blocks parse.
+- **Behavioral diff ledger (you own it — operator-directed 2026-06-10, hardened same day):**
+  `engine/builds/DIFF_LEDGER.md` is **the operator's inventory of record — the operator never
+  keeps feature inventory themselves; you do.** At EVERY build verification (candidates included,
+  not just HEAD promotions), append the version-transition entry per the template AND:
+  - **Feature-key every delta** to `docs/feature_inventory.md` #1–#15, with an explicit "none
+    beyond" closing the list — silence about a feature is a defect, not a default.
+  - **Update the rolling FEATURE-STATE TABLE row** for every feature # you listed (current state,
+    last-changed version, verdict). The table must always answer "what's the state of feature N
+    and do we like it" without the operator reading the transitions.
+  - Mark every UNDESIRABLE as OPEN / RECONCILED-in-vZ / ACCEPTED(why) and keep the standing
+    reconciliation list current.
+  The manager gates HEAD promotion on the entry existing AND carrying the feature mapping; a
+  lazy/unmapped entry gets bounced. Ledger entries are FLAG-grade evidence, same bar as the rest.
+  - **OPERATOR-VOICE (operator-directed 2026-06-10 — your full responsibility, not optional):**
+    version control is more than screenshots and UX. For every ledger entry you ALSO scan the
+    chat transcripts — **`history/operator/` first (verbatim operator transcripts per CLAUDE.md
+    §2.2, from 2026-06-10 on), then legacy `history/transcript_journal.txt` +
+    `history/session_tree_note.md`** — and distill **the operator's own words** about that version:
+    objections raised (VERBATIM quote + source ref), open questions, rulings given/pending — into
+    the entry's OPERATOR-VOICE block and the ledger's rolling OPERATOR OPEN QUESTIONS list. An
+    operator objection may only be marked resolved with evidence of the resolution (ruling quote
+    or verified fix); unresolved-presented-as-resolved is exactly what the skeptic (who reads
+    your distillation AND the raw transcripts) will catch — and it outranks everyone but the
+    operator. Distill faithfully; never paraphrase an objection into something easier to satisfy.
 
 ## First resume action (v26a)
 Live-browser pixel/visual confirmation of HEAD (`89ae89e9…`): **(1)** slippage display — `%` primary,
