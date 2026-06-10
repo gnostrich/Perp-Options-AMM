@@ -30,6 +30,30 @@ _Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
 
+## Done — v27 RENDER/DEFAULT/LABEL fix (knob+warp now VISIBLE; handed to manager 2026-06-10)
+Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (in place). Splice:
+`/tmp/splice_v27_render.py` (count==1 each, blobs never through). Tester root cause: default pool
+sat at u0=ln(800000/10)≈11.3 (off `curveTraceW`'s fixed u∈[−6,6] window → flat sliver) AND symmetric
+wings 0.70/0.70 ⇒ Δw=0 ⇒ τ inert + all trades wing-rejected. CURVE MATH UNCHANGED → self-check
+**21 PASS 0 FAIL** (it builds its OWN pools, never reads the default). Blobs `ab663f5c`/`c505b08a`
+intact; 3 scripts parse; IIFE intact; longest non-blob line 535; diff = exactly the 4 regions.
+- **(1) Trace window straddles operating point + elbow:** `curveTraceW` no longer walks fixed
+  u∈[−6,6]; now `uCenter=½(u0+phi)`, `uSpan=½|u0−phi|+6`, walks `[uCenter−uSpan, uCenter+uSpan]`.
+  Same F-level / same weight field (render-only).
+- **(2) Realistic ASYMMETRIC default pool:** `x:10,y:12` (u0≈0.18, near elbow), `wMinus:0.60,
+  wPlus:0.85` (Δw=0.25 live, both >½ so gLoc≈3.76>1), `alpha:7.625,beta:2.55` (re-stamped readouts).
+  oracle/oracle_initial/perpMark `80000→4.44` (pool's natural marginal=4.51; arb near-identity so
+  marker+frame land ON the curve). UI input defaults `wminus-input 0.70→0.60`, `wplus-input
+  0.70→0.85`. NOTE oracle change has dollar-pipe blast radius but the default pool is NOT a gated
+  surface (only the self-check gates, and it uses its own states) — flagged to manager for awareness.
+- **(3) #16 honest label:** engine SHIPS strong-form φ warp → label now "trades RESHAPE the curve —
+  strong-form φ warp ships … Still OPEN [needs-Aristotle]: warp∘rebase-commute and
+  funding-under-moved-φ lemmas." (was "reserves move on a FIXED curve … strong form is OPEN").
+- **Open for tester:** browser/visual — confirm the curve renders across the frame (not a sliver),
+  τ slider rounds the ATM elbow, a trade visibly shifts the elbow (φ warp), in-band trade executes.
+- **Open for manager:** oracle 80000→4.44 default change (visual-consistency need; blast-radius note
+  above) — confirm acceptable for this WIP demo build before any HEAD consideration.
+
 ## Done — v27 STRONG-FORM WARP (replaces R-simple; implemented, handed to manager 2026-06-10)
 Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (in place; HEAD v26c untouched).
 Authority: `notes/research/TRADE_WARP_strongform_2026-06-10.md` (skeptic-GREEN, manager-verified).

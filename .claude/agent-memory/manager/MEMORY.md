@@ -256,6 +256,18 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   promotion / main-merge of the curve-swap is a SEPARATE operator-tier decision** (curve/invariant
   change + open lemmas warp∘rebase-commute / funding-under-moved-φ [needs-Aristotle]) — NOT auto-promoted.
   HEAD still v26c.
+  **★ TESTER LIVE PASS #1 (agent a9d62863): engine PASS but UI ACCEPTANCE FAIL — features invisible.**
+  knob+warp engine-true but screen-invisible (curve = flat sliver: default op point u₀≈11.3 outside
+  curveTraceW u∈[−6,6]; symmetric default pool Δw=0 ⇒ τ inert + all trades wing-rejected); #16 label
+  stale ("OPEN/fixed curve"). PASS live: wing guard, γ guard, pricing/payoff, 0 console errors. BLOCKER:
+  no HEAD-promote on visual layer. DIFF_LEDGER v27 CANDIDATE entry + evidence/v27_pw + pw harnesses landed.
+  **★ RENDER FIX (agent a44a78d7) + MANAGER-VERIFIED:** curveTraceW now centers on live op-point+elbow
+  (uCenter=(u₀+φ)/2, uSpan straddles); asymmetric near-elbow default pool (x10/y12 u₀≈0.18, w₋0.60/w₊0.85
+  Δw0.25, γ_loc≈3.76, oracle 80000→4.44); #16 label now honest (strong-form φ warp ships). I re-verified:
+  file-safety GREEN (blobs canonical, 3 scripts parse, IIFE), self-check 21/21 unchanged. ⚠ INTERN FLAG:
+  the oracle-default change (→4.44) has dollar-pipe/KPI blast radius (not a gated surface; self-check uses
+  own pools) — tester to confirm KPIs/pricing render sane. **TESTER RE-RUN DISPATCHED** to confirm
+  visible knob+warp. HEAD still v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

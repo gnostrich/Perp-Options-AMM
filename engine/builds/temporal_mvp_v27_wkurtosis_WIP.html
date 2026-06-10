@@ -1328,14 +1328,14 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           <div class="field-row two-col" style="margin-bottom: 6px;">
             <div class="field-label">PUT WING w₋</div>
             <div class="field-input-wrap">
-              <input type="number" id="wminus-input" min="0.51" max="0.95" step="0.01" value="0.70">
+              <input type="number" id="wminus-input" min="0.51" max="0.95" step="0.01" value="0.60">
               <div class="sim-aid-label">put-side weight · must be &gt; 0.5 so γ_loc = w/(1−w) &gt; 1 (locked). Clamped.</div>
             </div>
           </div>
           <div class="field-row two-col" style="margin-bottom: 6px;">
             <div class="field-label">CALL WING w₊</div>
             <div class="field-input-wrap">
-              <input type="number" id="wplus-input" min="0.51" max="0.95" step="0.01" value="0.70">
+              <input type="number" id="wplus-input" min="0.51" max="0.95" step="0.01" value="0.85">
               <div class="sim-aid-label">call-side weight · must be &gt; 0.5 so γ_loc &gt; 1 (locked). Clamped.</div>
             </div>
           </div>
@@ -1350,10 +1350,10 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             Click to execute the trade that restores |dy/dx| = oracle (bisection inverse on (W)).
           </div>
           <div class="sim-aid-label" style="padding: 6px 8px 0; opacity:0.85;">
-            <b>Trade mechanic (#16):</b> reserves move on a FIXED curve — the reserves point slides
-            along a fixed warp (τ, wing weights frozen; per-trade α=x·w, β=y·(1−w) conserved). This is
-            NOT the full trades-reshape-the-curve warp (weight-field re-centering u→u−φ) — that strong
-            form is OPEN.
+            <b>Trade mechanic (#16):</b> trades RESHAPE the curve — the strong-form φ warp ships: a
+            trade re-centers the weight field (u→u−φ′) so the elbow visibly moves (τ, wing weights
+            frozen; per-trade α=x·w, β=y·(1−w) conserved). Still OPEN [needs-Aristotle]: the
+            warp∘rebase-commute and funding-under-moved-φ lemmas.
           </div>
         </div>
         <div class="panel-section">
@@ -2282,10 +2282,12 @@ const Store = (function() {
       // (W) kurtosis curve: tau (ATM-elbow roundness, vol-set/static), wing weights
       // wMinus/wPlus (>0.5 each so g_loc>1 — see calibration guard). alpha/beta are
       // DERIVED (x·w, y·(1-w)); kept for display compatibility. w_mid=0.5 ⇒ ATM g_loc=1
-      // would violate the lock, so wing weights start symmetric >0.5 (g_loc≈2.33 ATM).
-      pool: { x: 10.0, y: 800000.0, tau: 0.3, wMinus: 0.70, wPlus: 0.70, phi: 0.0, alpha: 7.0, beta: 240000.0 },
-      oracle: 80000.0,
-      oracle_initial: 80000.0,
+      // would violate the lock, so wings start ASYMMETRIC and >0.5 (wMinus=0.60,
+      // wPlus=0.85): Delta-w=0.25 keeps tau live + trades in-range; the operating
+      // point sits NEAR the elbow (u0=ln(y/x)~0.18) so the warp renders on-frame.
+      pool: { x: 10.0, y: 12.0, tau: 0.3, wMinus: 0.60, wPlus: 0.85, phi: 0.0, alpha: 7.625, beta: 2.55 },
+      oracle: 4.44,
+      oracle_initial: 4.44,
       // Perp mark — layer-3 reference (formal-spec §1.4). MVP-collapsed
       // numerically to the oracle here; used only by the carved-slice
       // P&L (the carved slice is a perp, not an option). Production
@@ -2298,7 +2300,7 @@ const Store = (function() {
       // for the OTM/ITM regime test. Defaults to the oracle's value but is
       // independently editable from the KPI panel; a rebase moves the
       // oracle and NOT the perp mark.
-      perpMark: 80000.0,
+      perpMark: 4.44,
       t: 0,
       kappa: 0.02,
       tick_hours: 1,
@@ -3380,9 +3382,16 @@ const Viz = (function() {
     const u0 = Math.log(snap.y / snap.x);
     const kCur = wm * Math.log(snap.x) + (1 - wm) * Math.log(snap.y)
                - dw2 * Math.sqrt(tau * tau + (u0 - phi) * (u0 - phi));
-    const logRange = 6;
+    // Window must STRADDLE both the live operating point (u0 = ln(y/x)) and the
+    // elbow (u = phi); a fixed u in [-6,6] leaves a deep-OTM pool off-frame as a
+    // flat sliver, hiding the tau-rounding and the phi-warp. Center on the
+    // midpoint of u0 and phi, half-width wide enough to render the rounded elbow
+    // plus both frozen wings. (Render-only: same F-level, same weight field.)
+    const uCenter = 0.5 * (u0 + phi);
+    const uSpan = Math.max(Math.abs(u0 - phi), 0) * 0.5 + 6;
+    const uLo = uCenter - uSpan, uHi = uCenter + uSpan;
     for (let i = 0; i <= N; i++) {
-      const u = -logRange + (2 * logRange) * i / N;
+      const u = uLo + (uHi - uLo) * i / N;
       const w = wm + dw2 * (u - phi) / Math.sqrt(tau * tau + (u - phi) * (u - phi));
       const m = (w / (1 - w)) * Math.exp(u);   // marginal price = slope on (W)
       const lnx = kCur - (1 - wm) * u + dw2 * Math.sqrt(tau * tau + (u - phi) * (u - phi));
