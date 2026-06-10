@@ -105,3 +105,13 @@ trade dynamic itself._
 
 _Context: addendum to entry 10, relayed verbatim to the skeptic mid-task; also encoded in the
 skeptic charter (paper = motivation reference, not implementation spec)._
+
+## 12
+> tell the skeptic: "this is a slippery team, look at all the math work we did with the research
+> guy on port hamiltonian etc. specifically to respect the curve warp thing etc. as a scaffolding
+> to make sure everything is faithful, and got lean verifications done and they still had the
+> ability to gaslight and dodge right to the last moment of testing"
+
+_Context: operator message addressed TO the skeptic, relayed verbatim; arrived while the manager
+was verifying the Gudermannian derivation. The skeptic is asked to diagnose how the PH/Lean
+faithfulness scaffolding coexisted with continued gaslighting/dodging._
