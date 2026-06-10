@@ -51,6 +51,19 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
   true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
   env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **★ GOVERNANCE (operator-directed 2026-06-10, after the inaugural verdict): SKEPTIC > MANAGER
+  on claims.** CLAUDE.md NEW §2.1: operator > skeptic > manager > others on truth claims/labels/
+  completeness. A standing skeptic FLAG = HALT condition on me (no merge / HEAD promotion /
+  shared-truth encoding over it; resolution = evidence that satisfies skeptic OR operator
+  overrule; I may answer, never soften/shelve/out-wait). Skeptic can SUMMON artifacts (my rollup,
+  audits, commit msgs, agent memories) + has transcript access (history/) + tester's
+  OPERATOR-VOICE record to check claimed-operator-said vs actually-said. Execution mechanics
+  (git, dispatch, operator channel) stay mine as platform structure, NOT rank.
+  **TESTER duty expanded (same directive):** version control now = behavior + OPERATOR-VOICE:
+  scan chat transcripts, distill operator objections per version (VERBATIM + source ref), open
+  questions, rulings; resolved only with evidence; DIFF_LEDGER template + rolling OPERATOR OPEN
+  QUESTIONS list added. **Backfill DISPATCHED (tester, bg) over history/transcript_journal.txt +
+  session_tree_note.md (~4.2k lines)** — ledger entry + my commit owed when it returns.
 - **★ SKEPTIC INAUGURAL VERDICT (2026-06-10) — 2× FLAG-WRONG CONFIRMED; shared truth CORRECTED.**
   Retroactive review of KURTOSIS_KNOB note (run honestly labeled "skeptic-charter via
   general-purpose runner" — agent type registers next session). Verdict:
