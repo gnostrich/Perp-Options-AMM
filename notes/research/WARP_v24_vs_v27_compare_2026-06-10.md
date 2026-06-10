@@ -13,6 +13,17 @@
 > gap is most likely the missing **anchor-overlay viz** (v24 has it; v27 doesn't) — an honest fix, not
 > amplification. **The trajectory-vs-pricing-curve definitional knot + this reconciliation are routed to
 > the skeptic before anything goes to the operator.**
+>
+> **↳ SKEPTIC RECONCILE (`notes/skeptic/VERDICT_WARP_v24_vs_v27_RECONCILE_2026-06-10.md`, sharper —
+> CORRECTS my header too):** (1) v24 DOES warp; operator's premise TRUE; "premise false" = FLAG-WRONG.
+> (2) **But "same order of magnitude" = NO — it inverts: v24 reshapes MORE than v27.** Apples-to-apples
+> at ray u=0.5: ratio v27/v24 ≈ 0.0003 @1% / 0.032 @10% ⇒ **v27's per-trade reshape is 30×–1000× SMALLER
+> than v24's.** v24's scalar w shifts the WHOLE curve uniformly; v27's φ-recenter is a small elbow-LOCAL
+> bend that decays in the wings (the price of frozen wings). My header's "(iii) same order = YES" was
+> WRONG (my v24 number was at the center u=0; the wings is where they diverge). (3) Visibility fix =
+> mirror v24's anchor overlay (honest) — but even then v27's warp looks SMALLER; enlarging it
+> (smaller τ / wider Δw) is a CALIBRATION choice, operator's call. (4) Metric A (dot-slide 1.000) CORRECT;
+> matched-kurtosis defensible. TEST E upheld.
 _research-lead, 2026-06-10. Operator entry 24. NO engine edit, NO git, NO submit. Manager re-derives before anything goes to the operator._
 
 ## The operator's question (verbatim)

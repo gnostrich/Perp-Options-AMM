@@ -286,11 +286,18 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   ANCHOR overlay (L3113-3115/3164-3165). **I verified (`/tmp/v24_render_warp.py`): v24's rendered curve
   reshapes 0.0099%@1% / 0.906%@10% — NONZERO, SAME ORDER as v27 (~0.004%/~2.6%).** So operator's premise
   HOLDS (v24's drawn curve warps; live-vs-anchor divergence = the visible warp); "premise false"
-  CONTRADICTS skeptic TEST E; **answer to operator's question = YES, same order of magnitude.** v27
-  sub-pixel gap ⇒ likely the missing ANCHOR-OVERLAY viz (v24 has it, v27 doesn't) = honest fix, not
-  amplification (likely makes fork-(b) unnecessary). Correction header on the note. **DEFINITIONAL KNOT
-  (trajectory vs pricing curve) ROUTED TO SKEPTIC** (its TEST E has a stake) before operator relay / viz
-  build. HEAD v26c.
+  CONTRADICTS skeptic TEST E. **SKEPTIC RECONCILE (agent a8360cd1, VERDICT_WARP_v24_vs_v27_RECONCILE,
+  verdict #13) — sharper, CORRECTS me too:** (1) v24 warps, premise TRUE, headline FLAG-WRONG. (2)
+  **"same order of magnitude" = NO, and it INVERTS: v24 reshapes MORE than v27** — apples-to-apples at
+  ray u=0.5, ratio v27/v24 ≈ 0.0003@1% / 0.032@10% ⇒ **v27's warp is 30×–1000× SMALLER** (v24's scalar
+  w shifts the whole curve uniformly; v27's φ is a small elbow-LOCAL bend that decays in the wings — the
+  price of frozen wings). **My earlier "shaping up to YES, same order" to the operator was PREMATURE/
+  WRONG (my v24 calc was at center u=0, not apples-to-apples) — OWNED, corrected.** (3) Visibility fix =
+  mirror v24's anchor overlay (honest) BUT even then v27's warp looks SMALLER; enlarging it (smaller τ /
+  wider Δw) = CALIBRATION choice, operator's call. (4) Metric A (dot-slide 1.000) correct; matched-kurtosis
+  defensible; TEST E upheld. **RELAY skeptic verdict VERBATIM (its process-note: paraphrase = FLAG-PROCESS).**
+  Operator-tier decision now: accept v27's gentle local warp / calibrate it bigger (trade vs frozen wings)
+  / reconsider. HEAD v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

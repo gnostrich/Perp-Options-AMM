@@ -415,3 +415,43 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - The strong-form warp moves the whole pricing curve (ATM weight +2.1e-2/trade), is a real reshape.
 - warp4's "1e-13 at τ≥5 Balancer" = single-step tautology, NOT a τ→∞ convergence (that's ~1/τ²).
 - Tangency (pricing slope==trajectory slope) survives a MOVED φ (8.9e-16), not just φ=0.
+
+13. **2026-06-10 — WARP v24-vs-v27 reconciliation (verdict #13)** →
+   `notes/skeptic/VERDICT_WARP_v24_vs_v27_RECONCILE_2026-06-10.md`. Summoned to break a
+   contradiction: the compare note (`notes/research/WARP_v24_vs_v27_compare_2026-06-10.md`)
+   headlined "v24 ≡ 0 reshape / pure dot-slide / operator's 'v24 warps' premise FALSE" — contradicts
+   my own TEST E (#12). **VERDICT: that headline is FLAG-WRONG; the manager's CORRECTION HEADER is
+   right.** Re-derived independently vs LIVE v24 engine source (render path L3100–3165, trade
+   L1617–1625, getW=α/x L1594, getDepth=x^w·y^(1−w) L1596). **(1) Premise TRUE — v24 warps:** v24
+   DRAWS `curveTraceExplicit(snap.w, snap.depth, modeSlope)` from the LIVE w=α/x; a trade conserves
+   (α,β) but x moves ⇒ w moves (0.5→0.5455 @10%) ⇒ the rendered Balancer pricing curve reshapes
+   (~9% Δy at the wing u=2 on a 10% trade; curve at wings moves MORE than the dot). The note's
+   Metric-B "0 exact" held the CONSERVED TRAJECTORY hyperbola (x−α)(y−β)=αβ, NOT what v24 plots —
+   `/tmp/warp_cmp_6.js` L25 states the error verbatim: "pricing curve is fully determined by
+   (alpha,beta)" = FALSE (it's determined by w,depth). **(2) Same order of magnitude? NO — and the
+   surprise: v24 reshapes MORE, not less.** Apples-to-apples (both builds' rendered curve, same
+   pool/trade, Δln(mp) at fixed ray, `/tmp/skeptic_ratio.js`): ratio v27/v24 ≈ 0.0003 @1% / 0.032
+   @10% at u=0.5 — v27 reshapes 30×–1000× LESS (v24's scalar w shifts the WHOLE curve uniformly;
+   v27's φ-recenter is a small elbow-local bend). This INVERTS the note's "v27 adds a reshape v24
+   lacks." **(3) Visibility fix = mirror v24's fixed-w=0.5 ANCHOR overlay (L3164), NOT amplify** —
+   v24 shows warp as live-vs-anchor divergence (Δy=2.58 @u=2 post-10%); v27 WIP lacks the overlay.
+   But operator must be told the overlay reveals a SMALLER warp than v24's (calibration: smaller τ /
+   wider Δw enlarges it — operator-tier, not a render bug). **(4) Definitional knot reconciled:** the
+   right referent for "trades warp the curve" is the RENDERED PRICING CURVE (x^w·y^(1−w)=k, moves as
+   w moves), NOT the trajectory hyperbola (conserved, not plotted). My TEST E was right; only the
+   note's Metric B (which silently switched referent) was wrong. **What the note got RIGHT (don't
+   over-correct):** Metric A dot-slide ratio 1.000 is CORRECT (shared hyperbola, identical start);
+   matched-kurtosis construction defensible. **Process:** manager caught its own subagent's headline
+   pre-relay (correction header) — §2.1 channel working; no FLAG-PROCESS. Manager will NOT relay the
+   original "premise false" headline. **Pattern #4 reinforced:** "curve fully determined by (α,β)" =
+   true statement about the WRONG object (trajectory) sold as the rendered object — sibling of
+   price-vs-slope GOTCHA #12.
+
+## Claims mine-to-defend (verdict #13 — v24-vs-v27 reconcile)
+- v24's RENDERED pricing curve warps under a trade (w=α/x moves; ~9% Δy at wing u=2 on a 10% trade).
+  The operator's "v24 warps" premise is TRUE. (`/tmp/skeptic_check.js`)
+- v27's per-trade curve reshape is 30×–1000× SMALLER than v24's, NOT same order of magnitude
+  (v24 = curve-wide w-scalar shift; v27 = small elbow-local φ-recenter). Ratio v27/v24 ≈ 0.0003@1%,
+  0.032@10% at u=0.5. (`/tmp/skeptic_ratio.js`)
+- "Pricing curve is fully determined by (α,β)" is FALSE — it's determined by (w=α/x, depth); (α,β)
+  fix only the trajectory hyperbola (the locus, not the drawn curve). This is the note's root error.
