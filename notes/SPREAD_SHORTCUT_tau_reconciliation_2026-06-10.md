@@ -59,11 +59,14 @@ moneyness* (`mark = min(sNorm/θ, θ/sNorm)` is the payoff definition). So the c
 > call/put wings and three strike pairs (e.g. call sNorm 0.6, strikes (0.8,1.2): both 0.25). Independent
 > of the curve. ✓
 
-**One care-point (the only τ-dependence in (A), and it's indirect):** the mark consumes `sNorm =
-getSNorm(state)`. `getSNorm` **is** curve-dependent and is on the migration change-list — it must be
-re-derived from the τ profile so that `sNorm` still *means the spot moneyness*. The identity is exact for
-whatever number `getSNorm` returns; the requirement is only that the τ-`getSNorm` keeps `sNorm` = the
-normalized spot (as v24's `(x−α)/α = (1−w)/w` does). Pin that and (A) is untouched.
+**One care-point (the only τ-dependence in (A), and it's indirect) — CORRECTED 2026-06-10:** the mark
+consumes `sNorm = getSNorm(state)`. **`getSNorm = (x−α)/α = X/α` is curve-INDEPENDENT (ports verbatim)** —
+per GH_MATH.md it "is NOT curve-dependent; carries convexity via X." Manager-verified: via the τ-arb,
+`sNorm(oracle)` stays **monotone** (well-defined strike registration) and at τ→∞/Δw=0 reproduces v24's
+`sNorm = √(β/(α·oracle))` exactly (err ≤ 2e-41). So the real care-point is **not** re-deriving `getSNorm`
+(it's the same formula) but **registering strikes through the τ-arb**: `θ = getSNorm(arbitrageToOracle(K))`
+(HEAD v26c's `sNormStrike`) — the K↔θ map warps with τ via the arb (already derived), the `getSNorm`
+formula does not. Reuse the registration-through-arb mechanism and (A) is untouched.
 
 ---
 
@@ -91,7 +94,7 @@ state. v24 has this because its curve is `X·Y=αβ` (`x = α + αβ/(y−β)`);
 | `compositeRay(lo,hi)` → θ*, δ | √(θ_lo θ_hi), ½log(θ_hi/θ_lo) | identical | **NO** (port verbatim) |
 | `mark(wing,θ,sNorm)` | min(sNorm/θ, θ/sNorm) | identical | **NO** (moneyness, not curve) |
 | `vsValue = N·mark(θ*)·2sinh(δ)` | Identity I/II | identical | **NO** (port verbatim) |
-| `getSNorm(state)` | (x−α)/α = (1−w)/w | re-derive from τ profile (keep = spot moneyness) | **YES** (curve fn, already listed) |
+| `getSNorm(state)` | (x−α)/α = (1−w)/w | **identical** `(x−α)/α` (curve-independent; verified) | **NO** (formula ports; registration uses τ-arb) |
 | `tradeUpdate(s, dy)` | `dx=−αβ·dy/[(y−β)(y'−β)]` | τ goal-seek: `y'=y+dy`; solve `u'` from `Y₀e^{W(u')}=y'−β`; `x'=X₀e^{W(u')−u'}+α` | **YES** (curve fn, already derived) |
 | bundle 2 legs → 1 tx | one `tradeUpdate(net dy)` | one `tradeUpdate(net dy)` | **NO** (path-independent, §2) |
 
@@ -116,9 +119,10 @@ its quadratic). The composite ray, mark, `2sinh(δ)`, and the bundling all trans
 2. **ITM legs settle-to-cash, no AMM swap** (L1973–1996) — unchanged by τ (intrinsic value, curve-free).
    Only the OTM (live) leg hits the AMM, and that leg is the one whose `tradeUpdate` becomes the τ
    goal-seek.
-3. **`getSNorm` re-derivation is the one real swap task in the pricing path** — get it right (sNorm must
-   stay the spot moneyness) and the whole pricing layer (mark, composite ray, vsValue, leg dispatch,
-   wing-membership) ports without edits. This is the single point to test hardest on the swap.
+3. **`getSNorm` ports verbatim (corrected); the swap task in the pricing path is strike registration via
+   the τ-arb** — `θ = getSNorm(arbitrageToOracle(K))`. Get the registration-through-arb right and the
+   whole pricing layer (mark, composite ray, vsValue, leg dispatch, wing-membership) ports without edits.
+   This is the single point to test hardest on the swap (crossover must still land at the dollar strike K).
 4. **This is a readiness note, not the swap.** Actually editing v24's `<script>` (the surgical swap) is a
    future engine pass behind the file-safety gate — not done here. Curve/economic-object choice
    (whether to ship the τ-curve at all) stays operator-owned (Gate-2).
