@@ -104,6 +104,23 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   PROPOSES; manager re-derives (token-scan/diff, trusted-from-prover discipline) + executes moves +
   surfaces ambiguous to operator. Same move-not-delete/reversible conditions as the 2026-06-10 docs
   cold-storage.
+  **★ AUDIT RETURNED (`notes/skeptic/VERDICT_FORMAL_TRUTH_TO_OBJECTIVE_2026-06-10.md`, agent a5432e56).**
+  Axis the skeptic refused to conflate (and I won't): provenance (trusted-from-prover) ⊥
+  truth-to-objective (relevance). **BUCKET 1 KEEP (on-objective/load-bearing):** R1, T1a, T1b_clean,
+  MERTON_tie = the settlement-survives SPINE (= the rebuild gate); R2/R3/R4/R5; GHMaps,
+  CLOSEOUT_frontier, CLOSEOUT_GHmeasure, GHJ_grounded, C3_reflection; PH6(rebase #5) + B1(solvency #13)
+  straddle §4 contracts → KEEP though they live in the PH cluster. **BUCKET 2 COLD-STORE:** 2A movable-now
+  (superseded duplicates: bare UNIFY/+UNIFY_stage0 rfl-tautology, non-grounded twins
+  GHJ/GHcoercive/PH3/PH4b/CTPH, pre-harden T1b_optimality, RUN-4 Courant/Kahler, probe_optstop —
+  INDEX cites superseders); 2B GATED on operator (PH/metriplectic/Kähler/Courant framing cluster).
+  **BUCKET 3 ASK-OPERATOR (NOT decided by me):** (1) THE BIG ONE — PH/Kähler/Courant framing kept as
+  motivation vs cold-stored as off-objective (governs all 2B; product call, §7); (2) physically
+  reorganize aristotle_runs/ vs just annotate INDEX (zero-risk); (3) B1/solvency default KEEP;
+  (4) MERTON σ-knob UI label open. **NO FORMAL FILE MOVED THIS PASS** — escalating to operator via
+  AskUserQuestion. Skeptic self-flagged: relevance judgment from INDEX/RESULTS/MANAGER_VERIFICATION +
+  objective mapping, did NOT re-derive proofs. ON EXECUTION: I token-scan/diff the actual moves
+  (trusted-from-prover discipline) + re-point INDEX/MANAGER_VERIFICATION/RESULTS/DIFF_LEDGER + truth-up
+  both memories.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.

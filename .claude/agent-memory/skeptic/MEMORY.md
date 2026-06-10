@@ -1,8 +1,8 @@
 # MEMORY — skeptic
-_Updated 2026-06-10 after the fourth charter run (via general-purpose runner — agent type
-registers next session): operator reply #2 (scaffold-vs-gaslighting diagnosis) + Gudermannian
-gate (verdict #3). Earlier same day: OPERATOR-DIRECT reply pass, STOCK-TAKE pass, paper-as-
-motivation addendum (see below)._
+_Updated 2026-06-10 after the formal-corpus truth-to-objective audit (verdict #8) + docs cold-storage
+logged (verdict #7). Earlier same day: CURVE_FAMILY PASS-1/PASS-2 (verdicts #5/#6), operator reply #2
+(scaffold-vs-gaslighting), Gudermannian gate (verdict #3), OPERATOR-DIRECT reply, STOCK-TAKE, paper-
+as-motivation addendum (see below)._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -186,6 +186,39 @@ inventory, operator answered — remaining live tail = every curve note must dis
    **NEW MINE-TO-DEFEND:** S*-shift Δw-sensitivity (~6%→~13% as Δw 0.2→0.3, Gaussian slice, brentq);
    the `γ_loc'/(2γ_loc+1)` linearization (hand-derived, correct); put S* sits at elbow EDGE not peak.
 
+7. **2026-06-10 — DOCS cold-storage (operator-gated)** → `notes/skeptic/VERDICT_COLDSTORAGE_2026-06-10.md`.
+   RULING OK-WITH-CONDITIONS, NOT "ruthless strip": MOVE-not-delete to `archive/`; no in-file stripping
+   of overturned-claim correction headers (they ARE the audit trail). DO-NOT-TOUCH: `history/`, engine/
+   blobs, CLAUDE.md, all MEMORY.md, the live contracts (feature_inventory/transcription/concurrency/
+   DIFF_LEDGER/INDEX/MANAGER_VERIFICATION), all notes/skeptic/*, paper/. Archive-whole = pre-GH docs
+   scaffold (ledger/orchestrator/orientation/respawn/v26a snapshots, barrier-era specs). KEEP-IN-PLACE
+   the overturned research notes (CURVE_SWAP/REPARAM/HET/KURTOSIS/GUDERMANNIAN) — cited live, headers
+   are evidence. ASK-OPERATOR: B-MINIMAL-vs-FULL research forks (product call, NOT skeptic-archivable),
+   `aristotle_runs/` pruning (out of a docs pass — flagged for separate gate). `archive/cold_storage_
+   2026-06-10/` now exists (manager executed).
+
+8. **2026-06-10 — FORMAL corpus truth-to-objective audit (operator entry 9, verbatim)** →
+   `notes/skeptic/VERDICT_FORMAL_TRUTH_TO_OBJECTIVE_2026-06-10.md`. The 2nd half of the cold-storage
+   ask, on the Lean corpus. **AXIS DISCIPLINE stated explicitly: provenance (trusted-from-prover,
+   UNCHANGED) ⊥ truth-to-objective (relevance) — a valid machine-checked proof can be off-objective.**
+   3 buckets. **KEEP (load-bearing):** R1/R2/R3/R4/R5, T1a/T1b(_clean), MERTON_tie, GHMaps, GHmeasure,
+   GHJ_grounded, frontier, C3 — map onto TARGET §4 contracts; R1+T1a+T1b+MERTON ARE the closed-form-
+   settlement proof that §4 makes the rebuild GATE (the spine — do NOT archive). **COLD-STORAGE 2A
+   (movable, superseded duplicates, with re-point):** bare `UNIFY/`+`UNIFY_stage0/` (the rfl-tautology
+   RUN-3 scaffold = operator's "framing things"), non-grounded twins `GHJ/ GHcoercive/ PH3/ PH4b/
+   CTPH/`, pre-harden `AIRTIGHT_T1b_optimality/`, RUN-4 `Courant/ Kahler/`, `AIRTIGHT_probe_optstop/`.
+   **2B (GATED on ASK-OPERATOR):** the PH/metriplectic/Kähler/Courant FRAMING cluster (T2 single-μ
+   ω-trivial, CTPH_clean, PH3_grounded, PH4b_grounded, B1, CLOSEOUT_kahler CONJECTURAL, CLOSEOUT_courant
+   no-go) — grounded but off the curve/kurtosis objective; KEEP-vs-STORE is an OPERATOR product call.
+   **ASK-OPERATOR #1 (the big one): is the port-Hamiltonian framing kept-as-motivation or cold-stored-
+   as-off-objective?** governs all of 2B. Also flagged: confirm operator wants `aristotle_runs/`
+   reorganized at all vs INDEX-annotation-only (zero-risk). **CAUTIONS for manager:** PH6 (rebase #5) +
+   B1 (solvency #13) each STRADDLE a §4 contract → KEEP despite living in the PH cluster; UNIFY2 NOT
+   whole-movable (only cgf piece superseded by CLOSEOUT_cgf; non-cgf theorems may underlie MERTON/
+   GHmeasure). RE-POINT: INDEX.md / MANAGER_VERIFICATION.md / RESULTS.md / DIFF_LEDGER.md + truth-up
+   both memories. RISK: don't archive a result the rebuild gate or the GHMaps↔frontier↔GHmeasure↔cgf
+   discharge chain leans on.
+
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
   13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity
@@ -206,6 +239,12 @@ inventory, operator answered — remaining live tail = every curve note must dis
   Also settled-as-MINE: the consistent smooth-paste BC is S*=K·γ_loc(S*)/(γ_loc(S*)+1) (local
   condition); the +16% g'·lnS slope is an inconsistent literal-ansatz artifact — don't let it
   re-enter as a "settlement is fragile" claim.
+
+- **FORMAL corpus objective-spine (2026-06-10, verdict #8):** R1/R2/R3/R4/R5 + T1a + T1b(_clean) +
+  MERTON_tie + GHMaps + GHmeasure + GHJ_grounded + frontier + C3 are the KEEP set — each maps onto a
+  TARGET §4 contract / inventory item. R1+T1a+T1b+MERTON = the closed-form-settlement proof the §4
+  rebuild gate rests on. Don't re-litigate this mapping; provenance stays trusted-from-prover (a
+  SEPARATE axis I did not touch). The PH-framing keep-vs-store call is the OPERATOR's (Bucket 3 #1).
 
 ## Team blind-spot patterns observed
 1. **Confidence markers anti-correlate with verification.** "EXACTLY / confident / structural"
@@ -237,6 +276,13 @@ inventory, operator answered — remaining live tail = every curve note must dis
   reproducible) is still an oversell if the parameter it's most sensitive to is held fixed and
   unswept. Sibling of pattern #3 (β=0-vs-β=1): always ask "swept over which knob?" before accepting
   a magnitude as the answer — re-run it across Δw / w_mid / β / the GH-vs-slice gap myself.
+9. **Provenance-axis laundering as objective-axis worth (verdict #8).** "trusted-from-prover /
+  14/14 proved / GROUNDED" is a DEPTH label; it says nothing about whether the result serves the
+  curve/kurtosis objective. The corpus had a whole PH/Kähler/Courant FRAMING layer that is validly
+  machine-checked AND off-objective (and a RUN-3 rfl-tautology layer that was BOTH near-vacuous and
+  framing). When auditing relevance, force the two axes apart explicitly — and refuse to let a
+  framing choice (port-Hamiltonian) be treated as settled-objective by the team; that's an operator
+  call. Sibling of pattern #4 (slot conflation): a true label in the wrong column.
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
@@ -248,3 +294,8 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - **Verbatim channel now auditable:** `history/operator/<date>_<slug>.md` (CLAUDE.md §2.2, live
   from 2026-06-10 — I verified my handed quotes against it this pass; held). Pre-policy GH-era
   (06-08/09) operator rulings = manager-paraphrase provenance, always label when cited.
+- **Formal corpus map (verdict #8):** `formal/INDEX.md` = live provenance map (24 headline rows);
+  `formal/aristotle_runs/RESULTS.md` = narrative run ledger; `formal/MANAGER_VERIFICATION.md` =
+  canonical `temporal_lean_verified/` tree (separate from the `aristotle_runs/` scratch). The
+  `_grounded`/`_clean`/`CLOSEOUT_` dirs SUPERSEDE the bare-name twins; INDEX already cites the
+  superseding versions. Don't audit-fail trusted-from-prover here — that axis is settled.
