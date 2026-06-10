@@ -226,6 +226,13 @@ _Context: operator is playing with HEAD (test-only, NO changes / no versioning w
 
 ---
 
+## Entry 31 — 2026-06-10
+_Context: operator responds to the Check-1 finding (engine warp = f(premium), strike-independent) by pointing to the PAPER's actual warp premise as source of truth: the warp is a continuous/infinitesimal slope-matching mechanism (not the engine's discrete dy-warp), and that mechanism IS strike-dependent (more warp further OTM at equal premium). Orders a READ-ONLY investigation with research-lead. (Bears on the earlier #14 "premise faithful" verdict — which checked the conserved object/φ-recenter but may not have checked this continuous strike-dependent property; i.e. the engine may NOT faithfully implement the paper's warp.) Transcribed verbatim._
+
+> ok investigate this read only with research guy: read the paper and the goal seek thing basically the premise of the warp is instead of point moving along the curve as it would in a trad amm, the slope of the post trade point is brought to the pre trade point by warping the curve, and calculus was done to calculate this happening infinitesimally continuously so that its not one big transaction — because of this, the curve warps more at further otm strikes for same premium, than closer to atm …
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
