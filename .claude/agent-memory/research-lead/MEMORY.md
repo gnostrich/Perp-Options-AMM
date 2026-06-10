@@ -1,5 +1,31 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, CURVE-FAMILY CARRY pass #4 (notes-only; NO submit/edit/git; skeptic-gated)._
+_Last updated: 2026-06-10, (W) BUILD SPEC speed-run (notes-only; NO submit/edit/git; theory-risk ACCEPTED)._
+
+### (W) BUILD SPEC — 2026-06-10 (operator SPEED RUN, autonomy granted, theory-risk accepted; notes-only)
+Doc: `notes/research/BUILD_SPEC_wcurve_2026-06-10.md`. The intern's implementation contract for the (W)
+kurtosis curve off the v24 base (`engine/builds/temporal_mvp_v24_rebase_fixed_2.html` — clean Balancer-
+barrier engine, NO GH tail/ghMu). Verify scripts `/tmp/wcurve_verify{,2,3}.py` (python float64).
+**LOAD-BEARING [proven] FINDING:** on (W) Balancer-warp curve, marginal price == geometric slope EXACTLY
+(`|dy/dx|=(w/(1-w))(y/x)`, 1e-15) ⇒ **GOTCHA#12's e^(-ghMu) factor is GH-only, ABSENT in (W)**; mpGeom
+collapses to getMP_raw, do NOT port any ghMu machinery. Other [proven]: first integral RK4 3.4e-13;
+wing exponents γ_±=w_±/(1-w_±) τ-independent; γ_loc(0)=w_mid/(1-w_mid); price p(u)=γ_loc·e^u strictly
+monotone ⇒ arbitrage inverse unique+round-trips; Reading-A S*=K·γ_loc(S*)/(γ_loc(S*)+1) fixed point
+converges. **4 curve fns specced:** getMP_raw=(w/(1-w))(y/x) with w=wField(u); tradeUpdate=paper Trade-
+Formula (α=x·w,β=y·(1-w) conserved per-trade at PRE-weight, hyperbola algebra unchanged, w re-derived);
+arbitrageToOracle=bisection invert (no closed form on W); rebase=carry-shift q→q−ln r (NOT rigid x→r·x;
+w NOT preserved, curve-shape is). mark=v26c smooth-pasting form with g→γ_loc(strike). Funding anchor=
+price-anchor p=P, γ→±γ_loc. Dollar pipe REUSED (§6 hard-stop). τ knob static/vol-set, wings frozen.
+**[theory-risk-accepted]:** trade per-trade-freeze + R-simple composition (reserves slide on FIXED field;
+R-paper field-recenter w→φ map OPEN #16); rebase carry-shift (covariance-in-q lemma PROPOSED-only, not
+Lean); funding price-anchor; γ_loc-at-strike (elbow few-% under Reading B). **CANNOT-DEFINE flags:**
+(1) trade→skew strong form #16 OPEN; (2) carry-covariance-in-q Lean unverified; (3) **γ>1 needs BOTH
+w_±>½ — asymmetric params can give γ₋<1, calibration/operator constraint, UI must reject w_±≤½**;
+(4) Reading A vs B = operator settlement-semantics call. Nothing submitted/verified; skeptic FAST pass +
+manager re-derive pending before intern ships. **needs-Aristotle: NONE ready** (operator-tier coord/
+settlement decisions precede any Lean obligation).
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY CARRY pass #4 (notes-only; NO submit/edit/git; skeptic-gated)._
 
 ### CURVE-FAMILY CARRY (#4) — 2026-06-10 (skeptic ruling DELEGATED_DECISIONS item C: #4 FIRST; notes-only)
 Note: `notes/research/CURVE_FAMILY_carry_pass_2026-06-10.md`. Scripts `/tmp/carry_W.py`, `/tmp/carry_W2.py`
