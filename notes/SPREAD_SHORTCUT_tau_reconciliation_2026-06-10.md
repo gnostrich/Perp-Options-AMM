@@ -44,6 +44,17 @@ mark. For an OTM call (`mark = sNorm/θ`):
 moneyness* (`mark = min(sNorm/θ, θ/sNorm)` is the payoff definition). So the composite ray, `θ*`,
 `2sinh(δ)`, and the mark **port verbatim** — `τ` cannot touch them.
 
+> **CLARIFICATION (operator, confirmed 50 dps) — the shortcut's effective notional is value-difference-
+> based, NOT the raw `N`.** Both constituent legs carry the same notional `N` (long `N` at `θ_lo`, short
+> `N` at `θ_hi`), but the AMM sees only their **net** = the value *difference*: `V = N·mark(θ_lo) −
+> N·mark(θ_hi) = N·mark(θ*)·2sinh(δ)`. Re-expressed as one barrier swap at `θ*`, the **effective notional
+> is `N' = N·2sinh(δ) = N·(θ_hi−θ_lo)/√(θ_lo θ_hi)`** — the original `N` scaled by the strike-spread
+> factor, not the unchanged `N`. Limits: tight spread `2sinh(δ)→2δ→0` ⇒ legs nearly cancel, `N'→0`
+> (a 1%-wide spread on N=10 hits the AMM as ~0.2); wide spread can push `N' > N` (strikes 0.5/2.0 ⇒
+> `N'=15`). (`sinh` = *difference* of legs = a spread; the `bsValue` `2cosh(δ)` form is the *sum*.) This
+> scaling is entirely in the mark/composite-ray pricing layer ⇒ **curve-agnostic, unchanged by τ**; only
+> the `tradeUpdate` that pushes the resulting cash `V·oracle` gets the τ-warp.
+
 > **NUMERIC (CHECK 1, 50 dps):** `|mark(lo)−mark(hi)| == mark(θ*)·2sinh(δ)` to **err ≤ 6.7e-52** across
 > call/put wings and three strike pairs (e.g. call sNorm 0.6, strikes (0.8,1.2): both 0.25). Independent
 > of the curve. ✓
