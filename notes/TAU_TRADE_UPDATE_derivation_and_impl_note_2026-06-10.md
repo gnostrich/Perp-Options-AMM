@@ -104,6 +104,38 @@ for `u'` then setting `x' = X(u')+α` yields **exactly** `dx = −αβ·Δy/[(y�
 > with **|Δx| error = 0.0** (`x' = 9.444…/12.142…/8.076…`); marginal at `u₀` = 80000.0 both ways.
 > **Confident.**
 
+### 3a. THE SINGLE CLOSED-FORM EXPRESSION (refinement — the integral closes; manager-added 2026-06-10)
+
+The local-weight integral is **not** numeric — it closes in elementary form, because `∫ u/√(τ²+u²) du =
+√(τ²+u²)`. With `W(u) := ∫₀ᵘ w(t) dt`:
+
+    W(u) = w_mid·u + (Δw/2)·( √(τ²+u²) − τ )                                          (closed form)
+
+    X(u) = X₀ · exp( W(u) − u ),   Y(u) = Y₀ · exp( W(u) )      (anchored X₀,Y₀ at u=0)
+
+and eliminating `u = log(Y/X) − log(Y₀/X₀)` gives a **single implicit curve equation** — the τ-analog of
+Balancer's `x^w·y^(1−w)=k`:
+
+    X·Y  =  X₀Y₀ · exp[ (2·w_mid − 1)·u ] · exp[ Δw·( √(τ²+u²) − τ ) ]
+            \________ Balancer baseline ______/   \____ kurtosis elbow ____/
+
+The **only** new object is `g(u) = √(τ²+u²) − τ` — a smoothed `|u|` (rounded-vertex hyperbola). Baseline
+factor `=const` iff `w_mid=½` (constant-product); elbow factor `=1` iff `Δw=0` OR collapses as `τ→∞`
+(`g→u²/2τ→0`). **Manager-verified (50 dps):** closed `W` matches quadrature to 1e-51; implicit eq matches
+the parametric `X·Y` to 0.0–2e-44; `w_mid=½,Δw=0 ⇒ X·Y=const` for any τ.
+
+> **NOTE — this refines §0/§6-C5:** there is **no clean *algebraic* invariant** (C5 stands), but there
+> **IS a closed-form *transcendental* curve.** So implementation needs **no quadrature** — evaluate one `√`
+> for the forward map; only the *inversion* (Y→u, §3) needs a 1-D solve, exactly as v24 needs a `√` to
+> invert its quadratic. "Numeric inversion," not "numeric integration."
+
+> **Honest nuance (manager): kurtosis (τ) rides on the elbow size Δw.** The warp factor carries `Δw`, so
+> `τ` shapes a corner only when one exists (`Δw≠0`). `τ` = corner *sharpness*; `Δw` = elbow *size*. They
+> separate (τ moves sharpness at fixed Δw — the §6-C2 table), but a perfectly symmetric single-γ curve
+> (`Δw=0`) has no corner to round. **The GH engine always has one:** its put/call exponents are `γ` and
+> `γ+1` (Esscher `βh=1` ⇒ `Δγ=1`), so `τ=δ` genuinely rounds it. A symmetric-kurtosis curve would need an
+> *even* profile instead — separate object, flagged not built.
+
 ### 4. Marginal price — `getMP_raw` with the local weight
 
     getMP_raw(state) = m(u_spot) = (w(u_spot)/(1−w(u_spot)))·(Y(u_spot)/X(u_spot)),   u_spot ↔ state.
