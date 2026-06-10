@@ -1308,6 +1308,20 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             </div>
           </div>
           <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">KURTOSIS τ</div>
+            <div class="field-input-wrap">
+              <input type="number" id="kurt-tau-input" min="0.05" max="50" step="0.05" value="1">
+              <div class="sim-aid-label">elbow sharpness · small τ = sharp / fat-tailed, large τ = flat / Gaussian</div>
+            </div>
+          </div>
+          <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">WING TILT</div>
+            <div class="field-input-wrap">
+              <input type="number" id="kurt-tilt-input" min="0" max="0.8" step="0.05" value="0.4">
+              <div class="sim-aid-label">wing-exponent gap γ₊−γ₋ · 0 = plain v24 (no elbow), &gt;0 = bent curve</div>
+            </div>
+          </div>
+          <div class="field-row two-col" style="margin-bottom: 6px;">
             <div class="field-label">TIME-STEP</div>
             <div class="field-input-wrap">
               <input type="number" id="tick-hours" min="1" max="720" step="1" value="1">
@@ -1603,11 +1617,11 @@ const Engine = (function() {
   //   marginal m(u) = (w/(1−w))·(Y/X)                 (local Balancer slope)
   // τ→∞ or Δw→0 ⇒ w≡wmid ⇒ X·Y=const ⇒ v24 constant product (verified).
   const _prm = (s) => ({
-    wmid: (s.wmid !== undefined) ? s.wmid : 0.5,
-    dw:   (s.dw   !== undefined) ? s.dw   : 0,
-    tau:  (s.tau  !== undefined) ? s.tau  : 1,
-    X0:   (s.X0   !== undefined) ? s.X0   : (s.x - s.alpha),
-    Y0:   (s.Y0   !== undefined) ? s.Y0   : (s.y - s.beta),
+    wmid: (s.ghMid  !== undefined) ? s.ghMid  : 0.5,
+    dw:   (s.ghTilt !== undefined) ? s.ghTilt : 0,
+    tau:  (s.ghTau  !== undefined) ? s.ghTau  : 1,
+    X0:   (s.ghX0   !== undefined) ? s.ghX0   : (s.x - s.alpha),
+    Y0:   (s.ghY0   !== undefined) ? s.ghY0   : (s.y - s.beta),
   });
   const _wOf = (u, p) => p.wmid + 0.5 * p.dw * u / Math.sqrt(p.tau * p.tau + u * u);
   const _WOf = (u, p) => p.wmid * u + 0.5 * p.dw * (Math.sqrt(p.tau * p.tau + u * u) - p.tau);
@@ -1674,7 +1688,7 @@ const Engine = (function() {
   // Marginal → m/r exactly; the elbow shape (τ,Δw) is untouched (kernel-orthogonal).
   function rebase(s, r) {
     return { ...s, x: s.x * r, alpha: s.alpha * r,
-             X0: ((s.X0 !== undefined) ? s.X0 : (s.x - s.alpha)) * r };
+             ghX0: ((s.ghX0 !== undefined) ? s.ghX0 : (s.x - s.alpha)) * r };
   }
 
   // Arbitrage to oracle: find the trade that sets |dy/dx| = oracle, preserving α, β.
@@ -2174,7 +2188,7 @@ const Store = (function() {
   function initialState() {
     return {
       // Deep deployment: x=10 BTC at $80k → y=$800k cash, w=0.5.
-      pool: { x: 10.0, y: 800000.0, alpha: 5.0, beta: 400000.0, wmid: 0.5, dw: 0.4, tau: 1.0, X0: 5.0, Y0: 400000.0 },
+      pool: { x: 10.0, y: 800000.0, alpha: 5.0, beta: 400000.0, ghMid: 0.5, ghTilt: 0.4, ghTau: 1.0, ghX0: 5.0, ghY0: 400000.0 },
       oracle: 80000.0,
       oracle_initial: 80000.0,
       // Perp mark — layer-3 reference (formal-spec §1.4). MVP-collapsed
@@ -2285,6 +2299,9 @@ const Store = (function() {
   }
 
   function setKappa(k) { if (k > 0) state.kappa = k; }
+  function _reanchor() { state.pool.ghX0 = state.pool.x - state.pool.alpha; state.pool.ghY0 = state.pool.y - state.pool.beta; }
+  function setGhTau(v)  { if (v > 0)  { state.pool.ghTau  = v; _reanchor(); } }   // kurtosis (elbow sharpness)
+  function setGhTilt(v) { if (v >= 0) { state.pool.ghTilt = v; _reanchor(); } }   // wing-exponent tilt (γ₊−γ₋)
   function setTickHours(h) { if (h > 0) state.tick_hours = h; }
   // Perp mark setter — MVP-collapsed to oracle; survives in code only
   // for the carved-slice P&L (a perp, not an option). No UI hook in
@@ -2586,7 +2603,7 @@ const Store = (function() {
   return {
     get state() { return state; },
     log, poolInvariants,
-    setOracle, setPerpMark, setKappa, setTickHours, runArbitrage,
+    setOracle, setPerpMark, setKappa, setGhTau, setGhTilt, setTickHours, runArbitrage,
     addPerp, removePerp,
     perpPnl, perpEquity, perpMarkNow,
     liquidity, liquidityPreview,
@@ -2667,6 +2684,12 @@ kpiOracle.addEventListener('change', () => {
 // ── Settings ──────────────────────────────────────────────────────────────
 document.getElementById('kappa-input').addEventListener('change', (e) => {
   Store.setKappa(parseFloat(e.target.value));
+});
+document.getElementById('kurt-tau-input').addEventListener('change', (e) => {
+  Store.setGhTau(parseFloat(e.target.value)); render();
+});
+document.getElementById('kurt-tilt-input').addEventListener('change', (e) => {
+  Store.setGhTilt(parseFloat(e.target.value)); render();
 });
 document.getElementById('tick-hours').addEventListener('change', (e) => {
   Store.setTickHours(parseFloat(e.target.value));
@@ -3148,7 +3171,8 @@ const Viz = (function() {
     const w = Engine.getW(p);
     const sNorm = Engine.getSNorm(p);
     const depth = Engine.getDepth(p);
-    return { x: p.x, y: p.y, w, depth, sNorm, alpha: p.alpha, beta: p.beta };
+    return { x: p.x, y: p.y, w, depth, sNorm, alpha: p.alpha, beta: p.beta,
+             ghMid: p.ghMid, ghTilt: p.ghTilt, ghTau: p.ghTau, ghX0: p.ghX0, ghY0: p.ghY0 };
   }
 
   // Curve trace: parametrize in log(m/modeSlope) so samples cluster around the
@@ -3167,7 +3191,27 @@ const Viz = (function() {
     }
     return pts;
   }
+  // τ-curve trace: samples the offset GH curve X(u),Y(u) so the rounded elbow
+  // (the kurtosis warp) is drawn through the live reserves point.
+  function curveTraceTau(snap) {
+    const pts = [];
+    const N = 400, logRange = 6;
+    const wmid = snap.ghMid, dw = snap.ghTilt, tau = snap.ghTau, X0 = snap.ghX0, Y0 = snap.ghY0;
+    const al = snap.alpha, be = snap.beta;
+    for (let i = 0; i <= N; i++) {
+      const u = -logRange + (2 * logRange) * i / N;
+      const Wv = wmid * u + 0.5 * dw * (Math.sqrt(tau * tau + u * u) - tau);
+      const eW = Math.exp(Wv);
+      const x = X0 * eW * Math.exp(-u) + al;
+      const y = Y0 * eW + be;
+      const w = wmid + 0.5 * dw * u / Math.sqrt(tau * tau + u * u);
+      const m = (w / (1 - w)) * (Y0 * eW) / (X0 * eW * Math.exp(-u));
+      if (isFinite(x) && isFinite(y) && x > 0 && y > 0) pts.push([x, y, Math.atan(m)]);
+    }
+    return pts;
+  }
   function curveTrace(snap) {
+    if (snap.ghTau !== undefined && snap.ghTilt) return curveTraceTau(snap);
     const modeSlope = snap.beta / snap.alpha;
     return curveTraceExplicit(snap.w, snap.depth, modeSlope);
   }
