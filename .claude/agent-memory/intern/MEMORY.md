@@ -30,6 +30,38 @@ _Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
 
+## Done — v27 STRONG-FORM WARP (replaces R-simple; implemented, handed to manager 2026-06-10)
+Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (in place; HEAD v26c untouched).
+Authority: `notes/research/TRADE_WARP_strongform_2026-06-10.md` (skeptic-GREEN, manager-verified).
+Splice: `/tmp/splice_warp.py` (15 reps incl. caller surfaces, all `count==1`, blobs never through).
+Blobs `ab663f5c`/`c505b08a` intact; 3 scripts parse; IIFE intact; longest non-blob line 553.
+- **Field center φ in state** (`phi`, persisted across trades, default 0). `wField` now centers at φ:
+  `u = ln(y/x) − phi`. φ threaded through: `_stampAB`, `arbitrageToOracle` (priceOfU + F-level both
+  use `(u−phi)`), `rebase` (carries φ THROUGH unchanged — does NOT couple, see caveat), `sNormStrike`
+  (via arb), pool default, setTau, setWingWeights, LP resize, liquidityPreview, snapshot, `curveTraceW`.
+- **Strong-form `tradeUpdate`** (R-simple GONE): conserve `α=x·w(u;φ)`,`β=y·(1−w(u;φ))`; `y'=y+dy`,
+  `w*=1−β/y'`, `x'=α/w*`, `u'=ln(y'/x')`, `t=(w*−wm)/dw2`, `z=t·τ/√(1−t²)`, `φ'=u'−z`. Returns
+  `_stampAB({x',y',phi:φ',...})`. Verified `w(u';φ')==w*==0.697171` (matches skeptic TEST B exactly;
+  R-simple's wrong 0.690620 is dropped).
+- **Wing-range guard:** if `w*∉(w_−,w_+)` (|t|≥1) tradeUpdate returns `{rejected:true,reason:'wing-range'}`
+  instead of a state. Surfaced HONESTLY at all 5 consumers: `executeLeg` (returns
+  `{rejected,reason:'trade exceeds frozen-wing range — split or widen Δw'}`), spread leg1/leg2, and the
+  3 band-close sim sites → all bubble `{ok:false, reason:'…frozen-wing range — split or widen Δw'}`.
+- **Render reshapes:** `curveTraceW` walks the φ-centered field + φ-shifted F-level, so a trade VISIBLY
+  moves the elbow (warp), not a dot sliding. Snapshot carries φ to the draw layer.
+- **rebase caveat (skeptic-required):** rebase stays the carry-shift P→P/r; φ carried through, NOT
+  coupled in a way asserting warp∘rebase commute. Code comment marks warp∘rebase-commute + φ-anchor/
+  funding as OPEN `[needs-Aristotle]`. No "Balancer to 1e-13" claim made anywhere.
+- **Gates:** `engine/verify/wcurve_selfcheck.js` extended with WARP block (SKIP-as-pass if tradeUpdate
+  doesn't move φ): (a) α,β conserved 1e-12; (b) on trajectory hyperbola (x−α)(y−β)=αβ resid 0; (c)
+  w(u';φ')==w* 1e-12; (d) φ moves ⇒ ATM weight shifts; (e) wing-cap rejects over-size + in-band accepted;
+  (f) path-independent split==one-shot Δ<1e-15; + round-trip. **21 PASS 0 FAIL** on WIP; earlier 12
+  still pass; HEAD v26c SKIPs (stays green). Did NOT run GH run_all (per brief).
+- **Open for tester:** browser/visual — a trade reshapes the curve (elbow shifts with φ); an over-size
+  trade shows the "frozen-wing range — split or widen Δw" message; in-band trade executes.
+- **Open for manager:** re-verify the strong-form numbers + the φ-threading diff; warp∘rebase-commute
+  and φ-anchor/funding lemmas remain OPEN/`[needs-Aristotle]` (not closed here).
+
 ## Done — v27 (W) KURTOSIS CURVE (SPEED RUN, implemented, handed to manager 2026-06-10)
 Build: **`engine/builds/temporal_mvp_v27_wkurtosis_WIP.html`** (from v24
 `temporal_mvp_v24_rebase_fixed_2.html`; NOTE v24 is PRE-GH — no ghCalibrate/CDF, no ghMu; HEAD v26c

@@ -1636,7 +1636,11 @@ const Engine = (function() {
     if (!(typeof s.tau === 'number') || !(typeof s.wMinus === 'number') || !(typeof s.wPlus === 'number')) {
       return s.alpha / s.x;
     }
-    const u = Math.log(s.y / s.x);
+    // (W) STRONG-FORM warp: the weight field is CENTERED at phi (the field center,
+    // part of pool state, persisted across trades). A trade moves phi (the curve
+    // SKEWS), wMinus/wPlus/tau frozen. phi absent (pre-warp state) ⇒ centered at 0.
+    const phi = (typeof s.phi === 'number') ? s.phi : 0;
+    const u = Math.log(s.y / s.x) - phi;
     return _wMid(s) + 0.5 * _dW(s) * u / Math.sqrt(s.tau * s.tau + u * u);
   }
   const gLoc = (s) => { const w = wField(s); return w / (1 - w); };   // local exponent g_loc
@@ -1654,7 +1658,8 @@ const Engine = (function() {
   // (W) re-stamp derived alpha/beta onto a state for display-layer compatibility.
   function _stampAB(s) {
     const w = wField(s);
-    return { x: s.x, y: s.y, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus,
+    const phi = (typeof s.phi === 'number') ? s.phi : 0;
+    return { x: s.x, y: s.y, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus, phi,
              alpha: s.x * w, beta: s.y * (1 - w) };
   }
 
@@ -1690,28 +1695,50 @@ const Engine = (function() {
   // Identity III — barrier swap (exposed for completeness).
   const bsValue = (N, m, d) => N * m * 2 * Math.cosh(d);
 
-  // Identity IV — (W) paper Trade-Formula (#16). The conserved leg invariants
-  // alpha = x·w_entry and beta = y·(1-w_entry) are frozen at the PRE-trade weight
-  // for THIS trade; the hyperbola move is the SAME algebra as v24; the NEW live
-  // weight w = wField(post) is then a derived readout (the curve has skewed).
-  // tau (kurtosis) is INVARIANT under a trade.
-  // ⚠ HONESTY (R-simple, theory-risk-accepted): this is "reserves move on a FIXED
-  // curve" — the reserves point slides along a fixed warp (wMinus/wPlus/tau frozen).
-  // It is NOT the full trades-RESHAPE-the-curve warp (weight-field re-centering
-  // u→u−φ, the strong paper reading) — that w→φ map is OPEN/#16. Do not present
-  // this as the full warp.
+  // Identity IV — (W) paper Trade-Formula (#16): the STRONG-FORM warp.
+  // AUTHORITY: notes/research/TRADE_WARP_strongform_2026-06-10.md (skeptic-GREEN,
+  // manager-verified). This SUPERSEDES the old R-simple (which the skeptic PROVED
+  // violates alpha/beta conservation — it is gone, not kept).
+  //
+  // Conserve the field-analogue invariants at the SHIFTED-field local weight:
+  //   alpha = x·w(u;phi),  beta = y·(1-w(u;phi)),  u = ln(y/x).
+  // Cash leg dy:  y' = y+dy;  w* = 1 - beta/y' (beta-conservation);
+  //   x' = alpha/w* (alpha-conservation);  u' = ln(y'/x');
+  //   t = (w*-w_mid)/(dW/2);  z = t·tau/sqrt(1-t^2);  phi' = u' - z  (field reshape).
+  // The reserves point rides the SAME trajectory hyperbola (x-alpha)(y-beta)=alpha·beta
+  // as plain Balancer; the PRICING curve reshapes (phi moves) as the dependent readout —
+  // "trades skew the curve, not a dot sliding on a fixed curve". tau/wings INVARIANT.
+  //
+  // WING-RANGE GUARD: w* must lie in (w_-, w_+) i.e. |t|<1 — else the curve would skew
+  // PAST a frozen wing (no finite phi'). Such a trade is REJECTED here (the UI surfaces
+  // it honestly and offers split/widen-dW); see caller.
+  //
+  // [needs-Aristotle] warp∘rebase-commute AND the phi=0 anchor / funding-reference under
+  // a moved phi are OPEN lemmas — NOT closed. This build does NOT implement an (x,y,phi)
+  // rebase that implies warp∘rebase commute (rebase stays the carry-shift P→P/r below).
   function tradeUpdate(s, dy) {
+    const wm = _wMid(s), dw2 = 0.5 * _dW(s), tau = s.tau;
     const wEntry = wField(s);
-    const alpha = s.x * wEntry;          // conserved through this trade  [theory-risk-accepted]
+    const alpha = s.x * wEntry;          // conserved through this trade
     const beta  = s.y * (1 - wEntry);    // conserved through this trade
     const y_new = s.y + dy;
-    const denom = (s.y - beta) * (y_new - beta);
-    if (Math.abs(denom) < 1e-12) return null;
-    const dx = -alpha * beta * dy / denom;
-    const x_new = s.x + dx;
-    if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0 || y_new <= 0) return null;
-    // Store (x,y) + the static curve shape; re-stamp derived alpha/beta for display.
-    return _stampAB({ x: x_new, y: y_new, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus });
+    if (!(y_new > 0)) return null;
+    const wStar = 1 - beta / y_new;      // new LOCAL weight (beta-conservation)
+    // wing-range guard: w* must stay inside the frozen wing band (|t|<1).
+    if (!(wStar > s.wMinus && wStar < s.wPlus)) {
+      return { rejected: true, reason: 'wing-range',
+               wStar, wMinus: s.wMinus, wPlus: s.wPlus };
+    }
+    const x_new = alpha / wStar;         // new underlying reserve (alpha-conservation)
+    if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0) return null;
+    const uPrime = Math.log(y_new / x_new);
+    const t = (wStar - wm) / dw2;        // in (-1,1) by the guard
+    const z = t * tau / Math.sqrt(1 - t * t);
+    const phiPrime = uPrime - z;         // field reshape — the curve SKEWS
+    if (!isFinite(phiPrime)) return null;
+    // Store (x,y,phi) + the static curve shape; re-stamp derived alpha/beta for display.
+    return _stampAB({ x: x_new, y: y_new, tau: s.tau,
+                      wMinus: s.wMinus, wPlus: s.wPlus, phi: phiPrime });
   }
 
   // (W) rebase. P → P/r is a SHIFT in the carry coordinate q = ln p (a price-leg
@@ -1723,8 +1750,13 @@ const Engine = (function() {
   function rebase(s, r) {
     if (!(r > 0)) return null;
     const p_new = getMP_raw(s) / r;
-    const st = arbitrageToOracle(s, p_new);
-    return st ? _stampAB({ x: st.x, y: st.y, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus }) : null;
+    // [needs-Aristotle] warp∘rebase-commute is OPEN. We deliberately do NOT couple phi
+    // here in a way that asserts commutation: rebase is the carry-shift P→P/r only.
+    // The field center phi is carried THROUGH unchanged (re-placed on the same shape).
+    const st = arbitrageToOracle({ ...s, phi: (typeof s.phi === 'number') ? s.phi : 0 }, p_new);
+    return st ? _stampAB({ x: st.x, y: st.y, tau: s.tau,
+                           wMinus: s.wMinus, wPlus: s.wPlus,
+                           phi: (typeof s.phi === 'number') ? s.phi : 0 }) : null;
   }
 
   // (W) arbitrage to a target marginal price. No closed form (alpha,beta are
@@ -1734,21 +1766,23 @@ const Engine = (function() {
   function arbitrageToOracle(s, oracle) {
     if (!(oracle > 0)) return null;
     const wm = _wMid(s), dw2 = 0.5 * _dW(s), tau = s.tau;
+    const phi = (typeof s.phi === 'number') ? s.phi : 0;
     const priceOfU = (u) => {
-      const w = wm + dw2 * u / Math.sqrt(tau * tau + u * u);
+      const w = wm + dw2 * (u - phi) / Math.sqrt(tau * tau + (u - phi) * (u - phi));
       return (w / (1 - w)) * Math.exp(u);
     };
     let lo = -50, hi = 50;
     for (let i = 0; i < 200; i++) { const mid = (lo + hi) / 2; if (priceOfU(mid) < oracle) lo = mid; else hi = mid; }
     const uStar = (lo + hi) / 2;
-    // Keep F invariant. F = wm·ln x + (1-wm)·ln y - dw2·sqrt(tau^2+u^2).
-    // With y = x·e^u ⇒ ln x = kCur - (1-wm)·u + dw2·sqrt(tau^2+u^2).
+    // Keep F invariant. F = wm·ln x + (1-wm)·ln y - dw2·sqrt(tau^2+(u-phi)^2).
+    // With y = x·e^u ⇒ ln x = kCur - (1-wm)·u + dw2·sqrt(tau^2+(u-phi)^2).
+    const u0 = Math.log(s.y / s.x);
     const kCur = wm * Math.log(s.x) + (1 - wm) * Math.log(s.y)
-               - dw2 * Math.sqrt(tau * tau + Math.log(s.y / s.x) ** 2);
-    const lnx = kCur - (1 - wm) * uStar + dw2 * Math.sqrt(tau * tau + uStar * uStar);
+               - dw2 * Math.sqrt(tau * tau + (u0 - phi) * (u0 - phi));
+    const lnx = kCur - (1 - wm) * uStar + dw2 * Math.sqrt(tau * tau + (uStar - phi) * (uStar - phi));
     const x_eq = Math.exp(lnx), y_eq = x_eq * Math.exp(uStar);
     if (!(x_eq > 0) || !(y_eq > 0)) return null;
-    return _stampAB({ x: x_eq, y: y_eq, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus });
+    return _stampAB({ x: x_eq, y: y_eq, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus, phi });
   }
 
   // (W) register a dollar strike K in the carry coordinate: sNorm of the curve point
@@ -1811,6 +1845,8 @@ const Engine = (function() {
     const legSign  = (legType === 'sell') ? +1 : -1;
     const dy = (wingSign * legSign) * V_usd;   // cash delta on the pool's y leg
     const post = tradeUpdate(state, dy);
+    if (post && post.rejected) return { rejected: true,
+      reason: 'trade exceeds frozen-wing range — split or widen Δw', detail: post };
     if (!post) return null;
     return { newState: post, V: p.V, theta_star: p.theta_star, delta: p.delta, dy,
              m_star: p.m_star, inner: theta_inner, outer: theta_outer, wing, N, legType, mode: p.mode };
@@ -1876,6 +1912,7 @@ const Engine = (function() {
     }
 
     const leg1 = executeLeg(state, 'sell', sold_wing, sold.inner, sold.outer, N_sell, oracle);
+    if (leg1 && leg1.rejected) return { ok: false, reason: 'Sell leg: ' + leg1.reason + '.' };
     if (!leg1) return { ok: false, reason: 'Sell leg failed (singular state).' };
     const V_sell = leg1.V;
 
@@ -1902,6 +1939,7 @@ const Engine = (function() {
     const N_buy = V_sell / denom;
 
     const leg2 = executeLeg(leg1.newState, 'buy', bought_wing, bought.inner, bought.outer, N_buy, oracle);
+    if (leg2 && leg2.rejected) return { ok: false, reason: 'Bought leg: ' + leg2.reason + '.' };
     if (!leg2) return { ok: false, reason: 'Bought leg failed.' };
 
     // Per-leg slippage (display-only). The PERCENTAGE is |Δ(w/(1-w)) ratio|
@@ -2095,6 +2133,7 @@ const Engine = (function() {
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N);
       Y = px_b.V; m_b = px_b.m_star;
       const s_after_Y = tradeUpdate(s, -Y);
+      if (s_after_Y && s_after_Y.rejected) return { ok: false, reason: 'Bought-leg close exceeds frozen-wing range — split or widen Δw.' };
       if (!s_after_Y) return { ok: false, reason: 'Bought-leg (live) close singular.' };
       s = s_after_Y;
       live_leg = 'bought';
@@ -2107,6 +2146,7 @@ const Engine = (function() {
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N);
       X = px_s.V; m_s = px_s.m_star;
       const s_after_X = tradeUpdate(s, +X);
+      if (s_after_X && s_after_X.rejected) return { ok: false, reason: 'Sold-leg close exceeds frozen-wing range — split or widen Δw.' };
       if (!s_after_X) return { ok: false, reason: 'Sold-leg (live) close singular.' };
       s = s_after_X;
       live_leg = 'sold';
@@ -2115,12 +2155,14 @@ const Engine = (function() {
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N);
       X = px_s.V; m_s = px_s.m_star;
       const s_after_X = tradeUpdate(s, +X);
+      if (s_after_X && s_after_X.rejected) return { ok: false, reason: 'Sold-leg close exceeds frozen-wing range — split or widen Δw.' };
       if (!s_after_X) return { ok: false, reason: 'Sold-leg close singular.' };
       s = s_after_X;
 
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N);
       Y = px_b.V; m_b = px_b.m_star;
       const s_after_Y = tradeUpdate(s, -Y);
+      if (s_after_Y && s_after_Y.rejected) return { ok: false, reason: 'Bought-leg close exceeds frozen-wing range — split or widen Δw.' };
       if (!s_after_Y) return { ok: false, reason: 'Bought-leg close singular.' };
       s = s_after_Y;
     }
@@ -2241,7 +2283,7 @@ const Store = (function() {
       // wMinus/wPlus (>0.5 each so g_loc>1 — see calibration guard). alpha/beta are
       // DERIVED (x·w, y·(1-w)); kept for display compatibility. w_mid=0.5 ⇒ ATM g_loc=1
       // would violate the lock, so wing weights start symmetric >0.5 (g_loc≈2.33 ATM).
-      pool: { x: 10.0, y: 800000.0, tau: 0.3, wMinus: 0.70, wPlus: 0.70, alpha: 7.0, beta: 240000.0 },
+      pool: { x: 10.0, y: 800000.0, tau: 0.3, wMinus: 0.70, wPlus: 0.70, phi: 0.0, alpha: 7.0, beta: 240000.0 },
       oracle: 80000.0,
       oracle_initial: 80000.0,
       // Perp mark — layer-3 reference (formal-spec §1.4). MVP-collapsed
@@ -2363,7 +2405,8 @@ const Store = (function() {
   function setTau(v) {
     if (!(v > 0)) return { ok: false, reason: 'τ must be > 0.' };
     state.pool = { x: state.pool.x, y: state.pool.y, tau: v,
-                   wMinus: state.pool.wMinus, wPlus: state.pool.wPlus };
+                   wMinus: state.pool.wMinus, wPlus: state.pool.wPlus,
+                   phi: (typeof state.pool.phi === 'number') ? state.pool.phi : 0 };
     const w = Engine.wField(state.pool);
     state.pool.alpha = state.pool.x * w; state.pool.beta = state.pool.y * (1 - w);
     if (typeof window !== 'undefined') window.__curveFrame = null;
@@ -2381,7 +2424,8 @@ const Store = (function() {
     if (!(np > 0.5)) { np = LO; clamped = true; }
     if (nm > HI) { nm = HI; clamped = true; }
     if (np > HI) { np = HI; clamped = true; }
-    state.pool = { x: state.pool.x, y: state.pool.y, tau: state.pool.tau, wMinus: nm, wPlus: np };
+    state.pool = { x: state.pool.x, y: state.pool.y, tau: state.pool.tau, wMinus: nm, wPlus: np,
+                   phi: (typeof state.pool.phi === 'number') ? state.pool.phi : 0 };
     const w = Engine.wField(state.pool);
     state.pool.alpha = state.pool.x * w; state.pool.beta = state.pool.y * (1 - w);
     if (typeof window !== 'undefined') window.__curveFrame = null;
@@ -2437,7 +2481,8 @@ const Store = (function() {
     }
     const f = 1 + lambda;
     state.pool = { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f,
-                   tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
+                   tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus,
+                   phi: (typeof p.phi === 'number') ? p.phi : 0 };
     // Keep the rebase baselines proportional so the invariant-watch
     // (α/β/k drift) reads the LP resize as a clean scale, not drift.
     state._baseline_alpha *= f;
@@ -2459,7 +2504,8 @@ const Store = (function() {
     if (lambda <= -1 + 1e-12) return null;
     const f = 1 + lambda;
     return { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f,
-             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
+             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus,
+             phi: (typeof p.phi === 'number') ? p.phi : 0 };
   }
 
   function addPerp(side, notional, margin, entryMark) {
@@ -3294,7 +3340,8 @@ const Viz = (function() {
     const sNorm = Engine.getSNorm(p);
     const depth = Engine.getDepth(p);
     return { x: p.x, y: p.y, w, depth, sNorm, alpha: p.alpha, beta: p.beta,
-             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
+             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus,
+             phi: (typeof p.phi === 'number') ? p.phi : 0 };
   }
 
   // Curve trace: parametrize in log(m/modeSlope) so samples cluster around the
@@ -3326,16 +3373,19 @@ const Viz = (function() {
     const wm = 0.5 * (snap.wMinus + snap.wPlus);
     const dw2 = 0.5 * (snap.wPlus - snap.wMinus);
     const tau = snap.tau;
+    // STRONG-FORM warp: the field is CENTERED at the live phi, so a trade (which moves
+    // phi) VISIBLY RESHAPES this curve — the elbow shifts. Wing exponents/tau frozen.
+    const phi = (typeof snap.phi === 'number') ? snap.phi : 0;
     // F level of the live point (curve the reserves point sits on).
     const u0 = Math.log(snap.y / snap.x);
     const kCur = wm * Math.log(snap.x) + (1 - wm) * Math.log(snap.y)
-               - dw2 * Math.sqrt(tau * tau + u0 * u0);
+               - dw2 * Math.sqrt(tau * tau + (u0 - phi) * (u0 - phi));
     const logRange = 6;
     for (let i = 0; i <= N; i++) {
       const u = -logRange + (2 * logRange) * i / N;
-      const w = wm + dw2 * u / Math.sqrt(tau * tau + u * u);
+      const w = wm + dw2 * (u - phi) / Math.sqrt(tau * tau + (u - phi) * (u - phi));
       const m = (w / (1 - w)) * Math.exp(u);   // marginal price = slope on (W)
-      const lnx = kCur - (1 - wm) * u + dw2 * Math.sqrt(tau * tau + u * u);
+      const lnx = kCur - (1 - wm) * u + dw2 * Math.sqrt(tau * tau + (u - phi) * (u - phi));
       const x = Math.exp(lnx), y = x * Math.exp(u);
       if (isFinite(x) && isFinite(y) && x > 0 && y > 0) pts.push([x, y, Math.atan(m)]);
     }

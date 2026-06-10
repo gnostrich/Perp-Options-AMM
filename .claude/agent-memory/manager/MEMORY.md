@@ -243,6 +243,19 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   as convergence). Build caveat: NO `(x,y,φ)` rebase implying warp∘rebase commute (lemma OPEN). Warp note
   + BUILD_SPEC carry correction headers. **BUILD RESUMING: intern dispatched to integrate strong-form
   warp + wing guard into v27** → then tester (browser) + my re-verify → HEAD/ship candidate.
+  **★★ WARP INTEGRATED INTO v27 + MANAGER-VERIFIED (agent a7511eca, 2026-06-10).** φ field-center
+  threaded through state/arb/rebase/render; R-simple REMOVED; strong-form tradeUpdate in; wing-range
+  guard at 5 consumers; curve render reshapes on trade. **I ran file-safety MYSELF: blobs ab663f5c@74/
+  c505b08a@1060 canonical+UNCHANGED, 3 scripts parse, IIFE intact — GREEN.** **I ran the self-check
+  MYSELF: 21 PASS / 0 FAIL** (12 core + 9 warp): α/β conserved, on trajectory hyperbola resid 0, field
+  consistency w(u';φ')==w*==0.6971707707 (= skeptic TEST B), **φ moves ⇒ ATM weight shifts 2.11e-2
+  (curve REshaped)**, wing-cap rejects over-size + accepts in-band, path-independent 1.78e-15,
+  round-trip restores. **TESTER browser run DISPATCHED** (curve warps on trade; knob rounds elbow/wings
+  frozen; over-size→frozen-wing msg; in-band executes; honest labels render) + DIFF_LEDGER entry owed.
+  **v27 = a manager-verified PLAYABLE WIP build** (the deliverable to hand the operator). **HEAD
+  promotion / main-merge of the curve-swap is a SEPARATE operator-tier decision** (curve/invariant
+  change + open lemmas warp∘rebase-commute / funding-under-moved-φ [needs-Aristotle]) — NOT auto-promoted.
+  HEAD still v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
