@@ -164,3 +164,17 @@ after the pivot._
 _Context: operator↔skeptic brainstorm session opened. Protocol: manager = pure pipe (operator
 messages appended verbatim to `notes/skeptic/BRAINSTORM_2026-06-10.md` + this transcript; skeptic
 replies relayed verbatim; session file carries the skeptic's context across turns)._
+
+## 18
+> ok i'll get to this later. first, do you see my vision here? we established w working to warp
+> the curve (goal seek etc. as in paper assuming you've read it), it lacked kurtosis and was
+> barrier specific, so we worked to generalise balancer to something with a single kurtosis knob
+> so it still functioned the same way geometrically. does this make sense to you as a geometric
+> motivation? and then you know the way i tried thinking of this is what is the closed form
+> function that is the 'polar view' of the balancer curve through hyperbolic angles instead of
+> 'straight ones' ... that kind of thing...
+
+_Context: addressed to the manager — a comprehension check on the geometric motivation (w-warp
+established per paper; generalize Balancer with a single kurtosis knob, same geometric function;
+the guiding question = the closed-form 'polar view' of Balancer through hyperbolic angles).
+Skeptic brainstorm question parked by operator for later._
