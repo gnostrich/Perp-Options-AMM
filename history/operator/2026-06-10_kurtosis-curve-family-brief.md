@@ -40,3 +40,10 @@ _Context: operator answers the plain-language flags 1 and 3. Flag 1 → "1a" (th
 _Context: operator confirms the manager's plain-English read-back of the polar-lens vision (one static shape knob = steepness = kurtosis = amplitude, set once for vol; skew dynamic, produced by trading via the w-warp; hyperbolic-angle lens with frozen power-law wings; exact closed form left open to earn its place). Manager to feed this framing into the research scaffold as the locked target. Transcribed verbatim._
 
 > yes
+
+---
+
+## Entry 5 — 2026-06-10
+_Context: operator picks "start" over "hold" on the manager's go/no-go — begin the derivation. Manager to (1) truth-up the quarantined research-lead memory, then (2) state the curve-family conjecture precisely in the hyperbolic-angle lens and prove closed-form American settlement survives FIRST (the rebuild gate), no engine edit. Transcribed verbatim._
+
+> start

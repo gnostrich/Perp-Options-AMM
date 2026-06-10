@@ -57,10 +57,16 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   §4 contract-survival checklist + v24-base finding + sequencing + research-lead-reconcile
   prerequisite + first research task). NOT a build authorization (curve = operator-tier; settlement
   must be proven to survive BEFORE rebuild).
-- **OPEN NEXT (manager, awaiting operator):** start the derivation now vs hold? Prerequisite =
-  research-lead MEMORY truth-up (quarantined: still asserts broken τ≡δ/no-invariant). Then state the
-  curve-family conjecture precisely (hyperbolic-angle lens, one amplitude knob, skew=w-trade, frozen
-  wings) → prove American smooth-pasting closed form survives FIRST (rebuild gate) → contracts #4–#13.
+- **★ DERIVATION DISPATCHED (operator entry 5 = "start", 2026-06-10).** research-lead launched in
+  background (agent `a65816fc`) with a 3-part brief: (0) MANDATORY memory truth-up (lifts the
+  quarantine — drop broken τ≡δ/no-invariant/all-κ-invariant; encode skeptic's manager-verified
+  corrections); (1) state the curve precisely in the operator's hyperbolic-angle lens (one static
+  amplitude knob=steepness=kurtosis, skew=w-trade shift, frozen wings; cosh/Gudermannian must earn
+  its place vs the √-kernel — d-law already failed once); (2) the rebuild gate — does closed-form
+  American smooth-pasting settlement survive on the new curve (re-derive, don't assume). Output =
+  design note (proposed `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`) + inventory
+  disposition; NO engine edit, NO git. **ON RETURN:** I re-derive every number, route the note
+  through the skeptic (mandatory §2.1 pass), then commit. Awaiting completion.
 - **Sequencing reminder:** CLAUDE §0 ruling-1 pivot = DONE; ruling-2 w-warp build = NEXT;
   this curve-family research target slots into/alongside that, operator-gated.
 
