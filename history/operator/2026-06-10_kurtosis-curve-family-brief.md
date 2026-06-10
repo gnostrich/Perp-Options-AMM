@@ -204,6 +204,13 @@ _Context: after the warp investigation closed (premise faithful; no τ matches v
 
 ---
 
+## Entry 29 — 2026-06-10
+_Context: operator tried to play with the promoted v27 HEAD and couldn't; objects that the UX (including default parameters) changed from v24 (the render-fix pass had re-scaled the default pool/oracle 80000→4.44 — manager owns this as the wrong fix; correct fix = keep v24 defaults, init φ₀=u₀ so the elbow starts at the operating point); reiterates a standing instruction (not in our transcripts — predates the policy): NO sliders, up/down arrows (steppers) with appropriate sensitivity. Quick UX test ordered. Transcribed verbatim._
+
+> do a quick UX test, I dont know what you did in the past but i'm not able to play with it. why has anything in the UX changed from the v24 case including default parameters? I mentioned also I dont want sliders anymore just updown arrows with appropriate sesicitivty
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
