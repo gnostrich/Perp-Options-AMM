@@ -1,5 +1,33 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, PREMIUM-WARP + SPREAD-SHORTCUT verify (notes-only; NO submit/edit/git; operator entry 30)._
+_Last updated: 2026-06-10, ARISTOTLE WARP QUERY (entry 33; READ-ONLY; QUERY-only — no submit/edit/git/build)._
+
+### ARISTOTLE WARP/CONTINUOUS-CASE QUERY — 2026-06-10 (operator entry 33; QUERY-only; NO submit/edit/git/build)
+Note: `notes/research/WARP_continuous_aristotle_query_2026-06-10.md`. Auth: ARISTOTLE_API_KEY clean
+(no literal `<>` this session — starts `ar`, ends `24`, len 49); CLI = `uvx --from aristotlelib aristotle`.
+Enumerated ALL ~80 projects (8 pages of `list`). The operator's "continuous case thing on aristotle"
+= the **`warp-amm` / `warp-amm-handoff` cluster** (3 weeks ago: `d20dda3a` base, `7f933065`+`4e92e3cb`
+Model-C twins) — Lean `RequestProject/Warp.lean`, formalizes a "Warp AMM paper" (`warp-amm.tex`, NOT
+in archive). Downloaded + audited base (d20dda3a) + Model-C (7f933065): token-CLEAN, summary asserts
+axioms ⊆ std three (no inline `#print axioms`). **WHAT IT HAS (trade-point anchored, matches operator's
+pin):** `σ_B w₀ x_B y_B=((1−w₀)/w₀)(x_B/y_B)` = tangent AT THE TRADE POINT (x_B,y_B), NOT spot/45°/
+reserves; `w₁ x_s y_s σB` re-seats curve to that tangent; `mode_shift`: φ-shift `ξ_m(wn)−ξ_m(w₀)=
+log(y_s/x_s)−log(y_B/x_B)`; `mode_shift_closed_call` (needs `hcurve`=both on pre-trade curve):
+`=(1/w₀)log(y_s/y_B)` CLOSED FORM; `slope_integral_sum/prod`: ∫σ_ξ over rapidity = 2σ·sinh Δξ /
+2σ²(cosh Δξ−1). **WHAT IT IS NOT (honest gap):** this is the DISCRETE trade-point mode-shift +
+slope-over-RAPIDITY integral; it is NOT the paper-draft `dw/dy=β/y²` cash-leg integral along the
+conservation hyperbola `(x−α)(y−β)=αβ`. Different parametrization (rapidity/log-price ξ, weight w(θ)),
+no `(α,β)` first integral, no `β/y²` ODE. So: the operator's continuous-case warp EXISTS on Aristotle
+as the WARP-AMM rapidity formalization (trade-point-anchored ✓), but the SPECIFIC `dw/dy=β/y²` integral
+named in the paper-draft placeholder is NOT among the 80 projects (searched: trade-exec `f297c53f` is a
+DIFFERENT "self-referential w=Rx/T" model). Other warp-adjacent: `4895db4e` closed-form pricing surface
+(skew/depth, path-independence), `5f9d64c7` Barrier-on-Balancer (`spot_deriv_in_weight d/dw=(y/x)/(1−w)²`).
+**RECOMMEND:** the WARP-AMM `Warp.lean` IS the continuous-case home (use it); if the engine fix needs the
+`dw/dy=β/y²` hyperbola integral specifically, that is a SHORT fresh derivation/obligation (NOT submitted
+this pass) — the `(α,β)`-flow lemma already flagged in TRADE_WARP_strongform item 1 is the same object.
+Nothing submitted/built/git; READ-ONLY query only. Archives in /tmp/aristotle_query (throwaway).
+
+---
+_Earlier: 2026-06-10, PREMIUM-WARP + SPREAD-SHORTCUT verify (notes-only; NO submit/edit/git; operator entry 30)._
 
 ### PREMIUM-WARP MONOTONICITY + VS-SHORTCUT — 2026-06-10 (operator entry 30; TEST-ONLY; NO submit/edit/git; builds md5-unchanged)
 Note: `notes/research/WARP_premium_and_spread_shortcut_2026-06-10.md`. Engines sliced read-only to
