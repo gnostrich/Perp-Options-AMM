@@ -134,6 +134,13 @@ _Context: operator asks when they can get a working version to play with. Timeli
 
 ---
 
+## Entry 19 — 2026-06-10
+_Context: operator picks Option 2 (HOLD the build — no point without the trades-warp), and directs the manager to put another agent (research-lead) on the strong-form trades-warp derivation/generalisation, referencing the paper + v24 (slope goal-seek / α,β conservation law for weight updation). Notes the trades-warp is "half the job", and that there's a PRIOR discarded variant (another curve put in, discarded because the warp didn't work) — a reference to learn from. Transcribed verbatim._
+
+> option 2: "no point without trades-warp thing, put another agent (maybe research lead)  on to refer to the paper / v24 etc. (slope goal-seek / conservation law alpha beta ... for weight updation...) if you need the derivation / generalisation --- this is half the job --- we already have a variant that put in another curve but we discarded because warp didn't work"
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 

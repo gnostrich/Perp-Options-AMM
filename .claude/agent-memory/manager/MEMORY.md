@@ -190,6 +190,18 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   curve+knob+pricing+settlement+trade-warp into v27 (file-safety HARD, STOP-ON-RED) → I re-derive +
   skeptic fast charter/honesty pass + tester live → hand operator. Deliverable floor: playable
   knob+pricing core guaranteed; trade-warp if it lands safely; honest labels on what's theory-risk.
+- **★ BUILD HELD — operator chose Option 2 (entry 19): "no point without trades-warp thing."** The
+  R-simple (dot-sliding) build does NOT meet the signed acceptance test; ship nothing until the
+  STRONG-FORM trades-warp (R-paper, #16) is solved ("half the job"). **Strong-form warp DISPATCHED to
+  research-lead (agent a659a677):** derive how a trade UPDATES the (W) WEIGHT FIELD so the curve
+  RESHAPES (slope goal-seek + α,β conservation generalised to the field, per operator's hints), refs =
+  paper + v24 tradeUpdate/arbitrageToOracle + FLAGS_warp_with_trades + #16; INVESTIGATE the operator's
+  "discarded variant where warp didn't work" (likely the GH line v25→v26c where #16 was never
+  implemented — extract the obstruction). Output `notes/research/TRADE_WARP_strongform_2026-06-10.md`;
+  manager re-derives + skeptic pass before build resumes. **Intern R-simple build (agent a766fe3b)
+  still finishing** → will land as a HELD WIP scaffold (curve/knob/pricing/settlement core is reusable
+  for the eventual strong-form build; the R-simple trade gets REPLACED by the strong-form warp). NOT
+  shipped, NOT HEAD. HEAD stays v26c.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
