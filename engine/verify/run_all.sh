@@ -35,4 +35,23 @@ node seam_gate.js temporal_mvp_v26b_itm.html   # set -e => nonzero exit aborts r
 echo "\n================ DIR GATE — v26c strike-registration (crossover@K + directional consistency) [HARD GATE] ================"
 node dir_gate.js temporal_mvp_v26b_itm.html    # set -e => nonzero exit aborts run_all; SKIPs as pass pre-v26c
 
+# ── FAITH GATES (engine-faithfulness pivot, operator-ordered 2026-06-10) ──
+# Hold the LIVE engine to the PROVEN constructs (formal/INDEX.md). Each gate is
+# negative-controlled (--mutate flips the checked relation -> exit 1) and SKIPs
+# as pass only on a pre-GH build (no ghCalibrate). set -e => any red aborts.
+echo "\n================ FAITH 1 — trade = Esscher tilt translation, slope=P*e^(u-mu) (faith_esscher.js) [HARD GATE] ================"
+node faith_esscher.js temporal_mvp_v26b_itm.html
+
+echo "\n================ FAITH 2 — rebase = gauge move, sNorm-quantities invariant (faith_rebase.js) [HARD GATE] ================"
+node faith_rebase.js temporal_mvp_v26b_itm.html
+
+echo "\n================ FAITH 3 — C3 mark reflection: put = reflected call (faith_reflection.js) [HARD GATE] ================"
+node faith_reflection.js temporal_mvp_v26b_itm.html
+
+echo "\n================ FAITH 4 — gamma<->vol tie: Merton root structure + (gamma, sigma_eff) pins (faith_merton.js) [HARD GATE] ================"
+node faith_merton.js temporal_mvp_v26b_itm.html
+
+echo "\n================ FAITH 5 — curvature = variance (cgf''=Var=Fisher), engine shadow (faith_fisher.js) [HARD GATE] ================"
+node faith_fisher.js temporal_mvp_v26b_itm.html
+
 echo "\nAll checks above should be green. (Lean = trusted-from-prover; UI = tester-confirmed.)"

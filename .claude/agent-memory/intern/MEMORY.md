@@ -1,8 +1,9 @@
 # MEMORY — intern
-_Last updated: 2026-06-08, bootstrap. Rewrite changed bits at task end._
+_Last updated: 2026-06-10 (faith gates). Rewrite changed bits at task end._
 
 ## Engine
-- Canonical: **`engine/builds/HEAD_temporal_mvp_v26a.html`** (md5 `89ae89e9…`). Work from this.
+- Canonical: **`engine/builds/HEAD_temporal_mvp_v26c.html`** (md5 `6cc73563779a3e030774b7597d0ae187`).
+  Work from this. (v26a/v26b notes below are history of landed work.)
 - 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`. `getSNorm`=(x−α)/α;
   `getDepth` is display-only/stale (left so by design). State carries scalar `gh*` params
   (`ghP,ghNx,ghNy,ghM,ghMu,ghAh,ghBh,ghDelta`); the CDF table lives in a module cache keyed by shape,
@@ -190,3 +191,38 @@ Splice: `/tmp/splice_xrange.py` (2 reps, both `count==1`, blobs never through). 
   PASS γ∈{1.5,2,3,4}, seam gate PASS both branches, blobs `ab663f5c`/`c505b08a` intact, 3 scripts
   parse, sigs:true, IIFE:true, longest non-blob line 553 chars. **Open for tester:** visual — naked
   leg climbing past capped spread now visible within the wider frame.
+
+## Done — FAITH GATES (engine-faithfulness pivot, operator-ordered FIRST, 2026-06-10)
+**Harness-only — ZERO HTML edits** (HEAD md5 `6cc73563` byte-unchanged). 5 new
+`engine/verify/faith_*.js` wired into run_all.sh as HARD GATES after dir_gate (same positional-$1
+staged-name convention, `temporal_mvp_v26b_itm.html`). Each: PASS bar in header, loud PASS/FAIL,
+exit 1 on red, `--mutate` flag flips the checked relation → exit 1 (all 5 demonstrated), PLUS a
+built-in always-on "mutant DETECTED" assertion (dir_gate style). All SKIP-as-pass only on pre-GH
+builds (no ghCalibrate). Full run_all on clean v26c: GREEN, exit 0.
+- **faith_esscher** (GHJ slope law): FD slope (central-diff tradeUpdate, NOT getMP_raw) ==
+  ghP·e^(u−ghMu) at 10 walked trade states; gauge scalars bit-identical under trade; group law;
+  slope-ratio==mp-ratio. TOL_FD=0.5%: measured FD plateau ~1.1e-3, h-INDEPENDENT (table-chord
+  aliasing, same artifact seam gate documents — do NOT shrink h expecting improvement). Mutant =
+  THE gotcha (slope vs getMP_raw, off by e^ghMu).
+- **faith_rebase** (PH6): r∈{0.5,1.1,2,5}: getSNorm/sNormStrike(·,K/r)/mark invariant ≤1e-12
+  (measured 4e-16); getMP_raw×1/r; arb commutes; group law; scalar bookkeeping bit-exact. Mutant =
+  unscaled K post-rebase (θ 0.23 vs 0.91 @γ=2,r=2).
+- **faith_reflection** (C3 residual closed): mark('put',θ,s,γ)==mark('call',θ,θ²/s,γ) ≤1e-12
+  (measured 6e-16), 405 pts/γ incl. engine-registered θ; markFrac too; boundaries reflect
+  sN*c·sN*p=θ². Mutant = reflect at 1.02·θ²/s.
+- **faith_merton** (MERTON tie): kernel is GH λ=1 hyperbolic `exp(bh·v−ah·√(δ²+v²))`; harness
+  quadrature off LIVE ghAh/ghBh/ghDelta. PINS (5e-7): σ_eff²=0.539376231136/0.324244596604/
+  0.160865765074/0.0987368432408 (γ=1.5/2/3/4), M, κ(−γ), r_GH=γκ(1)+κ(−γ), r_gauss=γ(γ+1)σ²/2.
+  ghM(engine A&S Bessel)==full-support quadrature ≤1e-8 (measured ~5e-10). Vieta roots {−γ,γ+1};
+  strip: put root IN, Gaussian call root γ+1 OUT (GH asymmetry, integrand non-decay shown).
+  Sanity anchors: κ(−2)=0 (kernel symmetry), κ(−3)=κ(1). δ enters via σ_eff² — gap r_GH/r_gauss
+  −1 = +15%/+0.2%/−1.5%/+3.8% recorded. Mutant = silent δ′=2δ drift.
+- **faith_fisher** (cgf''=Var=Fisher): NO direct engine κ''(t) exists (engine carries only the
+  t=0/t=1 Esscher pair) — honest shadow: ENGINE means from reserve legs (F_β=1−X/Nx,
+  F_{β+1}=Y/(NyM), Stieltjes over arb sweep): Δmean==∫₀¹Var_t dt and logM_T==mean_β+∫(1−t)Var_t
+  (exact for the TRUNCATED exp-family = what the table implements; window [−16,18] DETECTED live
+  via price-coordinate clamp readback, not assumed). TOL 1e-4 (measured ≤1.4e-5). Truncation gap
+  log ghM−logM_T = 1.13e-4 @γ=1.5 (slow tilt tail), <1e-8 @γ≥2 — printed+bounded 2e-4. Mutant =
+  Var×1.01 (resid→1e-2).
+- **Manager note:** `d0354e5` WIP-snapshotted the first 3 mid-task; final files byte-identical.
+  Remaining uncommitted: run_all.sh wiring + faith_merton.js + faith_fisher.js.
