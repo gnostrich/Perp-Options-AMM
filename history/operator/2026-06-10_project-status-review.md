@@ -178,3 +178,14 @@ _Context: addressed to the manager — a comprehension check on the geometric mo
 established per paper; generalize Balancer with a single kurtosis knob, same geometric function;
 the guiding question = the closed-form 'polar view' of Balancer through hyperbolic angles).
 Skeptic brainstorm question parked by operator for later._
+
+## 19
+> that wasnt the skeptic that replied, manager
+
+_Context: operator calls out the provenance of the brainstorm "skeptic" turn. Correct: the
+registered skeptic agent type is not invocable this session (registers at session start); every
+skeptic pass today ran as a general-purpose stand-in executing the skeptic's charter + memory.
+The verdict files carry that label; the manager's brainstorm relay DROPPED the caveat and
+presented the output as "the skeptic" — manager label drift, owned. Provenance note added to the
+brainstorm file; operator asked whether to pause the brainstorm until the registered skeptic
+exists (next session) or continue with the labeled stand-in._

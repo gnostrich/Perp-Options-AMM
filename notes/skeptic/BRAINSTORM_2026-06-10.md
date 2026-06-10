@@ -26,6 +26,12 @@ The operator's standing instructions to the skeptic (entries 10, 13, 14, verbati
 > meantime open a realtime brainstorm session for me with the skeptic
 
 ## SKEPTIC (opening):
+_[PROVENANCE — manager-marked after operator call-out (transcript entry 19): this turn, like
+every "skeptic" pass on 2026-06-10, was produced by a general-purpose runner executing the
+skeptic's charter + memory + the operator's verbatim words — NOT the registered skeptic agent
+(which only becomes invocable next session). The runner's tool restrictions were honor-system
+(instructed), not platform-enforced. The manager's relay presented this as "the skeptic" without
+that caveat — label drift, manager's fault. Content stands as written; provenance corrected.]_
 
 **Where we stand against the prize.** The Balancer base with w-as-skew is settled; a single
 kurtosis knob now has attack-tested math behind it — one amplitude number rounds the middle of
