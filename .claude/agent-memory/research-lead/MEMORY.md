@@ -1,5 +1,28 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, CURVE-FAMILY settlement PASS 2 (notes-only; NO submit/edit/git)._
+_Last updated: 2026-06-10, CURVE-FAMILY CARRY pass #4 (notes-only; NO submit/edit/git; skeptic-gated)._
+
+### CURVE-FAMILY CARRY (#4) — 2026-06-10 (skeptic ruling DELEGATED_DECISIONS item C: #4 FIRST; notes-only)
+Note: `notes/research/CURVE_FAMILY_carry_pass_2026-06-10.md`. Scripts `/tmp/carry_W.py`, `/tmp/carry_W2.py`
+(numpy/scipy float64). Curve = √-kernel (W) invariant. β=1 engine pin honored throughout.
+**VERDICT — LOCKED CARRY CONTRACT DOES NOT TRANSFER (operator-tier).** Carry constant P=Ny/Nx
+TRANSFERS as reserve anchor. The coordinate identity `u=log price−log P` with `dq/du=1` does NOT:
+on (W) `dq/du = 1 + w′/(w(1−w))` [analytic, ★★], measured peak `dq/du` = 6.99 (τ=0.08)/2.60 (τ=0.3)/
+1.48 (τ=1) at the elbow center, →1 only in wings [numeric]. Two DIFFERENT log-coords: reserve-ratio
+`u=ln(y/x)` vs log-price `q=ln p`, related by `q = u + ln γ_loc(u) + C` (★) — the warp correction
+`ln γ_loc(u)` is a BOUNDED sigmoidal step (ln γ₋→ln γ₊, total 0.981 at the test params), u-dependent,
+so q≠u+const. TRUE carry coordinate = the price leg `ln(p/P)`, NOT `ln(y/x)`. Anchor `P=Ny/Nx`:
+reserve-anchor (y/x=P) and price-anchor (p=P) DECOUPLE unless w=½ there; "anchor w=½" is now a single
+POINT not a curve slice. **β=1 honor:** on GH engine warp correction = ln(Ny·M/Nx) is u-INDEPENDENT ⇒
+`max|dq/du−1|=0` [numeric] ⇒ carry clean on the SHIPPED engine; non-transfer is a (W)-WEIGHT-curve
+fact (kernel-in-weight vs kernel-in-score), NOT an engine regression. **Dependents pinned (NOT worked
+this pass):** #5 rebase + #9 funding + #11 dollar + #8 strike-reg must all work in `q=ln p` not `u`;
+rebase must act on q (rigid-shift in u fails — warp doesn't commute); funding anchor must be pinned
+(reserve p=P vs weight w=½ now differ). **needs-Aristotle: NONE ready** (operator-tier coord decision
+precedes any Lean obligation; a carry-covariance-in-q lemma is PROPOSED only). Nothing trusted-from-
+prover/verified. Skeptic pass pending before merge. Inventory disposition table in note (§5).
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY settlement PASS 2 (notes-only; NO submit/edit/git)._
 
 ### CURVE-FAMILY SETTLEMENT — PASS 2, 2026-06-10 (notes-only; NO submit/edit/git; skeptic-gated)
 Note: `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md`. Settles the ONE narrow question the

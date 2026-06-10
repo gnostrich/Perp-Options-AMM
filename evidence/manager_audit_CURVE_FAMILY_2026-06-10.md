@@ -70,7 +70,23 @@ Re-derived `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md` (`/tmp/v
   corrected to the operator. Note carries a manager CORRECTION HEADER. Settlement remains a Reading-A-vs-B
   semantics fork (operator-tier, §7) — escalated, NOT presented as small/passable.
 
+## ★ CARRY pass #4 verification (2026-06-10) — `notes/research/CURVE_FAMILY_carry_pass_2026-06-10.md`
+Re-derived (`/tmp/verify_carry.py` + hand derivation):
+- **Hand derivation:** Balancer price `p=(w/(1−w))·(y/x)` ⇒ `q=ln p = ln(w/(1−w)) + u`, `u=ln(y/x)`.
+  Constant w ⇒ `dq/du=1`. (W) with `w=w(u)` ⇒ `dq/du = 1 + w′/(w(1−w))` — CONFIRMED.
+- **Numeric:** `dq/du(0)` = 6.95 (τ=0.08) / 2.59 (τ=0.3) / 1.48 (τ=1.0); → 1.00001 in the wing (u=8).
+  Reproduces the note's "2–11× / peak 6.99 @τ=0.08 / 2.60 @τ=0.3, →1 in wings."
+- **VERDICT CONFIRMED:** the locked carry coordinate identity `u = log price − log P` (`dq/du=1`,
+  a Balancer fact) BREAKS on (W) in the elbow. Reserve-ratio `u=ln(y/x)` and log-price `q=ln p` are
+  two different coordinates; **true carry coordinate = the price leg `q=ln p`**, not `u`. Locked
+  contract #4 does NOT transfer — operator-tier (the note flags it honestly; no correction header
+  needed — the note is sound). β=1 engine-clean claim (carry fine on the shipped GH engine; the
+  non-transfer is a (W)-weight-curve property, not an engine regression) is structurally consistent
+  and NOT an engine regression — taken as research-lead's claim, not independently engine-reproduced here.
+- Consequence: #5 rebase / #9 funding / #11 dollar pipe / #8 strike-reg must be worked in `q=ln p`,
+  not `u`; the w=½ "anchor" decouples into a reserve-anchor vs price-anchor on (W). Routed to skeptic
+  (mandatory pass + the coordinate-redefinition call).
+
 ## Provenance
-Numeric + analytic by manager (both the original reproduction AND the correction). Nothing
-trusted-from-prover or verified. Curve note NOT merged to main; the skeptic FLAG stands on §2.3/§2.5
-and is a §2.1 halt on promoting "gate fails" as truth — resolved here by retraction, not by out-waiting.
+Numeric + analytic by manager (the original reproduction, the §2.3 correction, AND the carry pass).
+Nothing trusted-from-prover or verified. Notes NOT merged to main; skeptic passes pending where noted.

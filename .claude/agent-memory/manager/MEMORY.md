@@ -143,6 +143,21 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
     (dq/du≠1; β=1-not-β=0; escalate non-transfer as "locked-contract-does-not-transfer"). On return:
     I re-derive + skeptic pass before merge; then dispatch the parallel batch.
   Cold-storage docs run (16 archived) stands. All four calls owned by skeptic; manager executed mechanics only.
+- **★ CARRY #4 PASS RETURNED + MANAGER-REPRODUCED (2026-06-10, agent abee6437,
+  `notes/research/CURVE_FAMILY_carry_pass_2026-06-10.md`).** **VERDICT: the locked carry contract #4
+  does NOT transfer cleanly to (W).** Carry constant `P=Ny/Nx` survives as a reserve-ratio anchor, but
+  the coordinate identity `u=log price − log P` with `dq/du=1` (a Balancer fact) BREAKS: `dq/du =
+  1 + w′/(w(1−w))` [analytic, I hand-derived], peaks 6.99 (τ=0.08)/2.60 (τ=0.3), →1 in wings — I
+  reproduced (`/tmp/verify_carry.py`: 6.95/2.59/1.48). Reserve-ratio `u=ln(y/x)` and log-price `q=ln p`
+  are TWO coordinates: `q = u + ln γ_loc(u) + C`. **True carry coordinate = the price leg `q=ln p`.**
+  β=1 engine-clean (non-transfer is a (W)-weight property, NOT an engine regression — research-lead
+  claim, structurally consistent, not independently engine-reproduced by me). **OPERATOR-TIER FLAG:
+  locked contract does not transfer** (research-lead honored the standing instruction). Consequence:
+  #5/#9/#11/#8 must be worked in `q=ln p` not `u`; w=½ anchor decouples (reserve-anchor vs price-anchor).
+  **DISPATCHED skeptic (mandatory pass on the carry note + take the coordinate-redefinition call** —
+  is adopting `q=ln p` for the (W) design within delegated scope, or does it reopen CLAUDE §4 locked
+  architecture → operator). Evidence appended `evidence/manager_audit_CURVE_FAMILY_2026-06-10.md`.
+  Carry note NOT merged to main pending skeptic pass.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
