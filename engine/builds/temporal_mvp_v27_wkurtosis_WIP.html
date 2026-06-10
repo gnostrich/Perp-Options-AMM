@@ -1316,12 +1316,44 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           </div>
         </div>
         <div class="panel-section">
+          <div class="panel-section-title">(W) Curve Shape · kurtosis</div>
+          <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">KURTOSIS τ</div>
+            <div class="field-input-wrap">
+              <input type="range" id="tau-input" min="0.05" max="3" step="0.01" value="0.3">
+              <span id="tau-readout" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">0.30</span>
+              <div class="sim-aid-label">ATM-elbow roundness, vol-set at setup; STATIC — not changed by trades. Smaller τ = sharper elbow (leptokurtic); larger τ → plain Balancer. Wings (tail exponents) are frozen across τ.</div>
+            </div>
+          </div>
+          <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">PUT WING w₋</div>
+            <div class="field-input-wrap">
+              <input type="number" id="wminus-input" min="0.51" max="0.95" step="0.01" value="0.70">
+              <div class="sim-aid-label">put-side weight · must be &gt; 0.5 so γ_loc = w/(1−w) &gt; 1 (locked). Clamped.</div>
+            </div>
+          </div>
+          <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">CALL WING w₊</div>
+            <div class="field-input-wrap">
+              <input type="number" id="wplus-input" min="0.51" max="0.95" step="0.01" value="0.70">
+              <div class="sim-aid-label">call-side weight · must be &gt; 0.5 so γ_loc &gt; 1 (locked). Clamped.</div>
+            </div>
+          </div>
+          <div class="sim-aid-label" id="wcurve-status" style="padding: 2px 8px 0;">γ_loc(ATM)=2.33 · wings γ₋=2.33, γ₊=2.33</div>
+        </div>
+        <div class="panel-section">
           <div class="panel-section-title">Loop Controls</div>
           <button class="btn-action full" id="btn-tick">Advance Time</button>
           <button class="btn-action full" id="btn-arb" style="margin-top: 6px; background: #4040A0;">Run Arbitrage to Oracle</button>
           <div class="sim-aid-label" style="padding: 6px 8px 0;">
             Arbitrage: post-rebase or post-trade, pool's marginal price may diverge from oracle.
-            Click to execute the trade that restores |dy/dx| = oracle (preserves α, β; shifts w).
+            Click to execute the trade that restores |dy/dx| = oracle (bisection inverse on (W)).
+          </div>
+          <div class="sim-aid-label" style="padding: 6px 8px 0; opacity:0.85;">
+            <b>Trade mechanic (#16):</b> reserves move on a FIXED curve — the reserves point slides
+            along a fixed warp (τ, wing weights frozen; per-trade α=x·w, β=y·(1−w) conserved). This is
+            NOT the full trades-reshape-the-curve warp (weight-field re-centering u→u−φ) — that strong
+            form is OPEN.
           </div>
         </div>
         <div class="panel-section">
@@ -1590,17 +1622,62 @@ SCRIPT BLOCKS
 
 const Engine = (function() {
 
-  // Derived field helpers — full state is just {x, y, α, β}; w is recovered.
-  const getW     = (s) => s.alpha / s.x;
+  // ── (W) kurtosis curve helpers ─────────────────────────────────────────
+  // Curve: F = x^wMid · y^(1-wMid) · exp(-(dW/2)·sqrt(tau^2 + ln^2(y/x))) = k.
+  // Position-dependent weight field w(u), u = ln(y/x); local exponent g_loc = w/(1-w).
+  // Static knob: tau (kurtosis / ATM-elbow roundness, vol-set at setup). Static wing
+  // weights wMinus,wPlus. alpha = x·w and beta = y·(1-w) are now DERIVED readouts
+  // (recomputed live), NOT stored curve constants — see tradeUpdate.
+  const _wMid = (s) => 0.5 * (s.wMinus + s.wPlus);
+  const _dW   = (s) => (s.wPlus - s.wMinus);
+  function wField(s) {
+    // Loud fallback: a pre-(W) state (no wing weights) reverts to the legacy
+    // constant Balancer weight alpha/x. The live (W) path always carries the scalars.
+    if (!(typeof s.tau === 'number') || !(typeof s.wMinus === 'number') || !(typeof s.wPlus === 'number')) {
+      return s.alpha / s.x;
+    }
+    const u = Math.log(s.y / s.x);
+    return _wMid(s) + 0.5 * _dW(s) * u / Math.sqrt(s.tau * s.tau + u * u);
+  }
+  const gLoc = (s) => { const w = wField(s); return w / (1 - w); };   // local exponent g_loc
+
+  // Derived field helpers — curve geometry is driven by the weight FIELD now.
+  const getW     = (s) => wField(s);
   const getSNorm = (s) => { const w = getW(s); return (1 - w) / w; };
   const getDepth = (s) => { const w = getW(s); return Math.pow(s.x, w) * Math.pow(s.y, 1 - w); };
-  const getMP_raw = (s) => { const w = getW(s); return w * s.y / ((1 - w) * s.x); };  // |dy/dx| raw (Layer 1)
+  // (W) marginal price = g_loc·(y/x). On (W) the price coordinate AND the geometric
+  // slope COINCIDE EXACTLY (warp lives in the weight). GOTCHA#12's e^(-ghMu) factor is
+  // GH-only and ABSENT here — do NOT reintroduce it on a future GH cross-port.
+  const getMP_raw = (s) => { const w = getW(s); return (w / (1 - w)) * (s.y / s.x); };  // = slope (Layer 1)
   const poolMark  = (s, oracle, oi) => getMP_raw(s) * ((oi > 0) ? (oracle / oi) : 1);   // honest $ (Layer 2)
 
-  // Mark (no-premium): mark(θ, s) = min(s/θ, θ/s) ∈ (0, 1]; ITM saturates at 1.
-  function mark(wing, theta, sNorm) {
+  // (W) re-stamp derived alpha/beta onto a state for display-layer compatibility.
+  function _stampAB(s) {
+    const w = wField(s);
+    return { x: s.x, y: s.y, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus,
+             alpha: s.x * w, beta: s.y * (1 - w) };
+  }
+
+  // Base per-wing fraction (no premium): markFrac(theta,s) = min(s/theta, theta/s) in (0,1].
+  function markFrac(wing, theta, sNorm) {
     if (wing === 'call') return sNorm < theta ? sNorm / theta : 1;
     else                  return sNorm > theta ? theta / sNorm : 1;
+  }
+  // (W) smooth-pasting mark (Reading A: value ∝ S^(-g_loc), S* = K·g/(g+1)). g = g_loc
+  // passed in by the caller. When gamma is absent or <=1 this collapses to the bare
+  // markFrac — so any display path that does NOT pass gamma keeps the v24 no-premium mark.
+  function mark(wing, theta, sNorm, gamma) {
+    const g = gamma;
+    if (!(g > 1) || !(theta > 0) || !(sNorm > 0)) return markFrac(wing, theta, sNorm);
+    if (wing === 'call') {
+      const sNstar = theta * Math.pow((g + 1) / g, g);
+      if (sNorm <= sNstar) return sNorm / ((g + 1) * sNstar);
+      return 1 - Math.pow(sNorm / theta, -1 / g);
+    } else {
+      const sNstar = theta * Math.pow(g / (g + 1), g);
+      if (sNorm >= sNstar) return sNstar / ((g + 1) * sNorm);
+      return 1 - Math.pow(sNorm / theta, 1 / g);
+    }
   }
 
   // Composite ray: θ* = √(θ₁θ₂), δ = ½ log(θ₂/θ₁). Takes (lo, hi).
@@ -1613,37 +1690,74 @@ const Engine = (function() {
   // Identity III — barrier swap (exposed for completeness).
   const bsValue = (N, m, d) => N * m * 2 * Math.cosh(d);
 
-  // Identity IV — closed-form trade update (preserves α, β, hyperbola).
+  // Identity IV — (W) paper Trade-Formula (#16). The conserved leg invariants
+  // alpha = x·w_entry and beta = y·(1-w_entry) are frozen at the PRE-trade weight
+  // for THIS trade; the hyperbola move is the SAME algebra as v24; the NEW live
+  // weight w = wField(post) is then a derived readout (the curve has skewed).
+  // tau (kurtosis) is INVARIANT under a trade.
+  // ⚠ HONESTY (R-simple, theory-risk-accepted): this is "reserves move on a FIXED
+  // curve" — the reserves point slides along a fixed warp (wMinus/wPlus/tau frozen).
+  // It is NOT the full trades-RESHAPE-the-curve warp (weight-field re-centering
+  // u→u−φ, the strong paper reading) — that w→φ map is OPEN/#16. Do not present
+  // this as the full warp.
   function tradeUpdate(s, dy) {
+    const wEntry = wField(s);
+    const alpha = s.x * wEntry;          // conserved through this trade  [theory-risk-accepted]
+    const beta  = s.y * (1 - wEntry);    // conserved through this trade
     const y_new = s.y + dy;
-    const denom = (s.y - s.beta) * (y_new - s.beta);
+    const denom = (s.y - beta) * (y_new - beta);
     if (Math.abs(denom) < 1e-12) return null;
-    const dx = -s.alpha * s.beta * dy / denom;
+    const dx = -alpha * beta * dy / denom;
     const x_new = s.x + dx;
     if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0 || y_new <= 0) return null;
-    return { x: x_new, y: y_new, alpha: s.alpha, beta: s.beta };
+    // Store (x,y) + the static curve shape; re-stamp derived alpha/beta for display.
+    return _stampAB({ x: x_new, y: y_new, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus });
   }
 
-  // Rebase (frame-keeping; see rebasing_logic_note §3).
-  // r = s_new / s_old. x → r·x, α → r·α, β invariant, y invariant, w invariant.
+  // (W) rebase. P → P/r is a SHIFT in the carry coordinate q = ln p (a price-leg
+  // move), NOT a rigid x→r·x reserve shift (which would move u and warp w on (W)).
+  // Implemented as: re-place the reserves point at marginal price p_old/r on the
+  // SAME (W) curve shape (tau, wMinus, wPlus invariant). w is intentionally NOT
+  // preserved (it cannot be on (W)); the curve SHAPE and the carry-shift law are.
+  // [theory-risk-accepted] carry-covariance-in-q lemma is PROPOSED-only, not Lean.
   function rebase(s, r) {
-    return { x: s.x * r, y: s.y, alpha: s.alpha * r, beta: s.beta };
+    if (!(r > 0)) return null;
+    const p_new = getMP_raw(s) / r;
+    const st = arbitrageToOracle(s, p_new);
+    return st ? _stampAB({ x: st.x, y: st.y, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus }) : null;
   }
 
-  // Arbitrage to oracle: find the trade that sets |dy/dx| = oracle, preserving α, β.
-  // At equilibrium on hyperbola (x−α)(y−β) = αβ:
-  //   mp = w·y / ((1−w)·x) = α·y / (β·x)... wait, more cleanly:
-  //   α/x · y / (β/y · x) = α·y² / (β·x²) = oracle
-  //   ⇒ y² = oracle·β·x²/α
-  //   Combined with hyperbola y = β·x/(x−α):
-  //   ⇒ x_eq = α + √(α·β / oracle), y_eq = β + √(α·β·oracle)
+  // (W) arbitrage to a target marginal price. No closed form (alpha,beta are
+  // position-dependent); invert p(u)=g_loc(u)·e^u = oracle for u by bisection
+  // (p strictly monotone in u — proven), then place (x,y) on the SAME curve level
+  // (F = k_current) at that u.
   function arbitrageToOracle(s, oracle) {
     if (!(oracle > 0)) return null;
-    const x_eq = s.alpha + Math.sqrt(s.alpha * s.beta / oracle);
-    const y_eq = s.beta  + Math.sqrt(s.alpha * s.beta * oracle);
-    const dy = y_eq - s.y;
-    if (Math.abs(dy) < 1e-12) return { ...s };
-    return tradeUpdate(s, dy);
+    const wm = _wMid(s), dw2 = 0.5 * _dW(s), tau = s.tau;
+    const priceOfU = (u) => {
+      const w = wm + dw2 * u / Math.sqrt(tau * tau + u * u);
+      return (w / (1 - w)) * Math.exp(u);
+    };
+    let lo = -50, hi = 50;
+    for (let i = 0; i < 200; i++) { const mid = (lo + hi) / 2; if (priceOfU(mid) < oracle) lo = mid; else hi = mid; }
+    const uStar = (lo + hi) / 2;
+    // Keep F invariant. F = wm·ln x + (1-wm)·ln y - dw2·sqrt(tau^2+u^2).
+    // With y = x·e^u ⇒ ln x = kCur - (1-wm)·u + dw2·sqrt(tau^2+u^2).
+    const kCur = wm * Math.log(s.x) + (1 - wm) * Math.log(s.y)
+               - dw2 * Math.sqrt(tau * tau + Math.log(s.y / s.x) ** 2);
+    const lnx = kCur - (1 - wm) * uStar + dw2 * Math.sqrt(tau * tau + uStar * uStar);
+    const x_eq = Math.exp(lnx), y_eq = x_eq * Math.exp(uStar);
+    if (!(x_eq > 0) || !(y_eq > 0)) return null;
+    return _stampAB({ x: x_eq, y: y_eq, tau: s.tau, wMinus: s.wMinus, wPlus: s.wPlus });
+  }
+
+  // (W) register a dollar strike K in the carry coordinate: sNorm of the curve point
+  // whose marginal price equals K. Carry object (sNorm ∝ S^-g), pins OTM→ITM at K.
+  function sNormStrike(s, K) {
+    if (!s || !(K > 0)) return NaN;
+    const st = arbitrageToOracle(s, K);
+    if (!st) return NaN;
+    return getSNorm(st);
   }
 
   // Mode detection: outer absent (null/undefined/NaN/<=0) ⇒ barrier; else spread.
@@ -1654,13 +1768,15 @@ const Engine = (function() {
   function legPrice(state, wing, theta_inner, theta_outer, N) {
     const sNorm = getSNorm(state);
     if (isBarrier(theta_outer)) {
-      const m = mark(wing, theta_inner, sNorm);
+      const g = gLoc(state);  // (W) local exponent at live reserves (T5 strike-position refinement deferred)
+      const m = mark(wing, theta_inner, sNorm, g);
       return { V: N * m, theta_star: theta_inner, delta: 0, m_star: m, mode: 'barrier' };
     }
     const lo = Math.min(theta_inner, theta_outer);
     const hi = Math.max(theta_inner, theta_outer);
     const { theta_star, delta } = compositeRay(lo, hi);
-    const m_star = mark(wing, theta_star, sNorm);
+    const g = gLoc(state);  // (W) local exponent at live reserves (T5 strike-position refinement deferred)
+    const m_star = mark(wing, theta_star, sNorm, g);
     return { V: vsValue(N, m_star, delta), theta_star, delta, m_star, mode: 'spread' };
   }
 
@@ -2081,16 +2197,20 @@ const Engine = (function() {
   // f = κ · γ · N · mark · (S − 1) / S, where S = pool spot in oracle-normalised frame.
   // γ_call = +2, γ_put = −2 (locked exponent per memory; configurable in prod).
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial) {
+    // (W) funding: price-anchor p=P (carry-consistent), gamma → ±g_loc. [theory-risk-accepted]
+    // g_loc evaluated at the live reserves (T5 strike-position refinement deferred).
     const S = (oracle > 0 && oracle_initial > 0) ? poolMark(state, oracle, oracle_initial) / oracle : getSNorm(state);
-    const m = mark(wing, strike_theta, S);
-    const gamma = (wing === 'call') ? +2 : -2;
+    const g = gLoc(state);
+    const m = mark(wing, strike_theta, S, g);
+    const gamma = (wing === 'call') ? +g : -g;
     if (S <= 0) return 0;
     return kappa * gamma * N * m * (S - 1) / S * dt;
   }
 
   return {
     getW, getSNorm, getDepth, getMP_raw, poolMark,
-    mark, compositeRay, vsValue, bsValue,
+    wField, gLoc, sNormStrike,
+    mark, markFrac, compositeRay, vsValue, bsValue,
     tradeUpdate, rebase, arbitrageToOracle,
     legPrice, executeLeg, executeBand,
     executeCompositeLeg, executeFourStrikeSpread,    // aliases for back-compat
@@ -2117,7 +2237,11 @@ const Store = (function() {
   function initialState() {
     return {
       // Deep deployment: x=10 BTC at $80k → y=$800k cash, w=0.5.
-      pool: { x: 10.0, y: 800000.0, alpha: 5.0, beta: 400000.0 },
+      // (W) kurtosis curve: tau (ATM-elbow roundness, vol-set/static), wing weights
+      // wMinus/wPlus (>0.5 each so g_loc>1 — see calibration guard). alpha/beta are
+      // DERIVED (x·w, y·(1-w)); kept for display compatibility. w_mid=0.5 ⇒ ATM g_loc=1
+      // would violate the lock, so wing weights start symmetric >0.5 (g_loc≈2.33 ATM).
+      pool: { x: 10.0, y: 800000.0, tau: 0.3, wMinus: 0.70, wPlus: 0.70, alpha: 7.0, beta: 240000.0 },
       oracle: 80000.0,
       oracle_initial: 80000.0,
       // Perp mark — layer-3 reference (formal-spec §1.4). MVP-collapsed
@@ -2155,8 +2279,8 @@ const Store = (function() {
       eventLog: [],
 
       // Invariant baselines (rescale on rebase per §4 of rebasing note)
-      _baseline_alpha: 5.0,
-      _baseline_beta:  400000.0,
+      _baseline_alpha: 7.0,
+      _baseline_beta:  240000.0,
       _baseline_k:     null
     };
   }
@@ -2220,15 +2344,52 @@ const Store = (function() {
     const r = newOracle / state.oracle;
     if (Math.abs(r - 1) < 1e-12) return;
     state.pool = Engine.rebase(state.pool, r);
-    state._baseline_alpha *= r;
+    // (W) rebase is a carry-shift (P→P/r), not a rigid x→r·x scale; w is NOT preserved.
+    // Re-baseline alpha/beta to the post-rebase derived readouts so the invariant
+    // watch reads the frame move cleanly (not as drift).
+    state._baseline_alpha = state.pool.alpha;
+    state._baseline_beta  = state.pool.beta;
     state._baseline_k = Engine.getDepth(state.pool);
     state.oracle = newOracle;
     state.perpMark = newOracle;   // carved perp tracks the oracle (external perp DEX feed)
-    log('rebase', `Oracle → $${newOracle.toFixed(0)} (r=${r.toFixed(4)}); x→r·x, α→r·α, β invariant.`);
+    log('rebase', `Oracle → $${newOracle.toFixed(0)} (r=${r.toFixed(4)}); (W) carry-shift P→P/r, curve shape invariant.`);
   }
 
   function setKappa(k) { if (k > 0) state.kappa = k; }
   function setTickHours(h) { if (h > 0) state.tick_hours = h; }
+  // (W) kurtosis knob: tau is static (vol-set at setup), NOT changed by trades.
+  // Re-stamps derived alpha/beta and clears the frozen curve frame so the new
+  // shape re-frames. Guard tau>0.
+  function setTau(v) {
+    if (!(v > 0)) return { ok: false, reason: 'τ must be > 0.' };
+    state.pool = { x: state.pool.x, y: state.pool.y, tau: v,
+                   wMinus: state.pool.wMinus, wPlus: state.pool.wPlus };
+    const w = Engine.wField(state.pool);
+    state.pool.alpha = state.pool.x * w; state.pool.beta = state.pool.y * (1 - w);
+    if (typeof window !== 'undefined') window.__curveFrame = null;
+    log('info', `Kurtosis τ → ${v.toFixed(2)} (static; curve elbow re-shaped, wings frozen).`);
+    return { ok: true };
+  }
+  // (W) γ>1 CALIBRATION GUARD (manager-confirmed): γ_loc = w/(1−w) > 1 ⟺ w > 1/2.
+  // Reject/clamp any wing weight ≤ 1/2 (would give γ<1 — violates the lock /
+  // value∝S^(−γ) eigenfunction). Returns {ok,reason,clamped}.
+  function setWingWeights(wm, wp) {
+    const EPS = 0.001, LO = 0.5 + EPS, HI = 0.95;
+    let clamped = false;
+    let nm = wm, np = wp;
+    if (!(nm > 0.5)) { nm = LO; clamped = true; }
+    if (!(np > 0.5)) { np = LO; clamped = true; }
+    if (nm > HI) { nm = HI; clamped = true; }
+    if (np > HI) { np = HI; clamped = true; }
+    state.pool = { x: state.pool.x, y: state.pool.y, tau: state.pool.tau, wMinus: nm, wPlus: np };
+    const w = Engine.wField(state.pool);
+    state.pool.alpha = state.pool.x * w; state.pool.beta = state.pool.y * (1 - w);
+    if (typeof window !== 'undefined') window.__curveFrame = null;
+    const gM = nm / (1 - nm), gP = np / (1 - np);
+    log('info', `Wing weights → w₋=${nm.toFixed(3)} (γ₋=${gM.toFixed(2)}), w₊=${np.toFixed(3)} (γ₊=${gP.toFixed(2)})`
+        + (clamped ? ' [CLAMPED to keep γ>1 — locked]' : ''));
+    return { ok: true, clamped, wMinus: nm, wPlus: np, gMinus: gM, gPlus: gP };
+  }
   // Perp mark setter — MVP-collapsed to oracle; survives in code only
   // for the carved-slice P&L (a perp, not an option). No UI hook in
   // v5.2; left exposed for tests, future re-wiring, and external
@@ -2275,7 +2436,8 @@ const Store = (function() {
       return { ok: false, reason: `Withdrawal $${(-D).toFixed(0)} exceeds pool value $${V.toFixed(0)}.` };
     }
     const f = 1 + lambda;
-    state.pool = { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f };
+    state.pool = { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f,
+                   tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
     // Keep the rebase baselines proportional so the invariant-watch
     // (α/β/k drift) reads the LP resize as a clean scale, not drift.
     state._baseline_alpha *= f;
@@ -2296,7 +2458,8 @@ const Store = (function() {
     const lambda = D / V;
     if (lambda <= -1 + 1e-12) return null;
     const f = 1 + lambda;
-    return { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f };
+    return { x: p.x * f, y: p.y * f, alpha: p.alpha * f, beta: p.beta * f,
+             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
   }
 
   function addPerp(side, notional, margin, entryMark) {
@@ -2529,7 +2692,7 @@ const Store = (function() {
   return {
     get state() { return state; },
     log, poolInvariants,
-    setOracle, setPerpMark, setKappa, setTickHours, runArbitrage,
+    setOracle, setPerpMark, setKappa, setTickHours, setTau, setWingWeights, runArbitrage,
     addPerp, removePerp,
     perpPnl, perpEquity, perpMarkNow,
     liquidity, liquidityPreview,
@@ -2614,6 +2777,45 @@ document.getElementById('kappa-input').addEventListener('change', (e) => {
 document.getElementById('tick-hours').addEventListener('change', (e) => {
   Store.setTickHours(parseFloat(e.target.value));
 });
+// ── (W) kurtosis knob + wing-weight (γ>1 guard) wiring ──
+function _wcurveStatus() {
+  const p = Store.state.pool;
+  const gM = p.wMinus / (1 - p.wMinus), gP = p.wPlus / (1 - p.wPlus);
+  const gATM = Engine.gLoc(p);
+  const el = document.getElementById('wcurve-status');
+  if (el) el.textContent = `γ_loc(ATM)=${gATM.toFixed(2)} · wings γ₋=${gM.toFixed(2)}, γ₊=${gP.toFixed(2)}`;
+}
+(function () {
+  const tau = document.getElementById('tau-input');
+  const ro = document.getElementById('tau-readout');
+  if (tau) {
+    const onTau = () => {
+      const v = parseFloat(tau.value);
+      if (ro) ro.textContent = v.toFixed(2);
+      Store.setTau(v);
+      _wcurveStatus();
+      if (typeof render === 'function') render();
+      if (typeof Viz !== 'undefined' && Viz) Viz.drawAll(Store.state, null);
+    };
+    tau.addEventListener('input', onTau);
+    tau.addEventListener('change', onTau);
+  }
+  const applyWings = () => {
+    const wmEl = document.getElementById('wminus-input');
+    const wpEl = document.getElementById('wplus-input');
+    const r = Store.setWingWeights(parseFloat(wmEl.value), parseFloat(wpEl.value));
+    // reflect any clamp back into the inputs so the UI cannot show a γ<1 weight
+    if (r && r.clamped) { wmEl.value = r.wMinus.toFixed(3); wpEl.value = r.wPlus.toFixed(3); }
+    _wcurveStatus();
+    if (typeof render === 'function') render();
+    if (typeof Viz !== 'undefined' && Viz) Viz.drawAll(Store.state, null);
+  };
+  const wmEl = document.getElementById('wminus-input');
+  const wpEl = document.getElementById('wplus-input');
+  if (wmEl) wmEl.addEventListener('change', applyWings);
+  if (wpEl) wpEl.addEventListener('change', applyWings);
+  _wcurveStatus();
+})();
 document.getElementById('btn-tick').addEventListener('click', () => {
   Store.fundingTick(Store.state.tick_hours);
   render();
@@ -3091,16 +3293,18 @@ const Viz = (function() {
     const w = Engine.getW(p);
     const sNorm = Engine.getSNorm(p);
     const depth = Engine.getDepth(p);
-    return { x: p.x, y: p.y, w, depth, sNorm, alpha: p.alpha, beta: p.beta };
+    return { x: p.x, y: p.y, w, depth, sNorm, alpha: p.alpha, beta: p.beta,
+             tau: p.tau, wMinus: p.wMinus, wPlus: p.wPlus };
   }
 
   // Curve trace: parametrize in log(m/modeSlope) so samples cluster around the
   // visible mode region. Uniform-phi sampling fails for asymmetric raw units
   // (BTC/USD) because the mode sits at phi ≈ 89.999° — a sliver near π/2.
   function curveTraceExplicit(w_local, k_local, modeSlope) {
+    // Legacy constant-weight Balancer trace (kept for the w=1/2 anchor overlay).
     const pts = [];
     const N = 400;
-    const logRange = 6;   // covers e^-6 to e^6 ratio around the mode
+    const logRange = 6;
     for (let i = 0; i <= N; i++) {
       const u = -logRange + (2 * logRange) * i / N;
       const m = modeSlope * Math.exp(u);
@@ -3110,7 +3314,35 @@ const Viz = (function() {
     }
     return pts;
   }
+  // (W) curve trace: walk u = ln(y/x) and place (x,y) on the F=k level with the
+  // POSITION-DEPENDENT weight field. tau rounds the ATM elbow; the wing exponents
+  // are tau-independent, so the far-OTM/far-ITM segments are frozen across tau.
+  function curveTraceW(snap) {
+    if (!(typeof snap.tau === 'number') || !(typeof snap.wMinus === 'number')) {
+      return curveTrace(snap);   // legacy fallback
+    }
+    const pts = [];
+    const N = 400;
+    const wm = 0.5 * (snap.wMinus + snap.wPlus);
+    const dw2 = 0.5 * (snap.wPlus - snap.wMinus);
+    const tau = snap.tau;
+    // F level of the live point (curve the reserves point sits on).
+    const u0 = Math.log(snap.y / snap.x);
+    const kCur = wm * Math.log(snap.x) + (1 - wm) * Math.log(snap.y)
+               - dw2 * Math.sqrt(tau * tau + u0 * u0);
+    const logRange = 6;
+    for (let i = 0; i <= N; i++) {
+      const u = -logRange + (2 * logRange) * i / N;
+      const w = wm + dw2 * u / Math.sqrt(tau * tau + u * u);
+      const m = (w / (1 - w)) * Math.exp(u);   // marginal price = slope on (W)
+      const lnx = kCur - (1 - wm) * u + dw2 * Math.sqrt(tau * tau + u * u);
+      const x = Math.exp(lnx), y = x * Math.exp(u);
+      if (isFinite(x) && isFinite(y) && x > 0 && y > 0) pts.push([x, y, Math.atan(m)]);
+    }
+    return pts;
+  }
   function curveTrace(snap) {
+    if (typeof snap.tau === 'number' && typeof snap.wMinus === 'number') return curveTraceW(snap);
     const modeSlope = snap.beta / snap.alpha;
     return curveTraceExplicit(snap.w, snap.depth, modeSlope);
   }

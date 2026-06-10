@@ -202,6 +202,20 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   still finishing** → will land as a HELD WIP scaffold (curve/knob/pricing/settlement core is reusable
   for the eventual strong-form build; the R-simple trade gets REPLACED by the strong-form warp). NOT
   shipped, NOT HEAD. HEAD stays v26c.
+  **★ INTERN BUILD LANDED + MANAGER-VERIFIED (agent a766fe3b, 2026-06-10).** `temporal_mvp_v27_wkurtosis_WIP.html`
+  + `engine/verify/wcurve_selfcheck.js`. **I ran the file-safety gate MYSELF: blobs line74 ab663f5c /
+  line1060 c505b08a (canonical, UNCHANGED), 3 scripts parse, IIFE intact** — GREEN. **I ran the self-check
+  MYSELF: 12 PASS / 0 FAIL** — price==geometric slope 4.3e-7 (no e^-μ, GH gotcha absent), arb inverse
+  round-trip 1.5e-15, symmetric wings+elbow FROZEN across τ (machine prec), asym tail→w_+/(1−w_+)
+  τ-indep, elbow rounds with τ, γ_loc>1@ATM + ≤1 guard fires, call seam value+slope match, S*=K·γ/(γ+1).
+  Implemented: 4 (W) curve fns (getMP_raw position-dependent wField, no ghMu; arbitrageToOracle=bisection;
+  rebase=carry-shift P→P/r; tradeUpdate=R-simple), τ knob UI (Settings→"(W) Curve Shape"), γ_loc
+  smooth-pasting mark (Reading A), w_±∈(0.501,0.95) clamp, R-simple #16 LABELED honestly in code+UI.
+  Compat layer: authoritative {x,y,τ,wMinus,wPlus}; α/β re-stamped as derived readouts. **STATUS: HELD
+  WIP, NOT HEAD, NOT shipped** (operator Option 2 — awaits strong-form warp to replace R-simple).
+  Tester browser pass DEFERRED until pre-ship (build will change when warp lands). Intern theory-risk
+  flags: funding uses live-reserves γ_loc not strike-registered carry (T4/T5); rebase covariance lemma
+  PROPOSED-only; τ label direction (small τ = fatter) = operator's final call.
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
