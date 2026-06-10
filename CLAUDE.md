@@ -17,6 +17,19 @@ different curves; see `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`). Full
 `docs/feature_inventory.md` — design/brainstorm notes must disposition every item there (the
 skeptic enforces this).
 
+**Operator rulings 2026-06-10 (transcript entry 14, verbatim source `history/operator/`):**
+1. **Engine-faithfulness pivot UN-HELD and ordered FIRST** — built and gated before any new
+   theory work (the live engine must reproduce every proven construct; the unproved spec↔engine
+   gap is where the dodging lived).
+2. **Trades bend the curve: YES.** A trade should reshape the curve itself, not only move the
+   pool along a fixed curve. This is a standing UNIMPLEMENTED requirement (inventory item 16) —
+   today's engine and all proposed families are fixed-curve; no design note may imply otherwise.
+3. **Kurtosis = "steepness / flatness of the curve, we set it so the curve is appropriate for
+   pricing perpetual american style options for an asset of some vol, and it isn't / doesn't have
+   to be changed by trades."** The knob is the curve's geometry, vol-calibrated at setup, static
+   under trading — NOT a trader-measured statistic (the moment-coupling at β=1 is therefore not a
+   defect of the knob as the operator defines it).
+
 ## 1. The store is the filesystem (not a chat ledger)
 The old multi-chat world re-emitted a `TEMPORAL-CONTEXT-LEDGER` snapshot every reply. **Obsolete.**
 Here the repository is the durable store:

@@ -126,3 +126,16 @@ _Context: rebuke of the manager's "strong reading vs tilt reading" phrasing (man
 jargon in an operator-facing question — the exact failure the note describes). Note relayed
 verbatim to the skeptic + pinned in its charter. Manager re-asked both pending questions in
 plain English._
+
+## 14
+> 1 yes, also tell the skeptic: "never get bogged down by the decision tree they refer to you /
+> give you lots of infodumps etc., just stay ruthlessly true to your objective, and ask me when in
+> doubt about your objective"; 2. yes; 3. steepness / flatness of the curve, we set it so the
+> curve is appropriate for pricing perpetual american style options for an asset of some vol, and
+> it isn't / doesn't have to be changed by trades
+
+_Context: answers to the manager's three plain-English questions. RULING 1: engine-faithfulness
+pivot un-held, ordered built+gated before any new theory work. RULING 2: YES — a trade should
+bend the shape of the curve itself. RULING 3: kurtosis = steepness/flatness of the curve, set
+once so the curve prices perpetual-American options for an asset of a given vol; NOT changed by
+trades. Skeptic note pinned in charter (objective discipline)._

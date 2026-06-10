@@ -73,6 +73,22 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   reconcile (which MUST include memory truth-up) runs.** B invariance suite label:
   derived-NOT-engine-verified (no δ≠0.08 engine ever built). Skeptic verified the verbatim channel
   against history/operator/ — held, no FLAG-PROCESS.
+- **★ OPERATOR RULINGS (2026-06-10, transcript entry 14 — VERBATIM SOURCE, encoded CLAUDE.md §0):**
+  (1) **PIVOT UN-HELD + FIRST:** engine-faithfulness gates built+gated BEFORE any new theory work
+  (skeptic's recommended action, operator: "1 yes"). INTERN DISPATCHED (bg) — faith gates under
+  engine/verify/ (Esscher/trade-translation, rebase-sNorm invariance, C3 mark-reflection, Merton
+  γ-σ tie, Fisher where engine-checkable), negative-controlled, wired into run_all; HTML untouched.
+  (2) **TRADES BEND THE CURVE: YES** (inventory 16 RULED; OPEN-UNIMPLEMENTED — all current/proposed
+  designs are fixed-curve). (3) **KURTOSIS = curve steepness/flatness, vol-calibrated at setup,
+  static under trades** (operator's exact words in CLAUDE §0) ⇒ knob = geometry, NOT trader-moment;
+  the β=1 moment-coupling is not a defect under this definition. OPEN DESIGN Q (operator-tier,
+  after pivot): WHAT do trades bend if not the steep/flat setting — the lean/tilt (paper-era
+  w-dynamics)? Do NOT decide; ask when pivot lands. Skeptic notes pinned in charter same session:
+  objective discipline ("ruthlessly true to your objective, ask me when in doubt") + vocabulary
+  discipline (plain English, invented terms = dodge vector — "strong vs tilt" was MY violation,
+  owned). **Skeptic flags this session: ALL RESOLVED** (item-16 omission → note amended ⊕; my
+  commit-digit mislabel → evidence/manager_corrigendum_gudermannian; wording demand → plain
+  sentence added). Gudermannian note = PASSED its gate after fixes.
 - **★ TRANSCRIPTION POLICY (operator-directed 2026-06-10): "make a transcription policy so the
   skeptic and tester can see my messages."** NEW standing manager duty (CLAUDE.md §2.2 + full text
   `docs/transcription_policy.md`): every operator message VERBATIM (case/typos/ellipses, no
