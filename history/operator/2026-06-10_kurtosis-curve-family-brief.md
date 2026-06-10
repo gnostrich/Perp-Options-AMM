@@ -251,3 +251,10 @@ _Context: operator adds two hypotheses to the in-flight read-only investigation 
 _Context: operator confirms the trade-point-anchoring fix is precisely their intuition; says the continuous-case derivation is "on aristotle somewhere" — directs research-lead to query our existing Aristotle projects to find it; and pins the invariant: if it must be derived, it's with respect to the POINT AT WHICH THE TRADE IS HAPPENING (the trade point = ray∩curve), NOT spot / the 45° slope point / pool-reserves point / any other point. Transcribed verbatim._
 
 > "— the likely fix is to anchor each leg's warp at its ray∩curve trade point instead of spot (a contained change to the trade path), " precisely my intuition; and the continuous case thing is on aristotle somewhere if the reseaech guy is able to query our projects out there may find it; but yes if need to derive its with respect to the point at which the trade is happening, not spot or 45 degree slope point / pool reserves point or any other point
+
+---
+
+## Entry 34 — 2026-06-10
+_Context: operator asks how the trade-point-anchored continuous warp (the warp-amm Aristotle derivation, on plain scalar-weight Balancer) GENERALISES to the generalized-Balancer-with-kurtosis curve (the (W) √-kernel weight-field + τ knob = v27). Read-only theory derivation; research-lead dispatched. Transcribed verbatim._
+
+> how does that generalise to the generalised balancer with kurtosis thing?
