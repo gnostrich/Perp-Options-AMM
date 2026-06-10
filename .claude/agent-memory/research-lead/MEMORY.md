@@ -1,5 +1,31 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, WARP v24-vs-v27 numeric compare (notes-only; NO submit/edit/git; operator entry 24)._
+_Last updated: 2026-06-10, WARP kurtosis SWEEP (notes-only; NO submit/edit/git; operator entry 26)._
+
+### WARP KURTOSIS SWEEP (#16-adjacent) — 2026-06-10 (operator entry 26; notes-only; NO submit/edit/git)
+Note: `notes/research/WARP_kurtosis_sweep_2026-06-10.md`. Scripts `/tmp/warp_sweep_{1..5}.js` (Node float64).
+Baseline = skeptic reconcile (NOT the retracted headline): v24 warps via SCALAR w=α/x → UNIFORM shift of
+whole curve across all rays; v27 φ-recenter → elbow-LOCAL bend that DECAYS in wings (frozen-wing price).
+**QUESTION:** is there a kurtosis τ where v27's curve warp matches v24's? **METRIC (skeptic's):** each
+build's ACTUAL rendered curve, Δln(mp) ray-resolved at fixed u, pre/post trade. Sanity: reproduced
+skeptic's 0.0003@1%/u=0.5, 0.0318@10%/u=0.5 EXACTLY.
+**STRUCTURAL KEY:** v24 reshape Δln(w/(1−w)) is u-INDEPENDENT (uniform shift); v27 reshape
+Δln(w(u;φ)/(1−w(u;φ))) is u-DEPENDENT, decays in wings. Different SHAPES of reshape.
+**VERDICT = NO.** Same-sign (correct-direction) elbow warp ratio v27/v24 SUP = 0.9999, attained only at
+τ→∞,Δw→0 (degenerate flat Balancer = no kurtosis knob left). At all realistic τ: elbow ratio <1, wings
+(u≥0.5) ≤0.04 and falling. SIGN TRAP: widening Δw past matched (≈τ/2) FLIPS the elbow reshape sign (φ
+overshoots/reverses; Δw=0.30,τ=0.3 → ratio −0.918) — |warp|>v24 only with WRONG sign = opposite bend, not
+a match. DESIGN CHECK at any near-match: w_mid=0.5 forces w_−<½ ⇒ **γ_−<1, VIOLATES γ>1 lock** (match
+lives at ordinary-CPMM comfort point, NOT a shippable options pool); matched Δw=τ/2 REJECTS 10% trades for
+τ≤0.10 (wing-range guard); wings stay frozen (✓, ~1e−5 shift). Polar-lens: v24=uniform fan re-scale (w),
+v27=fan-center re-aim (φ) — agree at elbow to 1st order, MUST diverge in wings (φ has zero leverage where
+warp term saturates). Operator's "too natural" intuition correct AT ELBOW/1st-order; frozen wings (the
+design choice) cap the match to the elbow. **FLAGS (operator-tier, via manager):** visible-warp gap is
+STRUCTURAL not bug, NOT closable by τ; honest fixes = anchor-overlay viz (true smaller magnitude) or accept
+localized warp; v24-magnitude warp ⇒ give up frozen-wing/static-kurtosis (curve/object call, not
+calibration). Numbers at symmetric (10,10),w_mid=0.5 comfort pool (the v24 object the operator named); γ>1
+options-pool magnitudes a separate sweep. Nothing submitted/built/git. Manager re-derives + skeptic verifies.
+
+---
 
 ### WARP v24-vs-v27 COMPARE (#16-adjacent) — 2026-06-10 (operator entry 24; notes-only; NO submit/edit/git)
 Note: `notes/research/WARP_v24_vs_v27_compare_2026-06-10.md`. Scripts `/tmp/warp_cmp_{1..7}.js` (Node float64).
