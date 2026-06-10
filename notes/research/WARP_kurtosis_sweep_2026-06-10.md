@@ -1,5 +1,25 @@
 # WARP kurtosis sweep — is there a τ where v27 warps like v24? (notes-only)
 
+> ## ✅ MANAGER VERIFICATION (2026-06-10 — core verified; full-table skeptic check QUEUED)
+> Verdict = **NO usable/design-valid τ matches v24's full warp.** I re-derived the two LOAD-BEARING
+> claims myself (`/tmp/verify_sweep_core.py`) and they HOLD:
+> 1. **Matching at v24's symmetric comfort point (w_mid=0.5) forces γ₋<1** for ANY Δw>0 (w_−=0.5−Δw/2<½
+>    ⇒ γ₋=0.82/0.67/0.54 at Δw=0.1/0.2/0.3) — i.e. the match lives at the ordinary-CPMM point, NOT a
+>    shippable options pool (violates the γ>1 lock).
+> 2. **v27's warp leverage collapses in the wings** (frozen-wings design): field sensitivity
+>    `w′(u)=(Δw/2)τ²/(τ²+u²)^{3/2}` gives wing/elbow leverage 0.0075 (τ=0.1) … 0.72 (τ=1.0) at u=0.5,
+>    falling ~1/u³; v24's `w=α/x` shift is ~uniform (O(1)) at all rays. So the wings cannot match, and
+>    extending v27's reach toward the wings requires τ→large = vanishing kurtosis (the τ→∞ degenerate
+>    flat-Balancer limit the sweep found).
+> **So the operator's polar-lens intuition is RIGHT at the elbow / to first order (shared cosh skeleton),
+> but the frozen wings — the operator's own static-kurtosis design choice — structurally CAP the match to
+> the elbow.** v24-magnitude warp everywhere ⟺ UNfreezing the wings ⟺ giving up the static kurtosis knob
+> (curve/economic-object call, NOT a calibration knob). The research-lead's finer claims (elbow ceiling
+> 0.9999 only at τ→∞/Δw→0; the sign-FLIP when Δw>τ/2 = a different/opposite deformation, not a match) are
+> anchored to the skeptic-reconcile's verified baseline (reproduced 0.0003@1%/0.0318@10% exactly) but the
+> **full sweep table is QUEUED for skeptic verification** (after the in-flight premise cross-verify) before
+> being treated as settled.
+
 _research-lead, 2026-06-10. Operator entry 26. NO engine edit, NO git, NO submit to Aristotle.
 Manager re-derives + skeptic verifies before anything reaches the operator._
 

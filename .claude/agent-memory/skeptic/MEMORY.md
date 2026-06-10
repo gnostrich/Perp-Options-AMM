@@ -455,3 +455,39 @@ inventory, operator answered — remaining live tail = every curve note must dis
   0.032@10% at u=0.5. (`/tmp/skeptic_ratio.js`)
 - "Pricing curve is fully determined by (α,β)" is FALSE — it's determined by (w=α/x, depth); (α,β)
   fix only the trajectory hyperbola (the locus, not the drawn curve). This is the note's root error.
+
+14. **2026-06-10 — GEOMETRIC-PREMISE cross-verify (verdict #14, operator entry 27 verbatim:
+   "cross verify the geometric premise / principle of the curve warp is correct in the version
+   we're working on vs the paper's intuition and v24")** →
+   `notes/skeptic/VERDICT_PREMISE_CROSSVERIFY_2026-06-10.md`. Run by ME (research-lead busy on
+   entry-26 τ-sweep). **VERDICT: FAITHFUL — no drift, no FLAG-WRONG, no FLAG-OMISSION.** v27's warp
+   is the SAME geometric principle as paper+v24, correctly generalized scalar-w → field w(u;φ).
+   **Independently re-derived vs LIVE engine source** (`/tmp/skeptic_premise.py`): v24 tradeUpdate
+   L1617 = paper Trade Formula line 84 verbatim (α,β held, w=α/x derived L1594); v27 wField L1633-1644
+   = note §2 map verbatim, tradeUpdate L1719-1742 = note §3 Steps1-4 verbatim, curveTraceW L3369-3401
+   draws the φ-field PRICING curve (correct referent). **KEY NUMBERS (mine):** (1) both conserve (α,β),
+   reserves on (x−α)(y−β)=αβ to ≤1.1e-14; (2) v27 field weight at post-trade point == conservation-
+   demanded wStar to 0.00e+00 (φ uniquely re-seats curve thru new point); (3) at matched symmetric
+   start (wmid=0.5) v27's wStar per trade BYTE-IDENTICAL to v24's derived w (0.545455/0.583333/0.444444)
+   — same conserved object, same trajectory, same w-values, v27 only adds φ bookkeeping; (4) tangency
+   identity pricing_slope==traj_slope to 2-7e-16 on BOTH (faithfulness transfers); (5) getMP_raw L1655
+   correctly has NO e^−ghMu (GH-only; kernel-in-WEIGHT here, slot distinction respected). **φ = the
+   operator's entry-9 polar-lens "skew = angle shift" exactly** (enters strictly as u−φ); τ never
+   written by trade (ruling 3 honored). **Steelmanned 4 break-attempts, all failed** (different
+   conserved object / referent-switch / φ-not-angle-shift / faithfulness-broken). **1 labeling caveat
+   (carried from #12, re-confirmed):** TEST 4 v27 x'==v24 x' to 1.8e-15 at ALL τ is a SINGLE-STEP
+   IDENTITY not a τ→∞ convergence proof (genuine limit ~1/τ²) — descriptive, not a premise defect.
+   **2 open lemmas honestly carried** (warp∘rebase commute [needs-Aristotle]; φ-anchor/funding
+   operator-tier) — build correctly does NOT couple φ in rebase (L1753-55). Verbatim channel HELD
+   (entry 27 verified vs history/operator/...kurtosis-curve-family-brief.md). Convergence-alarm LOW
+   (corroborates #12/#13 but re-derived vs live source, every number independent).
+
+## Claims mine-to-defend (verdict #14 — premise cross-verify)
+- v27 conserves the IDENTICAL (α,β) object as v24/paper; reserves ride the IDENTICAL trajectory
+  hyperbola (x−α)(y−β)=αβ; same w-values at matched start. The premise did NOT drift.
+- v27's φ-field weight at the post-trade point == conservation-demanded wStar EXACTLY (0.00e+00) —
+  φ-recenter is the unique α/β-consistent reshape, realizing the paper's "bring slope of post-trade
+  point to reserves point" as an angle-shift.
+- tangency (pricing slope == trajectory slope) holds on (W) by the SAME algebra as Balancer (≤7e-16);
+  getMP_raw has no e^−ghMu (warp in WEIGHT not SCORE). Live build is faithful, not just the note.
+- The τ-invariance of v27-x'==v24-x' (TEST 4) is a single-step identity, NOT Balancer-limit convergence.

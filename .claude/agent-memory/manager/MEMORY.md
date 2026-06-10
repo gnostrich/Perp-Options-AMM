@@ -298,6 +298,31 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   defensible; TEST E upheld. **RELAY skeptic verdict VERBATIM (its process-note: paraphrase = FLAG-PROCESS).**
   Operator-tier decision now: accept v27's gentle local warp / calibrate it bigger (trade vs frozen wings)
   / reconsider. HEAD v26c.
+- **★ KURTOSIS SWEEP (operator entry 26, agent adc1e14e) — VERDICT: NO usable τ matches v24's full warp;
+  manager-verified core.** `notes/research/WARP_kurtosis_sweep_2026-06-10.md`. I re-derived the 2
+  load-bearing claims (`/tmp/verify_sweep_core.py`): (1) matching at v24's symmetric point (w_mid=0.5)
+  forces γ₋<1 (w_−<½) for any Δw>0 → not a shippable options pool; (2) v27 warp leverage collapses in
+  the wings (w′(u)=(Δw/2)τ²/(τ²+u²)^{3/2}, wing/elbow 0.0075..0.72 @u=0.5, ~1/u³ decay) vs v24 uniform →
+  wings CANNOT match. **Operator's polar-lens intuition RIGHT at the elbow (shared cosh skeleton), but
+  frozen wings (their own static-kurtosis design) structurally cap the match to the elbow.** Elbow
+  ceiling 0.9999 only at τ→∞/Δw→0 (no-kurtosis degenerate); widening Δw>τ/2 FLIPS the warp sign (wrong
+  deformation, not a match) — research-lead's, anchored to skeptic-reconcile baseline, **full table
+  QUEUED for skeptic verify** (after the in-flight premise cross-verify a1950fd8). **REAL FORK (operator-
+  tier): v24-magnitude warp everywhere ⟺ UNfreeze the wings ⟺ give up the static kurtosis knob** (curve/
+  economic-object call, not a knob). Relayed manager-verified core to operator; skeptic full-table pending.
+  HEAD v26c.
+- **★ PREMISE CROSS-VERIFY (operator entry 27, skeptic agent a1950fd8, verdict #14) — FAITHFUL, NO DRIFT.**
+  `notes/skeptic/VERDICT_PREMISE_CROSSVERIFY_2026-06-10.md`. v27's curve-warp IS the same geometric
+  principle as the paper + v24, correctly generalized scalar-w → field w(u;φ). 4 checks (independent
+  re-derivation `/tmp/skeptic_premise.py` vs live source): (1) same conserved object α=x·w,β=y·(1−w)
+  (= paper Trade Formula = v24 tradeUpdate; trajectory hyperbola residual ≤1.1e-14; matched weights
+  byte-identical to v24); (2) same warp referent (rendered pricing curve reshapes as φ moves); (3) same
+  faithfulness (tangency pricing_slope==trajectory_slope ≤7e-16; getMP_raw no e^(−ghMu) — warp in WEIGHT
+  not SCORE); (4) polar-lens φ enters as u−φ = "skew = angle shift" (entry 9), τ never written by a trade
+  (ruling 3). Tried 4 ways to break it, all failed. Caveat (verdict #12 re-confirmed): the 1.8e-15
+  "v27==v24 at every τ" is a single-step identity, NOT a τ→∞ convergence. 2 open lemmas honestly carried.
+  **Net: premise SOUND/built-right; the magnitude gap is the frozen-wings design cap, not a flaw.**
+  Skeptic now free → dispatched the queued SWEEP full-table verify (ceiling 0.9999 / sign-flip).
 - **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
   I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
   if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
