@@ -47,3 +47,10 @@ _Context: operator confirms the manager's plain-English read-back of the polar-l
 _Context: operator picks "start" over "hold" on the manager's go/no-go — begin the derivation. Manager to (1) truth-up the quarantined research-lead memory, then (2) state the curve-family conjecture precisely in the hyperbolic-angle lens and prove closed-form American settlement survives FIRST (the rebuild gate), no engine edit. Transcribed verbatim._
 
 > start
+
+---
+
+## Entry 6 — 2026-06-10
+_Context: operator requests a "cold storage" archival pass — move stale/not-aligned material into a separate folder and strip it out of all files, explicitly gated on skeptic approval ("check with skeptic if that's ok and if so do it"). Arrived while the curve-family verification + skeptic audit were in flight. Transcribed verbatim._
+
+> i'd also like a general cold storage run so all the stale stuff I'm not aligned with is thrown into a separate folder and stripped out of all files ruthlessly , check with skeptic if that's ok and if so do it

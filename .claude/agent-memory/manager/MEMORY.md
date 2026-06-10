@@ -57,6 +57,35 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   §4 contract-survival checklist + v24-base finding + sequencing + research-lead-reconcile
   prerequisite + first research task). NOT a build authorization (curve = operator-tier; settlement
   must be proven to survive BEFORE rebuild).
+- **★ DERIVATION RETURNED + MANAGER-VERIFIED (2026-06-10, agent a65816fc).** Note
+  `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`. **THE CURVE** = √-kernel invariant
+  `x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k`; **lens** = cosh hyperbolic-angle form (exact
+  identity √(τ²+u²)=τ·cosh(asinh(u/τ)) — adds NO DOF). One static knob = amplitude (steepness=kurtosis)
+  in the symmetric fixed-wing reading; skew = angle shift φ from the w-trade (#16, UNIMPLEMENTED);
+  wings = exact CD monomials, τ-independent (frozen). **REBUILD GATE = NOT CLEARED:** closed-form
+  American settlement S*=Kγ/(γ+1) survives ONLY on the frozen wings (constant γ_±); in the ATM elbow
+  γ_loc varies ⇒ inherited closed form does not apply, and the most-traded strikes sit in the elbow.
+  **I RE-DERIVED ALL NUMBERS MYSELF** (`evidence/manager_audit_CURVE_FAMILY_2026-06-10.md`,
+  /tmp/verify_curvefamily.py): settlement 75.000/87.349/96.146/97.955 (γ′=0/.01/.05/.10, γ=3,K=100),
+  invariant std 1.1e-13, cosh id ~1e-14, wings exact, elbow width 0.85/2.80/6.19 — ALL MATCH +
+  analytic smooth-pasting hand-check. NUANCE: §2.3 magnitude is a LINEARIZED heuristic; the rigorous
+  load-bearer is §2.2 structural (solid). **Skeptic §2.1 adversarial pass IN FLIGHT (agent a8986778)**
+  — curve note + evidence committed to feature branch, NOT merged to main pending that verdict.
+  Resolution paths for the gate (operator-tier): (i) engineer traded-strike band into the frozen
+  wings (calibration); (ii) find a generalized closed-form free boundary for the elbow (open analytic);
+  (iii) Aristotle-certify the seam once a boundary is pinned.
+- **★ COLD-STORAGE REQUEST (operator entry 6, 2026-06-10):** "general cold storage run … stale stuff
+  I'm not aligned with … separate folder and stripped out of all files ruthlessly, check with skeptic
+  if that's ok and if so do it." **GATED ON SKEPTIC** (operator instruction + §2.1). NOT STARTED.
+  Hard guardrails I will hold (and have the skeptic vet): (1) NEVER touch the append-only operator
+  transcripts / `history/` — verbatim record, corrections = dated corrigenda not edits (§2.2);
+  (2) NEVER edit engine HTML blobs / trip the file-safety gate — engine out of scope for a doc pass;
+  (3) MOVE not DELETE → a cold-storage folder, fully revertable in git; (4) "stale/not-aligned" needs
+  a concrete proposed list (overturned τ≡δ/no-invariant notes + their dependents, barrier-era
+  specifics, superseded brainstorm forks) — operator is the authority on what they're "not aligned
+  with". Plan: put the proposal to the skeptic the moment it's free (do NOT run two skeptic sessions
+  on one branch — memory write-collision), then execute on its OK (surface the list to operator if
+  ambiguous). AWAITING skeptic availability.
 - **★ DERIVATION DISPATCHED (operator entry 5 = "start", 2026-06-10).** research-lead launched in
   background (agent `a65816fc`) with a 3-part brief: (0) MANDATORY memory truth-up (lifts the
   quarantine — drop broken τ≡δ/no-invariant/all-κ-invariant; encode skeptic's manager-verified
