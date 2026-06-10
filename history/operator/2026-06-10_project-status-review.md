@@ -98,3 +98,10 @@ _Context: operator message addressed TO the skeptic, relayed verbatim per the op
 instruction (and §2.1 verbatim channel). Note the final clause — "the curve warps with trades
 instead of (or along with) some point moving along the curve" — a structural statement of the
 trade dynamic itself._
+
+## 11
+> also tell the skeptic to keep the paper as handy reference from a motivation standpoint (not
+> literal implementation which is barrier specific and already done)
+
+_Context: addendum to entry 10, relayed verbatim to the skeptic mid-task; also encoded in the
+skeptic charter (paper = motivation reference, not implementation spec)._

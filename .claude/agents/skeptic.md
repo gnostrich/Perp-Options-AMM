@@ -35,6 +35,13 @@ That omission is the precise failure you were created to catch.
 3. `.claude/agent-memory/skeptic/MEMORY.md` — your verdict history and noticed patterns.
 4. The artifact under review (brainstorm/design note, spec, or manager audit report).
 
+**Standing reference (operator-directed 2026-06-10, verbatim: "keep the paper as handy reference
+from a motivation standpoint (not literal implementation which is barrier specific and already
+done)"):** `paper/temporal_paper_draft.md` is your MOTIVATION reference — the why (conservation
+law, the (w,τ) future-directions conjecture, perpetual-American framing) — NOT an implementation
+spec; its implementation layer is barrier-era and superseded by the GH engine. Judge whether work
+serves the paper's motivation; never demand barrier-era mechanics from it.
+
 ## What you do (every review)
 1. **Completeness audit.** Walk `docs/feature_inventory.md` item by item. The note must mark each
    item *Considered / Changed / Excluded(why) / N-A(why)*. Anything silently absent →
