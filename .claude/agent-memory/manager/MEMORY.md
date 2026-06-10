@@ -51,6 +51,28 @@ mechanical audit trail. Rewrite the changed bits at the end of every task._
   (GROUNDED, trusted-from-prover), frontier row notes its carried hyps DISCHARGED by GHMaps,
   true-floor updated (Bessel-K normalizer VALUE only + B1 + Kähler + Courant-settled + C3-link +
   env-blocked "verified"); + `formal/README.md` layout guide; RESULTS.md NAV repointed.
+- **★ SKEPTIC STOCK-TAKE LANDED (2026-06-10, `notes/skeptic/STOCKTAKE_2026-06-10.md`) — the
+  brainstorm map.** Key NEW numerics (β=1 engine pin, calibrated vs notes' β=0 digits):
+  (1) B's δ-dial at β=1 = COUPLED (skew,kurt) dial — skew +0.99→+0.07 co-moves w/ excess kurt
+  3.66→0.03; clean role split & "[0,3]" are β=0-only (purity costs the FULL fork = settlement
+  change); (2) δ DOES round the elbow at β=1 (curvature 9.31→0.66) — REPARAM elbow claim now
+  holds at engine pin; (3) wing reserve depth swings ~7× across the dial at β=1 (X/Nx@moneyness-2
+  0.085→0.563) ⇒ any shipped knob RE-PRICES the B1 floor (un-dispositioned, both branches);
+  (4) deployment asymmetry: B-MINIMAL contains today's engine exactly, A at NO setting.
+  Branch-A honest ledger: wings SHOWN; carry BROKEN-as-stated; Esscher slope law BROKEN mid-curve;
+  rebase/seam(LOCKED item)/funding(ill-posed when w is a field)/strike-reg/solvency UNKNOWN;
+  (W) reserves UNBOUNDED (GH solvency frame doesn't transfer); A's only computed kurtosis object
+  is PLATYkurtic. Decisive inputs: U1 (FREE, highest leverage) which kurtosis does the operator
+  mean — fat-tail return density→only B(FULL/β=0) shown / elbow-rounding→both, B-MINIMAL wins on
+  compat / fatter tradeable wings→NEITHER (γ is the wing knob, stop if that's the intent);
+  U4 (FREE) skew-coupling tolerable? no→B-MINIMAL out, fight = B-FULL vs A; U2/U3 (~days) (W)
+  carry+rebase / value-fn+seam — invariant makes tractable; either failing kills A.
+  **Residuals fixed/handled:** inventory line-11 motive paragraph carried the broken τ≡δ verbatim
+  → FIXED (this commit). **research-lead MEMORY NOT truthed-up (still asserts κ:=δ EXACTLY / no
+  invariant exists / all κ-invariant) → research-lead QUARANTINED from the brainstorm until its
+  reconcile (which MUST include memory truth-up) runs.** B invariance suite label:
+  derived-NOT-engine-verified (no δ≠0.08 engine ever built). Skeptic verified the verbatim channel
+  against history/operator/ — held, no FLAG-PROCESS.
 - **★ TRANSCRIPTION POLICY (operator-directed 2026-06-10): "make a transcription policy so the
   skeptic and tester can see my messages."** NEW standing manager duty (CLAUDE.md §2.2 + full text
   `docs/transcription_policy.md`): every operator message VERBATIM (case/typos/ellipses, no

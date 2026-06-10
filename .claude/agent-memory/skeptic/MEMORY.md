@@ -1,6 +1,6 @@
 # MEMORY — skeptic
-_Updated 2026-06-10 after first charter pass (run as "skeptic-charter run via general-purpose
-runner" — agent type registers next session)._
+_Updated 2026-06-10 after STOCK-TAKE pass (second charter run via general-purpose runner — agent
+type registers next session)._
 
 ## The motive (your lens — operator's words, 2026-06-10, verbatim)
 > "the skeptic has to have a very concise crisp understanding of the project motive (curve warp
@@ -16,6 +16,22 @@ Expanded form lives in CLAUDE.md §0 and your charter. Checklist: `docs/feature_
 > implementation)"
 
 ## Verdicts issued
+0. **2026-06-10 — STOCK-TAKE for the operator brainstorm** → `notes/skeptic/STOCKTAKE_2026-06-10.md`
+   (knowledge map A vs B, uncertainty ranking U1–U5, bullshit watch, residual-overclaim sweep).
+   **NEW FACTS I computed (β=1, α=4, calibrated against note digits — these are now mine to defend):**
+   (a) δ-dial at the engine pin is a COUPLED (skew,kurt) dial: skew +0.99→+0.07 co-moves as exkurt
+   runs 3.66→0.03 (δ 0→30); δ→0 limit = asym-Laplace exkurt 3.6644 (analytic+numeric agree). The
+   clean role-split purity is β=0-only ⇒ B-MINIMAL knob is impure; purity costs the FULL fork.
+   (b) δ DOES round the ATM elbow at β=1 (curv 9.31→0.66, δ 0.08→3) — REPARAM §3.5 transfers.
+   (c) Wing depth at m=2 swings 0.085→0.563 at β=1 (~7×, BIGGER than β=0's 0.034→0.220) — solvency
+   knob-sensitivity un-dispositioned in both notes. (d) Analytic: (W) reserves are UNBOUNDED (wings
+   = exact CD) vs GH bounded ⇒ A's solvency frame is structurally different, not just unmeasured.
+   (e) Deployment asymmetry: B-MINIMAL contains today's engine exactly; A at NO setting.
+   **RESIDUAL OVER-CLAIMS flagged (handed to manager):** feature_inventory.md line 11 motive ⭐
+   paragraph STILL says "GH engine = one setting, τ≡δ=0.08" (contradicts its own item 2);
+   research-lead MEMORY.md NOT truthed-up (still "κ:=δ EXACTLY", "NO clean invariant exists",
+   "all κ-INVARIANT" as flat facts) — if it briefs from memory it re-asserts broken claims.
+   B's invariance suite = derived-not-engine-verified (no δ≠0.08 engine ever built).
 1. **2026-06-10 — KURTOSIS_KNOB note (retroactive, PR #18/#20)** →
    `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`. Verdicts: 2× FLAG-WRONG (§0 "no clean
    algebraic invariant exists" — refuted by explicit closed form
@@ -63,3 +79,8 @@ Expanded form lives in CLAUDE.md §0 and your charter. Checklist: `docs/feature_
   mpmath digits to ~1e-3 or better; calibrate against a known note value first.
 - (W)-membership test for any curve: w_eff = ℓY/(ℓY+ℓX) vs ũ=ln(Y/X); τ_implied =
   (ũ−c)√(1−r²)/r must be constant. Reusable.
+- Frontier-from-kernel recipe (reusable): X(u)=upper tail of f_β, elbow = max|d² log X/du²| by FD
+  on 0.05 grid; depth = X(ln m)/X(−∞). β=0 control reproduces REPARAM §3.5 published digits.
+- **Verbatim channel now auditable:** `history/operator/<date>_<slug>.md` (CLAUDE.md §2.2, live
+  from 2026-06-10 — I verified my handed quotes against it this pass; held). Pre-policy GH-era
+  (06-08/09) operator rulings = manager-paraphrase provenance, always label when cited.

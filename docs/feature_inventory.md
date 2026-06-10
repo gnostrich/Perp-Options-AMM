@@ -7,10 +7,12 @@ FLAG-OMISSION. Keep this file short and current — it is a lens, not an encyclo
 
 ## ⭐ The motive (one breath)
 **A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else
-stays the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight `w(u)` is
-the warp (the GH engine = one setting, τ≡δ=0.08); τ rounds the ATM elbow with wings staying exact
-power-laws; carry/rebase, value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are
-**unchanged**. The curve/invariant decision is the operator's.
+stays the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the
+warp; the knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
+value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are **unchanged**. The
+curve/invariant decision is the operator's. (⚠ How the GH engine relates to the proposed
+τ-family is OPEN — the "GH = one setting, τ≡δ" identity is BROKEN, item 2 below; this paragraph
+previously carried it, corrected 2026-06-10 per skeptic stock-take §4.1.)
 
 ## Disposition rule
 Every in-scope note carries a line per item: **Considered** (analyzed in the note) / **Changed**
