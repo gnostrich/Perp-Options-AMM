@@ -19,3 +19,10 @@ _Context: curve-family brief for the kurtosis knob; closing paragraph is phrased
 >
 > Standing flags: trig (Gudermannian/tanh/cosh) is team-introduced encoding — it must earn its place by hitting the geometry above, not get adopted because it's elegant.
 > Want me to persist that brief as a skeptic verdict file so it's durable in the repo? I can write it (my space, my right) — but committing/pushing it is a manager step, and I won't leave untracked churn again without you saying so. Tell me (a) or (b), and whether to write the file.
+
+---
+
+## Entry 2 — 2026-06-10
+_Context: operator answers the manager's relay of the skeptic's three FLAGs — resolves flag (ii) by choosing v24 as the reference base, and asks for flags (i) and (iii) to be restated in simpler language. Transcribed verbatim._
+
+> v24 is the best reference because its sort of pure balancer (although it lags an edit or two on settlements (jump ATM), and  anchor curve and funding must generalise when we swap the curve), but nevertheless this version im comfortable with because how the curve warps actually and shows on UX.... ; flags 1 and 3 tldr. make the language simpler so i can respond

@@ -22,11 +22,21 @@ brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
   invariant `x^{w_mid}y^{1−w_mid}e^{−(Δw/2)√(τ²+ln²(y/x))}=k`, manager-verified RK4 4.8e-13) —
   so "can't be done"/wing-benders are refuted. NOT established: contracts (#4–#11,#13) survive on
   (W); (W)=GH engine (BROKEN identity stands); warp-with-trades (#16).
-- **3 skeptic FLAGs relayed to operator (verbatim, unreconciled):** (i) which kurtosis — elbow-
-  rounding vs 4th-moment statistic (confirm); (ii) brief says "v24 HTML" but HEAD = v26c (v24
-  predates ITM smooth-pasting #7 + uniform strike registration #8, both must-survive contracts) —
-  discrepancy flagged, NOT resolved; (iii) "one-parameter" vs (W)'s 3 DOF (w_mid/Δw/τ) — knob is
-  likely τ with others calibration-pinned; confirm. AWAITING operator answers.
+- **3 skeptic FLAGs relayed to operator (verbatim):** (i) which kurtosis — elbow-rounding vs
+  4th-moment statistic; (ii) "v24 HTML" vs HEAD v26c; (iii) "one-parameter" vs (W)'s 3 DOF.
+  **STATUS after operator entry 2 (2026-06-10):**
+  - **(ii) RESOLVED → v24 is the reference base** (operator: "best reference because its sort of
+    pure balancer … this version im comfortable with because how the curve warps actually and shows
+    on UX"; caveats: "lags an edit or two on settlements (jump ATM)", "anchor curve and funding
+    must generalise when we swap the curve"). **MANAGER FINDING (verified on disk):** v24 =
+    `temporal_mvp_v24_rebase_fixed_2.html` is the **BARRIER** curve (39 `barrier` refs, **0**
+    `balancer`, no `ghCalibrate`/`ghDelta` → not GH), with **no smooth-pasting** (0 `smoothpast`/
+    `freeBoundary` — confirms the "jump ATM" caveat). So "pure balancer" is the operator's loose
+    label; v24's role = UX/scaffold/shell reference (the curve is replaced by the new kurtosis
+    family anyway). One-line heads-up given to operator; settlement (#7), strike-reg (#8), anchor
+    curve, funding all = re-derive-on-new-curve work (matches the brief's "re-derive, don't assume").
+  - **(i) + (iii) RESTATED in plain language to operator** (operator asked "tldr, make the language
+    simpler so i can respond"); AWAITING operator answers.
 - **Sequencing reminder:** CLAUDE §0 ruling-1 pivot = DONE; ruling-2 w-warp build = NEXT;
   this curve-family research target slots into/alongside that, operator-gated.
 
