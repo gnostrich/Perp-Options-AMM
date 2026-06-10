@@ -190,6 +190,13 @@ _Context: after the skeptic reconcile (v24 warps; v27 warps 30–1000× less at 
 
 ---
 
+## Entry 27 — 2026-06-10
+_Context: operator asks, in parallel ("meantime, if the research guy is idle"), for a cross-verification that v27's curve-warp geometric premise/principle is correct vs the paper's intuition and vs v24. Manager note: research-lead is busy on the entry-26 sweep (no double-session), so the manager put the IDLE skeptic on it (independent premise-verifier), transparently attributed, with research-lead to corroborate post-sweep. Transcribed verbatim._
+
+> also meantime if the research guy is idle let him cross verify the geometric premise / principle of the curve warp is correct in the version we're working on vs the paper's intuition and v24
+
+---
+
 ## Entry 18 — 2026-06-10
 _Context: operator authorizes a fast-track speed run — build the FULL thing off the v24 base ASAP (~1 hour target), all three streams (remaining contracts / #16 trade-warp / the build) concurrently; grants the manager autonomy; directs the manager to tell the skeptic (verbatim relay) to prioritise speed and accept some theory-risk to allow the build, within the core charter. Transcribed verbatim._
 
