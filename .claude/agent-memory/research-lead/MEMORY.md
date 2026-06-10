@@ -1,5 +1,30 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, KURTOSIS-KNOB κ DERIVATION (Balancer-native single-κ profile; NO submit/edit/git)._
+_Last updated: 2026-06-10, τ TRADE-UPDATE DERIVATION (v24→τ curve-warp-on-trade + impl note; NO submit/edit/git)._
+
+### τ TRADE-UPDATE DERIVATION — 2026-06-10 (operator: derive τ-generalized trade state update from v24, then impl note)
+Note: `notes/TAU_TRADE_UPDATE_derivation_and_impl_note_2026-06-10.md`. mpmath 50–60 dps, direct construction.
+KNOB RENAMED κ→τ (τ ≡ GH δ exactly). v24 file read byte-accurate (lines 1593–1647); manager extraction confirmed.
+**LOAD-BEARING FINDING (confident, pinned): v24 is a SINGLE offset constant-product** — on floors (α,β),
+`(x−α)(y−β)=αβ` IS `X·Y=αβ` (rect hyperbola, γ_offset=1, X∝S^(−1/2)). v24's `w=α/x` is a PRICE-COORDINATE
+(the GH getMP≠slope gotcha), NOT a variable-γ wing structure. v24 implied profile = sigmoid(u/2), wings
+w_−=0,w_+=1 (degenerate). So τ's variable-γ content lives in Δw=w_+−w_−≠0; **v24 is the Δw=0,w_mid=½ slice
+where τ is INERT at every value** (w(±5)=0.5 at τ=0.1 and 1e6) ⇒ adding τ is safe-by-construction on current pool.
+**τ STATE:** fixed scalar (like v24's funding `kappa`, like δ); dynamic state stays {x,y,α,β}+profile (w_−,w_+,τ).
+**CONSERVED per trade:** floors (α,β)+profile (w_−,w_+,τ); trades move on ONE curve X(u),Y(u) DEFINED by offset
+depletion slopes dlogX/du=−(1−w(u)), dlogY/du=+w(u) (local Balancer step at w(u)). NO closed algebraic invariant
+for finite τ (verified: no X^a Y^(1−a)=k conserved) — implementable form = local-weight integration + numeric
+inversion (= GH engine's same-table construction; FP-exact round-trips).
+**τ tradeUpdate:** y'=y+Δy; solve u' from Y-side integral; x'=X(u')+α (same SHAPE as v24/GH tradeUpdate).
+**NUMERIC CHECKS (all ✓):** C1 τ→∞==v24 tradeUpdate BYTE-LEVEL (|Δx|err=0.0 over 3 trades; marginal 80000; arb/rebase
+reduce to v24 closed forms). C2 finite-τ warps ATM elbow, wings τ-INDEPENDENT power-law (γ_loc(±100τ) byte-identical
+across τ∈{0.1,1,30}=3.99988/1.50003; w'(0)=Δw/(2τ)). C3 round-trip x/y/u err=0.0 (no τ leakage). C4 rebase τ-invariant
+(marginal→/r exactly, profile untouched). C5 no algebraic invariant.
+**NAME WARNING (load-bearing):** v24 state.kappa = FUNDING elasticity (line 2083), NOT kurtosis. Kurtosis knob MUST
+be separate scalar τ. Do NOT reuse kappa.
+**OPERATOR-OWNED FLAGS:** (1) ship τ? = Gate-2 curve/econ-object; (2) skew Δw≠0 = SETTLEMENT FORK (two-root/βh=0);
+τ orthogonal, safe to ship with skew held; (3) expose 1/τ=fatness (object L), do NOT ship "τ up=fatter". Derivation
+pass only — no engine/git/submit.
+
 
 ### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
 Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
