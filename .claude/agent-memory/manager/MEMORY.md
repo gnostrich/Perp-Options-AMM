@@ -1,7 +1,34 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-10 (branch claude/ecstatic-planck-ridcyr → PR #22 squash-merged to main
-`9c633445`; governance config-only). This is the project's state-of-the-whole; git history is the
-mechanical audit trail._
+_Last updated: 2026-06-10 (branch claude/exciting-archimedes-txs2wx; persisted operator's
+kurtosis-curve-family brief as a skeptic-authored note — NOT yet merged to main). This is the
+project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★ KURTOSIS CURVE-FAMILY BRIEF PERSISTED (2026-06-10, branch claude/exciting-archimedes-txs2wx)
+Operator delivered a curve-family TARGET brief (closed-form one-param family replacing plain
+Balancer, param = kurtosis knob; geometry = straight-line-in-log Balancer base, knob bows the
+middle / freezes the wings; static vol-set; existence = yardstick not mandate; everything-else
+contracts must be re-derived not assumed; prove closed-form settlement survives before rebuild;
+trig must earn its place). Operator's closing ask (relayed in the skeptic's voice): persist the
+brief as a skeptic verdict file — (a)/(b) per §2.4 + whether to write.
+- **My decision: (a)** — the skeptic authored the file IN ITS OWN VOICE (I did NOT write in its
+  voice, §2.4); I committed it. Did NOT choose (b) (my-synthesis) because the operator/skeptic
+  wanted it in the skeptic's space and a curve artifact deserves max fidelity.
+- **Files (this branch, committed):** `history/operator/2026-06-10_kurtosis-curve-family-brief.md`
+  (operator brief VERBATIM, §2.2, transcribed in-turn) + `notes/skeptic/BRIEF_kurtosis_curve_family_2026-06-10.md`
+  (skeptic-authored, run a64013f5; verbatim operator block + skeptic synthesis + inventory #1–#16
+  disposition + 3 FLAGs).
+- **Persisting ≠ authorizing a rebuild.** Curve/invariant is operator-tier; this is a research
+  TARGET note only. Existence yardstick is ALREADY satisfied in-repo (skeptic's closed-form
+  invariant `x^{w_mid}y^{1−w_mid}e^{−(Δw/2)√(τ²+ln²(y/x))}=k`, manager-verified RK4 4.8e-13) —
+  so "can't be done"/wing-benders are refuted. NOT established: contracts (#4–#11,#13) survive on
+  (W); (W)=GH engine (BROKEN identity stands); warp-with-trades (#16).
+- **3 skeptic FLAGs relayed to operator (verbatim, unreconciled):** (i) which kurtosis — elbow-
+  rounding vs 4th-moment statistic (confirm); (ii) brief says "v24 HTML" but HEAD = v26c (v24
+  predates ITM smooth-pasting #7 + uniform strike registration #8, both must-survive contracts) —
+  discrepancy flagged, NOT resolved; (iii) "one-parameter" vs (W)'s 3 DOF (w_mid/Δw/τ) — knob is
+  likely τ with others calibration-pinned; confirm. AWAITING operator answers.
+- **Sequencing reminder:** CLAUDE §0 ruling-1 pivot = DONE; ruling-2 w-warp build = NEXT;
+  this curve-family research target slots into/alongside that, operator-gated.
 
 ## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
 Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two
