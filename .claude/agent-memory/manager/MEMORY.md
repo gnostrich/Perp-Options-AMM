@@ -2,6 +2,43 @@
 _Last updated: 2026-06-09, FORMAL PHASE CHECKPOINT merged to main. This is the project's state-of-the-whole;
 git history is the mechanical audit trail. Rewrite the changed bits at the end of every task._
 
+## ★ BRAINSTORM PHASE (2026-06-10) — KURTOSIS KNOB τ + v24 MIGRATION (operator-driven, curve/economic-object territory)
+- **Context:** operator running deep theory brainstorms (PH-native vs info-geo object; GH vs CES; corner
+  geometry 90°→180° = kurtosis). Concrete goal landed: a single asymptote-respecting **kurtosis knob `τ`**
+  on the Balancer curve, realizing the AfT paper's conjectured `(w, κ)` family (paper EXPLICITLY conjectures
+  kurtosis-family as future work → this RESOLVES it, doesn't restate it — operator corrected my earlier overreach).
+- **The τ-knob (notes on main):** `KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md` (PR #18) + notation
+  de-collide PR #20 (κ→τ since κ read as strike K; CD invariant K→k; strike K reserved). Profile
+  `w(u)=w_mid+(Δw/2)·u/√(τ²+u²)`, **`τ≡GH δ` exactly**. convexity=w_mid, skew=Δw, kurtosis=τ. τ→∞=plain
+  Balancer (Gaussian), τ→0=Laplace. √-elbow ROUNDS the vertex (asymptote-preserving); exp-power |v|^d
+  does NOT (breaks the power-law spine — operator caught me agreeing to d=2; I owned it). NO clean algebraic
+  invariant F(x,y;w,τ)=k exists (only constant-w base has x^w y^(1−w)=k). Kurtosis SIGN object-dependent:
+  latent driver (object L) small-τ=leptokurtic (fatness dial=1/τ); pushforward (object P) opposite. Ship label = operator.
+- **τ-TRADE-UPDATE + MIGRATION NOTE (2026-06-10, branch `claude/v24-kurtosis-migration`, commit 6876cd9, PUSHED):**
+  research-lead agent a51bf519 derived the τ-generalized transaction state update; **manager INDEPENDENTLY
+  re-derived (mpmath 60 dps, own integration + root-find — all reproduced).** `notes/TAU_TRADE_UPDATE_derivation_and_impl_note_2026-06-10.md`.
+  - **LOAD-BEARING FINDING (manager-confirmed):** v24 is a SINGLE constant-product pool in offset coords
+    (`X·Y=αβ`, X=x−α,Y=y−β; γ_offset=1). Its `w=α/x` is a **PRICE COORDINATE, not a variable-γ wing
+    structure** (CHECK0: X·Y=2e6 conserved byte-exact through a trade while w drifts 0.5→0.529). v24's
+    implied profile = sigmoid(u/2) with **degenerate wings w_−=0,w_+=1**. So v24 = the **Δw=0, w_mid=½
+    slice where τ is INERT at every value** → adding τ is safe-by-construction on the current pool.
+  - **This is the answer to the operator's "swap a number into w can't change kurtosis" challenge:** correct —
+    in v24 you genuinely can't (it's constant-product, w is a price coord). Kurtosis comes from making the
+    curve non-constant-product: **position-varying weight profile w(u) with genuine finite power-law wings
+    (Δw≠0) = generalizing Balancer→GH, NOT a scalar-w swap.** Note's §0 + Phase-2 thesis now say this plainly
+    (manager added explicit scalar-swap-mirage warning + verification stamp).
+  - **Manager checks (all PASS, 60 dps):** τ→∞ reproduces v24 tradeUpdate |Δx|err=0.0 (also re-derived
+    analytically); finite-τ wings power-law γ_loc(±100τ) byte-identical across τ∈{0.1,1,30} while elbow
+    w'(0)=Δw/(2τ) warps; round-trip err=0.0; rebase τ-invariant (marginal→/r, profile untouched); no
+    algebraic invariant. Implementable form = local-weight integration + numeric inversion (GH same-table).
+  - **Operator-owned flags surfaced (NOT decided):** (1) whether to ship τ at all (reopens locked GH curve);
+    (2) skew Δw≠0 = the SETTLEMENT FORK (two-root/βh=0) — τ orthogonal, safe to ship with skew held;
+    (3) expose 1/τ=fatness (object L), do NOT ship "τ up=fatter" (backwards).
+- **STATE:** branch `claude/v24-kurtosis-migration` has v24 staged (ba00ef6) + τ note (6876cd9), pushed.
+  **NOT merged to main** — this is brainstorm/derivation territory, curve/economic-object choice is
+  operator-owned; offer merge, don't auto-merge a strategic curve decision. v24 ref build md5 6f606f52.
+- **DO NOT** begin the engine-faithfulness pivot (still HELD) or any held work; operator is driving the brainstorm.
+
 ## ★ GOVERNANCE CHANGE (2026-06-09) — AUTONOMOUS PR MGMT + CONCURRENCY/MERGE POLICY (config-only, self-merged)
 - **A — PR management is now FULLY AUTONOMOUS (operator pre-authorized).** Manager opens/squash-merges/
   deletes branches with NO operator approval, **including strategic merges to `main`**, bounded ONLY by
