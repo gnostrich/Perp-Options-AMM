@@ -1,5 +1,30 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, ARISTOTLE WARP QUERY (entry 33; READ-ONLY; QUERY-only — no submit/edit/git/build)._
+_Last updated: 2026-06-10, WARP→genB-kurtosis GENERALISATION (entry 34; READ-ONLY derivation; no submit/edit/git/build)._
+
+### WARP → (W) KURTOSIS GENERALISATION — 2026-06-10 (operator entry 34; READ-ONLY; notes-only; NO submit/edit/git/build)
+Note: `notes/research/WARP_genB_kurtosis_generalisation_2026-06-10.md`. Scripts `/tmp/genB_warp.py`,
+`/tmp/genB_warp2.py` (python float64). Re-read retrieved warp-amm Model-C Lean (`/tmp/aristotle_query/mc/.../Warp.lean`).
+**ANSWER: warp-amm's scalar trade-point re-seat (w₀→w₁) lifts to (W) as a φ-RECENTER of the field,
+anchored at the leg's trade point — the lift is FORCED, not a choice.** Per-leg closed law `[analytic]`:
+**dφ/dy = du′/dy − (1/w′(u))·(β/y²)** (numeric-vs-analytic 1.2e-10). Steps 1–3 (y'=y+dy; w*=1−β/y';
+x'=α/w*) IDENTICAL to warp-amm/Balancer conservation; only Step 4 (invert field for φ') is new.
+**τ/KURTOSIS ENTERS ONLY through the re-seat factor `dz/dw*=1/w′(u)` (exact identity, residual 0
+float64).** Sharp elbow (small τ, w′(0)=Δw/2τ large) ⇒ cheap local warp; frozen wings (w′→0) ⇒
+1/w′→∞ ⇒ divergent φ-travel = the frozen-wing range cap. Strike-dependent, grows toward wings (~27×
+spread reproduced). τ NEVER written by trade (static-knob/frozen-wing design holds; knob CONDITIONS the
+warp, not scaled by it). **CLOSED FORMS: survive in elbow (φ'=ln(y'/x')−t·τ/√(1−t²), |t|<1); warp-amm
+mode_shift/cosh-lens carries VERBATIM on wings (constant w_±); BREAK at frozen wing (t→±1 ⇒ z→±∞ ⇒ no
+finite φ ⇒ numeric clamp/reject/split — global problem is bisection-class).** Balancer limit: τ→∞ ⇒
+w′→0 ⇒ field flat ⇒ collapses to warp-amm scalar mode_shift (1/w₀)log(y_s/y_B) (w′(0)=1e-4@τ=1000).
+**CONTRACTS HOLD:** α/β conservation, frozen wings, γ>1 (iff w_±>½), Reading-A settlement (warp only
+moves φ). **RE-FLAGGED unresolved:** one-global-φ-across-trade-point-AND-reserves-point (the (α,β)-flow
+lemma, `[needs-Aristotle]`, the cert of the lift, path-indep numeric 0.0 not Lean); trades∘rebase commute
+on (W) `[needs-Aristotle]`; φ-anchor/funding under moved φ (operator-tier). Operator-tier: engine→
+trade-point anchoring (curve/economic-object call); wing clamp/reject/split (calibration). Nothing
+submitted/built/git/verified. Manager re-derives; skeptic before operator.
+
+---
+_Earlier: 2026-06-10, ARISTOTLE WARP QUERY (entry 33; READ-ONLY; QUERY-only — no submit/edit/git/build)._
 
 ### ARISTOTLE WARP/CONTINUOUS-CASE QUERY — 2026-06-10 (operator entry 33; QUERY-only; NO submit/edit/git/build)
 Note: `notes/research/WARP_continuous_aristotle_query_2026-06-10.md`. Auth: ARISTOTLE_API_KEY clean

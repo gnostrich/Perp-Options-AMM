@@ -45,8 +45,27 @@ portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note
   integral = separate, bigger, [needs-Aristotle] (placeholder). **DECISION = OPERATOR-TIER (§7 curve/
   economic-object): anchor the warp at the trade-point vs spot — a real engine change, NOT calibration,
   NOT a manager call.** Verdict `notes/skeptic/VERDICT_WARP_continuous_strikedep_2026-06-10.md`. Aristotle
-  query for the existing continuous derivation (entry 33, agent af44bb67) RUNNING. HEAD untouched 1eebfcd6
+  query for the existing continuous derivation (entry 33, agent af44bb67): FOUND on Aristotle —
+  warp-amm cluster (d20dda3a/7f933065/4e92e3cb, Warp.lean), trade-point-anchored, closed forms
+  (mode_shift/rapidity); rapidity coords (not the exact β/y² form, which is elementary anyway);
+  recommend fold into formal/INDEX.md (not in it, predates). HEAD untouched 1eebfcd6
   (test-only; no build edit until operator authorizes the fix).
+- **★ (W)-KURTOSIS GENERALISATION of the trade-point warp (operator entry 34, research-lead a820c2cd,
+  manager-verified headline `/tmp/verify_genB.py`).** `notes/research/WARP_genB_kurtosis_generalisation_2026-06-10.md`.
+  The warp-amm scalar re-seat lifts to a (W) FIELD φ-recenter; steps 1–3 (y'=y+dy; w*=1−β/y'; x'=α/w*)
+  = byte-identical Balancer conservation move; only new step = invert the field for φ′. **Per-leg law
+  (I verified vs the engine's own φ′: |diff| 4e-5@τ0.3 / 4e-8@τ1.0): `dφ/dy = du′/dy − (1/w′(u))·(β/y²)`**
+  — the paper's `β/y²` warp DEMAND divided by the local curve steepness `w′(u)`. **τ enters ONLY via
+  `dz/dw*=1/w′(u)`:** sharp elbow (small τ, big w′) ⇒ cheap local warp; frozen wing (w′→0) ⇒ 1/w′→∞ ⇒
+  divergent φ-travel = the wing cap. τ CONDITIONS the warp, never written by the trade (static-τ/frozen-
+  wing design holds). Closed form in elbow + on wings (cosh/polar lens carries); numeric only at the
+  frozen edge. **Balancer-limit reduction verified** (τ→∞ ⇒ w′→0 ⇒ collapses to warp-amm scalar mode_shift
+  — warp-amm = the τ→∞/Δw→0 corner of (W), genuine generalisation). Contracts (α/β, frozen wings, γ>1,
+  Reading-A) hold. **UNCERTIFIED piece = the one-global-φ-across-trade-point-AND-reserves-point =
+  (α,β)-flow-confinement lemma [needs-Aristotle]** (path-indep numeric 0.0, not Lean) + trades∘rebase
+  commute + φ-anchor/funding. **This IS the spec for the trade-point fix on v27.** GATES before any BUILD:
+  full skeptic vet of this generalisation + the confinement lemma; operator authorization (trade-point
+  anchoring = operator-tier §7). Relayed to operator as the theory answer (manager-verified headline).
 **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
 canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
 an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in
