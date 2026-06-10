@@ -1,0 +1,50 @@
+{
+  "p1_v24": {
+    "spot": "1.0000",
+    "spotUsd": "$80,000.00",
+    "w": "0.5000",
+    "poolY": 800000,
+    "poolX": 10
+  },
+  "p2_tauLow": "0.05",
+  "p2_tauHigh": "1.5",
+  "p2_elbow": {
+    "mean": 5.62,
+    "max": 111,
+    "n": 210
+  },
+  "p2_leftWing": {
+    "mean": 0,
+    "max": 0,
+    "n": 84
+  },
+  "p2_rightWing": {
+    "mean": 1.26,
+    "max": 9,
+    "n": 91
+  },
+  "p4_bandSpinner": {
+    "start": "120000",
+    "afterClickUp": "120500",
+    "afterClickDown": "120000"
+  },
+  "p4_tauSpinner": {
+    "start": "0.3",
+    "afterClickUp": "0.3"
+  },
+  "p3_sizes": [
+    {
+      "n": 50,
+      "warn": "",
+      "executeDisabled": false,
+      "slippage": "93.9684 %  ·  ≈ $59834.49"
+    },
+    {
+      "n": 100,
+      "warn": "Bought leg: trade exceeds frozen-wing range — split or widen Δw.",
+      "executeDisabled": true,
+      "slippage": "93.9684 %  ·  ≈ $59834.49"
+    }
+  ],
+  "consoleErrors": []
+}

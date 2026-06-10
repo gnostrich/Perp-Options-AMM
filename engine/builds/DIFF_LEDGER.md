@@ -18,11 +18,11 @@ transcripts to distill my objections to each version, open questions etc."** (op
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
-| # | Feature (inventory) | Current state (as of v27 HEAD `b245bfda`, OPERATOR-promoted 2026-06-10 entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
+| # | Feature (inventory) | Current state (as of v27 HEAD **UX-restore build `9d22cffd`**, 2026-06-10; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
 |---|---|---|---|---|
-| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. GH (score-kernel) line demoted at v26c, retained intact | v27 promotion (entry 28) | DESIRABLE — Balancer is the literal substrate |
+| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side) | UX-restore `9d22cffd` | DESIRABLE — v24 feel restored; Spot-KPI value flag OPEN |
 | 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED by operator ruling (override, not resolved) |
-| 3 | Kurtosis knob τ | HEAD: τ slider LIVE (0.05–3); elbow VISIBLY rounds (~36px silhouette delta) with wings frozen (slope-angle Δ≤0.0001° at u=±10) — tester-confirmed on screen | v27 render-fix (`b245bfda`) | DESIRABLE — engine + UI PASS |
+| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **FLAG: the clickable up/down ARROWS are CSS-hidden on the settings panel** (L326-328 webkit-appearance:none) — mouse-click stepping is dead on τ (band inputs DO show clickable arrows) | UX-restore `9d22cffd` | DESIRABLE math/control; arrow-affordance OPEN (operator asked for updown arrows) |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
 | 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled | v27 | OPEN lemma — theory-risk-accepted |
 | 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 | DESIRABLE — Reading A ruled |
@@ -34,7 +34,7 @@ changed, every entry, no exceptions)
 | 12 | getMP_raw price-coord gotcha | HEAD (v27): price == geometric slope EXACTLY on (W) (no e^μ factor); code comment warns against re-introducing the GH factor on a cross-port | v27 | DESIRABLE — moot by construction, warning kept |
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
-| 15 | File-safety gate | HEAD blobs canonical `ab663f5c…`/`c505b08a…` (tester re-verified at promotion), 3 scripts parse; selfcheck 21 PASS; demoted v26c GH suite green | 2026-06-10 promotion | DESIRABLE — stable |
+| 15 | File-safety gate | UX-restore build `9d22cffd`: blobs canonical `ab663f5c…`/`c505b08a…` (line-md5, tester re-verified), 3 scripts parse; selfcheck 21/21 (manager); 0 console errors live ×2 | UX-restore `9d22cffd` | DESIRABLE — stable |
 | 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) | HEAD — engine PASS; visual subtlety ACCEPTED(operator, entry 28) |
 
 ## Entry template
@@ -112,6 +112,17 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    per-trade warp IS subtle on screen); the operator promoted with that fact on the table — an
    override, not a fix. Residual polish OPEN: anchor-overlay / amplified-warp viz.
 
+0b. **★ v29-objection (entry 29) — "not able to play with it" / v24-UX-divergence / no-sliders — LARGELY ADDRESSED by the UX-restore (`9d22cffd`), two residuals OPEN.** [#1, #3]
+   Verbatim (`history/operator/2026-06-10_kurtosis-curve-family-brief.md` Entry 29
+   [verbatim-transcript]): "do a quick UX test, I dont know what you did in the past but i'm not
+   able to play with it. why has anything in the UX changed from the v24 case including default
+   parameters? I mentioned also I dont want sliders anymore just updown arrows with appropriate
+   sesicitivty". Tester verdict (this run, live ×2): **operator-playable now** — load → curve
+   across frame at the $80k dollar scale → step τ → trade executes → readouts move, 0 console
+   errors. No sliders anywhere (0 input[type=range]). RESIDUALS OPEN: (i) τ's up/down ARROWS are
+   CSS-hidden — mouse-click stepping dead on the knob the instruction was about (keyboard arrows
+   work); (ii) Spot ($) KPI reads $30,344.83 (raw reserve ratio y/x) where v24 showed $80,000 —
+   the first dollar number on screen still diverges from v24. See the UX-restore entry below.
 1. **Curve / kurtosis-knob family — RULED to (W) + Reading A; sub-flags below.** [#2, #3, #6]
    The curve family is now RULED: the (W) weight-profile family on the v24 base (Entry 2 "v24 is
    the best reference because its sort of pure balancer", Entry 4 "yes" to the polar-lens
@@ -561,6 +572,103 @@ already-present / portable / GH-dead).**
 
 ---
 
+## v27 HEAD `b245bfda` → UX-RESTORE `9d22cffd` (entry-29 quick UX test: v24 defaults back, no sliders)   [status: HEAD (in-place UX fix on the promoted line); tester live ×2]
+_Tester live-Playwright Chromium 2026-06-10, operator-style (real clicks/keys through the UI, not
+engine shortcuts), reproduced ×2 byte-identical (runs A/B + fixup ×2). Build
+`HEAD_temporal_mvp_v27_wkurtosis.html` md5 `9d22cffd6a0f002f359eed81d7157203`. File-safety GREEN:
+blob line-md5s `ab663f5c…`/`c505b08a…` canonical, 3 scripts parse, 0 console/page errors._
+
+**FEATURES:** #1 (v24 dollar-scale defaults restored), #3 (τ control = number stepper, no slider),
+#2 (curve render at restored defaults), #16 (in-band execute + frozen-wing guard at $80k scale),
+#10 (slippage readout exercised live), #11-adjacent display readouts (lp-y-delta, Create-Perp LIQ
+— the two reconciled fixes), #15 (file-safety re-verified). **None beyond** (#4–#9, #12–#14
+untouched by this pass; #13 still the open ship-gate).
+
+**PER-ITEM VERDICTS (the operator's entry-29 test):**
+- **1. Load — PASS-with-FLAG (tester-confirmed ×2).** Page renders, 0 console errors. Curve spans
+  the frame (fracW 0.981 / fracH 0.93, 8195 lit px) with eq-dot + strike rays
+  (`A_01_load_default.png`). Dollar world is BTC-$80k: oracle input 80000, **engine marginal
+  $80,000.000 at load** (live read), NOT $4.44. **lp-y-delta $0.00 at load** (dynamic `_initial_y`
+  baseline — RECONCILED). Perp form defaults sane: 0.1 BTC ≈$8,000 / $1000 margin → **8.0×**, liq
+  **long $70,000.00 / short $90,000.00** (not −9995 — RECONCILED). **FLAG (new, OPEN):** the KPI
+  strip's first dollar number, "Spot ($)", reads **$30,344.83** (= raw reserve ratio y/x; kpi-spot
+  0.3793, kpi-w 0.7250) where v24 showed **$80,000.00** (sNorm 1.0, w 0.5) — on (W) the marginal is
+  γ_loc·(y/x) so the spot KPI no longer equals the BTC price. Display-basis bug/mislabel.
+- **2. No sliders — PASS; arrow-affordance FLAG (OPEN).** **0 `input[type=range]` in the live DOM**
+  (every control is number/select/button/checkbox/file; same census on v24). τ is
+  `input[type=number] step=0.05 (0.05–3)`; keyboard ↑/↓ steps 0.30→0.35→…, readout + curve update
+  through the real handler. Sensitivities sane (τ 0.05, wings 0.01, strikes $500, notionals 0.01
+  BTC, margin $10, oracle $100). **BUT the clickable up/down spinner ARROWS are CSS-hidden for the
+  settings panel/perp form** (`.field-input-wrap …::-webkit-inner-spin-button {-webkit-appearance:
+  none}` L326-328, inherited from the v24 base): mouse-clicking the τ arrow region does nothing
+  (0.3→0.3, ×2 runs; close-up `C_08_tau_field_closeup.png` shows no arrows while hovered), while
+  the band price inputs (visible-spinner CSS L938-950) DO click-step 120000→120500→120000. The
+  operator asked for "updown arrows" — on the τ knob the arrows aren't clickable/visible.
+- **3. Play the knob — PASS (tester-confirmed ×2).** τ stepped to 0.05 (5×↓) vs 1.5 (29×↑):
+  ATM elbow visibly rounds — silhouette delta mean 5.62px / max 111px in the elbow band — while
+  **left wing 0.00px and right wing 1.26px mean** (near-frozen; small elbow-edge bleed).
+  `C_02_tau_low_005.png` vs `C_03_tau_high_150.png`. Numbers byte-identical across both runs.
+- **4. Trade — PASS (tester-confirmed ×2).** Real UI end-to-end: Create Perp → Add Perp (defaults)
+  → Trade Bands → 0.05 BTC, sold-call $120,000 / bought-put $68,000 → preview ok (slippage
+  **0.0710% ≈ $0.07**, bought leg auto-derived 0.001754 BTC), Transact enabled → click → executes:
+  pool y 303,448.28→303,604.47, **lp-y-delta $156.20** (nonzero), bands count 1, curve/dot redraw
+  (mean 1.25px, max 318px — dot+ray move), Spot($) KPI ticks $30,344.83→$30,517.30, **no NaN
+  anywhere** (sweep of every .kpi-val/.val/.derived-val). NO wing-range rejection at sane sizes —
+  in-band holds up to 50 BTC on the 10-BTC pool (50 BTC shows honest slippage 93.97% ≈ $59,834 and
+  still executes-enabled; noted, not flagged). `A_04_pre_trade.png` / `A_05_post_trade.png`.
+- **5. Over-size — PASS (pixel-confirmed).** 100 BTC band → red banner **"Bought leg: trade
+  exceeds frozen-wing range — split or widen Δw."** + Transact disabled
+  (`C_06_wing_message_N100.png`, legible crop `C_06b_wing_message_crop.png`). Reproduced ×2.
+- **6. v24-feel side-by-side — PASS-with-flags.** Identical: oracle 80000, page nav, 4 subtabs,
+  KPI labels, 4 chart views, perp defaults (0.1/$1000), band prefills (0.05 / 84000 / 68000),
+  settings sections — plus exactly ONE new section "(W) Curve Shape · kurtosis" (3 number inputs:
+  τ/w₋/w₊). Conspicuously different beyond the (W) controls: **(i) Spot/Spot($)/w KPI VALUES**
+  (v24: 1.0000/$80,000/0.5000 → v27: 0.3793/$30,344.83/0.7250 — same labels, jarring numbers; the
+  flag above); **(ii) pool y $303,448.28 vs v24's $800,000** (deliberate equilibrium-at-load so
+  marginal=oracle, code comment L2285-2289 — defensible, but it IS a default-parameter change from
+  v24 and should be surfaced to the operator with the rationale); (iii) Depth-k value differs
+  (different invariant — expected). `V24_01_load_default.png` vs `V27_01_load_default.png`.
+
+**DESIRABLE:**
+- v24 dollar world restored: oracle 80000 / marginal $80,000.000 at load / $-KPIs at BTC scale;
+  layout+defaults parity with v24 verified element-by-element. [#1]
+- Slider fully gone; τ stepper live with sane sensitivity; knob visibly works at the restored
+  defaults. [#3]
+- The two readout absurdities RECONCILED (lp-y-delta dynamic baseline; LIQ $70k/$90k @8×). [#11-adj]
+- Whole loop playable: load → see curve → step knob → trade → readouts move, no NaN, guard messages
+  honest. [#2, #16, #10]
+**UNDESIRABLE:**
+- Spot ($) KPI shows reserve ratio ($30,344.83), not the marginal ($80,000) — diverges from v24's
+  load-time read and from the "$80k world" the rest of the screen now speaks. **OPEN.** [#1/display]
+- τ up/down arrows CSS-hidden — mouse stepping dead on the knob the no-sliders instruction was
+  about; keyboard-only. **OPEN** (one-line CSS). [#3]
+- y0=303,448.28 ≠ v24's 800,000 (rationale'd default change, not silently bad — but it is a
+  default-parameter delta from v24 the operator explicitly asked about). **OPEN-for-ruling.** [#1]
+**NEUTRAL:** band inputs prefill 0.05/84000/68000 on load (same as v24's prefill behavior).
+
+**OPERATOR-VOICE:** ([verbatim-transcript],
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md` Entry 29)
+- **THE OBJECTION, entry 29:** "do a quick UX test, I dont know what you did in the past but i'm
+  not able to play with it. why has anything in the UX changed from the v24 case including default
+  parameters? I mentioned also I dont want sliders anymore just updown arrows with appropriate
+  sesicitivty" — clause-by-clause status: **"not able to play with it"** → ADDRESSED(evidence:
+  this run's full loop, ×2); **"why has anything changed from v24 incl. default parameters"** →
+  LARGELY ADDRESSED (defaults/layout restored; residuals = Spot($) KPI value, y0 choice — both
+  surfaced above, OPEN); **"no sliders, updown arrows, appropriate sensitivity"** → no-sliders MET
+  + sensitivity MET; up/down-arrow CLICKABILITY NOT met on τ (CSS-hidden) — OPEN.
+- Context note per transcript: the "updown arrows" instruction predates the transcription policy
+  (operator: "I mentioned also…") — no earlier verbatim source exists; entry 29 is the verbatim
+  record of it.
+**EVIDENCE:** `evidence/v27_ux/` — A_01_load_default, A_04_pre_trade, A_05_post_trade,
+A_07_perp_form, C_02_tau_low_005, C_03_tau_high_150, C_06_wing_message_N100,
+C_06b_wing_message_crop, C_08_tau_field_closeup, V24_01/V27_01_load_default (side-by-side),
+trace_ux_operator.json (runs A+B), trace_ux_fixup.json. Harnesses
+`engine/verify/pw_v27_ux_operator.mjs` + `pw_v27_ux_fixup.mjs`. **VERDICT: OPERATOR-PLAYABLE =
+YES (load → curve at $80k → step knob → trade, ×2 clean); two UX flags OPEN (Spot($) basis,
+τ arrow affordance).**
+
+---
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
@@ -574,7 +682,9 @@ already-present / portable / GH-dead).**
 | Strike registration export-only: no regLeg wiring; one-mark uniformity + all-γ crossover@K unverified on (W) | v27 HEAD | OPEN — NOTES D11/D13/D16 |
 | Degenerate default pool (symmetric wings w₋=w₊=0.70 ⇒ Δw=0 ⇒ τ inert, all trades rejected) | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — default now asymmetric x10/y12 w₋0.60/w₊0.85 Δw0.25; τ + trades live on load |
 | Stale "Trade mechanic (#16)" UI label says strong-form OPEN while engine ships it | v27 (`3914c7f4`) | **RECONCILED in `b245bfda`** — label now states the strong-form φ warp ships (tester-confirmed verbatim) |
-| Oracle/pool-default blast radius: lp-y-delta shows −$799,988 (hardcoded y−800000 baseline, L4295) + Create-Perp LIQ price −9995.56 (degenerate at oracle 4.44 / $1000 margin) | v27 render-fix (`b245bfda`, oracle→4.44 un-gated default) | OPEN — non-NaN but absurd readouts; intern fix (rebase the y-delta baseline; sanity the toy default margin/notional) |
+| Oracle/pool-default blast radius: lp-y-delta shows −$799,988 (hardcoded y−800000 baseline, L4295) + Create-Perp LIQ price −9995.56 (degenerate at oracle 4.44 / $1000 margin) | v27 render-fix (`b245bfda`, oracle→4.44 un-gated default) | **RECONCILED in UX-restore `9d22cffd`** — lp-y-delta = dynamic `_initial_y` baseline (L4311), reads $0.00 at load / $156.20 after the test trade; Create-Perp LIQ sane at $80k defaults: 8.0×, long $70,000.00 / short $90,000.00 (tester-confirmed live ×2) |
+| Spot KPI basis: “Spot ($)” shows $30,344.83 = raw reserve ratio y/x, NOT the pool marginal ($80,000) — v24 showed $80,000 at load; first dollar number the operator sees contradicts the $80k world (kpi-spot 0.3793 / kpi-w 0.7250 same basis) | UX-restore `9d22cffd` (exposed by equilibrium-at-load y0) | OPEN — intern: point kpi-spot/kpi-spot-usd at the marginal (getMP_raw) or relabel honestly |
+| τ (and all settings-panel/perp-form) number inputs: up/down spinner ARROWS hidden by CSS (`.field-input-wrap … ::-webkit-inner-spin-button { -webkit-appearance:none }` L326-328) — mouse-click stepping dead on τ (verified: click ×2 no-ops; band-price inputs with the L938-950 visible-spinner CSS DO step 120000→120500 on click); keyboard arrows work | v24 base CSS, carried into v27; bites NOW because the operator's no-sliders ruling makes arrows the only knob affordance | OPEN — one-line CSS fix: give .field-input-wrap inputs the same inner-spin-button treatment (at least τ) |
 | Funding re-pointed to price-anchor p=P, γ→±γ_loc — diverges from HEAD's locked w=½ funding | v27 (candidate) | OPEN — theory-risk-accepted; operator/skeptic-tier |
 
 _Tester: append new entries above the reconciliation list; update the list every entry._

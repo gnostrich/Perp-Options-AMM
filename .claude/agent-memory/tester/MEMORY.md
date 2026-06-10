@@ -1,8 +1,38 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the v27 HEAD-PROMOTION ledger entry + the operator-ordered
-v24→v26c feature-level diff (entry 28)._
+_Last updated: 2026-06-10, after the entry-29 UX-restore operator-playability test (build
+`9d22cffd`) + ledger entry._
 
-## ★★ MOST RECENT — v27 IS HEAD (operator ruling, entry 28) + the v24→v26c desirables note
+## ★★★ MOST RECENT — UX-RESTORE `9d22cffd` TESTED: OPERATOR-PLAYABLE = YES, two UX flags OPEN
+HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `9d22cffd6a0f002f359eed81d7157203`
+(UX-restore on the promoted v27 line; was `b245bfda`). Live Playwright, operator-style (real
+clicks/keys), ×2 byte-identical, 0 console errors. Blobs canonical, 3 scripts parse.
+**Verdicts (full detail in DIFF_LEDGER UX-restore entry):**
+- Load PASS: oracle 80000, marginal $80,000.000 at load, curve fracW 0.981, lp-y-delta $0.00
+  (RECONCILED — dynamic `_initial_y` L4311), perp form 8.0× / liq $70k long / $90k short
+  (RECONCILED).
+- No sliders PASS: 0 input[type=range] live DOM; τ = number step 0.05; keyboard ↑/↓ works.
+  **FLAG OPEN: τ spinner ARROWS CSS-hidden** (`.field-input-wrap` L326-328 appearance:none —
+  mouse-click stepping dead on τ; band-price inputs L938-950 DO click-step). One-line CSS fix.
+- Knob PASS: τ 0.05 vs 1.5 → elbow 5.62px mean/111 max, left wing 0.00px, right 1.26px.
+- Trade PASS: real UI perp+band 0.05 BTC sold-120000/bought-68000 → slippage 0.0710%≈$0.07,
+  executes, y +156.20, curve/dot redraw, no NaN. In-band holds to 50 BTC (93.97% slippage, honest,
+  allowed); **frozen-wing red banner at 100 BTC** + Transact disabled (pixel-confirmed crop).
+- v24 side-by-side PASS-with-flags: identical layout/tabs/KPI-labels/chart-views/defaults + one
+  new (W) settings section. **FLAG OPEN: Spot ($) KPI = $30,344.83 = raw y/x reserve ratio, NOT
+  the marginal $80,000** (v24 showed $80,000/1.0000/0.5000; v27 shows 0.3793/$30,344.83/0.7250) —
+  first dollar number on screen contradicts the $80k world. Also y0=303,448.28 ≠ v24's 800,000
+  (deliberate equilibrium-at-load, code L2285-2289 — surfaced for operator ruling).
+**Ledger updated:** UX-restore entry appended; feature-state rows #1/#3/#15 re-rowed; rolling
+list item 0b (entry-29 objection, clause-by-clause status); reconciliation: blast-radius row
+RECONCILED-in-9d22cffd, +2 new OPEN rows (Spot-KPI basis, τ arrow affordance).
+**Repro:** `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v27_ux_operator.mjs`
+(runs A/B + v24 compare) + `node verify/pw_v27_ux_fixup.mjs` (true τ-low, over-size search,
+spinner-click probe, v24 spot baseline). Evidence `evidence/v27_ux/`.
+**Gotcha new:** number-input spinner mouse-clicks only work where CSS shows them (profit-row
+inputs yes, field-input-wrap no); keyboard ArrowUp/Down always steps + fires input. Over-size
+threshold on default pool: in-band ≤50 BTC, frozen-wing at 100 BTC (bought leg rejects first).
+
+## Prior — v27 IS HEAD (operator ruling, entry 28) + the v24→v26c desirables note
 **HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` (`b245bfda`), PROMOTED 2026-06-10 by
 OPERATOR RULING** (entry 28 verbatim, `history/operator/2026-06-10_kurtosis-curve-family-brief.md`:
 "firstly, commit this version to head because theres nothing useful since v24 -- in parallel let
