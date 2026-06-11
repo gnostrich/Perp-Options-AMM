@@ -575,3 +575,10 @@ _Context: the confrontation question — given the Merton-quadratic calibration 
 _Context: operator doesn't understand "the lock"; orders the skeptic's wipe plan executed — manager wiped to basics and resumed._
 
 > indont understand that this lock means simple english again is lacking, skeptic, wipe the manager down to basics again and resume him
+
+---
+
+## Entry 79 — 2026-06-11
+_Context: operator probes whether the manager is conflating the pool curve (first graph) with the derived option-price curves (second graph)._
+
+> now are you conflating the pool curve for the curves we see in the second graph that derive option prices from the pool? :)
