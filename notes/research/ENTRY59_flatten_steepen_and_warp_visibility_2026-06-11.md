@@ -1,4 +1,4 @@
-> ⚠ **VOID — operator killed this run before delivery (entry 63: "stop the run its of no use to me"). Retained unread for the record only; superseded by the manager's entry-63 flatness brainstorm (steepness=γ-level repackaging). Do not cite.**
+> ⚠ **VOID-AS-DELIVERABLE — operator killed this run before delivery (entry 63: "stop the run its of no use to me"). The agent completed anyway and its return summary reached the manager post-kill; honesty note: its conclusions independently CORROBORATE the manager's entry-63 brainstorm (wing pair = THE steepness knob; one-sided trade path is the missing warp piece) and CORRECT one manager statement (px metric: axis-aligned overstates up to ~10× vs perpendicular; and path-A is NOT needed for warp visibility — in-cap A ≈ legacy visibility; A is for strike-dependence only). Non-canon as a deliverable; facts above relayed to operator in one line. Do not cite beyond that.**
 
 # ENTRY-59 RUN — "w varies with strike": clean flattening/steepening + curve warp, against the VISIBLE bar
 
