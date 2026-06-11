@@ -533,3 +533,10 @@ _Context: standing transparency mandate (addressed also to the skeptic, to enfor
 _Context: comprehension question — what do wing weights mean; why are elbow and steepness separate degrees of freedom._
 
 > i dont understand what wing weihts mean, i dont understand how theres elbow and steepness as 2 dof here
+
+---
+
+## Entry 73 — 2026-06-11
+_Context: operator pins the Balancer axiom — w weights x, 1−w weights y, must sum to 1, else void._
+
+> no in balaner w is weight of x and 1-w is weight of y, they sum to 1 , if they dont, the thing is void for me
