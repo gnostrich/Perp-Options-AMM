@@ -44,3 +44,4 @@ absences.
 Owner: manager (edits on operator direction or when a locked decision changes). The skeptic FLAGS
 inventory staleness too — if a note legitimately needed an item this list lacks, that's a
 FLAG-PROCESS against the inventory itself.
+| 17 | **LP liquidity port** `Store.liquidity(D)` / spec §2.13 liquidity(Σ,λ) | Pool-state WRITER missed by the first checker closure (skeptic verdict #11, 2026-06-11): deposit/withdraw must rescale reserves along the SAME curve (I_LP1) — mark, w, τ, registration all unchanged; any liquidity op that reshapes μ is non-conforming. Checker row 20 / CHK-8 (queued). |

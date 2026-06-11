@@ -209,3 +209,27 @@ checks actually run (run_all.sh full green + chk_core.js CHK-1..6 green, both th
 queued legs and blocked/parked rows named with their blocker — none claimed run). Every
 forced-form cell cites its AC / transcript entry / theorem; no new math anywhere; no claim
 that any candidate family passes the full table; no GH↔(W) identity used.
+
+## 6. Corrigenda (dated; manager-applied per skeptic verdict #11, `notes/skeptic/VERDICT_HOURCLOSE_2026-06-11.md`)
+
+1. **CLOSURE HOLE — row 20 added (the flag's substance): LP liquidity operation.**
+   `Store.liquidity(D)` (HTML script 1, Earn-panel-wired) implements the formal spec's
+   liquidity(Σ,λ) operator (spec §2.13) and WRITES pool state (x, y, α, β, Nx, Ny). Spec L504
+   names trade / arb / rebase / **liquidity** as the complete generating set for pool moves.
+   - Component: LP deposit/withdraw (liquidity port).
+   - Geometry-forced form: proportional scaling along the SAME μ (invariant I_LP1, spec §2.13 —
+     deposit/withdraw rescales reserves without moving the mark or reshaping μ; under warp
+     semantics: λ acts on μ's level, never its shape; τ untouched; w untouched).
+   - Check: **CHK-8 (QUEUED, specced):** post-liquidity invariants — mark unchanged, w unchanged,
+     sNorm-registration unchanged, μ-shape readings (elasticity profile) pointwise unchanged,
+     reserves scaled by λ exactly; negative control: a liquidity op that perturbs w or the
+     elbow must FAIL. Status: QUEUED (not in landed suite — never claimed run).
+2. **Book/funding writers enumerated (closure §2 amendment):** funding accrual writes
+   `leg.funding_*` (book state) per tick — book-state writers are INSIDE the closure as
+   consumers of μ-readings (funding row's check covers the rate; the accrual write-path joins
+   CHK-8's queued sweep). "Oracle consumed at exactly two points" CORRECTED: three+ paths
+   (arb target; funding; executeBand/executeLeg V_usd→dy) — enumeration, not count, is the rule.
+3. **§4.1 provenance fixed inline** (entry-20 attribution; "nothing submitted" was false at
+   commit time — three FW submissions were already in flight in the same session).
+4. **Inventory staleness:** `docs/feature_inventory.md` gains item 17 (LP liquidity port) —
+   manager edit per the inventory's own maintenance clause, same commit.

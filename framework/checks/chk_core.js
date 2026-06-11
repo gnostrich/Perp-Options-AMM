@@ -77,6 +77,16 @@ function report(name, detail) { console.log(`REPORT ${name}  ${detail}`); }
   }
   const aD = Math.abs(xs * ws - a) / a, bD = Math.abs(ys * (1 - ws) - b) / b;
   gate("CHK-2a alpha/beta conservation over 100 trades", aD < 1e-12 && bD < 1e-12, `alpha drift=${fmt(aD)} beta drift=${fmt(bD)}`);
+  // NEGATIVE-CONTROL TWIN (skeptic verdict #11 condition — the discriminator the identity-leg lacked):
+  // a FIXED-CURVE trade (today's engine semantics: slide along x^w y^(1-w)=k, w unchanged) must
+  // VIOLATE the warp conservation law — the check must detect non-warp updates.
+  (function negA() {
+    const x0 = 80, y0 = 150, w0 = 0.3, k = Math.pow(x0, w0) * Math.pow(y0, 1 - w0);
+    const y1 = y0 + 30, x1 = Math.pow(k / Math.pow(y1, 1 - w0), 1 / w0); // slide, w stays w0
+    const aDrift = Math.abs(x1 * w0 - x0 * w0) / (x0 * w0);
+    gate("CHK-2a-neg fixed-curve (non-warp) trade MUST violate conservation", aDrift > 1e-3,
+      `alpha drift under slide=${fmt(aDrift)} — detected (a warp checker that passes the old engine is no checker)`);
+  })();
   // micro-integration vs one-shot for a finite trade dy=+30
   const oneShot = (() => { const yN = y + 30, xN = a * yN / (yN - b); return a / xN; })();
   let xm = x, ym = y, wm = w; const N = 10000;
@@ -85,6 +95,15 @@ function report(name, detail) { console.log(`REPORT ${name}  ${detail}`); }
   const slopeMicro = (wm / (1 - wm)) * (ym / xm);
   gate("CHK-2b finite trade = integral of slices (slope agreement)", Math.abs(slopeOne / slopeMicro - 1) < 1e-9,
     `one-shot slope=${slopeOne.toFixed(9)} micro(10k)=${slopeMicro.toFixed(9)} reldiff=${fmt(Math.abs(slopeOne / slopeMicro - 1))}`);
+  // NEGATIVE-CONTROL TWIN: a WRONG transport (read-once: freeze the destination slope from the
+  // ORIGINAL curve for the whole finite trade, no per-slice update) must DISAGREE with the integral.
+  (function negB() {
+    const yN = y + 30, xD = Math.pow((Math.pow(x, w) * Math.pow(y, 1 - w)) / Math.pow(yN, 1 - w), 1 / w);
+    const slopeReadOnce = (w / (1 - w)) * (yN / xD); // destination slope off the frozen curve, one read
+    const rel = Math.abs(slopeReadOnce / slopeMicro - 1);
+    gate("CHK-2b-neg read-once (non-integral) transport MUST disagree with the integral", rel > 1e-3,
+      `read-once slope=${slopeReadOnce.toFixed(6)} vs integral=${slopeMicro.toFixed(6)} reldiff=${fmt(rel)} — the 'sort of integral' clause has teeth`);
+  })();
 })();
 
 // ---------- CHK-3: four-number budget — gamma derived, wings tau-invariant ----------
@@ -119,29 +138,44 @@ function report(name, detail) { console.log(`REPORT ${name}  ${detail}`); }
   for (const tau of [0.05, 0.3, 1, 3]) {
     const anchor = Wcurve(0, tau, 0);           // dw=0 member exists at every tau (existence by construction)
     const pool = Wcurve(0.2, tau, 0);
-    // funding functional (slope-deviation ratio at strike rays): == 0 on anchor-vs-anchor; != 0 pool-vs-anchor
-    let zero = 0, nonzero = 0;
+    // funding functional (slope-deviation ratio at strike rays). Three legs, none tautological:
+    // (i) a GENERIC pool built with dw=0 vs the anchor constructor — code-path identity, not sA/sA;
+    // (ii) skewed pool vs same-tau anchor != 0; (iii) NEGATIVE CONTROL: a WRONG-tau anchor must
+    // show nonzero funding even for an UNSKEWED pool — i.e. the operator's "both same kurtosis"
+    // pin is exactly what makes funding price skew only (entry 3 discriminator).
+    const genericUnskewed = Wcurve(0, tau, 0);
+    const poolWrongTau = Wcurve(0.2, tau * 4, 0);
+    let zero = 0, nonzero = 0, tauSens = 0;
     for (const u of [-1, -0.3, 0.3, 1]) {
-      const sA = anchor.eps(u), sP = pool.eps(u);
-      zero = Math.max(zero, Math.abs(sA / sA - 1));
-      nonzero = Math.max(nonzero, Math.abs(sP / sA - 1));
+      zero = Math.max(zero, Math.abs(genericUnskewed.eps(u) / anchor.eps(u) - 1));
+      nonzero = Math.max(nonzero, Math.abs(pool.eps(u) / anchor.eps(u) - 1));
+      // tau-sensitivity of the funding READING on the skewed side: a kurtosis-mismatched
+      // comparison would mis-price skew — the functional must distinguish tau from 4*tau.
+      tauSens = Math.max(tauSens, Math.abs(pool.eps(u) - poolWrongTau.eps(u)));
     }
-    gate(`CHK-4 tau=${tau} anchor exists; funding(anchor)=0; funding(pool)!=0`, zero === 0 && nonzero > 1e-3,
-      `anchor self-deviation=${zero} pool-vs-anchor max |ratio-1|=${fmt(nonzero)}`);
+    gate(`CHK-4 tau=${tau} anchor exists; funding(unskewed-vs-anchor)=0; funding(pool)!=0; funding reading is tau-sensitive`,
+      zero < 1e-15 && nonzero > 1e-3 && tauSens > 1e-3,
+      `unskewed-vs-anchor=${fmt(zero)} pool-vs-anchor=${fmt(nonzero)} tau-sensitivity=${fmt(tauSens)}`);
   }
   report("CHK-4-GH", "GH at engine pin beta=1: zero-skew member requires beta=0 = settlement-semantics change (B-FULL fork) — anchor existence CONDITIONAL, operator-tier; cited from skeptic stock-take 2026-06-10, not re-run");
+  report("CHK-4-degeneracy (FINDING, surfaced by the first wrong-tau control failing honestly)",
+    "in the (W) family the unskewed member is plain Balancer at EVERY tau (dw=0 kills the elbow term identically) — the operator's 'both same kurtosis' clause is degenerate-true for (W) and binds only for families whose unskewed member carries tau (e.g. GH delta at beta=0); framework anchor-existence column should record this per family");
 })();
 
 // ---------- CHK-5: LDF (closest-axis thickness) — Balancer tent formula + mode location ----------
 // Forced form: AC-4 (entry 4 verbatim; LDF note §1).
 (function CHK5() {
-  const k = 4; // xy = 4, sqrt(k)=2
-  let maxRes = 0;
+  // Non-tautological (skeptic verdict #11 condition): curve points come from NEWTON ROOT-FINDING
+  // on the (W) invariant at dw=0 (NOT from the same closed-form exponentials the tent formula uses).
+  // F(x,y) = sqrt(x*y) = k  =>  given x, solve sqrt(x*y)-k=0 for y numerically.
+  const k = 2; // sqrt(xy)=2 => xy=4
+  let maxRes = 0, maxModeRes = 0;
   for (let u = -4; u <= 4; u += 0.01) {
-    const x = 2 * Math.exp(-u / 2), y = 2 * Math.exp(u / 2);
-    maxRes = Math.max(maxRes, Math.abs(Math.min(x, y) - 2 * Math.exp(-Math.abs(u) / 2)));
+    const x = 2 * Math.exp(-u / 2);
+    let y = 1; for (let i = 0; i < 80; i++) { const f = Math.sqrt(x * y) - k; const df = Math.sqrt(x) / (2 * Math.sqrt(y)); y -= f / df; } // Newton
+    maxRes = Math.max(maxRes, Math.abs(Math.min(x, y) - 2 * Math.exp(-Math.abs(Math.log(y / x)) / 2)));
   }
-  gate("CHK-5 Balancer LDF = sqrt(k)*e^(-|u|/2) tent, mode at 45-deg ray", maxRes < 1e-12, `max formula residual=${fmt(maxRes)}`);
+  gate("CHK-5 Balancer LDF tent (solver-derived points vs formula), mode at 45-deg ray", maxRes < 1e-9, `max solver-vs-formula residual=${fmt(maxRes)}`);
 })();
 
 // ---------- CHK-6: solvency exposure REPORT (no pass/fail — B1 is the operator's extrinsic ship-gate) ----------
