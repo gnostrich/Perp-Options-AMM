@@ -640,3 +640,10 @@ _Context: comprehension request — explain warp anchoring._
 _Context: vocabulary collision — in project usage "anchor curve" = the static w=½ reference; the manager used "anchoring" for the warp goal-seek point. Operator objects._
 
 > what the fuck are you saying. anchor curve never skews; pool curve skews. what the fuck are you anchoring?
+
+---
+
+## Entry 88 — 2026-06-11
+_Context: operator ruling completing the lens architecture — the warp goal-seek point is the trade point, in the lensed coordinate._
+
+> goal seek is trade point seen through the lens… hope this is good enough for you
