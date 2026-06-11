@@ -1,7 +1,54 @@
 # MEMORY — tester
-_Last updated: 2026-06-11, after the ENTRY-46 STANDING UI SMOKE-PASS on fixed HEAD `928cde1c` (READ-ONLY; first invocation of the standing smoke gate)._
+_Last updated: 2026-06-11, after the v28 POLAR-LENS STAGE-1 STANDING UI SMOKE-PASS (candidate build `5e1ff278`, READ-ONLY; operator ASLEEP, autonomous build entry 95). HEAD unchanged = v27 `928cde1c`._
 
-## ★★★★★ MOST RECENT — ENTRY-46 SMOKE-PASS (HEAD `928cde1ccc…`, fix build for entry-45 lacunae)
+## ★★★★★ MOST RECENT — v28 POLAR-LENS STAGE-1 SMOKE (CANDIDATE `5e1ff278`, NOT HEAD; new line off PLAIN v24)
+Build = `engine/builds/temporal_mvp_v28_lens_S1.html` (md5 `5e1ff278dbfea889d49b48224ba931d3`). Static
+polar lens (knob τ) reshapes CHART 2 (option/value) + funding; CHART 1 (pool curve) + all trade
+mechanics are plain v24 byte-identical (manager pre-verify tradeUpdate Δ0; lens_selfcheck 14/0).
+Harness `engine/verify/pw_v28_lens_S1_smoke.mjs`; evidence `evidence/v28_lens_S1/` (17 shots +
+RUN_LOG_runA/B + INDEX). Live Playwright ×2 byte-identical verdicts, **0 console errors / 0
+pageerrors**. File-safety GREEN (webp L74 `ab663f5c…`, svg **L1060** `c505b08a…`, 3 scripts parse).
+Ledger entry appended (feature-keyed #1/#3/#6/#7/#9/#10/#11/#12/#15/#16 + none-beyond; OPERATOR-VOICE
+entries 91/93/94/95; +OPEN item -3; +2 recon rows; table rows #3/#6/#7/#9/#10/#15 amended).
+**VERDICT: Stage-1 mechanics + lens math + chart-1/chart-2 separation all PASS; ONE blocking FLAG ⇒
+HAND-BACK = HOLD.**
+- **★ FLAG-1 (the blocker, OPEN, intern one-liner): the τ stepper does NOT auto-redraw chart 2.** A
+  τ 0.3→3 step via the real stepper EVENT = **0 px** change on chart 2. Root cause: τ-input handler
+  (~L2702) guards its redraw with `if (window.Viz && Viz.drawAll)`, but `Viz` is a const IIFE (L3175)
+  **never attached to window** ⇒ `window.Viz===undefined` ⇒ dead branch. Chart 2 refreshes ONLY when
+  another action fires `render()`/`Viz.drawAll` (Advance Time / Arb / trade / Reset). SAME CLASS as
+  the operator's entry-45 "curve almost completely insensitive to kurtosis change" — would read as
+  "knob does nothing" live. Fix: `window.Viz = Viz;` or call `render()`. **Math/draw are CORRECT —
+  forced redraw shows the full ≈98px elbow reshape.**
+- **Step verdicts (forced-redraw measurement — canvas px-diff saturates only when whole-curve; I used
+  raw ImageData + analytic markLensed):** (1) τ number stepper 0.3, NO slider (0 input[type=range]) +
+  chart-2 lensed mark + φ_m marker — PASS. (2) τ0.3→0.05 elbow SHARPENS (~98px analytic, 6,645 px
+  rendered), wings frozen (Δψ≈5e-5) — PASS. (3) τ0.3→2 ROUNDS in BOTH default (w=0.5/γ=1, 8,103 px)
+  and steep (w=0.78/γ=3.55, 6,276 px) pools — PASS (NOT degenerate here: γ from the single v24 w, no
+  Δw gap). (4) chart 1 INVARIANT to τ across {0.05,1,2,3} = **0 px every τ** — CONTAMINATION PROBE
+  PASS HARD. (5) funding (steep pool S=2.333≠1): ATM=0 (g_atm=0), OTM call +2.23e-3 / put −2.23e-3
+  (opposite-signed equal-mag), all finite; markLensed g=0 exact = finite 1 (S*=0 path safe) — PASS.
+  (6) in-range trade: reserves moved on FIXED v24 curve (10→9.905 BTC, α/β conserved, inv resid
+  1.16e-16), chart 1 redrew moved point, chart 2 lensed mark re-rendered — PASS.
+- **INHERITED-v24 (NOT a Stage-1 regression, note-don't-FLAG):** band audit `pv-net-cash` = $618M on
+  $800k pool — `dy`/`netPoolY` already USD (`V_usd=p.V·oracle` L1755) then display ×oracle AGAIN
+  (L3050-52). VERIFIED byte-identical in v24 base (`temporal_mvp_v24_rebase_fixed_2.html` L2959/L2961).
+  Same class entry-46 fixed on v27; this line is off plain v24 where that fix never existed. Slippage
+  % readout itself sane (1.9322% ≈ $73.62). Lens does not touch it.
+- **OPERATOR-VOICE (operator ASLEEP, no objection on v28 yet):** Stage-1 architecture is the operator's
+  own design — entry 94 (L695) "balancer curve unchanged with the stuff we read from it and write (AMM
+  tx) to it being through a polar lens (… kurtosis into chart 2 view)"; entry 91 (L621) the lens
+  splays around the mode to steepen curve 2. **OPEN GAP (faithful): the operator's intent includes the
+  AMM-tx WRITE through the lens; Stage 1 only lenses chart-2 READ + funding — the traded dollar
+  settlement is plain v24 (parked operator-tier per the dispatch). Recorded OPEN, not complete.**
+  Entry 93 (L688) "5 idc, same geometric thing" = funding-through-lens RULED-accepted; "2 no cap …
+  just x y w that move" = γ from single w, cap-free lens. Entry 95 (L702) = the autonomous build go.
+- **Gotchas this run (added below):** Viz/render are NOT on window — drive redraws via real handlers
+  (btn-tick = render() = the working redraw path); arb/tick/reset live in the Settings subtab; default
+  pool w=0.5 ⇒ getMP_raw==oracle_initial ⇒ funding S≡1 (steepen w to make (S−1)/S alive); funding sign
+  is call>0/put<0 (NOT the reverse).
+
+## ★★★★ Prior — ENTRY-46 SMOKE-PASS (HEAD `928cde1ccc…`, fix build for entry-45 lacunae)
 Build = entry-45/46 fixes (clearBandPreviewOut L3136; audit raw USD L3242-47; anchor k=√(x·y)
 L3494; τ disclosure L1329). Engine `<script>` byte-identical to `1eebfcd6` — all deltas UI-layer.
 Harness `engine/verify/pw_v27_entry46_smoke.mjs`; evidence `evidence/v27_entry46_smoke/` (INDEX.txt);
@@ -174,9 +221,11 @@ paraphrase] / [summary-stub].
   ABSORBED in v26c.
 
 ## File-safety canon
-Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1064); 3 `<script>` parse.
+Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg); 3 `<script>` parse. **svg line varies by
+build: L1064 on the v27 line (`928cde1c` etc.), L1060 on the v28-S1 candidate (`5e1ff278`) — content
+canonical either way; key off the line md5, not the number.**
 HEAD `928cde1cccb0f35fdc9a23a7634414c8` (entry-46 fix build); prior `1eebfcd6`, `9d22cffd`, `b245bfda`, `3914c7f4`;
-v26c_full2 `6cc73563…`; v26b `8df9f8a3…`.
+v26c_full2 `6cc73563…`; v26b `8df9f8a3…`. **v28-S1 candidate `5e1ff278dbfea889d49b48224ba931d3` (NOT HEAD).**
 
 ## Environment quick-ref
 `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/<harness>.mjs` — playwright

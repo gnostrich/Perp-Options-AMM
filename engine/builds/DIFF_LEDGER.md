@@ -22,19 +22,19 @@ changed, every entry, no exceptions)
 |---|---|---|---|---|
 | 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side). **Display-fix `1eebfcd6`: Spot($)/Spot KPI + hdr-pool-spot re-pointed to the marginal getMP_raw — $80,000.00 / 1.0000 / "spot $80,000.00" at load (v24 values)** | entry-46 smoke (`928cde1c`, FINDING-R) | DESIRABLE — v24 feel restored; Spot-KPI basis RECONCILED-in-`1eebfcd6` (y0 delta OPEN-for-ruling). **NEW OPEN (entry-46 smoke, FINDING-R): post-rebase Spot($)/hdr-pool-spot show POOL-FRAME getMP_raw, not current-$ poolMark — oracle→90000 makes Spot($) read $71,232 then post-arb $80,000 beside an Oracle box reading 90000; honest at r=1 only. Display-only; engine self-consistent** |
 | 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | entry-46 fix `928cde1c` (anchor overlay) | HEAD — engine PASS; visual subtlety ACCEPTED (override). **ENTRY-46: anchor (w=½) overlay FIXED-verified — k=√(x·y)=1,742 (was 170.83, 104× low); passes 1.15px from the live reserves dot, pixel-confirmed on the entry-45 frame (`I3_anchor_curve_default.png` re-shoot).** **ENTRY-30 obs: warp is premium-driven only (φ=f(dy=±premium)); constant-premium-further-OTM does NOT warp more — operator CHECK-1 claim NOT reproduced, see OPEN -1.** **ENTRY-45 obs: τ visual authority intrinsically small on the default frame — re-anchoring pins the elbow at the live point and wing shift is along-tangent (self-sliding); full-range τ 0.05→3.00 max 153.7px at wing tail yet perceived shape ~unchanged (screenshots); per-click (±0.05) 3.4px max = sub-visible. Redraw FIRES (canvas diff every step). See OPEN -2** |
-| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | entry-46 fix `928cde1c` (disclosure sentence) | DESIRABLE mechanics — stepper+redraw verified live ×2; **ENTRY-46: honest disclosure sentence added + visible at the τ control ("Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step…"); per-click delta re-baselined byte-identical (3.39px analytic / 3,744px canvas one click; 153.73px full sweep)** — **BUT ENTRY-45: operator reports (correctly) the CURVE looks "almost completely insensitive" to τ — confirmed intrinsic-small visual authority (one click 3.4px max; 0.30→0.60 19.9px; 0.30→3.00 131px, all at wing tails along-tangent, elbow pinned at live point). NOT a redraw bug. Whether the knob needs more VISUAL authority = OPEN operator-tier (OPEN -2)** |
+| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | entry-46 fix `928cde1c` (disclosure sentence) | DESIRABLE mechanics — stepper+redraw verified live ×2; **ENTRY-46: honest disclosure sentence added + visible at the τ control ("Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step…"); per-click delta re-baselined byte-identical (3.39px analytic / 3,744px canvas one click; 153.73px full sweep)** — **BUT ENTRY-45: operator reports (correctly) the CURVE looks "almost completely insensitive" to τ — confirmed intrinsic-small visual authority (one click 3.4px max; 0.30→0.60 19.9px; 0.30→3.00 131px, all at wing tails along-tangent, elbow pinned at live point). NOT a redraw bug. Whether the knob needs more VISUAL authority = OPEN operator-tier (OPEN -2)** **▶ v28-S1 CANDIDATE (NOT HEAD, `5e1ff278`): on the polar-lens build τ visibly reshapes CHART 2 (lens read) — forced-redraw τ0.3→0.05 ≈98px elbow sharpen, wings frozen (Δψ≈5e-5); BUT the τ stepper EVENT does NOT auto-redraw chart 2 (0 px on a 0.3→3 step) because `window.Viz` is undefined and the L2702 guard is dead — FLAG-1, OPEN intern one-liner. Same operator "insensitive to kurtosis" symptom-class, here a pure redraw-wiring bug (math/draw correct).** |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
 | 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled. **ENTRY-46 smoke: rebase path UI-exercised first time — engine consistent (arb closes the poolMark gap exactly) but the $ KPIs display the pool FRAME, see FINDING-R row #1** | v27 (+ entry-46 smoke obs) | OPEN lemma — theory-risk-accepted; FINDING-R display item OPEN |
-| 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 | DESIRABLE — Reading A ruled |
-| 7 | ITM American smooth-pasting | HEAD (v27): ported with g→γ_loc (Reading A); seam value/slope selfcheck PASS; mark/markFrac split present. NOT carried from the GH line: payoff naked-leg uncap + x-range −90..+200 (HEAD payoff caps at 1, ±50%) — NOTES D9/D10 | v27 (+ Task-2 diff) | HEAD — seam PASS; 2 GH-line payoff upgrades unported (noted for future) |
+| 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 (+ v28-S1 candidate obs) | DESIRABLE — Reading A ruled. **▶ v28-S1 (`5e1ff278`): pricing READ through the polar lens g_loc=γ·h′_τ(|u|) on chart 2; value∝S^(−γ_loc) preserved in the wings (selfcheck 5c g_wing→γ-scale); elbow rounds with τ, wings frozen — tester-confirmed live** |
+| 7 | ITM American smooth-pasting | HEAD (v27): ported with g→γ_loc (Reading A); seam value/slope selfcheck PASS; mark/markFrac split present. NOT carried from the GH line: payoff naked-leg uncap + x-range −90..+200 (HEAD payoff caps at 1, ±50%) — NOTES D9/D10 | v27 (+ Task-2 diff) (+ v28-S1 candidate obs) | HEAD — seam PASS; 2 GH-line payoff upgrades unported (noted for future). **▶ v28-S1 (`5e1ff278`): lens twin `markLensed` (Reading-A smooth-paste with strike-local g) — seam value/slope continuous incl. g<1 (selfcheck 4a/4b), and the g=0/S*=0 ATM point returns finite boundary value 1 (no NaN, MUST-APPLY-2) — tester live-probe + selfcheck 4c agree** |
 | 8 | Uniform strike registration θ=sNorm(K) | HEAD (v27): sNormStrike ((W) inverse) defined+exported (round-trip 1.46e-15, NaN-loud) but **export-only — no regLeg wiring**; payoff sweeps price-ratio (1+r); the v26c one-mark-across-display/exec/chart guarantee + all-γ crossover@K are UNVERIFIED on (W) — NOTES D11/D13/D16 | v27 (+ Task-2 diff) | PARTIAL — function present, uniform wiring unported (noted for future) |
-| 9 | Funding | HEAD (v27): re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — diverges from the GH line's locked w=½ funding; φ-anchor/funding lemma OPEN [needs-Aristotle] | v27 | OPEN — theory-risk; not UI-exercised |
-| 10 | Slippage basis (mpGeom) | HEAD (v27): mpGeom collapses to getMP_raw (price==slope on (W), proven, selfcheck L4). NOT carried: v26a's honest $-tooltip ("Layer-1 reserve-USD, not trader honest-dollar") — HEAD ships the v24 tooltip — NOTES D2 | entry-46 fix `928cde1c` | DESIRABLE math; $-label honesty unported (noted). **ENTRY-46: BOTH entry-45 band-panel display defects RECONCILED-in-`928cde1c`, tester live ×2 — (a) stale-on-reject: `clearBandPreviewOut()` wired on every reject path, STALE-CHECK FALSE on swap/pill/oversize; (b) audit strip prints raw engine USD exactly (28,453.17/11,470.09/39,923.26 on the entry-45 reference band — was $3.19B).** **ENTRY-45 (historical): 2 display defects: (a) STALE-ON-REJECT — previewBand reject paths (!sim.ok / club guards) set the warn but DON'T clear summary/audit ⇒ slippage/N_buy/net-cash retain the PREVIOUS direction's numbers next to the rejection banner (the operator's screenshot state); (b) ×ORACLE UNIT INFLATION — pv-net-cash/pv-dy-sold/pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool (engine netPoolY=39,923.26 raw USD, correct; display ×80,000)** |
+| 9 | Funding | HEAD (v27): re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — diverges from the GH line's locked w=½ funding; φ-anchor/funding lemma OPEN [needs-Aristotle] | v27 (+ v28-S1 candidate obs) | OPEN — theory-risk; not UI-exercised on v27. **▶ v28-S1 (`5e1ff278`): funding routes THROUGH the lens (±g_loc replaces ±2). UI-exercised: with S≠1 (steep pool), ATM funding=0 (g_loc→0), OTM call +2.23e-3 / put −2.23e-3 (opposite-signed, equal magnitude), all finite — tester-confirmed. Operator RULED funding-through-lens accepted (entry-93 "5 idc, same geometric thing")** |
+| 10 | Slippage basis (mpGeom) | HEAD (v27): mpGeom collapses to getMP_raw (price==slope on (W), proven, selfcheck L4). NOT carried: v26a's honest $-tooltip ("Layer-1 reserve-USD, not trader honest-dollar") — HEAD ships the v24 tooltip — NOTES D2 | entry-46 fix `928cde1c` | DESIRABLE math; $-label honesty unported (noted). **ENTRY-46: BOTH entry-45 band-panel display defects RECONCILED-in-`928cde1c`, tester live ×2 — (a) stale-on-reject: `clearBandPreviewOut()` wired on every reject path, STALE-CHECK FALSE on swap/pill/oversize; (b) audit strip prints raw engine USD exactly (28,453.17/11,470.09/39,923.26 on the entry-45 reference band — was $3.19B).** **ENTRY-45 (historical): 2 display defects: (a) STALE-ON-REJECT — previewBand reject paths (!sim.ok / club guards) set the warn but DON'T clear summary/audit ⇒ slippage/N_buy/net-cash retain the PREVIOUS direction's numbers next to the rejection banner (the operator's screenshot state); (b) ×ORACLE UNIT INFLATION — pv-net-cash/pv-dy-sold/pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool (engine netPoolY=39,923.26 raw USD, correct; display ×80,000)**  **▶ v28-S1 (`5e1ff278`): executed slippage is plain v24 (lens does NOT touch it; the slippage % readout is sane, e.g. 1.9322% ≈ $73.62). BUT the band AUDIT strip nets (pv-net-cash/pv-dy-*) carry the v24-base ×oracle DOUBLE-MULTIPLY ($618M on an $800k pool) — VERIFIED byte-identical to the v24 base (V_usd already ×oracle L1755, display ×oracle again L3050-52); INHERITED-v24, not a Stage-1 regression; OPEN (candidate v24 known-gap fix).** |
 | 11 | Dollar/settlement pipe | Reused byte-identical from the v24 base; curve-independent | — (unchanged) | DESIRABLE — stable (reuse) |
 | 12 | getMP_raw price-coord gotcha | HEAD (v27): price == geometric slope EXACTLY on (W) (no e^μ factor); code comment warns against re-introducing the GH factor on a cross-port | v27 | DESIRABLE — moot by construction, warning kept |
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
-| 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | entry-46 build `928cde1c` | DESIRABLE — stable (re-verified entry-46 smoke: md5 `928cde1c` whole-file, blobs canonical L74/L1064, 3 scripts parse, run_all 22/22, 0 uncaught exceptions ×2) |
+| 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | entry-46 build `928cde1c` (HEAD); v28-S1 `5e1ff278` (candidate line) | DESIRABLE — stable. HEAD re-verified entry-46 smoke (md5 `928cde1c`, blobs L74/L1064, 3 scripts, run_all 22/22, 0 uncaught ×2). **▶ v28-S1 candidate (`5e1ff278`): file-safety GREEN — blobs canonical `ab663f5c…` L74 / `c505b08a…` L1060, 3 scripts parse, lens_selfcheck 14/0, 0 console errors live ×2** |
 | 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; ACCEPTED(operator). **ENTRY-30: composite-ray spread→single-tx at θ*=√(θ₁θ₂) CONFIRMED exactly (residual 0); but premium-controlled warp NOT reproduced (strike not in tradeUpdate) — OPEN -1.** **ENTRY-45 quantification: the band path (the ONLY UI trade) nets sold-premium−bought-premium ⇒ tiny dy ⇒ tiny φ: 1 BTC band nets ≈$1,626 → Δφ 7.4e-3; cumulative 3 BTC/$240k notional → 2.14px max curve shift. Warp invisibility is STRUCTURAL on the band path, compounding the elbow-local subtlety** **ENTRY-46 smoke: unchanged (engine byte-identical) — 0.05-BTC execute Δφ=4.44e-4; preview steppers + w-readout (the sub-pixel-legibility surrogate) verified working** |
 
 ## Entry template
@@ -66,6 +66,20 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
 > paraphrase]**, or **[summary-stub]** accordingly.
 
 ### OPEN (operator asked / objected; no recorded resolution)
+
+-3. **★ v28-S1 (tester finding, operator ASLEEP) — the KURTOSIS τ knob does NOT auto-redraw chart 2
+   on the polar-lens build.** [#3] NOT an operator question yet (the build post-dates the last
+   operator turn) — recorded here because it is the SAME CLASS as the operator's standing entry-45
+   objection (*"did you check that the curve is almost completely insensitive to kurtosis change?"*,
+   `history/operator/2026-06-10_kurtosis-curve-family-brief.md:341` [verbatim-transcript]) and would
+   reproduce that exact complaint on `temporal_mvp_v28_lens_S1.html` (`5e1ff278`). Tester live ×2: a
+   τ 0.3→3 step via the real stepper yields 0 px change on chart 2; root cause is the L2702 handler
+   guarding its redraw on `window.Viz` which is undefined (Viz is a const IIFE at L3175 never put on
+   window). The lens math + draw are correct — a forced redraw (Advance Time / Arbitrage / trade /
+   Reset) shows the full ≈98px elbow reshape. **Status: OPEN — intern one-liner (`window.Viz = Viz;`
+   or call `render()`); BLOCKS the Stage-1 hand-back gate. Cannot be marked resolved without the fix
+   verified live or an operator waiver.** Evidence `evidence/v28_lens_S1/`, harness
+   `engine/verify/pw_v28_lens_S1_smoke.mjs`.
 
 -2. **★ ENTRY 45 — operator live-play, four lacunae (τ insensitivity / long↔short "breaks" /
    anchor in corner / no visible warp).** [#2, #3, #10, #16] Operator `[verbatim-transcript]`
@@ -1068,9 +1082,129 @@ RECONCILED-in-`928cde1c`; +1 new row (FINDING-R); boot-log row carried OPEN.
 ---
 
 
+## ▶ NEW BUILD LINE — v24 base → v28 polar-lens Stage 1 `temporal_mvp_v28_lens_S1.html` (`5e1ff278`)   [status: CANDIDATE, NOT HEAD — HEAD stays v27 `928cde1c`; new line off PLAIN v24, NOT a v27/GH descendant; tester STANDING UI SMOKE-PASS live x2 byte-identical verdicts]
+_Tester live-Playwright Chromium, READ-ONLY on the build, reproduced clean x2 (IDENTICAL verdicts,
+0 console errors / 0 pageerrors both runs). Build = v24 base + a STATIC polar-lens READ layer on
+CHART 2 (option/value view) + funding; POOL curve (chart 1) and all trade mechanics are plain v24,
+byte-identical (manager pre-verify: tradeUpdate delta 0 vs v24, lens_selfcheck 14/0). Harness
+`engine/verify/pw_v28_lens_S1_smoke.mjs`; evidence `evidence/v28_lens_S1/` (17 shots + RUN_LOG x2).
+File-safety GREEN: blobs canonical `ab663f5c...` (webp L74) / `c505b08a...` (svg L1060), 3 scripts parse.
+Node `lens_selfcheck.js` = 14 PASS / 0 FAIL._
+
+**FEATURES:** #1 (Balancer base - literal v24, unchanged), #3 (kurtosis knob tau - NEW static polar-lens
+knob, number stepper 0.05-3 default 0.3, NO slider), #6 (pricing value~S^(-gamma_loc) - now read through
+the lens g_loc=gamma*h'_tau(|u|) on chart 2), #7 (ITM American smooth-paste - lens twin `markLensed`, seam
+value/slope continuous incl. g<1, selfcheck 4a/4b/4c), #9 (funding - re-pointed through the lens, +-g_loc
+replaces +-2; ATM->0 via g_loc->0), #10 (slippage - plain v24, lens does NOT touch executed slippage),
+#11 (dollar/settlement pipe - plain v24, lens NOT in the traded dollar settlement - parked, see
+OPERATOR-VOICE), #12 (getMP_raw price-coord - plain v24), #15 (file-safety GREEN), #16 (warp-with-trades
+- plain v24 alpha/beta-conserving tradeUpdate, byte-identical; lens is read-only, never feeds a slope back).
+**None beyond.** (#2 curve-warp w(u), #4 carry, #5 rebase, #8 registration, #13 solvency, #14 Esscher:
+all plain v24, untouched by Stage 1.)
+
+**DESIRABLE (tester-confirmed live):**
+- **#3/#6/#7 lens reshapes chart 2 - VISIBLE.** Forced-redraw measurement (canvas px, raw ImageData):
+  tau0.3->0.05 elbow **sharpens** (analytic max dpsi=0.328 ~98px at phi=45.8deg; rendered 6,645 px changed),
+  tau0.3->2 **rounds/flattens** (DEFAULT pool 8,103 px; STEEP pool w=0.78 6,276 px). Sharp spike at small
+  tau vs rounded broad peak at large tau - tester eye-confirmed (`S2_01` vs `S3_03`). **Visible in BOTH
+  the default pool (w=0.5/gamma=1) and a steep pool (w=0.78/gamma=3.55)** - the default is NOT degenerate
+  here (unlike v27's symmetric-wing default), because gamma comes from the single v24 w, not a Dw wing-gap. [#3,#6,#7]
+- **#3/#6 WINGS FROZEN.** Far-wing dpsi across the full tau sweep ~5.1e-5 (default) / 8.5e-5 (steep) - the
+  power-law wings tend to the same slope; only the ATM elbow moves. Matches the spec contract. [#3,#6]
+- **#9 funding through the lens - ATM->0, OTM signed, finite.** With S=poolMark/oracle != 1 (steep pool
+  w=0.7 => S=2.333): funding ATM call/put = 0.000e0 (g_atm=0, the g_loc->0 lens factor zeros it even
+  with the (S-1)/S leg alive); OTM call=+2.230e-3 / OTM put=-2.230e-3 (opposite sign, correct
+  call>0/put<0 convention, equal magnitude on the symmetric lens). All finite. [#9]
+- **#7 g=0 / S*=0 path FINITE (MUST-APPLY-2).** `markLensed` at the exact g=0 ATM point returns the
+  inclusive boundary value 1 (call & put), no NaN/Inf - the `pow(1,-inf)` trap is avoided. selfcheck 4c +
+  live probe agree. [#7]
+- **#16 trade is plain v24 + the lens read re-renders.** In-range band execute: reserves moved on the
+  FIXED v24 curve (10->9.905 BTC, y 800k->807.7k, alpha/beta conserved, invariant (x-alpha)(y-beta)=alpha*beta
+  rel resid 1.16e-16); chart 1 redrew the moved point (8,020 px), chart 2 lensed mark re-rendered (11,607 lit px).
+  Trade mechanic byte-identical to v24 (selfcheck 6/6b). [#16]
+- **#15 file-safety + clean console.** 0 uncaught exceptions / 0 console errors across all 6 steps +
+  full standing smoke, x2 runs. Blobs canonical, 3 scripts parse, lens_selfcheck 14/0.
+
+**UNDESIRABLE:**
+- *** FLAG-1 (#3) - the tau stepper does NOT auto-redraw chart 2. OPEN - blocks the Stage-1 hand-back.**
+  Turning KURTOSIS tau updates `Store.state.tau` (verified) but chart 2 does **not** refresh: a 0.3->3
+  step via the real stepper event yields **0 px change** on the pricing canvas. Root cause: the
+  tau-input change/input handler (~L2702) guards its redraw with `if (window.Viz && Viz.drawAll)`, but
+  `Viz` is a `const` IIFE (L3175) **never attached to `window`** => `window.Viz===undefined` => the
+  redraw branch is dead. Chart 2 only refreshes when some OTHER action fires `render()`/`Viz.drawAll`
+  (Advance Time / Arbitrage / a trade / Reset). **This is exactly the operator's recurring "curve
+  almost completely insensitive to kurtosis change" symptom (entry 45), here at the chart-2 lens - and
+  it would read as "the knob does nothing" to the operator playing live.** One-line intern fix:
+  `window.Viz = Viz;` (or replace the guarded call with the same `render()` the other handlers use).
+  The lens math + draw are CORRECT (forced redraw shows the full 98px reshape) - purely a redraw-wiring
+  defect. [#3] **OPEN.**
+- **INHERITED-from-v24 (NOT a Stage-1 regression) - band audit xoracle inflation.** `pv-net-cash`
+  reads $618,314,484.19 (and -$545,831,965.28 post-swap) on an $800k pool: `dy`/`netPoolY` are ALREADY
+  USD (`V_usd = p.V*oracle`, L1755) and the display multiplies by `s.oracle` AGAIN (L3050-3052
+  `netPoolY*s.oracle`). **Verified byte-identical in the v24 base** (`temporal_mvp_v24_rebase_fixed_2.html`
+  L2959/L2961) - same defect class the entry-45 audit caught and entry-46 FIXED on the v27 line, but
+  this build is off PLAIN v24 where that fix never existed. The slippage line itself is sane
+  ("1.9322 % . ~ $73.62"). Lens does not touch this path. **OPEN - carried as inherited-v24; if v24's
+  known gaps are being corrected on this line (operator entry-93 "correcting its known gaps"), this is
+  one.** [#10/#11]
+
+**NEUTRAL:**
+- New Settings field "KURTOSIS tau" with an honest sim-aid label ("polar-lens kurtosis knob . STATIC
+  (vol-set at deploy) . rounds the ATM elbow ... wings stay exact power-laws. Smaller tau => sharper elbow").
+- Chart 2 (Mark Across Strikes) x-axis = strike polar angle phi; mode marker phi_m drawn; mark curve now the
+  lensed `markLensed` psi. Chart 1 (Pool Curve) plain v24 - verified HARD invariant to tau.
+
+*** CONTAMINATION PROBE (the key Stage-1 separation) - PASS HARD.** Chart 1 (Pool Curve) px-diff across
+the FULL tau sweep {0.05, 1.0, 2.0, 3.0} (each with a forced redraw) = **0 px at every tau**. tau touches
+chart 2 + funding ONLY; the pool curve is untouched. Tester-confirmed (`S4_01` vs `S4_02` pixel-identical).
+
+**OPERATOR-VOICE** (`history/operator/2026-06-10_kurtosis-curve-family-brief.md`, per section 2.2 verbatim):
+- **RULED - the Stage-1 architecture is the operator's own design [verbatim-transcript], Entry 94 (L695):**
+  *"yeah basically here its balancer curve unchanged with the stuff we read from it and write (AMM tx)
+  to it being through a polar lens (implementing vol / steepness / kurtosis into chart 2 view)"* - and
+  Entry 91 (L621): *"ok now if we retain balancer but have the AMM tx and the settlement funding wueries
+  etc work through the polar lens (which splays around the mode) would changing the extent of lensing
+  soove for the kurtosis thereby steepening curve 2?"* Stage 1 delivers the **chart-2 READ + funding**
+  through the lens (tester-confirmed). **OPEN GAP (faithful to the operator's words):** the operator's
+  intent includes the **"AMM tx ... write to it being through a polar lens"** - i.e. the *traded* dollar
+  settlement also through the lens. Stage 1 does NOT do this (lensed premium does NOT flow into the
+  executed-trade dollar figures - the chart-2 mark is lensed while executed dollars are plain v24; the
+  manager flagged this as a parked operator-tier decision). **Recorded OPEN - Stage 1 is a partial
+  realisation of the operator's stated lens scope; not presented as complete.** [#10, #11, #16]
+- **RULED [verbatim-transcript], Entry 93 (L688):** *"... 5 idc, same geometric thing whatever it
+  implies ..."* (answer to funding-through-lens) => funding-through-lens ACCEPTED as-is by the operator.
+  Stage-1 funding routes through g_loc; tester-confirmed ATM->0 / OTM-signed. RULED-accepted.
+- **RULED [verbatim-transcript], Entry 93 (L688):** *"... 2 no cap imo, same as balancer literally so not
+  the generalised thing, ... now theres just x y w that move ..."* => gamma from the single v24 w (no
+  frozen-wing Dw construct); the lens is cap-free (selfcheck 3 `|g_loc|<=gamma everywhere`). Matches build.
+- **RULED [verbatim-transcript], Entry 95 (L702):** *"i'm going to bed, giving go ahead to build a
+  version once you're satisfied without asking me anything. skeptic, you have the mandate, have the
+  needful done"* - the autonomous build authorization this Stage-1 build runs under; operator ASLEEP.
+- **No operator OBJECTION recorded against v28/Stage-1 yet** (build post-dates the last operator turn).
+  FLAG-1 (tau no-auto-redraw) is a tester finding the operator has not seen; it is the same *class* as the
+  operator's standing entry-45 objection (*"the curve is almost completely insensitive to kurtosis
+  change"*, L341) and would reproduce that complaint on this build until fixed.
+
+**EVIDENCE:** `evidence/v28_lens_S1/` - S1_01/02 (tau stepper + chart-2 default), S2_01 (tau0.05 sharp),
+S3_01/02/03 (tau2 default + steep pool sweep), S4_01/02 (chart-1 tau-invariant), S5_01/02 (perp + bands),
+S6_01/02 (post-trade chart-1/chart-2), SM_01..04 (swap/payoff/trajectory/reset), RUN_LOG_runA/B.txt
+(byte-identical verdicts). Harness `engine/verify/pw_v28_lens_S1_smoke.mjs`. Node `lens_selfcheck.js`
+14/0. **VERDICT: Stage-1 mechanics + lens math + chart-1/chart-2 separation all PASS; ONE blocking FLAG
+(FLAG-1 tau no-auto-redraw, OPEN intern one-liner) + one INHERITED-v24 xoracle audit defect. NOT a
+HEAD-promotion (HEAD stays v27). Stage-1 hand-back gate = HOLD pending FLAG-1.**
+
+**Table rows updated:** #3 (tau knob - lens visible but no auto-redraw FLAG), #6, #7, #9, #10 (inherited
+xoracle), #15 (new build, file-safety green). **Rolling list:** new OPEN item -3 (FLAG-1). **Reconciliation
+list:** +2 new rows (FLAG-1 tau no-auto-redraw OPEN; inherited-v24 xoracle audit OPEN).
+
+---
+
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
+| **v28-S1 FLAG-1: KURTOSIS tau stepper does NOT auto-redraw chart 2 (event yields 0 px; `window.Viz` undefined so the L2702 redraw guard is dead) - reproduces the operator's "curve insensitive to kurtosis" complaint at the lens** | v28-S1 (`5e1ff278`) | OPEN - intern one-liner (`window.Viz = Viz;` or call `render()`); lens math/draw correct (forced redraw = full 98px reshape); BLOCKS the Stage-1 hand-back |
+| v28-S1 band audit xoracle inflation (pv-net-cash/pv-dy-* multiply already-USD dy by oracle again; $618M on $800k pool) - INHERITED byte-identical from v24 base (L1755 V_usd already xoracle, L3050-52 xoracle again) | v24 base, present in v28-S1 | OPEN - inherited-v24; candidate "known-gap" correction per operator entry-93 |
 | Payoff ray-legend overprint (cosmetic) | v26c | OPEN — intern polish, non-blocking |
 | Collar-aggressiveness slippage magnitude | v26a (exposed) | ACCEPTED — operator parked |
 | (W) curve/knob not visually legible (sliver curve; τ invisible) | v27 (`3914c7f4`) | **RECONCILED in v27 render-fix (`b245bfda`)** — curve renders across frame (item 1 PASS) + τ visibly rounds elbow with frozen wings (item 2 PASS), tester-confirmed |
