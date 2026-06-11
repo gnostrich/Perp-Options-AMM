@@ -61,3 +61,8 @@ _Context: second simplification request on the same relay._
 > idk, im exploring giving up the asymptotes altogether in a parallel session, will get back to you
 
 _Context: all three pending decisions (AC-2.5 class; transport reading; OPERATOR-VOICE move) parked — operator exploring dropping the exact power-law wings in a parallel session. No ruling; exploration only. Comparison table + organiser registration stay gated._
+
+## 13
+> i'm continuing in parallel but i wont make a choice as of now on 1; 2 also i didnt understand; 3 ok
+
+_Context: decision 1 (tilt class) parked; decision 2 (transport reading) needs a simpler re-explanation — resolved by the degenerate-reading fact (the alternative reading means "no bend", so the operator's entry-7 sentence is the only live reading, proceeding under it); decision 3 = GO on the OPERATOR-VOICE handover (org adoption unlocked: register organiser, condition-5 sweep, first distillation, skeptic audit)._
