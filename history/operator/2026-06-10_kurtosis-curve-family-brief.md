@@ -491,3 +491,10 @@ _Context: operator rejects the manager's repeatedly-proposed "one-sided trade pa
 _Context: theory question — what do perpetual American option pricing models give natively; is there a legit candidate (presumably as the principled basis for the curve's shape knobs)._
 
 > what would perpetual amerircan option pricing models give us natively,  is there a legit candidate?
+
+---
+
+## Entry 67 — 2026-06-11
+_Context: operator asks for a plain explanation of "the weight level" (the flatness knob the manager named)._
+
+> and what is the weight level? please explain?
