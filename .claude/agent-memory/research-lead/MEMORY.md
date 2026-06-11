@@ -1,5 +1,36 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, WARP→genB-kurtosis GENERALISATION (entry 34; READ-ONLY derivation; no submit/edit/git/build)._
+_Last updated: 2026-06-11, TRADE-POINT ANCHORING IMPLEMENTATION SPEC (entry 36; NOTES-ONLY; no submit/edit/git/build)._
+
+### TRADE-POINT ANCHORING FIX — CODE SPEC — 2026-06-11 (operator entry 36 AUTHORIZED fix + promote; NOTES-ONLY; NO edit/git/build/submit)
+Spec: `notes/research/SPEC_tradepoint_anchoring_fix_2026-06-11.md` (intern's build contract). Sanity
+`/tmp/tradepoint_sanity.js` (node float64, mirrors HEAD v27 engine fns). Read real engine HEAD v27
+(`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` lines 1637 wField / 1723 tradeUpdate / 1770
+arbitrageToOracle / 1806 legPrice / 1844 executeLeg) + gate `engine/verify/wcurve_selfcheck.js` (g) L176-201.
+**THE CHANGE (surgical, 2 fns + 1 helper):** route the warp anchor to the leg's ray∩curve trade point
+`tp=arbitrageToOracle(state,K)` while reserves still move by the REAL cash leg dy. Adopt OPTION A:
+`tradeUpdate(s,dy,anchor)` — warp quantities (wEntry,α,β,wm,dw2,tau) read off `anchor`, reserves move
+`y'=anchor.y+dy` from it; anchor OMITTED ⇒ BYTE-IDENTICAL to today (executeBand's spot calls unchanged).
+`executeLeg` computes tp from the leg strike + passes it. `strikeMarginal(s,θ*)` helper bisects sNorm→
+marginal (OR use direct dollar-K → arbitrageToOracle if the call site already has a $ strike — wiring
+detail, flagged for intern to confirm). legPrice/mark/arbitrageToOracle/rebase/wField UNCHANGED in body.
+**φ-CONSISTENCY RESOLVED EXPLICITLY:** discrete construction picks ONE φ′, set from the RESERVES point
+under the TRADE-POINT-conserved (α,β); tp supplies (α,β) only; φ′=ln(y'/x')−z uniquely determined by the
+reserves point; both points ride the one trajectory (x−α)(y−β)=αβ ⇒ globally consistent. Verified 0.0
+(w(reserves;φ′)==w* exact). The CERTIFICATE that this is anchor-path-independent = (α,β)-flow lemma,
+numeric 0.0 but [needs-Aristotle] OPEN — build labels it so (NOT proven).
+**NEW HARD GATE (g) flips documenting→assert:** (g.1) strike-dep: same dy=0.1 at two trade points ⇒
+DIFFERENT φ′, assert |Δφ|>0.02 — TARGET φ_near(1.1·mp0)=−0.004437, φ_far(1.6·mp0)=−0.037378, **|Δφ|=
+0.032940**; (g.2) spot-reduction K==spot ⇒ legacy path, assert |Δφ|<1e-9 — TARGET **1.67e-16**; (g.3
+optional) one-global-φ consistency |Δ|<1e-10 — TARGET 0.0. Pool=existing wpool (x10,y12,τ.3,w.52/.72),
+mp0=2.457812. Reductions preserved: spot-reduce exact, Balancer-limit τ→∞ untouched, α/β cons (now at
+tp), frozen wings, γ>1 iff w_±>½, Reading-A untouched (warp consumed AFTER pricing), wing-range guard now
+at tp (in-band at gate dy across all probed strikes). **HONEST CARRY:** numerically faithful (path-indep
+0.0, spot-reduce 1.67e-16); global single-φ consistency = (α,β)-flow lemma OPEN [needs-Aristotle], NOT
+Lean-cert — build must say so. warp∘rebase-commute + φ-anchor/funding still OPEN; fix does NOT touch
+rebase. Nothing submitted/edited/built/git. Manager re-derives; skeptic reviews SPEC before intern builds.
+
+---
+_Earlier: 2026-06-10, WARP→genB-kurtosis GENERALISATION (entry 34; READ-ONLY derivation; no submit/edit/git/build)._
 
 ### WARP → (W) KURTOSIS GENERALISATION — 2026-06-10 (operator entry 34; READ-ONLY; notes-only; NO submit/edit/git/build)
 Note: `notes/research/WARP_genB_kurtosis_generalisation_2026-06-10.md`. Scripts `/tmp/genB_warp.py`,
