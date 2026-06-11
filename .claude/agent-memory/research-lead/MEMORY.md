@@ -1,5 +1,41 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, FMI hyperbolic-alts + shoulder-localization (entry 42; READ-ONLY/FMI; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, POLAR weight-free density first-principles (entry 53/54; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### POLAR WEIGHT-FREE LIQUIDITY-DEPTH DISTRIBUTION — first-principles — 2026-06-11 (operator entry 53/54 "do the needful"; READ-ONLY; HEAD untouched md5 928cde1c; NO edit/git/build/submit)
+Note: `notes/research/POLAR_density_first_principles_2026-06-11.md`. Scripts `/tmp/polar53{,b,c,d}.py`
+(python float64 + sympy; numpy2 `trapz`→`trapezoid`). Operator (53 verbatim): "think from first principles
+as a liquidity (relative radius) distribution native to polar ray coords with natural skew+kurtosis knobs,
+natural map from x,y to the skew knob (maybe dont even need weights)."
+**OBJECT:** primitive = local-exponent/depth field `γ_loc(u)` on log-price ray `u=ln(y/x)=ln tan θ`
+(θ=45°⟺ATM⟺u=0); curve `ln F=∫γ_loc du`; price `p(u)=γ_loc(u)·e^u`; numeraire = depth-per-log-price
+(carry-gauge covariant). Family: `γ_loc=γ₋+(γ₊−γ₋)·½(1+tanh κu)+skew·tanh κu/cosh²κu`.
+**(a) WELL-POSED = YES.** **(b) KURTOSIS⊥SKEW = YES — the headline win (W) CANNOT do:** even part of ln g
+= κ (peak `d²ln g/du²∝−κ`), odd = skew, L2-orthogonal (`<even,odd>`~5e-12 machine-zero); wings frozen at
+corners γ₋,γ₊ (κ/skew-invariant, float64-exact); **kurtosis-at-zero-skew WORKS** (symmetric γ₋=γ₊+skew=0
+still tunes peak −1.25→−12.5 over κ), whereas (W) welds τ to Δw (w′(0)=Δw/2τ ⇒ Δw=0⇒τ inert,
+manager-verified). **(c) WEIGHT-FREE = CONDITIONAL — the crux:** dynamic skew = `u_R=ln(y/x)` read off
+reserves, NO stored scalar — but weight-free ONLY under SPOT/reserves anchoring (entry-38 "B"); under
+TRADE-POINT anchoring (path A, operator's CHOSEN build mechanic) the reseat scalar (W's `z=t·τ/√(1−t²)`,
+=stored φ≠u_R) REAPPEARS = the weight in disguise. **(d) ARB-SANE = YES w/ explicit guard:** monotone
+⟺ `γ_loc+γ_loc′>0` (κ-robust to κ=20; skew-bounded — κ=8,skew=1.5 breaks it); invariant CLOSED-FORM but
+**TRANSCENDENTAL** (base→log-cosh/softplus, skew→sech² both elementary via sympy; NOT the √-kernel's
+ALGEBRAIC `√(τ²+u²)`) ⇒ forfeits entry-41 integrability tiebreak; inversion = bisection (engine already
+does). **TRADE conserves** shape (γ±,κ — central moments translate-invariant) + curve level F=k; dynamic
+d.o.f.=u_R (density-frame analogue of (W)'s α=xw,β=y(1−w)); well-posed ODE `dx=−dy/p` path-indep (converges
+with N). **(Q4) polar family PROPERLY CONTAINS (W)** (=√-kernel-shoulder member); 3 irreducible shape DOF
+{γ₋,γ₊,κ}=level/skew/kurtosis (manager's count CONFIRMED, can't be beaten) — win is DECOUPLING not count.
+**(Q5) bounded θ∈(0,π/2) but u FULL ray** (u=ln tan θ); g>0⇒deep-strike DEPTH floor (depth≠premium;
+value~S^−γ₊→0 INTACT — defensible settlement reading, operator-tier). Carry/rebase/funding/warp∘rebase
+OPEN here as for (W) (frame doesn't fix, doesn't worsen); ITM smooth-pasting + dollar pipe transfer clean.
+**HARDEST OBSTRUCTION (flag to operator):** weight-elimination ⟺ B-anchoring, which CONTRADICTS the
+already-chosen path-A warp mechanic — an A-vs-B / weights-or-no-weights RE-FORK, operator-tier. **HONEST
+CARRY:** decision-support, NOT build-auth/curve-swap. NO Lean lemma crystallised ready to submit (γ_loc+
+γ_loc′>0 monotonicity + recenter path-indep are CANDIDATE obligations only AFTER operator picks mechanic —
+premature to pin). Nothing submitted/built/edited/git. Manager re-derives + skeptic before operator.
+
+---
+
+_Earlier: 2026-06-11, FMI hyperbolic-alts + shoulder-localization (entry 42; READ-ONLY/FMI; notes-only; no submit/edit/git/build)._
 
 ### FMI — HYPERBOLIC ALTERNATIVES (Q1) + SHOULDER LOCALIZATION GOVERNOR (Q2) — 2026-06-11 (operator entry 42; READ-ONLY/FMI "not trying to change anything"; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path A PAUSED)
 Note: `notes/research/FMI_hyperbolic_alts_and_shoulder_localisation_2026-06-11.md`. Script `/tmp/fmi42.py`
