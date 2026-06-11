@@ -374,3 +374,10 @@ _Context: follow-up to the entry-48 answer (weighted analogue = premium-mass til
 _Context: continuation of the angle-chart brainstorm (entries 47–49). Operator asks whether a liquidity-depth distribution over the polar angle can be implemented directly as the primitive._
 
 > can we somehow directly implement an disribution idk if gudermannian is the right word but basically assignining relative liquidity depth by polar angle in the 90 degree frame
+
+---
+
+## Entry 51 — 2026-06-11
+_Context: continuation of the density-over-angle brainstorm (entries 47–50). Operator proposes the distribution's parameters could yield kurtosis (not just warp), and asks for a natural mapping where x/y/w carry skew while kurtosis stays an external (static) knob._
+
+> it may give kurtosis also not just warp, right -- like if there were a direct way to control the parameters of this distrbution --- and then separately find a natural mapping so x y w do skew and kurtosis remains external
