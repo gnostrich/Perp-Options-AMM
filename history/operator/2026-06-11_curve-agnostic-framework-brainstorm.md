@@ -51,3 +51,8 @@ _Context: general green light on the queued work. Manager plan stated: restructu
 > simpler english please
 
 _Context: re-explain the AC-2.5 decision relay in plain words._
+
+## 11
+> again, simpler english
+
+_Context: second simplification request on the same relay._
