@@ -16,3 +16,8 @@ _Context: answers the skeptic's standing question from `notes/skeptic/BRAINSTORM
 > consequns: 1 yes; 2  funding is a geometric comparison across curves, anchor curve is unskewed pool curve can be skewed, both to have same kurtosis; 3 design choice whether pool depth is impacted or not, as of now not is easier; since we unified the two using some logic its baked into how the curve is pricing each strike ray alreay i thinl... anything else?
 
 _Context: answers the manager's three propagation consequences from the prior turn (1 = exercise settles on the live warped curve; 2 = funding's role; 3 = solvency/re-marking). Skeptic and research-lead receive this verbatim at their next dispatch (skeptic's entry-2 continuation was already in flight when this arrived)._
+
+## 4
+> 1 you can think of LDF as the thickness of the curve measured perpendicular from the closest axis (or in 180 degree case, just height); 2 i wont answer something worded so cryptically; 3 at every skew 'spot' / 'pool mark' (latter term more accurate, former is a conversational approximation) corresponds to mode, which i think is always the point on curve in 90 degree context with unit tangent slope;
+
+_Context: answers the consolidated brainstorm questions (1 = LDF operational definition; 2 = the "γ derived from w or fifth dial" question, REFUSED for cryptic wording — plain-English re-pose owed; 3 = mode-at-spot, with "pool mark" the accurate term and a checkable conjecture: mode = the unit-tangent-slope point). Routed verbatim to research-lead (definition formalization + conjecture check) and skeptic (brainstorm reply) same turn._

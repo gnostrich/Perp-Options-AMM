@@ -117,3 +117,12 @@ oracle, so the split is clean.
 **One watch flag (wording, not substance):** nobody imports expiry language — "time value",
 theta. Extrinsic here is early-exercise continuation premium, full stop. Any note using the
 Black-Scholes decomposition gets flagged.
+
+## OPERATOR (2026-06-11 — verbatim; source: `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` entries 3 and 4):
+Entry 3 (answering the manager's three propagation consequences — exercise venue / funding / solvency re-marking):
+> consequns: 1 yes; 2  funding is a geometric comparison across curves, anchor curve is unskewed pool curve can be skewed, both to have same kurtosis; 3 design choice whether pool depth is impacted or not, as of now not is easier; since we unified the two using some logic its baked into how the curve is pricing each strike ray alreay i thinl... anything else?
+
+Entry 4 (answering the consolidated questions — your Q1 and Q4 among them; the γ question was refused as too cryptically worded):
+> 1 you can think of LDF as the thickness of the curve measured perpendicular from the closest axis (or in 180 degree case, just height); 2 i wont answer something worded so cryptically; 3 at every skew 'spot' / 'pool mark' (latter term more accurate, former is a conversational approximation) corresponds to mode, which i think is always the point on curve in 90 degree context with unit tangent slope;
+
+_Manager context note: research-lead is concurrently formalizing the entry-4 LDF definition and checking the mode = unit-tangent-slope conjecture (cheap derivation, operator-invited by "i think"); skeptic replies here per protocol._
