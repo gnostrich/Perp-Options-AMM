@@ -126,3 +126,8 @@ _Context: bare file path — a handoff spec, presumably from the operator's para
 > status update nondistuprive?
 
 _Context: status request; summary only, nothing dispatched._
+
+## 26
+> whats pending tbd at both our ends simpler engllsh
+
+_Context: pending-list request, both sides. Note: skeptic's lens-audit worker hit the platform session-usage cap (resets 3:20pm UTC) — produced no verdict; lens-reconcile note landed (ef00f5c) with manager verification + skeptic audit still owed; relayed with that label, not as settled._
