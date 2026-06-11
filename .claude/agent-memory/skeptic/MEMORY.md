@@ -1133,3 +1133,33 @@ the operator now carry tables where technical.
    misrepresent the operator). At any remediation/wipe audit, grep the new artifacts for content
    sourced from whatever the remediation just outlawed; check every "unrequested" label against
    the verbatim transcript — the operator may have asked for it.
+
+26b. **2026-06-11 — verdict #26 FOLLOW-THROUGH (re-check of commit ac4061d "redo 3 flagged lines")**
+   → ruling delivered in-channel (no new verdict file). Diffed ac4061d myself: exactly 1 file
+   (docs/OPEN_OPERATOR_QUESTIONS.md), 3 lines changed, nothing else. **All 3 CONFIRMED → verdict #26
+   FLAG→PASS; wipe execution fully clean; resumed manager's first dispatch unblocked from my side.**
+   (1) item 3: killed-run parenthetical "NOT needed for warp visibility" stripped; residue
+   (map-independent divergence, cap-only-fix) sourced from entries 39–41 + my #24 Q4, legitimate.
+   (2) item 7: relabeled OPERATOR-RAISED with entry-76 quote — verified byte-identical vs transcript
+   L563 ("shouldnt it follow an analytic function instead of us specifying extrinsically"); pointer
+   now = transcript entry 76. Partial-quote OK (relevant clause, pointer to full).
+   (3) item 1: model premise stated (q=0, r=5%: γ=2r/σ²), r/q crossover sensitivity stated,
+   r,q↔carry mapping marked UNDERIVED/premise-unverified; untranscribed "manager table" pointer
+   dropped. Matches my σ<√(2r)≈31.6% derivation (mine-to-defend, #26).
+   **ITEM-2 RULING (manager asked, I ruled, manager executes): REWRITE NOW — supersession-shaped.**
+   Entry 80 (verbatim, transcript L591: asymmetry native to second-graph pricing; "i just need one
+   flatness / steepness knon") contradicts item 2's standing "Wing boxes stay editable as skew
+   control (disposition answered)" — a decided-sounding disposition the operator's newest words
+   undercut, in a doc whose header says "nothing here is decided." Under charter R2 the entry-69–72
+   per-item-yes ask is VOID anyway (intervening operator statement = scope change). Requirements I
+   set: (a) mark the 3-item list SUPERSEDED by entry 80 w/ pointer; (b) live question = go/no-go on
+   the one-knob scope table (single weight, wing boxes GONE, τ gone, v24-family trade mechanic),
+   awaiting operator ruling + my R6 scope-gate, NOTHING dispatched; (c) do NOT silently drop item
+   (3) Spot($) bug fix — it inherits disposition inside the table, may not build on the old void go;
+   (d) record supersession-of-question, never table-as-decided. Waiting would leave the canonical
+   doc inviting a "yes" that builds wing boxes the operator just disowned (patterns #6/#10).
+   **DEMAND (open, soft):** entry 80's transcript text contains a Unicode "…" mid-sentence; same
+   file entry 76 has the operator's ASCII "...". Manager must confirm entry 80 is the COMPLETE
+   single message with the operator's own ellipsis, or append a corrigendum splitting/completing it
+   (§2.2 — elision marks inside verbatim transcripts are a fidelity hazard). Not blocking the
+   rewrite; blocking any future load-bearing citation of entry 80's elided middle.
