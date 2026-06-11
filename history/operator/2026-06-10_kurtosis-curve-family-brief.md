@@ -612,3 +612,10 @@ _Context: operator (who has used plain Balancer before) asks mechanically how it
 _Context: operator rejects the manager's entry-82 answer as gaslighting._
 
 > straight gaslighting
+
+---
+
+## Entry 84 — 2026-06-11
+_Context: operator proposes — retain plain Balancer for the pool; route AMM tx + settlement/funding queries through the polar lens (splaying around the mode); does varying the lens extent give kurtosis, steepening curve 2 (the option-price graph)?_
+
+> ok now if we retain balancer but have the AMM tx and the settlement funding wueries etc work through the polar lens (which splays around the mode) would changing the extent of lensing soove for the kurtosis thereby steepening curve 2?
