@@ -626,3 +626,10 @@ _Context: operator proposes — retain plain Balancer for the pool; route AMM tx
 _Context: operator confirms the intended shape — lens implements upon v24, surgical, keeping warp goal-seek and the vertical-spread one-tx shortcut, subject to the known warp-anchoring gap and the v24 ATM-jump settlement lag._
 
 > so this would implement upon v24 (subject to the local warp not happening thing we’d diagnosed yesterday, and the settlement thing atm jump stuff at feature level)  — it would keep most things intact and be quite surgical, warp goal seek mechanism same, even the AMM tx 2 options same leg vertical spread as one AMM tx shortcut …
+
+---
+
+## Entry 86 — 2026-06-11
+_Context: comprehension request — explain warp anchoring._
+
+> explain warp anchong
