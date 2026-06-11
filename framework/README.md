@@ -1,5 +1,21 @@
 # framework/ — the curve-AGNOSTIC framework (first-class citizen)
 
+## 0. THE OBJECT (operator-demanded singular name, transcript entry 22)
+
+**The pool potential, μ** — one strictly convex function on the carry line (stat-mech alias: the
+pool's **free energy**; information-geometry type: the convex generator of a Hessian structure
+with ports). Everything else is a stated **reading of μ**, never its own object:
+price = μ′ · dissipation/Fisher = μ″ · value metric = 1/μ″ · the curve = μ's level-set geometry ·
+the LDF = its thickness reading · the mode/pool-mark = its unit-slope point · trade = the warp
+flow transporting μ′ (entry 7) · rebase = μ's gauge translation · funding = μ vs the unskewed
+same-τ μ-twin · settlement S* = forced by μ's wings · solvency exposure = reported off μ's depth
+(never closed by it — B1 extrinsic). A candidate curve family IS a parameterization of μ by
+(x, y, w; τ). The consistency checker's one sentence: **every component equals its μ-reading, or
+the row catches it.**
+
+_(Naming pass through the framework note + checker table queued for research-lead's next edit —
+its artifact, under skeptic audit at the time of this header.)_
+
 _Created 2026-06-11 (restructure slice 1). Operator directive (verbatim, transcript
 `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` entry 8): "I also separately
 want the project ruthlessly restructured so curve specific work lands in a separate folder, and
