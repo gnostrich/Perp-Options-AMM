@@ -463,3 +463,17 @@ _Context: operator queries whether the strike cap ("safety gate") is what's hidi
 _Context: operator kills the entry-59 measurement run._
 
 > stop the run its of no use to me
+
+---
+
+## Entry 63b — 2026-06-11
+_Context: sent while the manager was finishing the entry-63 housekeeping turn._
+
+> brainstorm the fucking curve flatness thing
+
+---
+
+## Entry 64 — 2026-06-11
+_Context: operator asks for the straight verdict — is the flatness knob impossible? (warp deemed surmountable)._
+
+> tell me straight is it impossible to get what i'm asking - the flatness knob thing? warp seems surmountable as sort of had it already
