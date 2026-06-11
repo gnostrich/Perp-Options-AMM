@@ -1,6 +1,54 @@
 # MEMORY — intern
-_Last updated: 2026-06-11 (v27 entry-46 lacunae fixes: stale-preview / audit-strip units /
-anchor depth / τ disclosure). Rewrite changed bits at task end._
+_Last updated: 2026-06-11 (v28 lens Stage-1 BUILT — polar-lens read layer on the v24 base;
+handed to manager). Rewrite changed bits at task end._
+
+## Done — v28 POLAR-LENS STAGE 1 (read layer on v24 base; handed to manager 2026-06-11)
+Build: **`engine/builds/temporal_mvp_v28_lens_S1.html`** (NEW, from base
+`temporal_mvp_v24_rebase_fixed_2.html`; HEAD v27 `928cde1c` UNTOUCHED, not promoted, no git).
+md5 **`5e1ff278dbfea889d49b48224ba931d3`** (487837 b). Spec
+`specs/SPEC_v24_lens_BUILD_2026-06-11.md` + skeptic R6 `notes/skeptic/VERDICT_R6_SPEC_v24_lens_2026-06-11.md`
+(2 binding must-applies). Splices `/tmp/splice_engine.py` (3 reps), `/tmp/splice_ui.py` (5),
+`/tmp/splice_ui2.py` (3) — all count==1, blobs never through. Diff vs base = exactly 20 hunks,
+all intended regions, no blob lines (74/1060), no pool-fn lines.
+- **Engine (new, exported):** `hTau`,`hpTau` (h_τ, h′_τ); `lensU(state,θ)=ln(θ/getSNorm(state))`
+  (sNorm coord, MUST-APPLY-1); `gLoc(state,θ,tau)=γ·h′_τ(|u|)`, γ=w/(1−w) LIVE; `markLensed(wing,
+  θ,sNorm,g)` = v26b Reading-A smooth-paste with the strike-LOCAL g (call=sNorm/θ arm sStar=
+  θ·((g+1)/g)^g; put=θ/sNorm arm sStar=θ·(g/(g+1))^g; cont c·sNorm, c=1/((g+1)·sStar); intrinsic).
+  **`mark` UNCHANGED** (lensed mark is a NEW fn; `mark` still drives the unchanged pool/exec/$ pipe).
+- **MUST-APPLY-1 honored:** ONE coordinate (sNorm) everywhere; g_loc uses getSNorm(state) mode, NOT
+  the price-coord S. Funding's S/(S−1)/S/κ/sign UNCHANGED; only ±2→±g_loc and mark→markLensed.
+- **MUST-APPLY-2 honored:** NO γ_min floor. g=0 ⇒ S*=0 finite. The one NaN locus (g=0 AND
+  sNorm===θ exactly → pow(1,−∞)=NaN) is dodged by **inclusive boundary** (`<=`/`>=`): the boundary
+  point returns the boundary value 1/(g+1), no floor, geometry preserved. Gate (4c): NaN-free.
+- **P2 funding:** `fundingPerStrike` got trailing `tau` param; caller (fundingTick ~L2585) passes
+  `state.tau`. ±g_loc replaces ±2; markLensed at the sNorm mode.
+- **P1 + L3 curve-2:** `drawState` (drawPricing/chart-2) rewritten to plot ψ=`markLensed(wing,θ=
+  tan(φ),sNorm,gLoc)` through the lens (live γ off poolForLens, τ static). Display clamped to
+  [0,1]. Call sites pass `state.pool`/`previewPool`+`state.tau`. **Chart-1 (drawCurve, pool curve)
+  UNTOUCHED — plain v24.**
+- **P3 settlement:** `markLensed` IS the smooth-paste primitive (exported, gated directly). Did NOT
+  rewire closeBand/legValueUnified/markEff/executeBand dollar pipe — those feed the stage-2→3
+  conversion (brief: unchanged; stop-and-report if it needs an exercise branch). Pool +
+  execution + $ pipe BYTE-IDENTICAL to v24 (lens_selfcheck (6)/(6b)).
+- **τ control:** number stepper `tau-input` (min 0.05/max 3/step 0.05/value 0.3) in Settings >
+  Protocol Params (NO slider, operator). `setTau` (static, guards bad/legacy), `state.tau:0.3`
+  default. Listener (change+input) → setTau → Viz.drawAll. Steepness γ stays v24 derived-w (no
+  slider added, per §6).
+- **L4 forward-read-only:** no inverse-lens/target-slope helper; arbitrageToOracle stays lens-free.
+  Gate (7a)/(7b) structural-grep confirm.
+- **Gate:** NEW `engine/verify/lens_selfcheck.js` (sandboxes engine script like wcurve_selfcheck;
+  SKIPs-as-pass on builds w/o gLoc/markLensed export → base v24 + HEAD v27 stay green). On v28:
+  **14 PASS 0 FAIL** (items 1/2a/2b/3/4a/4b/4c/5a/5b/5c/6/6b/7a/7b). NOT wired into run_all (Stage-1
+  brief asks for the file + report; run_all routes pre-GH→wcurve which SKIPs). run_all on v28 =
+  GREEN (blobs canonical, dispatch clean).
+- **Safety:** blobs `ab663f5c`@74/`c505b08a`@1060 intact (svg stayed at 1060 — my HTML add was at
+  ~1316, after the svg; engine adds after 1604), 3 scripts parse (589/442/1742), longest script
+  line 482, IIFE intact, no sig changes beyond the intended fundingPerStrike +tau / drawState
+  +poolForLens,tau / new exports.
+- **Open for tester (Stage-1 smoke):** see 6-step script in handoff. **Open for manager:** Stage 2
+  (warp/observable) NOT built (intentional). P1's lensed mark deliberately NOT wired into
+  pfComponents/dollarFigure (would change a displayed settlement $ vs the unchanged engine
+  closeBand — flagged as the stop-class dollar-pipe boundary).
 
 ## Engine
 - Canonical: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** (md5
