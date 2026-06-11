@@ -346,3 +346,10 @@ _Context: operator live-playing downloaded HEAD v27 (screenshot: TRADE BANDS tab
 _Context: manager had replied with first-pass findings on the four entry-45 lacunae and said fixes were queued pending the operator's go ("I'm not touching the build until you say go"). This is the go-ahead._
 
 > do the needful
+
+---
+
+## Entry 47 — 2026-06-11
+_Context: after the entry-45 findings (incl. the tester's "bands are warp-neutral by construction" result) and with fixes in flight, operator asks for a read-only brainstorm revisiting fork B (per-notional uniform slippage)._
+
+> ok. brainstorm only: throwback to when we had that fork A B where the latter was about same slippage for same notional any strike?
