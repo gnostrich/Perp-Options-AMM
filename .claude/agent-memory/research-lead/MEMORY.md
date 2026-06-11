@@ -1,33 +1,40 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, TRADE-POINT ANCHORING IMPLEMENTATION SPEC (entry 36; NOTES-ONLY; no submit/edit/git/build)._
+_Last updated: 2026-06-11, TRADE-POINT ANCHORING RE-POSED + operator invariant (entry 37; NOTES-ONLY; no submit/edit/git/build)._
 
-### TRADE-POINT ANCHORING FIX — CODE SPEC — 2026-06-11 (operator entry 36 AUTHORIZED fix + promote; NOTES-ONLY; NO edit/git/build/submit)
-Spec: `notes/research/SPEC_tradepoint_anchoring_fix_2026-06-11.md` (intern's build contract). Sanity
-`/tmp/tradepoint_sanity.js` (node float64, mirrors HEAD v27 engine fns). Read real engine HEAD v27
-(`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` lines 1637 wField / 1723 tradeUpdate / 1770
-arbitrageToOracle / 1806 legPrice / 1844 executeLeg) + gate `engine/verify/wcurve_selfcheck.js` (g) L176-201.
-**THE CHANGE (surgical, 2 fns + 1 helper):** route the warp anchor to the leg's ray∩curve trade point
-`tp=arbitrageToOracle(state,K)` while reserves still move by the REAL cash leg dy. Adopt OPTION A:
-`tradeUpdate(s,dy,anchor)` — warp quantities (wEntry,α,β,wm,dw2,tau) read off `anchor`, reserves move
-`y'=anchor.y+dy` from it; anchor OMITTED ⇒ BYTE-IDENTICAL to today (executeBand's spot calls unchanged).
-`executeLeg` computes tp from the leg strike + passes it. `strikeMarginal(s,θ*)` helper bisects sNorm→
-marginal (OR use direct dollar-K → arbitrageToOracle if the call site already has a $ strike — wiring
-detail, flagged for intern to confirm). legPrice/mark/arbitrageToOracle/rebase/wField UNCHANGED in body.
-**φ-CONSISTENCY RESOLVED EXPLICITLY:** discrete construction picks ONE φ′, set from the RESERVES point
-under the TRADE-POINT-conserved (α,β); tp supplies (α,β) only; φ′=ln(y'/x')−z uniquely determined by the
-reserves point; both points ride the one trajectory (x−α)(y−β)=αβ ⇒ globally consistent. Verified 0.0
-(w(reserves;φ′)==w* exact). The CERTIFICATE that this is anchor-path-independent = (α,β)-flow lemma,
-numeric 0.0 but [needs-Aristotle] OPEN — build labels it so (NOT proven).
-**NEW HARD GATE (g) flips documenting→assert:** (g.1) strike-dep: same dy=0.1 at two trade points ⇒
-DIFFERENT φ′, assert |Δφ|>0.02 — TARGET φ_near(1.1·mp0)=−0.004437, φ_far(1.6·mp0)=−0.037378, **|Δφ|=
-0.032940**; (g.2) spot-reduction K==spot ⇒ legacy path, assert |Δφ|<1e-9 — TARGET **1.67e-16**; (g.3
-optional) one-global-φ consistency |Δ|<1e-10 — TARGET 0.0. Pool=existing wpool (x10,y12,τ.3,w.52/.72),
-mp0=2.457812. Reductions preserved: spot-reduce exact, Balancer-limit τ→∞ untouched, α/β cons (now at
-tp), frozen wings, γ>1 iff w_±>½, Reading-A untouched (warp consumed AFTER pricing), wing-range guard now
-at tp (in-band at gate dy across all probed strikes). **HONEST CARRY:** numerically faithful (path-indep
-0.0, spot-reduce 1.67e-16); global single-φ consistency = (α,β)-flow lemma OPEN [needs-Aristotle], NOT
-Lean-cert — build must say so. warp∘rebase-commute + φ-anchor/funding still OPEN; fix does NOT touch
-rebase. Nothing submitted/edited/built/git. Manager re-derives; skeptic reviews SPEC before intern builds.
+### TRADE-POINT ANCHORING — RE-POSED (FAITHFUL) + INVARIANT VERDICT — 2026-06-11 (operator entries 31/36/37; NOTES-ONLY; NO edit/git/build/submit)
+Spec: `notes/research/SPEC_tradepoint_anchoring_REPOSED_2026-06-11.md`. Scripts `/tmp/repose3.js`
+(final form), `/tmp/repose.js`+`/tmp/repose2.js` (two REJECTED discretizations), `/tmp/inv3.js`
+(operator invariant), `/tmp/gate.js` (corrected gate). All node float64, mirror live HEAD v27.
+**WHY RE-POSE:** prior spec (`SPEC_tradepoint_anchoring_fix_2026-06-11.md`) was FLAG-WRONG (skeptic #18,
+`VERDICT_tradepoint_anchoring_spec_2026-06-11.md`) — it set (α,β) AND moved y'=y_B+dy at the TRADE POINT
+⇒ TELEPORTED the pool to the strike ray (dy=0.1 @K=1.6mp0 moved y 12→15.0, spot 2.46→4.01). Discarded
+the live reserves point.
+**THE FIX — SEPARATE THE TWO CHANNELS:** reserves move from the LIVE point (α,β,wStar,x',y' all read off
+`s`; y'=s.y+dy) ⇒ pool FAITHFUL (NOT teleported); the warp AMOUNT (φ') reads the strike gearing at the
+trade point. Construction: keep legacy reserves move + legacy EXACT reseat z0=t·τ/√(1−t²); scale the
+reseat by **G = w′(u_spot)/w′(u_tp)** (genB 1/w′(u_tp) strike channel); **z=z0·G, φ'=u'−z.**
+G==1 at tp=spot ⇒ **spot-reduction EXACT 0.0** (byte-identical, better than prior 1.67e-16 — it's an
+algebraic identity, no bisection). Two naive discretizations REJECTED (first-order gearing |Δφ|=6.7e-2
+at spot; integrated genB 4.0e-4 at spot) — only the curvature-RATIO form reduces exactly.
+**(i) FAITHFUL = YES:** (x',y') IDENTICAL across all strikes at fixed dy (9.9598/12.10 = legacy);
+only φ' warps by strike. Pool stays put; curve skews. mp0=2.457812 on gate pool {10,12,.3,.52,.72,0}.
+**(ii) OPERATOR INVARIANT (entry 37, "same warp any strike same notional") = NO, decisively.** Warp is
+NOT notional-only: **|Δφ| ≈ z0(dy)·G(K)**, strike channel G=1/w′(u_tp) DOMINATES. Same notional sell-call
+(via real executeLeg): |Δφ| 1.9e-4 (ATM) → 2.66 (deep OTM), ~14000×; z0 flat (0.185→0.186), G runs
+1.0→15.3. **Warp ∝ notional FALSE.** Reconciles "same premium ⇒ more warp OTM" (✅ z0 fixed, G grows).
+Curve-reshape Δln(mp) metric agrees (4.3e-4→0.224). FORCED by trade-point anchoring itself (genB
+1/w′(u_tp)); strike-independent warp ⟺ NOT trade-point-anchored ⇒ contradicts entry 31/36. That tension
+is operator/curve-object call — flagged, NOT a defect of the fix.
+**CORRECTED (g.1) GATE (skeptic, re-derived on RE-POSED):** pin pool+dy; assert
+`|φ_far−φ_near| > 1e6·FLOOR` (FLOOR=max(|φ_spotReduce|,EPSILON) — MANDATORY guard, spotReduce now 0.0
+exact ⇒ div-by-zero else) AND `|φ_far|>|φ_near|`. TARGETS: φ_near(1.1mp0)=−0.054467, φ_far(1.6mp0)=
+−0.684490, **|Δφ|=0.630023** (~19× the prior wrong-spec 0.033, warp now in the right channel); ordered
+TRUE; spotReduce=0.0. (g.2) spot-reduce <1e-12 TARGET 0.0; (g.3) one-global-φ at LIVE-β reserves 0.0.
+**HONEST CARRY (unchanged):** (α,β)-flow-confinement lemma [needs-Aristotle] OPEN, NOT Lean-cert — numeric
+only, do not report proven. warp∘rebase-commute + φ-anchor/funding still OPEN; fix does NOT touch rebase.
+Reductions preserved (spot-reduce EXACT, Balancer τ→∞, α/β cons LIVE now, frozen wings, γ>1 iff w_±>½,
+Reading-A untouched, wing-range guard LIVE = identical to legacy surface). Nothing submitted/edited/
+built/git. Manager re-derives; skeptic RE-REVIEWS the RE-POSED spec before intern builds.
 
 ---
 _Earlier: 2026-06-10, WARP→genB-kurtosis GENERALISATION (entry 34; READ-ONLY derivation; no submit/edit/git/build)._
