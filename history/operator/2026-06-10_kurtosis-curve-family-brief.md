@@ -428,3 +428,10 @@ _Context: brainstorm continues. Operator asks whether giving up the asymptotes (
 _Context: operator asks whether the running-exponent "middle path" (un-freezing the wings) just returns us to the demoted GH curve._
 
 > so would that middle path put us back with GH?
+
+---
+
+## Entry 59 — 2026-06-11
+_Context: operator sets GH aside, points at the existing strike-varying-w work, and orders a run with a qualitative acceptance bar: visible clean flattening/steepening AND visible curve warp._
+
+> GH not forced and aside, the w varies with strike also was something we did some work on. do a run and check for that and see if it works. or if its something else. TLDR i want to see clean flattening steepening allowed, I also want to see curve warp working.... understand qualitatively what im looking for here

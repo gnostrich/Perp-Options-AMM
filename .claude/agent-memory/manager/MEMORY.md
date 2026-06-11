@@ -77,6 +77,15 @@ math), resid-0.0-as-evidence (definitional/rfl-class), "path-A renamed"-as-dismi
 slope=dlnp/du ≠ operator's slope=price (gotcha-adjacent; exactness range-limited under his
 vocabulary — history still required). Soft FLAG-OMISSION: no inventory table. RELAYED per
 D-RULING (confirmation-plus-one-loss shape, slope=price vocab, no greek/resid).**
+**ENTRIES 57-59:** asymptote-give-up Q: manager-measured — no-arb (monotonicity) is the REAL kurtosis
+cap just behind the γ>1 lock (~1/3 more peak depth then arbitrageable); middle path floated =
+running-exponent wings; operator asked "back to GH?" — answered honestly (kernel-in-weight ≠
+kernel-in-score, but un-freezing hands back what (W) was chosen FOR); operator: GH not forced,
+set aside. **ENTRY 59 ORDER (live): RUN dispatched (research-lead abc411cd, bg, read-only) —
+qualitative acceptance bar = (1) knob → VISIBLE flatten/steepen on canvas, (2) trade → VISIBLE
+curve bend. Inventory all steepness handles (w±, Δw, w_mid, τ×Δw) + warp visibility map
+(one-sided vs bands vs projected path-A) + verdict: existing machinery w/ right settings, or
+something else needs building. Skeptic pass expected before relay.**
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
