@@ -484,3 +484,10 @@ _Context: operator asks for the straight verdict — is the flatness knob imposs
 _Context: operator rejects the manager's repeatedly-proposed "one-sided trade path" — an unrequested trade-mechanics addition. Manager drops it from the build scope entirely._
 
 > i didnt fucking ask for any change to trade mechanics one side whatevrr thr fuck youre slipping in desperately
+
+---
+
+## Entry 66 — 2026-06-11
+_Context: theory question — what do perpetual American option pricing models give natively; is there a legit candidate (presumably as the principled basis for the curve's shape knobs)._
+
+> what would perpetual amerircan option pricing models give us natively,  is there a legit candidate?
