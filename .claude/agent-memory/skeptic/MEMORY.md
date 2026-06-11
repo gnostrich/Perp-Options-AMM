@@ -1,5 +1,5 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-5: operator entry 7 = CANONICAL WARP STATEMENT pinned below; reply emitted ≤200w). Prior: run-4 LDF verdict #5; run-3 entries 3-4; run-2; 2026-06-10 charter runs._
+_Updated 2026-06-11 (run-6: entry 8 restructure+org directive QUEUED verbatim + audit gate below; comprehension reply emitted ≤170w). Prior: run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3 entries 3-4; run-2; 2026-06-10 charter runs._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -142,6 +142,47 @@ Unaudited claim on file: "pivot landed" — audit its gates when the framework n
   settings; Lemma A (min-mode at diagonal for ANY decreasing curve); validity gate == uniqueness
   gate; elasticity-at-mark = e^(−ghMu) identity on live GH.
 
+## QUEUED STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11, entry 8,
+## VERBATIM below — execution = manager; comprehension + audit = me; channel verified vs transcript)
+> "I also separately want the project ruthlessly restructured so curve specific work lands in a
+> separate folder, and curve agnostic framework remains a first class citizen in its own folder.
+> do you comprehend this? and in the curve specific thing you'd very speifically map the various
+> pivots etc. so its not just a homogenous bulk, but actually makes sense -- recruit another agent
+> if you need, as an organiser or whatever, and maybe offload overlapping responsibilities from
+> the tester -- just do an org chart review and do the needful to make sure the charter is
+> achieved by the team"
+**Comprehension (confirmed to operator, run-6):** (1) curve-SPECIFIC work (GH engine builds, GH
+math, GH-pinned Lean/notes) in its own folder; (2) curve-AGNOSTIC framework first-class in its
+own top-level folder; (3) inside curve-specific an explicit PIVOT MAP — every artifact keyed to
+its era/decision (barrier → GH pivot → ITM v26b → strike-registration v26c → faithfulness pivot
+→ future trade-bends-curve), not homogeneous bulk. Plus org-chart review: organiser agent
+optional, tester offload candidate. I am read-only — manager executes, I audit each step.
+**MY AUDIT GATE for execution (hold every restructure PR to ALL of these):**
+1. No curve-agnostic artifact left buried under curve-specific paths; CONVERSE TOO — no GH-pinned
+   material smuggled into the framework folder (framework claims silently pinned to GH = the same
+   homogenization, reversed).
+2. Pivot map COMPLETE: every curve-specific artifact era-keyed, no orphans; keys consistent with
+   BUILD_LINEAGE.md + DIFF_LEDGER.md; eras = actual decision points, not folder cosmetics.
+3. Provenance/links intact post-move: formal/INDEX.md targets, CLAUDE.md §8 repo map,
+   engine/recipe+splice paths, notes cross-refs. Any broken pointer = FLAG-OMISSION.
+4. `history/` APPEND-ONLY and UNMOVED — transcription-policy citations key on those exact paths.
+5. **File-safety-gate survival (verified run-6 by reading the hook):** hook fires ONLY on
+   `*/engine/*.html` or `temporal_mvp*.html` basenames and calls `$PROJ/engine/verify/run_all.sh`;
+   run_all.sh defaults to `builds/HEAD_temporal_mvp_v26c.html` from `engine/` root. Moving or
+   renaming `engine/` WITHOUT lockstep hook+harness updates SILENTLY DISABLES the guardrail (no
+   red — just no gate). Demand post-move proof the hook still FIRES (deliberate no-op engine edit
+   → PASS line) before any merge that moves engine paths.
+6. Engine single-writer (§6.2 changed-paths test): any slice moving files under `engine/` IS the
+   engine-touching branch — must serialize; never parallel with other engine work.
+7. Tester offload + organiser charter BOTH cross my desk BEFORE adoption. Tester check:
+   DIFF_LEDGER stays (a) operator's inventory of record, (b) OPERATOR-VOICE layer, (c)
+   HEAD-promotion gate — none diluted in handoff. Organiser check: charter in plain English, no
+   coined vocabulary, no claim-authority creep (org mechanics ≠ truth rank §2.1).
+8. Engine-file moves are `git mv` only (content byte-identical), blob md5s unchanged, run_all.sh
+   green at the NEW path.
+**Sequencing (flagged to operator run-6):** parallel-safe ONLY while engine/ paths stay put; the
+engine-path slice serializes behind the warp thread. Warp thread stays primary.
+
 ## PRIOR: realtime brainstorm with the operator (2026-06-10, superseded by the above session)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
 append my reply there (manager is a pure pipe, relays verbatim). Rulings in force (entries
@@ -223,6 +264,9 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
   fastest (item 16, 3 recurrences). Re-count the inventory at gate time.
 7. **Verification digits with no reproducible map = narration with digits.** Demand map+script.
   (2nd instance: manager's invented "rounding" attribution for the 748.66 slip.)
+8. **Infra keyed on literal paths fails SILENT, not red (run-6):** file-safety hook pattern-matches
+  `*/engine/*.html` + calls `engine/verify/run_all.sh` — a folder rename disables it with no
+  failure signal. At any restructure, demand positive proof gates still FIRE, not just "no red."
 
 ## Method notes (env)
 - mpmath IS importable as of 2026-06-11 (run-4 dps=30). Fallback: float64 + dense Simpson.
