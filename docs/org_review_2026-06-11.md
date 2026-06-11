@@ -53,7 +53,16 @@ records-curation half of the tester's job to it. Nobody's authority over truth c
   facts; organiser blocks = feature-table + OPERATOR-VOICE curation; the HEAD-promotion gate
   explicitly REQUIRES the OPERATOR-VOICE block present (missing = red, manager bounces) — i.e.
   the gate becomes a two-block check, named honestly (this changes §5's old "unchanged" claim).
-- **Transition protocol** (skeptic condition 4): (i) tester sign-off on the first handover;
+- **Tester conditions (sign-off given 2026-06-11, run afed8db6 — BINDING, joins the skeptic's):**
+  **T1 verbatim-lift** — organiser state/verdict wording must be lifted VERBATIM from tester
+  entries or transcripts, never restated/compressed (compression is where overclaim enters —
+  the org review's own "pivot landed" slip is the existence proof); tester entries now carry
+  per-feature row-verdict lines so lifting is always possible; non-matching wording = FLAG.
+  **T2 clean baseline** — handover starts from the 2026-06-11 fixed ledger (done, commit 40751b3).
+  **T3 frozen blocks** — pre-handover OPERATOR-VOICE content stays tester-authored; organiser
+  may add dated, labelled addenda only.
+- **Transition protocol** (skeptic condition 4): (i) tester sign-off on the first handover
+  — **GIVEN, as conditioned above**;
   (ii) skeptic audits the organiser's FIRST distillation against verbatim transcripts;
   (iii) operator notified in one plain line that OPERATOR-VOICE distillation specifically moves
   (2026-06-10 entry 5 gave the tester "full responsibility" — operator veto room held open);
