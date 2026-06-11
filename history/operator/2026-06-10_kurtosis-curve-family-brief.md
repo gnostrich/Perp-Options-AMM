@@ -367,3 +367,10 @@ _Context: continuation of the entry-47 B brainstorm. Operator proposes a conserv
 _Context: follow-up to the entry-48 answer (weighted analogue = premium-mass tilt/skew)._
 
 > got it, so thats just tilting / the curve, pretty much same sort of thing. so this approach doesn't give us some shortcut to kurtosis?
+
+---
+
+## Entry 50 — 2026-06-11
+_Context: continuation of the angle-chart brainstorm (entries 47–49). Operator asks whether a liquidity-depth distribution over the polar angle can be implemented directly as the primitive._
+
+> can we somehow directly implement an disribution idk if gudermannian is the right word but basically assignining relative liquidity depth by polar angle in the 90 degree frame
