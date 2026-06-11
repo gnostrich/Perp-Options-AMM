@@ -505,3 +505,10 @@ _Context: operator asks for a plain explanation of "the weight level" (the flatn
 _Context: operator challenges the in-flight HEAD build (dispatched by the manager on the entry-61 standing authorization): where did 2 steepness knobs come from, was a HEAD edit asked for, is the manager out of control. Manager halts the build — the in-flight edit will be reverted on completion; no further engine edits without explicit scope + explicit go. Sent twice (identical); transcribed once._
 
 > and how the fuck did 2 steepness knobs come in ? did i ask you to edit head again? are you going out of control?
+
+---
+
+## Entry 69 — 2026-06-11
+_Context: full stop ordered; operator demands the itemized core edit being proposed; manager demoted by operator ruling. All dispatches/edits halted; in-flight intern output to be discarded._
+
+> sop whatever the fuck ytoure sdoing and just itemise the core edit that you're propising making. you're demoted from manager.
