@@ -61,7 +61,7 @@ Candidate formalizations, for a point (x,y) on the curve in the 90° quadrant:
 - **H1 (verbatim 90° reading):** perpendicular distance to the x-axis is y, to the y-axis is x;
   closest-axis thickness = **min(x,y)**. Kinked at the diagonal.
 - **H2 (180° reading, radius-preserving unfold):** open the fan by the forced doubling σ=2χ
-  (Gudermannian bridge, `notes/GUDERMANNIAN_BRIDGE_2026-06-10.md` §1) keeping the radius;
+  (Gudermannian bridge, `curves/gh/GUDERMANNIAN_BRIDGE_2026-06-10.md` §1) keeping the radius;
   "just height" above the now-single axis = r·sin 2ψ = **2xy/√(x²+y²)**. Smooth; ≈ 2·min(x,y)
   near the edges (ratio between √2 and 2). **[DERIVED]**
 - **H3 (conformal unfold z↦z²):** the literal squaring map takes the quadrant onto the upper

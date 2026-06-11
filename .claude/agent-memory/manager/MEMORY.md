@@ -51,7 +51,7 @@ project's state-of-the-whole; git history is the mechanical audit trail._
   skew↔kurt ⇒ zero-skew member may not exist per candidate); #13 DEFERRED-not-satisfied
   (liabilities still re-mark; reachable-warp-set boundedness needed; "baked in… i thinl" = hedged
   conjecture, must be proven); manipulation/cost-to-warp column mandatory; PASS conditions listed.
-- **research-lead LDF check LANDED (`notes/LDF_DEFINITION_CHECK_2026-06-11.md`, 9e64152) + skeptic
+- **research-lead LDF check LANDED (`framework/LDF_DEFINITION_CHECK_2026-06-11.md` (moved from notes/ in slice 1), 9e64152) + skeptic
   AUDIT verdict #5:** substance PASS (tripwire NOT tripped; all decisive numbers reproduced;
   "conjecture = anchor-preservation under skew" sold at right strength). RESULT: LDF =
   closest-axis thickness WORKS (Balancer gets a real mode); conjecture EXACTLY TRUE for anchored
