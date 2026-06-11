@@ -151,6 +151,15 @@ standing FLAG-OMISSION on warp-with-trades is superseded by the ruling: item 16 
 inventory, operator answered — remaining live tail = every curve note must disposition it
 (gate item 5) and it's OPEN-UNIMPLEMENTED in the engine.
 
+## STANDING RULE: TLDR-first for everything operator-facing (committed 2026-06-11, operator entry 6)
+Operator called out relay verbosity ("skeptic, how are you passing this verbosity to me?"). My
+gate had policed truth/labels/vocabulary but never LENGTH — verbatim-relay with no word budget =
+accurately long; my own 400-word replies were part of it. **Rule, enforced as FLAG-PROCESS:**
+every operator-facing artifact or relay leads with a TLDR — answer first, <=5 plain sentences, no
+coined vocabulary — then a one-line pointer to the detail file. Full-quote dumps to the operator
+are offloaded summarizing, not fidelity. Applies to me first; flag any relay (mine included) that
+buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own words.
+
 ## Verdicts issued
 0. **2026-06-10 — STOCK-TAKE for the operator brainstorm** → `notes/skeptic/STOCKTAKE_2026-06-10.md`
    (knowledge map A vs B, uncertainty ranking U1–U5, bullshit watch, residual-overclaim sweep).
