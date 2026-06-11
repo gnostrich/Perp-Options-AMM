@@ -1220,3 +1220,52 @@ reader (or relay) could promote it to THE reason. Sibling of #4 (construction-sl
 #9 (provenance-axis-as-objective-axis): always ask "is this the object the CLAIM is about, or a
 true statement about a neighbour?" Specific to warp questions: the warp object is the pool-curve
 reshape gearing, NOT the option-surface readout curvature — never let them be substituted.
+
+28. **2026-06-11 — V24+polar-lens CORRECTED re-run (C.0–C.9) + C.9 build SCOPE-GATE (verdict #28;
+   operator entry 95 MANDATE: "build a version once you're satisfied without asking me anything.
+   skeptic, you have the mandate")** → `notes/skeptic/VERDICT_V24_LENS_2026-06-11.md`. Audits the
+   re-run after operator rejected the prior pass (verdict #27's artifact) as a "gross truncation"
+   (entry 91 — the prior pass called the OBSERVABLE strike-blind; the corrected one says the LENSED
+   curve-2 reshape is strike-DEPENDENT). **DECISION: FLAG-HALT — narrow & fixable. MATH SOUND, SCOPE
+   INCOMPLETE.** I did NOT halt on a broken claim; all 4 attacked parts SURVIVED re-derivation:
+   - **(a) settlement smooth-paste at g_loc<1:** genuine 2-condition (value+slope) solve, NOT a
+     tautology — I solved slope-match from scratch, recovered s*=θ((g+1)/g)^g, value matches auto;
+     machine-zero gaps at g∈{0.4..2.42} (`/tmp/sk_settle.js`/`sk_settle2.js`). g<1 exercise MEANING
+     = operator-tier, accepted entry 93#5.
+   - **(b) "strike-dependent" HONEST not over-rotation:** g_loc IS the real pricing exponent (feeds
+     S*=Kg/(g+1), funding scale, mark slope); one +10% trade shifts mode d=0.258 and re-prices
+     strikes by different dG (+1.72 ATM→−0.029 at 4×) — transactable, not redraw (`/tmp/sk_strikedep.js`).
+     CAVEAT: it's a SINGLE-DOF reshape (one mode shift through static nonlinear h′), not an independent
+     per-strike warp — still correctly called strike-dependent.
+   - **(c) forward-read-only/"no cap" — THE one that could sink it, SURVIVED:** inverse-lens 1/h″
+     blowup is REAL (2162@u=8) BUT no necessary query forces it — arb-to-oracle targets the
+     MODE/marginal (plain-Balancer root-find, lens-free, `/tmp/sk_arb_rebase.js`); and entry 93#2
+     VERBATIM ("no cap imo, same as balancer literally so not the generalised thing, just x y w that
+     move") collapses the goal-seek to plain-Balancer pool motion, SUPERSEDING the entry-31/33
+     slope-goal-seek (which WAS the inverse solve). R-fwd is what the operator authorized
+     (`/tmp/sk_goalseek.js`). |dG|≤γ hard bound (h′∈[0,1]). No cap holds.
+   - **(d) lens-mode∘rebase commute:** HOLDS (translation-covariant, g_loc dep only on u_K−u_mode,
+     `/tmp/sk_arb_rebase.js`) — but the NOTE never derives it (silent gap).
+   **HALT BLOCKERS (inventory omissions — note has NO disposition table):**
+   - **OMISSION-1 (BLOCKER) carry #4 + ln(γ) strike-placement gap:** lens centers on MODE=ln(marginal);
+     carry anchors at P=Ny/Nx; they DIFFER by ln(γ)≈0.97 nats whenever w≠½ i.e. always for γ≠1
+     (mode=ln(γP), `/tmp/sk_carry.js`). Note wires u=ln(K/mode); carry/registration want u=logprice−logP.
+     Intern could mis-place EVERY strike by ln γ. Must state the moneyness origin in plain words.
+     (verdict-#10 carry trap; pattern-#4 construction-slot.)
+   - **OMISSION-2 (BLOCKER) funding #9:** only derived in the SUPERSEDED body; scope P2 cites "HEAD
+     formula" but base is v24 whose funding is hardcoded γ=±2 (line 2086, NOT HEAD's, NOT w-derived)
+     and whose mark() isn't lens-aware. Lens threads g_loc through mark+funding+settlement = 3 call
+     sites, NOT one isolated readout. Scope must name the v24 funding-γ swap, stop citing HEAD.
+   - **OMISSION-3 (must-state):** rebase #5 / solvency #13 / strike-reg #8 / dollar-pipe #11 entirely
+     absent. Steelman (inherit-unchanged-from-v24) sound for #5/#11/#13 but silence violates the
+     inventory rule + operator entry-2 ("anchor curve and funding must generalise when we swap the
+     curve"). #8 is NOT independent of OMISSION-1.
+   **JOB 2 R6 scope-gate:** R1 PASS (every C.9 item citation-backed, zero unrequested) except the
+   "HEAD formula" mis-citation. R3 control inventory: v24 has NO steepness control (w DERIVED, getW=α/x,
+   "w (derived)" KPI; γ set by pool-init deposit); scope adds τ but never dispositions STEEPNESS as a
+   control — operator asked repeatedly (29/77/82). Must add row: steepness=derived-w (unchanged),
+   kurtosis=τ (new), w=derived/moves-on-trade. **STAGE the build** (read layer+gate, then warp/observable
+   +tester smoke-pass) — lens is NOT isolated. **Strengthen L4** to ban lensed-slope-as-INPUT explicitly.
+   **CLEAR-TO-BUILD on 5 scope fixes (none need operator)** — see verdict file. Convergence-alarm LOW
+   (self-adversarial; mgr's max|dG|=2.53≤γ confirms my |dG|≤γ). No FLAG-PROCESS (95/88/91/93/94 verified
+   verbatim). The op-tier flags (g<1 meaning, ATM-funding→0, τ calib) already accepted entry 93#5.
