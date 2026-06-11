@@ -71,3 +71,8 @@ _Context: decision 1 (tilt class) parked; decision 2 (transport reading) needs a
 > TLDR i want to see clean flattening steepening allowed, I also want to see curve warp working
 
 _Context: product demand — make both mechanics visible/runnable: (i) the steepness knob acting cleanly (wings pinned), (ii) trades bending the curve. Manager dispatched a standalone demo build (intern; demo/ path, engine untouched) on the already-verified math: (W) elbow family for the knob; paper's Balancer trade formula for the warp. Real-engine build still gated on operator's curve-class choice (decision 1, parked entry 13)._
+
+## 15
+> and havent totally ditched asymptote yet
+
+_Context: clarifies entry 12 — the exact power-law wings are still live in the parallel exploration; no pin changes. Nothing was rebuilt on the drop assumption._
