@@ -624,3 +624,54 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - The verification blind-spot CLASS = "verifies the operation, never its anchor/strike-dependence"; the
   structural test = does the gate feed in the strike coord. WARP(d)/(f) gave false confidence (name claims
   faithfulness, body checks local invariance); the (g) strike-anchoring gate is the class fix.
+
+18. **2026-06-11 — TRADE-POINT-ANCHORING build SPEC (verdict #18; operator entry 36 authorized fix+promote)** →
+   `notes/skeptic/VERDICT_tradepoint_anchoring_spec_2026-06-11.md`. The build contract for the #16 fix I
+   diagnosed (#16/#17). Artifact = `notes/research/SPEC_tradepoint_anchoring_fix_2026-06-11.md`. **VERDICT:
+   FLAG-WRONG — NOT sound to hand the intern; NEEDS REWORK.** Sandboxed the LIVE engine in Node vm
+   (`/tmp/verify.js`, extracted `<script id=engine>`), built the spec's anchored `tradeUpdateAt` from its own
+   §1.1 block, checked vs live wField/getMP_raw/arbitrageToOracle/tradeUpdate (did NOT trust the spec's
+   /tmp/tradepoint_sanity.js). **(1) THE BUG (load-bearing): `y′=y_B+dy` with (α,β) seeded at the trade point
+   RELOCATES the live pool to the strike ray.** On spec pool {10,12,τ0.3,w[.52,.72]}, leg K=1.6·mp0 dy=0.1:
+   post y leg 12→15.007 (=y_B+dy, NOT spot+dy=12.1); live spot price 2.46→4.01 (LEGACY: 2.46→2.52). Post y′ =
+   12.10/12.53/15.01/17.20 across K=1.0/1.1/1.6/2.0 — SAME dy ⇒ pool teleports to wherever the strike is.
+   DECISIVE: the tp-(α,β)=(6.41,4.39) hyperbola does NOT pass through live spot (10,12) — resid −0.798; spot's
+   OWN (α,β)=(6.72,3.94) differ. On (W), (α,β) is a position-dependent LOCAL readout, NOT a global pool const;
+   seeding it at tp launches the pool onto a hyperbola the live reserves were never on. Spec discards the live
+   reserves point. CONTRADICTS the motive ("trades skew the curve INSTEAD OF moving the reserves point") +
+   paper L39 ("bring slope of post-trade point to the PRE-TRADE reserves point" — the bring-back step the spec
+   drops). Strike-dependence belongs in the warp AMOUNT (φ′), NOT in WHERE THE POOL SITS. Breaks "everything
+   unchanged" #4/#6/#9 (all read live spot) → FLAG-WRONG not FLAG-OMISSION (dispositions present but false).
+   Steelman ("y_B+dy IS paper's y′=y+Δy, L43 treat-tp-as-reserves") tried + FAILED: L43 reads the rate at tp,
+   L39 brings reshape BACK to the live reserves; spec keeps tp as the DESTINATION. **(2) φ-consistency §1.3
+   CONFIRMED:** one-global-φ true, w(reserves;φ′)==w*==0.7075027962 to |Δ|=0.0 — but it's consistency on the
+   tp-hyperbola, which isn't the pool's. Math right, mounted on wrong reserves. **(3) SPOT-REDUCTION CONFIRMED
+   byte-exact:** anchor omitted ⇒ byte-identical to legacy (|Δφ|=|Δx|=0.0); anchor=AtO(spot) ⇒ 1.67e-16.
+   executeBand internal arb-reversal calls (no anchor, L2139/52/61/68) stay spot-anchored, correct. Option-A
+   wiring is the one part to keep verbatim. **(4) GATE manager-FLAG RIGHT + I added a 2nd axis:** hard |Δφ|>0.02
+   brittle on POOL (0.033 y=12 → 0.159 y=22, varying y alone) AND on dy (0.0155 at dy=0.05 FAILS, 0.0329 at
+   dy=0.1 PASSES — spec missed this). Reproduced spec's 0.032940 exactly. ROBUST (g.1) I specified (gate-mechanics
+   not curve-design): pin pool+dy as named consts; assert |φ_far−φ_near| > C·|φ_spotReduction| (noise-floor-
+   relative, C~1e6, ratio ~2e14 at spec pool); AND assert ordered |φ_far|>|φ_near| (structural, pool-robust).
+   Can't false-pass (strike-indep ⇒ ratio~1, equal mags, both fail) or false-fail (scales w/ setup). But MOOT
+   until item 1 fixed. **Net: intern does NOT build; research-lead re-poses so cash leg moves reserves from the
+   LIVE point while warp rate reads at tp; re-spec; I re-review.** Verbatim channel HELD (entry 36 relayed as
+   context; reviewed artifact+engine directly). Convergence-alarm MODERATE — manager already FLAGged the gate
+   but NOT the relocation; the relocation is the bigger, structural one, and the manager's "reproduced
+   path-indep 0.0 / spot-reduction 1.67e-16" green-lit the construction without checking WHERE the reserves land
+   (exact instance of blind-spot pattern #4 + #2: verified the cheap consistency numbers, never asked "where does
+   the pool actually sit post-trade").
+
+## Claims mine-to-defend (verdict #18 — trade-point-anchoring spec)
+- Spec `y′=y_B+dy` (α,β-at-tp) RELOCATES the live pool to the strike ray: dy=0.1 @K=1.6·mp0 moves y 12→15.0,
+  spot price 2.46→4.01; post-spot depends on which strike traded. The tp-(α,β) hyperbola does NOT contain the
+  live spot reserves (resid −0.80) ⇒ the construction discards the live reserves point. FLAG-WRONG. (`/tmp/verify.js`)
+- On (W) the "(α,β)" is a POSITION-DEPENDENT LOCAL readout, not a global pool constant — so "seed (α,β) at tp
+  then move y from y_B" is not a faithful pool evolution. The faithful split: cash leg moves reserves from the
+  LIVE point; warp RATE/amount reads at the trade point. The spec puts strike-dependence in the wrong place.
+- φ-consistency §1.3 (one-global-φ, |Δ|=0.0) is CORRECT but answers consistency on the tp-hyperbola, not the
+  pool's. Spot-reduction (anchor-omitted byte-identical; AtO(spot) 1.67e-16) is CORRECT — Option-A wiring sound.
+- Gate |Δφ|>0.02 is pool-dep AND dy-dep (0.0155@dy0.05 fails). Robust gate = noise-floor-relative + ordered
+  |φ_far|>|φ_near| with pinned pool/dy. (Gate moot until the relocation bug is fixed.)
+- Pattern: manager re-derived the cheap consistency numbers (path-indep 0.0, spot-red 1.67e-16) and never asked
+  "where does the pool sit post-trade" — pattern #2 (verify cheapest, narrate rest) + #4 (true label, wrong object).
