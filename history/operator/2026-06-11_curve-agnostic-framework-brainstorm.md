@@ -56,3 +56,8 @@ _Context: re-explain the AC-2.5 decision relay in plain words._
 > again, simpler english
 
 _Context: second simplification request on the same relay._
+
+## 12
+> idk, im exploring giving up the asymptotes altogether in a parallel session, will get back to you
+
+_Context: all three pending decisions (AC-2.5 class; transport reading; OPERATOR-VOICE move) parked — operator exploring dropping the exact power-law wings in a parallel session. No ruling; exploration only. Comparison table + organiser registration stay gated._
