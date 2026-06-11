@@ -293,3 +293,14 @@ _Context: operator resolves the A-vs-B warp fork — picks **A (trade-point anch
 _Context: read-only brainstorm — operator clarifies the B intent: the slippage is still implemented by the same curve-warp principle, and is the SAME per unit notional as for a spot trade (uniform per-notional execution slippage, strike-blind; strike sets only the option value/mark). Asks "does that make sense?" Manager read: yes, coherent + bounded (sidesteps A's divergence); precise form = warp sized by NOTIONAL (N·oracle), NOT premium (so it's a change from the current premium-sized engine — the curiosity run's "B = current engine" was imprecise on sizing). Grounding with research-lead (read-only). Transcribed verbatim._
 
 > read only brainstorm: my idea with B was that the slippage remains implemented by the same curve warp principle, and is the same per unit notional as for a spot trade. does that make sense?
+
+---
+
+## Entry 40 — 2026-06-11
+_Context: operator confirms sticking with A (B is adjacent-terrain brainstorm only). Brainstorm hypotheses: (a) B forces a curve shape that is NOT kurtosis-tunable; (b) A gives the DOF needed for pricing American-style on any asset. And challenges the dust-trade divergence: trading far out where slope→∞ goal-seeks another slope ≈∞, so the slope CHANGE is small ⇒ "not a huge warp imo you're probably missing something obvious." Transcribed verbatim._
+
+> we're sticking to A not pivoting, but i'm just brainstorming B because its good to have adjacent terrain explored from a theory standpoint: now, what I think B would do is force a curve shape which is not kurtosis tunable
+>
+> while A gives us the DOF we need for pricing american styles on any asset i think
+>
+> explain the dust trade blowup for me — if you trade at a point far out where slope is tending to infinity or whatever, what's going to happen is that its going to goal seek another slope close to infinity so its not a huge warp imo you're probably missing something obvious
