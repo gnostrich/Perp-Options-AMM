@@ -121,3 +121,8 @@ _Context: direct operator question to the skeptic. Skeptic's hour-close audit ru
 > specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md
 
 _Context: bare file path — a handoff spec, presumably from the operator's parallel session. Manager fetched, read, and routed it (skeptic completeness pass + framework reconcile) before acting._
+
+## 25
+> status update nondistuprive?
+
+_Context: status request; summary only, nothing dispatched._
