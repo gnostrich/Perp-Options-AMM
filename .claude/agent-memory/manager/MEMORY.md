@@ -49,6 +49,14 @@ static knob"; never asked for kurtosis-indep-of-skew — the headline is unreque
 **RELAY DONE w/ correction. NET for operator: weight-free skew map = YES under fork B; free
 lock-respecting kurtosis-at-zero-skew = NO (neither (W) nor polar); the one call = B-vs-A (weights
 or not). HEAD untouched 928cde1c. No build, no claim encoded.**
+**ENTRY 55 OPERATOR PUSHBACK + ENTRY 56 GO:** (1) I CONCEDED the "saturation/floor" framing was
+WRONG — object PRESERVES ASYMPTOTES (θ∈(0,π/2) bounded but u=ln tanθ unbounded; wings frozen at the
+angle edges; the floor belonged only to the old δ·P=k law, not this object). (2) operator proposes
+local-slope goal-seek via GLOBAL-σ knob read from reserves (no stored φ) = candidate THIRD option vs
+skeptic's failed weight-free-A search. (3) operator AGREES monotonicity binds. **DISPATCHED
+research-lead (a79a0c1d, read-only bg)** to settle: does global-σ-goal-seek give weight-free +
+strike-dependent + monotone warp, or collapse to B / hit the map-indep divergence? Bar = the
+skeptic's "could not construct a weight-free A-compatible map." Skeptic pass REQUIRED before relay.
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
