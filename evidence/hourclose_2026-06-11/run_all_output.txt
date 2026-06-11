@@ -1,0 +1,385 @@
+================ integrity ================
+whole-file md5 (want 6cc73563779a3e030774b7597d0ae187): 6cc73563779a3e030774b7597d0ae187
+blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): ab663f5c26f2a461c5b0ef1421d0ad74
+blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): c505b08ad0e4c6b0fb9e64e9679fe291
+
+================ 7 GH gates + curveTrace + marker (verify_v26a_mine.js) ================
+blob-in-script: false | all parse: true | sigs: true | IIFE: true
+gates g=1.5: PASS
+gates g=2: PASS
+gates g=3: PASS
+gates g=4: PASS
+Fix2 curveTrace: points on-GH-curve = 401 /401, worst slope err = 5.156e-12 , x monotone = true
+Fix3 marker on curve: getMP_raw(eq)= 136000.00 (target 136000.00)
+ENGINE GATES PASS (v26a)
+
+================ getMP_raw = e^ghMu * |dy/dx|  (slope_test.js) ================
+g=1.5 S=1: getMP_raw=80000.000  |dy/dx|=6851.967  ratio getMP_raw/(dy/dx)=11.6755  e^ghMu=11.6768  (ghMu=2.4576)
+g=1.5 S=1.7: getMP_raw=136000.000  |dy/dx|=11652.681  ratio getMP_raw/(dy/dx)=11.6711  e^ghMu=11.6768  (ghMu=2.4576)
+g=2 S=1: getMP_raw=80000.000  |dy/dx|=1796.851  ratio getMP_raw/(dy/dx)=44.5223  e^ghMu=44.5223  (ghMu=3.7960)
+g=2 S=1.7: getMP_raw=136000.000  |dy/dx|=3055.783  ratio getMP_raw/(dy/dx)=44.5058  e^ghMu=44.5223  (ghMu=3.7960)
+g=3 S=1: getMP_raw=80000.000  |dy/dx|=106.863  ratio getMP_raw/(dy/dx)=748.6219  e^ghMu=748.6197  (ghMu=6.6182)
+g=3 S=1.7: getMP_raw=136000.000  |dy/dx|=181.641  ratio getMP_raw/(dy/dx)=748.7291  e^ghMu=748.6197  (ghMu=6.6182)
+g=4 S=1: getMP_raw=80000.000  |dy/dx|=5.806  ratio getMP_raw/(dy/dx)=13779.6956  e^ghMu=13779.8694  (ghMu=9.5310)
+g=4 S=1.7: getMP_raw=136000.000  |dy/dx|=9.873  ratio getMP_raw/(dy/dx)=13774.6795  e^ghMu=13779.8694  (ghMu=9.5310)
+If ratio == e^ghMu -> getMP_raw = e^mu*|dy/dx| (escalation correct, getMP_raw is a price coordinate not the slope).
+If ratio == 1      -> getMP_raw IS the slope (escalation wrong).
+
+================ slippage acceptance targets (slip_accept.js) ================
+Corrected-slippage acceptance targets (γ=2, mpGeom=getMP_raw*e^-ghMu):
+  x1.02: %=0.99  $=3.46
+  x1.2: %=9.09  $=249.49
+  x2: %=33.34  $=2246.00
+  x6: %=71.45  $=6240.94
+
+================ SPLICE-LEVEL: actual spliced functions vs targets (splice_level_check.js) ================
+Spliced slippage functions vs slip_accept targets (gamma=2):
+  x1.02  %=   0.99  $=     3.46  (target 0.99% / $3.46)  OK
+  x1.2   %=   9.09  $=   249.49  (target 9.09% / $249.49)  OK
+  x2     %=  33.34  $=  2246.00  (target 33.34% / $2246)  OK
+  x6     %=  71.45  $=  6240.94  (target 71.45% / $6240.94)  OK
+  no-default guard: mpGeom(no ghMu) = NaN -> OK (NaN, loud)
+
+SPLICE-LEVEL CHECK PASS
+
+================ SEAM GATE — v26b ITM/American (value+slope <=0.15% AND directional) [HARD GATE] ================
+SEAM GATE — v26b ITM/American smooth-pasting   file=temporal_mvp_v26b_itm.html   tol=0.15%
+
+gamma=1.5  (ghAh-1=1.500000)
+  ok   gamma recovered from ghAh  ghAh-1=1.5
+  branch A (1-S/K): S*/K=0.6000  frac@bdry=0.4000  value 0.400000 vs 0.400000 (0.000%)  slope(sNorm) 1.8590e-1 vs 1.8590e-1 (0.0003%)
+  ok   A value match <=0.15%  0.000%
+  ok   A slope match <=0.15%  0.0003%
+  ok   A no jump @ boundary  |Δ|=8.00e-7
+  ok   A directional: S* < K (exercise S<K)  S*=48000.0 K=80000
+  branch B (1-K/S): S*/K=1.6667  frac@bdry=0.4000  value 0.400000 vs 0.400000 (0.000%)  slope(sNorm) -8.6066e-1 vs -8.6066e-1 (0.0005%)
+  ok   B value match <=0.15%  0.000%
+  ok   B slope match <=0.15%  0.0005%
+  ok   B no jump @ boundary  |Δ|=8.00e-7
+  ok   B directional: S* > K (exercise S>K)  S*=133333.3 K=80000
+
+gamma=2  (ghAh-1=2.000000)
+  ok   gamma recovered from ghAh  ghAh-1=2
+  branch A (1-S/K): S*/K=0.6667  frac@bdry=0.3333  value 0.333333 vs 0.333333 (0.000%)  slope(sNorm) 1.4815e-1 vs 1.4815e-1 (0.0003%)
+  ok   A value match <=0.15%  0.000%
+  ok   A slope match <=0.15%  0.0003%
+  ok   A no jump @ boundary  |Δ|=6.67e-7
+  ok   A directional: S* < K (exercise S<K)  S*=53333.3 K=80000
+  branch B (1-K/S): S*/K=1.5000  frac@bdry=0.3333  value 0.333333 vs 0.333333 (0.000%)  slope(sNorm) -7.5000e-1 vs -7.5000e-1 (0.0005%)
+  ok   B value match <=0.15%  0.000%
+  ok   B slope match <=0.15%  0.0005%
+  ok   B no jump @ boundary  |Δ|=6.67e-7
+  ok   B directional: S* > K (exercise S>K)  S*=120000.0 K=80000
+
+gamma=3  (ghAh-1=3.000000)
+  ok   gamma recovered from ghAh  ghAh-1=3
+  branch A (1-S/K): S*/K=0.7500  frac@bdry=0.2500  value 0.250000 vs 0.250000 (0.000%)  slope(sNorm) 1.0547e-1 vs 1.0547e-1 (0.0003%)
+  ok   A value match <=0.15%  0.000%
+  ok   A slope match <=0.15%  0.0003%
+  ok   A no jump @ boundary  |Δ|=5.00e-7
+  ok   A directional: S* < K (exercise S<K)  S*=60000.0 K=80000
+  branch B (1-K/S): S*/K=1.3333  frac@bdry=0.2500  value 0.250000 vs 0.250000 (0.000%)  slope(sNorm) -5.9259e-1 vs -5.9259e-1 (0.0005%)
+  ok   B value match <=0.15%  0.000%
+  ok   B slope match <=0.15%  0.0005%
+  ok   B no jump @ boundary  |Δ|=5.00e-7
+  ok   B directional: S* > K (exercise S>K)  S*=106666.7 K=80000
+
+gamma=4  (ghAh-1=4.000000)
+  ok   gamma recovered from ghAh  ghAh-1=4
+  branch A (1-S/K): S*/K=0.8000  frac@bdry=0.2000  value 0.200000 vs 0.200000 (0.000%)  slope(sNorm) 8.1920e-2 vs 8.1920e-2 (0.0002%)
+  ok   A value match <=0.15%  0.000%
+  ok   A slope match <=0.15%  0.0002%
+  ok   A no jump @ boundary  |Δ|=4.00e-7
+  ok   A directional: S* < K (exercise S<K)  S*=64000.0 K=80000
+  branch B (1-K/S): S*/K=1.2500  frac@bdry=0.2000  value 0.200000 vs 0.200000 (0.000%)  slope(sNorm) -4.8828e-1 vs -4.8828e-1 (0.0005%)
+  ok   B value match <=0.15%  0.000%
+  ok   B slope match <=0.15%  0.0005%
+  ok   B no jump @ boundary  |Δ|=4.00e-7
+  ok   B directional: S* > K (exercise S>K)  S*=100000.0 K=80000
+
+SEAM GATE: PASS (value+slope <=0.15% AND directional, both branches, gamma in {1.5,2,3,4})
+
+================ DIR GATE — v26c strike-registration (crossover@K + directional consistency) [HARD GATE] ================
+DIR GATE — strike-registration directional consistency   file=temporal_mvp_v26b_itm.html
+
+crossover-at-K (spec check 1): want oracle=84000 (NOT drift oracle0^2/K=76190)
+  gamma=1.5 crossover oracle=84000 (|err|=0)
+  ok   gamma=1.5 crossover at K  oracle=84000 K=84000
+  gamma=2 crossover oracle=84000 (|err|=0)
+  ok   gamma=2 crossover at K  oracle=84000 K=84000
+  gamma=3 crossover oracle=84000 (|err|=0)
+  ok   gamma=3 crossover at K  oracle=84000 K=84000
+  gamma=4 crossover oracle=84000 (|err|=0)
+  ok   gamma=4 crossover at K  oracle=84000 K=84000
+
+mixed-basis exec-path control (guardrail 5): exec crossover must ALSO land at K
+  gamma=1.5 EXEC crossover(registered)=84005 (|err|=5)   mutant(K/oracle)=72555 (drift point=76190)
+  ok   gamma=1.5 EXEC-path crossover at K  oracle=84005 K=84000
+  ok   gamma=1.5 mixed-basis mutant DETECTED (misses K)  mutant crossover=72555 (drift=76190) vs K=84000
+  gamma=2 EXEC crossover(registered)=84005 (|err|=5)   mutant(K/oracle)=76190 (drift point=76190)
+  ok   gamma=2 EXEC-path crossover at K  oracle=84005 K=84000
+  ok   gamma=2 mixed-basis mutant DETECTED (misses K)  mutant crossover=76190 (drift=76190) vs K=84000
+  gamma=3 EXEC crossover(registered)=84005 (|err|=5)   mutant(K/oracle)=78075 (drift point=76190)
+  ok   gamma=3 EXEC-path crossover at K  oracle=84005 K=84000
+  ok   gamma=3 mixed-basis mutant DETECTED (misses K)  mutant crossover=78075 (drift=76190) vs K=84000
+  gamma=4 EXEC crossover(registered)=84005 (|err|=5)   mutant(K/oracle)=78710 (drift point=76190)
+  ok   gamma=4 EXEC-path crossover at K  oracle=84005 K=84000
+  ok   gamma=4 mixed-basis mutant DETECTED (misses K)  mutant crossover=78710 (drift=76190) vs K=84000
+
+gamma=1.5
+  call K=84000: sign(K-oracle)=1 fund=1 d(mark)/dsNorm=2.000e-1 (sign 1)  theta=0.9295
+  ok   call moneyness sign == want  got 1
+  ok   call funding sign == moneyness
+  ok   call d(mark)/dsNorm sign == funding
+  put K=76000: sign(K-oracle)=-1 fund=-1 d(mark)/dsNorm=-2.008e-1 (sign -1)  theta=1.0799
+  ok   put moneyness sign == want  got -1
+  ok   put funding sign == moneyness
+  ok   put d(mark)/dsNorm sign == funding
+  ok   mutation (swapped arm) DETECTED  swapped d(mark)/dsNorm sign=-1 (must differ from call fund +1)
+
+gamma=2
+  call K=84000: sign(K-oracle)=1 fund=1 d(mark)/dsNorm=1.633e-1 (sign 1)  theta=0.9071
+  ok   call moneyness sign == want  got 1
+  ok   call funding sign == moneyness
+  ok   call d(mark)/dsNorm sign == funding
+  put K=76000: sign(K-oracle)=-1 fund=-1 d(mark)/dsNorm=-1.641e-1 (sign -1)  theta=1.1080
+  ok   put moneyness sign == want  got -1
+  ok   put funding sign == moneyness
+  ok   put d(mark)/dsNorm sign == funding
+  ok   mutation (swapped arm) DETECTED  swapped d(mark)/dsNorm sign=-1 (must differ from call fund +1)
+
+gamma=3
+  call K=84000: sign(K-oracle)=1 fund=1 d(mark)/dsNorm=1.221e-1 (sign 1)  theta=0.8639
+  ok   call moneyness sign == want  got 1
+  ok   call funding sign == moneyness
+  ok   call d(mark)/dsNorm sign == funding
+  put K=76000: sign(K-oracle)=-1 fund=-1 d(mark)/dsNorm=-1.230e-1 (sign -1)  theta=1.1663
+  ok   put moneyness sign == want  got -1
+  ok   put funding sign == moneyness
+  ok   put d(mark)/dsNorm sign == funding
+  ok   mutation (swapped arm) DETECTED  swapped d(mark)/dsNorm sign=-1 (must differ from call fund +1)
+
+gamma=4
+  call K=84000: sign(K-oracle)=1 fund=1 d(mark)/dsNorm=9.957e-2 (sign 1)  theta=0.8228
+  ok   call moneyness sign == want  got 1
+  ok   call funding sign == moneyness
+  ok   call d(mark)/dsNorm sign == funding
+  put K=76000: sign(K-oracle)=-1 fund=-1 d(mark)/dsNorm=-1.006e-1 (sign -1)  theta=1.2276
+  ok   put moneyness sign == want  got -1
+  ok   put funding sign == moneyness
+  ok   put d(mark)/dsNorm sign == funding
+  ok   mutation (swapped arm) DETECTED  swapped d(mark)/dsNorm sign=-1 (must differ from call fund +1)
+
+DIR GATE: PASS (CALL +++ / PUT ---, mutation detected, gamma in {1.5,2,3,4})
+
+================ FAITH 1 — trade = Esscher tilt translation, slope=P*e^(u-mu) (faith_esscher.js) [HARD GATE] ================
+FAITH-ESSCHER — trade = tilt translation, slope = P·e^(u−μ)   file=temporal_mvp_v26b_itm.html   TOL_FD=0.5%
+
+gamma=1.5  (e^ghMu=11.7)
+  ok   E1 slope law (vs P·e^(u−μ)) <=0.5% at 10 states  worst=1.097e-3
+  ok   E2 gauge scalars bit-identical under trade
+  ok   E3 group law (d1∘d2 == d1+d2) <=1e-9  resid=0.000e+0
+  ok   E4 slope-ratio == mp-ratio <=0.5%  worst=9.856e-4
+  ok   mutant (slope vs getMP_raw) DETECTED (>10×TOL off)  mutant min err=9.143e-1 (≈e^ghMu−1)
+
+gamma=2  (e^ghMu=44.5)
+  ok   E1 slope law (vs P·e^(u−μ)) <=0.5% at 10 states  worst=8.951e-4
+  ok   E2 gauge scalars bit-identical under trade
+  ok   E3 group law (d1∘d2 == d1+d2) <=1e-9  resid=0.000e+0
+  ok   E4 slope-ratio == mp-ratio <=0.5%  worst=8.971e-4
+  ok   mutant (slope vs getMP_raw) DETECTED (>10×TOL off)  mutant min err=9.775e-1 (≈e^ghMu−1)
+
+gamma=3  (e^ghMu=748.6)
+  ok   E1 slope law (vs P·e^(u−μ)) <=0.5% at 10 states  worst=9.433e-4
+  ok   E2 gauge scalars bit-identical under trade
+  ok   E3 group law (d1∘d2 == d1+d2) <=1e-9  resid=0.000e+0
+  ok   E4 slope-ratio == mp-ratio <=0.5%  worst=9.403e-4
+  ok   mutant (slope vs getMP_raw) DETECTED (>10×TOL off)  mutant min err=9.987e-1 (≈e^ghMu−1)
+
+gamma=4  (e^ghMu=13779.9)
+  ok   E1 slope law (vs P·e^(u−μ)) <=0.5% at 10 states  worst=9.393e-4
+  ok   E2 gauge scalars bit-identical under trade
+  ok   E3 group law (d1∘d2 == d1+d2) <=1e-9  resid=0.000e+0
+  ok   E4 slope-ratio == mp-ratio <=0.5%  worst=9.371e-4
+  ok   mutant (slope vs getMP_raw) DETECTED (>10×TOL off)  mutant min err=9.999e-1 (≈e^ghMu−1)
+
+FAITH-ESSCHER: PASS (slope=P·e^(u−μ) on the LIVE engine, translation group + gauge invariance, gamma in {1.5,2,3,4})
+
+================ FAITH 2 — rebase = gauge move, sNorm-quantities invariant (faith_rebase.js) [HARD GATE] ================
+FAITH-REBASE — gauge invariance of sNorm-quantities   file=temporal_mvp_v26b_itm.html   TOL=1e-12
+
+gamma=1.5  θ(K)=0.929458  sNorm=1.000000
+  ok   R1 getSNorm invariant <=1e-12  worst=0.000e+0
+  ok   R2 sNormStrike(·, K/r) invariant <=1e-12  worst=0.000e+0
+  ok   R3 mark invariant (both wings) <=1e-12  worst=0.000e+0
+  ok   R4 getMP_raw scales 1/r <=1e-12  worst=2.220e-16
+  ok   R5 arb commutes with gauge <=1e-12  worst=0.000e+0
+  ok   R6 gauge group law <=1e-12  worst=2.220e-16
+  ok   R7 scalar bookkeeping bit-exact
+  ok   mutant (K unscaled) DETECTED (>100×TOL off)  mutant resid=1.827e+0
+
+gamma=2  θ(K)=0.907067  sNorm=1.000000
+  ok   R1 getSNorm invariant <=1e-12  worst=0.000e+0
+  ok   R2 sNormStrike(·, K/r) invariant <=1e-12  worst=4.441e-16
+  ok   R3 mark invariant (both wings) <=1e-12  worst=5.551e-16
+  ok   R4 getMP_raw scales 1/r <=1e-12  worst=2.220e-16
+  ok   R5 arb commutes with gauge <=1e-12  worst=4.441e-16
+  ok   R6 gauge group law <=1e-12  worst=0.000e+0
+  ok   R7 scalar bookkeeping bit-exact
+  ok   mutant (K unscaled) DETECTED (>100×TOL off)  mutant resid=2.997e+0
+
+gamma=3  θ(K)=0.863890  sNorm=1.000000
+  ok   R1 getSNorm invariant <=1e-12  worst=0.000e+0
+  ok   R2 sNormStrike(·, K/r) invariant <=1e-12  worst=0.000e+0
+  ok   R3 mark invariant (both wings) <=1e-12  worst=0.000e+0
+  ok   R4 getMP_raw scales 1/r <=1e-12  worst=0.000e+0
+  ok   R5 arb commutes with gauge <=1e-12  worst=4.441e-16
+  ok   R6 gauge group law <=1e-12  worst=2.220e-16
+  ok   R7 scalar bookkeeping bit-exact
+  ok   mutant (K unscaled) DETECTED (>100×TOL off)  mutant resid=6.992e+0
+
+gamma=4  θ(K)=0.822770  sNorm=1.000000
+  ok   R1 getSNorm invariant <=1e-12  worst=0.000e+0
+  ok   R2 sNormStrike(·, K/r) invariant <=1e-12  worst=0.000e+0
+  ok   R3 mark invariant (both wings) <=1e-12  worst=0.000e+0
+  ok   R4 getMP_raw scales 1/r <=1e-12  worst=2.220e-16
+  ok   R5 arb commutes with gauge <=1e-12  worst=4.441e-16
+  ok   R6 gauge group law <=1e-12  worst=2.220e-16
+  ok   R7 scalar bookkeeping bit-exact
+  ok   mutant (K unscaled) DETECTED (>100×TOL off)  mutant resid=1.498e+1
+
+FAITH-REBASE: PASS (rebase = gauge move; sNorm-quantities invariant on the LIVE engine, gamma in {1.5,2,3,4})
+
+================ FAITH 3 — C3 mark reflection: put = reflected call (faith_reflection.js) [HARD GATE] ================
+FAITH-REFLECTION — markPut(θ,s) == markCall(θ,θ²/s)   file=temporal_mvp_v26b_itm.html   TOL=1e-12
+
+gamma=1.5  (405 points, 5 strikes, incl. engine-registered θ)
+  ok   C1 mark reflection <=1e-12  worst=3.327e-16
+  ok   C2 markFrac reflection <=1e-12  worst=1.110e-16
+  ok   C3 boundaries reflect (sN*c·sN*p=θ²) <=1e-12  resid=0.000e+0
+  ok   mutant (1.02·θ²/s) DETECTED (>1e6×TOL off)  mutant min resid=6.380e-4
+
+gamma=2  (405 points, 5 strikes, incl. engine-registered θ)
+  ok   C1 mark reflection <=1e-12  worst=4.174e-16
+  ok   C2 markFrac reflection <=1e-12  worst=1.110e-16
+  ok   C3 boundaries reflect (sN*c·sN*p=θ²) <=1e-12  resid=0.000e+0
+  ok   mutant (1.02·θ²/s) DETECTED (>1e6×TOL off)  mutant min resid=1.094e-3
+
+gamma=3  (405 points, 5 strikes, incl. engine-registered θ)
+  ok   C1 mark reflection <=1e-12  worst=6.241e-16
+  ok   C2 markFrac reflection <=1e-12  worst=1.110e-16
+  ok   C3 boundaries reflect (sN*c·sN*p=θ²) <=1e-12  resid=2.220e-16
+  ok   mutant (1.02·θ²/s) DETECTED (>1e6×TOL off)  mutant min resid=1.803e-3
+
+gamma=4  (405 points, 5 strikes, incl. engine-registered θ)
+  ok   C1 mark reflection <=1e-12  worst=5.398e-16
+  ok   C2 markFrac reflection <=1e-12  worst=1.110e-16
+  ok   C3 boundaries reflect (sN*c·sN*p=θ²) <=1e-12  resid=2.220e-16
+  ok   mutant (1.02·θ²/s) DETECTED (>1e6×TOL off)  mutant min resid=2.279e-3
+
+FAITH-REFLECTION: PASS (put = reflected call on the LIVE engine mark, gamma in {1.5,2,3,4})
+
+================ FAITH 4 — gamma<->vol tie: Merton root structure + (gamma, sigma_eff) pins (faith_merton.js) [HARD GATE] ================
+FAITH-MERTON — γ↔vol tie: ψ(−γ)=r structure + Gaussian slice γ(γ+1)=2r/σ²   file=temporal_mvp_v26b_itm.html
+
+gamma=1.5  live shape: ah=2.5 bh=1 delta=0.08
+  ok   M1 shape params pinned (ah=γ+1, bh=1, δ=0.08)
+  RECORD: sigma_eff=0.7344223792  sigma_eff^2=0.5393762311  M=2.380249474  r_GH=1.1627620  r_gauss=1.0113304  (non-Gaussianity gap r_GH/r_gauss−1=1.50e-1 at δ=0.08)
+  ok   M2 ghM(engine Bessel) == quadrature M <=1e-8  ghM=2.38024947278 quad=2.38024947402 rel=5.21e-10
+  ok   M3 sigma_eff^2 == PIN <=5e-7  rel=7.99e-13
+  ok   M4 r_gauss == PIN <=5e-7  rel=3.34e-9
+  ok   M4 ψ_g(−γ)==ψ_g(γ+1)==r_gauss <=1e-9  ψ_g(−γ)=1.0113304 ψ_g(γ+1)=1.0113304
+  ok   M4 Vieta: roots {−γ, γ+1} <=1e-9  roots=-1.5000000, 2.5000000
+  ok   M5 r_GH == PIN <=5e-7  rel=7.10e-9
+  ok   M5 kappa(−γ) == PIN (abs <=5e-7)  kneg=-0.13804591 pin=-0.1380459065
+  ok   M5 put root −γ IN strip (−(ah+bh), ah−bh)
+  ok   M5 Gaussian call root γ+1 OUT of strip (γ+1 > ah−bh)  γ+1=2.5 strip edge=1.5
+  ok   M5 call-root integrand non-decaying (f(100)>0.9)  f(100)=0.9999
+  ok   mutant (δ′=2δ drift) DETECTED (>100×TOL_PIN off pin)  mutant rel=4.58e-2
+
+gamma=2  live shape: ah=3 bh=1 delta=0.08
+  ok   M1 shape params pinned (ah=γ+1, bh=1, δ=0.08)
+  RECORD: sigma_eff=0.5694247945  sigma_eff^2=0.3242445966  M=1.628235159  r_GH=0.97499341  r_gauss=0.97273379  (non-Gaussianity gap r_GH/r_gauss−1=2.32e-3 at δ=0.08)
+  ok   M2 ghM(engine Bessel) == quadrature M <=1e-8  ghM=1.62823515863 quad=1.62823515945 rel=5.02e-10
+  ok   M3 sigma_eff^2 == PIN <=5e-7  rel=7.41e-13
+  ok   M4 r_gauss == PIN <=5e-7  rel=1.94e-10
+  ok   M4 ψ_g(−γ)==ψ_g(γ+1)==r_gauss <=1e-9  ψ_g(−γ)=0.97273379 ψ_g(γ+1)=0.97273379
+  ok   M4 Vieta: roots {−γ, γ+1} <=1e-9  roots=-2.0000000, 3.0000000
+  ok   M5 r_GH == PIN <=5e-7  rel=2.03e-9
+  ok   M5 kappa(−γ) == PIN (abs <=5e-7)  kneg=1.9761970e-14 pin=0
+  ok   M5 put root −γ IN strip (−(ah+bh), ah−bh)
+  ok   M5 Gaussian call root γ+1 OUT of strip (γ+1 > ah−bh)  γ+1=3 strip edge=2
+  ok   M5 call-root integrand non-decaying (f(100)>0.9)  f(100)=0.9999
+  ok   mutant (δ′=2δ drift) DETECTED (>100×TOL_PIN off pin)  mutant rel=6.44e-2
+
+gamma=3  live shape: ah=4 bh=1 delta=0.08
+  ok   M1 shape params pinned (ah=γ+1, bh=1, δ=0.08)
+  RECORD: sigma_eff=0.4010807463  sigma_eff^2=0.1608657651  M=1.268303998  r_GH=0.95072229  r_gauss=0.96519459  (non-Gaussianity gap r_GH/r_gauss−1=-1.50e-2 at δ=0.08)
+  ok   M2 ghM(engine Bessel) == quadrature M <=1e-8  ghM=1.26830399710 quad=1.26830399765 rel=4.37e-10
+  ok   M3 sigma_eff^2 == PIN <=5e-7  rel=1.93e-12
+  ok   M4 r_gauss == PIN <=5e-7  rel=4.62e-10
+  ok   M4 ψ_g(−γ)==ψ_g(γ+1)==r_gauss <=1e-9  ψ_g(−γ)=0.96519459 ψ_g(γ+1)=0.96519459
+  ok   M4 Vieta: roots {−γ, γ+1} <=1e-9  roots=-3.0000000, 4.0000000
+  ok   M5 r_GH == PIN <=5e-7  rel=2.25e-9
+  ok   M5 kappa(−γ) == PIN (abs <=5e-7)  kneg=0.23768057 pin=0.2376805731
+  ok   M5 put root −γ IN strip (−(ah+bh), ah−bh)
+  ok   M5 Gaussian call root γ+1 OUT of strip (γ+1 > ah−bh)  γ+1=4 strip edge=3
+  ok   M5 call-root integrand non-decaying (f(100)>0.9)  f(100)=0.9999
+  ok   mutant (δ′=2δ drift) DETECTED (>100×TOL_PIN off pin)  mutant rel=1.01e-1
+
+gamma=4  live shape: ah=5 bh=1 delta=0.08
+  ok   M1 shape params pinned (ah=γ+1, bh=1, δ=0.08)
+  RECORD: sigma_eff=0.3142241926  sigma_eff^2=0.09873684324  M=1.157377874  r_GH=1.0249699  r_gauss=0.98736843  (non-Gaussianity gap r_GH/r_gauss−1=3.81e-2 at δ=0.08)
+  ok   M2 ghM(engine Bessel) == quadrature M <=1e-8  ghM=1.15737787407 quad=1.15737787447 rel=3.44e-10
+  ok   M3 sigma_eff^2 == PIN <=5e-7  rel=5.08e-13
+  ok   M4 r_gauss == PIN <=5e-7  rel=2.44e-9
+  ok   M4 ψ_g(−γ)==ψ_g(γ+1)==r_gauss <=1e-9  ψ_g(−γ)=0.98736843 ψ_g(γ+1)=0.98736843
+  ok   M4 Vieta: roots {−γ, γ+1} <=1e-9  roots=-4.0000000, 5.0000000
+  ok   M5 r_GH == PIN <=5e-7  rel=4.17e-8
+  ok   M5 kappa(−γ) == PIN (abs <=5e-7)  kneg=0.44034188 pin=0.4403418837
+  ok   M5 put root −γ IN strip (−(ah+bh), ah−bh)
+  ok   M5 Gaussian call root γ+1 OUT of strip (γ+1 > ah−bh)  γ+1=5 strip edge=4
+  ok   M5 call-root integrand non-decaying (f(100)>0.9)  f(100)=0.9998
+  ok   mutant (δ′=2δ drift) DETECTED (>100×TOL_PIN off pin)  mutant rel=1.36e-1
+
+FAITH-MERTON: PASS ((γ, σ_eff) pairs on pin, ghM==GH integral, Merton root structure + GH strip asymmetry, gamma in {1.5,2,3,4})
+
+================ FAITH 5 — curvature = variance (cgf''=Var=Fisher), engine shadow (faith_fisher.js) [HARD GATE] ================
+FAITH-FISHER — curvature=variance via the engine's Esscher pair   file=temporal_mvp_v26b_itm.html   TOL=0.0001
+
+  ok   F4 window detected sane (vLo<=−10<0<10<=vHi)  window=[-16.000, 18.000]
+gamma=1.5  eng mean_β=0.39318203  eng mean_{β+1}=1.8050692  ∫Var_t=1.4119057  ∫(1−t)Var_t=0.47390149
+  ok   F1 Δmean(engine) == ∫₀¹Var_t dt <=0.0001  resid=1.315e-5
+  ok   F2 logM_T == mean_β(engine)+∫(1−t)Var_t <=0.0001  resid=9.824e-6
+  ok   F3 ghM == full-support GH integral <=1e-8  rel=5.212e-10
+  ok   F3 truncation gap |log ghM − logM_T| <=0.0002  gap=1.133e-4 (full vs window — documented)
+  ok   mutant (Var×1.01) DETECTED (>10×TOL)  mutant resid=9.914e-3
+
+  ok   F4 window detected sane (vLo<=−10<0<10<=vHi)  window=[-16.000, 18.000]
+gamma=2  eng mean_β=0.26106708  eng mean_{β+1}=0.82473351  ∫Var_t=0.56366723  ∫(1−t)Var_t=0.22642901
+  ok   F1 Δmean(engine) == ∫₀¹Var_t dt <=0.0001  resid=1.422e-6
+  ok   F2 logM_T == mean_β(engine)+∫(1−t)Var_t <=0.0001  resid=1.242e-6
+  ok   F3 ghM == full-support GH integral <=1e-8  rel=5.017e-10
+  ok   F3 truncation gap |log ghM − logM_T| <=0.0002  gap=1.268e-8 (full vs window — documented)
+  ok   mutant (Var×1.01) DETECTED (>10×TOL)  mutant resid=9.902e-3
+
+  ok   F4 window detected sane (vLo<=−10<0<10<=vHi)  window=[-16.000, 18.000]
+gamma=3  eng mean_β=0.14274999  eng mean_{β+1}=0.35331293  ∫Var_t=0.21056295  ∫(1−t)Var_t=0.094930545
+  ok   F1 Δmean(engine) == ∫₀¹Var_t dt <=0.0001  resid=1.086e-7
+  ok   F2 logM_T == mean_β(engine)+∫(1−t)Var_t <=0.0001  resid=1.438e-7
+  ok   F3 ghM == full-support GH integral <=1e-8  rel=4.370e-10
+  ok   F3 truncation gap |log ghM − logM_T| <=0.0002  gap=4.370e-10 (full vs window — documented)
+  ok   mutant (Var×1.01) DETECTED (>10×TOL)  mutant resid=9.901e-3
+
+  ok   F4 window detected sane (vLo<=−10<0<10<=vHi)  window=[-16.000, 18.000]
+gamma=4  eng mean_β=0.091593970  eng mean_{β+1}=0.20763950  ∫Var_t=0.11604553  ∫(1−t)Var_t=0.054563017
+  ok   F1 Δmean(engine) == ∫₀¹Var_t dt <=0.0001  resid=2.327e-8
+  ok   F2 logM_T == mean_β(engine)+∫(1−t)Var_t <=0.0001  resid=3.990e-8
+  ok   F3 ghM == full-support GH integral <=1e-8  rel=3.438e-10
+  ok   F3 truncation gap |log ghM − logM_T| <=0.0002  gap=3.438e-10 (full vs window — documented)
+  ok   mutant (Var×1.01) DETECTED (>10×TOL)  mutant resid=9.901e-3
+
+FAITH-FISHER: PASS (engine Esscher-pair mean displacement == integrated tilted variance; ghM == GH integral, gamma in {1.5,2,3,4})
+
+All checks above should be green. (Lean = trusted-from-prover; UI = tester-confirmed.)
+EXIT_CODE=0

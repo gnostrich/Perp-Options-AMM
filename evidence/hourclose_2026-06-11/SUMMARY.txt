@@ -1,0 +1,47 @@
+HOUR-CLOSE INDEPENDENT VERIFICATION — 2026-06-11 (tester)
+Operator entry-20 deadline run. Both suites executed by the tester directly; verbatim outputs in this directory.
+
+BUILD UNDER TEST
+engine/builds/HEAD_temporal_mvp_v26c.html
+- whole-file md5 6cc73563779a3e030774b7597d0ae187 — re-derived independently via md5sum, matches harness integrity block
+- blob line md5s re-derived via sed -n 'Np' | md5sum: L74 ab663f5c26f2a461c5b0ef1421d0ad74, L1060 c505b08ad0e4c6b0fb9e64e9679fe291 — both canonical
+NOTE (known gotcha, not a deviation): seam/dir/faith gate headers print the scratch name
+temporal_mvp_v26b_itm.html — run_all.sh copies the build under test to that scratch path; the
+CONTENT verified is v26c HEAD.
+
+SUITE 1 — engine/verify/run_all.sh (run from engine/ per harness cwd gotcha; default = HEAD)
+EXIT CODE 0 — FLAG VERDICT: PASS
+- integrity md5s exact (3/3, see above)
+- 7 GH gates PASS at gamma 1.5/2/3/4; curveTrace 401/401 on-curve (worst slope err 5.156e-12); marker on curve (136000.00 vs target 136000.00)
+- slope identity: ratio getMP_raw/|dy/dx| == e^ghMu at all four gamma (11.68 / 44.52 / 748.62 / 13779.7) — getMP_raw is a price coordinate, not the slope (escalation correct)
+- slippage acceptance targets + SPLICE-LEVEL CHECK PASS (x1.02/x1.2/x2/x6 all OK; no-default guard NaN-loud OK)
+- SEAM GATE PASS (value+slope <=0.15% AND directional, both branches A/B, gamma in {1.5,2,3,4})
+- DIR GATE PASS (crossover@K |err|=0 spec path; exec-path crossover at K; mixed-basis mutants DETECTED, all gammas)
+- FAITH 1–5 PASS (esscher / rebase / reflection / merton / fisher; every per-gamma mutant DETECTED)
+Full output: run_all_output.txt
+
+SUITE 2 — node framework/checks/chk_core.js (commit 1eb552c; file unmodified in working tree)
+EXIT CODE 0 — FLAG VERDICT: PASS
+- Final line: ALL GATED CHECKS PASS (reports informational)
+- CHK-1b is an INTENTIONAL NEGATIVE CONTROL: weighted-CD must fail mode-at-mark; the PASS line
+  means "correctly inadmissible" (eps == 0.6667 != 1 everywhere) — failing to have a mode IS the
+  expected result. Do not misread as a defect.
+- CHK-1c intentional fail-by-factor on the live GH engine: 44.52x (gamma=2), 748.62x (gamma=3) —
+  exactly e^ghMu, cross-consistent with suite-1's slope_test ratios (44.5223 / 748.6219).
+- REPORT lines (CHK-3-reach, CHK-4-GH, CHK-6) are informational, not gated.
+Full output: chk_core_output.txt
+
+ENGINE-SOURCE CLEANLINESS
+git status --porcelain -- engine/ : CLEAN (empty). Only engine/ commit this session is 40751b3 =
+engine/builds/DIFF_LEDGER.md + engine/splices/splice_ledger_stalefix_2026-06-11.py
+(markdown/process, tester-authored). Zero engine-source modifications confirmed.
+
+SCOPE / PROVENANCE LABEL
+This is SUITE-LEVEL (Node oracle) verification ONLY. NO browser/UI claim is made by this run —
+no UI changed this session and no Playwright run was performed. Do not upgrade this label to
+"tester-confirmed (rendered)". The prior live-browser confirmation of v26c stands separately
+(evidence/v26c_pw/).
+DIFF_LEDGER: no new entry required — no version transition occurred (HEAD unchanged at 6cc73563);
+the v26c entry already exists.
+
+OVERALL: PASS both suites, exit codes 0/0, zero deviations from expectations.

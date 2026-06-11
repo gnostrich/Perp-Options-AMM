@@ -1,5 +1,24 @@
 # MEMORY — tester
-_Last updated: 2026-06-11, after the org-review sign-off + ledger stale-fact fixes._
+_Last updated: 2026-06-11, after the hour-close independent verification run._
+
+## ★ 2026-06-11 — HOUR-CLOSE INDEPENDENT VERIFICATION (operator entry-20 deadline) — BOTH PASS
+Ran both suites myself; verbatim outputs + SUMMARY.txt: `evidence/hourclose_2026-06-11/`.
+- **Suite 1** `engine/verify/run_all.sh` (from `engine/`, HEAD default): **EXIT 0, PASS** —
+  integrity md5s exact (6cc73563 / ab663f5c@74 / c505b08a@1060, all re-derived myself), 7 GH
+  gates x4 gamma, curveTrace 401/401, slope identity ==e^ghMu, slippage + splice-level, SEAM,
+  DIR, FAITH 1-5 all PASS with every mutant detected. Scratch-name gotcha unchanged (gate
+  headers say v26b_itm; content = v26c).
+- **Suite 2** `node framework/checks/chk_core.js` (NEW curve-agnostic propagation checks,
+  manager commit 1eb552c; file clean in working tree): **EXIT 0, ALL GATED CHECKS PASS.**
+  CHK-1b = intentional negative control (weighted-CD must-fail mode-at-mark; PASS = correctly
+  inadmissible, eps==0.6667!=1). CHK-1c = live-GH fail-by-factor 44.52 (g=2) / 748.62 (g=3) —
+  exactly e^ghMu, cross-consistent with suite-1 slope_test (44.5223/748.6219). REPORT lines
+  (3-reach, 4-GH, 6) informational, ungated.
+- Engine-source cleanliness: `git status -- engine/` clean; only engine/ commit this session =
+  40751b3 (DIFF_LEDGER.md + my splice script; markdown/process). Zero engine-source mods.
+- Label honesty: suite-level ONLY — no browser/UI claim this run (no UI changed this session).
+  No DIFF_LEDGER entry needed: no version transition, HEAD unchanged at 6cc73563.
+
 
 ## ★ 2026-06-11 — ORG-REVIEW SIGN-OFF (skeptic run-8 cond 4i) + ledger stale-fact fixes
 **I SIGNED OFF YES** on the organiser handover as conditioned (`docs/org_review_2026-06-11.md`,

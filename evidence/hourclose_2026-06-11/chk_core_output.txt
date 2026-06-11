@@ -1,0 +1,20 @@
+PASS  CHK-1a (W) dw=0.2 tau=0.3 mode==unit-slope  mode_u=1.906e-12 eps1_u=-8.327e-17 (both ~0; slope at mode = -1.000e+0)
+PASS  CHK-1a (W) dw=-0.2 tau=0.5 mode==unit-slope  mode_u=1.906e-12 eps1_u=-2.776e-16 (both ~0; slope at mode = -1.000e+0)
+PASS  CHK-1b weighted-CD w=0.4 negative control (must FAIL mode-at-mark)  eps ≡ 0.6667 ≠ 1 everywhere — correctly inadmissible
+PASS  CHK-1c live GH gamma=2 mark is NOT the mode (expected fail-by-factor)  elasticity@mark = e^(-ghMu) = 1/44.52 (mode-at-mark off by 44.52x)
+PASS  CHK-1c live GH gamma=3 mark is NOT the mode (expected fail-by-factor)  elasticity@mark = e^(-ghMu) = 1/748.62 (mode-at-mark off by 748.62x)
+PASS  CHK-2a alpha/beta conservation over 100 trades  alpha drift=1.480e-16 beta drift=0.000e+0
+PASS  CHK-2b finite trade = integral of slices (slope agreement)  one-shot slope=2.232142857 micro(10k)=2.232142857 reldiff=3.741e-12
+PASS  CHK-3 wing +: gamma_loc derived from w, tau-invariant at ±100tau  gamma_loc=[1.499988, 1.499969, 1.499969] derived target=1.500000 tau-spread=1.905e-5
+PASS  CHK-3 wing -: gamma_loc derived from w, tau-invariant at ±100tau  gamma_loc=[0.666672, 0.666681, 0.666681] derived target=0.666667 tau-spread=8.466e-6
+REPORT CHK-3-reach  at FIXED u=6, tau=3 gives gamma_loc=1.4357 (vs 1.5 asymptote) — the elbow reach scales with tau; wing exponent unchanged, measured where the wing lives (±100tau)
+PASS  CHK-4 tau=0.05 anchor exists; funding(anchor)=0; funding(pool)!=0  anchor self-deviation=0 pool-vs-anchor max |ratio-1|=4.992e-1
+PASS  CHK-4 tau=0.3 anchor exists; funding(anchor)=0; funding(pool)!=0  anchor self-deviation=0 pool-vs-anchor max |ratio-1|=4.739e-1
+PASS  CHK-4 tau=1 anchor exists; funding(anchor)=0; funding(pool)!=0  anchor self-deviation=0 pool-vs-anchor max |ratio-1|=3.294e-1
+PASS  CHK-4 tau=3 anchor exists; funding(anchor)=0; funding(pool)!=0  anchor self-deviation=0 pool-vs-anchor max |ratio-1|=1.350e-1
+REPORT CHK-4-GH  GH at engine pin beta=1: zero-skew member requires beta=0 = settlement-semantics change (B-FULL fork) — anchor existence CONDITIONAL, operator-tier; cited from skeptic stock-take 2026-06-10, not re-run
+PASS  CHK-5 Balancer LDF = sqrt(k)*e^(-|u|/2) tent, mode at 45-deg ray  max formula residual=0.000e+0
+REPORT CHK-6 (W) wing-depth profile across tau (knob re-prices depth; geometry never closes solvency)  tau=0.05: x(u=-3)/x(0)=6.0197 | tau=0.3: x(u=-3)/x(0)=5.8796 | tau=1: x(u=-3)/x(0)=5.5635 | tau=3: x(u=-3)/x(0)=5.0747
+
+ALL GATED CHECKS PASS (reports above are informational)
+EXIT_CODE=0
