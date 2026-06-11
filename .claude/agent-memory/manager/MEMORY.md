@@ -36,3 +36,16 @@ PIPELINE (do not skip a step):
 6. Promote to HEAD; update LINEAGE/INTEGRITY/CLAUDE.md §8; commit; (PR autonomous if needed).
 7. Report a concise build summary at operator wake — tables + simple English (R7).
 Guardrails intact: skeptic FLAG halts; file-safety halts; not-satisfied halts. HEAD now 928cde1c.
+
+## v24+lens pipeline — at SCOPE-COMPLETION (2026-06-11, operator asleep, entry-95 autonomous)
+Skeptic #28 = FLAG-HALT NARROW: math survived all 4 attacks (settlement smooth-paste at g<1,
+strike-dependence honest, forward-read-only/no-cap, rebase-commute); halt only on scope gaps.
+5 fixes, NONE need operator. 2 are derivation (dispatched research-lead a4cf90fd):
+  B1 carry#4 — lens moneyness origin: marginal vs carry-anchor P (differ by ln γ ≈0.97); must agree
+     with strike-registration #8 or strikes misplace by ln γ. RESOLVE u(K).
+  B2 funding#9 — re-derive on v24 BASE (hardcoded γ=±2 @~L2086, not HEAD, not lens-aware) → g_loc swap.
+3 are doc/process (folded into the new spec): inventory table #4/#5/#8/#11/#13; R3 steepness-control
+row (steepness=derived-w unchanged; τ=new static knob); L4 strengthen (ban lensed-slope-as-INPUT);
+STAGE the build (S1 read-layer, S2 warp). Output → `specs/SPEC_v24_lens_BUILD_2026-06-11.md`.
+NEXT: research-lead lands → manager verify → skeptic R6 re-gate the spec → intern Stage 1 → gate +
+smoke-pass → Stage 2 → gate + smoke-pass → promote HEAD → morning report. HEAD 928cde1c untouched.
