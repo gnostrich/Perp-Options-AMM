@@ -1009,3 +1009,54 @@ inventory, operator answered — remaining live tail = every curve note must dis
   decoupling theorem the operator never requested, and it turned out lock-violating. Cross-check every
   headline against the operator's verbatim ask (history/operator/) before accepting it as the prize —
   the most confident claim is the one most likely drifted from the actual question (pattern #1 lens).
+
+24. **2026-06-11 — GLOBAL_SKEW goal-seek note (verdict #24; operator entries 55/56, READ-ONLY)** →
+   `notes/skeptic/VERDICT_GLOBAL_SKEW_goalseek_2026-06-11.md`. Adjudicates research-lead's answer to
+   the operator's entry-55 "local-slope-goal-seek using global skew" proposal (follow-up to my #23).
+   **VERDICT: 1× FLAG-WRONG (narrow) + 1× FLAG-OVERSELL + 1× FLAG-OMISSION(soft); NET CONCLUSION
+   SURVIVES MY ATTACK** — no weight-free third option; the mechanic works, is monotone, and IS path A
+   with the same divergence + ~1.4× cap. Fresh script `/tmp/sk_skew55.py` (NOT a rerun of theirs);
+   every note digit byte-reproduced (Q1 table, Q2 residuals .218/.051/0/.102/.241, Q3 min 1.0000,
+   Q4 gearing 1.43→189.39, peak 1.284). **FLAG-WRONG:** §1 "the UNIQUE asymptote-preserving single
+   global scalar is a shift" — FALSE: width-rescale u→u/s (= τ knob; excluded only by entry-14
+   RULING "kurtosis static", not math — note never cites it), asymmetric-width (skew-flavored,
+   excluded by NOTHING stated; not a translation, best-shift-fit dev 0.0836), and the note's OWN §3
+   odd-bump steelman (internal inconsistency). Conclusion survives on the map-independent legs only.
+   **FLAG-OVERSELL:** σ≡φ "(load-bearing) resid 0.0" is DEFINITIONAL (family defined as a shift —
+   rfl-class); plus σ≡φ is identity of the translation ACTION not the curve family (γ-blend ≠ w-blend
+   thru γ=w/(1−w), max dev 0.199 at matched wings — pattern #4); plus note's "slope"=d ln p/du ≠
+   operator's slope=PRICE (paper L35 verbatim) — the σ₁=displacement exactness is an artifact of that
+   choice; under slope=price, restoration is RANGE-LIMITED (fails beyond du≈ln(γ_loc(u0)/γ₋)≈0.33
+   from ATM) and still needs history. Conclusion robust under both readings. **Q2 impossibility
+   ENDORSED + strengthened with a TWO-HISTORY WITNESS** (u_R0=0 vs −0.5 → same u_R1=0.3 need σ +0.30
+   vs +0.80 ⇒ no F(x,y); dimension/map-independent). Label: definitional-once-stated; the content is
+   that EVERY live reading of the goal-seek target references pre-trade state (checked vs verbatim
+   31/38/39/53/55 + paper L39: note's rule, paper's rule, conservation w* all pre-referencing;
+   "post-state/executed-price" reading = memoryless = IS fork B by definition; oracle-anchored σ
+   violates entry-16 "its w that the trade changes"). Upgrade of my #23 "couldn't find" →
+   impossibility = LEGITIMATE. **Q3 strengthened:** min d ln p/du is σ-INVARIANT (translation) ⇒ knob
+   can NEVER break monotonicity of a monotone base — not an up-skew artifact; down-skew base breaks
+   at σ=0 already (my example min −0.400). **Q4:** third confirmation of the u³ gearing (after #19
+   (ln K)³, #20 map-independence); cap matches my #19 boundary. **FLAG-OMISSION(soft):** NO inventory
+   disposition section at all; prose covers #16/#2/#3/#6/#5/#9; silent: #4 carry, #8 strike-reg
+   (the cap IS strike policy), #10/#12 (and the note commits the slope-vocab offense). **D-RULING:**
+   relay = confirmation-plus-one-loss, slope=price vocabulary: "yes the knob works, it IS the A warp
+   you chose; the only casualty is weight-free — a goal-seek to the pre-trade slope must remember the
+   pre-trade state, and that memory is the weight; memoryless exists only as B (parked)". Do NOT
+   relay "dead-on-arrival"/"renamed"-as-dismissal/resid-0.0/the broken uniqueness sentence.
+   Convergence-alarm LOW-MODERATE (note upgrades MY OWN #23 — attacked the upgrade independently,
+   held; the italicized-confident §1 sentence was the false one = pattern #1 again).
+
+## Claims mine-to-defend (verdict #24 — global skew)
+- Shift-uniqueness is FALSE: width-rescale and asymmetric-width are asymptote-preserving non-shift
+  single scalars (asym-width is not-a-translation, shift-fit dev 0.0836); exclusion of width is
+  RULING-based (entry-14 τ-static), not math. None rescue weight-free (Q2) or boundedness (Q4).
+- Two-history witness: same current reserves, different required σ (+0.30 vs +0.80) ⇒ no memoryless
+  F(x,y) can implement a pre-trade-referencing goal-seek. Dimension- and map-independent.
+- Note's "slope"=d ln p/du is a pure function of u−σ (hence resid-0.0 exactness); operator's
+  slope=PRICE is not — price-restoration is range-limited (du≲0.33 from ATM at note params, bound
+  ln(γ_loc(u0)/γ₋)) and fails outright for larger moves. Both readings force history.
+- σ≡φ holds as translation-DOF identity ONLY; √-blend-in-γ ≠ √-blend-in-w as curves (dev 0.199 at
+  matched wings). If a "σ family" is ever built as §1 writes it, it is NOT the (W) field.
+- Monotonicity min is σ-invariant under translation — the shift knob can never create an arb that
+  the base profile didn't already have.
