@@ -81,3 +81,8 @@ _Context: clarifies entry 12 — the exact power-law wings are still live in the
 > also is the curve agnostic stuff dealed and airtight now? and i dont want the demo another chat id sing it
 
 _Context: (1) status question on deliverable A — answered honestly (built+audited+merged; machine-proof layer and one math hole still open; closing pass dispatched); (2) demo CANCELLED — another chat is doing it; intern's in-flight output will be discarded uncommitted._
+
+## 17
+> its not just a curve check gang its supposed to make sure all other components that i'm not going to name now, are forced consistent with it .... an internal consistency check
+
+_Context: purpose correction on deliverable A — the framework is a consistency-FORCING machine (geometry chosen ⇒ every other component's form is derived/forced from it; any independently-specified component must get caught), not merely admission tests for candidate curves. Restatement pass queued for research-lead after its in-flight prover/off-mark run returns._
