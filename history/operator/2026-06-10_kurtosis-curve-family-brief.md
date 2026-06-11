@@ -591,3 +591,10 @@ _Context: operator states the design principle — put/call asymmetry is imposed
 > the put call asymmetry is naturally imposed by the second graph pricing logic even in the absence of any skew … you dont fucking get that i just need one flatness / steepness knon
 
 _§2.2 corrigendum-note (2026-06-11): the mid-sentence "…" above is the operator's own character; entry 80 is the complete single message as received (skeptic 26b demand: confirmed)._
+
+---
+
+## Entry 81 — 2026-06-11
+_Context: operator sets the standing technical-conversation format (simple English + existing-vs-planned comparison tables) and asks for the steepness solution explained in it._
+
+> now in simple english and accompanied by tables comparing existing thing with what you plan to do (this is how you will converse with me on technical matters), explain how the steepness problem is solved
