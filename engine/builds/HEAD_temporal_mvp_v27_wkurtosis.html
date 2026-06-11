@@ -1326,7 +1326,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             <div class="field-input-wrap">
               <input type="number" id="tau-input" min="0.05" max="3" step="0.05" value="0.3">
               <span id="tau-readout" style="font-family:'IBM Plex Mono',monospace;font-size:11px;">0.30</span>
-              <div class="sim-aid-label">ATM-elbow roundness, vol-set at setup; STATIC — not changed by trades. Smaller τ = sharper elbow (leptokurtic); larger τ → plain Balancer. Wings (tail exponents) are frozen across τ.</div>
+              <div class="sim-aid-label">ATM-elbow roundness, vol-set at setup; STATIC — not changed by trades. Smaller τ = sharper elbow (leptokurtic); larger τ → plain Balancer. Wings (tail exponents) are frozen across τ. Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step — sweep τ widely or widen the wing gap to see it.</div>
             </div>
           </div>
           <div class="field-row two-col" style="margin-bottom: 6px;">
@@ -3128,6 +3128,28 @@ function setWarn(msg) {
   document.getElementById('btn-execute').disabled = !!msg;
 }
 
+// Stale-on-reject guard (entry-46 FIX 1): ONE reset for every preview-output
+// field previewBand() writes (audit-strip setVal ids, N_buy/bought-qty readout,
+// $-sublines, deposit row, mode pills, slippage/fee summary). Every reject /
+// early-return path MUST call this BEFORE setWarn so a rejected band can never
+// keep showing the previous preview's numbers (stale frankenstate).
+function clearBandPreviewOut() {
+  ['pv-sold-theta','pv-sold-delta','pv-sold-mark','pv-sold-V','pv-bought-theta','pv-bought-delta','pv-bought-mark','pv-N-bought','pv-bought-V','pv-fN','pv-fE','pv-L0','pv-dy-sold','pv-dy-bought','pv-net-cash'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = '—'; el.className = 'val dim'; }
+  });
+  const boughtDisp = document.getElementById('band-notional-bought-display');
+  if (boughtDisp) boughtDisp.textContent = '—';
+  const boughtSub = document.getElementById('band-notional-bought-subline');
+  if (boughtSub) boughtSub.textContent = '';
+  const sellSub = document.getElementById('band-notional-sell-subline');
+  if (sellSub) sellSub.textContent = '';
+  const depEl = document.getElementById('band-deposit-notional');
+  if (depEl) depEl.textContent = '—';
+  setModeTags(null, null);
+  setSummary(null, null, null, null);
+}
+
 function previewBand() {
   const inp = readBand();
   const s = Store.state;
@@ -3147,24 +3169,16 @@ function previewBand() {
   const outerBoughtValid= !isFinite(inp.bought_K.outer) || inp.bought_K.outer > 0;
   const ksOK = innerOK && outerSoldValid && outerBoughtValid;
   if (!ksOK || !(inp.N_sell > 0)) {
-    ['pv-sold-theta','pv-sold-delta','pv-sold-mark','pv-sold-V','pv-bought-theta','pv-bought-delta','pv-bought-mark','pv-N-bought','pv-bought-V','pv-fN','pv-fE','pv-L0','pv-dy-sold','pv-dy-bought','pv-net-cash'].forEach(id => setVal(id, '—'));
-    const _boughtDisp = document.getElementById('band-notional-bought-display');
-    if (_boughtDisp) _boughtDisp.textContent = '—';
-    const _boughtSub = document.getElementById('band-notional-bought-subline');
-    if (_boughtSub) _boughtSub.textContent = '';
-    const _sellSub = document.getElementById('band-notional-sell-subline');
-    if (_sellSub) _sellSub.textContent = '';
-    setModeTags(null, null);
-    setSummary(null, null, null, null);
+    clearBandPreviewOut();
     setWarn(innerOK ? (inp.N_sell > 0 ? 'Outer strikes must be positive if specified.' : 'Notional must be positive.') : 'Enter notional and inner strikes (outer optional).');
     if (Viz) Viz.drawAll(s, null);
     return;
   }
-  if (!inp.clubSide) { setWarn('Select a perp-club for attribution.'); if (Viz) Viz.drawAll(s, null); return; }
+  if (!inp.clubSide) { clearBandPreviewOut(); setWarn('Select a perp-club for attribution.'); if (Viz) Viz.drawAll(s, null); return; }
 
   const club = s.clubs[inp.clubSide];
-  if (!club || club.totalNotional <= 0) { setWarn('Club has no perp notional. Add a perp.'); if (Viz) Viz.drawAll(s, null); return; }
-  if (club.equity <= 0) { setWarn('Club has zero equity.'); if (Viz) Viz.drawAll(s, null); return; }
+  if (!club || club.totalNotional <= 0) { clearBandPreviewOut(); setWarn('Club has no perp notional. Add a perp.'); if (Viz) Viz.drawAll(s, null); return; }
+  if (club.equity <= 0) { clearBandPreviewOut(); setWarn('Club has zero equity.'); if (Viz) Viz.drawAll(s, null); return; }
 
   const sold = {
     inner: inp.sold_K.inner / s.oracle,
@@ -3176,13 +3190,14 @@ function previewBand() {
   };
   const N_und = inp.N_sell;   // already in BTC (underlying)
   const sim = Engine.executeBand(s.pool, inp.sold_wing, inp.bought_wing, sold, bought, N_und, s.oracle, s.oracle_initial);
-  if (!sim.ok) { setWarn(sim.reason); if (Viz) Viz.drawAll(s, null); return; }
+  if (!sim.ok) { clearBandPreviewOut(); setWarn(sim.reason); if (Viz) Viz.drawAll(s, null); return; }
 
   // Fee preview + equity guard
   const FEE_RATE = 0.0001;
   const fee_btc = FEE_RATE * N_und;
   const fee_usd = fee_btc * s.oracle;
   if (club.equity < fee_usd) {
+    clearBandPreviewOut();
     setWarn(`Insufficient club equity for fee: need $${fee_usd.toFixed(4)}, have $${club.equity.toFixed(2)}.`);
     if (Viz) Viz.drawAll(s, null); return;
   }
@@ -3224,9 +3239,12 @@ function previewBand() {
   setVal('pv-fN', fmtPct(f_N, 3), 'dim');
   setVal('pv-fE', fmtPct(f_E, 3), 'dim');
   setVal('pv-L0', fmtNum(L0, 2) + '×', 'accent');
-  setVal('pv-dy-sold',   fmtSig(sim.leg1.dy * s.oracle, 4) + ' $', 'dim');
-  setVal('pv-dy-bought', fmtSig(sim.leg2.dy * s.oracle, 4) + ' $', 'dim');
-  setVal('pv-net-cash', fmtUSD(sim.netPoolY * s.oracle, 6), 'pos');
+  // (W) units (entry-46 FIX 2): leg.dy and netPoolY are ALREADY raw pool-USD
+  // (executeLeg sets dy = V*oracle and tradeUpdate moves y by exactly that) --
+  // do NOT multiply by oracle again (it inflated a ~$40k net-cash to billions).
+  setVal('pv-dy-sold',   fmtSig(sim.leg1.dy, 4) + ' $', 'dim');
+  setVal('pv-dy-bought', fmtSig(sim.leg2.dy, 4) + ' $', 'dim');
+  setVal('pv-net-cash', fmtUSD(sim.netPoolY, 6), 'pos');
   setWarn('');
 
   // Stash for canvas viz. Both intermediate (post-leg-1) and final
@@ -3470,7 +3488,10 @@ const Viz = (function() {
     const xMax_raw = window.__curveFrame.xMax;
     const yMax_raw = window.__curveFrame.yMax;
 
-    const anchorPts = curveTraceExplicit(0.5, snap.depth, modeSlope);
+    // Anchor = w=1/2 CONSTANT-PRODUCT reference THROUGH the live reserves
+    // point: k = sqrt(x*y) (entry-46 FIX 3). snap.depth is x^w*y^(1-w) in the
+    // live (W) weight's units -- feeding it here drew the anchor ~104x low.
+    const anchorPts = curveTraceExplicit(0.5, Math.sqrt(snap.x * snap.y), modeSlope);
     const livePts   = curveTrace(snap);
 
     // Trace BOTH legs of the band so the full journey is visible at once:

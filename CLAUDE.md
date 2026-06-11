@@ -257,8 +257,10 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `1eebfcd6…`;
-  promotion `b245bfda` → UX-restore `9d22cffd` → display-fix `1eebfcd6`.
+- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `928cde1c…`;
+  promotion `b245bfda` → UX-restore `9d22cffd` → display-fix `1eebfcd6` → entry-45/46 UI-lacunae
+  fixes `928cde1c` [stale-on-reject clear, audit-strip raw USD, anchor through live reserves point,
+  τ disclosure; engine script byte-identical].
   **PROMOTED 2026-06-10 by operator ruling, entry 28** — "nothing useful since v24", overriding the
   tester's visual-layer blocker). **(W) kurtosis curve off the v24 Balancer base** (NOT a GH
   descendant): √-kernel weight-field invariant; static τ kurtosis knob (elbow rounds, wings frozen
@@ -268,10 +270,11 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   construction); on (W) **price==slope** (the e^(−ghMu) gotcha is GH-only). Gate =
   `engine/verify/wcurve_selfcheck.js` (22 PASS [HARD] — incl. WARP (g) anchoring/#16-gap gate added 2026-06-11, wired as run_all's (W) branch). Known-OPEN:
   warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; warp is elbow-local (verified —
-  cannot match v24's global magnitude with frozen wings); **anchor overlay RENDERS BROKEN** (legacy
-  w=½ trace fed (W)-units depth ⇒ ~104× low, hugs frame edge — skeptic-corrected 2026-06-11; the old
-  "viz not added" wording was FALSE, it renders wrong); τ per-click visual delta sub-pixel at default
-  Δw (entry-45). lp-y-delta + LIQ-PRICE were FIXED in the UX-restore (no longer open). **Prior HEAD
+  cannot match v24's global magnitude with frozen wings) AND bands are warp-neutral by construction
+  (net-premium cash; tester entry-45); τ per-click visual delta sub-pixel at default Δw (intrinsic;
+  disclosure sentence now in the UI). The entry-45 anchor-overlay (~104× low) + stale-on-reject +
+  ×oracle-inflation defects were FIXED 2026-06-11 (`928cde1c`); lp-y-delta + LIQ-PRICE were FIXED
+  in the UX-restore (no longer open). **Prior HEAD
   demoted to `temporal_mvp_v26c.html`** (`6cc73563…`, GH-line endpoint, suite still green via
   explicit path).
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;

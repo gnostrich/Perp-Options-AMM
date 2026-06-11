@@ -1,15 +1,23 @@
 # MEMORY — intern
-_Last updated: 2026-06-10 (v27 spinner-CSS + spot-KPI basis fix). Rewrite changed bits at task end._
+_Last updated: 2026-06-11 (v27 entry-46 lacunae fixes: stale-preview / audit-strip units /
+anchor depth / τ disclosure). Rewrite changed bits at task end._
 
 ## Engine
 - Canonical: **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html`** (md5
-  `29cd56bf83060f4b21a328bb79f03c57` after the 2026-06-10 spinner+KPI fix; manager re-pins
-  run_all/INTEGRITY/BUILD_LINEAGE). ⚠ svg blob line shifted 1060→**1064** (CSS region grew
-  4 lines) — line-layer md5s unchanged (`ab663f5c`@74, `c505b08a`@1064); pins that hardcode
-  1060 need the manager re-pin. (W) kurtosis curve build (pre-GH lineage from v24 —
-  NO ghCalibrate/ghMu on this branch; gate = `verify/wcurve_selfcheck.js` 21 PASS).
+  **`928cde1cccb0f35fdc9a23a7634414c8`** after the 2026-06-11 entry-46 lacunae splice; I
+  updated the run_all.sh informational pin myself per brief — manager re-pins
+  INTEGRITY/BUILD_LINEAGE/DIFF_LEDGER). Base I edited was `1eebfcd6f6ff4f4e3df5f745ac145f19`
+  (manager's post-29cd56bf state, incl. the WARP (g) anchoring gate). ⚠ svg blob line is
+  **1064** (not 1060) — line-layer md5s unchanged (`ab663f5c`@74, `c505b08a`@1064).
+  (W) kurtosis curve build (pre-GH lineage from v24 — NO ghCalibrate/ghMu on this branch;
+  gate = `verify/wcurve_selfcheck.js` **22 PASS** incl. WARP (g) documenting gate).
   GH-lineage v26c (`6cc73563…`) remains in builds/ as history. (v26a/v26b notes below
   are history of landed work.)
+- ⚠ (W) UNITS gotchas (re-derived 2026-06-11): engine `executeLeg` sets `dy = V*oracle`
+  (V is asset-units) and `tradeUpdate` moves pool y by exactly that ⇒ **`leg.dy`/`netPoolY`
+  are ALREADY raw USD** — display must NOT multiply by oracle again. `snap.depth`
+  (`getDepth=x^w·y^(1−w)`, live w) is (W)-units — a w=½ overlay trace needs
+  `k=√(x·y)` (constant-product through the live point), NOT snap.depth (~104× low).
 - 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`. `getSNorm`=(x−α)/α;
   `getDepth` is display-only/stale (left so by design). State carries scalar `gh*` params
   (`ghP,ghNx,ghNy,ghM,ghMu,ghAh,ghBh,ghDelta`); the CDF table lives in a module cache keyed by shape,
@@ -35,6 +43,29 @@ _Last updated: 2026-06-10 (v27 spinner-CSS + spot-KPI basis fix). Rewrite change
 `getMP_raw` = price coordinate, NOT slope. Use `mpGeom = getMP_raw·e^(−s.ghMu)` for anything compared
 to a geometric Δy/Δx (slippage %, $, angles). Read `ghMu` per-state; missing `ghMu` → **NaN (loud)**,
 never `e^0`. Catastrophic cancellation: compute OTM tail via direct upper-tail integrals, NOT `1−F`.
+
+## Done — v27 ENTRY-46 LACUNAE FIXES (4 UI-layer, handed to manager 2026-06-11)
+Build: **`HEAD_temporal_mvp_v27_wkurtosis.html`** edited IN PLACE per brief (1eebfcd6 →
+**928cde1cccb0f35fdc9a23a7634414c8**). Splice `/tmp/splice_v27_lacunae.py` (10 reps, all
+count==1, blobs never through; copy-then-promote). 9 diff hunks = exactly the intended
+regions. **Engine + state `<script>` blocks BYTE-IDENTICAL** (engine md5 d0869cbbb137
+pre==post); only ui script + one HTML label line changed. NO git (manager re-pins ledgers).
+- **(1) stale-on-reject (previewBand):** new `clearBandPreviewOut()` (after setWarn,
+  ~L3131) resets ALL preview outputs (15 pv-* setVal ids, band-notional-bought-display,
+  both $-sublines, band-deposit-notional, mode pills, setSummary) to '—'; called at TOP of
+  ALL 6 reject/early-return paths (invalid-inputs path now uses it too; club×3, !sim.ok,
+  fee-equity). Deposit row reset sticks because render() sets it BEFORE calling previewBand.
+- **(2) audit-strip units:** pv-dy-sold/pv-dy-bought/pv-net-cash dropped `* s.oracle` —
+  leg.dy/netPoolY are raw USD (re-derived from executeLeg, == pool Δy to 1e-6 in sandbox).
+- **(3) anchor overlay:** `curveTraceExplicit(0.5, Math.sqrt(snap.x*snap.y), modeSlope)`
+  (was snap.depth=170.83 → 104× low); k=1741.98 passes exactly through (10, 303448.28).
+  Legend text untouched. Legacy fallback at curveTrace (snap.depth, pre-(W) states) left.
+- **(4) τ disclosure (L1329):** appended "Visible effect scales with the wing gap (w₊−w₋)
+  … sweep τ widely or widen the wing gap to see it." (magnitude itself unchanged, per brief).
+- Safety: blobs `ab663f5c`@74/`c505b08a`@1064 intact, 3 scripts parse (longest line 482),
+  IIFE intact, run_all GREEN (pin updated to 928cde1c), wcurve_selfcheck **22 PASS 0 FAIL**.
+- **Open for tester:** browser — swap→reject shows warn + all '—'; net-cash ~order-$10k
+  not billions; anchor (w=½) trace passes through the reserves point; τ label text.
 
 ## Done — v27 SPINNER CSS + SPOT-KPI BASIS (tester residuals, handed to manager 2026-06-10)
 Build: **`HEAD_temporal_mvp_v27_wkurtosis.html`** edited via copy-then-promote (9d22cffd →

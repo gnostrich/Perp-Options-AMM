@@ -5,7 +5,7 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v27_wkurtosis.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 1eebfcd6f6ff4f4e3df5f745ac145f19 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 928cde1cccb0f35fdc9a23a7634414c8 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 # Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
 # shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
 BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')

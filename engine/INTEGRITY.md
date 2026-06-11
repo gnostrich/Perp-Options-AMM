@@ -9,7 +9,7 @@
 | (slippage WIP head) | `2c0337e8` | v26a + slippage work-in-progress (the splice base) |
 | `temporal_mvp_v26a.html` | `89ae89e9` | slipfix — the blob-layer reconcile below was verified on this build; **demoted, succeeded by v26b then v26c** |
 | `temporal_mvp_v26c.html` | `6cc73563` | uniform strike registration θ=sNorm(K); GH-line endpoint — **demoted 2026-06-10 on v27 promotion (operator entry 28)** |
-| **`HEAD_temporal_mvp_v27_wkurtosis.html`** | **`1eebfcd6`** | **current canonical HEAD** — (W) kurtosis curve off the v24 Balancer base (static τ knob, strong-form φ trades-warp, Reading-A settlement); gate = `wcurve_selfcheck.js` 22 PASS (incl. WARP (g) #16-anchoring gate, 2026-06-11); see `BUILD_LINEAGE.md` |
+| **`HEAD_temporal_mvp_v27_wkurtosis.html`** | **`928cde1c`** | **current canonical HEAD** — (W) kurtosis curve off the v24 Balancer base (static τ knob, strong-form φ trades-warp, Reading-A settlement); gate = `wcurve_selfcheck.js` 22 PASS (incl. WARP (g) #16-anchoring gate, 2026-06-11); entry-45/46 UI-lacunae fixes 2026-06-11 (engine block byte-identical, md5 1eebfcd6→928cde1c); see `BUILD_LINEAGE.md` |
 
 The two blobs are unchanged across the entire lineage (v24 → v26c → v27). That is the file-safety invariant; it has held.
 
