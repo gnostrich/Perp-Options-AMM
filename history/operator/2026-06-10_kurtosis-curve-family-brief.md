@@ -540,3 +540,10 @@ _Context: comprehension question — what do wing weights mean; why are elbow an
 _Context: operator pins the Balancer axiom — w weights x, 1−w weights y, must sum to 1, else void._
 
 > no in balaner w is weight of x and 1-w is weight of y, they sum to 1 , if they dont, the thing is void for me
+
+---
+
+## Entry 74 — 2026-06-11
+_Context: comprehension narrowing — weight field understood; what is "wing weights"._
+
+> i get weight field thing but what is wing weights?
