@@ -29,8 +29,16 @@ _Last updated: 2026-06-11, AIRTIGHT CLOSING PASS (FW prover triage+3 submits; OF
   q′>0⇒StrictMono⇒StrictConvexOn, nonstrict iffs R≥0⟺Monotone⟺ConvexOn; FW-8 abstract leak ≥0 both
   orientations + strict + Bregman-gap form). FW_germ `6d6ba6e6` (FW-5 joint_iff at-the-mark via
   HasDerivAt encodings TransportFO/ModeFO ⟺ ε′=−½∧A=½ + weight corollary (½,−1/8); FW-6 linear-germ
-  witness + validity strip d²<8). **POLL STATE AT HANDOFF: all 3 RUNNING — audits owed next dispatch**
-  (download → byte-diff 5 canonical modules → token-scan → #print axioms ⊆ std three → re-derive).
+  witness + validity strip d²<8). **ALL 3 RETURNED + AUDITED THIS PASS: proved (trusted-from-prover)
+  — 15/15 + 8/8 + 7/7 = 30/30 targets.** Audit PASS each: pins v4.28.0 intact, 5 canonical modules
+  byte-identical, token-clean (zero sorry/admit/axiom/native_decide/opaque/unsafe; kernel +decide
+  allowed), statement lines character-identical (FW_germ docstrings `/--`→`/-` = allowed emend;
+  warp_core restored docstrings), #print axioms per theorem ⊆ std three (Aristotle-reported), math
+  re-derived pre-submission. NOT "verified" (manager's canonical-env label upgrade). FRAGILITY FLAGS
+  (harden candidates): warp_core grind x5-6 (field-arith closers); gate_leak grind@41 + aesop@160;
+  germ aesop@64. Archives `formal/aristotle_runs/FW_{warp_core,gate_leak,germ}/extracted/`. Full
+  table + flags in RESULTS.md FW RUN. INDEX.md rows = manager-owned (flagged in return). Both FW-7
+  nonstrict iffs proved BOTH directions as stated (no weakening).
 - **No-submit-needed:** FW-9 (T1a 3566d93c [TFP] already abstract over a·S^(−γ); residual = carried
   FIELD "wings exact power-law + γ(w,τ) map" per candidate).
 - **Blocked on open design (cannot pin predicates):** FW-10 (funding functional choice = operator-tier
@@ -79,6 +87,14 @@ unsatisfiable)** — (a) effectively dead for THIS product unless trades restric
 (b)/(c) become the live routes; off-mark violation budget now quantifiable: (1−4ε″)·s·dy. (d)
 singular: untouched/open. **NEW (e): enlarge live-dial budget to ≥3 shape dials** (generic counting)
 — breaks the AC-3 x,y,w ruling = operator-owned. Relay via manager.
+**FW-14 (NEW obligation, PINNED not submitted — queue next; manager re-derivation of Part-2 math
+owed first):** (a) off-mark diagonal recovery: the (T)+(M) collision at q=ũ₀ forces ε′=−½ [the
+FW-5 statement already carries this]; (b) V′(0)=1−4ε″(0) first-order distance law (algebra over
+the series expansion — pinnable as HasDerivAt statements); (c) ODE-profile existence/uniqueness +
+symmetry ε(s)ε(−s)=1 (needs Picard–Lindelöf machinery — Mathlib has `IsPicardLindelof`/
+`ODE_solution_unique`; heavier, stage after manager re-derivation). Still-blocked: FW-10 (funding
+functional = operator choice; F3 anchor-rebase OPEN), FW-12 (per-family mark/intrinsic undefined;
+B1 conditional [TFP] = the template), FW-11-general (per-family rebase action OPEN).
 
 ---
 

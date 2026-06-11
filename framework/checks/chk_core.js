@@ -138,7 +138,8 @@ function report(name, detail) { console.log(`REPORT ${name}  ${detail}`); }
   for (const tau of [0.05, 0.3, 1, 3]) {
     const anchor = Wcurve(0, tau, 0);           // dw=0 member exists at every tau (existence by construction)
     const pool = Wcurve(0.2, tau, 0);
-    // funding functional (slope-deviation ratio at strike rays). Three legs, none tautological:
+    // funding functional (slope-deviation ratio at strike rays). Three legs — leg (i) is a
+    // labelled code-path identity (cannot fail); the gate's teeth are legs (ii)+(iii):
     // (i) a GENERIC pool built with dw=0 vs the anchor constructor — code-path identity, not sA/sA;
     // (ii) skewed pool vs same-tau anchor != 0; (iii) NEGATIVE CONTROL: a WRONG-tau anchor must
     // show nonzero funding even for an UNSKEWED pool — i.e. the operator's "both same kurtosis"

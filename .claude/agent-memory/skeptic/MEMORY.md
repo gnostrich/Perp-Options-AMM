@@ -1,8 +1,8 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-12: hour-close audit — verdict #11: chk_core PASS-W-COND (4 tautology
-legs), CONSISTENCY table FLAG-OMISSION (closure missed the spec-named liquidity generator) +
-FLAG-PROCESS (§4.1 false provenance ×2). Prior: run-11 entry-18 #10; run-10 merge gate #9;
-run-9 FRAMEWORK #8; run-8 org #7; run-7 slice-1 #6; run-4 LDF #5.)_
+_Updated 2026-06-11 (run-13: verdict #12 — operator entry-23 direct answer (singular/forces-
+calculus) + STAND-DOWN of all three verdict-#11 conditions (commits 3889022+9616480), three
+non-standing residues named. Prior: run-12 hour-close #11; run-11 entry-18 #10; run-10 merge
+gate #9; run-9 FRAMEWORK #8; run-8 org #7; run-7 slice-1 #6; run-4 LDF #5.)_
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -25,9 +25,10 @@ altogether in a parallel session"; entry 15: "havent totally ditched asymptote y
 lands, gate item 4's power-law-wings leg is operator-reopened — do NOT auto-flag wing changes as
 drift once he rules; demand the ruling verbatim first. Pending decisions (AC-2.5 class; transport
 reading) PARKED pending that exploration; entry-13 item 3 = GO on OPERATOR-VOICE handover.
-**Entry 22 (2026-06-11, post-deadline): operator demands ONE name for the unified object** —
-manager answered "pool potential μ"; in-note naming pass queued (research-lead). Watch: the name
-must not smuggle claims (μ-readings ≠ new theorems).
+**Entry 22: ONE name = "pool potential μ" (framework/README §0, audited run-13: readings list is
+claim-safe — funding honestly a TWO-μ comparison via the family; solvency "never closed by it";
+B1 extrinsic carried). In-note naming pass still queued (research-lead) — audit when it lands;
+μ-readings ≠ new theorems.** Entry 23 answered by me run-13 (verdict #12, message text).
 
 ## ⭐ ENTRY-1 PROPAGATION CLAUSE (operator, 2026-06-11 entry 1, VERBATIM — settled run-11; the
 ## framework was ordered component-propagating FROM THE FIRST MESSAGE, entry 18 confirms):
@@ -38,10 +39,10 @@ must not smuggle claims (μ-readings ≠ new theorems).
 Entry 17 ("not just a curve check… all other components… forced consistent with it .... an
 internal consistency check") = RESTATEMENT + emphasis, NOT new information. Entry 20 verbatim:
 **"no. i want it done within the hour"** — NOTHING ELSE in it; all carve-outs are
-MANAGER-named (his own context note says so). Judge every framework/deliverable-B artifact
-against BOTH: propagation machinery present AND organized as a checker that catches a
-non-conforming component spec. Component list closure: ATTEMPTED by the consistency table,
-BROKEN by me run-12 (liquidity generator missed — see verdict #11).
+MANAGER-named (his own context note says so; table §4.1 now says so too, fixed 9616480).
+Component list closure: BROKEN by me run-12 (liquidity generator missed); DISPOSITIONED run-13
+(row 20 + CHK-8 QUEUED + book-writers/oracle-paths corrigenda + inventory item 17) — closure
+leg of verdict-#10 item 4 now satisfied via §6 corrigenda layer.
 
 ## ⭐ CANONICAL WARP STATEMENT (operator, 2026-06-11, entry 7, VERBATIM — the 5-6th explanation;
 ## this NEVER needs re-explaining again; every warp/trade-mechanic claim is judged against it)
@@ -68,7 +69,7 @@ violation law is EXACTLY dε=ε·du (e^{ln1.2}=1.2 exact; small-trade ratio 1.00
 held open there, correctly:** (a) which dial bends — AC-10a; (b) joint satisfiability — AC-2;
 (c) α,β-analogues per family — AC-10c, central unconstructed object; (d) path-independence off
 Balancer — FW-13 template. FW Lean runs IN FLIGHT (f54f457: FW_warp_core 56b4f0fa, FW_gate_leak
-727fc83e, FW_germ 6d6ba6e6) — audit the returns when they land.
+727fc83e, FW_germ 6d6ba6e6; germ archive LANDED in 3889022 — audit the returns when claimed).
 
 ## The earlier motive line + why I exist + paper-as-motivation (operator verbatim 2026-06-10 — unchanged)
 > "the skeptic has to have a very concise crisp understanding of the project motive (curve warp
@@ -83,57 +84,54 @@ Balancer — FW-13 template. FW Lean runs IN FLIGHT (f54f457: FW_warp_core 56b4f
 Formula (L75–91) = the verified Balancer INSTANCE of the warp principle. Run-9 nuance: paper
 L41–43 = the q≠p trade layer — cite when scoping warp claims. L39 verbatim = reading-1 transport.
 
-## ACTIVE: curve-agnostic-framework — state after run-12 (hour-close audit)
-**Run-12 (verdict #11, file notes/skeptic/VERDICT_HOURCLOSE_2026-06-11.md):** audited the
-hour-close pair (chk_core.js 1eb552c manager-built; CONSISTENCY_CHECKER table 291967e/07b0bec
-runner-built to my verdict-#10 item-4 spec).
-- **chk_core.js PASS-WITH-CONDITIONS:** I re-ran it (exit 0) + run_all.sh (exit 0, HEAD md5
-  canonical) and re-derived ≥1 number per family — all reproduce (44.52/748.62 = e^ghMu
-  corroborated 3 ways; one-shot slope 2.2321428 by hand; CHK-3 targets+spread analytic; CHK-4
-  0.135/0.499 by hand; CHK-6 6.0197/5.0747 by hand). **CHK-3 RED→fix ruled LEGITIMATE
-  measurand correction** (±100τ IS the F2-verified claim's own measurand per my KURTOSIS_KNOB
-  verdict L115; gate retains teeth — tol 1e-3 vs failure signals 0.83/6.5e-2; RED memorialized
-  in CHK-3-reach REPORT). **Narrow OVERSELL:** 4 of 12 gated legs are code tautologies that
-  CANNOT fail (CHK-2a/2b — a,b conserved by construction then asserted; CHK-4 zero-leg sA/sA;
-  CHK-5 code-vs-itself via |u|) vs the header's own "a check that cannot fail is not a check";
-  the real CHK-2 discriminators (1.2100-vs-1.2000, fixed-curve rejection, round-trip) are all
-  QUEUED(CHK-2c) yet row 2's "Catches:" credits them to the landed leg. CHK-1b doesn't push the
-  failing curve through the CHK-1a machinery; CHK-1c gates only >40 (values printed not gated).
-- **CONSISTENCY table FLAG-OMISSION (the closure):** `Store.liquidity(D)` (HTML script 1
-  L170–191, Earn-panel wired) = "the liquidity(Σ,λ) operator from the formal spec §2.13" —
-  writes state.pool x,y,α,β,Nx,Ny ×(1+λ). Spec L504: trade/arb/rebase + liquidity "together
-  form the complete generating set for pool moves"; I_LP1 invariance (preserves w, sNorm) =
-  ready-made forced-form+check row. In NO row/leg/carve-out. Plus: book writers unenumerated
-  (closure lists the book as State; funding accrual WRITES it — script1 L410
-  `leg['funding_'+sk] += trader_pays`; open/close write it via wrappers — wrappers do route
-  through tradeUpdate, single-mechanism survives); "oracle consumed at exactly two points" is
-  FALSE (funding L408; executeBand rays; executeLeg V_usd=p.V·fx → dy → tradeUpdate = oracle
-  in the WRITE path). Steelmans (genesis-folding; narrow pool-state; write-path-only oracle)
-  all fail. **FLAG-PROCESS (narrow, §4.1):** "operator-named carve-out, entry 20" — false
-  (entry 20 = deadline only); "nothing submitted this pass" — false (same commit logs 3 FW
-  submissions). **Verified honest:** statuses (both suites green under MY hands), §3.1 numbers
-  exact vs my run, QUEUED labelling explicit, corrigendum-2 scope + my watch-notes carried,
-  #15-as-process-gate N-A LEGITIMATE, inventory 16/16 accurate — the liquidity gap is also
-  INVENTORY staleness (its own maintenance clause ⇒ FLAG-PROCESS against inventory; manager
-  owns the edit).
-- **Item-4 verdict: PASS-WITH-CONDITIONS** — table leg + checks-RUN leg satisfied (my own
-  runs); closure leg NOT satisfied until missed state-touchers dispositioned. Carve-out
-  substance legitimate (FW runs genuinely in flight; parked choices real; off-mark/AC-10c
-  carried with BLOCKED labels), provenance mislabelled.
+## ACTIVE: curve-agnostic-framework — state after run-13
+**Run-13 (verdict #12, message text — two items):**
+1. **Entry-23 answer (operator direct):** singular YES (μ; funding = two-μ comparison via
+   family; solvency/oracle outside by design); satisfactory as frame, not finished as theory;
+   "forces calculus + simply solving" TRUE-DEMONSTRATED on S*-from-wings, (W) invariant from
+   weight law, Balancer trade integrals, γ-from-w τ-invariant — NOT YET on composition map M
+   (CHK-7 blocked), off-mark (no theorem), funding functional (operator CHOICE not solve),
+   solvency (reported never solved, correctly). Manager's interim ("not yet for the
+   composition") endorsed in direction, SHARPENED: the not-yet list is four items, not one.
+2. **Verdict-#11 STAND-DOWN (commits 3889022+9616480): all three conditions STOOD-DOWN.**
+   (a) chk_core hardened LEGITIMATE, not label games — re-run exit 0; diff audited 1eb552c→
+   3889022; hand-verified: CHK-2a-neg slide drift 0.3465 ✓; CHK-2b-neg read-once 1.475577 vs
+   integral 2.232143 (rel 0.339) ✓ — and it would go RED if the micro-integrator degenerated;
+   CHK-4 tauSens 0.092–0.227 ✓ (two of four by hand); CHK-4-degeneracy FINDING TRUE (dw=0
+   kills τ identically in (W) — constructor-verified) and honestly memorialized; CHK-5 rebuilt
+   on Newton solve, constant-√k anchor breaks code-vs-itself (residual 2.2e-16 vs gate 1e-9;
+   tolerance 1e-12→1e-9 justified, failure signal O(1)). Positive identity legs (2a/2b/4-zero)
+   retained but now twinned/labelled — satisfies my "or equivalent must-fail legs" clause;
+   CHK-2c stays honestly QUEUED. (b) Table §6 corrigenda real: row 20 (I_LP1 forced form,
+   CHK-8 QUEUED never claimed run), book-writers + 3-path oracle enumeration, §4.1 fixed
+   inline (9616480). Bounce incident: §6 claimed the §4.1 fix at 3889022 while the edit had
+   bounced — manager SELF-CAUGHT, fixed 39s later, commit message narrates the failure
+   honestly → no flag, pattern 18 logged. (c) Inventory item 17 present, content complete.
+   **Three NON-STANDING residues (re-raise if quoted downstream):** (i) chk_core CHK-4 comment
+   "Three legs, none tautological" overclaims its leg (i) — which is, and is labelled, a
+   code-path identity (two same-arg constructor calls; cannot fail); (ii) table §2 BODY still
+   carries the superseded sentences ("exactly two points… no other read", "No other function
+   writes pool state", "union is exactly rows 1–19", "all 16") with no pointer to §6 —
+   corrigenda supersede, but a §2-only reader absorbs falsehoods; if §2 is quoted downstream
+   without §6, re-raise; (iii) inventory row 17 sits BELOW the "## Maintenance" header outside
+   the main table — cosmetic, content unambiguous.
+**Run-12 (verdict #11, file VERDICT_HOURCLOSE_2026-06-11.md) — now fully stood down:** chk_core
+PASS-W-COND (4 tautology legs → fixed above; CHK-3 RED fix ruled LEGITIMATE measurand
+correction — settled); table FLAG-OMISSION (Store.liquidity = spec §2.13 generator, HTML
+script 1 L170–191; book writers; oracle paths) → dispositioned; FLAG-PROCESS §4.1 ×2 → fixed.
 **Run-11 (verdict #10):** entry-1 propagation clause settled (operator did NOT stutter);
-framework note NOT merely curve-admission but organized curve-inward; manager's "real
-correction" framing = FLAG-PROCESS; genuinely missing list = the item-4 spec the hour-close
-then built against.
+manager's "real correction" framing = FLAG-PROCESS; missing list = the item-4 spec the
+hour-close then built against (now delivered: table+checks+closure all three legs satisfied).
 **Run-5..10 state (compressed):** entry-7 pin gates everything. Entry-2 re-pricing answered
 (terms locked/marks float; extrinsic := continuation premium; expiry-language BANNED). Entry-3:
 #8 live-curve exercise SETTLED; #9 funding anchor RULED (unskewed member, same kurtosis) = AC-5
 F5; #13 solvency DEFERRED-not-satisfied — AC-7 carries it. Entry-4: LDF=height fn (AC-4);
 entry-5 budget = AC-3 quote-exact. U1 residue carried. Manager's operating default (warp
 PRIMARY) veto-PENDING in AC-2. Watch-notes: AC-3 "δ=τ" slot wording; carry-P per family thin
-(now row-5/§4.6 of the table, carried honestly). Run-10 merge gate PASS + 2 watch-notes (L224
-"admits all three" над FOUR-option menu; AC-2.5 opener scope). Org adoption: my
+(row-5/§4.6 of the table, carried honestly). Run-10 merge gate PASS + 2 watch-notes (L224
+"admits all three" over FOUR-option menu; AC-2.5 opener scope). Org adoption: my
 first-distillation audit fires when it lands.
-**DELIVERABLE B (comparison table) gate:** all 16 rows per family + 5-item gate + per-cell
+**DELIVERABLE B (comparison table) gate:** all 16(+17) rows per family + 5-item gate + per-cell
 provenance + run-2 forced rows EVALUATED per family + scope column for q≠p + AC-2.5 option per
 family + per-component propagation per family. (Gated on operator's entries-12/15 exploration.)
 
@@ -169,18 +167,24 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
    quoted; "real correction" framing = record misrepresentation; missing list named (became the
    item-4 spec).
 11. **HOUR-CLOSE (run-12)** → VERDICT_HOURCLOSE_2026-06-11.md: chk_core PASS-W-COND (OVERSELL:
-   4 tautology legs vs own header; CHK-3 fix LEGITIMATE); table FLAG-OMISSION (liquidity
-   generator + book writers + oracle-read miscount — closure fails its own rule) + narrow
-   FLAG-PROCESS (§4.1 "operator-named" + "nothing submitted" both false); item-4
-   PASS-WITH-CONDITIONS (closure leg outstanding). Inventory staleness flagged (no LP item).
+   4 tautology legs); table FLAG-OMISSION (liquidity generator + book writers + oracle-read
+   miscount) + narrow FLAG-PROCESS (§4.1 ×2). **ALL STOOD DOWN run-13.**
+12. **Entry-23 answer + #11 stand-down (run-13, message text):** singular yes / frame yes /
+   solving demonstrated-on-one-family, four-item not-yet list (sharpens manager's interim);
+   conditions (a)(b)(c) all STOOD-DOWN, 3 non-standing residues named; §4.1 bounce incident
+   judged self-caught-honest, no flag.
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
+- **Hardened chk_core discriminator layer (run-13, MINE):** slide drift 0.3465; read-once
+  1.475577 vs transported 2.232143 (rel 0.339, the large-trade twin of my run-5 1.21/1.20);
+  tauSens 0.0923 (τ=0.05, max at u=0.3) and 0.101 (τ=3, u=1); CHK-5 solver residual 2.2e-16
+  with the constant-√k anchor making off-curve solutions fail. CHK-4-degeneracy FINDING true:
+  Wcurve(0,τ) is τ-free plain Balancer identically.
 - **chk_core numeric layer (run-12, MINE):** every printed number reproduced (e^ghMu factors,
-  one-shot slope, CHK-3 targets/spread incl. max(8,·)-floor mechanism, CHK-4 deviations, CHK-6
-  depths). CHK-3 wing-target map analytically CORRECT per side (+→1.5, −→0.6667). CHK-3
-  measurand fix legitimate — settled; don't re-litigate absent new evidence.
-- **Both suites green 2026-06-11 (run-12, MINE):** run_all.sh exit 0 from engine/ (HEAD md5
-  6cc73563 canonical, blob line-md5s canonical), chk_core exit 0.
+  one-shot slope 2.2321428, CHK-3 targets/spread incl. max(8,·)-floor mechanism, CHK-4
+  deviations, CHK-6 depths). CHK-3 measurand fix legitimate — settled.
+- **Both suites green 2026-06-11 (runs 12–13, MINE):** run_all.sh exit 0 from engine/ (HEAD md5
+  6cc73563 canonical, blob line-md5s canonical), chk_core exit 0 (re-run post-hardening).
 - **AC-2 joint characterization core (run-9):** transport ⇒ A=ε′+1; mode ⇒ A=−ε′; jointly
   ε′(mark)=−½ ⟺ (½,−1/8); validity −1/8>−¼; violation rate (2ε′+1)du; reading-2 ⇒ ε′=0 ⇒
   contradicts entry 16. Direction-independence real. SCOPE: at-the-mark.
@@ -191,8 +195,8 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 - **"Frozen germ kills skew" steelman DISSOLVED (run-9):** germ pins only the 2-jet.
 - **α,β ⟺ reading-1 transport, generic Balancer states (run-9):** symbolic iff + cascade.
 - **Paper Trade Formula = integral of its own infinitesimal rule (run-5):** one-shot == 10k
-  micro-steps; 1.2000 vs 1.2100; 1.44≠1.2 mode-break. (chk_core CHK-2 re-encodes this as a
-  tautology-gate — the MATH is mine/settled; the GATE is decorative, see verdict #11.)
+  micro-steps; 1.2000 vs 1.2100; 1.44≠1.2 mode-break. (chk_core CHK-2 now carries BOTH the
+  identity legs AND the must-fail twins — the gate finally has the discriminators.)
 - **Run-4 settled set:** anchored-warp mode=unit-slope=diagonal; Lemma A; validity==uniqueness;
   elasticity-at-mark = e^(−ghMu) on live GH (1/748.62 at γ=3; 1/44.52 at γ=2 — re-corroborated
   run-12 via slope_test output).
@@ -204,8 +208,8 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
   12/15 — wait for the ruling.)
 - **Store.liquidity finding (run-12, MINE, code-verified):** the live HTML has a fifth
   pool-state writer implementing spec §2.13; spec L504 names the 4-move complete generating
-  set incl. liquidity; I_LP1 = its invariance contract. Use this as the standing counterexample
-  to any "closure" claim that omits it.
+  set incl. liquidity; I_LP1 = its invariance contract. NOW dispositioned (row 20/CHK-8/item
+  17) — keep as the standing counterexample template for closure claims.
 
 ## Team blind-spot patterns observed
 1. **Confidence markers anti-correlate with verification.** Holds.
@@ -214,36 +218,36 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 4. **Construction-slot conflation** (SCORE vs WEIGHT; one-shot vs integral). Watch "δ=τ".
 5. **Impossibility claims argued from one failed candidate.**
 6. **Checklist staleness at the verification step** — run-12 instance: the INVENTORY itself
-  lacks the spec's liquidity generator; 16/16 can be true while the lens is stale. Re-count
-  AND re-ground the lens against the spec's own enumerations (generating set, §2.13).
-7. **Verification digits with no reproducible map = narration with digits.** Run-12: clean —
-  every digit reproduced.
+  lacked the spec's liquidity generator (fixed: item 17). Re-count AND re-ground the lens
+  against the spec's own enumerations (generating set, §2.13).
+7. **Verification digits with no reproducible map = narration with digits.** Runs 12–13: clean.
 8. **Infra keyed on literal paths fails SILENT.** (run_all.sh is cwd-sensitive — run from
-  engine/; from repo root the integrity block no-ops with missing-file noise.)
+  engine/; chk_core is cwd-safe via __dirname.)
 9. **Line-number citations into MUTABLE files rot silently.**
 10. **Controls drafted in the QUEUE, not the CHARTER.**
-11. **Headline scope-narrowing:** fine print knows, headline doesn't. Run-12 instance: row-2
-  "Catches:" credits QUEUED discriminators to the landed leg while §3.1's fine print queues
-  them correctly.
+11. **Headline scope-narrowing:** fine print knows, headline doesn't. (Row-2 "Catches:" now
+  approximately true post-hardening — 2a-neg/2b-neg actually catch what it credits.)
 12. **Manager numbering slips.** Check numbers against my ledger before citing.
 13. **Relay-text verification ceiling:** manager replies untranscribed by policy — state the
   ceiling, never upgrade to "verified."
 14. **Operator pushback triggers reflex concession, not record check.** (run-11.)
-15. **The rfl pattern recurs as RUNNABLE-CHECK tautologies (NEW, run-12).** Self-referential
-  gate legs (assert the construction's defining identity back at itself: ws=a/xN then
-  xs·ws==a; sA/sA; code-vs-itself formulas) pass forever and inflate "N gated checks PASS"
-  counts. Audit rule: for every gated leg ask "what INPUT could make this red?" — if none
-  exists, it's a tautology leg; demand the must-fail twin (the manager's own header maxim is
-  the standard to quote back).
-16. **Closure sweeps scope to the easiest-enumerated surface (NEW, run-12).** "All state
-  writers" was swept over the ENGINE BLOCK only; the Store (same file, next script tag) held
-  a spec-named writer. Precision claims ("exactly two points", "all of them") are attack
-  surface — verify them against the WHOLE artifact, and against the spec's own completeness
-  sentences (generating set). Twin of 6.
-17. **Manager-named scope-cuts drift into "operator-named" within hours (NEW, run-12).** The
-  entry-20 carve-outs were the manager's commitment per his own context note; the runner's
-  table re-attributed them to the operator same-day. Check every "operator-named/RULED" tag
-  against the verbatim transcript — authority laundering is quiet and fast.
+15. **The rfl pattern recurs as RUNNABLE-CHECK tautologies (run-12).** Audit rule: for every
+  gated leg ask "what INPUT could make this red?" — demand the must-fail twin. RESOLUTION
+  PATTERN (run-13): identity leg + must-fail twin is an acceptable pair; the twin must target
+  the same measurand and would-fire-on-broken-machinery (2b-neg does: rel→0 if micro
+  degenerates). Residual watch: "none tautological" comment-level overclaims.
+16. **Closure sweeps scope to the easiest-enumerated surface (run-12).** Verify precision
+  claims ("exactly two", "all of them") against the WHOLE artifact + the spec's own
+  completeness sentences. Twin of 6.
+17. **Manager-named scope-cuts drift into "operator-named" within hours (run-12).** Check
+  every "operator-named/RULED" tag against the verbatim transcript. (Fixed inline 9616480.)
+18. **Corrigenda race their own writes (NEW, run-13).** A §6 "fixed inline" claim shipped
+  while the inline edit had BOUNCED on concurrent modification — the correction layer itself
+  made an unverified-persistence claim (CLAUDE.md §1 rule). Self-caught by manager next
+  commit, honestly narrated → the system worked, but: at any corrigendum, verify the BODY
+  matches the corrigendum claim at the SAME commit. Sibling: body-vs-corrigenda divergence —
+  §2 still carries superseded sentences with no pointer to §6; corrected-by-appendix leaves
+  the falsehood live for body-only readers.
 
 ## Method notes (env)
 - mpmath importable (dps=30 fine). Reusable rigs: (W)-membership; trade-mechanic
@@ -255,9 +259,13 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 - **Record-fidelity rig (run-11):** grep transcript for ordering language FIRST, then the
   artifact for machinery — judge novelty after both.
 - **Run-12 rig (engine-surface sweep):** extract all `<script>` bodies from HEAD html in node;
-  regex function inventory + `Engine.<fn>(` call sites per script; keyword sweep
-  (deposit|withdraw|accrue|position|book) with line context; then read the hit bodies. Catches
-  Store-level state writers that engine-block-scoped sweeps miss. run_all.sh MUST run from
-  engine/ (cwd-sensitive). chk_core.js: `node framework/checks/chk_core.js`, expect exit 0.
+  regex function inventory + call sites per script; keyword sweep (deposit|withdraw|accrue|
+  position|book) with line context. Catches Store-level writers. run_all.sh MUST run from
+  engine/. chk_core.js: `node framework/checks/chk_core.js`, expect exit 0.
+- **Run-13 rig (stand-down audit):** `git diff <audited-sha> <fix-sha> -- <file>` BEFORE
+  re-running — judge the fix from the diff (tolerance loosening = label-game vector; here
+  CHK-5 1e-12→1e-9 justified, measured 2.2e-16); then hand-verify each NEW number; then check
+  the claimed-fixed text at the claiming commit (`git show <sha>:<file>`) — that's what caught
+  the §4.1 bounce being real.
 - **Verbatim channel:** `history/operator/<date>_<slug>.md` (live 2026-06-10+). Pre-policy
   GH-era rulings = manager-paraphrase provenance, label when cited.

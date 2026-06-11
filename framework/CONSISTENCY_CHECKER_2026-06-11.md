@@ -31,6 +31,11 @@ on the operator's parked choices or on open math is labelled, not papered over.
 
 ## 2. Component-list CLOSURE argument
 
+_⚠ SUPERSEDED-IN-PLACE notice (skeptic verdict #12 residue): this section's original sentences
+"consumed at exactly two points", "no other function writes pool state", "union is exactly rows
+1–19", "all 16" are corrected by §6 (row 20 LP-liquidity; 3-path oracle enumeration; item 17) —
+read §2 only together with §6._
+
 **Closure rule: a component = anything that reads or writes pool state; the reads/writes are
 enumerated from the engine surface + paper + ports — nothing else touches state.**
 

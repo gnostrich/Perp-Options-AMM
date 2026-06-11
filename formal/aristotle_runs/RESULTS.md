@@ -489,8 +489,25 @@ blocked on open design (funding functional choice operator-tier + F3 anchor-reba
 mark/intrinsic undefined — B1 conditional [TFP] is the existing template); FW-11 general = blocked on
 per-family rebase action (Balancer instance submitted).
 
-| ID | name | targets | status |
-|----|------|---------|--------|
-| 56b4f0fa-eacf-414d-bc8c-33cba9606bb0 | FW_warp_core | FW-1/2/3/4/13 + FW-11 Balancer instance (15 thms: flow HasDerivAt, first integrals, transport uniqueness, round-trip, semigroup, elasticity law, rebase commute) | SUBMITTED (poll) |
-| 727fc83e-9cc1-4478-a197-a51d640941aa | FW_gate_leak | FW-7 (gate identity, strict chain, nonstrict iffs) + FW-8 (abstract leak ≥0, strict, Bregman) | SUBMITTED (poll) |
-| 6d6ba6e6-320c-49d4-81ec-73db27ba8d34 | FW_germ | FW-5 (joint_iff at-the-mark, HasDerivAt encoding) + FW-6 (linear-germ witness + validity strip) | SUBMITTED (poll) |
+| ID | name | targets | verdict |
+|----|------|---------|---------|
+| 56b4f0fa-eacf-414d-bc8c-33cba9606bb0 | FW_warp_core | FW-1/2/3/4/13 + FW-11 Balancer instance (15 thms: flow HasDerivAt, first integrals, transport uniqueness, round-trip, semigroup, elasticity law, rebase commute) | **proved (trusted-from-prover)** 15/15 |
+| 727fc83e-9cc1-4478-a197-a51d640941aa | FW_gate_leak | FW-7 (gate identity, strict chain, nonstrict iffs BOTH directions) + FW-8 (abstract leak ≥0, strict, Bregman) | **proved (trusted-from-prover)** 8/8 |
+| 6d6ba6e6-320c-49d4-81ec-73db27ba8d34 | FW_germ | FW-5 (joint_iff at-the-mark, HasDerivAt encoding) + FW-6 (linear-germ witness + validity strip) | **proved (trusted-from-prover)** 7/7 |
+
+AUDIT (all three PASS): toolchain pins `leanprover/lean4:v4.28.0` + mathlib `rev=v4.28.0` unchanged;
+all 5 canonical modules (AMMCurve/Audit/Main/Seam/Temporal) byte-identical vs working tree; token-scan
+ZERO `sorry`/`admit`/`axiom` decls/`native_decide`/`sorryAx`/`opaque`/`unsafe` (kernel `+decide` simps
+present = allowed); every theorem/def statement line character-identical submit-vs-return (FW_germ's
+docstrings reflowed `/--`→`/-` = allowed comment-only emendation; FW_warp_core restored docstrings);
+`#print axioms` per theorem present in every file, Aristotle reports ⊆ {propext, Classical.choice,
+Quot.sound} for all 30 targets; math re-derived independently pre-submission (framework note AC-1/AC-2
+numerics + this pass's flow/transport algebra). NOT "verified" (no canonical-env build — label upgrade
+is the manager's).
+
+FRAGILITY FLAGS (harden candidates, NOT audit failures — axiom-clean, statements frozen):
+- FW_warp_core: `grind` x5-6 (lines ~79/105/130/144`+locals`/185`+qlia`/195 — field-arithmetic closers).
+- FW_gate_leak: `grind` line 41 (final algebra of gate identity), `aesop` line 160 (measure-positivity
+  side-goal in `leak_pos`).
+- FW_germ: `aesop` line 64 (slope-form chain step in `joint_iff` forward leg).
+T1b-HARDEN-style cleanup run available on demand.
