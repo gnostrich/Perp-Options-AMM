@@ -519,3 +519,10 @@ _Context: full stop ordered; operator demands the itemized core edit being propo
 _Context: addressed to the skeptic: TLDR the manager's last message (the itemized core edit), and prepare the manager wipe-and-replacement so the session's behaviours don't persist. Relayed to the skeptic verbatim this turn._
 
 > skeptic tldr what hes saying, and prepare to wipe the manager and replace him so these behaviours don't persist
+
+---
+
+## Entry 71 — 2026-06-11
+_Context: standing transparency mandate (addressed also to the skeptic, to enforce in spirit): tabular format for technical content, concise simple-English explanations, show core formulas and edits. The halted build's output was discarded this turn (HEAD verified 928cde1c)._
+
+> still not giving me a single core formula table and showing edits -- by now i consider this kind lack of clarity malicious , skeptic , enforce this kind of transparency not just literally but in spirit --- tabular for technical stuff -- concise and sinple eneligh explanations
