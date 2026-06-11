@@ -24,8 +24,15 @@ ALL CORRECTED this turn); FLAG-OVERSELL narrow (my "engine clean ⇒ UI-layer" s
 put-route; skeptic ran it, clean, conclusion survives — pattern #2 recorded against me).
 Response-type ruling (BINDING, entry-44 mandate): operator replies = plain-English blocks ≤3
 sentences/concern, numbers only where they answer, provenance in plain words, no md5/gates/PR talk.
-**PENDING: tester live-repro (running, bg) → exact ⇅ exception → intern fix dispatch (swap fix +
-(W)-anchor `√(x·y)` one-liner + τ sim-aid disclosure text) → gates + UI smoke-pass → hand back.**
+**STATE: tester live-repro DONE** (no crash — stale-on-reject frankenstate + ×oracle audit-strip
+inflation = the real defects; bands warp-neutral by construction [net premium cash]; MAX chip =
+boot-seeded demo club). **Intern fixes DONE + manager-verified, md5 `1eebfcd6`→`928cde1c`**
+(clearBandPreviewOut on all 6 reject paths; pv lines raw USD; anchor `√(x·y)` through live point;
+τ disclosure sentence; engine script BYTE-IDENTICAL d0869cbb; 22/22; pins updated run_all/
+LINEAGE/INTEGRITY/CLAUDE.md). **PENDING: first standing UI smoke-pass (tester, running bg) →
+one-line operator hand-back.** Entry-47 B-throwback brainstorm delivered (synthesis from vetted
+CURIOSITY_B + BRAINSTORM_B notes + band-neutrality connection; no build action). Operator-tier
+still open: A strike-cap ≤~1.4×; τ visual-authority design (wider default Δw / coarser step?).
 
 ## ⏳ LIVE THREAD — WARP TRADE-POINT FIX (path A), as of 2026-06-11 (entries 31–40)
 Operator chose **A** (trade-point anchoring, paper-faithful) for the build; **NOT YET BUILT** (HEAD
