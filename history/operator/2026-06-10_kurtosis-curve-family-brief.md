@@ -605,3 +605,10 @@ _Context: operator sets the standing technical-conversation format (simple Engli
 _Context: operator (who has used plain Balancer before) asks mechanically how it gets flatter — where the knob plugs into the function._
 
 > with plain balancer, and i’ve used this before, HOW does it get flatter. where does the knob plug into the function?
+
+---
+
+## Entry 83 — 2026-06-11
+_Context: operator rejects the manager's entry-82 answer as gaslighting._
+
+> straight gaslighting
