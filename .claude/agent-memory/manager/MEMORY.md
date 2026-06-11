@@ -51,8 +51,15 @@ still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern bui
   requirement (p<½ wing diverges u^{+}, p>½ collapses to w_mid + non-monotone) — somewhat circular; the
   GENUINE shoulder-shape family ({√,tanh,erf}, all frozen→±1) is UNDER-DETERMINED (√-kernel = integrable
   + gentlest, NOT uniquely forced). So entry-41's "under-determined/integrability-tiebreak" is the
-  HONEST framing; entry-42's "pinned" holds only in the narrow s_p sense. **Routed to skeptic to
-  reconcile entry-41 vs entry-42 before the operator hears "pinned."** Did NOT relay the over-claim.
+  HONEST framing; entry-42's "pinned" holds only in the narrow s_p sense.
+  **RESOLVED 2026-06-11 — skeptic reconciled (TWO runs, both agree): UNDER-DETERMINED wins.** Verdicts
+  `notes/skeptic/VERDICT_FMI42_shoulder_pinning_2026-06-11.md` + `VERDICT_FMI_shoulder_pinned_vs_underdetermined_2026-06-11.md`.
+  entry-42 carries **FLAG-OVERSELL** (pinned→unique over-reads a tautology) **+ FLAG-WRONG** (soft-side
+  "costs the algebraic invariant" is FALSE — `∫s_p` is elementary-algebraic for all rational p≠1;
+  real soft blocker = wing DIVERGING `u^{1−2p}`, i.e. frozen-wings contract). entry-41 PASS STANDS.
+  Correction header added to the FMI note (overrides body "pinned/unique" language); quantified content
+  (divergence order, monotonicity turnover, W10) is fine. RELAYED to operator verbatim (skeptic's one
+  honest sentence). HEAD untouched `1eebfcd6`.
 
 ## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
 **CURRENT HEAD md5 = `1eebfcd6f6ff4f4e3df5f745ac145f19`** (promotion `b245bfda` → UX-restore

@@ -7,6 +7,23 @@ submission. Operator is live-playing HEAD `1eebfcd6`; build path A paused. Notes
 (`/tmp/fmi42.py`; companion `/tmp/shoulder.py`, `/tmp/naturalness{,2}.py`; python float64 + scipy).
 Tags: `[analytic]` derived, `[numeric]` float64-checked. **This is NOT a proposal to change the curve.**_
 
+> ⚠ **CORRECTION HEADER (manager, 2026-06-11, post-skeptic).** Two skeptic re-derivations
+> (`notes/skeptic/VERDICT_FMI42_shoulder_pinning_2026-06-11.md` and
+> `notes/skeptic/VERDICT_FMI_shoulder_pinned_vs_underdetermined_2026-06-11.md`) flag the entry-42
+> shoulder-pinning argument below. **Two corrections override the body text:**
+> 1. **FLAG-WRONG — the soft-side "costs the algebraic invariant" claim is FALSE.** `∫ s_p du` for
+>    `s_p = u/(τ²+u²)^p` is **elementary-algebraic for every rational `p≠1`** (p=¼ → ⅔(τ²+u²)^¾;
+>    p=¾ → 2(τ²+u²)^¼; only p=1 logs). The real soft-side blocker is the **wing DIVERGING**
+>    (`s_p ~ u^{1−2p} → ∞` for p<½ ⇒ no frozen wing at all) — the frozen-wings contract, not
+>    algebraicity. The p-sweep "transcendental invariant" column for p<½ is wrong.
+> 2. **FLAG-OVERSELL — "two-sided pinned → √-kernel UNIQUE" over-reads a tautology.** The `s_p` pin
+>    is the frozen-wings requirement restated (p=½ is the only frozen-wing member of that one slice)
+>    + monotonicity (a redundant second symptom of the same collapse on the sharp side). Across the
+>    real shoulder-SHAPE family `{√-kernel, tanh, erf, gudermannian}` (all valid frozen-wing 1-knob
+>    sigmoids), the shoulder is **UNDER-DETERMINED** — entry-41's standing frame. √-kernel is
+>    **selected** on tiebreaks (gentlest divergence + algebraic `√(τ²+u²)` invariant = polar-lens
+>    closure), **not compelled.** Read the body's "pinned/unique" language as that tiebreak, not a law.
+
 ---
 
 ## The object under discussion

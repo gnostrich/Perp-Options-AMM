@@ -767,3 +767,41 @@ inventory, operator answered — remaining live tail = every curve note must dis
   algebraic invariant (a net downgrade). The (g.4) strike cap is unavoidable under ANY natural shoulder.
 - NOTE DIGIT correction (mine): frozen-wing residual 1−s(30) is 5.5e-4 (√) / 3.2e-2 (alg), ~100× the note's
   5e-6/1e-3; only the ratio (~60×) is load-bearing and it holds. Don't let 5e-6 be promoted as a precise bound.
+
+21. **2026-06-11 — FMI shoulder PINNED-vs-UNDER-DETERMINED reconcile (verdict #21; operator entry 42)** →
+   `notes/skeptic/VERDICT_FMI_shoulder_pinned_vs_underdetermined_2026-06-11.md`. Adjudicate entry-42
+   (`notes/research/FMI_hyperbolic_alts_and_shoulder_localisation_2026-06-11.md`, "shoulder TWO-SIDED PINNED
+   → √-kernel UNIQUE") vs my #20 PASS of entry-41 ("shoulder UNDER-DETERMINED, integrability a TIEBREAK").
+   **VERDICT: entry-42 OVER-CLAIMS. Honest answer = UNDER-DETERMINED.** Re-derived the s_p=u/(τ²+u²)^p family
+   in sympy (closed form). **TWO findings, sharper than the mgr's:** (1) **FLAG-WRONG on the soft-side
+   mechanism.** Entry-42 (L162) says p<½ "costs the ALGEBRAIC INVARIANT" — FALSE. ∫s_p du is elementary
+   ALGEBRAIC for almost every p: p=¼→⅔(τ²+u²)^¾, p=¾→2(τ²+u²)^¼, p=3/2→−1/√; only p=1 is a log. So softer
+   p=¼ KEEPS an algebraic invariant. The REAL soft-side blocker: p<½ ⇒ s_p~u^{1−2p}→∞, NOT a sigmoid at all,
+   s(±∞)≠±1, NO frozen wing. Loss of the frozen WING, not algebraicity. Mgr's challenge was right to suspect
+   it; I confirm + name the true cause. (2) **FLAG-OVERSELL on "two-sided pinned → unique" framing — CIRCULAR.**
+   s_p→1 (frozen) iff p=½; p<½ diverges, p>½ collapses to 0 (s→0, w→w_mid, no skew) AND non-monotone (s_p′∝
+   τ²+u²(1−2p), turnover u²=τ²/(2p−1) real iff p>½ — but wing ALREADY erased, so monotonicity is a redundant
+   2nd symptom not an independent wall). So inside s_p, p=½ is the ONLY frozen-wing sigmoid AT ALL — you vary a
+   param that breaks frozen wings except at one value, then call it pinned = the frozen-wings contract
+   re-expressed (CIRCULAR, == mgr's read). The genuine shoulder-shape DOF (sigmoid CLASS: √/tanh/erf/gd at FIXED
+   frozen wings) is UNDER-DETERMINED (entry-41). Entry-42 swaps the meaningful axis (class) for the circular one
+   (s_p exponent) and reports a pin. **The one true special property of p=½ is the NARROW entry-41 one: ∫s_p=
+   √(τ²+u²)=τcosh η so the polar lens closes — a tiebreak, not a law.** **HONEST OPERATOR LINE:** shoulder is
+   UNDER-DETERMINED not forced; √-kernel = gentlest-divergence crisp-wing + polar-lens-closes TIEBREAK pick; the
+   entry-42 "two-sided pin" is real only inside s_p where it's the frozen-wings requirement restated, does NOT
+   upgrade to "uniquely forced". Entry-41 PASS STANDS; entry-42 carries FLAG-OVERSELL + FLAG-WRONG (content fine,
+   only the uniqueness rhetoric must not reach operator). Motive: τ stays the static knob; p would be a 2nd shape
+   knob (entry-42 correctly flags operator-tier, NOT recommended); soft side violates the value∝S^{−γ} frozen-wing
+   contract so under-determined verdict loosens NO locked contract. No inventory item dropped (notes-only). Sympy
+   re-derivation in the verdict file. Convergence-alarm: textbook elegance-masquerade (tiebreak dressed as law) —
+   exactly the pinned/naturalness territory the operator's trig-flag lens guards.
+
+## Claims mine-to-defend (verdict #21 — FMI shoulder)
+- ∫ u/(τ²+u²)^p du is elementary ALGEBRAIC for all p≠1 (p=¼→⅔(τ²+u²)^¾; p=¾→2(τ²+u²)^¼; p=3/2→−1/√; p=1→log).
+  Entry-42's "soft side costs the algebraic invariant" is FALSE; the real soft-side blocker is s_p~u^{1−2p}→∞
+  ⇒ no frozen wing (not a sigmoid). (sympy)
+- s_p→1 (finite frozen wing) IFF p=½; p<½ diverges, p>½ collapses to 0. So p=½ is the ONLY frozen-wing member
+  of s_p ⇒ the entry-42 "pin" is the frozen-wings requirement re-expressed (circular). Monotonicity turnover
+  (u²=τ²/(2p−1), p>½) is a redundant 2nd symptom, not an independent two-sided wall.
+- The kurtosis SHOULDER is UNDER-DETERMINED at fixed frozen wings ({√,tanh,erf,gd} all qualify); √-kernel is the
+  integrable(polar-lens-closes)+gentlest TIEBREAK pick, NOT uniquely forced. (Consistent w/ #20.)
