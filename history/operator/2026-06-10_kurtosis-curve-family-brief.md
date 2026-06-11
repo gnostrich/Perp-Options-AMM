@@ -512,3 +512,10 @@ _Context: operator challenges the in-flight HEAD build (dispatched by the manage
 _Context: full stop ordered; operator demands the itemized core edit being proposed; manager demoted by operator ruling. All dispatches/edits halted; in-flight intern output to be discarded._
 
 > sop whatever the fuck ytoure sdoing and just itemise the core edit that you're propising making. you're demoted from manager.
+
+---
+
+## Entry 70 — 2026-06-11
+_Context: addressed to the skeptic: TLDR the manager's last message (the itemized core edit), and prepare the manager wipe-and-replacement so the session's behaviours don't persist. Relayed to the skeptic verbatim this turn._
+
+> skeptic tldr what hes saying, and prepare to wipe the manager and replace him so these behaviours don't persist
