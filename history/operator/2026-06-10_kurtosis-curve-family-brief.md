@@ -339,3 +339,10 @@ _Context: operator gave me "link to head"; I replied with a PR offer + a multi-p
 _Context: operator live-playing downloaded HEAD v27 (screenshot: TRADE BANDS tab, sell 9.95 BTC @52000 / buy @100000, red "MAX: 0.0625 BTC" chip, slippage 18.2%); reports four concerns, summons skeptic and tester. Sent twice (interrupt + identical resend); transcribed once._
 
 > did you check that the curve is almost completely insensitive to kurtosis change? theres no visible curve warp, and the simulation breaks when you switch long to short.... i'm concerned at these lacunae, skeptic, tester. the anchor curve is sitting way off in the corner somewhere
+
+---
+
+## Entry 46 — 2026-06-11
+_Context: manager had replied with first-pass findings on the four entry-45 lacunae and said fixes were queued pending the operator's go ("I'm not touching the build until you say go"). This is the go-ahead._
+
+> do the needful
