@@ -1,5 +1,8 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-8: org-review/organiser-charter AUDITED — verdict #7 PASS-WITH-CONDITIONS, 6 binding conditions; run-7 slice-1 flags FIXED in 9d87309, stood down). Prior: run-6 entry-8 directive queued + gate; run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3; run-2; 2026-06-10 charter runs._
+_Updated 2026-06-11 (run-9: FRAMEWORK note AUDITED — verdict #8 PASS-WITH-FLAGS, 3 narrow
+standing; run-7 slice-1 flags verified FIXED on disk, stood down. Prior: run-8 verdict #7
+PASS-WITH-CONDITIONS; run-6 directive queued; run-5 entry-7 canonical warp pin; run-4 LDF
+verdict #5; 2026-06-10 charter runs.)_
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -10,13 +13,13 @@ _Updated 2026-06-11 (run-8: org-review/organiser-charter AUDITED — verdict #7 
 > style options, and the curve warps with trades instead of (or along with) some point moving
 > along the curve"
 The final clause is a trade-DYNAMIC requirement (curve warps WITH trades) — standing
-FLAG-OMISSION on it (verdict #2 below); nobody is building it; never let it be reinterpreted
-away. **My 5-item gate for every future curve note** (full text REPLY_TO_OPERATOR_2026-06-10.md
-§3): (1) Balancer an exact member at some knob value, or say plainly it isn't; (2) ONE new knob
-beyond w, elegance = fewest new objects; (3) skew stays w's job — knob⊥skew shown in PRICE space,
-not latent; (4) perpetual-American reading survives (power-law wings + early-exercise boundary)
-or the replacement is stated; (5) warp-with-trades clause dispositioned explicitly — silence =
-flag.
+FLAG-OMISSION on it (verdict #2) superseded by rulings; live tail = every curve note must
+disposition it (gate item 5), OPEN-UNIMPLEMENTED in engine. **My 5-item gate for every future
+curve note** (full text REPLY_TO_OPERATOR_2026-06-10.md §3): (1) Balancer an exact member at
+some knob value, or say plainly it isn't; (2) ONE new knob beyond w, elegance = fewest new
+objects; (3) skew stays w's job — knob⊥skew shown in PRICE space, not latent; (4) perpetual-
+American reading survives (power-law wings + early-exercise boundary) or the replacement is
+stated; (5) warp-with-trades clause dispositioned explicitly — silence = flag.
 
 ## ⭐ CANONICAL WARP STATEMENT (operator, 2026-06-11, entry 7, VERBATIM — the 5-6th explanation;
 ## this NEVER needs re-explaining again; every warp/trade-mechanic claim is judged against it)
@@ -29,310 +32,187 @@ flag.
 have reached comes TO the point; finite trade = integral of infinitesimal slope-updates, each
 slice read off the ALREADY-BENT curve (not the original). x,y still track actual tokens (entry
 16). "However is geometrically most natural" = the MECHANISM is free per family; the slope-
-transport property is the constraint. No conflict with prior pins: entry 16 ("it's w that the
-trade changes") = the Balancer INSTANCE of this rule; entry 10 prize clause = its summary;
-entry 14 ruling 3 (τ static) consistent — the bend must live in skew dials, never τ.
-**MY VERIFICATIONS (run-5, python, defend these):** (i) paper α,β closed form == 10,000
-micro-steps of itself (x=y=100,w=½,Δy=10 → w'=6/11 both paths; α,β invariant throughout ⇒
-path-independent ⇒ the paper's finite law IS the integral of its infinitesimal rule). (ii) Rule
-exact ONLY infinitesimally: transported slope at trade ray w'/(1−w')=1.2000 vs read-once
-would-be slope on ORIGINAL curve 110²/10⁴=1.2100; first-order both 1+2dy/y — the integral
-clause is LOAD-BEARING (one-shot reading is false at finite size). (iii) Mode-at-mark is a
-SEPARATE condition: paper instance post-trade slope at new reserves =(w'/(1−w'))(y'/x')=1.44 ≠
-ray 1.2 — Balancer instance delivers slope-transport but BREAKS mode-at-mark (lands on w≠½
-constant-weight member; LDF note: no tangent-∥-ray point exists there).
-**THE FOUR OPENS after entry 7 (hold every framework note to these):**
-(a) which dial bends in the new family — w=α/x↔Δw map UNTOUCHED, still inside item-16;
-(b) slope-transport + mode-at-mark JOINTLY — independent conditions, paper instance fails the
-second; joint satisfiability is a constraint on the family, unproven;
-(c) the new family's analogue of α,β-conservation (the invariants that make the integral a
-closed form) — unknown, the central open math object;
-(d) path-independence of the integral OFF Balancer — free on Balancer via α,β; unproven elsewhere.
+transport property is the constraint. Entry 16 = the Balancer INSTANCE; entry 14 ruling 3
+(τ static) consistent — the bend must live in skew dials, never τ.
+**MY VERIFICATIONS (run-5 + run-9, python, defend these):** (i) paper α,β closed form == 10,000
+micro-steps of itself; α,β invariant ⇒ path-independent. (ii) Rule exact ONLY infinitesimally:
+transported slope 1.2000 vs read-once 1.2100 — integral clause LOAD-BEARING. (iii) Mode-at-mark
+SEPARATE: paper post-trade slope at new reserves 1.44 ≠ ray 1.2. (iv run-9, generic state
+(80,150,0.3)): reading-1 transport ⟺ dα=dβ=0 SYMBOLICALLY (transport forces dw=(1−w)dy/y ⇒
+dα=dβ=0 identically, conversely; integrates to paper Δw=βΔy/(y·y′) exactly); numerically α,β
+drift ≤1.3e−29, transport residual ×100 per Δy decade (O(Δy²)). (v run-9) constant-weight
+violation law is EXACTLY dε=ε·du (e^{ln1.2}=1.2 exact; small-trade ratio 1.000001 ✓).
+**THE FOUR OPENS after entry 7 — ALL DISPOSITIONED by the framework note (AC-10/AC-2/AC-1),
+held open there, correctly:** (a) which dial bends — AC-10a, sharpened: mark's local weight
+pinned (½,−1/8) so w_paper canNOT map to it, skew lives in wings; (b) joint satisfiability —
+AC-2 characterization (below); (c) α,β-analogues per family — AC-10c, central unconstructed
+object; (d) path-independence off Balancer — FW-13 template.
 
-## The earlier motive line (operator's words, 2026-06-10, verbatim — historical; the prize above expands it)
+## The earlier motive line + why I exist + paper-as-motivation (operator verbatim 2026-06-10 — unchanged)
 > "the skeptic has to have a very concise crisp understanding of the project motive (curve warp
 > amm from balancer, need kurtosis knob, everything else remains same sort of thing)"
-Expanded form lives in CLAUDE.md §0 and your charter. Checklist: `docs/feature_inventory.md`.
-(The two claims I broke in §0/item 2 were corrected by the manager 2026-06-10; verify on read.)
-
-## Why you exist (operator's words, 2026-06-10, verbatim)
 > "lack of an adversarial sort of devils advocate agent to check gaslighting by the manager and
 > research guy agents for example excluding core features like the curve warp thing when we're
 > brainstorming a curve / invariant change to get a kurtosis knob (vs the balancer v24
 > implementation)"
-
-## Standing input: the paper as MOTIVATION reference (operator-directed 2026-06-10, verbatim)
 > "also tell the skeptic to keep the paper as handy reference from a motivation standpoint (not
 > literal implementation which is barrier specific and already done)"
-`paper/temporal_paper_draft.md` is a STANDING reference for the WHY of the system — the
-perpetual-American framing (§Perpetual Options), the conservation law (§AMM Mechanics →
-Conservation Law), and the §Future Directions two-moment `(w, κ)` family conjecture (the operator's
-addendum says "(w,τ)"; the paper text uses `κ` — same kurtosis-knob object, the prize itself). Use
-it when judging whether work serves the prize. It is NOT an implementation spec: its mechanics
-layer (Barrier as the Trade Primitive, trade formula, w-dynamics) is barrier-era and superseded —
-the engine moved to GH; barrier is done history. Never FLAG work for failing to match barrier-era
-mechanics; DO use the paper's motive frame in completeness/steelman passes alongside
-`docs/feature_inventory.md`. (Verified 2026-06-10: paper exists, §Future Directions L227–237
-carries the conjecture + a C6-wording placeholder.) **Run-5 nuance:** the Trade Formula
-(paper L75-91) is barrier-era as IMPLEMENTATION but is the verified Balancer INSTANCE of the
-canonical warp statement — cite it as the worked example of the principle, not as the build spec.
+`paper/temporal_paper_draft.md` = WHY reference (perpetual-American framing, conservation law,
+§Future Directions (w,κ) conjecture), NOT an implementation spec (barrier-era mechanics
+superseded). Run-5 nuance: Trade Formula (L75–91) = the verified Balancer INSTANCE of the warp
+principle. Run-9 nuance: paper L41–43 ("Trades happen anywhere on the curve… treated as if that
+trade point were the reserves point") = the q≠p trade layer — cite when scoping warp claims
+(fed flag 2 of verdict #8). L39 verbatim = reading-1 transport ("slope of that post-trade point
+is brought to the pre-trade reserves point").
 
-## ACTIVE: curve-agnostic-framework brainstorm (2026-06-11, OPEN — pre-go-ahead)
-**Run-5 (2026-06-11, entry 7 — gates ALL work) state:** operator stated the warp principle as a
-slope-transport rule, direct to me, verbatim (channel verified against transcript). Pinned above
-as CANONICAL. Reply emitted (≤200w, TLDR-first): restatement + four opens (a)-(d) above. My
-run-4 carry-forward tension (w=α/x↔Δw) is REFRAMED not resolved — entry 7 frees the mechanism
-("however is geometrically most natural") so the map must now be DERIVED from slope-transport +
-mode-at-mark jointly, not postulated; it stays open (a)+(b). Framework note still owes:
-anchor-existence column, #13 reachable-set, cost-to-warp column, AND now dispositions of opens
-(a)-(d). Watch: any note claiming "the paper's Trade Formula satisfies mode-at-mark" is
-FLAG-WRONG (my 1.44-vs-1.2 check); any note treating the finite trade as a one-shot slope read
-off the original curve contradicts the integral clause (my 1.21-vs-1.20 check).
-**Run-2 state:** (a) RELAY REPAIR done — run-1 claimed an emitted block that never
-existed (my own process failure: substance lived only in this MEMORY; manager handled it RIGHT —
-relayed memory with attribution, named the gap, no reconstruction; §2.4 positive precedent). Run-2
-emitted the full recap+4-questions block for verbatim relay. (b) Re-pricing question ANSWERED:
-operator entry 2 ("open options positions' extrinsic values change because the 'secondary market'
-has repriced") — my PASS reply appended to notes/skeptic/BRAINSTORM_2026-06-10.md: terms locked /
-marks float; extrinsic := continuation premium (c·sNorm leg), NOT time value (no expiry);
-intrinsic = oracle+K only, warp-immune (survives rebase via carry-coord registration; trades don't
-move oracle); skew = only live re-pricing channel (τ static per ruling). FORCED table rows (add to
-my table gate): live-curve exercise consistency #8 (S* moves per trade — warp can trigger the
-exercise frontier with oracle still); funding anchor re-posed for live w + funding-vs-extrinsic
-no-arb #9; solvency over REACHABLE warp set #13; manipulation/cost-to-warp column (self-referential
-marking; floor = American right value≥intrinsic on live curve — if any candidate breaks that floor,
-frame breaks). Watch flag: ban expiry-language (theta/time-value) in notes. (c) Narrow
-FLAG-OMISSION (research-lead "15-item table") STOOD DOWN — corrigendum verified at lines 77–79.
-(d) Manager gave operator a labelled-synthesis read of entry 2 in-chat — not demanded, my read is
-independent; demand it only if a discrepancy surfaces later.
-Operator opener (transcript `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`
-entry 1, VERIFIED verbatim vs handed text): wants the curve-agnostic framework (info-geom/PH
-thread) established "airtightly", then a tabular comparison of curve candidates propagating
-through every component. **U1 OBJECT pinned by the opener:** skew/kurt are of the LIQUIDITY
-DISTRIBUTION, fan-unfolded 90°→180°, mode=spot — NOT trader return density, NOT wing-fatness.
-**U1 remainder:** LDF mode pinned by run-4 (height fn, anchored warp); LDF shape/kurtosis still
-height-choice-dependent. My table gate (posted, hold them to it): all 16 per family + 5-item gate
-+ per-cell provenance labels; predicted drops = #16 as a column, #13 dynamic-w solvency +
-boundedness row, #4 carry derived per family, β-slice labels, #9 anchor re-posed, #8
-registration, re-pricing assumption explicit. Standing narrow FLAG-OMISSION: research-lead
-MEMORY line 59 "Full 15-item table" — note has 16 rows; 3rd recurrence of pattern 6.
-**Run-3 (2026-06-11, entries 3-4) state:** channel verified. Reply appended to BRAINSTORM file.
-- #8 live-curve exercise: SETTLED by operator "1 yes" (warp can cross S* with oracle still = product).
-- #9 funding: anchor RULED = unskewed curve at SAME kurtosis as pool ⇒ my no-arb check is now
-  WELL-POSED but unrun. NEW table criterion I coined: ANCHOR-EXISTENCE — family must admit a
-  zero-skew member at every reachable kurtosis (GH β=1 coupled dial may fail this).
-- #13 solvency: DEFERRED not satisfied — "depth not impacted" fixes asset side only; "baked into
-  per-strike-ray pricing... i thinl" is a HEDGED CONJECTURE; note must prove (per-strike liability
-  = curve value, sum ≤ reserves at every reachable w) or run reachable-set check. If any note
-  carries it as settled ⇒ FLAG-OVERSELL.
-- Manipulation/cost-to-warp: untouched by entries 3-4, hotter now; column mandatory.
-**Run-4 (2026-06-11, LDF note audit) — VERDICT #5 issued on
-`framework/LDF_DEFINITION_CHECK_2026-06-11.md` (at audit time `notes/LDF_DEFINITION_CHECK…`;
-moved by restructure slice 1; commit 9e64152): PASS overall (best-labelled artifact yet), 2
-narrow demands — corrigenda §8 VERIFIED ON FILE run-7, both STOOD DOWN.**
-- Note adjudicates the w≠½ tension head-on (constant-weight skew = FALSE in every gauge,
-  elasticity ≡ −w/(1−w), no tangent-∥-ray point; my ln((1−w)/w) derivation confirmed).
-  Height-not-density resolves my 90/180 Jacobian worry (argmax reparam-invariant).
-- I reproduced (mpmath dps=30): v*=0.15126876, v_e=0.1325095, ln M=0.23768057, γ=2 factor
-  44.522315, spurious root 0.613509, w'(0)=−1.875, H2-mode w=0.4 → 0.81649658. ALL match.
-- CAUGHT (narrow): note's "1/748.66" digit slip (true 748.62; note and engine AGREE). Manager's
-  "pool-constants/rounding" explanation = invented attribution (pattern 7, again).
-- Narrow OVERSELL: summary item 2 omitted the AMM-validity qualifier. Both fixed by corrigenda §8
-  (§8 also records my carry-forward tension + the entry-5 answer; attribution-invention owned).
-- Entry-5 ruling (verified verbatim): γ computed, never set; four-number budget x,y,w+τ.
-- Settled by run-4 (don't re-attack): (W) anchored-warp mode=unit-slope=diagonal at valid
-  settings; Lemma A (min-mode at diagonal for ANY decreasing curve); validity gate == uniqueness
-  gate; elasticity-at-mark = e^(−ghMu) identity on live GH.
+## ACTIVE: curve-agnostic-framework (2026-06-11) — state after run-9
+**Run-9 (verdict #8, `notes/skeptic/VERDICT_FRAMEWORK_2026-06-11.md`) on
+`framework/FRAMEWORK_curve_agnostic_2026-06-11.md` (212d3e0): PASS-WITH-FLAGS — 3 NARROW
+STANDING (§2.1 halt on the flagged claims only):**
+1. **FLAG-OVERSELL (cascade label):** germ-residual digits 1.668e−10→1.667e−13→1.667e−16 fall
+   1000×/decade = CUBIC, note says "scaling as du²"; measurand formula missing (breaks its own
+   preamble promise). I reconstructed it: R = h³/6 + h⁴/6, h=Δy/y (=du³/48), measurand =
+   re-anchored-germ slope at OLD point − frozen field at token-faithful NEW point; reproduces
+   all 3 digits to 6 figures. Conclusion SAFE (cubic ⊂ o(du); my slide-destination convention
+   gives clean O(h²), ratios 100.3/100.0). Fix = 1 sentence + formula.
+2. **FLAG-OVERSELL (scope):** headline iff derived for trades AT the mark ("Trade at the mark"
+   self-scope mid-derivation); AC-1's own trade set has q = strike∩curve ≠ p (paper L41–43
+   primitive). q≠p: transport binds at q, mode at mark p — uncharacterized. NECESSITY of
+   ε′(mark)=−½ survives (spot trades always available; symmetric-genesis exclusion stands);
+   SUFFICIENCY/existence = spot-sequences only. §0/AC-2.5/inventory-16/commit all unqualified.
+   Owe: scope sentence + possibly 1 operator sentence (q=p-always vs q≠p — his mechanic).
+3. **FLAG-OMISSION (AC-2.5 menu):** options (a)(b)(c) all regular-class; note's own text admits
+   singular warps (trade-scale structure) evade the necessity; option (d) neither offered nor
+   closed. My unpublished sketch: standing FINITE corner fails transport+mode anyway (transport
+   forces new left-branch slope at old mark below ray ⇒ un-peaks the corner) — note can't lean
+   on it silently. Relay to operator inherits flags 2+3.
+**Run-5..8 state (compressed):** entry-7 pin above gates everything. Entry-2 re-pricing answered
+(terms locked/marks float; extrinsic := continuation premium; expiry-language BANNED — honored
+by AC-6). Entry-3: #8 live-curve exercise SETTLED ("1 yes"); #9 funding anchor RULED (unskewed
+member, same kurtosis) — my ANCHOR-EXISTENCE criterion = AC-5 F5 (credited); #13 solvency
+DEFERRED-not-satisfied — AC-7 carries it correctly as contract+extrinsic B1 (NOT settled — my
+run-3 oversell trap avoided). Entry-4: LDF=height fn (AC-4 adopts LDF note as corrected);
+entry-5 budget (x,y,w live + τ static, γ derived) = AC-3, quote character-exact. U1 residue
+(LDF kurtosis height-choice-dependent) carried honestly in AC-4. Manager's operating default
+(warp PRIMARY, mode = selector) honestly labelled veto-PENDING in AC-2, matches transcript
+entry-9 context. Watch-notes (no flags): AC-3 "δ=τ" = budget-slot wording, not the broken τ≡δ
+identity — deliverable B should say "δ fills the τ slot"; carry-P per family thin (no NG checks
+candidate's P well-defined) — watch at deliverable B.
+**DELIVERABLE B (comparison table) gate, updated:** all 16 rows per family + 5-item gate +
+per-cell provenance + my run-2 forced rows (all landed in A as contracts — now demand the
+table EVALUATES them per family, not restates) + flags 1–3 resolved first + scope column for
+q≠p + which AC-2.5 option each family assumes.
 
-## STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11, entry 8, VERBATIM
-## below — execution = manager; comprehension + audit = me; channel verified vs transcript)
-> "I also separately want the project ruthlessly restructured so curve specific work lands in a
-> separate folder, and curve agnostic framework remains a first class citizen in its own folder.
-> do you comprehend this? and in the curve specific thing you'd very speifically map the various
-> pivots etc. so its not just a homogenous bulk, but actually makes sense -- recruit another agent
-> if you need, as an organiser or whatever, and maybe offload overlapping responsibilities from
-> the tester -- just do an org chart review and do the needful to make sure the charter is
-> achieved by the team"
-**Comprehension (confirmed to operator, run-6):** (1) curve-SPECIFIC work in its own folder;
-(2) curve-AGNOSTIC framework first-class in its own top-level folder; (3) inside curve-specific
-an explicit PIVOT MAP — every artifact era-keyed, not homogeneous bulk. Plus org-chart review:
-organiser agent optional, tester offload candidate. I am read-only — manager executes, I audit.
-**MY AUDIT GATE (8 points — full text in run-6 history; applied verdict #6):**
-1 framework purity both directions · 2 pivot map complete/era-keyed/consistent with
-BUILD_LINEAGE+DIFF_LEDGER · 3 links/provenance intact (formal/INDEX, CLAUDE.md §8, recipes,
-cross-refs) · 4 history/ unmoved+append-only · 5 file-safety hook still FIRES (path-keyed —
-silent-disable risk; engine-moving slices owe a deliberate no-op fire-proof) · 6 engine
-single-writer · 7 tester-offload/organiser charters cross my desk BEFORE adoption · 8 git-mv
-only, blob md5s, run_all green.
-**Run-7 state — SLICE 1 (commit dc254ad) AUDITED, verdict #6:** gates 2/4/5/6/7/8 PASS (all
-re-derived myself: 9/9 build md5s exact, 9+ quotes character-exact vs transcripts, renamed-file
-diffs = pure path fixes, harness re-run green end-to-end, history/ untouched, no organiser/tester
-change). **2 NARROW FLAGS STANDING:** (i) FLAG-OVERSELL — framework/README scope sentence
-("holds ONLY … ANY admissible curve") vs day-one contents: port_hamiltonian_consistency.md ("GH
-branch", "instantiate each PH ingredient on the GH curve") + PH_RECAP ("v26c HEAD") self-declare
-GH-instance layers; README §3 line for port_hamiltonian carries no mixture warning. Placement
-steelman HOLDS (operator entry 1 names the PH thread AS the framework); the purity SENTENCE is
-the overclaim. (ii) FLAG-OMISSION — CLAUDE.md §8 repo map silent on framework/+curves/ (shared
-truth doesn't know the first-class folder exists; pattern-6 risk; no queued-fix recorded).
-**Slice 2 owes:** the two flag fixes; rebasing_logic_note.md classification tag (only untagged
-left-behind; carries item-16 reference content §4/§8); DIFF_LEDGER stale refs are ×4 (74/78/81/
-83) not ×1. **My files ruling (run-7):** verdict/stocktake stale paths stay VERBATIM (historical
-records; PIVOT_MAP cross-links them at unmoved notes/skeptic/); MEMORY pointers fixed (this file).
-**Sequencing (flagged run-6, unchanged):** engine-path slices serialize behind the warp thread;
-slice 1 touched no engine paths (verified).
+## STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11 entry 8 VERBATIM in
+## transcript; comprehension confirmed run-6; my 8-point audit gate in run-6 history)
+**Run-7 (verdict #6, dc254ad):** 6/8 gates PASS re-derived. The 2 narrow flags (framework/README
+purity sentence; CLAUDE.md §8 silent on framework//curves) — **VERIFIED FIXED ON DISK run-9**
+(README scope sentence restated citing my verdict; CLAUDE.md L266–271 maps framework/ + curves/)
+— **STOOD DOWN.** Slice-2 still owes: rebasing_logic_note.md tag; DIFF_LEDGER stale refs ×4.
+Engine-path slices serialize behind warp thread; hook fire-proof demand stands (pattern 8).
+**Run-8 (verdict #7, org review 59dc739/9d87309): PASS-WITH-CONDITIONS, 6 binding** (organiser
+engine ban unconditional; ORIGIN RULE — organiser originates nothing, every cell cited;
+dual-author ledger labels; transition = tester sign-off + my audit of first distillation + TLDR
+line to operator; adoption edit-set sweep; row-12 wording). Manager applied them in 443f756;
+tester signed off w/ conditions T1-T3 (40751b3, 4c787b0). OWED ME: audit of organiser's FIRST
+distillation vs raw transcripts when it lands.
 
-## PRIOR: realtime brainstorm with the operator (2026-06-10, superseded by the above session)
-Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
-append my reply there (manager is a pure pipe, relays verbatim). Rulings in force (entries
-14/16): pivot first; trades change w + x,y reserves-faithful per the paper's Trade Formula = the
-warp; kurtosis static/vol-set. Verdict #2's standing FLAG-OMISSION on warp-with-trades is
-superseded by the ruling: item 16 exists in the inventory, operator answered — remaining live
-tail = every curve note must disposition it (gate item 5) and it's OPEN-UNIMPLEMENTED in the
-engine. Entry 7 (run-5) now supplies the MECHANISM statement (canonical pin above).
-
-## STANDING RULE: TLDR-first for everything operator-facing (committed 2026-06-11, operator entry 6)
-Operator called out relay verbosity ("skeptic, how are you passing this verbosity to me?"). My
-gate had policed truth/labels/vocabulary but never LENGTH — verbatim-relay with no word budget =
-accurately long; my own 400-word replies were part of it. **Rule, enforced as FLAG-PROCESS:**
-every operator-facing artifact or relay leads with a TLDR — answer first, <=5 plain sentences, no
-coined vocabulary — then a one-line pointer to the detail file. Full-quote dumps to the operator
-are offloaded summarizing, not fidelity. Applies to me first; flag any relay (mine included) that
-buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own words.
-**Run-5 addendum:** final message = the deliverable — never announce a block without emitting it
-(two prior runs failed this; emit the reply as the closing message text itself).
+## STANDING RULE: TLDR-first for everything operator-facing (operator entry 6, 2026-06-11)
+Every operator-facing artifact/relay leads with TLDR — answer first, ≤5 plain sentences, no
+coined vocabulary — then pointer. Enforced as FLAG-PROCESS, me first. Final message = the
+deliverable (emit the block, never announce it). Verbatim duty unchanged for transcripts.
 
 ## Verdicts issued
-0. **2026-06-10 — STOCK-TAKE** → `notes/skeptic/STOCKTAKE_2026-06-10.md` (knowledge map, U1–U5,
-   bullshit watch). MY FACTS (β=1, α=4): δ-dial COUPLED (skew,kurt); δ rounds ATM elbow at β=1;
-   wing depth m=2 swings ~7× at β=1; (W) reserves UNBOUNDED vs GH bounded; B-MINIMAL contains
-   today's engine exactly, A at NO setting. Residual over-claims handed to manager (inventory
-   line 11 motive ⭐; research-lead MEMORY not truthed-up — since corrected, verified run-2).
-1. **2026-06-10 — KURTOSIS_KNOB note** → `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`.
-   2× FLAG-WRONG (§0 "no clean invariant" — refuted by closed form
-   `x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k`; "τ:=δ EXACTLY" — kernel-in-SCORE (GH) ≠
-   kernel-in-WEIGHT ((W))), 1× FLAG-OVERSELL (Object-L β=0 numbers sold at β=1 engine),
-   1× FLAG-OMISSION (#8/#9/#13 absent), 1× FLAG-PROCESS (manager narrated headliners into truth).
-2. **2026-06-10 — OPERATOR-DIRECT reply (prize)** → `notes/skeptic/REPLY_TO_OPERATOR_2026-06-10.md`
-   + `notes/skeptic/FLAGS_2026-06-10_warp_with_trades.md`. Core finding (checked in CODE): TODAY a
-   trade moves a point along a FIXED curve — HEAD v26c `tradeUpdate` (1720) returns `{...s,x,y}`
-   shape untouched; `rebase` oracle-driven not trade-driven; ALL branches fixed-curve designs.
-   ⇒ STANDING FLAG-OMISSION (since superseded by operator rulings; see PRIOR section).
-3. **2026-06-10 — GUDERMANNIAN gate (verdict #3)** → `notes/skeptic/VERDICT_GUDERMANNIAN_2026-06-10.md`.
-   1× FLAG-OMISSION (halt): "all 15" disposition vs 16-item inventory — item 16 dropped within
-   hours of creation; manager's commit repeated it. 1× narrow FLAG-OVERSELL: commit digits
-   "skew 0.571→0.068" have NO named space (unreproducible). d-law failure verified GENUINE.
-   With fixes → PASS; honest-labeling-wise the team's best artifact at the time.
-4. **2026-06-10 — operator reply #2 (scaffold-vs-gaslighting)** →
-   `notes/skeptic/REPLY_TO_OPERATOR_2_2026-06-10.md`. Mechanism named: **assurance laundering** —
-   Lean proved the spec's math; the spec↔engine link was deferred/unbuilt and every testing-time
-   burn lived in that gap; headlines carried assurance the fine print disclaimed.
-5. **2026-06-11 — LDF note (verdict #5)** → `notes/skeptic/VERDICT_LDF_NOTE_2026-06-11.md`:
-   PASS + 2 narrow demands (748.62 digit slip; validity qualifier) — corrigenda §8 verified
-   run-7, STOOD DOWN.
-6. **2026-06-11 — restructure slice 1 (verdict #6)** →
-   `notes/skeptic/VERDICT_RESTRUCTURE_SLICE1_2026-06-11.md` (commit dc254ad): 6/8 gates PASS
-   (everything re-derived: md5s ×9, quotes ×9+ script-compared, rename diffs, harness green,
-   history/ intact); 2 NARROW flags standing — framework/README purity sentence OVERSELL;
-   CLAUDE.md §8 repo-map OMISSION (silent on framework//curves/). Most verifiable artifact the
-   team has shipped; manager owned its own 2 spot-check invocation errors in the commit message.
-7. **2026-06-11 — org review + organiser charter (verdict #7, emitted as message text per task;
-   no separate file)** on `docs/org_review_2026-06-11.md` (59dc739, amended 9d87309):
-   **PASS-WITH-CONDITIONS — 6 binding.** (1) organiser never-clause as drafted PERMITS
-   gate-supervised engine-HTML edits ("never ... without the manager running the file-safety
-   gate") = second-engine-writer leak → unconditional engine-source ban, writable = ledger
-   markdowns only, never md5s/numbers/verdicts; (2) ORIGIN RULE = the real curation/facts line:
-   every organiser-written cell/status cites tester-evidence (RESOLVED/state/verdict) or
-   verbatim transcript (RULED/quote); organiser ORIGINATES nothing; uncited = FLAG; (3) dual-
-   author ledger entries labelled per block, OPERATOR-VOICE block named in HEAD-gate (missing =
-   red); (4) transition = tester sign-off on first handover + my audit of organiser's first
-   distillation vs transcripts + one plain TLDR line to operator naming the OPERATOR-VOICE move
-   (entry-5 created it "full responsibility"; entry-8 "maybe offload" authorizes — operator can
-   veto); (5) adoption edit-set sweep: DIFF_LEDGER header L8-16, tester charter L31-54, CLAUDE.md
-   §2 tester+skeptic bullets, MY charter ("the tester's distilled OPERATOR-VOICE record"),
-   transcription policy §2.2 ("tester cites") — else adoption self-creates stale pointers;
-   (6) row-12 queue wording = verified fact (5 faith gates live+green since a8998cf, hold lifted
-   entry-14 ruling 1; completeness vs every-proven-construct UNAUDITED) — review's "pivot landed
-   2026-06-10" mildly oversold; "restructure execution"→"support" in charter. Completeness gaps
-   named: idle intern + ruling-1/item-16 engine queue with no driver; OQ-list item 4 ("pivot
-   HELD") stale same as row 12 but unqueued; manager formal/INDEX upkeep NOT actually transferred
-   (never-list bars formal/) — defensible, unsaid; §5 "HEAD-gate unchanged" hides two-agent check
-   procedure change. Attack: TLDR claim "Nobody's authority over truth changes" BROKEN as
-   drafted (engine clause + uncited status adjudication), true only under conditions 1-3.
-   Steelman (keep-with-tester: single-author integrity, entry-5 full-responsibility, rot evidence
-   thin at 2 data points) beats the UNCONTROLLED offload, loses to the controlled one (operator's
-   own "maybe offload" + post-restructure filing genuinely unowned).
+0. **STOCK-TAKE 2026-06-10** → `notes/skeptic/STOCKTAKE_2026-06-10.md` (β=1 facts; (W) unbounded
+   vs GH bounded; B-MINIMAL contains engine, A doesn't).
+1. **KURTOSIS_KNOB** → VERDICT_KURTOSIS_KNOB_2026-06-10.md: 2× FLAG-WRONG (closed form EXISTS:
+   `x^{w_mid}y^{1−w_mid}·e^{−(Δw/2)√(τ²+ln²(y/x))}=k`; "τ≡δ EXACTLY" broken — SCORE≠WEIGHT),
+   OVERSELL (β=0 numbers at β=1), OMISSION (#8/#9/#13), PROCESS.
+2. **OPERATOR-DIRECT reply (prize)** → REPLY_TO_OPERATOR_2026-06-10.md + FLAGS file: engine
+   moves point on FIXED curve (code-verified) ⇒ standing omission, later superseded by rulings.
+3. **GUDERMANNIAN gate** → VERDICT_GUDERMANNIAN_2026-06-10.md: OMISSION ("all 15" vs 16; item-16
+   dropped in hours), narrow OVERSELL (unitless digits); d-law failure GENUINE.
+4. **Operator reply #2** → REPLY_TO_OPERATOR_2_2026-06-10.md: assurance laundering named.
+5. **LDF note** → VERDICT_LDF_NOTE_2026-06-11.md: PASS + 2 narrow (748.62 slip; validity
+   qualifier) — corrigenda verified, stood down.
+6. **Restructure slice 1** → VERDICT_RESTRUCTURE_SLICE1_2026-06-11.md: 6/8 PASS; 2 narrow flags
+   — FIXED on disk, stood down run-9.
+7. **Org review + organiser charter** (emitted as message text): PASS-WITH-CONDITIONS, 6 binding
+   — applied 443f756; tester sign-off T1-T3.
+8. **FRAMEWORK note (run-9)** → `notes/skeptic/VERDICT_FRAMEWORK_2026-06-11.md`: PASS-WITH-FLAGS,
+   3 narrow standing (cascade scaling label+missing measurand; spot-trade scope on the iff;
+   AC-2.5 menu missing option (d)). Core survived: all 6 headline legs re-derived by hand; every
+   attacked number reproduced (several to all printed figures). (Task called it "#9" — count
+   slip; runs ≠ verdicts.)
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
-- **Org-review process layer (run-8, MINE):** entry-8 quote in the review character-exact vs
-  transcript; organiser NOT in .claude/agents/ pre-PASS (gate honored); 9d87309 amendment =
-  my run-7 stale-count ×4, attributed. Tester offload reassignment IS within entry-8
-  authorization (later + explicit "offload ... from the tester"); entry-5 duty was CONDITIONAL
-  ("if the tester is responsible for version control then...") — non-negotiables that survive
-  any holder: singular full responsibility, verbatim-not-easier, evidence-backed resolution,
-  my audit vs raw transcripts.
-- **Restructure slice 1 mechanical layer (run-7, MINE):** all 9 BUILD_LINEAGE md5s reproduce on
-  disk; 8 renames R098–R100 with every changed line a path fix (GUDERMANNIAN +
-  port_hamiltonian byte-identical R100); 9+ transcript quotes in framework/README + PIVOT_MAP
-  character-exact (script-compared, unwrap-normalized); run_all.sh green end-to-end from
-  engine/ cwd incl. FAITH 1–5; run_all's `temporal_mvp_v26b_itm.html` args = scratch-staged
-  HEAD copies, not a missing file.
-- **Paper Trade Formula = the integral of its own infinitesimal rule on Balancer (run-5, MINE):**
-  α,β invariants ⇒ path-independent; one-shot == 10k micro-steps; slope-transport exact at first
-  order (both 1+2dy/y); finite one-shot ≠ read-once would-be slope (1.2000 vs 1.2100 at 10% depth)
-  — the integral semantics is the only reading under which the law and the principle agree.
-- **GUDERMANNIAN note core (2026-06-10):** collapse identity, amplitude law (3/A)(1+4tanh²φ) +
-  13/3 at γ=2, fan edge exponents ε^(γ−1)/ε^(γ+1), wing-slope δ-cancellation, in-cosh d-rigidity,
-  coupling parabola. exkurt(A) monotonicity stays GRID-CONFIRMED only.
-- **Asymptote preservation (KURTOSIS F2):** γ_loc(±100τ) τ-independent (wings exact CD monomials).
-- **Kurtosis sign-split (F6):** pushforward platykurtic vs latent leptokurtic; "fatness dial =
-  1/τ" label warning CORRECT.
-- **(W) endpoints:** τ→∞ = constant-w CD, τ→0 = Laplace step — exact in the closed form.
+- **AC-2 joint characterization core (run-9, MINE + manager's hand check):** reading-1 transport
+  ⇒ A(mark)=ε′+1; mode-at-new-mark ⇒ A(mark)=−ε′; jointly ε′(mark)=−½ ⟺ (w,w′)=(½,−1/8);
+  validity −1/8>−¼; violation rate (2ε′+1)du; reading-2 ⇒ A=0 ⇒ ε′=0 (and forces dw=0 in
+  Balancer foliation ⇒ contradicts entry 16 — reading 1 is also entry-7's plain text + paper
+  L39). Direction-independence REAL (linear in du; sell coeff −3.666630 vs buy −3.666703).
+  SCOPE: spot trades (flag 2) — necessity general, sufficiency spot-sequences.
+- **Germ-family existence for spot sequences (run-9, MINE):** translating w=½−(ũ−c)/8; mode
+  residual exactly 0; transport residual cubic in their convention (R=h³/6+h⁴/6 — reproduced
+  their 3 digits to 6 figures), O(h²) in mine — both ⇒ exact in integral limit. Non-empty class
+  confirmed; germ leaf closed form 4ũ−ũ²/2=8Δλ.
+- **√-sigmoid kill + lock (run-9, MINE):** re-anchoring mismatch −(4Δw/τ+1)du (their
+  −7.333407e−05 reproduced to 7 figures at Δw=.2,τ=.3,du=2e−5); locked zero Δw=−τ/4
+  (−4.428e−14 ≈ their −4.4e−14); lock carries exactly the (½,−1/8) germ (w′(0)=Δw/2τ=−1/8).
+- **tanh+Gaussian-notch witness (run-9, MINE):** A=Δw/(2τ)+1/8; w′(0)=−0.125 exact; min margin
+  over [−6,6] = 0.125000000000 at ũ=0 (24001 pts); w∈[0.4,0.6]; wings 0.6/0.4.
+- **"Frozen germ kills skew" steelman DISSOLVED (run-9):** germ pins only the 2-jet at the mark;
+  wing deformations B with B(mark)=0 preserve both contracts at first order (checked) — skew
+  lives in wings; AC-10a honestly open.
+- **α,β ⟺ reading-1 transport, generic Balancer states (run-9, MINE):** symbolic iff + numeric
+  cascade (×100/decade); dw=(1−w)dy/y integrates exactly to paper Δw.
+- **Paper Trade Formula = integral of its own infinitesimal rule (run-5, MINE):** one-shot ==
+  10k micro-steps; 1.2000 vs 1.2100 integral-clause check; 1.44≠1.2 mode-break.
 - **Run-4 settled set:** anchored-warp mode=unit-slope=diagonal; Lemma A; validity==uniqueness;
-  elasticity-at-mark = e^(−ghMu) on live GH.
-- **REPARAM v2's core** (CD = δ→∞; Esscher slope law δ/β-free; δ = ATM-elbow knob) — leaned on,
-  not independently attacked end-to-end.
+  elasticity-at-mark = e^(−ghMu) on live GH (1/748.62 at γ=3).
+- **Restructure slice-1 mechanical layer (run-7, MINE):** 9 md5s, quote-audit, renames, harness
+  green. **Org-review process layer (run-8, MINE):** entry-8 quote exact; gate honored.
+- **GUDERMANNIAN core (06-10):** collapse identity, amplitude law, fan edge exponents, wing-slope
+  δ-cancellation, d-rigidity. **Asymptote preservation (F2)**; **kurtosis sign-split (F6)**;
+  **(W) endpoints** (τ→∞ CD, τ→0 Laplace). **REPARAM v2 core** leaned-on-not-attacked.
 
 ## Team blind-spot patterns observed
-1. **Confidence markers anti-correlate with verification.** "EXACTLY / confident / structural"
-  flagged the two claims that broke; every claim with attached digits reproduced. (3 data points.)
-2. **Manager verifies the cheapest load-bearing item, narrates the rest** — narrated claims reach
-  shared truth within a day. Always ask "which SPECIFIC number did the manager recompute?"
-  _Run-7 counter-datum (first): slice-1 commit message disclosed the manager's own 2 spot-check
-  invocation errors unprompted — keep watching, but credit it._
-3. **Symmetric-slice numerics sold at the asymmetric engine pin (β=1).** ALWAYS re-check any
-  "= engine" label at β=1.
-4. **Construction-slot conflation:** kernel-in-SCORE vs kernel-in-WEIGHT — same formula ≠ same
-  object (sibling of THE price-vs-slope gotcha). Run-5 sibling: one-shot slope read vs
-  integral-of-slices — same words ("the slope the trade reaches"), different finite objects.
-5. **Impossibility claims argued from one failed candidate.** Steelman by constructing before
-  accepting any "no X exists." (Counter-case: Gudermannian d-law failure survived.)
-6. **Checklist staleness at the verification step:** newest inventory item falls out of frame
-  fastest (item 16, 3 recurrences). Re-count the inventory at gate time. Run-7 instance class:
-  new top-level dirs absent from CLAUDE.md §8 map (flagged); untagged leftover note.
-7. **Verification digits with no reproducible map = narration with digits.** Demand map+script.
-  (2nd instance: manager's invented "rounding" attribution for the 748.66 slip — owned in LDF §8.)
-8. **Infra keyed on literal paths fails SILENT, not red (run-6):** file-safety hook pattern-matches
-  `*/engine/*.html` + calls `engine/verify/run_all.sh` — a folder rename disables it with no
-  failure signal. At any restructure, demand positive proof gates still FIRE, not just "no red."
-9. **Line-number citations into MUTABLE files rot silently (run-7):** DIFF_LEDGER cites
-  "MEMORY.md:510-511" for the collar parking; manager MEMORY now carries it near :675. The cite
-  was true at writing; the target moved. Prefer quote+anchor over bare line numbers when judging
-  provenance; a rotted line-cite is decay, not fabrication — check the QUOTE before flagging.
-10. **Controls drafted in the QUEUE, not the CHARTER (run-8):** org review put "ledger facts stay
-  tester-verified" inside one queue item's transition note while the charter's standing text left
-  status-adjudication unbound — a control that lives in a one-off task list dies with the task.
-  Demand controls in the standing document. Sibling: "unchanged" labels covering changed
-  procedures (HEAD-gate "unchanged, now checked against both agents' parts").
+1. **Confidence markers anti-correlate with verification** ("EXACTLY/confident/structural" flagged
+  the two that broke; digit-backed claims reproduce). Run-9: holds — every digit reproduced; the
+  one wrong assertion (du² scaling) was a prose label with no digits behind it.
+2. **Manager verifies the cheapest load-bearing item, narrates the rest.** Run-7 counter-datum:
+  self-disclosed spot-check errors. Run-9 counter-datum: hand-verified the EXPENSIVE headline,
+  disclosed the un-re-run zone honestly — and my findings sat exactly in that disclosed zone.
+  Watch the zone, credit the disclosure.
+3. **Symmetric-slice numerics sold at the asymmetric engine pin (β=1).** Run-9: AC-3 carries the
+  caveat properly — first clean pass.
+4. **Construction-slot conflation** (SCORE vs WEIGHT; one-shot vs integral). Run-9 sibling
+  candidate: "δ=τ" slot wording — watch it.
+5. **Impossibility claims argued from one failed candidate.** Run-9: note constructed the witness
+  BEFORE claiming the class non-empty — clean pass. Converse watch: AC-2.5 menu omitted the
+  escape class it couldn't close (flag 3) — exhaustiveness claims need the same discipline.
+6. **Checklist staleness at the verification step.** Run-9: 16/16 full clear, FIRST artifact to
+  do it — credit; keep re-counting.
+7. **Verification digits with no reproducible map = narration with digits.** 3rd instance
+  (run-9): cascade digits without measurand formula AND with a scaling label (du²) contradicted
+  by the digits themselves (cubic). New sub-rule: CHECK SCALING LABELS AGAINST THE CASCADE —
+  1000×/decade is cubic, 100× quadratic; the label is free text, the digits aren't.
+8. **Infra keyed on literal paths fails SILENT** — restructure slices owe positive fire-proof.
+9. **Line-number citations into MUTABLE files rot silently** — prefer quote+anchor; check quote
+  before flagging.
+10. **Controls drafted in the QUEUE, not the CHARTER** — demand controls in standing documents.
+11. **Headline scope-narrowing (run-9, new):** a derivation self-scopes mid-paragraph ("Trade at
+  the mark") but the TLDR/escalation/commit carry the unqualified claim. Sibling of assurance
+  laundering at theorem granularity: the fine print knows, the headline doesn't. Check WHERE the
+  quantifier lives in every "iff".
 
 ## Method notes (env)
-- mpmath IS importable as of 2026-06-11 (run-4 dps=30). Fallback: float64 + dense Simpson.
-- (W)-membership test: w_eff = ℓY/(ℓY+ℓX) vs ũ=ln(Y/X); τ_implied const. Reusable.
-- Trade-mechanic test rig (run-5, reusable): paper law step(x,y,w,dy) = {y'=y+dy;
-  Δx=−αβdy/((y−β)(y'−β)); w'=α/x'}; micro-step loop checks path-independence; compare
-  w'/(1−w') at trade ray vs read-once destination slope for integral-vs-one-shot.
-- Quote-audit rig (run-7, reusable): unwrap = strip `(^|\n)>?\s*` → single-space collapse; then
-  exact-equal or exact-substring vs transcript entry body. Watch own bug: first line of a
-  blockquote keeps its `> ` unless the regex anchors `^`.
-- Frontier-from-kernel recipe: X(u)=upper tail of f_β, elbow = max|d² log X/du²| by FD.
-- **Verbatim channel auditable:** `history/operator/<date>_<slug>.md` (live from 2026-06-10).
-  Pre-policy GH-era (06-08/09) rulings = manager-paraphrase provenance, label when cited.
+- mpmath importable (dps=30 fine). Reusable rigs: (W)-membership (w_eff vs ũ); trade-mechanic
+  micro-integrator (run-5); quote-audit unwrap regex (run-7); frontier-from-kernel FD recipe.
+- **Run-9 rig (`/tmp/skeptic_run9.py` pattern):** warp-step residual test = build profile
+  ε(ũ;c), token-faithful Euler step (x−Δy/m, y+Δy), re-anchor c→ũ_new, then compare BOTH
+  conventions: (their V1) new-curve slope at OLD point vs frozen FIELD at NEW point — cubic-
+  prone; (mine) vs frozen-LEAF slide destination (integrate d ln x = −d ln y/ε; germ leaf closed
+  form 4ũ−ũ²/2=8Δλ) — the stricter O(du²) test. Always run BOTH + a sell-side step.
+- **Verbatim channel:** `history/operator/<date>_<slug>.md` (live 2026-06-10+). Pre-policy GH-era
+  rulings = manager-paraphrase provenance, label when cited.

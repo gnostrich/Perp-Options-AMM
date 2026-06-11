@@ -28,13 +28,17 @@ statement, known pass/fail instances, and a verification procedure (numeric gate
 obligation FW-x — stated, not submitted).
 
 **The one new result of this pass (AC-2):** the warp rule and mode-at-mark are independent
-conditions, and for regular ray-profile warps they can hold together **iff the curve's elasticity
-passes through the mark at value 1 with slope −½** (local weight ½, weight-slope −⅛). This class
-is non-empty [NUM] — so no "none exists" stop is triggered — but it excludes the natural
-re-anchored √-sigmoid at all but one sign-locked skew, and it excludes the symmetric (unskewed)
-state itself, so a pool opened symmetric cannot satisfy both from its first trade under any
-regular warp. That tension is escalated to the operator (§AC-2.5), exactly where the manager's
-veto-able operating default lives.
+conditions, and for regular ray-profile warps **and trades AT the mark** they can hold together
+**iff the curve's elasticity passes through the mark at value 1 with slope −½** (local weight ½,
+weight-slope −⅛). _Scope qualifier (corrigendum 2, §16): the characterization is derived for
+at-the-mark trades; OFF-mark trades (strike∩curve ≠ mark — the paper's product primitive, L41–43)
+are UNCHARACTERIZED: the necessity legs (ε′(mark)=−½; symmetric-genesis exclusion) survive
+unchanged, sufficiency/existence off-mark is open._ This class is non-empty [NUM] — so no "none
+exists" stop is triggered — but it excludes the natural re-anchored √-sigmoid at all but one
+sign-locked skew, and it excludes the symmetric (unskewed) state itself, so a pool opened
+symmetric cannot satisfy both from its first trade under any regular warp. That tension is
+escalated to the operator (§AC-2.5), exactly where the manager's veto-able operating default
+lives.
 
 ---
 
@@ -191,8 +195,11 @@ pre-trade (ε(mark)=1, slope = ray ⇒ du = 2dy/y):
 
 **Existence — no STOP triggered.** The class is non-empty: the translating linear-germ family
 w(ũ; c) = ½ − (ũ−c)/8 (center c re-anchored to the new mark each slice) satisfies BOTH contracts
-with per-step residuals scaling as du² (1.668e−10 → 1.667e−13 → 1.667e−16 as the step drops 10×;
-mode residual exactly 0) — i.e. exactly, in the integral limit [NUM]. A globally valid profile
+with per-step residuals vanishing super-linearly (1.668e−10 → 1.667e−13 → 1.667e−16 as the step
+drops 10× — a 1000×/decade fall = CUBIC per step, not du²; measurand R = h³/6 + h⁴/6 with
+h = Δy/y, skeptic-reconstructed, reproduces all three digits to six figures — corrigendum 1, §16;
+mode residual exactly 0) — i.e. exactly, in the integral limit [NUM; conclusion unaffected,
+label was wrong]. A globally valid profile
 with the frozen germ AND asymmetric power-law wings also exists: w(ũ) = ½ + (Δw/2)tanh(ũ/τ) −
 A·ũ·e^(−ũ²/2s²) with A = Δw/(2τ) + 1/8 (at Δw=0.2, τ=0.5, s=0.35: w′(0) = −0.125 exact, validity
 margin min[w′+w(1−w)] = +0.125 > 0 over ũ∈[−6,6], w ∈ [0.4, 0.6], wing weights 0.6/0.4) [NUM].
@@ -218,7 +225,12 @@ genesis. Options the operator must pick among (framework admits all three; none 
 (a) accept the frozen-germ class (every reachable state carries the (½,−1/8) germ; genesis
 already tilted); (b) demote mode-at-mark to approximate/asymptotic (small standing violation
 (2ε′+1)du per trade, e.g. ε′≈0 near genesis); (c) keep mode-at-mark as a family-selector
-(holds at the family's designed operating states, not per-state-after-every-trade). Robustness
+(holds at the family's designed operating states, not per-state-after-every-trade);
+(d) [ADDED, corrigendum 3 §16 — skeptic FLAG-OMISSION] a SINGULAR/corner warp (update kernel
+with structure at the trade scale), which evades the regular-class necessity — honestly OPEN:
+neither constructed nor closed in this note (the skeptic's own sketch suggests finite corners
+fail, but that argument is the skeptic's, not proven here); choosing (d) means commissioning
+that analysis first. Robustness
 note: under the non-canonical reading 2 of transport ("destination slope at the NEW reserves" —
 NOT the paper's, which forces dw=0 there) the joint condition becomes ε′(mark) = 0, i.e.
 flat-at-mark profiles — the fork between −½ and 0 is entirely the transport reading, so the
@@ -576,7 +588,7 @@ test for the composition map.
 | 13 | Solvency boundary | **Considered.** AC-7: reachable-set boundedness + coverage sweep as the contract; B1 stays the extrinsic operator ship-gate; PH-4b necessity-not-sufficiency restated; nothing here closes solvency. |
 | 14 | Esscher / latent group | **Considered.** Fixed-curve "trade = latent translation" does NOT lift to warp dynamics; the J-leg's conserved object is per-family (α,β-analogues, AC-10c); no X·Y-style invariant language used for GH. |
 | 15 | File-safety gate | **N-A** (notes-only pass; no engine edit). Any candidate build lands under the gate + splice recipe unchanged. |
-| 16 | Warp-with-trades | **Considered — the framework's core.** AC-1 = the canonical principle [RULED, entry 7]; paper Trade Formula = its verified Balancer instance [NUM]; AC-2 pins the acceptance test (mode-at-mark) and its joint cost; AC-10 holds the open composition map; UNIMPLEMENTED status unchanged; build sequenced after the engine-faithfulness pivot. |
+| 16 | Warp-with-trades | **Considered — the framework's core.** AC-1 = the canonical principle [RULED, entry 7]; paper Trade Formula = its verified Balancer instance [NUM]; AC-2 pins the acceptance test (mode-at-mark) and its joint cost — at-the-mark trades only, off-mark uncharacterized (corrigendum 2, §16); AC-10 holds the open composition map; UNIMPLEMENTED status unchanged; build sequenced after the engine-faithfulness pivot. |
 
 ## 15. Flags and escalations (for the manager to relay)
 
@@ -593,3 +605,20 @@ test for the composition map.
    formula; no claim that any candidate passes all contracts; no GH↔(W) identity used anywhere.
 4. **Not in this pass (by spec):** the comparison TABLE (deliverable B); any Aristotle
    submission (FW-x are statements); any engine edit; any curve decision.
+
+## 16. Corrigenda (dated; manager-applied per skeptic verdict #8, `notes/skeptic/VERDICT_FRAMEWORK_2026-06-11.md`, 2026-06-11)
+
+1. **Germ-residual scaling label** (AC-2 existence paragraph): digits fall 1000×/decade = cubic
+   per step, not the claimed du²; measurand reconstructed by the skeptic as R = h³/6 + h⁴/6
+   (h=Δy/y), reproducing all three printed digits to six figures. Integral-limit conclusion
+   unaffected (the skeptic's stricter slide-destination convention gives clean O(h²)).
+2. **Scope qualifier on the AC-2 iff** (§0, AC-2, AC-2.5, inventory row 16): characterization
+   derived for trades AT the mark; off-mark trades (strike∩curve ≠ mark — the paper's product
+   primitive, L41–43) UNCHARACTERIZED — necessity (ε′=−½, symmetric-genesis exclusion) survives;
+   sufficiency/existence off-mark = OPEN. The manager's commit message 212d3e0 and same-day
+   operator relay carried the unqualified iff — corrected in the next relay, owned.
+3. **AC-2.5 menu completeness**: option (d) singular/corner warps added — evades regular-class
+   necessity; neither constructed nor closed here; choosing it commissions that analysis first.
+4. Manager-audit slips (skeptic): the skeptic's Balancer α,β check was its run-5 (not run-6 as
+   the audit brief said); the note scopes "α,β-conservation IS slope-transport" to the Balancer
+   foliation (the brief over-read it as general). This skeptic verdict is #8 by its ledger.
