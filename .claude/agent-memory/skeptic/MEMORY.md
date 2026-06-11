@@ -1163,3 +1163,60 @@ the operator now carry tables where technical.
    single message with the operator's own ellipsis, or append a corrigendum splitting/completing it
    (§2.2 — elision marks inside verbatim transcripts are a fidelity hazard). Not blocking the
    rewrite; blocking any future load-bearing citation of entry 80's elided middle.
+
+27. **2026-06-11 — V24+polar-lens derivation (verdict #27)** →
+   `notes/skeptic/VERDICT_V24_LENS_derivation_2026-06-11.md`. The architecture the operator is
+   leaning toward (entries 80–88): plain Balancer pool (one scalar w) + a STATIC polar lens
+   `h_τ(u)=√(τ²+u²)−τ` in the query layer carrying ALL kurtosis. Net: **PASS on load-bearing math +
+   headline; the THE-attack does NOT break it; 2 FLAGs.**
+   **THE-attack (silent B-collapse?) RESOLVED — NO silent collapse:** (1) the pool reshape is
+   STRIKE-BLIND — derived: trade is closed-form in cash dy alone (α/β conserved), same +10% trade
+   gives identical w=0.75 reshape at K=1.0/1.1/1.4/2/4 (`/tmp/skeptic_warp_strike.js`); v24
+   `tradeUpdate(s,dy)` (L1617) has NO strike arg. (2) `w` (scalar) MOVES on trades → the POOL curve
+   warps; the lens MODE tracks the marginal (readout, doesn't warp) — no contradiction, two objects.
+   (3) bounded lens Jacobian `dG/du=γ·h″` (peak γ/τ=8.788 at mode→0 wings, reproduced) is a
+   QUERY-readout object, NOT the warp-travel object; it is true-but-secondary. The REAL no-divergence
+   reason (note leads with it, correct): plain Balancer has NO root-find (trade fully determined by
+   α/β) ⇒ NO `1/w′(u)→∞` gearing channel ⇒ cap genuinely gone. **Strike-dependence is NOT deleted —
+   it MOVED to the pricing read g_loc(|u−u_mode|).** The strike-blind warp is the v24 mechanic (the
+   operator's OWN reference, entry 84 "retain Balancer + lens"; entry 59 set the (W) w(u) field
+   "aside"). So this is B-style warp BY OPERATOR DESIGN, not the B-collapse #4 warns against (and the
+   note's pricing is NOT weight-free, so it isn't the pure-B strike-blind-PRICING case either).
+   **HONESTY HINGE = a FLAG-PROCESS trip-wire on the MANAGER, not the note:** the headline must reach
+   the operator with the word **strike-blind / v24-scalar warp** — "warp works + no cap" bare would
+   re-introduce the (W)/A ambiguity. If that word is dropped on relay → FLAG-PROCESS.
+   **FLAG-OVERSELL (non-blocking, label):** (d) funding γ→g_loc(u_K) zeroes ATM funding + makes scale
+   strike-dependent — that TOUCHES LOCKED inventory #9 ("must not be touched by strike changes").
+   Disclosed+flagged honestly, but filed as "(d) works"; correct class = "Changed, locked contract
+   altered, operator-tier" (same call as carry #5/#10).
+   **FLAG-OMISSION:** no per-item inventory disposition; genuinely absent + build-relevant: #4 carry
+   (P=Ny/Nx, 0 mentions), #5 rebase (1 incidental, the lens-mode∘rebase commute is OPEN+unstated —
+   the (W) warp∘rebase lemma reborn for the lens), #13 solvency (0; plain-Balancer reserve bound +
+   flat-top g<1 value law un-framed). Also absent: #8/#11/#12/#14/#15.
+   **COLLISION flagged (operator-tier linkage):** (b) flat-top drives LOCAL g_loc<1 in band
+   |ln K|<τ/√(γ²−1) (±13.1% at τ=0.3,γ=2.64, reproduced) — this is the SAME g<1 regime
+   OPEN_OPERATOR_QUESTIONS #1 (γ>1 lock) is unresolved on, at readout layer not pool weight. Surface
+   the (b) settlement-semantics call TOGETHER with OPEN #1 — one operator ruling on the g<1 object.
+   **PASS items (attacked, held):** round-trip+path-indep exact 0 (v24 α/β flow inv);
+   asymptote-preservation g_loc→γ ∀τ (operator's hard gate met); (e) per-leg-g_loc-breaks-√(θ₁θ₂)
+   STRUCTURE sound (common-exponent algebra → per-leg breaks → wing recovery; local exponents
+   1.37/2.12→2.62 reproduced; %-magnitudes 63/29/10 NOT independently certified — my mark proxy wrong
+   form, manager-confirmed, qualitative structure right). (e) framing "execution survives, closed-form
+   pricing breaks" CORRECT — execution NOT affected (pool warp strike-free ⇒ 2-leg spread still 1 tx).
+   Convergence-alarm LOW (self-adversarial: hunts the (a) sign-flip + (e) breakage + flat-top bound;
+   manager independently re-derived lens-Jac + (e); (e) lands a partial-failure against momentum).
+   **MINE-TO-DEFEND:** strike-blind reshape is identical at all strikes (function of dy alone, v24
+   mechanic); the no-divergence cause is the ABSENT root-find (not the bounded lens-Jac, which is a
+   different/secondary object); strike-dependence lives in g_loc(u_K) read; funding-γ→g_loc zeroes
+   ATM + is strike-dependent-scale (touches locked #9); flat-top g<1 band = OPEN-#1's object at
+   readout layer. NEW PATTERN candidate (logged below).
+
+## Team blind-spot pattern #10 (verdict #27)
+**A property of one object cited as proof about a DIFFERENT object (category-adjacent oversell).**
+The lens note's "bounded lens Jacobian dG/du" is TRUE but is a query-readout-smoothness object; the
+no-divergence claim actually rests on the ABSENT warp-travel root-find (no 1/w′ channel). The note
+got the primary reason right, but a weaker secondary true-statement sat next to it where a careless
+reader (or relay) could promote it to THE reason. Sibling of #4 (construction-slot conflation) and
+#9 (provenance-axis-as-objective-axis): always ask "is this the object the CLAIM is about, or a
+true statement about a neighbour?" Specific to warp questions: the warp object is the pool-curve
+reshape gearing, NOT the option-surface readout curvature — never let them be substituted.
