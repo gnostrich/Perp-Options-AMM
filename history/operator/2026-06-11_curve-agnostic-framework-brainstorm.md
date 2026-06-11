@@ -26,3 +26,8 @@ _Context: answers the consolidated brainstorm questions (1 = LDF operational def
 > idk cant answer, but no separate knob for wing sttpness etc. its x y w determing skew, and single kurtosis / steepness knob thats it
 
 _Context: answers the manager's plain-English re-pose of the γ question (entry 4 item 2). Ruling read: the parameter budget is hard — live state (x,y,w) drives skew, ONE static kurtosis/steepness knob, no separate wing-steepness dial; wing exponent γ must be derived, not set._
+
+## 6
+> simple english. tldr. if you understand things clearly enough yourself, you should be able to explain concisely. skeptic, how are you passing this verbosity to me?
+
+_Context: verbosity call-out on the manager's relays; direct question to the skeptic, routed to it verbatim same turn._
