@@ -679,3 +679,10 @@ _Context: operator corrects the team's "strike-blind" truncation — the warp go
 _Context: operator asks the manager to list its open questions barely, pointwise, simple English._
 
 > list your questions as barely as possible pointwise sinple english
+
+---
+
+## Entry 93 — 2026-06-11
+_Context: operator answers the 6 bare questions. (1) re-run YES; (2) no cap — pool is literally Balancer, NOT the generalised frozen-wing curve, just x/y/w moving; (3) the lock framing is moot — just x/y/w move; (4) one-tx execution only (closed-form spread pricing NOT required); (5) funding-through-lens accepted as-is; (6) BUILD GO once re-run confirms — build on v24, correcting its known gaps (ATM-jump settlement, the local-warp thing)._
+
+> 1 yes, 2 no cap imo, same as balancer literally so not the generalised thing, 3 idk what that means, now theres just x y w that move, 4 one tx execution is all, 5 idc, same geometric thing whatever it implies, 6 yes once confirmed execute this building on the v24 correcting its known gaps i mentioned earlier in this conversation
