@@ -1,5 +1,36 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, WARP-divergence reconcile + safe-strike cap (entry 40; READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, NATURALNESS of polar/√-kernel kurtosis map (entry 41; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### NATURALNESS of the polar/√-kernel kurtosis map — 2026-06-11 (operator entry 41; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A PAUSED)
+Note: `notes/research/NATURALNESS_polar_kurtosis_map_2026-06-11.md`. Scripts `/tmp/naturalness{,2,3b}.py`
+(python float64 + scipy). **Q (entry 41 verbatim):** is the (W) `w(u)=w_mid+(Δw/2)·u/√(τ²+u²)` (√-kernel),
+read in the polar/hyperbolic-angle cosh lens, the MOST NATURAL kurtosis map (frozen wings + rounded
+shoulder + one knob τ), or one of many? trig must EARN its place.
+**(i) MOST-NATURAL VERDICT: √-kernel = natural ALGEBRAIC PRIMITIVE; cosh = its COORDINATE, not a 2nd object.**
+Singled out by a CONCRETE non-aesthetic tiebreak: it is the ONLY candidate with a closed-form ALGEBRAIC
+curve invariant — ∫(u/√(τ²+u²))du=√(τ²+u²) ELEMENTARY [num match 0.0]; tanh→τ·ln cosh TRANSCENDENTAL
+(2.2e-16); erf→u·erf+gaussian NON-ELEMENTARY (2.2e-16). Polar lens UNIQUELY forces cosh GIVEN the lens
+(cosh η = unique hyperbolic radius →|u| on wings; τcosh η≡√(τ²+u²) resid 4.4e-16; √-kernel-in-u ≡ tanh-in-η
+resid 0.0) — but the lens is well-MOTIVATED (log-price rapidity), not logically forced over tanh-in-u etc.
+Canonical as primitive, one-of-a-family as shoulder, tiebreak = integrability. TRIG FLAG SATISFIED, lens
+ONLY (no new content; if trig vanished √-kernel stands alone). Confirms+sharpens the CURVE_FAMILY-derivation
+ruling. Max-ent/info-geom does NOT rescue canonicity (shoulder under-determined; Gudermannian d-law already
+FAILED).
+**(ii) DIVERGENCE = INTRINSIC to ANY frozen-power-law-wing map [analytic]** — frozen⟺w→const⟺w′→0⟺gearing
+1/w′→∞ necessarily; only the RATE varies. √-kernel w′~u⁻³ (power) is ALREADY the LEAST-divergent map that
+keeps crisp frozen wings (tanh ~e⁻²ᵘ, erf ~e⁻ᵘ² are FAR worse: G@8τ = √-kernel 524 vs tanh 2.2e6 vs erf
+6.8e21). ONLY softer option = algebraic u/(τ+|u|) (w′~u⁻², G 3.7× softer @5τ, 10× @12τ) BUT: still diverges
+(poly), erodes wing-exactness (resid 1e-3 vs 5e-6 @30τ), AND loses the algebraic invariant ⇒ net DOWNGRADE
+for A. **NO map removes the (g.4) cap; cap is map-INDEPENDENT, correct resolution.** √-kernel sits at the
+sweet spot: least-divergent map honoring all 3 contracts (frozen wing + algebraic invariant + γ>1).
+**HONEST CARRY (unchanged):** theory/naturalness only, NO build auth. (α,β)-flow lemma [needs-Aristotle]/OPEN
+numeric-only; warp∘rebase + φ-funding OPEN. Curve/shoulder-shape choice = operator-tier (flagged, not
+decided). Nothing submitted/built/edited/git. Manager re-derives + routes naturalness claim through SKEPTIC
+before relaying to operator.
+
+---
+
+_Earlier: 2026-06-11, WARP-divergence reconcile + safe-strike cap (entry 40; READ-ONLY; notes-only; no submit/edit/git/build)._
 
 ### WARP-DIVERGENCE RECONCILE + SAFE-STRIKE CAP (g.4) — 2026-06-11 (operator entry 40; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A)
 Note: `notes/research/WARP_divergence_reconcile_and_cap_2026-06-11.md`. Script `/tmp/warp_cap.js`
