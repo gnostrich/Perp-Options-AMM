@@ -49,23 +49,26 @@ by the pricing layer, not by pool shape.
 | Lens slope strictly positive ⇒ value monotone (basic no-arb) | h′ = u/√(τ²+u²) > 0 for u>0 |
 | At a resting (arbed) pool, every w gives the same tangent at the live point; w shows in resting depth (y = x·oracle/γ) and second-order bend (×(γ+1)) | resting-pool table: w=0.5 ⇒ y=$800k, w=0.725 ⇒ $303,448, w=0.9 ⇒ $88,889; slope $80,000 in all three |
 
-## In-flight derivation (read-only; results land in `notes/research/`, skeptic-checked)
+## Derivation RESULTS (research-lead `notes/research/V24_LENS_derivation_2026-06-11.md`; skeptic-checked `notes/skeptic/VERDICT_V24_LENS_derivation_2026-06-11.md`; manager-reproduced where noted)
 
-| Item | Question |
-|---|---|
-| (a) | Trade-point-through-lens goal-seek on plain Balancer: exact formula; is the far-OTM divergence (the old ~1.4×-cap driver, caused by the PREVIOUS curve's frozen pool wings) **absent** here? |
-| (b) | Settlement through the lens: closed-form free boundary; ATM-jump (smooth-pasting) port |
-| (c) | No-arb bound on lens extent τ (monotonicity + butterfly convexity) |
-| (d) | Funding reference ray through the lens |
-| (e) | Vertical-spread one-tx composite point in the lensed coordinate (was √(θ₁θ₂) raw) |
-| (f) | Slippage-per-strike profile (same-premium and same-notional tables) |
+| Item | Verdict | Detail (honest labels) |
+|---|---|---|
+| (a) divergence / strike cap | **WORKS — no cap needed** | Plain Balancer has no `w(u)` field ⇒ no root-find ⇒ no `1/w′→∞` channel; the (W)-era cap was an artifact of the frozen-wing field, gone with the field. Goal-seek = the lens MODE tracks the live marginal (a readout, no solve); round-trip exact, path-independent. **CRITICAL HONEST LABEL (skeptic-required): the trade reshape is STRIKE-BLIND — a trade is closed-form in cash `dy` alone (v24 `tradeUpdate` takes no strike arg); same-cash trade gives the identical warp at every strike. This is the B-style warp, by the operator's own design (entries 84/59), NOT the strike-dependent path-A warp. Strike-dependence did not vanish — it moved to the pricing read `g_loc(\|u−u_mode\|)`.** The scalar `w` moves on trades (pool curve warps); the lens never warps (static kurtosis). |
+| (b) settlement | **WORKS-WITH-BOUND** | `S*=K·g_loc/(g_loc+1)` closed form per strike; v26b ATM-jump smooth-paste ports exact (machine-zero). BOUND: flat-top band `\|ln K\|<τ/√(γ²−1)` (±13% at τ=0.3,γ=2.64) where the local exponent g_loc<1 and the American-exercise reading degenerates — **operator-tier settlement-semantics, and it COLLIDES with OPEN-#1 (the γ>1 lock): rule on the g<1 object ONCE, here at the readout layer.** |
+| (c) no-arb bound on τ | **WORKS** | butterfly + monotonicity hold ∀τ; asymptotes preserved ∀τ; τ is NOT no-arb-bounded — only flat-top-width is a calibration choice. |
+| (d) funding | **CHANGED — LOCKED CONTRACT ALTERED, operator-tier** (skeptic re-classed up from "works") | routing γ→g_loc(u_K) zeroes ATM funding and makes its scale strike-dependent; inventory #9 funding is LOCKED ("not touched by mark/strike changes"). Same operator-tier class as carry #5/#10. Must be ruled, not assumed. |
+| (e) vertical-spread shortcut | **PARTIAL: execution survives, closed-form PRICING breaks** | per-leg `g_loc(u_i)` breaks the `√(θ₁θ₂)` price shortcut (manager-reproduced ≈39%/12%/1% error near/mid/deep). One-tx EXECUTION is unaffected (a 2-leg spread is still one strike-free pool tx). **Live tension with operator entry 85 ("keep the VS shortcut") — if closed-form spread PRICING is a hard requirement, the lens spec needs rework.** |
+| (f) slippage | **WORKS** | strike-invariant per unit cash (no strike channel in the warp); strike enters only the lensed premium sizing the cash leg. |
+
+### Inventory items still UN-dispositioned (skeptic FLAG-OMISSION — to close before a build spec)
+`#4 carry (P=Ny/Nx)`, `#5 rebase` (the lens-mode∘rebase **commute lemma is OPEN** — the (W) warp∘rebase lemma reborn for the lens), `#13 solvency` (plain-Balancer reserve bound + the flat-top g<1 value law), plus #8/#11/#12/#14/#15. None derived yet.
 
 ## Vocabulary guard (collisions that caused real confusion)
 
 | Term | Means here | Does NOT mean |
 |---|---|---|
 | anchor curve | the static w=½ gray reference (funding yardstick); never moves | anything about where the warp applies |
-| goal-seek point | where the post-trade slope is restored (= trade point, lensed — entry 88) | "anchoring" (term retired) |
+| goal-seek point | where the post-trade slope is restored; in the derived architecture this resolves to the lens MODE tracking the live marginal (strike-blind warp) | "anchoring" (term retired); NOT strike-dependent path-A warp |
 | kurtosis / steepness | operator uses them interchangeably for the curve's bend; in THIS architecture: pool bend = w, option-surface bend = lens τ | a 4th-moment trader statistic |
 
 ## Pointers
