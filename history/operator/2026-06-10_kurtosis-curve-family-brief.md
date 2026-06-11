@@ -598,3 +598,10 @@ _§2.2 corrigendum-note (2026-06-11): the mid-sentence "…" above is the operat
 _Context: operator sets the standing technical-conversation format (simple English + existing-vs-planned comparison tables) and asks for the steepness solution explained in it._
 
 > now in simple english and accompanied by tables comparing existing thing with what you plan to do (this is how you will converse with me on technical matters), explain how the steepness problem is solved
+
+---
+
+## Entry 82 — 2026-06-11
+_Context: operator (who has used plain Balancer before) asks mechanically how it gets flatter — where the knob plugs into the function._
+
+> with plain balancer, and i’ve used this before, HOW does it get flatter. where does the knob plug into the function?
