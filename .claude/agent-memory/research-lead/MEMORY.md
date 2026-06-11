@@ -1,5 +1,22 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, CURIOSITY RUN B — warp∝notional inverse-design (entry 38; CURIOSITY/notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, BRAINSTORM B — per-notional (spot-equivalent) slippage (entry 39; BRAINSTORM/notes-only; no submit/edit/git/build)._
+
+### BRAINSTORM B — slippage = same warp principle, same per unit notional as a SPOT trade — 2026-06-11 (operator entry 39; BRAINSTORM ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6)
+Note: `notes/research/BRAINSTORM_B_per_notional_slippage_2026-06-11.md`. Builds on curiosity-B. Engine facts read straight off HEAD source (1eebfcd6); numeric warp tables back-stopped by /tmp/curiosityB_explore.js.
+**OPERATOR (39 verbatim):** "my idea with B was that the slippage remains implemented by the same curve warp principle, and is the same per unit notional as for a spot trade. does that make sense?"
+**VERDICT = YES, it makes sense** — coherent + well-defined + self-consistent on (W).
+**PRECISE STATEMENT:** mechanism unchanged (curve-warp, same as A); magnitude strike-INVARIANT, = a spot trade's per notional. Strike enters ONLY the option VALUE (mark), never the execution slippage.
+**ONE-LINE CONSTRUCTION:** feed cash leg `dy := N·oracle` (notional·spot, DROP the premium/mark factor) into the existing spot-anchored `tradeUpdate(state,dy)` ⇒ `|Δφ|=z0(N·oracle)`, strike-free, = the spot trade's warp (one swap primitive on (W), line 1723; strike never an arg).
+**MANAGER'S PREMIUM-vs-NOTIONAL READ = CORRECT, source-verified [analytic]:** HEAD `legPrice` returns `V=N·mark` (L1811/1818); `executeLeg` sets `dy=V·oracle=N·mark·oracle` (L1847/1850) ⇒ live engine sizes warp by PREMIUM ⇒ slippage-per-notional SHRINKS OTM (mark↓). B drops mark ⇒ strike-invariant, spot-equivalent. "Spot trade's slippage per notional" well-defined + right ref: spot trade pushes dy=N·oracle (mark≡1) through the SAME tradeUpdate; B = identity dy_option=dy_spot=N·oracle.
+**SUBTLETY:** "per unit notional"=strike-INVARIANCE not linearity (z0 convex in size, spot ref too — equality preserved).
+**VALUE/SLIPPAGE SEPARATION = clean + recognizable:** value=mark(K,moneyness); slippage=z0(N) spot-equiv, moneyness-blind. = execution-by-size + separate-mark (linear-impact-AMM design). vs A=moneyness-geared (z0·G, G∝1/w′(u_tp), DIVERGES at frozen wing ~14000×). Both sound; different PRODUCTS.
+**SELF-CONSISTENT on (W) = YES, all hold + B LESS divergent than A:** α/β cons (resid 0.0), frozen wings, static τ, γ>1, bounded (no wing blow-up — B's win), wing-guard HELD. ⚠ wing-guard rejects MORE under B (notional sizing dy=N·oracle ≥ premium N·mark·oracle since mark≤1 ⇒ hits w* band sooner ⇒ large-notional deep-OTM that clears today may REJECT — internally consistent, calibration-flag).
+**GIVES UP (unchanged):** paper σ_B trade-point tangent (0.254 vs B's 1.460 @K=1.6mp0) ⇒ self-consistent but NOT paper's trade mechanic. B = spot-anchored (gearing already=live engine) + notional sizing (the CHANGE; live engine still premium-sizes). A & B differ from live engine in OPPOSITE directions.
+**HONEST CARRY:** (α,β)-flow lemma [needs-Aristotle]/OPEN/numeric-0.0 for A AND B — not proven either. A vs B = operator product/curve call (operator pursuing A as build). Nothing built/submitted/edited/git. Manager re-derives + relays to operator.
+
+---
+
+_Earlier: 2026-06-11, CURIOSITY RUN B — warp∝notional inverse-design (entry 38; CURIOSITY/notes-only; no submit/edit/git/build)._
 
 ### CURIOSITY RUN B — what invariant yields warp ∝ notional (strike-INDEPENDENT)? — 2026-06-11 (operator entry 38; CURIOSITY ONLY; nothing to do with the build; NO edit/git/build/submit)
 Note: `notes/research/CURIOSITY_B_warp_proportional_notional_2026-06-11.md`. Script `/tmp/curiosityB_explore.js`
