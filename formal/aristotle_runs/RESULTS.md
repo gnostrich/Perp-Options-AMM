@@ -476,3 +476,21 @@ Operator-approved SMALL HARDEN of `AIRTIGHT_T1b_optimality/.../Optimality.lean`:
 - line 92 `grind +qlia` → `right; field_simp; ring` (`opt_boundary_is_critical_A`: pick right disjunct, smooth-pasting factor `γ − (γ+1)·(Kγ/(γ+1))/K = 0` by field arithmetic).
 - line 145 `grind` → `exact ⟨(Sstar_A_pos hK (by linarith)).le, le_rfl⟩` (`opt_boundary_is_max_A`: membership `S*_A ∈ Icc 0 S*_A`).
 **AUDIT (all PASS):** token-scan `grep -rnE '(grind|aesop|exact?|apply?|rw?|simp?|native_decide|sorry|admit|sorryAx|opaque|unsafe)'` → ZERO live search/forbidden tokens (0 `grind|aesop` even in comments); ZERO `axiom` decls; ZERO `sorry`. All 6 theorem signature lines + the `AmericanOptimalityPrinciple` structure (`: Prop`, `True` field — NOT axiom, NOT proved) character-identical to original (full diff = the 3 tactic lines above only). All 5 sibling modules (AMMCurve/Audit/Main/Seam/Temporal) byte-identical vs submitted AND vs the original-T1b run. Toolchain pin `leanprover/lean4:v4.28.0` + mathlib `rev=v4.28.0` UNCHANGED. `#print axioms` block (6 targets) present; Aristotle reports ⊆ {propext,Classical.choice,Quot.sound}, no sorryAx — and the 3 concrete replacements (`exact`/`field_simp;ring`/term) cannot introduce non-standard axioms, so the original's clean axiom set cannot have regressed. Math re-derived independently (all 3 goals correct). **NOTE:** summary's "removed `hK : K ≠ 0` hypothesis" line is STALE carried text from a prior run — the actual diff shows NO signature change (original helper never had that hyp). NOT upgraded to "verified" (canonical-env build = the `#print axioms` reproduction + label upgrade).
+
+---
+
+## FW RUN — 2026-06-11 (curve-agnostic framework airtight pass; SCRATCH-ONLY, canonical tree UNTOUCHED)
+
+3 submits (standalone `import Mathlib` modules added to throwaway copies of the canonical project;
+canonical `formal/temporal_lean_verified/` NOT modified). Prompts `formal/prompts/aristotle_prompt_fw_*.md`.
+Obligations FW-1..FW-8, FW-11(Balancer), FW-13 from `framework/FRAMEWORK_curve_agnostic_2026-06-11.md` §12.
+Triage: FW-9 = no-submit (already covered by T1a 3566d93c [TFP], abstract value law); FW-10/FW-12 =
+blocked on open design (funding functional choice operator-tier + F3 anchor-rebase [OPEN]; per-family
+mark/intrinsic undefined — B1 conditional [TFP] is the existing template); FW-11 general = blocked on
+per-family rebase action (Balancer instance submitted).
+
+| ID | name | targets | status |
+|----|------|---------|--------|
+| 56b4f0fa-eacf-414d-bc8c-33cba9606bb0 | FW_warp_core | FW-1/2/3/4/13 + FW-11 Balancer instance (15 thms: flow HasDerivAt, first integrals, transport uniqueness, round-trip, semigroup, elasticity law, rebase commute) | SUBMITTED (poll) |
+| 727fc83e-9cc1-4478-a197-a51d640941aa | FW_gate_leak | FW-7 (gate identity, strict chain, nonstrict iffs) + FW-8 (abstract leak ≥0, strict, Bregman) | SUBMITTED (poll) |
+| 6d6ba6e6-320c-49d4-81ec-73db27ba8d34 | FW_germ | FW-5 (joint_iff at-the-mark, HasDerivAt encoding) + FW-6 (linear-germ witness + validity strip) | SUBMITTED (poll) |
