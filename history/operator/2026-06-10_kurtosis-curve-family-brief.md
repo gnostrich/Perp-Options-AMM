@@ -307,6 +307,13 @@ _Context: operator confirms sticking with A (B is adjacent-terrain brainstorm on
 _Context: operator is OK with strike caps in principle, but wants read-only clarity on a FOUNDATIONAL question: is the polar map we use to implement the kurtosis "wings / shoulder / elbow" shape the MOST NATURAL one — i.e. is the √-kernel / hyperbolic-angle (W) construction canonical, or did we adopt a convenient encoding (the standing trig flag), and is the warp-divergence a symptom of an unnatural map vs intrinsic to any frozen-wings kurtosis curve. Transcribed verbatim._
 
 > i get what you're saying. i'm not opposed to the strike caps per se, however, I just want a bit more clarity around how whether our polar map that implements this kurtosis wings shoulder thing is the most natural one … read only
+
+---
+
+## Entry 42 — 2026-06-11
+_Context: two FMI (read-only, "not trying to change anything") questions: (1) what hyperbolic ALTERNATIVES exist to our hyperbolic polar map (√-kernel / hyperbolic-angle); (2) is something determining how much the shoulder is 'localised' / 'segregated from' the wings. Transcribed verbatim._
+
+> just fmi, 1. what hyperbolic alternatives exits to our hyperbolic polar map thing (not trying to change anything);  2. is something determining how much the shoulder is 'localised' / 'segregated from' wings ...
 >
 > while A gives us the DOF we need for pricing american styles on any asset i think
 >
