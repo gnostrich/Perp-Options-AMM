@@ -1,5 +1,47 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, ENTRY-59 flatten/steepen + warp-visibility run (READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, V24+POLAR-LENS architecture derivation (entry 89; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### V24 + POLAR-LENS ARCHITECTURE — 6-item derivation (operator entries 80–88; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit) — 2026-06-11
+Note: `notes/research/V24_LENS_derivation_2026-06-11.md`. Scripts `/tmp/lens_{a,a2,a3,b,b2,c,c2,c3,def,e2}.js`
+(node float64; v24 tradeUpdate + v26b smooth-paste mark transcribed). Spec derived-WITHIN (not redesigned):
+`specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md`. OBJECT: plain Balancer pool (scalar w, γ=w/(1−w),
+v24 α/β trade) + a STATIC polar LENS in the QUERY layer only: `h_τ(u)=√(τ²+u²)−τ`, surface decay exponent
+`G(u)=γ·h′_τ(u)` (0 at mode→γ wings). Lens NEVER touches the pool update. Structurally ≠ (W) (which put the
+√-kernel INSIDE w(u)) — THAT is why the divergence dies.
+**(a) WORKS — THE key result: far-OTM divergence ABSENT.** No w(u) ⇒ NO 1/w′ channel (the old ~1.4×-cap
+driver). Lens Jacobian dG/du=γ·h″=γτ²/(τ²+u²)^1.5 BOUNDED (max γ/τ at mode, →0 wings) — opposite shape to
+1/w′→∞. Goal-seek (entry 88) = "lens MODE tracks live marginal," a deterministic READOUT (no root-find, no
+field scalar) ⇒ single-valued/well-posed ∀strike, path-indep + round-trip EXACT (float64 0.0, inherits α/β).
+NO warp cap needed (vs (W)'s hard |Δφ|≤τ wall). CONSTRUCTION REQ: price G=γ·h′(|u−u_mode|) side-of-mode
+branch (else trade-shifted mode flips sign at strikes it crosses; = v24 markFrac shape already).
+**(b) WORKS-WITH-BOUND.** Closed-form S*=K·g_loc/(g_loc+1) PER STRIKE (g_loc=γ·h′(|u_K|) constant per
+strike); ATM-jump smooth-paste ports EXACTLY (value+slope continuous to machine zero), stays real/finite
+even g_loc<1. BOUND: flat-top band |ln K|<τ/√(γ²−1) (τ=0.3,γ=2.64 ⇒ ±13.1%) where g_loc<1 ⇒ American-
+exercise reading of S* degenerates (analytic value law still evaluates). = settlement-semantics call,
+OPERATOR-TIER (entry-85 "ATM-jump at feature level").
+**(c) WORKS — τ NOT bounded by no-arb.** Butterfly(convex-in-K) + strike-monotone hold ∀τ (0.05–3); spot-
+monotone holds ∀τ GIVEN |u−u_mode| branch (guard g_loc(|u|)+g_loc′(|u|)>0 always; SIGNED-lens would fail
+τ≳0.01 but architecture uses |·|); asymptotes preserved unconditionally. τ bounded by FLAT-TOP WIDTH
+(calibration/vol-set), not arbitrage.
+**(d) WORKS.** Funding = HEAD formula γ→g_loc(u_K); SIGN unchanged; SCALE→0 at ATM (flat top, no slope-
+deviation), →γ wings; no divergence. FLAG: ATM funding ~0 is expected behavioural change vs constant-γ HEAD.
+**(e) BROKEN (closed form) / works-with-bound (concept) — THE HARDEST OBSTRUCTION.** θ*=√(θ₁θ₂),2sinh(δ)
+PRICING shortcut was exact ONLY under common OTM exponent; per-leg g_loc(u_i) breaks it (rel.err 63%/29%/10%
+near→deep; near flat top NO valid θ* — 2sinh form can't represent). One-tx EXECUTION survives (single
+strike-free pool warp); CLOSED-FORM PRICING does not — spread priced leg-by-leg through lens. Recovers deep
+wing (common γ). PARTIALLY honours entry-85 "keep VS shortcut": execution yes, closed-form pricing no.
+**(f) WORKS.** Slippage strike-INVARIANT per unit cash (no strike channel on plain Balancer): same-premium
+⇒ identical warp; same-notional ⇒ warp shrinks OTM via lensed mark. Clean value/slippage separation.
+**OPERATOR-TIER FLAGS (via manager):** (b) flat-top settlement semantics (g_loc<1: shallow-power vs
+European clamp); (d) ATM funding→0 acceptable?; (e) is closed-form VS pricing a HARD requirement (if so, lens
+spec needs rework — live tension w/ entry 85); τ calibration (flat-top width). **NO Lean obligation ready to
+pin** (lens = static algebraic readout; (a)/(f) inherit v24 α/β path-indep already; candidate lemmas
+g_loc(|u|)+g_loc′>0 + smooth-paste continuity worth pinning only AFTER operator rules (b)/(e)). Nothing
+submitted/built/edited/git. Manager re-derives + SKEPTIC before operator.
+
+---
+
+_Earlier: 2026-06-11, ENTRY-59 flatten/steepen + warp-visibility run (READ-ONLY; notes-only; no submit/edit/git/build)._
 
 ### ENTRY-59 RUN — "w varies with strike: does it work?" vs the VISIBLE bar — 2026-06-11 (operator entry 59; READ-ONLY; HEAD untouched md5 928cde1c pre+post; NO edit/git/build/submit)
 Note: `notes/research/ENTRY59_flatten_steepen_and_warp_visibility_2026-06-11.md`. Scripts
