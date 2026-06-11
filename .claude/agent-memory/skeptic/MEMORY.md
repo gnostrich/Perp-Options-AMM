@@ -1,7 +1,7 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-10: merge-gate check, verdict #9 PASS — verdict-#8 corrigenda VERIFIED
-on disk, run-9 flags 1–3 STOOD DOWN; NO standing flag blocks merge of claude/focused-carson-15117f.
-Prior: run-9 FRAMEWORK audit #8; run-8 org #7; run-7 slice-1 #6; run-5 entry-7 pin; run-4 LDF #5.)_
+_Updated 2026-06-11 (run-11: operator entry-18 direct question — verdict #10, FLAG-PROCESS vs
+manager's entry-17 "real correction" framing; entry-1 propagation clause was there from the start.
+Prior: run-10 merge gate #9; run-9 FRAMEWORK #8; run-8 org #7; run-7 slice-1 #6; run-4 LDF #5.)_
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -20,10 +20,22 @@ objects; (3) skew stays w's job — knob⊥skew shown in PRICE space, not latent
 American reading survives (power-law wings + early-exercise boundary) or the replacement is
 stated; (5) warp-with-trades clause dispositioned explicitly — silence = flag.
 **⚠ LIVE (entry 12, 2026-06-11 verbatim): operator "exploring giving up the asymptotes
-altogether in a parallel session."** If that lands, gate item 4's power-law-wings leg is
-operator-reopened — do NOT auto-flag wing changes as drift once he rules; demand the ruling
-verbatim first. All three pending decisions (AC-2.5 class; transport reading; OPERATOR-VOICE
-move) PARKED pending that exploration.
+altogether in a parallel session"; entry 15: "havent totally ditched asymptote yet."** If a drop
+lands, gate item 4's power-law-wings leg is operator-reopened — do NOT auto-flag wing changes as
+drift once he rules; demand the ruling verbatim first. Pending decisions (AC-2.5 class; transport
+reading) PARKED pending that exploration; entry-13 item 3 = GO on OPERATOR-VOICE handover.
+
+## ⭐ ENTRY-1 PROPAGATION CLAUSE (operator, 2026-06-11 entry 1, VERBATIM — settled run-11; the
+## framework was ordered component-propagating FROM THE FIRST MESSAGE, entry 18 confirms):
+> "first establish airgithyly the entire curve agnostic framework (information geometry / port
+> hamiltonian thread we already attempted), and then within this framework you can tabularly
+> compare the various possibilkities with the whole thing propagating through every component
+> right from amm curve warp function, settlement, funding etc. whatever"
+Entry 17 ("not just a curve check… all other components… forced consistent with it .... an
+internal consistency check") = RESTATEMENT + emphasis (framework itself as the catching machine),
+NOT new information. Judge every framework/deliverable-B artifact against BOTH: propagation
+machinery present AND organized as a checker that catches a non-conforming component spec.
+Component list is open-ended ("etc. whatever" / "not going to name now") — closure owed.
 
 ## ⭐ CANONICAL WARP STATEMENT (operator, 2026-06-11, entry 7, VERBATIM — the 5-6th explanation;
 ## this NEVER needs re-explaining again; every warp/trade-mechanic claim is judged against it)
@@ -69,30 +81,30 @@ trade point were the reserves point") = the q≠p trade layer — cite when scop
 (fed flag 2 of verdict #8). L39 verbatim = reading-1 transport ("slope of that post-trade point
 is brought to the pre-trade reserves point").
 
-## ACTIVE: curve-agnostic-framework — state after run-10 (merge-gate check)
-**Run-10 (verdict #9, emitted as message text): merge gate on claude/focused-carson-15117f —
-PASS, no standing flag blocks.** Verified on disk (diff 212d3e0→49ed877, exact hunks):
-- **Run-9 flags 1–3 → STOOD DOWN.** §16 corrigenda landed (4 items, incl. manager owning the
-  unqualified-iff relay slip AND its own audit-brief slips). Inline: §0 headline iff now "and
-  trades AT the mark" + full scope-qualifier sentence; cascade sentence now "CUBIC per step,
-  not du²; measurand R = h³/6 + h⁴/6, h=Δy/y, skeptic-reconstructed" (matches my reconstruction
-  exactly, attributed); AC-2.5 option (d) added honestly open (my corner-sketch named as mine,
-  unproven); row-16 carries the scope. Relay leg: corrigenda commit precedes entry-10/11 relay
-  commits (order-consistent); relay TEXT manager-attested only — policy doesn't transcribe
-  manager replies; verification ceiling noted, slip owned in writing; entry 12 confirms the
-  operator received + parked the AC-2.5 decision.
-- **2 micro-residues, non-blocking watch-notes for next edit pass:** L224 "framework admits all
-  three" now sits above a FOUR-option menu; AC-2.5 opener ("satisfiable but only on a permanently
-  tilted-germ class") lacks the inline at-the-mark scope (scope lives §0/row-16/§16).
-- **Org layer:** docs/org_review_2026-06-11.md carries "STATUS: DRAFT" on disk; NO organiser.md
-  in .claude/agents/ — run-8's 6 conditions + tester T1-T3 bind at ADOPTION, not merge.
-  Still OWED ME: audit of organiser's FIRST distillation vs raw transcripts (fires post-adoption).
-- **Engine integrity re-derived MYSELF on branch:** blob line-md5s 74=ab663f5c…, 1060=c505b08a…
-  both canonical. Branch vs main = 606 files (main pre-GH at PR #2) — engine HTMLs are the
-  already-gated v26b/v26c lineage. Unaudited-by-me residue: tester 40751b3 (own ledger/MEMORY +
-  markdown-targeting splice script) and 4c787b0 (11 lines T1-T3) — process-layer, owners' own
-  docs, no truth-claim I dispute. §6.2 pre-merge greenness stays the manager's job; my PASS ≠
-  green gate.
+## ACTIVE: curve-agnostic-framework — state after run-11
+**Run-11 (verdict #10, message text per task): operator entry-18 direct question.** Findings:
+(1) entry 1 DID order component propagation (clause above) — operator did not stutter;
+(2) the framework note is NOT "merely curve-admission": settlement FORCED (T1a lift, L74/L550/
+row-6 "entire settlement layer forced"; live-S* propagation fact L377), funding constrained
+F1–F6 (rule choice operator-tier), solvency sweep AC-7, attack floor AC-8, engine socket AC-9,
+spine seam-contract L49 ("type-checks everywhere or is rejected"), 16/16 dispositioned — BUT
+organized curve-inward (admission tests), NG checks stated-not-built (except NG-9's existing
+harnesses), component list unclosed;
+(3) **FLAG-PROCESS vs manager:** framing entry 17 as "a real correction" + "what's missing to
+meet your bar" treated an entry-1 standing order as new information — misrepresents the record
+and undersells the artifact the manager itself audited 16/16. Steelman PARTIAL: grammatically
+the clause attaches to the table, and entry 17 adds the checker-emphasis — right reply was
+"ordered in entry 1; residual gap is X", not novelty concession. Verification ceiling: manager
+reply untranscribed (policy); quotes manager-supplied + consistent with operator's entry-18
+reaction.
+(4) Genuinely missing: explicit per-component table (component | geometry-forced form | check
+that catches a non-conforming spec) + component-list closure + checks actually run.
+**Run-10 (verdict #9): merge gate focused-carson PASS** — #8 corrigenda verified on disk (diff
+hunks), run-9 flags 1–3 stood down; 2 non-blocking watch-notes (L224 "admits all three" above a
+FOUR-option menu; AC-2.5 opener lacks inline at-the-mark scope). Org layer: org_review DRAFT on
+disk, NO organiser charter registered — run-8's 6 conditions + tester T1-T3 bind at ADOPTION;
+still OWED ME: audit of organiser's FIRST distillation vs raw transcripts. Engine integrity
+re-derived (blob md5s canonical).
 **Run-5..9 state (compressed):** entry-7 pin gates everything. Entry-2 re-pricing answered
 (terms locked/marks float; extrinsic := continuation premium; expiry-language BANNED — honored
 by AC-6). Entry-3: #8 live-curve exercise SETTLED ("1 yes"); #9 funding anchor RULED (unskewed
@@ -100,11 +112,12 @@ member, same kurtosis) = AC-5 F5 (credited); #13 solvency DEFERRED-not-satisfied
 it as contract+extrinsic B1. Entry-4: LDF=height fn (AC-4); entry-5 budget (x,y,w live + τ
 static, γ derived) = AC-3 quote-exact. U1 residue carried honestly in AC-4. Manager's operating
 default (warp PRIMARY, mode = selector) labelled veto-PENDING in AC-2. Watch-notes: AC-3 "δ=τ"
-= budget-slot wording (deliverable B should say "δ fills the τ slot"); carry-P per family thin.
+= budget-slot wording (deliverable B should say "δ fills the τ slot"); carry-P per family thin
+(AC-9 "P-analogue" asserted, not constructed — candidate for the genuinely-missing list).
 **DELIVERABLE B (comparison table) gate:** all 16 rows per family + 5-item gate + per-cell
 provenance + run-2 forced rows EVALUATED per family (not restated) + scope column for q≠p +
-which AC-2.5 option each family assumes. (Flags 1–3 resolved — that precondition now met.
-Table itself still gated on operator's entry-12 exploration returning.)
+which AC-2.5 option each family assumes + (run-11) per-component propagation shown per family,
+not just curve admission. (Table still gated on operator's entry-12/15 exploration returning.)
 
 ## STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11 entry 8 VERBATIM in
 ## transcript; comprehension confirmed run-6; my 8-point audit gate in run-6 history)
@@ -116,8 +129,8 @@ don't assume). Engine-path slices serialize behind warp thread; hook fire-proof 
 **Run-8 (verdict #7, org review 59dc739/9d87309): PASS-WITH-CONDITIONS, 6 binding AT ADOPTION**
 (organiser engine ban unconditional; ORIGIN RULE; dual-author ledger labels; transition = tester
 sign-off + my audit of first distillation + TLDR line to operator; adoption edit-set sweep;
-row-12 wording). Applied 443f756; tester T1-T3 bound 4c787b0. DRAFT + no-charter verified on
-disk (run-10). Adoption still gated (entry-12 context: "organiser registration stay[s] gated").
+row-12 wording). Applied 443f756; tester T1-T3 bound 4c787b0. Adoption unlocked by entry-13
+item 3 GO — my first-distillation audit fires when it lands.
 
 ## STANDING RULE: TLDR-first for everything operator-facing (operator entry 6, 2026-06-11)
 Every operator-facing artifact/relay leads with TLDR — answer first, ≤5 plain sentences, no
@@ -143,10 +156,15 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 8. **FRAMEWORK note (run-9)** → notes/skeptic/VERDICT_FRAMEWORK_2026-06-11.md: PASS-WITH-FLAGS,
    3 narrow standing (cascade label+measurand; spot-trade scope; AC-2.5 option (d)). Core
    survived: all 6 headline legs re-derived; every attacked number reproduced.
-9. **Merge gate focused-carson (run-10, message text): PASS** — #8 corrigenda verified on disk
-   (diff-confirmed hunks), flags 1–3 stood down; org conditions adoption-tier (DRAFT verified);
-   blobs re-derived canonical; 2 non-blocking watch-notes (L224 "all three"; AC-2.5 opener
-   scope). Manager count-slip noted (called it "run-9"; it's run-10 — 3rd numbering slip).
+9. **Merge gate focused-carson (run-10, message text): PASS** — #8 corrigenda verified on disk,
+   flags 1–3 stood down; 2 non-blocking watch-notes. Manager count-slip noted (3rd).
+10. **Entry-18 direct answer (run-11, message text): FLAG-PROCESS vs manager** — entry-1
+   propagation clause quoted (operator did NOT stutter); artifact NOT merely curve-admission
+   (settlement forced, funding/solvency/engine check-equipped, organized curve-inward, checks
+   stated-not-run); manager's "real correction" framing = record misrepresentation +
+   over-concession; genuinely missing = per-component forced-form/check table + list closure +
+   checks run. Steelman partial (table-attachment reading; entry-17 checker-emphasis genuinely
+   sharper) — did not rescue the novelty framing.
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
 - **AC-2 joint characterization core (run-9, MINE + manager's hand check):** reading-1 transport
@@ -154,7 +172,7 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
   validity −1/8>−¼; violation rate (2ε′+1)du; reading-2 ⇒ A=0 ⇒ ε′=0 (and forces dw=0 in
   Balancer foliation ⇒ contradicts entry 16 — reading 1 is also entry-7's plain text + paper
   L39). Direction-independence REAL (linear in du; sell coeff −3.666630 vs buy −3.666703).
-  SCOPE: at-the-mark trades (now carried in the note's §0/row-16/§16) — necessity general,
+  SCOPE: at-the-mark trades (carried in the note's §0/row-16/§16) — necessity general,
   sufficiency spot-sequences.
 - **Germ-family existence for spot sequences (run-9, MINE):** translating w=½−(ũ−c)/8; mode
   residual exactly 0; transport residual cubic in their convention (R=h³/6+h⁴/6 — reproduced
@@ -179,7 +197,11 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 - **GUDERMANNIAN core (06-10):** collapse identity, amplitude law, fan edge exponents, wing-slope
   δ-cancellation, d-rigidity. **Asymptote preservation (F2)**; **kurtosis sign-split (F6)**;
   **(W) endpoints** (τ→∞ CD, τ→0 Laplace). **REPARAM v2 core** leaned-on-not-attacked.
-  (⚠ F2/asymptote ground may be operator-reopened per entry 12 — wait for the ruling.)
+  (⚠ F2/asymptote ground may be operator-reopened per entries 12/15 — wait for the ruling.)
+- **Entry-1 propagation-clause reading (run-11, MINE):** the clause exists verbatim; framework
+  note's propagation content verified by grep (L49 seam contract, L74/L550 settlement FORCED,
+  L377 live-S* fact, row-6/7 dispositions). Settled: "merely curve-admission" is FALSE as a
+  content description, TRUE only of the organizing direction.
 
 ## Team blind-spot patterns observed
 1. **Confidence markers anti-correlate with verification** ("EXACTLY/confident/structural"
@@ -200,17 +222,20 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
 9. **Line-number citations into MUTABLE files rot silently** — prefer quote+anchor.
 10. **Controls drafted in the QUEUE, not the CHARTER** — demand controls in standing documents.
 11. **Headline scope-narrowing:** fine print knows, headline doesn't. Run-10: fix verified at
-  ALL headline layers (§0/row-16/§16) — but patched paragraphs can leave INTERNAL residue
-  ("admits all three" above a four-item menu): after a corrigenda pass, re-read the WHOLE
-  patched paragraph for self-consistency, not just the inserted sentence.
-12. **Manager numbering slips (3rd instance: run-5/6 in audit brief; verdict "#9"; this task
-  "run-9").** Harmless so far but provenance citations key off these numbers — check the number
-  against my ledger every time before citing.
-13. **Relay-text verification ceiling (new, run-10):** manager replies are NOT transcribed by
-  policy, so "the relay carried X" is structurally manager-attested only. Available evidence =
-  commit ordering + written ownership in corrigenda + operator's response behavior. When a
-  correction's operator-facing leg lives in a relay, state the ceiling explicitly — never
-  upgrade order-consistency to "verified."
+  ALL headline layers — but after a corrigenda pass, re-read the WHOLE patched paragraph for
+  self-consistency, not just the inserted sentence.
+12. **Manager numbering slips (3rd instance).** Provenance citations key off these numbers —
+  check against my ledger every time before citing.
+13. **Relay-text verification ceiling:** manager replies are NOT transcribed by policy, so "the
+  relay carried X" is structurally manager-attested only. State the ceiling explicitly — never
+  upgrade order-consistency to "verified." (Used again run-11 on the entry-17 reply quotes.)
+14. **Operator pushback triggers reflex concession, not record check (NEW, run-11).** Under
+  "its not just a curve check gang," the manager conceded a NEW "real correction" instead of
+  checking entry 1 — where the requirement already stood verbatim — and thereby undersold an
+  artifact it had itself audited 16/16. Sycophancy toward the operator is still a defect: a
+  "correction" claim is a TRUTH CLAIM about the record; verify novelty against the verbatim
+  transcript before accepting it. Twin of pattern 1 (confidence under social pressure replaces
+  verification).
 
 ## Method notes (env)
 - mpmath importable (dps=30 fine). Reusable rigs: (W)-membership (w_eff vs ũ); trade-mechanic
@@ -224,5 +249,9 @@ deliverable (emit the block, never announce it). Verbatim duty unchanged for tra
   prose claims); blob check = `awk '{print length($0),NR}' | sort -nr | head` then
   `sed -n '74p;1060p' | md5sum` vs CLAUDE.md §3 canonicals; charter-registration check =
   `ls .claude/agents/`; DRAFT label = head of the doc, not the commit message.
+- **Record-fidelity rig (run-11):** when anyone calls an operator message a "correction" or
+  "new requirement," grep the session transcript for the ordering language FIRST (here: entry 1
+  "propagating through every component"), then grep the artifact for the machinery (here:
+  forced|FORCED|consistency|propagat) — judge novelty only after both.
 - **Verbatim channel:** `history/operator/<date>_<slug>.md` (live 2026-06-10+). Pre-policy GH-era
   rulings = manager-paraphrase provenance, label when cited.
