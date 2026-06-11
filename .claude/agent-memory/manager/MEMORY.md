@@ -1,19 +1,6 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
 
-## ⏳ QUEUED — REPO RESTRUCTURE + ORG-CHART (operator entry 52, NOTE-AND-QUEUE; NOT executing yet)
-Operator wants ruthless split: `framework/` (curve-AGNOSTIC spine — carry/rebase/value∝S^−γ/ITM/
-funding/dollar-pipe/solvency/file-safety/inventory/motive — first-class top-level) + `curves/`
-(per-curve, with `PIVOTS.md` mapping P0 barrier→P1 Balancer v24→P2 GH v25-26c→P3 (W) v27→P4 fork
-A/B→P5 polar-distribution rethink, as labelled chapters not bulk). Skeptic plan:
-`notes/skeptic/QUEUED_PLAN_repo_restructure_2026-06-11.md`. Skeptic rulings: narrow READ-ONLY
-librarian agent defensible (it files, doesn't adjudicate truth; recruit=OPERATOR-TIER, my call to
-ask); shed only build-lineage *narration* from tester (KEEP DIFF_LEDGER + UI smoke-pass — those are
-verification); **framework side may proceed first; curve-side filing WAITS on the entry-53 polar
-redesign settling**; HEAD HTML relocation is FILE-SAFETY-GATED (gate keys off canonical path), not a
-docs move; history/blobs/correction-headers = DO-NOT-TOUCH. **OPEN operator asks (relayed):** recruit
-librarian Y/N; A1 agnostic layout (contract-up-top vs all-in-one); A2 Lean split physical vs INDEX
-annotation (skeptic rec: annotation); A3 ruthless=move-now vs skeleton-first (skeptic rec: skeleton).
-This is high-blast-radius repo-wide = operator-tier; I confirm scope before any move.
+## ⏳ QUEUED — REPO RESTRUCTURE + ORG-CHART (operator entry 52) — **WITHDRAWN entry 54** (operator: "message for another chat, ignore that"). Skeptic's plan note stays filed but DORMANT; do NOT act, do NOT recruit a librarian, no folder moves. Left here only so the filed note isn't mistaken for live work.
 
 ## ⏳ LIVE BRAINSTORM — POLAR LIQUIDITY-DISTRIBUTION CURVE REDESIGN (entries 47–53, READ-ONLY, no build)
 Operator exploring REPLACING the (W) weight-field curve with a first-principles **relative-radius
@@ -29,7 +16,10 @@ point tilt off 45° (weight-free, read from geometry) vs frozen wing-exponent di
 bounded (0,90°) ⇒ premium floor (intrinsic). OPEN crux: a weight-free x,y→tilt map is a DIFFERENT
 trade mechanic than the current α/β-conserving warp — what it conserves + closed-form + arb-sane is
 the derivation. Offered research-lead read-only pass (g(θ) from scratch, even/odd knobs, weight-free
-reserve→skew map + its conservation law, closed-form/arb check); AWAITING operator go.
+reserve→skew map + its conservation law, closed-form/arb check); **DISPATCHED entry 54 (research-lead a3e8b578, read-only, bg).** Brief:
+g(θ) from scratch; even=kurtosis⊥odd=skew; frozen γ₋,γ₊ corners; weight-free (x,y)→tilt map + its
+conservation law; closed-form/arb-sane; new-object-vs-rechart-of-(W); DOF count; bounded-support
+premium-floor vs value∝S^−γ lock (operator-tier flag). HEAD untouched 928cde1c.
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
