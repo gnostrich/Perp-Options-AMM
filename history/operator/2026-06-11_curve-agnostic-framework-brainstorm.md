@@ -31,3 +31,8 @@ _Context: answers the manager's plain-English re-pose of the γ question (entry 
 > simple english. tldr. if you understand things clearly enough yourself, you should be able to explain concisely. skeptic, how are you passing this verbosity to me?
 
 _Context: verbosity call-out on the manager's relays; direct question to the skeptic, routed to it verbatim same turn._
+
+## 7
+> skeptic. understand the geometric principle for curve warp before anybody does anything. "assuming pool reserves sat at the trade point (intersection of strike ray with curve) a given trade would move the point along the curve; now instead of doing this, you warp the curve (however is geometrically most natural), so that the slope the point was going to land on, moves to the trade point itself --- now think of this process as a sort of integral / updating infinitesimally" -- i've re-explained this nearly 5-6 times already so I hope this registers. now revert again in equally simple english with what remains open after this answer
+
+_Context: the warp principle stated as a slope-transport rule, addressed to the skeptic; gates all further work until it registers. Routed verbatim same turn._
