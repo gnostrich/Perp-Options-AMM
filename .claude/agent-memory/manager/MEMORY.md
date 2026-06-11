@@ -25,6 +25,17 @@ still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern bui
 - Honest carry (both A,B): `(α,β)`-flow-confinement lemma [needs-Aristotle], numeric-faithful only.
   Notes: `notes/research/{SPEC_tradepoint_anchoring_REPOSED,WARP_divergence_reconcile_and_cap,
   BRAINSTORM_B_per_notional_slippage,CURIOSITY_B_*}_2026-06-1{0,1}.md`; skeptic VERDICT_tradepoint_*.
+- **NATURALNESS inquiry (entry 41) — RESOLVED, skeptic-PASS (`VERDICT_NATURALNESS_polar_kurtosis_map`).**
+  The √-kernel/polar map IS honestly "the natural PRIMITIVE": singled by INTEGRABILITY (unique family
+  member with an algebraic curve invariant `√(τ²+u²)`; tanh→ln cosh, erf→non-elem); cosh = its
+  coordinate (trig-flag SATISFIED, zero new DOF, skeptic re-derived 1.1e-16); LEAST-divergent
+  frozen-wing map. HONEST CAVEAT (the note makes it, skeptic confirmed): the SHOULDER is
+  under-determined — integrability is a TIEBREAK not a law, so "natural primitive" NOT "only
+  conceivable curve." **Divergence is INTRINSIC/map-independent** (frozen wing ⟺ w′→0 ⟺ gearing→∞ for
+  ALL maps; ours is the gentlest) ⇒ A's (g.4) strike cap is map-independent, NOT a symptom of a wrong
+  map. 2 NON-blocking skeptic flags: note's frozen-wing residual digits ~100× optimistic (5e-6 vs true
+  5.5e-4 — the RATIO ~60× holds; don't cite 5e-6 as a bound); a gd-table normalization footnote.
+  **Net: foundation sound + vetted; build decision (A ≤~1.4× strike cap, intrinsic/unavoidable) back to operator.**
 
 ## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
 **CURRENT HEAD md5 = `1eebfcd6f6ff4f4e3df5f745ac145f19`** (promotion `b245bfda` → UX-restore

@@ -727,3 +727,43 @@ inventory, operator answered — remaining live tail = every curve note must dis
 - Safe boundary (gate pool, dy=0.1): |φ′|≤τ up to K≈1.35·mp0, ≤1 up to K≈1.70·mp0, wing-saturation ~8×.
 - Gate g.1 (noise-floor-relative + ordered, pinned pool/dy, FLOOR=max guard) is correct for strike-dep but has NO
   |φ′| magnitude bound — |φ′|=39 passes unchanged. Needs (g.4) sanity bound (threshold = operator cap).
+
+20. **2026-06-11 — NATURALNESS polar/√-kernel map (verdict #20; operator entry 41 verbatim, READ-ONLY)** →
+   `notes/skeptic/VERDICT_NATURALNESS_polar_kurtosis_map_2026-06-11.md`. Vet a NATURALNESS claim before
+   the operator (entry 41: "is our polar map the most natural one … read only"). Artifact =
+   `notes/research/NATURALNESS_polar_kurtosis_map_2026-06-11.md`. **VERDICT: PASS — claim HONESTLY SCOPED,
+   not over-reaching.** The note SUPPLIES its own narrowing (canonical AS PRIMITIVE / one-of-a-family
+   shoulder / integrability=TIEBREAK-not-forcing / trig=lens-only) — the exact hedge I would have forced.
+   **Re-derived all load-bearing numerics fresh** (`/tmp/sk_natural{,2,3}.py`): (1) integrability uniqueness
+   — √-kernel ∫=√(1+u²) ALGEBRAIC (diff 3.4e-14), tanh→ln cosh TRANSCENDENTAL (2.8e-14), erf→u·erf+gauss
+   NON-ELEMENTARY (8.9e-16); mgr's d/dx√=x/√ confirmed (3e-11). (2) trig-flag: cosh/√ bijective COV, ZERO
+   new DOF — τcosh(η)=√(τ²+u²) to 2.8e-14, w_sqrt(u)==wmid+(dw/2)tanh(η) to **1.1e-16** (== verdict #5 fact,
+   consistent w/ Gudermannian #3 lens-only ruling). (3) divergence intrinsic + ranking: gearing 1/w′ at
+   x=3/5/8/12 reproduced byte-level (√ 31.6/132.6/524/1746 == note; erf 6.8e21; tanh 2.2e6; alg 16/36/81/169;
+   softening √/alg 1.98/3.68/6.47/10.33 == note ~2/3.7/6.5/10.3); wing-decay exponents −3.000 √ / −1.985 alg.
+   Frozen⟺w→const⟺w′→0⟺gearing→∞ for ANY frozen wing = map-independent generalization of my #19 (ln K)³ —
+   CONSISTENT. **2 NON-blocking flags:** (a) FLAG-OVERSELL narrow — frozen-wing residual DIGITS ~100× optimistic
+   (note 5e-6 √/1e-3 alg; true 5.5e-4 √/3.2e-2 alg) BUT the ~60× RATIO the argument uses is correct, no decision
+   rests on the absolute; (b) note-quality — gd row uses unstated sech-x normalization (reproduces 74/1490 under
+   sech; my (2/π)atan(sinh) gave 1288/143k — both "the gd", gd not the recommendation). Neither changes the
+   operator-facing verdict. **Operator can be told WITHOUT narrowing: "natural primitive (integrability-singled),
+   one-of-a-family shoulder, trig-flag-satisfied, least-divergent — divergence intrinsic."** Inventory: touches
+   #1/#2/#3/#6/#16, all honest; #16/divergence front-and-center (== my #19), NOT silently dropped; #6 G4
+   wing-exactness correctly invoked as the contract the algebraic shoulder would erode. Did NOT flag missing
+   #4/#5/#7/#8/#9/#10/#11/#13 — out of this note's question-scope (shoulder naturalness), dragging them in = noise.
+   Convergence-alarm LOW (note self-limits: refuses "THE most natural", kills max-entropy rescue with team's own
+   dead d-law, confirms divergence unavoidable = my #19 (g.4) cap is right). Verbatim channel: entry 41 quote in
+   artifact; relayed as context, reviewed artifact+re-derived directly.
+
+## Claims mine-to-defend (verdict #20 — naturalness)
+- Integrability uniqueness REAL: √-kernel is the ONLY §1-family member with closed-form ALGEBRAIC curve
+  invariant (√ algebraic 3.4e-14 / tanh transcendental ln-cosh / erf non-elementary). It is a TIEBREAK not a
+  forcing — no economic/geometric necessity requires an algebraic (vs transcendental) level set; the note says so.
+- cosh/√ = bijective COV, ZERO new DOF (w_sqrt-in-u ≡ tanh-in-η to 1.1e-16). Trig is lens-only, content-free —
+  trig-flag SATISFIED, consistent w/ #3 (the rejected d-law was a content-claiming use; this lens use is honest).
+- Divergence is INTRINSIC to any frozen-power-law-wing map (w′→0 forces gearing→∞), map-independent — the
+  general form of my #19 (ln K)³. √-kernel is least-divergent among crisp-frozen maps (polynomial u⁻³ vs erf/tanh
+  exponential); only the algebraic u⁻² shoulder is gentler, bought with ~60× less-crisp freezing + loss of the
+  algebraic invariant (a net downgrade). The (g.4) strike cap is unavoidable under ANY natural shoulder.
+- NOTE DIGIT correction (mine): frozen-wing residual 1−s(30) is 5.5e-4 (√) / 3.2e-2 (alg), ~100× the note's
+  5e-6/1e-3; only the ratio (~60×) is load-bearing and it holds. Don't let 5e-6 be promoted as a precise bound.
