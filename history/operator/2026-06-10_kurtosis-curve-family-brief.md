@@ -547,3 +547,17 @@ _Context: operator pins the Balancer axiom — w weights x, 1−w weights y, mus
 _Context: comprehension narrowing — weight field understood; what is "wing weights"._
 
 > i get weight field thing but what is wing weights?
+
+---
+
+## Entry 75 — 2026-06-11
+_Context: operator asks why steepness editing on the HTML didn't work properly for them._
+
+> now why was I unable to edit steepness properly on the html?
+
+---
+
+## Entry 76 — 2026-06-11
+_Context: design question — with asymmetric wing weights, how does skew work; shouldn't skew follow an analytic function rather than extrinsic specification._
+
+> also with this curve how does skew work if you're going to have some asymmetric wing weights or whatever... shouldnt it follow an analytic function instead of us specifying extrinsically
