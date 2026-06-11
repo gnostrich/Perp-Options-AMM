@@ -561,3 +561,10 @@ _Context: operator asks why steepness editing on the HTML didn't work properly f
 _Context: design question — with asymmetric wing weights, how does skew work; shouldn't skew follow an analytic function rather than extrinsic specification._
 
 > also with this curve how does skew work if you're going to have some asymmetric wing weights or whatever... shouldnt it follow an analytic function instead of us specifying extrinsically
+
+---
+
+## Entry 77 — 2026-06-11
+_Context: the confrontation question — given the Merton-quadratic calibration is legitimate, how is curve steepness initialized for arbitrary asset vol, and did v27's restrictions allow it; "either that HTML or the theory is wrong"._
+
+> ok then if the theory is legitimate, i'll ask you again, how do i initialise the curve flatness / steepness for an asset or arbitrary vol and whether you think the restrictions in the HTML v27 i played with allowed that or not? either that HTML or the theory is wrong isnt it
