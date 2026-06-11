@@ -1,7 +1,74 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-10 (branch claude/ecstatic-planck-ridcyr → PR #22 squash-merged to main
-`9c633445`; governance config-only). This is the project's state-of-the-whole; git history is the
-mechanical audit trail._
+_Last updated: 2026-06-11 (branch claude/focused-carson-15117f, LIVE session). This is the
+project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★★ ACTIVE 2026-06-11 — CURVE-AGNOSTIC FRAMEWORK BRAINSTORM (pre-go-ahead; operator in the room)
+- **Transcript:** `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` (3 entries
+  so far, all verbatim, committed in-turn). Engine untouched (HEAD v26c 6cc73563); non-engine branch.
+- **Entry 1 (the spec):** curve-warp AMM; control skew+kurtosis of the LIQUIDITY DISTRIBUTION
+  FUNCTION on the 90°→180° hyperbolic-polar fan (= research-lead's Gudermannian object), mode=spot;
+  ideal: (x,y,w) determine skew, ONE static vol-set kurtosis knob; scaffolding stays, curve is the
+  open slot. Work scoped (NOT started — go-ahead pending): (A) airtight curve-agnostic framework
+  (info-geom/PH lift of the single-μ core), (B) tabular curve comparison propagating all 16
+  inventory components.
+- **Entry 2:** open options DO re-price — "extrinsic values change because the 'secondary market'
+  has repriced" (answers skeptic's standing BRAINSTORM_2026-06-10 question; appended verbatim
+  there). My labelled read relayed in-chat (intrinsic terms fixed, extrinsic floats on live curve).
+- **Entry 3 (answers my 3 propagation consequences):** (1) exercise on the live warped curve = YES;
+  (2) **funding = geometric comparison across curves: anchor curve UNSKEWED, pool curve may be
+  skewed, BOTH same kurtosis** (curve-agnostic generalization of the w=½ anchor — resolves "what
+  replaces w=½ per curve" and the "anchor when w is a field" worry); (3) pool-depth impact =
+  design choice, "not impacted" currently easier; "unified the two ⇒ baked into per-strike-ray
+  pricing alreay i thinl" (my reading = v26c uniform strike registration; AMBIGUITY flagged to
+  operator, confirm owed).
+- **research-lead pass 1 RETURNED** (relayed verbatim to operator): truth-up confirmed; U1 partially
+  resolved (fan density; residual = WHICH density rides the fan — depth vs latent kernel, kurtosis
+  SIGN flips); framework skeleton = admission contracts (generator/validity/fan/wings⇒S*/Trade-
+  Formula-warp/carry-rebase/funding-anchor/registration/slippage/solvency-report); 7 candidate rows
+  (GH-fixed · B-MINIMAL · B-FULL · (W) · (W)+Trade-Formula · Balancer · tanh-score control); 5 qs.
+- **skeptic pass 1 RETURNED:** channel verified (no FLAG-PROCESS); U1 object pinned, remainder =
+  operational LDF definition + moment coordinate; table gate recorded in its MEMORY ("all 16 per
+  family + per-cell provenance"); queued audit of "pivot landed" claim. **RELAY GAP (named to
+  operator, not papered):** its run announced a relay block it never emitted — substance lives in
+  its MEMORY update; follow-up run dispatched to emit the block + verdict entry-2 (appends to
+  BRAINSTORM file itself). Its FLAG-OMISSION (research-lead MEMORY "15-item table") → FIXED by
+  manager corrigendum 2026-06-11 (in-file, attributed); awaiting skeptic stand-down.
+- **CONVERGENCE (headline for operator):** research-lead and skeptic INDEPENDENTLY landed on the
+  same top question — which density operationally IS the LDF (liquidity depth vs latent kernel;
+  sign of kurtosis flips between them; plain-Balancer depth has no mode in one reading).
+- **Entries 4+5 (operator):** LDF = closest-axis thickness of the curve (180° case: just height) —
+  a THIRD object vs the two debated (fixes "Balancer has no mode"); mode = 'pool mark' (accurate
+  term) at every skew, CONJECTURED = the unit-tangent-slope point (|dy/dx|=1) — research-lead
+  checking (run aed838ad, in flight; my hand-check + skeptic's independent numeric both find the
+  raw-min(x,y) mode PINNED at x=y on weighted Balancer while unit-slope sits at ln((1−w)/w) ⇒
+  either the 180° unfolding reconciles them or the conjecture is the definition-SELECTOR; "at
+  every skew" is the suspect clause). **Entry 5 = HARD PARAMETER BUDGET:** "no separate knob for
+  wing sttpness etc. its x y w determing skew, and single kurtosis / steepness knob thats it" —
+  γ is DERIVED from (x,y,w,τ), never a fifth dial. Admission-contract consequence: today's engine
+  (γ own dial, no live w) fails the budget as-is; (W)'s (w₋,w₊) pair must compress into it.
+- **skeptic entries-3/4 reply (in BRAINSTORM file, lines 130-165):** #8 SETTLED; #9 funding now
+  WELL-POSED (anchor = unskewed same-τ member) + NEW anchor-existence column (GH β=1 couples
+  skew↔kurt ⇒ zero-skew member may not exist per candidate); #13 DEFERRED-not-satisfied
+  (liabilities still re-mark; reachable-warp-set boundedness needed; "baked in… i thinl" = hedged
+  conjecture, must be proven); manipulation/cost-to-warp column mandatory; PASS conditions listed.
+- **research-lead LDF check LANDED (`framework/LDF_DEFINITION_CHECK_2026-06-11.md` (moved from notes/ in slice 1), 9e64152) + skeptic
+  AUDIT verdict #5:** substance PASS (tripwire NOT tripped; all decisive numbers reproduced;
+  "conjecture = anchor-preservation under skew" sold at right strength). RESULT: LDF =
+  closest-axis thickness WORKS (Balancer gets a real mode); conjecture EXACTLY TRUE for anchored
+  warp (w_mid=½, skew=Δw, any τ in validity gate), FALSE for constant-weight skew (excluded — no
+  elasticity−1 point) and live GH (mark off-mode by e^ghMu exactly: 44.5223/748.6197,
+  manager-engine-verified) ⇒ conjecture = ADMISSION CONTRACT (pins skew mechanism + carry gauge;
+  height free up to symmetry). Pool-mark leg = item-16 acceptance test [OPEN, operator adoption
+  pending]. 2 narrow skeptic flags FIXED by dated corrigenda §8 (validity clause in summary item
+  2; 748.66→748.62 digit slip — MY "rounding/pool-constants" wave-off was an invented attribution,
+  owned, pattern-7 3rd instance: never explain a delta without the one-second check); §5 marked
+  answered-by-entry-5; carry-forward tension recorded (live w ↔ Δw map = inside item-16 OPEN).
+  Skeptic stand-down on the corrigenda = pending its next look.
+- **OWED next:** operator: (a) go-ahead on framework build, (b) adopt mode-at-mark as item-16
+  acceptance test y/n. Then dispatch framework build (A) then table (B) — framework note owes
+  anchor-existence column, #13 reachable-set, cost-to-warp column, the w=α/x↔Δw map treatment;
+  skeptic mandatory pass before any merge. U1 residue: LDF-kurtosis height-choice sentence
+  eventually needed.
 
 ## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
 Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two

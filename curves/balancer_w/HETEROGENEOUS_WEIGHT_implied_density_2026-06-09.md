@@ -3,8 +3,9 @@
 _2026-06-09, research-lead. DERIVATION deliverable (operator wants the closed form). No engine edits,
 no Aristotle submits, no git. Grounded in `engine/knowledge/GH_MATH.md`,
 `formal/temporal_lean_verified/RequestProject/AMMCurve.lean`, and the prior notes
-`REPARAM_balancer_kurtosis_dropin_2026-06-09.md`, `CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`,
-`perpetual_option_reconciliation_2026-06-09.md`. All numerics this pass mpmath, 30–50 digit, by direct
+`curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`,
+`curves/gh/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`,
+`notes/perpetual_option_reconciliation_2026-06-09.md`. All numerics this pass mpmath, 30–50 digit, by direct
 integration (not formula-arguing). Confident vs conjectural marked inline._
 
 ---

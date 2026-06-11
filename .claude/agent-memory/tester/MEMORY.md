@@ -1,53 +1,93 @@
 # MEMORY — tester
-_Last updated: 2026-06-10, after the OPERATOR-VOICE backfill of DIFF_LEDGER.md._
+_Last updated: 2026-06-11, after the org-review sign-off + ledger stale-fact fixes._
 
-## ★ NEW STANDING DUTY (operator-directed 2026-06-10) — OPERATOR-VOICE layer of DIFF_LEDGER
-Operator's mandate, verbatim: "if the tester is responsible for version control then apart from
-just taking screenshots and checking the UX, he has to take full responsibility to even scan the
-chats transcripts to distill my objections to each version, open questions etc."
-At EVERY ledger entry I now ALSO: scan `history/` transcripts (+ any newer transcript artifacts),
-distill the operator's OWN words (objections VERBATIM + file:line ref / open questions / rulings),
-fill the entry's OPERATOR-VOICE block + the rolling ⭐ OPERATOR OPEN QUESTIONS list. RESOLVED only
-with evidence (ruling quote or verified fix). Skeptic audits my distillation against raw
-transcripts and OUTRANKS everyone but the operator — unresolved-presented-as-resolved is the
-named failure. Never paraphrase an objection into something easier. Provenance labels I use:
-[verbatim-transcript] / [manager-recorded paraphrase] / [summary-stub].
+## ★ 2026-06-11 — ORG-REVIEW SIGN-OFF (skeptic run-8 cond 4i) + ledger stale-fact fixes
+**I SIGNED OFF YES** on the organiser handover as conditioned (`docs/org_review_2026-06-11.md`,
+443f756; skeptic verdict #7 PASS-WITH-CONDITIONS, 6 binding — see skeptic MEMORY ~L238-263).
+What moves: DIFF_LEDGER rolling feature-state TABLE curation + backfills, OPERATOR-VOICE
+distillation + rolling OQ list, staleness sweeps. What I KEEP: all verification (browser+oracle),
+evidence files, FLAG verdicts, authorship of every verification entry (the facts).
+**My 3 sign-off conditions (recorded in my reply to the manager):**
+- **T1 (verbatim-lift):** any state/verdict wording the organiser puts in a table cell must be a
+  VERBATIM LIFT from my verification entry (or a verbatim transcript), never a restatement — the
+  origin-rule leak is COMPRESSION (the org review's own row-12 "pivot landed" oversell, caught by
+  skeptic cond 6, is the existence proof). My side of the deal: **every verification entry I
+  write now carries an explicit per-feature row-verdict line** for each feature # listed, so the
+  organiser always has a liftable source and any non-matching wording is detectable=FLAG.
+- **T2 (clean baseline):** handover starts from the stale-fact-clean ledger I produced today (so
+  the skeptic's audit of the organiser's FIRST distillation isn't confounded by my-era staleness).
+  DONE — see below.
+- **T3 (frozen pre-handover blocks):** everything distilled before handover stays tester-authored
+  and frozen; organiser changes to those blocks = dated, labelled addenda, never in-place rewrites.
+**YOURS-only declaration:** the 2026-06-10 backfill — all 3 entry OPERATOR-VOICE blocks, the
+rolling OQ list (8 OPEN + 4 RESOLVED), and the transcript-gap honesty note — tester-authored.
+**Handover NOT yet effective:** still pending = skeptic cond-5 sweep (DIFF_LEDGER header, my
+charter L31-54, CLAUDE.md §2, skeptic charter, §2.2) by the manager, skeptic audit of organiser's
+first distillation, operator one-line notification (veto room open). **Until that completes the
+ledger duties remain MINE.**
 
-### Backfill DONE (2026-06-10) — what I wrote and where it came from
-- Read end-to-end: `history/transcript_journal.txt` (105 ln, session-summary catalog, last entry
-  2026-06-06) and `history/session_tree_note.md` (4100 ln, canonical PRE-GH note: composite-ray
-  v24 / v25-american / convexity-knob arc, ends at the curve-shape pivot). Swept `notes/`,
-  `docs/` (incl. `docs/context/chats/*.md` summary stubs), manager `MEMORY.md`, feature inventory.
-- Wrote: OPERATOR-VOICE blocks on all 3 backfilled entries + populated the rolling list
-  (8 OPEN items + 4 RESOLVED/RULED items with evidence) + a provenance/honesty note. Mandate
-  quote added to the ledger header.
-- Key verbatim operator quotes recovered (all session_tree_note.md unless noted):
-  "hid and aggregated away information" (:353, old portfolio); "I buy a discount IOU to receive
-  1 BTC after 12 months, on dollar margin" (:921-923, Fork-C settlement ruling); "same carved
-  slice everything — that's why it retains fraction-of-perp pricing" (:3206-3207, caught the
-  pass-3 settlement gap); "looked the same instead of steeper (american-style implies steeper)"
-  (:3460-3461, chart-shape objection); "initial not closing, escrowed not appropriated" (:3754);
-  fragments via manager MEMORY: "yes to all" (:32), "diligent… feature-level… so I don't ever
-  have to keep inventory" (:44-45), "I trust Aristotle" (:360).
-- Finding-2 chain fully evidenced: origin transcript :3444-3458 → og-manager-clone-1.md:18-20 →
-  operator ruling 2026-06-08 (manager MEMORY:505-506) → v26c absorption (my live confirmation).
+### Ledger fixes I applied 2026-06-11 (my file, my facts; markdown only, no engine source)
+Splice with count==1 asserts: `engine/splices/splice_ledger_stalefix_2026-06-11.py` (9 reps):
+- **Row #12** — skeptic cond-6 wording character-exact ("5 faith gates landed green (a8998cf);
+  completeness of the faithfulness program unaudited"), + my own evidence tail; last-changed
+  2026-06-10 (a8998cf); verdict GUARDED — completeness unaudited.
+- **OQ item 4** — re-scoped: hold RULED-lifted (operator "1 yes", entry 14 ruling 1,
+  `history/operator/2026-06-10_project-status-review.md` [verbatim-transcript]); what stays OPEN
+  = the completeness audit (live engine reproduces EVERY proven construct).
+- **4 stale paths** (skeptic slice-1 count, dc254ad): CURVE_SWAP → `curves/gh/...:93` (line holds);
+  KURTOSIS_KNOB → `curves/balancer_w/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md` — I
+  re-verified the quote anchors in the moved file: **two line refs had DRIFTED**
+  (:282-284→:284-285, :175-176→:177); fixed with re-checked quotes. Lesson: a path swap without
+  re-anchoring the quote plants a fresh stale fact.
+- **Provenance upgrades** (my OPERATOR-VOICE duty): header mandate cite + pain-points item now
+  cite the verbatim transcript (entries 5/2/4); the backfill honesty note kept VERBATIM with a
+  dated UPDATE appended (corrigenda style, not in-place rewrite).
+**My evidence for "green":** I re-ran `engine/verify/run_all.sh` myself 2026-06-11 vs HEAD —
+integrity md5s exact (6cc73563 / ab663f5c / c505b08a), 7 GH gates, slope identity, seam, dir,
+FAITH 1–5 all PASS (FAITH-FISHER final PASS; set -e chain). Not borrowed from the skeptic's run-7.
 
-### ★ THE HONESTY GAP I FLAGGED (do not lose this)
-**The GH-era sessions are NOT in `history/`.** transcript_journal stops 2026-06-06;
-session_tree_note ends pre-GH. So v25-GH / v26a / v26b / v26c (2026-06-08), governance + AIRTIGHT
-(2026-06-09), and the pain-point conversation (2026-06-10) have NO raw transcript — operator
-voice for the exact versions the ledger covers is secondhand (manager MEMORY paraphrase +
-docs/context/chats stubs + quote fragments). Today's directives reach me only via charters and
-manager memory. Recommended to manager/operator: export the 2026-06-08/09/10 transcripts into
-`history/` so the skeptic can audit raw words, not reconstructions.
+### ★ TRANSCRIPT-GAP STATUS (updated 2026-06-11 — supersedes the 06-10 note below in part)
+`history/operator/2026-06-10_project-status-review.md` EXISTS (verbatim, 20 entries; 1–6
+pre-policy backfill, labelled). 2026-06-11 sessions transcribe live
+(`2026-06-11_curve-agnostic-framework-brainstorm.md`, 9 entries at my read). **Remaining gap:
+2026-06-08/09 only** (v25-GH/v26a/v26b/v26c + governance/AIRTIGHT sessions) — export request
+stands. Key 06-10 verbatim anchors: entry 5 = my duty origin ("full responsibility… scan the
+chats transcripts…"); entry 14 = rulings 1-3 (pivot un-hold "1 yes"; trades-bend-curve "2. yes";
+kurtosis = static steepness); entry 16 = "its w that the trade changes"; entry 10 = the prize.
 
-### Watch-items I carry from the backfill
-- Rolling-list item 5: operator's "|Γ|≤1 exact; |Γ|>1 = labelled approximation" rider
-  (MEMORY:177-180) vs engine locked at γ>1 — nobody has verified an approximation LABEL actually
-  ships in UI/paper claims. Keep against future paper/UI passes.
-- Kurtosis era-reversal recorded (old "Rohan does not want kurtosis" :1056-1057 vs new motive
-  "purpose = kurtosis knob") — superseded, not open; recorded so it can't be cited stale.
-- Slippage-magnitude collar item is PARKED not resolved — re-surface if collar UX ships.
+## ★ STANDING DUTY (operator-directed 2026-06-10, entry 5) — OPERATOR-VOICE layer of DIFF_LEDGER
+**Being transferred to the organiser per operator entry-8 authorization (2026-06-11) — mine until
+the transition protocol completes (see sign-off section).** Mandate verbatim: "if the tester is
+responsible for version control then apart from just taking screenshots and checking the UX, he
+has to take full responsibility to even scan the chats transcripts to distill my objections to
+each version, open questions etc." Scan order: `history/operator/` FIRST, then legacy
+transcript_journal + session_tree_note. RESOLVED only with evidence. Never paraphrase an
+objection into something easier. Labels: [verbatim-transcript] / [manager-recorded paraphrase] /
+[summary-stub]. Skeptic audits my distillation and outranks everyone but the operator.
+
+### Backfill DONE (2026-06-10) — what I wrote and where it came from (FROZEN as tester-authored)
+- Read end-to-end: `history/transcript_journal.txt` (105 ln, summaries, ends 2026-06-06) and
+  `history/session_tree_note.md` (4100 ln, pre-GH canonical, ends at curve-shape pivot). Swept
+  `notes/`, `docs/` (incl. context/chats stubs), manager MEMORY, feature inventory.
+- Wrote: OPERATOR-VOICE blocks on all 3 backfilled entries + rolling list (8 OPEN + 4 RESOLVED
+  with evidence) + provenance/honesty note + header mandate quote.
+- Key verbatim recoveries (session_tree_note unless noted): "hid and aggregated away information"
+  (:353); "I buy a discount IOU to receive 1 BTC after 12 months, on dollar margin" (:921-923,
+  Fork-C); "same carved slice everything…" (:3206-3207, pass-3 settlement gap); "looked the same
+  instead of steeper (american-style implies steeper)" (:3460-3461); "initial not closing,
+  escrowed not appropriated" (:3754). Fragments since UPGRADED to verbatim (2026-06-11 fix):
+  "yes to all" (entry 2), "Id especially want the version control agent to be diligent…"
+  (entry 4). Still manager-recorded: "I trust Aristotle" (MEMORY:360, 06-09 session — gap).
+- Finding-2 chain fully evidenced: origin :3444-3458 → og-manager-clone-1.md:18-20 → operator
+  ruling 2026-06-08 (manager MEMORY paraphrase) → v26c absorption (my live confirmation).
+
+### Watch-items I carry
+- Rolling-list item 5: "|Γ|≤1 exact; |Γ|>1 = labelled approximation" rider vs engine locked γ>1 —
+  nobody has verified an approximation LABEL ships in UI/paper. Keep against paper/UI passes.
+- Kurtosis era-reversal recorded (old "Rohan does not want kurtosis" :1056-1057 superseded by
+  motive). Slippage-collar item PARKED not resolved — re-surface if collar UX ships.
+- NEW: organiser-era watch — T1 verbatim-lift compliance on its first table updates; my row-12
+  evidence-tail style (mandated-wording-prefix + my cite) is the template for liftable cells.
 
 ## DONE — live v26c_full2 browser confirmation (build 6cc73563…)
 Ran **live Playwright Chromium** against `builds/temporal_mvp_v26c_full2.html`. Build md5
@@ -109,10 +149,11 @@ mark cells — strongest possible evidence. (Prior v26b memory said "NOT on wind
 ### Repro
 `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v26c_visual.mjs`
 Crossover-at-K (arb-driven): set #kpi-oracle then click #btn-arb, read Engine.legIsITM live.
-Oracle gate: `cd engine; sh verify/run_all.sh builds/temporal_mvp_v26c_full2.html` (seam+dir PASS).
-Chromium binary at BOTH `/opt/pw-browsers/chromium-1194` and `~/.cache/ms-playwright/chromium-1194`;
-`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` is the one that resolved here. tmp harnesses must live
-under `engine/` so `import 'playwright'` resolves `engine/node_modules/`.
+Oracle gate: `cd engine; sh verify/run_all.sh` (defaults to HEAD; seam+dir+FAITH 1–5 PASS — my
+2026-06-11 re-run). Chromium binary at BOTH `/opt/pw-browsers/chromium-1194` and
+`~/.cache/ms-playwright/chromium-1194`; `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` is the one
+that resolved here. tmp harnesses must live under `engine/` so `import 'playwright'` resolves
+`engine/node_modules/`.
 
 ### Gotchas learned (v26c)
 - chart-select option values: `curve` (canvas-curve, GH pool curve + strike rays), `pricing`
@@ -136,11 +177,12 @@ under `engine/` so `import 'playwright'` resolves `engine/node_modules/`.
 
 ## File-safety canon
 Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060); 3 `<script>` parse.
-v26c_full2 build md5 `6cc73563779a3e030774b7597d0ae187`. v26b HEAD `8df9f8a3…`.
+v26c HEAD build md5 `6cc73563779a3e030774b7597d0ae187` (re-verified 2026-06-11). v26b `8df9f8a3…`.
 
 ## Evidence
 `evidence/v26c_pw/` — 01_inputs, 02_after_execute, 05_bands_table_spot, 06_bands_table_ITM,
 07_polar_mark_pricing, 08/08b/08c_curve_strikeray*, 09/09b_payoff_rebased*, **11_bands_table_crop**
 (ITM legible), **12_bands_table_OTM_crop** (OTM legible), trace.json (all DOM + live-engine numbers,
 sweeps, drift table, chart-vs-table diffs). Harness `engine/verify/pw_v26c_visual.mjs`.
-`engine/builds/DIFF_LEDGER.md` — my ledger incl. OPERATOR-VOICE layer (backfilled 2026-06-10).
+`engine/builds/DIFF_LEDGER.md` — my ledger incl. OPERATOR-VOICE layer (backfilled 2026-06-10;
+stale-fact-clean baseline 2026-06-11 via `engine/splices/splice_ledger_stalefix_2026-06-11.py`).
