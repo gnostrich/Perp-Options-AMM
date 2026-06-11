@@ -1,5 +1,5 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, LDF DEFINITION + MODE-CONJECTURE CHECK (derivation+numerics; NO submit / NO engine edit / NO git)._
+_Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK BUILD (deliverable A; derivations+numerics; NO submit / NO engine edit / NO git)._
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -18,8 +18,42 @@ _Last updated: 2026-06-11, LDF DEFINITION + MODE-CONJECTURE CHECK (derivation+nu
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
 
-### LDF DEFINITION + MODE-CONJECTURE CHECK — 2026-06-11 (operator entries 3–4; derivations INVITED; framework build still PENDING)
-Note: `notes/LDF_DEFINITION_CHECK_2026-06-11.md` (mpmath dps=30; inventory-dispositioned, all 16).
+### CURVE-AGNOSTIC FRAMEWORK BUILD — 2026-06-11 (operator entry 1 spec, entry 9 go-ahead; deliverable A DONE)
+**Deliverable: `framework/FRAMEWORK_curve_agnostic_2026-06-11.md`** — 10 admission contracts AC-1…AC-10
+(warp principle / mode-at-mark / 4-number budget / LDF / funding anchor / re-pricing / solvency
+reachable-set / manipulation cost / engine pipe / composition map) + info-geom/PH spine (T2 single-μ
+core lifts at type level; validity gate = generator convexity = R⪰0 [FW-7]; T1a settlement lift;
+PH3-leak abstract lift FW-8) + 13 Lean obligation STATEMENTS FW-1…FW-13 (NOTHING submitted) + numeric
+gates NG-1…NG-10 + full 16-row inventory table. Comparison TABLE = deliverable B, NOT this pass.
+**NEW RESULT (mine, this pass) [DERIVED+NUM mpmath dps=30]:** slope-transport (canonical reading 1 =
+paper's: destination slope arrives at the PRE-trade point; reading 2 forces dw=0, proved not the
+paper's) + mode-at-mark are JOINTLY satisfiable for regular ray-profile warps **iff ε(mark)=1 AND
+ε′(mark)=−½** (w(mark)=½, w′(mark)=−1/8; inside validity gate −¼). Non-empty: translating linear-germ
+family passes both, residuals ∝du² (1.668e-10→1.667e-16); global frozen-germ profile w/ asymmetric
+wings + validity margin +0.125 exists. KILLS: re-anchored √-sigmoid except sign-locked Δw=−τ/4
+(mismatch law −(4Δw/τ+1)du, measured −7.333407e-5 vs predicted −7.333333e-5); symmetric genesis
+(ε′=0) excluded under ANY regular warp ⇒ §AC-2.5 OPERATOR ESCALATION (frozen-germ vs approximate-mode
+vs selector-only; + one sentence wanted on the transport reading). Violation-rate law (2ε′+1)du
+reproduces skeptic's 1.44-vs-1.2 exactly (const-w ratio→1.000001 @Δy=1e-4). Paper Trade Formula
+re-derived independently: dw=(1−w)dy/y ⟺ slope transport; dα=dβ=0 DERIVED (conservation IS the
+principle); micro-integration |Δw|=9.1e-30; round-trip exact. Infinitesimal law + path-independence
+(first integrals = J-leg/Casimirs; round-trip identity; fees = R-leg) stated as AC-1 contract.
+Manager-declared operating default (warp PRIMARY, mode-at-mark SELECTOR) recorded as veto-pending
+label. Skeptic opens (a)-(d) dispositioned (AC-10/AC-2/AC-1); anchor-existence=AC-5 F5 (anchor in
+FAMILY, not reachable set — frozen-germ class has no unskewed reachable state); #13=AC-7;
+cost-to-warp=AC-8 (J-leg reversibility ⇒ manipulation cost lives ENTIRELY in R-leg friction). New
+propagation fact: live w ⇒ live γ ⇒ live S* (warp can trigger exercise frontier, oracle still).
+Queue unchanged; no Aristotle traffic. Scripts /tmp/fw_{warp,germ}_checks.py (ephemeral; all numbers
+restated in the note).
+**PATH MIGRATION (restructure 2026-06-11 — old `notes/`/`specs/` pointers in entries below are
+STALE):** LDF check + PH_RECAP + port_hamiltonian_consistency.md → `framework/`; GUDERMANNIAN +
+REPARAM + CURVE_SWAP → `curves/gh/`; KURTOSIS_KNOB + HETEROGENEOUS_WEIGHT → `curves/balancer_w/`.
+Live pointers below are fixed inline; historical narrative may still say notes/ or specs/.
+
+---
+
+### LDF DEFINITION + MODE-CONJECTURE CHECK — 2026-06-11 (operator entries 3–4; derivations INVITED)
+Note: `framework/LDF_DEFINITION_CHECK_2026-06-11.md` (mpmath dps=30; inventory-dispositioned, all 16).
 Operator entry-4 conjecture "mode = unit-tangent-slope point at every skew" — VERDICT:
 - **TRUE EXACTLY for the anchored warp family** (w_mid=½, skew=Δw, any τ): mode = unit-slope =
   w=½ crossing, 30 dps, BOTH skew signs; robust across all x↔y-symmetric thickness heights.
@@ -64,7 +98,7 @@ unchanged. Truth-up status: DONE (broken claims struck below; not re-asserted).
 ---
 
 ### GUDERMANNIAN BRIDGE — 2026-06-10 (operator entries 8–9; notes-only; skeptic-gated)
-Note: `notes/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
+Note: `curves/gh/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
 checked (~1e-38) AND derived; β=0 AND β=1 throughout (skeptic pattern 3 honored).
 **THE BRIDGE (exact):** strike-ray angle ψ (45°=ATM, tan ψ=y/x), χ=ψ−45°: `ũ=ln(y/x)=gd⁻¹(2χ)` —
 the 90°→180° "fan opening" IS the forced doubling σ=2χ (gd maps ℝ onto exactly 180°); ATM↦ũ=0;
@@ -108,7 +142,7 @@ the item-16 count dropping; the inventory and the note's table are 16 rows).
 ---
 
 ### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
-Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
+Note: `curves/balancer_w/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
 Realizes the paper's `(w,κ)` Future-Directions conjecture in implementable form.
 **✗CORRECTED (2026-06-10 truth-up — claim was BROKEN, skeptic counterexample, manager-verified):**
 ~~NO clean algebraic `F(x,y;w,κ)=k` exists~~ — FALSE. The closed form
@@ -156,7 +190,7 @@ but a conservation proof is separate). No engine/git/submit this pass.
 _Earlier: 2026-06-09, HETEROGENEOUS-WEIGHT DERIVATION (closed-form implied density; NO submit/edit/git)._
 
 ### HETEROGENEOUS-WEIGHT DERIVATION — 2026-06-09 (operator: closed form from x,y,w; DERIVE not approx)
-Note: `notes/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
+Note: `curves/balancer_w/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
 **Closed form (headline):** Balancer with position-dependent w(u) (u=log p−log P):
   q(u)=log p = u + log(w(u)/(1−w(u))) + const ;  d log p/du = 1 + w'(u)/(w(u)(1−w(u))) ;
   implied log-price density f_q = f_u(u(q)) / [1 + w'/(w(1−w))].
@@ -189,8 +223,8 @@ _Earlier: 2026-06-09, RECONCILE PASS (Balancer-δ + wings-vs-ATM resolved; NO su
 
 ### RECONCILE PASS — 2026-06-09 (resolved the Pass-1 vs Pass-2 δ conflict; manager-requested)
 Built the actual curves (mpmath 35-40 digit, direct integration — not formula-arguing). **Authoritative
-spec is now the v2 body of `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`** (rewritten to match
-the manager header; whole file self-consistent). Pass-1 note `CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`
+spec is now the v2 body of `curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`** (rewritten to match
+the manager header; whole file self-consistent). Pass-1 note `curves/gh/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`
 got a CORRECTION HEADER. **Three resolved verdicts:**
 - **BALANCER-δ VERDICT: the exact Cobb-Douglas/Balancer RESERVE CURVE is the δ→∞ (Gaussian) limit, NOT
   δ→0. Pass-1's "δ→0" is REFUTED.** Built it: CV of the CD invariant K=X^w·Y^(1−w) along the GH frontier
@@ -211,7 +245,7 @@ got a CORRECTION HEADER. **Three resolved verdicts:**
   1→0.70, 3→0.25, 10→0.075. Matches manager's δ=0.08,γ=2→2.76. exk∈[0,3].
 
 ### REPARAM DROP-IN SPEC — 2026-06-09 (spec for operator's separate impl session)
-Note: `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (NOW v2 — see reconcile pass above).
+Note: `curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (NOW v2 — see reconcile pass above).
 mpmath sanity checks (30-40 digit) run + reported. **KEY (load-bearing) findings:**
 - Esscher tilt `f_{β+1}/f_β=e^v` is EXACT, INDEPENDENT of (αh,βh,δ) ⇒ value∝S^(−γ) survives freeing
   δ/βh (G4 stays green in form; reference value regenerates). d log(slope)/d log(price)=1 all cases.
@@ -703,7 +737,8 @@ compile alone never would._
   `Audit.lean`, `Main.lean`. Audit template: `formal/MANAGER_VERIFICATION.md`.
   Aristotle prompt templates: `formal/prompts/aristotle_prompt_{port_hamiltonian,seam,curve_gate}.md`.
 - Aristotle (the prover) is **external** (no Lean in the agent loop). Contract = prompt + returned archive.
-- **PH consistency spec: `specs/port_hamiltonian_consistency.md`** (PH-1…PH-7 obligation targets).
+- **PH consistency spec: `framework/port_hamiltonian_consistency.md`** (PH-1…PH-7 obligation targets;
+  moved from `specs/` in the 2026-06-11 restructure, with `PH_RECAP_2026-06-08.md` alongside).
 - **Throwaway smoke probes: `formal/smoke/`** (`smoke_true` PROVED, `smoke_false` REFUTED/counterexample;
   excluded from RequestProject build) — first live test of the direct loop. I submit these MYSELF via the
   CLI. **SMOKE STATUS (2026-06-08): both round-trips COMPLETED.**

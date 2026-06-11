@@ -1,5 +1,5 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-7: restructure slice 1 AUDITED — verdict #6, 2 narrow flags standing; LDF run-4 flags stood down on verified §8 corrigenda). Prior: run-6 entry-8 directive queued + gate; run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3 entries 3-4; run-2; 2026-06-10 charter runs._
+_Updated 2026-06-11 (run-8: org-review/organiser-charter AUDITED — verdict #7 PASS-WITH-CONDITIONS, 6 binding conditions; run-7 slice-1 flags FIXED in 9d87309, stood down). Prior: run-6 entry-8 directive queued + gate; run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3; run-2; 2026-06-10 charter runs._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -235,8 +235,41 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
    history/ intact); 2 NARROW flags standing — framework/README purity sentence OVERSELL;
    CLAUDE.md §8 repo-map OMISSION (silent on framework//curves/). Most verifiable artifact the
    team has shipped; manager owned its own 2 spot-check invocation errors in the commit message.
+7. **2026-06-11 — org review + organiser charter (verdict #7, emitted as message text per task;
+   no separate file)** on `docs/org_review_2026-06-11.md` (59dc739, amended 9d87309):
+   **PASS-WITH-CONDITIONS — 6 binding.** (1) organiser never-clause as drafted PERMITS
+   gate-supervised engine-HTML edits ("never ... without the manager running the file-safety
+   gate") = second-engine-writer leak → unconditional engine-source ban, writable = ledger
+   markdowns only, never md5s/numbers/verdicts; (2) ORIGIN RULE = the real curation/facts line:
+   every organiser-written cell/status cites tester-evidence (RESOLVED/state/verdict) or
+   verbatim transcript (RULED/quote); organiser ORIGINATES nothing; uncited = FLAG; (3) dual-
+   author ledger entries labelled per block, OPERATOR-VOICE block named in HEAD-gate (missing =
+   red); (4) transition = tester sign-off on first handover + my audit of organiser's first
+   distillation vs transcripts + one plain TLDR line to operator naming the OPERATOR-VOICE move
+   (entry-5 created it "full responsibility"; entry-8 "maybe offload" authorizes — operator can
+   veto); (5) adoption edit-set sweep: DIFF_LEDGER header L8-16, tester charter L31-54, CLAUDE.md
+   §2 tester+skeptic bullets, MY charter ("the tester's distilled OPERATOR-VOICE record"),
+   transcription policy §2.2 ("tester cites") — else adoption self-creates stale pointers;
+   (6) row-12 queue wording = verified fact (5 faith gates live+green since a8998cf, hold lifted
+   entry-14 ruling 1; completeness vs every-proven-construct UNAUDITED) — review's "pivot landed
+   2026-06-10" mildly oversold; "restructure execution"→"support" in charter. Completeness gaps
+   named: idle intern + ruling-1/item-16 engine queue with no driver; OQ-list item 4 ("pivot
+   HELD") stale same as row 12 but unqueued; manager formal/INDEX upkeep NOT actually transferred
+   (never-list bars formal/) — defensible, unsaid; §5 "HEAD-gate unchanged" hides two-agent check
+   procedure change. Attack: TLDR claim "Nobody's authority over truth changes" BROKEN as
+   drafted (engine clause + uncited status adjudication), true only under conditions 1-3.
+   Steelman (keep-with-tester: single-author integrity, entry-5 full-responsibility, rot evidence
+   thin at 2 data points) beats the UNCONTROLLED offload, loses to the controlled one (operator's
+   own "maybe offload" + post-restructure filing genuinely unowned).
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
+- **Org-review process layer (run-8, MINE):** entry-8 quote in the review character-exact vs
+  transcript; organiser NOT in .claude/agents/ pre-PASS (gate honored); 9d87309 amendment =
+  my run-7 stale-count ×4, attributed. Tester offload reassignment IS within entry-8
+  authorization (later + explicit "offload ... from the tester"); entry-5 duty was CONDITIONAL
+  ("if the tester is responsible for version control then...") — non-negotiables that survive
+  any holder: singular full responsibility, verbatim-not-easier, evidence-backed resolution,
+  my audit vs raw transcripts.
 - **Restructure slice 1 mechanical layer (run-7, MINE):** all 9 BUILD_LINEAGE md5s reproduce on
   disk; 8 renames R098–R100 with every changed line a path fix (GUDERMANNIAN +
   port_hamiltonian byte-identical R100); 9+ transcript quotes in framework/README + PIVOT_MAP
@@ -285,6 +318,11 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
   "MEMORY.md:510-511" for the collar parking; manager MEMORY now carries it near :675. The cite
   was true at writing; the target moved. Prefer quote+anchor over bare line numbers when judging
   provenance; a rotted line-cite is decay, not fabrication — check the QUOTE before flagging.
+10. **Controls drafted in the QUEUE, not the CHARTER (run-8):** org review put "ledger facts stay
+  tester-verified" inside one queue item's transition note while the charter's standing text left
+  status-adjudication unbound — a control that lives in a one-off task list dies with the task.
+  Demand controls in the standing document. Sibling: "unchanged" labels covering changed
+  procedures (HEAD-gate "unchanged, now checked against both agents' parts").
 
 ## Method notes (env)
 - mpmath IS importable as of 2026-06-11 (run-4 dps=30). Fallback: float64 + dense Simpson.
