@@ -1269,3 +1269,53 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
    **CLEAR-TO-BUILD on 5 scope fixes (none need operator)** — see verdict file. Convergence-alarm LOW
    (self-adversarial; mgr's max|dG|=2.53≤γ confirms my |dG|≤γ). No FLAG-PROCESS (95/88/91/93/94 verified
    verbatim). The op-tier flags (g<1 meaning, ATM-funding→0, τ calib) already accepted entry 93#5.
+
+29. **2026-06-11 — R6 RE-GATE of SPEC_v24_lens_BUILD (verdict #29; closes #28 FLAG-HALT)** →
+   `notes/skeptic/VERDICT_R6_SPEC_v24_lens_2026-06-11.md`. Final gate before intern dispatch; mandate
+   entry 95 ("skeptic, you have the mandate, have the needful done"), operator ASLEEP. **DECISION:
+   CLEAR-TO-BUILD (Stage 1 may dispatch) with 2 HALT-CLASS must-apply notes + 2 record FLAG-OVERSELLs.**
+   All 5 of my #28 fixes ARE present (BLOCKER1 §1, BLOCKER2 §2, inventory table §5 all of
+   #4/#5/#8/#9/#11/#13+pool/lens/settlement, R3 steepness row §6, L4 strengthened §4). Independently
+   re-derived (`/tmp/sk_r6*.js`).
+   **MUST-APPLY-1 (halt-class wiring trap I FOUND): spec §1.2 funding sub-block re-introduces the exact
+   ln γ hazard it claims to close.** It writes `u(K)=ln(theta_K)−ln(mode_in_price)` pairing the
+   sNorm-REGISTERED theta_K against a PRICE-coord mode ⇒ at the ATM strike u jumps 0→−0.9694, g_loc
+   0→2.5185, funding does NOT vanish at ATM (breaks §2.3's whole point), every strike misplaced by γ.
+   Fix = a SINGLE unambiguous rule: ALL THREE layers (mark/funding/settlement) compute
+   `u = ln(theta_K / getSNorm(state))` in the ONE sNorm coordinate against the sNorm mode. The "funding
+   reads S in price coord" framing is a red herring that mixes coordinates. Reproduced `/tmp/sk_r6c.js`.
+   **MUST-APPLY-2 (defensive, lower): g=0 exact (ATM flat-top center) ⇒ S*=0; JS `Math.pow(Inf,0)=1` so
+   factor/sNorm*/c are FINITE (no NaN, verified `/tmp/sk_r6f.js`) — but tell intern S*=0 at g=0 is the
+   ACCEPTED degenerate flat-top reading (entry 93#5), not an error to "fix."**
+   **FLAG-OVERSELL-A (record, non-blocking): §2.3 funding table uses an implied γ≈1.204, NOT the
+   γ=2.6364 (w=0.725 "steep pool") its own header claims** — wing saturates 1.18 not 2.64. Behavior
+   (→0 ATM/→γ wings/sign-from-wing) is qualitatively right & reproduces; the TABLE NUMBERS are at the
+   wrong pool. Blind-spot pattern #1/#3. Don't cite the table digits.
+   **FLAG-OVERSELL-B (record, non-blocking): §5 #5-rebase row mechanism is self-contradictory** — says
+   "sNorm INVARIANT" AND "mode→mode/r" in one sentence. TRUTH: sNorm (mode) is rebase-INVARIANT; the
+   strike ray θ=K/oracle scales 1/r (oracle moves by r); so u(K) genuinely SHIFTS by −ln r — which is
+   ECONOMICALLY CORRECT (strike moneyness changed), not "fixed." Build is SAFE iff u is read LIVE every
+   render (it is); the row's EXPLANATION is wrong, the behavior is fine. `/tmp/sk_r6e.js`, base L1416
+   `tan(φ)=θ=K/oracle`.
+   **SURVIVED ATTACK:** carry ln γ offset = 0/0.4055/0.9694/1.7346 = ln γ EXACT (`/tmp/sk_r6.js`);
+   g_loc |u|-coordinate-invariance HOLDS when each layer measures from its OWN mode (price coord =
+   negated sNorm displacement; modeP·modeS=P=y/x NOT 1, but the constant cancels via own-mode measure)
+   `/tmp/sk_r6b.js`; staging S1 genuinely independently shippable (read-layer on byte-identical pool);
+   AMM-tx-through-lens (entries 84/88/91/94) = the goal-seek-in-lensed-view, pool executes plain
+   Balancer — settled in my #28 JOB-1(c) via entry 93#2 "just x y w that move", NO dodge.
+   **#28 FLAG-HALT: CLEARED** (5 fixes present). Convergence-alarm LOW (spec self-adversarial: hunted
+   coord-mix + inverse-lens; the funding-§1.2 trap is a residual it exposed-but-mis-wrote, not hid).
+   Verbatim channel HELD: 84/85/88/91/93/94/95 verified in
+   history/operator/2026-06-10_kurtosis-curve-family-brief.md (06-11 entries appended). No FLAG-PROCESS.
+
+## Claims mine-to-defend (verdict #29 — R6 re-gate)
+- The spec §1.2 funding formula `u=ln(theta_K)−ln(mode_in_price)` is a coordinate-MIX that re-opens
+  BLOCKER 1: sNorm-registered theta_K vs price-coord mode ⇒ ATM g_loc 0→2.52. The unique safe build
+  rule is one coordinate (sNorm) for all three layers: u=ln(theta_K/getSNorm(state)). (`/tmp/sk_r6c.js`)
+- g_loc coordinate-invariance holds ONLY as own-mode-measured |u|; modeP·modeS=P (=y/x), NOT 1, so
+  the two modes are NOT exact reciprocals — the offset cancels because each layer subtracts its own
+  mode, not because the modes are reciprocal. (`/tmp/sk_r6b.js`)
+- §2.3 funding table digits are at γ≈1.20, inconsistent with its stated γ=2.64 steep pool. Behavior
+  correct; numbers wrong-pool. (`/tmp/sk_r6d.js`)
+- Rebase: sNorm/w/γ invariant; strike ray θ=K/oracle scales 1/r; u(K) shifts −ln r (correct, not a
+  bug). Lens safe iff u read live. Spec's "mode→mode/r" prose is wrong. (`/tmp/sk_r6e.js`)
