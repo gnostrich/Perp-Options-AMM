@@ -1,0 +1,28 @@
+evidence/v27_entry45 — entry-45 lacunae verification on HEAD 1eebfcd6 (TEST-ONLY, no build edit)
+Run 2026-06-11, live Playwright Chromium, reproduced x2, 0 uncaught exceptions.
+Harnesses: engine/verify/pw_v27_entry45_lacunae.mjs + pw_v27_entry45_probe2.mjs
+Ledger entry: engine/builds/DIFF_LEDGER.md "TEST-ONLY observation — entry-45 lacunae verification"
+
+ITEM 1 (tau sensitivity):
+  I1_tau_0.30_baseline.png / I1_tau_0.35_oneclick.png / I1_tau_0.60.png / I1_tau_1.50.png /
+  I1_tau_3.00.png / I1_tau_0.05.png — canvas crops per tau step (real UI events)
+  I1_full_baseline.png — full page at load
+  trace_entry45.json items.item1 — per-step canvas pixel diffs + analytic px displacements
+
+ITEM 2 (long<->short switch):
+  I2_S1_pre_swap.png / I2_S1_post_swap.png / I2_S1_swap_back.png — operator-exact scenario
+  I2_S2_post_swap_bothclubs.png / I2_S3_default_band_post_swap.png / I2_S4_noperps_post_swap.png /
+  I2_S5_longclub_post_swap.png — scenario matrix
+  P2_valid_long_preview.png / P2_post_swap_frankenstate.png — operator screenshot state reproduced
+  P4_pill_toggle_stale.png — pill path stale check
+  P3b_valid_neg_netcash_preview.png / P3b_after_execute_click.png — $3.19B display + over-carve alert path
+  trace_entry45.json items.item2 + trace_probe2.json P1-P5
+
+ITEM 3 (anchor placement):
+  I3_anchor_curve_default.png / I3_full_default.png — gray w=1/2 anchor hugging origin corner
+  trace_entry45.json items.item3 — analytic: anchor y=$2,918.4 at x=10 vs live $303,448.3 (104x)
+
+ITEM 4 (trade-warp visibility):
+  I4_warp_pre.png / I4_preview_50k.png / I4_warp_post.png / I4_warp_post_5btc_cum.png
+  P6_warp_pre.png / P6_warp_post_cum.png — 1+2 BTC executed bands, cumulative
+  trace_entry45.json items.item4 + trace_probe2.json P6 — phi shifts + px displacement
