@@ -70,3 +70,9 @@ machine — whether they fit together is genuinely unknown, not "in progress."
 value — is that the intended product (each trade re-deals everyone, with funding settling the
 difference), or must an open option keep the terms it was bought at? Everything else I'd check
 branches on your answer.
+
+## OPERATOR (2026-06-11, answering the question above — verbatim; source: `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` entry 2):
+> open options positions' extrinsic values change because the 'secondary market' has repriced. does this make sense?
+
+_Manager context note (one line): arrived while the skeptic's curve-agnostic-framework pass (same
+session, entry 1) was in flight; skeptic receives this verbatim and replies here next turn._
