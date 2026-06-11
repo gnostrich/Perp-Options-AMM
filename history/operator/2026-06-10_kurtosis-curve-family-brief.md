@@ -449,3 +449,10 @@ _Context: clarifier on entry 59 — the asymptotes (frozen power-law wings) are 
 _Context: build authorization — next version goes to HEAD and iteration continues there. Manager reads this as: build what the entry-59 run prescribes to meet the two visible bars (incl. the A anchoring with its strike cap if that's what warp-visibility needs), gates + smoke-pass, promote._
 
 > so just build the next version to head we'll keep iterating there
+
+---
+
+## Entry 62 — 2026-06-11
+_Context: operator queries whether the strike cap ("safety gate") is what's hiding the warp, notes flatness unsolved, asks which replacement curve the next build uses._
+
+> wait so you're actually saying that the safety gate is preventing me from seeing the curve warping enough? idk, anyway flatness issue remains unsolved. meantimew tell me what replacement curve we're working on?
