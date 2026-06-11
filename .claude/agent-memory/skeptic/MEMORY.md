@@ -1,5 +1,5 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (brainstorm run-3: operator entries 3-4 — see ACTIVE section). Prior:
+_Updated 2026-06-11 (run-4: LDF note verdict #5 — see ACTIVE). Prior: (brainstorm run-3: operator entries 3-4 — see ACTIVE section). Prior:
 2026-06-10 fourth charter run (operator reply #2 scaffold-vs-gaslighting + Gudermannian gate
 verdict #3); same day earlier: OPERATOR-DIRECT reply, STOCK-TAKE, paper-as-motivation addendum._
 
@@ -100,7 +100,34 @@ appended to BRAINSTORM file (exactly 400 words). Dispositions of my four forced 
   = curve value, sum ≤ reserves at every reachable w) or run reachable-set check. If any note
   carries it as settled ⇒ FLAG-OVERSELL.
 - Manipulation/cost-to-warp: untouched by entries 3-4, hotter now; column mandatory.
-**LDF pre-flag posted (MY derivation, defend it):** literal operator definition (distance to
+**Run-4 (2026-06-11, LDF note audit) — VERDICT #5 issued on notes/LDF_DEFINITION_CHECK_2026-06-11.md
+(commit 9e64152): PASS overall (best-labelled artifact yet), 2 narrow demands, pre-flag STOOD DOWN.**
+- Pre-announced tripwire NOT tripped: note adjudicates the w!=1/2 tension head-on (constant-weight
+  skew = FALSE in every gauge, elasticity == -w/(1-w), no tangent-parallel-to-ray point; my
+  ln((1-w)/w) derivation confirmed as the note's y/x=(1-w)/w). Height-not-density resolves my
+  90/180 Jacobian worry (argmax reparam-invariant).
+- I reproduced (mpmath dps=30 — mpmath IS available now, update method note): v*=0.15126876,
+  v_e=0.1325095, ln M=0.23768057, gamma=2 factor 44.522315, spurious root 0.613509, w'(0)=-1.875,
+  H2-mode w=0.4 -> 0.81649658. ALL match.
+- CAUGHT (narrow): note's "1/748.66" is a digit slip — internally inconsistent with its own
+  0.0013358 (=1/748.615); true value 748.6219 (mine) vs live 748.61966 — note and engine AGREE,
+  the bad digit is the note's transcription. Manager's "pool-constants/rounding" explanation =
+  invented attribution without the 1-second reciprocal check (pattern 7, again).
+- Narrow OVERSELL: operator-facing summary item 2 "TRUE at every skew and every tau" omits the
+  AMM-validity qualifier its own body proves (invalid (Dw,tau) -> second unit-slope root 0.6135 ->
+  "THE unit-slope point" ill-posed). Fix = one clause.
+- Entry-5 ruling (verified verbatim, transcript line 26): gamma question ANSWERED (computed, never
+  set; four-number budget x,y,w+tau). Note needs a dated corrigendum on Sec 5. CARRY-FORWARD
+  tension for the framework note: budget's live "w determining skew" cannot be the local weight at
+  the mark (the item-16 contract pins local w==1/2 there post-trade) — it must map to Dw; the
+  w=alpha/x <-> Dw map is unstated, inside the item-16 OPEN. Also still owed by framework note:
+  anchor-existence column, #13 reachable-set, cost-to-warp column.
+- Settled by this pass (don't re-attack): (W) anchored-warp mode=unit-slope=diagonal at valid
+  settings; Lemma A (min-mode at diagonal for ANY decreasing curve — the conjecture's content is
+  ONLY the slope -1 there); validity gate == uniqueness gate; elasticity-at-mark = e^(-ghMu)
+  identity on live GH.
+
+**LDF pre-flag posted (MY derivation, defend it — RESOLVED by run-4, kept for record):** literal operator definition (distance to
 nearest axis) on plain Balancer = asymmetric Laplace in u=ln(y/x): mode PINNED at x=y diagonal
 (u=0) for EVERY w; unit-tangent-slope point at u=ln((1-w)/w); coincide only at w=1/2 (numeric:
 w=0.6 -> -0.405, w=0.7 -> -0.847). So "mode = pool mark at every skew" + "mode = unit-slope point"
@@ -247,7 +274,7 @@ inventory, operator answered — remaining live tail = every curve note must dis
   A verification claim that can't be re-run is narration with digits. Demand map+script.
 
 ## Method notes (env)
-- No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
+- mpmath IS importable as of 2026-06-11 (run-4 used dps=30). Older fallback: pure python3 float64 + dense Simpson/trapezoid reproduces the team's
   mpmath digits to ~1e-3 or better; calibrate against a known note value first.
 - (W)-membership test for any curve: w_eff = ℓY/(ℓY+ℓX) vs ũ=ln(Y/X); τ_implied =
   (ũ−c)√(1−r²)/r must be constant. Reusable.

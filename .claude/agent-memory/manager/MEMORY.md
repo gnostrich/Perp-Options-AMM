@@ -51,9 +51,24 @@ project's state-of-the-whole; git history is the mechanical audit trail._
   skew↔kurt ⇒ zero-skew member may not exist per candidate); #13 DEFERRED-not-satisfied
   (liabilities still re-mark; reachable-warp-set boundedness needed; "baked in… i thinl" = hedged
   conjecture, must be proven); manipulation/cost-to-warp column mandatory; PASS conditions listed.
-- **OWED next:** relay research-lead LDF-check verdict when run lands; entry 5 to both agents at
-  next dispatch; operator go-ahead → dispatch framework build (A) then table (B), skeptic
-  mandatory pass on the framework note before any merge.
+- **research-lead LDF check LANDED (`notes/LDF_DEFINITION_CHECK_2026-06-11.md`, 9e64152) + skeptic
+  AUDIT verdict #5:** substance PASS (tripwire NOT tripped; all decisive numbers reproduced;
+  "conjecture = anchor-preservation under skew" sold at right strength). RESULT: LDF =
+  closest-axis thickness WORKS (Balancer gets a real mode); conjecture EXACTLY TRUE for anchored
+  warp (w_mid=½, skew=Δw, any τ in validity gate), FALSE for constant-weight skew (excluded — no
+  elasticity−1 point) and live GH (mark off-mode by e^ghMu exactly: 44.5223/748.6197,
+  manager-engine-verified) ⇒ conjecture = ADMISSION CONTRACT (pins skew mechanism + carry gauge;
+  height free up to symmetry). Pool-mark leg = item-16 acceptance test [OPEN, operator adoption
+  pending]. 2 narrow skeptic flags FIXED by dated corrigenda §8 (validity clause in summary item
+  2; 748.66→748.62 digit slip — MY "rounding/pool-constants" wave-off was an invented attribution,
+  owned, pattern-7 3rd instance: never explain a delta without the one-second check); §5 marked
+  answered-by-entry-5; carry-forward tension recorded (live w ↔ Δw map = inside item-16 OPEN).
+  Skeptic stand-down on the corrigenda = pending its next look.
+- **OWED next:** operator: (a) go-ahead on framework build, (b) adopt mode-at-mark as item-16
+  acceptance test y/n. Then dispatch framework build (A) then table (B) — framework note owes
+  anchor-existence column, #13 reachable-set, cost-to-warp column, the w=α/x↔Δw map treatment;
+  skeptic mandatory pass before any merge. U1 residue: LDF-kurtosis height-choice sentence
+  eventually needed.
 
 ## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
 Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two

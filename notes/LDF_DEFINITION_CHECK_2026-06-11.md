@@ -17,9 +17,12 @@ as an admission test, not just a description.
    Balancer a genuine mode: on `xy=k` the thickness is exactly `√k·e^(−|ũ|/2)` (a symmetric tent
    peaking at the 45° ray, vanishing at both fan edges). ũ = ln(y/x).
 2. **The conjecture (mode = the point with unit tangent slope) is EXACTLY TRUE, at every skew
-   and every kurtosis τ, for the warp family anchored at w=½** — the mode, the unit-slope point,
-   and the w=½ crossing are all the same point, to 30 digits, and this does not depend on which
-   reasonable "thickness" measure you pick.
+   and every kurtosis τ inside the AMM-validity gate, for the warp family anchored at w=½** —
+   the mode, the unit-slope point, and the w=½ crossing are all the same point, to 30 digits,
+   and this does not depend on which reasonable "thickness" measure you pick. (Outside the
+   validity gate — e.g. Δw=−0.3, τ=0.08 — a second unit-slope root appears and "the" point is
+   ill-posed; §2. Validity and well-posedness are the same gate.) _[clause added by dated
+   corrigendum, see §8]_
 3. It is **FALSE for skew done by a constant weight** (Balancer with w≠½): no point of that
    curve has its tangent parallel to its own ray, so no choice of units can ever make the mode
    and the unit-slope point meet. Constant-weight skew is **inadmissible** under your conjecture.
@@ -140,7 +143,7 @@ skew," **excludes reweighting as the skew mechanism and admits only the anchored
 reference 1.268303997):** in the curve's own bounded normalization the diagonal crossing
 (T=F_{β+1}) sits at v*=0.15127, the unit-slope point at v=ln M=0.23768, and the gauge-invariant
 elasticity−1 point at v_e=0.13251 — but **calibration pins the pool mark at v₀=3**. Elasticity
-at the mark = 0.0013358 = 1/748.66 = **e^(−ghMu) exactly** (live calibration has Y0/X0 = mp0, so
+at the mark = 0.0013358 = 1/748.62 = **e^(−ghMu) exactly** (live calibration has Y0/X0 = mp0, so
 slope/ray at the mark = mp0·e^(−μ)/mp0); at γ=2: 0.022461 = 1/44.52. **THE gotcha factor
 (price coordinate ≠ slope) is precisely the factor by which the live pool mark fails the
 mode-at-mark property.** No single axis rescale can repair it: forcing unit slope at the mark
@@ -217,7 +220,7 @@ report, not the floor itself. [FRAMING]
 | 7 | ITM smooth-pasting | **N-A** (no settlement object touched; entry-3 ruling 1 — exercise on the live warped curve — recorded but not analyzed here). |
 | 8 | Strike registration | **N-A** (no mark/strike change proposed; any future warp build re-runs dir_gate). |
 | 9 | Funding w=½ anchor | **Considered (§4).** Entry-3 pin = generalization of the locked rule (anchor inherits τ, keeps w=½); functional choice left open, candidates listed, nothing decided. |
-| 10 | Slippage / mpGeom | **Considered.** THE price≠slope factor e^ghMu shows up as the exact mode-displacement factor at the live mark (748.66/44.52 reproduced). No slippage change. |
+| 10 | Slippage / mpGeom | **Considered.** THE price≠slope factor e^ghMu shows up as the exact mode-displacement factor at the live mark (748.62/44.52 reproduced). No slippage change. |
 | 11 | Dollar pipe | **N-A** (notes-only). |
 | 12 | THE gotcha | **Considered — promoted.** Elasticity at the live mark = e^(−ghMu) exactly: the gotcha factor is the measured violation of mode-at-mark on GH. |
 | 13 | Solvency | **Considered (§4 end).** Entry-3 ruling 3 (depth untouched) flagged as needing a B1 exposure line; nothing here closes or moves solvency. |
@@ -238,3 +241,21 @@ report, not the floor itself. [FRAMING]
 3. **Skeptic hooks:** every number above is reproducible from the two scripts' formulas (all
    restated inline); the only non-derived claims are labelled [OPEN]/[FRAMING]; no claim of GH
    membership, no claim that the Trade Formula satisfies the contract, no solvency claim.
+
+## 8. Corrigenda (dated; manager-applied per skeptic audit verdict #5, 2026-06-11)
+
+1. **Summary item 2** — added the AMM-validity qualifier the body (§2) proves (skeptic
+   FLAG-OVERSELL: the operator-readable sentence must be true standalone; outside the validity
+   gate the unit-slope point is non-unique).
+2. **"1/748.66" → "1/748.62"** (§2 and §6 row 10) — transcription slip (skeptic FLAG-WRONG: the
+   note's own 0.0013358 = 1/748.615; skeptic mpmath 748.6219; live engine 748.61966 — note math
+   and engine AGREE). Manager's earlier "rounding/pool-constants" explanation was an invented
+   attribution, owned as such; the identity claim "elasticity at mark = e^(−ghMu) exactly" stands.
+3. **§5 is now ANSWERED** — operator transcript entry 5 (2026-06-11, after this note's run
+   launched): "no separate knob for wing sttpness etc. its x y w determing skew, and single
+   kurtosis / steepness knob thats it" — γ is computed from (x,y,w,τ), never a fifth setup dial.
+4. **Carry-forward tension recorded (skeptic, for the FRAMEWORK note — not a defect of this
+   one):** the budget's live "w determining skew" cannot be the local weight at the mark (this
+   note's item-16 contract pins local w≡½ there post-trade) — it must map to Δw; the
+   w=α/x ↔ Δw map is unstated and lives inside the item-16 OPEN. The framework note also still
+   owes: anchor-existence column, #13 reachable-set, cost-to-warp column.
