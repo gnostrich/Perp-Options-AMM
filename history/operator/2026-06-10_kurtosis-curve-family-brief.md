@@ -456,3 +456,10 @@ _Context: build authorization — next version goes to HEAD and iteration contin
 _Context: operator queries whether the strike cap ("safety gate") is what's hiding the warp, notes flatness unsolved, asks which replacement curve the next build uses._
 
 > wait so you're actually saying that the safety gate is preventing me from seeing the curve warping enough? idk, anyway flatness issue remains unsolved. meantimew tell me what replacement curve we're working on?
+
+---
+
+## Entry 63 — 2026-06-11
+_Context: operator kills the entry-59 measurement run._
+
+> stop the run its of no use to me
