@@ -272,3 +272,10 @@ _Context: operator orders a stock-take / roadmap — (1) get the (W) generalisat
 _Context: operator authorizes building the trade-point-anchoring warp fix and PROMOTING it to HEAD (replacing the current spot-warp v27) — not worried about disrupting the play-file since HEAD is the dev simulator, not production (the prev version can be replaced as HEAD). Manager runs the full gate chain regardless (no skipping — that's how a bug doesn't reach the operator). Transcribed verbatim._
 
 > push to head, no stress with that because i'm not putting anything int production that has a bug so obviously the prev version can be replaced as head
+
+---
+
+## Entry 37 — 2026-06-11
+_Context: operator queues another read-only check for research-lead — whether the CORRECT (re-posed) trade-point construction ensures the SAME curve warp for ANY strike at the SAME notional (evaluate after the sell leg, single tx for simplicity). This is the warp∝notional invariant — it unifies "same notional → same warp" with the earlier "same premium → more warp OTM" (same premium OTM needs more notional ⇒ more warp). Folded into the spec re-pose. Transcribed verbatim._
+
+> another read only check to queue for research guy is whether the correct version ensures the same curve warp for any strike same notional (we evaluate after sell leg for single tx simplicity)
