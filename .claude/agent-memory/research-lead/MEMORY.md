@@ -1,5 +1,42 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, POLAR weight-free density first-principles (entry 53/54; READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, GLOBAL-SKEW goal-seek (entry 55/56; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### GLOBAL-SKEW GOAL-SEEK — does "local-slope goal-seek via one global skew σ" beat the weight? — 2026-06-11 (operator entry 55/56 "go"; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
+Note: `notes/research/GLOBAL_SKEW_goalseek_2026-06-11.md`. Script `/tmp/skew55.py` (python float64+scipy).
+Follow-up to POLAR_density note + skeptic verdict #23 (`VERDICT_POLAR_density_2026-06-11.md`: weight-free
+⟺ B-anchoring; skeptic "attacked for a weight-free A-compatible map and could NOT find one"). Operator (55
+verbatim): "(1) map PRESERVES THE ASYMPTOTES not bounded/saturates; (2) you can still local-slope-goal-seek
+using global skew as a knob right thats the point; (3) monotone important."
+**OBJECT (asymptote-preserving, operator pt-1):** `γ_loc(u;σ)=γ₋+(γ₊−γ₋)·S(κ(u−σ))`, S=√-kernel sigmoid;
+σ=single global scalar = elbow-center SHIFT. Wings frozen ANY σ (float64: γ_loc(±40)→γ±). **LOAD-BEARING
+IDENTITY (resid 0.0): the only asymptote-preserving single global scalar is a SHIFT, and `γ_loc(u;σ)≡
+γ_loc(u−σ;0)` = EXACTLY the (W) field-center φ. "global skew σ" ≡ "local-φ recenter" = ONE translation
+DOF. NOT a third mechanism — it IS path-A's φ renamed.**
+**Q1 STRIKE-DEP = YES but split.** Pure global σ-shift at fixed premium warps the ELBOW (Δln p peaks ATM
+−0.084, decays to ±wings −0.002 to −0.008) — "more warp at elbow," NOT the path-A "more warp OTM." The
+OTM-growing strike-dep reappears ONLY as path A (reflect-branch σ₁≈2·u_tp, geared by 1/γ_loc′), because σ=φ.
+**Q2 WEIGHT-FREE THROUGH TRADE = NO, IMPOSSIBLE (the crux).** Goal-seek "restore pre-trade slope at moved
+point" ⇒ `σ₁=u_R1−u_R0` = cumulative DISPLACEMENT (resid 0.0), = memoryless read u_R1 ONLY at ATM start
+(u_R0=0); away from ATM they disagree by u_R0 and memoryless read FAILS to restore slope (resid 0.05–0.24).
+**Impossibility (map-indep):** target = PRE-trade slope = fn of pre-trade state; memoryless σ=F(x,y) carries
+NO pre-state info ⇒ σ must store history = independent DOF = (W) φ = the weight in disguise. Upgrades
+skeptic's "could not find" → STRUCTURAL IMPOSSIBILITY. Amplitude-skew steelman: same verdict (more restricted).
+**Q3 MONOTONE = PASS, not binding.** Up-skew (γ₊>γ₋>1): σ-shift translates a monotone profile, `d ln p/du
+=1+γ_loc′/γ_loc≥1>0` (min 1.0000 over σ∈[−10,10]). General guard `γ_loc+γ_loc′>0` bites only under forced
+DOWN-skew (translation can't produce). **Q4 DIVERGENCE = SAME (σ≡φ).** Gearing 1/γ_loc′~u³→∞ identical to
+local-φ; ~1.4× strike cap (entry-40, K_max≈1.4mp0 from |Δφ|≤τ) RETURNS unchanged. Global-vs-local cosmetic.
+**Q5 NET = COLLAPSES TO A** (strike-aware+monotone, needs stored scalar), NOT a third option, NOT B.
+**HARDEST OBSTRUCTION (flag to operator):** memoryless reserve→σ map CANNOT restore a pre-trade slope
+target (target lives in pre-state). Weight-elimination still ⟺ B-anchoring; the goal-seek-to-a-prior-slope
+mechanic the operator describes IS path A and necessarily carries the stored φ/σ. A-vs-B = operator-tier.
+**HONEST CARRY:** decision-support, NOT build-auth/curve-swap. NO Lean lemma ready (σ≡φ identity +
+γ_loc+γ_loc′>0 are candidates only post-mechanic-pick; both covered by open (W) (α,β)-flow [needs-Aristotle]
++ warp∘rebase/φ-funding OPEN). Self-adversarial: answered the MECHANIC question head-on, no elegant-theorem
+elevation. Nothing submitted/built/edited/git. Manager re-derives + skeptic before operator.
+
+---
+
+_Earlier: 2026-06-11, POLAR weight-free density first-principles (entry 53/54; READ-ONLY; notes-only; no submit/edit/git/build)._
 
 ### POLAR WEIGHT-FREE LIQUIDITY-DEPTH DISTRIBUTION — first-principles — 2026-06-11 (operator entry 53/54 "do the needful"; READ-ONLY; HEAD untouched md5 928cde1c; NO edit/git/build/submit)
 Note: `notes/research/POLAR_density_first_principles_2026-06-11.md`. Scripts `/tmp/polar53{,b,c,d}.py`
