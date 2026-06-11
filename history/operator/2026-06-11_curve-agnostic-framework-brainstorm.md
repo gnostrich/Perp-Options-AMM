@@ -21,3 +21,8 @@ _Context: answers the manager's three propagation consequences from the prior tu
 > 1 you can think of LDF as the thickness of the curve measured perpendicular from the closest axis (or in 180 degree case, just height); 2 i wont answer something worded so cryptically; 3 at every skew 'spot' / 'pool mark' (latter term more accurate, former is a conversational approximation) corresponds to mode, which i think is always the point on curve in 90 degree context with unit tangent slope;
 
 _Context: answers the consolidated brainstorm questions (1 = LDF operational definition; 2 = the "γ derived from w or fifth dial" question, REFUSED for cryptic wording — plain-English re-pose owed; 3 = mode-at-spot, with "pool mark" the accurate term and a checkable conjecture: mode = the unit-tangent-slope point). Routed verbatim to research-lead (definition formalization + conjecture check) and skeptic (brainstorm reply) same turn._
+
+## 5
+> idk cant answer, but no separate knob for wing sttpness etc. its x y w determing skew, and single kurtosis / steepness knob thats it
+
+_Context: answers the manager's plain-English re-pose of the γ question (entry 4 item 2). Ruling read: the parameter budget is hard — live state (x,y,w) drives skew, ONE static kurtosis/steepness knob, no separate wing-steepness dial; wing exponent γ must be derived, not set._

@@ -1,8 +1,7 @@
 # MEMORY — skeptic
-_Updated 2026-06-10 after the fourth charter run (via general-purpose runner — agent type
-registers next session): operator reply #2 (scaffold-vs-gaslighting diagnosis) + Gudermannian
-gate (verdict #3). Earlier same day: OPERATOR-DIRECT reply pass, STOCK-TAKE pass, paper-as-
-motivation addendum (see below)._
+_Updated 2026-06-11 (brainstorm run-3: operator entries 3-4 — see ACTIVE section). Prior:
+2026-06-10 fourth charter run (operator reply #2 scaffold-vs-gaslighting + Gudermannian gate
+verdict #3); same day earlier: OPERATOR-DIRECT reply, STOCK-TAKE, paper-as-motivation addendum._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -89,6 +88,30 @@ Verified same pass: research-lead truth-up of the 2 broken claims IS done (✗CO
 66/74). Unaudited claim on file: "pivot landed" — audit its gates when the framework note arrives.
 research-lead produced a parallel recap I have NOT seen; my mandatory pass comes on the eventual
 framework/design note.
+**Run-3 (2026-06-11, entries 3-4) state:** channel verified (transcript == handed text). Reply
+appended to BRAINSTORM file (exactly 400 words). Dispositions of my four forced rows:
+- #8 live-curve exercise: SETTLED by operator "1 yes" (warp can cross S* with oracle still = product).
+- #9 funding: anchor RULED = unskewed curve at SAME kurtosis as pool ⇒ my no-arb check is now
+  WELL-POSED but unrun. NEW table criterion I coined: ANCHOR-EXISTENCE — family must admit a
+  zero-skew member at every reachable kurtosis (GH β=1 coupled dial may fail this). Hold the
+  framework note to this column.
+- #13 solvency: DEFERRED not satisfied — "depth not impacted" fixes asset side only; "baked into
+  per-strike-ray pricing... i thinl" is a HEDGED CONJECTURE; note must prove (per-strike liability
+  = curve value, sum ≤ reserves at every reachable w) or run reachable-set check. If any note
+  carries it as settled ⇒ FLAG-OVERSELL.
+- Manipulation/cost-to-warp: untouched by entries 3-4, hotter now; column mandatory.
+**LDF pre-flag posted (MY derivation, defend it):** literal operator definition (distance to
+nearest axis) on plain Balancer = asymmetric Laplace in u=ln(y/x): mode PINNED at x=y diagonal
+(u=0) for EVERY w; unit-tangent-slope point at u=ln((1-w)/w); coincide only at w=1/2 (numeric:
+w=0.6 -> -0.405, w=0.7 -> -0.847). So "mode = pool mark at every skew" + "mode = unit-slope point"
+cannot both hold as stated on the base member. research-lead's concurrent formalization note must
+adjudicate this, name the moment coordinate (F6 sign flip), and show 90/180-degree definitions
+agree (unfold Jacobian can move argmax). If it declares the conjecture TRUE without resolving the
+w!=1/2 tension ⇒ pre-announced FLAG. Steelman that held FOR the definition: kinked mode matches
+(W) tau->0 Laplace-step endpoint, so the definition itself looks right; "at every skew" is the
+suspect clause. γ question RE-POSED in plain English (operator refused cryptic version — wording
+failure was ours): "Is the pricing exponent γ a fifth independent number set at setup, or computed
+from the four pool numbers x, y, w and the kurtosis knob?" — answer pending.
 
 ## PRIOR: realtime brainstorm with the operator (2026-06-10, superseded by the above session)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,

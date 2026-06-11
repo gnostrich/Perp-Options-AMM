@@ -126,3 +126,44 @@ Entry 4 (answering the consolidated questions — your Q1 and Q4 among them; the
 > 1 you can think of LDF as the thickness of the curve measured perpendicular from the closest axis (or in 180 degree case, just height); 2 i wont answer something worded so cryptically; 3 at every skew 'spot' / 'pool mark' (latter term more accurate, former is a conversational approximation) corresponds to mode, which i think is always the point on curve in 90 degree context with unit tangent slope;
 
 _Manager context note: research-lead is concurrently formalizing the entry-4 LDF definition and checking the mode = unit-tangent-slope conjecture (cheap derivation, operator-invited by "i think"); skeptic replies here per protocol._
+
+## SKEPTIC (2026-06-11, replying to entries 3–4):
+
+**Settled vs forced, against my four rows.**
+- **#8 live-curve exercise: SETTLED** ("1 yes"). Now product fact: a warp can push an open
+  position across S* with the oracle still; spec must say so.
+- **#9 funding: WELL-POSED, not yet checked.** Anchor = the unskewed curve at the pool's same
+  kurtosis — defined at any live w, so my funding-vs-extrinsic no-arb check is now runnable.
+  Still forced: run it per candidate; and the family must
+  ADMIT a zero-skew member at every kurtosis the pool can hold (settled β=1 fact: GH's dial
+  couples skew and kurtosis, so this anchor may not exist for every candidate). Anchor-existence
+  becomes a column.
+- **#13 solvency: DEFERRED, not satisfied.** "Depth not impacted" fixes the asset side only —
+  liabilities still re-mark every trade, so boundedness over the reachable warp set is MORE
+  needed, not less. "Baked into how the curve is pricing each strike ray... i thinl" is a hedged
+  conjecture: the note must prove it (per-strike liability = curve value, summed ≤ reserves, at
+  every reachable w) or run the reachable-set check. Carrying it as settled = flag.
+- **Manipulation/cost-to-warp: UNTOUCHED**, and live-curve exercise makes it hotter (a warper
+  moves S* and settlement). Column mandatory; floor: value ≥ intrinsic.
+
+**LDF pre-flag (for the research-lead's check — re-derived, not duplicated):** on plain Balancer
+the literal definition (distance to nearest axis) is an asymmetric Laplace in ln(y/x) whose mode
+is PINNED at the x=y diagonal for every w, while the unit-tangent-slope point sits at
+ln((1−w)/w) — they coincide only at w=½ (verified numerically, w=0.6/0.7). So on the base member
+"mode = pool mark at every skew" and "mode = unit-slope point" cannot both hold as stated. The
+check must adjudicate, name the moment coordinate (kurtosis sign flips latent-vs-price — settled
+F6), and show 90° and 180° pick the same point (the unfold Jacobian can move an argmax). The
+kinked mode matches the (W) τ→0 Laplace-step endpoint — the definition looks right; "at every
+skew" is the suspect clause.
+
+**γ, plain re-pose:** Is the pricing exponent γ — the number in value ∝ S^(−γ) — a fifth
+independent number we set at setup, or is it computed from the four pool numbers x, y, w and the
+kurtosis knob?
+
+**PASS conditions on these pins:** anchor-existence column; #13 proved or reachable-set-checked;
+cost-to-warp column; LDF mode/unit-slope tension resolved explicitly, not averaged over.
+
+## OPERATOR (2026-06-11 — verbatim; source: `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` entry 5, answering the γ question you re-posed above):
+> idk cant answer, but no separate knob for wing sttpness etc. its x y w determing skew, and single kurtosis / steepness knob thats it
+
+_Manager context note (one line): ruling read as the hard parameter budget — live (x,y,w) + one static kurtosis/steepness knob, nothing else; γ computed, never set._

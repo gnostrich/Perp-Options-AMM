@@ -36,9 +36,24 @@ project's state-of-the-whole; git history is the mechanical audit trail._
 - **CONVERGENCE (headline for operator):** research-lead and skeptic INDEPENDENTLY landed on the
   same top question — which density operationally IS the LDF (liquidity depth vs latent kernel;
   sign of kurtosis flips between them; plain-Balancer depth has no mode in one reading).
-- **OWED next:** relay entry 3 verbatim to skeptic+research-lead at next dispatch; relay skeptic's
-  emitted block + entry-2 verdict to operator; operator go-ahead → dispatch framework build (A)
-  then table (B), skeptic mandatory pass on the framework note before any merge.
+- **Entries 4+5 (operator):** LDF = closest-axis thickness of the curve (180° case: just height) —
+  a THIRD object vs the two debated (fixes "Balancer has no mode"); mode = 'pool mark' (accurate
+  term) at every skew, CONJECTURED = the unit-tangent-slope point (|dy/dx|=1) — research-lead
+  checking (run aed838ad, in flight; my hand-check + skeptic's independent numeric both find the
+  raw-min(x,y) mode PINNED at x=y on weighted Balancer while unit-slope sits at ln((1−w)/w) ⇒
+  either the 180° unfolding reconciles them or the conjecture is the definition-SELECTOR; "at
+  every skew" is the suspect clause). **Entry 5 = HARD PARAMETER BUDGET:** "no separate knob for
+  wing sttpness etc. its x y w determing skew, and single kurtosis / steepness knob thats it" —
+  γ is DERIVED from (x,y,w,τ), never a fifth dial. Admission-contract consequence: today's engine
+  (γ own dial, no live w) fails the budget as-is; (W)'s (w₋,w₊) pair must compress into it.
+- **skeptic entries-3/4 reply (in BRAINSTORM file, lines 130-165):** #8 SETTLED; #9 funding now
+  WELL-POSED (anchor = unskewed same-τ member) + NEW anchor-existence column (GH β=1 couples
+  skew↔kurt ⇒ zero-skew member may not exist per candidate); #13 DEFERRED-not-satisfied
+  (liabilities still re-mark; reachable-warp-set boundedness needed; "baked in… i thinl" = hedged
+  conjecture, must be proven); manipulation/cost-to-warp column mandatory; PASS conditions listed.
+- **OWED next:** relay research-lead LDF-check verdict when run lands; entry 5 to both agents at
+  next dispatch; operator go-ahead → dispatch framework build (A) then table (B), skeptic
+  mandatory pass on the framework note before any merge.
 
 ## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
 Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two
