@@ -257,7 +257,8 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `b245bfda…`,
+- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `1eebfcd6…`;
+  promotion `b245bfda` → UX-restore `9d22cffd` → display-fix `1eebfcd6`.
   **PROMOTED 2026-06-10 by operator ruling, entry 28** — "nothing useful since v24", overriding the
   tester's visual-layer blocker). **(W) kurtosis curve off the v24 Balancer base** (NOT a GH
   descendant): √-kernel weight-field invariant; static τ kurtosis knob (elbow rounds, wings frozen
@@ -267,11 +268,18 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   construction); on (W) **price==slope** (the e^(−ghMu) gotcha is GH-only). Gate =
   `engine/verify/wcurve_selfcheck.js` (22 PASS [HARD] — incl. WARP (g) anchoring/#16-gap gate added 2026-06-11, wired as run_all's (W) branch). Known-OPEN:
   warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; warp is elbow-local (verified —
-  cannot match v24's global magnitude with frozen wings); anchor-overlay viz, lp-y-delta hardcode,
-  default LIQ-PRICE readout. **Prior HEAD demoted to `temporal_mvp_v26c.html`** (`6cc73563…`,
-  GH-line endpoint, suite still green via explicit path).
+  cannot match v24's global magnitude with frozen wings); **anchor overlay RENDERS BROKEN** (legacy
+  w=½ trace fed (W)-units depth ⇒ ~104× low, hugs frame edge — skeptic-corrected 2026-06-11; the old
+  "viz not added" wording was FALSE, it renders wrong); τ per-click visual delta sub-pixel at default
+  Δw (entry-45). lp-y-delta + LIQ-PRICE were FIXED in the UX-restore (no longer open). **Prior HEAD
+  demoted to `temporal_mvp_v26c.html`** (`6cc73563…`, GH-line endpoint, suite still green via
+  explicit path).
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
-  tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
+  tester-owned, gates HEAD promotion) in `engine/`. **Standing UI smoke-pass (skeptic-ruled
+  2026-06-11, FLAG-OMISSION fix):** HEAD promotion AND any operator hand-back additionally require a
+  live tester pass — every control exercised in each state (incl. direction swaps), every drawn
+  overlay identified + sanity-located, per-click visible delta measured for any knob the operator is
+  told to turn. Episodic happy-path passes don't satisfy this. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
   `prompts/` + `MANAGER_VERIFICATION.md` + **`INDEX.md`** (canonical provenance map over all Aristotle

@@ -8,6 +8,25 @@ Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the tr
 Skeptic verdict (entry 44) recorded in skeptic MEMORY; it polices the TYPE after-the-fact via transcript, does NOT pre-clear replies.
 
 
+## ⏳ LIVE THREAD 2 — ENTRY-45 LACUNAE (operator live-play bug reports), as of 2026-06-11
+Operator reported 4 issues playing HEAD (entry 45), summoned skeptic+tester; **entry 46 "do the
+needful" = go-ahead to fix.** Skeptic verdict IN (`notes/skeptic/VERDICT_LACUNAE_v27_liveplay_2026-06-11.md`):
+operator correct on ALL FOUR. Adjudication: (1) τ-insensitivity = known-open UNDER-DISCLOSED
+(per-click sub-pixel at Δw=0.25, frame-visible max 0.56%; intrinsic |Δlnx|≤(Δw/2)·Δτ + step 0.05);
+(2) warp-invisibility = disclosed+operator-overridden (best-disclosed); (3) long↔short ⇅ BREAK =
+GENUINELY MISSED (zero swap/short coverage ever; engine clean both signs — manager+skeptic
+re-derived; break is UI-layer; MAX chip = clubs[dir].totalNotional/oracle, empty-club suspect);
+(4) anchor overlay = GENUINELY MISSED + books carried FALSE "viz not added" (it RENDERS ~104× low:
+legacy w=½ trace × (W)-units depth 170.83; y$2.9k vs $303k at x=10). Skeptic FLAGs:
+FLAG-OMISSION (no standing UI gate — fix ADOPTED into CLAUDE.md §8: standing tester UI smoke-pass
+on promotion + operator hand-backs); FLAG-WRONG (books; CLAUDE.md §8 md5 drift b245bfda→1eebfcd6 —
+ALL CORRECTED this turn); FLAG-OVERSELL narrow (my "engine clean ⇒ UI-layer" skipped executeBand
+put-route; skeptic ran it, clean, conclusion survives — pattern #2 recorded against me).
+Response-type ruling (BINDING, entry-44 mandate): operator replies = plain-English blocks ≤3
+sentences/concern, numbers only where they answer, provenance in plain words, no md5/gates/PR talk.
+**PENDING: tester live-repro (running, bg) → exact ⇅ exception → intern fix dispatch (swap fix +
+(W)-anchor `√(x·y)` one-liner + τ sim-aid disclosure text) → gates + UI smoke-pass → hand back.**
+
 ## ⏳ LIVE THREAD — WARP TRADE-POINT FIX (path A), as of 2026-06-11 (entries 31–40)
 Operator chose **A** (trade-point anchoring, paper-faithful) for the build; **NOT YET BUILT** (HEAD
 still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern build → gates → promote.
@@ -76,10 +95,14 @@ elbow-at-carry; lp-y-delta dynamic; LIQ-PRICE sane; τ slider→stepper] → DIS
 [clickable spinners un-hidden; Spot KPI + header → marginal basis $80,000.00/1.0000; svg blob line
 1060→1064, md5 canonical — run_all blob check now LINE-AGNOSTIC]). **OPERATOR-PLAYABLE: tester-
 confirmed ×2** (load at $80k → curve renders → τ arrows click-step 0.05 + canvas redraws → trades
-execute w/ live readouts → over-size gets honest frozen-wing banner; 0 console errors). Gates green
+execute w/ live readouts → over-size gets honest frozen-wing banner; 0 console errors). [entry-45
+CORRECTION: those passes were happy-path/long-direction only — see LIVE THREAD top block.] Gates green
 both branches (v27 selfcheck 22/22 [HARD] — +WARP (g) #16-anchoring gate 2026-06-11; demoted v26c GH suite via explicit path). **OPEN (honest):**
-warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; anchor-overlay viz (optional —
-makes the elbow-local warp legible); y0=303,448-vs-800,000 default delta = the one entry-29 item
+warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; **anchor overlay RENDERS BROKEN
+~104× low (skeptic-corrected 2026-06-11 — my old "viz optional/not added" wording was FALSE; it
+renders, wrong: legacy w=½ trace × (W)-units depth; operator entry 45)**; long↔short ⇅ swap breaks
+UI (entry 45, tester pinning); τ per-click delta sub-pixel at default Δw (entry 45);
+y0=303,448-vs-800,000 default delta = the one entry-29 item
 LEFT FOR OPERATOR RULING (equilibrium-at-load chosen, γ>1 makes v24's exact y impossible);
 portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note-only per entry 28).
 - **★ TEST-ONLY CHECKS (operator entry 30, HEAD untouched 1eebfcd6) — research-lead a8b91a4c + tester

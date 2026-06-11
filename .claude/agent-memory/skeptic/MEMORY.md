@@ -836,3 +836,61 @@ inventory, operator answered — remaining live tail = every curve note must dis
   (u²=τ²/(2p−1), p>½) is a redundant 2nd symptom, not an independent two-sided wall.
 - The kurtosis SHOULDER is UNDER-DETERMINED at fixed frozen wings ({√,tanh,erf,gd} all qualify); √-kernel is the
   integrable(polar-lens-closes)+gentlest TIEBREAK pick, NOT uniquely forced. (Consistent w/ #20.)
+
+22. **2026-06-11 — ENTRY-45 live-play LACUNAE adjudication (verdict #22; operator summoned me by name)** →
+   `notes/skeptic/VERDICT_LACUNAE_v27_liveplay_2026-06-11.md`. Operator live-played HEAD `1eebfcd6`,
+   four concerns (verbatim verified vs history/operator/ entry 45 — channel HELD): τ-knob insensitive /
+   no visible warp / breaks on long→short switch / anchor curve in the corner. **ADJUDICATION:** (1)
+   τ-insensitivity = KNOWN-OPEN UNDER-DISCLOSED — full-range visibility verified (5.6px mean/111px max
+   over 29 clicks, tester) but PER-CLICK visibility (the entry-29 "appropriate sesicitivty" ask) never
+   measured/told: per click ≤0.59% reserves (bound (Δw/2)Δτ exact), 0.56% in visible frame @u−u0≈−2.8
+   (≈4px frame-edge tail, SUB-PIXEL at the elbow); display-fix "redraw" evidence was canvas-HASH only.
+   (2) no-visible-warp = KNOWN+DISCLOSED+OPERATOR-OVERRIDDEN (entry 28; ledger item 0 honest); residual:
+   anchoring fix (entries 36/38) NOT in HEAD (blocked on my #19 cap escalation — operator saw the dust-
+   blowup discussion, entries 40/42); whether entry-43's reply plainly said "fix not in yet" unverifiable
+   (replies untranscribed). (3) long↔short break = GENUINELY MISSED — zero ⇅-swap/short-band coverage in
+   ANY pass; MY executeBand run: short path CLEAN at default state (N=0.05 P68k/C84k slip 0.50%, P52k/C100k
+   0.38% all-finite; N=9.95 honest wing-rejection; ITM honest OTM-rejection) ⇒ break is UI-layer (club
+   gate/swap flow) — manager's conclusion survives on MY evidence (its tradeUpdate-sign check didn't cover
+   the put-sold executeBand path = narrow FLAG-OVERSELL, pattern #2). (4) anchor-in-corner = GENUINELY
+   MISSED + BOOKS FALSE: lineage/ledger/mgr-MEMORY say "anchor-overlay viz not added/optional" but HEAD
+   L3473 DRAWS the v24 legacy w=½ anchor (stroked L3570-71, legend L1427) fed (W)-unit depth 170.83 into
+   w=0.5 exponents → y $2,918 vs live $303,448 at x=10 = 104× low, 401/401 points edge-hugging. Inherited
+   in all 11 builds. **SELF-FLAG: my #13 "v27 WIP lacks the overlay" was wrong at code level (call existed;
+   what's lacking is a MEANINGFUL anchor) — plausibly seeded the false "not added" bookkeeping.** Also
+   CLAUDE.md §8 drift: md5 b245bfda vs disk 1eebfcd6; lp-y-delta + LIQ-PRICE listed open but fixed.
+   **C-RULING: FLAG-OMISSION (process) — UI verification is episodic+happy-path with NO standing gate**
+   (engine selfcheck 22/22 green while 3 of 4 lacunae lived in the ungated UI zone); entry-28 override of
+   one visual fact was silently institutionalized as "visual=non-gating". Minimal fix named (not designed):
+   standing tester UI smoke-pass on promotion/hand-back — every control in EACH state (swap incl.), every
+   overlay identified+located, per-click visible delta for any operator-facing knob, ledger entry. **D-RULING
+   (entry-44 gate): reply = 4 plain-English blocks ≤3 sentences each** (right/wrong + why + next, feature-
+   level); no md5/gates/PR/inventory numbers; skeptic/tester quoted per §2.4 with plain provenance; pending
+   says pending. Operator's four observations: ALL FOUR substantially correct. Convergence-alarm n/a (no
+   premature agreement; manager's numbers all reproduced byte-level — but its task framing "no UI
+   verification ran after UX-restore" was itself overstated, corrected in C).
+
+## Claims mine-to-defend (verdict #22 — lacunae)
+- Per-click τ bound |Δlnx| ≤ (Δw/2)·Δτ EXACT (from the closed-form invariant; each √-bracket ∈[0,Δτ]);
+  at defaults = 0.625%/click, observed 0.59% full-window / 0.56% visible-frame @u−u0≈−2.8; elbow sub-px/click;
+  full-range 0.05→3.00 = 32.35% / ~175px max. τ authority ∝ Δw (zero at Δw=0). (`/tmp/sk_lacunae.js`)
+- The wing ends ±6 (where the manager's max sits) are OFF-FRAME; frame xMax=30/yMax≈910k clips to
+  u−u0≈[−3,+1]. Any on-screen visibility claim must be computed inside the frame.
+- executeBand SHORT path (sold put/bought call) clean at default state: executes small, honest
+  wing/OTM rejections big, no NaN/throw (outer=NaN is the by-design barrier sentinel, L3143).
+- Wing caps at UX-restore defaults: dy∈(−$94,828, +$252,874) = (β/0.40−y0, β/0.15−y0), β=83,448.
+- HEAD anchor overlay = curveTraceExplicit(0.5, getDepth≈170.83(W-units), modeSlope) → 104× below live,
+  401/401 points within 8% of a frame edge. MAX chip = clubs[dir].totalNotional/oracle (L4287-89), flips
+  club on swap; NOT a curve limit.
+
+## Team blind-spot patterns observed (additions)
+10. **Episodic, happy-path UI verification; gates stop at engine math.** The standing gate
+  (wcurve_selfcheck) is engine-only; UI passes run when the operator complains, exercise the default
+  path only (long dir, default strikes), and verify "something changed" (canvas hash) not "visibly
+  changed". A one-time operator override of a DISCLOSED visual fact (entry 28) got institutionalized
+  as visual=non-gating. Watch for: "playable ×2" verdicts generalized from one path; redraw-fires sold
+  as visible; legend items never sanity-located (the 104× anchor sat in every screenshot unremarked).
+11. **Stale ABSENCE claims about inherited code.** "Not added/optional" recorded for a feature whose
+  legacy version was INHERITED and rendering garbage (anchor overlay, in all 11 builds). When a note
+  says X is absent from a build descended from a base that HAD X, demand the grep. (I committed this
+  one myself in #13 — "v27 WIP lacks the overlay".)
