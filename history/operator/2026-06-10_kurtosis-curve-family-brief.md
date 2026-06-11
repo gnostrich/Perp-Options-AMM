@@ -435,3 +435,10 @@ _Context: operator asks whether the running-exponent "middle path" (un-freezing 
 _Context: operator sets GH aside, points at the existing strike-varying-w work, and orders a run with a qualitative acceptance bar: visible clean flattening/steepening AND visible curve warp._
 
 > GH not forced and aside, the w varies with strike also was something we did some work on. do a run and check for that and see if it works. or if its something else. TLDR i want to see clean flattening steepening allowed, I also want to see curve warp working.... understand qualitatively what im looking for here
+
+---
+
+## Entry 60 — 2026-06-11
+_Context: clarifier on entry 59 — the asymptotes (frozen power-law wings) are NOT abandoned; entry 57 was exploratory only. The run stays within the asymptote-preserving frame._
+
+> and havent totally ditched asymptote yet
