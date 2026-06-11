@@ -619,3 +619,10 @@ _Context: operator rejects the manager's entry-82 answer as gaslighting._
 _Context: operator proposes — retain plain Balancer for the pool; route AMM tx + settlement/funding queries through the polar lens (splaying around the mode); does varying the lens extent give kurtosis, steepening curve 2 (the option-price graph)?_
 
 > ok now if we retain balancer but have the AMM tx and the settlement funding wueries etc work through the polar lens (which splays around the mode) would changing the extent of lensing soove for the kurtosis thereby steepening curve 2?
+
+---
+
+## Entry 85 — 2026-06-11
+_Context: operator confirms the intended shape — lens implements upon v24, surgical, keeping warp goal-seek and the vertical-spread one-tx shortcut, subject to the known warp-anchoring gap and the v24 ATM-jump settlement lag._
+
+> so this would implement upon v24 (subject to the local warp not happening thing we’d diagnosed yesterday, and the settlement thing atm jump stuff at feature level)  — it would keep most things intact and be quite surgical, warp goal seek mechanism same, even the AMM tx 2 options same leg vertical spread as one AMM tx shortcut …
