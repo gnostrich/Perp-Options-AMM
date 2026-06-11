@@ -96,3 +96,8 @@ _Context: operator challenges the manager's entry-17 reply (which framed compone
 > simple english tldr: how much time for the curve agnostic framework theory and implementation / propagation checks etc?
 
 _Context: timeline question; manager answered with session-count estimate (theory closing in-flight; checker re-cut + runnable propagation checks ~1-2 further working sessions; Aristotle latency and the parked operator choices are the stretch factors)._
+
+## 20
+> no. i want it done within the hour
+
+_Context: hard deadline — framework theory + implementation/propagation checks done within the hour. Manager committed with two named carve-outs (Aristotle queue latency; checks parameterized on the operator's parked choices run on available instances). Parallel execution: manager builds runnable checks (framework/checks/), runner drafts the closed component table, research-lead run already in flight, skeptic+tester pass at the close._
