@@ -353,3 +353,10 @@ _Context: manager had replied with first-pass findings on the four entry-45 lacu
 _Context: after the entry-45 findings (incl. the tester's "bands are warp-neutral by construction" result) and with fixes in flight, operator asks for a read-only brainstorm revisiting fork B (per-notional uniform slippage)._
 
 > ok. brainstorm only: throwback to when we had that fork A B where the latter was about same slippage for same notional any strike?
+
+---
+
+## Entry 48 — 2026-06-11
+_Context: continuation of the entry-47 B brainstorm. Operator proposes a conservation law on the premium-vs-strike surface itself and asks for its weighted-Balancer generalization._
+
+> now, if you think of B where theres a conservation law that implies perp option price ('premium') in 'fraction of perp / spot terms' such that the product of strike ray angular deviation from spot angle (the one with 45 degree slope) and premium is constant ..... now if in this context, we interpret this function like xy=k constant product, then what would its 'weighted' balancer analogue be?
