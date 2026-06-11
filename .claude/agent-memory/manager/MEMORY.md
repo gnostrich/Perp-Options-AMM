@@ -29,8 +29,13 @@ inflation = the real defects; bands warp-neutral by construction [net premium ca
 boot-seeded demo club). **Intern fixes DONE + manager-verified, md5 `1eebfcd6`→`928cde1c`**
 (clearBandPreviewOut on all 6 reject paths; pv lines raw USD; anchor `√(x·y)` through live point;
 τ disclosure sentence; engine script BYTE-IDENTICAL d0869cbb; 22/22; pins updated run_all/
-LINEAGE/INTEGRITY/CLAUDE.md). **PENDING: first standing UI smoke-pass (tester, running bg) →
-one-line operator hand-back.** Entry-47 B-throwback brainstorm delivered (synthesis from vetted
+LINEAGE/INTEGRITY/CLAUDE.md). **Standing UI smoke-pass #1: PASS ×2 (tester)** — all 4 fix-acceptance
+items live-verified, full control sweep green, 0 console errors, anchor 1.15px from live dot,
+export/import round-trip clean. **HAND-BACK DONE (build `928cde1c`).** NEW OPEN: **FINDING-R**
+(display-only, intern-fixable): post-rebase Spot($) KPI + header show pool-frame getMP_raw, not
+honest current-$ poolMark=getMP_raw×(oracle/oracle₀) — raise oracle to 90k ⇒ Spot($) shows
+$71,232; after arb shows $80,000 beside Oracle=90000. Keyed #1/#5 in ledger; queue with next
+engine pass. Also carried: boot-log stale "y=$800k,w=0.5" cosmetic.** Entry-47 B-throwback brainstorm delivered (synthesis from vetted
 CURIOSITY_B + BRAINSTORM_B notes + band-neutrality connection; no build action). Operator-tier
 still open: A strike-cap ≤~1.4×; τ visual-authority design (wider default Δw / coarser step?).
 
