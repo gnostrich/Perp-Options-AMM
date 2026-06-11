@@ -661,3 +661,21 @@ _Context: operator requests the lens development written to a named file, to han
 _Context: comprehension request — what is strike-blind warp._
 
 > whats strike blind warp?
+
+---
+
+## Entry 91 — 2026-06-11
+_Context: operator corrects the team's "strike-blind" truncation — the warp goal-seek is unchanged but performed IN THE LENSED VIEW (goal-seek the trade point as seen through the lens), which is strike-dependent._
+
+> are you fucked? I said that the same curve warp goal seek works but as seen through the lens, meaning that the curve looks warped as per the lens, so you'd goal seek as per what you'd see there
+>
+> thats a gross truncation of what I conceptualised and communicated 
+>
+> do you get what i'm saying?
+
+---
+
+## Entry 92 — 2026-06-11
+_Context: operator asks the manager to list its open questions barely, pointwise, simple English._
+
+> list your questions as barely as possible pointwise sinple english
