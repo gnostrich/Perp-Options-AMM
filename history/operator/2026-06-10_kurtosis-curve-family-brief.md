@@ -421,3 +421,10 @@ _Context: go-ahead to dispatch the research-lead derivation on entry-55 point 2 
 _Context: brainstorm continues. Operator asks whether giving up the asymptotes (frozen power-law wings) buys more flatness/steepness (kurtosis) control._
 
 > if we give up asymptotes can we get more control over the flatness / steepness...?
+
+---
+
+## Entry 58 — 2026-06-11
+_Context: operator asks whether the running-exponent "middle path" (un-freezing the wings) just returns us to the demoted GH curve._
+
+> so would that middle path put us back with GH?
