@@ -10,3 +10,10 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 6. Standing skeptic flags: latest verdicts in `notes/skeptic/` (#23 polar headline broken; #24 global-skew §1 uniqueness + resid-0.0 may not enter shared truth; #25 succession).
 
 Mechanical state (fact-with-pointer): HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `928cde1cccb0f35fdc9a23a7634414c8`, gates 22/22 (CLAUDE.md §8, BUILD_LINEAGE, INTEGRITY). Tree clean at wipe. No dispatches in flight except the skeptic wipe-audit. First act after seed: await operator instruction — no self-assigned work.
+
+## v24+lens derivation run (research-lead aa0bc7bd) — DID NOT COMPLETE (2026-06-11)
+Hit session limit; 0 usable output, NO note written, tree clean. The six derivation questions
+(handoff spec §in-flight) remain OPEN/unverified — re-dispatch when sessions reset. The handoff
+spec `specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md` is pushed and stands on its own
+(architecture + manager-verified numbers + the open questions HONESTLY marked unverified); it did
+NOT claim the derivation was done, so it is safe for the other session as-is.
