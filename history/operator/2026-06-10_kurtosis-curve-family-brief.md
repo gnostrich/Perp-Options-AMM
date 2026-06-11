@@ -286,3 +286,10 @@ _Context: operator queues another read-only check for research-lead — whether 
 _Context: operator resolves the A-vs-B warp fork — picks **A (trade-point anchoring, paper-faithful, strike-driven)** for the build; and separately asks the research guy for a CURIOSITY run on **B** (what invariant/mechanism would yield warp∝notional / same-notional-same-warp) purely to understand it — explicitly NOT for the current build. Manager proceeds to build A (skeptic re-review of the re-posed A spec + its far-strike divergence first); dispatches the B curiosity separately. Transcribed verbatim._
 
 > A, but separately ask the research guy to do a curiosity run on B just to understand what invariant would do that (nothing to do with the current built)
+
+---
+
+## Entry 39 — 2026-06-11
+_Context: read-only brainstorm — operator clarifies the B intent: the slippage is still implemented by the same curve-warp principle, and is the SAME per unit notional as for a spot trade (uniform per-notional execution slippage, strike-blind; strike sets only the option value/mark). Asks "does that make sense?" Manager read: yes, coherent + bounded (sidesteps A's divergence); precise form = warp sized by NOTIONAL (N·oracle), NOT premium (so it's a change from the current premium-sized engine — the curiosity run's "B = current engine" was imprecise on sizing). Grounding with research-lead (read-only). Transcribed verbatim._
+
+> read only brainstorm: my idea with B was that the slippage remains implemented by the same curve warp principle, and is the same per unit notional as for a spot trade. does that make sense?
