@@ -1,5 +1,5 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK recap+brainstorm seeds (text-only; NO submit / NO new derivation / NO git)._
+_Last updated: 2026-06-11, LDF DEFINITION + MODE-CONJECTURE CHECK (derivation+numerics; NO submit / NO engine edit / NO git)._
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -17,6 +17,33 @@ _Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK recap+brainstorm seeds (text
 > stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
+### LDF DEFINITION + MODE-CONJECTURE CHECK — 2026-06-11 (operator entries 3–4; derivations INVITED; framework build still PENDING)
+Note: `notes/LDF_DEFINITION_CHECK_2026-06-11.md` (mpmath dps=30; inventory-dispositioned, all 16).
+Operator entry-4 conjecture "mode = unit-tangent-slope point at every skew" — VERDICT:
+- **TRUE EXACTLY for the anchored warp family** (w_mid=½, skew=Δw, any τ): mode = unit-slope =
+  w=½ crossing, 30 dps, BOTH skew signs; robust across all x↔y-symmetric thickness heights.
+  Mechanism: w(0)=½ ⇒ diagonal crossed at slope −1. Unit-slope condition ≡ log carry-price = 0;
+  AMM-validity gate ⟺ uniqueness of the unit-slope point (invalid Δw=−0.3,τ=0.08 grows a 2nd root).
+- **FALSE in EVERY gauge for constant-weight skew** (weighted CD w≠½: elasticity ≡ −w/(1−w),
+  no tangent∥ray point exists) — the conjecture EXCLUDES reweighting, SELECTS the warp.
+- **FALSE for live GH** (γ=3 pin): candidate modes v*≈0.151 / ln M≈0.238 / elasticity−1 v_e≈0.133
+  vs pool mark v0=3 (17.6× price gap); **elasticity at the mark = e^(−ghMu) EXACTLY**
+  (1/748.66 γ=3, 1/44.52 γ=2 — THE gotcha factor IS the mode-displacement). 4th non-membership face.
+- **Selector result:** conjecture pins (1) skew mechanism = anchor-preservation w(0)=½;
+  (2) gauge = carry gauge (mode ray = 45° diagonal); (3) height only up to x↔y symmetry —
+  mode robust, "kurtosis of LDF" still height-dependent (U1 residue; min on plain Balancer =
+  √k·e^(−|ũ|/2) Laplace tent — object clash vs latent-kernel Gaussian corner, flagged not labelled).
+- **Pool-mark leg = item-16 contract [OPEN]:** post-trade warped curve must cross the post-trade
+  point with tangent∥ray (local w=½ in carry units) — stated as the acceptance test for the
+  Trade-Formula build; NOT checked against the paper here. H3=2xy caveat: critical at elasticity−1
+  but a MINIMUM for Δw>0 (xy = e^{2c}e^{Δw√(τ²+ũ²)}); honest height = min(x,y) or 2xy/r.
+- Entry-3 funding pin recorded: anchor = UNSKEWED same-family member at SAME τ (funding prices skew
+  only, per strike ray); functional open (slope-dev ratio = minimal continuation / level gap / area /
+  score gap — candidates listed, not decided). Re-posed γ question (entry-4 item 2 bounce) in one
+  sentence — in note §5, owed to operator via manager. Queue unchanged; no Aristotle traffic.
+
+---
 
 ### CURVE-AGNOSTIC FRAMEWORK BRAINSTORM — 2026-06-11 (operator entry 1; recap+seeds ONLY, pre-go-ahead)
 Operator spec (verbatim source `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`):
