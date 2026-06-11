@@ -106,3 +106,8 @@ _Context: hard deadline — framework theory + implementation/propagation checks
 > simlpe english summary whats going on nondistupriuvely
 
 _Context: status request; nothing dispatched or changed in response — summary only._
+
+## 22
+> yeah and you should know in the exercise to care to give me the singular name of this unified mathematical object
+
+_Context: naming demand — the framework must crown ONE named object that everything is a reading of. Manager answered: the pool potential μ (stat-mech alias: the pool's free energy); naming header added to framework/README; in-note phrasing pass queued for research-lead (its artifact, currently under skeptic audit)._
