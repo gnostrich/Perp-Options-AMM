@@ -1,0 +1,520 @@
+{
+ "build": "HEAD_temporal_mvp_v27_wkurtosis.html md5 928cde1c",
+ "date": "2026-06-11T09:56:17.967Z",
+ "items": {
+  "A3_anchor": {
+   "pool": {
+    "x": 10,
+    "y": 303448.28,
+    "tau": 0.3,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 10.320381356467916
+   },
+   "kNew": 1741.98,
+   "depthOld": 170.83,
+   "yAtLiveX_anchor": 303448.28,
+   "yLive": 303448.28,
+   "livePx": [
+    270,
+    283.3
+   ],
+   "minDistAnchorToLiveDot_px": 1.15,
+   "anchorInFrameBbox_px": {
+    "min": [
+     133.2,
+     21.3
+    ],
+    "max": [
+     673.5,
+     371.2
+    ]
+   },
+   "inFramePts": 146,
+   "frame": {
+    "xMax": 30,
+    "yMax": 910345
+   },
+   "plot": {
+    "left": 64,
+    "top": 18,
+    "right": 682,
+    "bottom": 416
+   }
+  },
+  "A4_disclosure": {
+   "found": true,
+   "text": "ATM-elbow roundness, vol-set at setup; STATIC — not changed by trades. Smaller τ = sharper elbow (leptokurtic); larger τ → plain Balancer. Wings (tail exponents) are frozen across τ. Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step — sweep τ widely or widen the wing gap to see it.",
+   "visible": true,
+   "rectTop": 503.65625,
+   "tauTop": 462.71875,
+   "distPx": 40.9375
+  },
+  "A2_audit": {
+   "display": {
+    "dyS": "28453.1684 $",
+    "dyB": "11470.0908 $",
+    "net": "$39,923.259202"
+   },
+   "parsed": {
+    "dyS": 28453.1684,
+    "dyB": 11470.0908,
+    "net": 39923.259202
+   },
+   "slippage": "18.1469 %  ·  ≈ $3764.65"
+  },
+  "A1_path1_swap": {
+   "out": {
+    "pv": {
+     "pv-sold-theta": "—",
+     "pv-sold-delta": "—",
+     "pv-sold-mark": "—",
+     "pv-sold-V": "—",
+     "pv-bought-theta": "—",
+     "pv-bought-delta": "—",
+     "pv-bought-mark": "—",
+     "pv-N-bought": "—",
+     "pv-bought-V": "—",
+     "pv-fN": "—",
+     "pv-fE": "—",
+     "pv-L0": "—",
+     "pv-dy-sold": "—",
+     "pv-dy-bought": "—",
+     "pv-net-cash": "—"
+    },
+    "boughtDisplay": "—",
+    "boughtSubline": "",
+    "sellSubline": "",
+    "deposit": "—",
+    "slippage": "— %",
+    "txfees": "0.0100 %",
+    "modeSell": "—",
+    "modeBuy": "—",
+    "maxChip": "MAX: 0.0625 BTC",
+    "dir": "short",
+    "warn": "Sell leg: trade exceeds frozen-wing range — split or widen Δw.",
+    "executeDisabled": true
+   },
+   "check": {
+    "stale": false,
+    "staleFields": [],
+    "warnPresent": true,
+    "executeDisabled": true
+   }
+  },
+  "A1_path2_pill": {
+   "out": {
+    "pv": {
+     "pv-sold-theta": "—",
+     "pv-sold-delta": "—",
+     "pv-sold-mark": "—",
+     "pv-sold-V": "—",
+     "pv-bought-theta": "—",
+     "pv-bought-delta": "—",
+     "pv-bought-mark": "—",
+     "pv-N-bought": "—",
+     "pv-bought-V": "—",
+     "pv-fN": "—",
+     "pv-fE": "—",
+     "pv-L0": "—",
+     "pv-dy-sold": "—",
+     "pv-dy-bought": "—",
+     "pv-net-cash": "—"
+    },
+    "boughtDisplay": "—",
+    "boughtSubline": "",
+    "sellSubline": "",
+    "deposit": "—",
+    "slippage": "— %",
+    "txfees": "0.0100 %",
+    "modeSell": "—",
+    "modeBuy": "—",
+    "maxChip": "MAX: 0.0625 BTC",
+    "dir": "short",
+    "warn": "Sold-leg strike θ=1.2500 not OTM on put wing (pool spot=1.0000).",
+    "executeDisabled": true
+   },
+   "check": {
+    "stale": false,
+    "staleFields": [],
+    "warnPresent": true,
+    "executeDisabled": true
+   }
+  },
+  "A1_path3_oversize": {
+   "out": {
+    "pv": {
+     "pv-sold-theta": "—",
+     "pv-sold-delta": "—",
+     "pv-sold-mark": "—",
+     "pv-sold-V": "—",
+     "pv-bought-theta": "—",
+     "pv-bought-delta": "—",
+     "pv-bought-mark": "—",
+     "pv-N-bought": "—",
+     "pv-bought-V": "—",
+     "pv-fN": "—",
+     "pv-fE": "—",
+     "pv-L0": "—",
+     "pv-dy-sold": "—",
+     "pv-dy-bought": "—",
+     "pv-net-cash": "—"
+    },
+    "boughtDisplay": "—",
+    "boughtSubline": "",
+    "sellSubline": "",
+    "deposit": "—",
+    "slippage": "— %",
+    "txfees": "0.0100 %",
+    "modeSell": "—",
+    "modeBuy": "—",
+    "maxChip": "MAX: 0.1250 BTC",
+    "dir": "long",
+    "warn": "Sell leg: trade exceeds frozen-wing range — split or widen Δw.",
+    "executeDisabled": true
+   },
+   "check": {
+    "stale": false,
+    "staleFields": [],
+    "warnPresent": true,
+    "executeDisabled": true
+   }
+  },
+  "A2b_1btc": {
+   "display": {
+    "dyS": "2859.6149 $",
+    "dyB": "913.0873 $",
+    "net": "$3,772.702201"
+   },
+   "parsed": {
+    "dyS": 2859.6149,
+    "dyB": 913.0873,
+    "net": 3772.702201
+   },
+   "slippage": "1.7149 %  ·  ≈ $40.42",
+   "engineTruth": {
+    "hasPreview": true
+   }
+  },
+  "B1_perps": {
+   "dLong": {
+    "lev": "8.0×",
+    "liq": "$70000.00"
+   },
+   "dShort": {
+    "lev": "8.0×",
+    "liq": "$90000.00"
+   },
+   "clubs": {
+    "long": {
+     "notional": 18000,
+     "equity": 2000
+    },
+    "short": {
+     "notional": 9000,
+     "equity": 1000
+    },
+    "nPerps": 4
+   }
+  },
+  "B2_steppers": {
+   "stepState0": {
+    "s1": false,
+    "s2": false,
+    "active": 2,
+    "w": "w: 0.725000 → 0.725130 → 0.725170 · Δw +0.000170"
+   },
+   "stepState1": {
+    "active": 1,
+    "cls1": "preview-step-btn active",
+    "w": "w: 0.725000 → 0.725130 → 0.725170 · Δw +0.000130"
+   },
+   "stepState2": {
+    "active": 2,
+    "cls2": "preview-step-btn active"
+   },
+   "dStep": {
+    "diffPx": 2312,
+    "totalPx": 322000,
+    "pct": 0.718,
+    "bbox": [
+     63,
+     0,
+     699,
+     416
+    ]
+   },
+   "dStepBack": {
+    "diffPx": 2312,
+    "totalPx": 322000,
+    "pct": 0.718,
+    "bbox": [
+     63,
+     0,
+     699,
+     416
+    ]
+   }
+  },
+  "B2_execute": {
+   "poolPre": {
+    "y": 303448.27586206904,
+    "phi": 10.320381356467916,
+    "bands": 0
+   },
+   "poolPost": {
+    "y": 303635.7220914549,
+    "phi": 10.320825577774972,
+    "bands": 1
+   },
+   "dialogCount": 0
+  },
+  "B2_overcarve": {
+   "dialogs": [
+    {
+     "phase": "B2-overcarve",
+     "type": "alert",
+     "message": "Open failed: Over-carve: band needs $80000 notional but club free is $14000."
+    }
+   ],
+   "preview": {
+    "warn": ""
+   }
+  },
+  "B2_directions": {
+   "dir1": {
+    "dir": "long",
+    "slippage": "0.0852 %  ·  ≈ $0.10",
+    "warn": ""
+   },
+   "postSwap": {
+    "warn": "",
+    "staleCheck": {
+     "stale": true,
+     "staleFields": [
+      "pv-sold-theta=0.6500",
+      "pv-sold-delta=0",
+      "pv-sold-mark=0.201887",
+      "pv-sold-V=$16,150.94",
+      "pv-bought-theta=1.2500",
+      "pv-bought-delta=0",
+      "pv-bought-mark=0.041069",
+      "pv-N-bought=0.293391 BTC",
+      "pv-bought-V=$963.94",
+      "pv-fN=888.889%",
+      "pv-fE=8000.000%",
+      "pv-L0=9.00×",
+      "pv-dy-sold=−16150.9406 $",
+      "pv-dy-bought=−963.9446 $",
+      "pv-net-cash=−$17,114.885266",
+      "boughtDisplay=0.293391 BTC",
+      "boughtSubline=≈ $23,471.32",
+      "sellSubline=≈ $80,000.00",
+      "deposit=1.0000",
+      "slippage=7.8422 %  ·  ≈ $1283.04",
+      "txfees=0.0100 %  ·  0.000100 BTC  ≈ $8.0000",
+      "modeSell=BAR",
+      "modeBuy=BAR"
+     ],
+     "warnPresent": false,
+     "executeDisabled": false
+    }
+   },
+   "dir2": {
+    "dir": "short",
+    "slippage": "0.3834 %  ·  ≈ $2.98",
+    "warn": "",
+    "executeDisabled": false
+   }
+  },
+  "B3_earn": {
+   "lp0": {
+    "y": "$303,635.72",
+    "x": "9.997659 BTC",
+    "pv": "$607,271.44",
+    "yd": "$187.45"
+   },
+   "lpPrev": {
+    "lambda": "+0.0165",
+    "val": "$617,271"
+   },
+   "lp1": {
+    "y": "$308,635.72",
+    "pv": "$617,271.44",
+    "poolY": 308635.7220914549
+   },
+   "lp2": {
+    "y": "$303,635.72",
+    "pv": "$607,271.44",
+    "poolY": 303635.7220914549
+   }
+  },
+  "B4_wings": {
+   "clamp": {
+    "wmInput": "0.501",
+    "wpInput": "0.850",
+    "wMinus": 0.501,
+    "wPlus": 0.85,
+    "status": "γ_loc(ATM)=2.08 · wings γ₋=1.00, γ₊=5.67"
+   },
+   "clamp2": {
+    "wpInput": "0.950",
+    "wPlus": 0.95
+   },
+   "restored": {
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "status": "γ_loc(ATM)=2.64 · wings γ₋=1.50, γ₊=5.67"
+   }
+  },
+  "B4_kappa_tick": {
+   "kappa": 0.5,
+   "tick_hours": 8
+  },
+  "B4_oracle": {
+   "spot0": {
+    "spotUsd": "$80,136.38",
+    "hdr": "spot $80,136.38",
+    "oracle": 80000,
+    "P": 30370.682238535985
+   },
+   "spot1": {
+    "spotUsd": "$71,232.34",
+    "hdr": "spot $71,232.34",
+    "oracle": 90000,
+    "P": 29215.797492206388,
+    "x": 10.107902042240365,
+    "y": 295310.4191371539
+   },
+   "dOracle": {
+    "diffPx": 10954,
+    "totalPx": 322000,
+    "pct": 3.402,
+    "bbox": [
+     63,
+     0,
+     699,
+     416
+    ]
+   }
+  },
+  "B4_arb_tick": {
+   "arb": {
+    "spotUsd": "$80,000.00",
+    "P": 30353.94598236788,
+    "oracle": 90000
+   },
+   "tick": {
+    "t": 8,
+    "kpiT": "8h"
+   }
+  },
+  "B5_portfolio": {
+   "visible": true,
+   "rows": 10,
+   "hasNaN": false,
+   "hasUndefined": false,
+   "excerpt": "PORTFOLIO\n1 open bands · 1 total\nPERPS\nBANDS\nLOG\n#\tSIDE\tNOTIONAL ($)\tMARGIN ($)\tENTRY MARK\tP&L (LIVE)\tEQUITY (LIVE)\tEFF. LEVERAGE\tCLUB\t\nP1\tLONG\t$10,000\t$1,000.00\t$80,000\t$1,250.00\t$2,250.00\t5.00×\tlong-btc\t×\nP2\tSHORT\t$5,000\t$500.00\t$80,000\t$625.00\t$1,125.00\t5.00×\tshort-btc\t×\nP3\tLONG\t$8,000\t$1,000.00\t$80,000\t$1,000.00\t$2,000.00\t4.50×\tlong-btc\t×\nP4\tSHORT\t$4,000\t$500.00\t$80,000\t$500.00\t$1,000.00\t4.50×"
+  },
+  "B6_roundtrip": {
+   "exported": true,
+   "file": "/home/user/Perp-Options-AMM/evidence/v27_entry46_smoke/export_state.json",
+   "byteIdentical": false,
+   "preLen": 6118,
+   "postLen": 6192,
+   "keyDiffs": [],
+   "stateIdenticalExLog": true,
+   "firstDiffAt": 3136,
+   "preCtx": "\": [\n    {\n      \"t\": 8,\n      \"kind\": \"fund\",\n      \"msg\": \"+8h: net trader → p",
+   "postCtx": "\": [\n    {\n      \"t\": 8,\n      \"kind\": \"info\",\n      \"msg\": \"Imported.\"\n    },\n "
+  },
+  "B7_reset": {
+   "oracle": 80000,
+   "x": 10,
+   "y": 303448.28,
+   "tau": 0.3,
+   "nPerps": 2,
+   "spotUsd": "$80,000.00"
+  },
+  "C_tau": {
+   "tau1": {
+    "input": "0.35",
+    "store": 0.35
+   },
+   "dClick": {
+    "diffPx": 3744,
+    "totalPx": 322000,
+    "pct": 1.163,
+    "bbox": [
+     63,
+     0,
+     699,
+     416
+    ]
+   },
+   "aClick": {
+    "maxDispPx": 3.39,
+    "maxAt": {
+     "u": 7.5
+    },
+    "inFramePts": 139
+   },
+   "dSweep": {
+    "diffPx": 5432,
+    "totalPx": 322000,
+    "pct": 1.687,
+    "bbox": [
+     63,
+     0,
+     699,
+     416
+    ]
+   },
+   "aSweep": {
+    "maxDispPx": 131.38,
+    "maxAt": {
+     "u": 7.02
+    },
+    "inFramePts": 159
+   },
+   "dLow": {
+    "diffPx": 4375,
+    "totalPx": 322000,
+    "pct": 1.359,
+    "bbox": [
+     205,
+     0,
+     699,
+     403
+    ]
+   },
+   "aFull": {
+    "maxDispPx": 153.73,
+    "maxAt": {
+     "u": 7.02
+    },
+    "inFramePts": 159
+   }
+  }
+ },
+ "consoleLog": [
+  {
+   "phase": "B2-bands",
+   "type": "warning",
+   "text": "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+  },
+  {
+   "phase": "C-tau",
+   "type": "warning",
+   "text": "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+  }
+ ],
+ "pageErrors": [],
+ "dialogs": [
+  {
+   "phase": "B2-overcarve",
+   "type": "alert",
+   "message": "Open failed: Over-carve: band needs $80000 notional but club free is $14000."
+  }
+ ]
+}
