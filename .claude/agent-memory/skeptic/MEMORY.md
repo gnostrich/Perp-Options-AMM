@@ -926,3 +926,86 @@ inventory, operator answered — remaining live tail = every curve note must dis
   legacy version was INHERITED and rendering garbage (anchor overlay, in all 11 builds). When a note
   says X is absent from a build descended from a base that HAD X, demand the grep. (I committed this
   one myself in #13 — "v27 WIP lacks the overlay".)
+
+23. **2026-06-11 — POLAR density first-principles note (verdict #23; operator entry 53/54, READ-ONLY)** →
+   `notes/skeptic/VERDICT_POLAR_density_2026-06-11.md`. Mandatory pre-relay pass; research-lead itself
+   asked the skeptic to verify the inventory table + the kurtosis-at-zero-skew claim. Artifact =
+   `notes/research/POLAR_density_first_principles_2026-06-11.md`. **VERDICT: 2× FLAG-WRONG + 2×
+   FLAG-OVERSELL + 1× FLAG-OMISSION(soft); the HEADLINE is broken; (a)/(c)/(d) survive.** Re-derived
+   independently (`/tmp/skeptic_polar{,2,3,4}.py`), reproduced mgr `/tmp/mgr_polar_check.js` + RL
+   `/tmp/polar53*.py`. **CORE DEFECT (the two mgr flags are ONE hole = an A/B construction swap):** the
+   note runs TWO incompatible kurtosis constructions and swaps between them. **Construction A** (§2 base
+   line 84, §3.3 monotonicity table, §4 containment): `γ_loc=γ₋+(γ₊−γ₋)·½(1+tanh κu)` — κ = blend
+   sharpness, γ_loc bounded in (γ₋,γ₊), always >1, always monotone, BUT INERT at γ₋=γ₊ (= (W)'s weld,
+   cannot do kurtosis-at-zero-skew). **Construction B** (§2.1 + §7 headline + mgr block (D)
+   `glocSym=2.5−κ·sech²u`): additive even bump, ATM = lvl−κ — the ONLY construction giving the headline
+   "−1.25→−12.5" + the symmetric-leptokurtic smile. **FLAG-WRONG #1:** the headline needs B; under B the
+   ATM value-law exponent goes <1 (κ=2→0.5) and NEGATIVE (κ=5→−2.5, κ=12.5→−10) across the advertised
+   range — VIOLATES the γ∈(1,4) lock (#6), which binds on γ_loc EVERYWHERE because note §1.2 itself
+   EQUATES γ_loc = value-law exponent = depth-potential slope (three-way identity, the escape hatch dies
+   on its own definition). Lock-respecting window = κ≲1.3 ONLY, never bounded; γ<4 also caps depth
+   (κ<lvl−1<3). **FLAG-WRONG #2:** §3.3 "κ alone never breaks monotonicity" is a Construction-A result
+   (γ_loc≥γ₋=1.8 dominates); on the headline B, monotone breaks at SAME κ (κ=2 min(γ+γ′)=−0.53 ARB;
+   κ=12.5→−16.4). Note never runs arb-sanity on its headline construction. **FLAG-OVERSELL #1:**
+   L2-orthogonality `<even,odd>≈machine-zero` is a PARITY TAUTOLOGY (even·odd is odd ⇒ ∫=0 for ANY f;
+   got 2.5e-15 for random garbage f) — zero modeling content; the real content is the DEFINITIONAL
+   assignment kurtosis≔even/skew≔odd, a choice dressed as a discovery. (mgr's instinct #1 CONFIRMED +
+   extended.) **FLAG-OVERSELL #2:** "polar CONTAINS (W)" true but near-vacuous ("set of all shoulders
+   contains this shoulder"); the extra the superset buys IS the lock-violating part. **FLAG-OMISSION
+   (soft, pattern #5/#8):** §5.2 files locked #5 rebase + #9 funding as "re-derive" (research to-do) not
+   operator-tier "locked contract unestablished on a new object"; ITM "transfers clean" label
+   conditional on γ_loc>1, undisclosed. **SURVIVES ATTACK (sound, don't re-litigate):** (a)
+   well-posedness (γ_loc primitive, ln F=∫γ_loc du, θ-bounded/u-unbounded); (c) weight-free-ONLY-under-B
+   crux — I attacked for a weight-free A-compatible map and COULD NOT FIND ONE (path-A trade-point
+   anchoring forces a gearing scalar ≠ u_R = the (W) z, = the weight in disguise); it is a genuine hard
+   TENSION not a contradiction (B is available, operator chose A in entry 38 eyes-open) ⇒ correctly
+   operator-tier; (d) closed-form TRANSCENDENTAL (log-cosh+sech²) forfeits the √-kernel ALGEBRAIC
+   tiebreak (sympy reproduced); the (W) τ-Δw weld (w≡w_mid ∀τ at Δw=0) CONFIRMED — the contrast is real,
+   the defect is the polar object's claim to CAN. **FRAMING MISMATCH (relay-fidelity note, not a flag):**
+   operator entry 53 asked for {distribution w/ skew+kurt knobs} + {weight-free x,y→SKEW map}; he did NOT
+   ask for kurtosis-decoupled-at-zero-skew. The note ELEVATES that to THE headline ("the one thing (W)
+   cannot do") = the team's elegance-theorem failure mode (pattern #1: the confident headline is the
+   broken claim). Operator entries 3/4: "steepness and kurtosis interchangeable", single static
+   vol-geometry knob — not a demand for orthogonality at zero skew. **D-RULING (entry-44):** operator
+   gets ONE plain answer — honest-yes (weight-free skew works under fork B) + honest-no (advertised
+   kurtosis-independent-of-skew breaks the γ>1 value-law lock + arbitrageable beyond a thin setting;
+   neither (W) nor polar gives a free lock-respecting kurtosis-at-zero-skew) + the one operator call
+   (B vs A). NO PR/κ-table/md5. Verbatim channel HELD (entry 53/54 verified vs
+   history/operator/2026-06-10_kurtosis-curve-family-brief.md). Convergence-alarm MODERATE — note is
+   self-adversarial on (c)/(d) and honest A-vs-B fork (NOT a dodge), but the headline is an
+   over-reaching elegant theorem the operator didn't ask for AND it's lock-violating; mgr re-derived (A)
+   frozen wings + (D) weld but did NOT catch the A/B construction swap that sinks the headline (caught
+   the orthogonality tautology + asked the γ>1 question = the right two instincts, handed to me to rule).
+
+## Claims mine-to-defend (verdict #23 — polar density)
+- The polar note runs TWO kurtosis constructions: A (blend sharpness κ-in-tanh, lock-safe but INERT at
+  zero wing-gap) and B (additive −κ·sech² bump, delivers the headline). The headline REQUIRES B; A
+  cannot do kurtosis-at-zero-skew. They are swapped silently — the monotonicity defense is A, the win is B.
+- Under Construction B at lvl=2.5: ATM γ_loc = lvl−κ → <1 at κ=2, NEGATIVE at κ≥2.5; VIOLATES γ∈(1,4)
+  (#6) which binds on γ_loc everywhere (note §1.2 EQUATES γ_loc=value-law exponent). Lock-safe window
+  κ≲1.3 only; γ<4 caps depth at κ<lvl−1<3. (`/tmp/skeptic_polar2.py`,`/tmp/skeptic_polar4.py`)
+- Under Construction B, price monotonicity (γ_loc+γ_loc′>0) breaks at the SAME κ: κ=2→−0.53 ARB.
+  §3.3's "κ never breaks monotonicity" is Construction A, mis-applied. (`/tmp/skeptic_polar2.py`)
+- L2 even·odd orthogonality is a parity tautology (2.5e-15 for random garbage f) — no modeling content;
+  the content is the definitional assignment kurtosis≔even/skew≔odd. (`/tmp/skeptic_polar3.py`)
+- "Polar contains (W)" is true but near-vacuous (all-shoulders ⊃ this-shoulder); the superset's extra IS
+  the lock-violating part. The (W) τ-Δw weld is real (w≡w_mid ∀τ at Δw=0) — (W) genuinely cannot do
+  kurtosis-at-zero-skew; the defect is the polar object's claim to CAN (only via lock-breaking B).
+- Weight-free is achievable ONLY under fork-B anchoring; under path-A (operator-chosen, entry 38) the
+  reseat scalar (=(W) z) is forced and IS the weight in disguise — a hard tension, correctly operator-tier.
+  (a) well-posed, (d) transcendental-not-algebraic cost: both sound, not re-litigated.
+
+## Team blind-spot patterns observed (additions)
+12. **Two constructions of the same knob, swapped between the win and the defense.** The polar note
+  defends arb-sanity/lock-safety with Construction A (the blend) and sells the headline with
+  Construction B (the additive bump) — different objects, never reconciled, the defense never run on
+  the construction that produces the win. Sibling of pattern #3 (β=0 numerics sold at β=1 engine) and
+  #4 (true label, wrong object): here a true safety result for object A is implicitly transferred to
+  object B that produces the headline. STRUCTURAL TEST at gate time: "is the lock/monotonicity check
+  run on the SAME closed-form that produces the advertised number?" If the headline formula and the
+  safety-table formula differ, that gap is the hole.
+13. **Headline answers a question the operator didn't ask.** Operator asked for skew+kurtosis knobs +
+  weight-free skew map; the note manufactured "kurtosis ⊥ skew at zero skew gap" as THE win. An elegant
+  decoupling theorem the operator never requested, and it turned out lock-violating. Cross-check every
+  headline against the operator's verbatim ask (history/operator/) before accepting it as the prize —
+  the most confident claim is the one most likely drifted from the actual question (pattern #1 lens).
