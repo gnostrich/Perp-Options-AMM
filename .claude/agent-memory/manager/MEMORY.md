@@ -1,5 +1,31 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
 
+## ⏳ LIVE THREAD — WARP TRADE-POINT FIX (path A), as of 2026-06-11 (entries 31–40)
+Operator chose **A** (trade-point anchoring, paper-faithful) for the build; **NOT YET BUILT** (HEAD
+still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern build → gates → promote.
+- **Spec re-posed + manager+skeptic-vetted:** reserves move from the LIVE point (no teleport — the
+  prior spec FLAG-WRONG'd for teleporting); strike-dependence only in the warp amount `φ′=u′−z0·G`,
+  `G=w′(u_spot)/w′(u_tp)`; spot-reduction byte-exact; anchor-omitted=legacy.
+- **DIVERGENCE (skeptic #19 + manager-verified, sharpened entry 40):** `G=((τ²+u_tp²)/(τ²+u_spot²))^1.5`
+  → ∞ in the frozen wing (1/w′ leverage: flat wing insensitive to φ ⇒ small far-out slope change needs
+  HUGE elbow move, dragging the elbow through ATM). **OBSERVABLE, not coordinate:** a DUST trade
+  (dy=0.001) reshapes ATM price **39%/87%/105%** at K=**1.35/1.7/2.0**·mp0 (saturates ~115% by 4×).
+  So A's clean band is TIGHT: **K_max≈1.4·mp0** (outer 1.7×) — likely NARROWER than the OTM strikes an
+  options venue wants (2×+). Single-φ CANNOT localize (more DOF would break frozen wings) ⇒ **bounding
+  the strike menu is the ONLY fix.** Cap = a STRIKE clamp on z0·G (separate from the trade wing-guard);
+  this is the gate's (g.4).
+- **MANAGER MISS owned (entry 40):** I told the operator "realistic range ≲1.7× is fine, your picture
+  holds" — WRONG; at 1.7× a dust trade reshapes ATM 87%. Corrected to operator. (Recurring pattern:
+  I relay the reassuring read; verification sharpens it harder.)
+- **AWAITING OPERATOR:** is a ≤~1.4×-spot strike menu acceptable for A, or does the tight band reopen
+  the choice? (operator-tier; they're firm on A but now have the accurate constraint.)
+- **B (curiosity, NOT the build):** = uniform per-notional slippage via spot-anchored warp sized by
+  N·oracle (drop the mark); coherent, BOUNDED at all strikes, self-consistent; NOT paper's trade-point
+  mechanic. A↔B = family z=z0·G^λ (λ=moneyness-gearing; λ=0=B/bounded, λ=1=A/divergent).
+- Honest carry (both A,B): `(α,β)`-flow-confinement lemma [needs-Aristotle], numeric-faithful only.
+  Notes: `notes/research/{SPEC_tradepoint_anchoring_REPOSED,WARP_divergence_reconcile_and_cap,
+  BRAINSTORM_B_per_notional_slippage,CURIOSITY_B_*}_2026-06-1{0,1}.md`; skeptic VERDICT_tradepoint_*.
+
 ## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
 **CURRENT HEAD md5 = `1eebfcd6f6ff4f4e3df5f745ac145f19`** (promotion `b245bfda` → UX-restore
 `9d22cffd` [entry 29: v24 defaults back — x=10/oracle 80k/y≈303448 no-load-arb equilibrium/φ₀=u₀

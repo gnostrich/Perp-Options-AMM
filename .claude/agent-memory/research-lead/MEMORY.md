@@ -1,5 +1,35 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, BRAINSTORM B — per-notional (spot-equivalent) slippage (entry 39; BRAINSTORM/notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, WARP-divergence reconcile + safe-strike cap (entry 40; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### WARP-DIVERGENCE RECONCILE + SAFE-STRIKE CAP (g.4) — 2026-06-11 (operator entry 40; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A)
+Note: `notes/research/WARP_divergence_reconcile_and_cap_2026-06-11.md`. Script `/tmp/warp_cap.js`
+(node float64; (W) fns byte-mirror /tmp/repose3.js). Gate pool {10,12,0.3,[0.52,0.72],0}, mp0=2.457812.
+**OPERATOR (40 verbatim):** "if you trade at a point far out where slope is tending to infinity... its
+going to goal seek another slope close to infinity so its not a huge warp imo you're probably missing something obvious."
+**VERDICT = OPERATOR HALF-RIGHT; manager reconciliation CONFIRMED + SHARPENED.**
+**(i) Operator RIGHT at trade-point + in-range; WRONG observably/out-of-range.** reshape AT the trade ray
+DECREASES going OTM (6.2e-2→5.3e-3 dust; TEST 1) — slope change demanded far out IS tiny, operator's
+geometry exact there. BUT 1/w′ flat-wing leverage routes warp into the ATM ELBOW + OPPOSITE WING: dust at
+K=2mp0 reshapes ATM 45%, spot price 22% (TESTS 1/2/3). NOT a coordinate artifact — saturates to the
+FROZEN WING (predicted mp@reserves 3.085714 == numeric 3.086047 at K=8, φ′=−36.8; TEST 8). "Missing
+something obvious" = single-φ leverage moves the warp AWAY from the trade point INTO the elbow.
+**(ii) (g.4) CAP — RECOMMEND K_max≈1.4·mp0 (|Δφ|≤τ; spot reshape ≲14%, elbow stays put); outer limit
+≈1.7·mp0 (|Δφ|≤1).** dy-ROBUST (<2% over 100× dy — strike channel G governs, not notional). Confirms
+manager's 1.35/1.70. Closed form: u_tp,max=√((τ²+u_spot²)(τ/z0)^{2/3}−τ²), K_max=price(u_tp,max)/mp0 —
+governed by ELBOW WIDTH τ, Δw-independent in dust limit (conservative vs numeric). G EXACT
+=((τ²+u_tp²)/(τ²+u_spot²))^{3/2} (==num 4dp; TEST 5). Build guard = STRIKE clamp on z0·G>CAP, separate
+from the TRADE wing-range guard (w*).
+**(iii) DOF VERDICT: single-φ GENUINELY LACKS DOF to localize a far-out warp** (one handle=elbow center;
+reshape@TP/reshape@ATM collapses 0.48→0.026; TEST 6) — **BUT adding DOF breaks frozen-wing/γ>1 contracts,
+so BOUNDING THE STRIKE RANGE (the cap) is the CORRECT + SUFFICIENT resolution for A.** Divergence = a
+domain-of-validity boundary, NOT a bug; far-out region (K=4–8mp0, mark≈0) is economically vacuous.
+**HONEST CARRY (unchanged):** (α,β)-flow lemma [needs-Aristotle]/OPEN, numeric-faithful only — no proof
+added. CAP value + whether to list beyond-cap strikes = operator/calibration call. Nothing submitted/
+built/edited/git. Manager re-derives + relays.
+
+---
+
+_Earlier: 2026-06-11, BRAINSTORM B — per-notional (spot-equivalent) slippage (entry 39; BRAINSTORM/notes-only; no submit/edit/git/build)._
 
 ### BRAINSTORM B — slippage = same warp principle, same per unit notional as a SPOT trade — 2026-06-11 (operator entry 39; BRAINSTORM ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6)
 Note: `notes/research/BRAINSTORM_B_per_notional_slippage_2026-06-11.md`. Builds on curiosity-B. Engine facts read straight off HEAD source (1eebfcd6); numeric warp tables back-stopped by /tmp/curiosityB_explore.js.
