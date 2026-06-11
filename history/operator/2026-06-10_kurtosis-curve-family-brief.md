@@ -258,3 +258,10 @@ _Context: operator confirms the trade-point-anchoring fix is precisely their int
 _Context: operator asks how the trade-point-anchored continuous warp (the warp-amm Aristotle derivation, on plain scalar-weight Balancer) GENERALISES to the generalized-Balancer-with-kurtosis curve (the (W) √-kernel weight-field + τ knob = v27). Read-only theory derivation; research-lead dispatched. Transcribed verbatim._
 
 > how does that generalise to the generalised balancer with kurtosis thing?
+
+---
+
+## Entry 35 — 2026-06-10
+_Context: operator orders a stock-take / roadmap — (1) get the (W) generalisation + trade-point fix VETTED; (2) get the fix DONE in v27; (3) audit/harden the MATH-VERIFICATION LAYER that was supposed to stop a fidelity gap like this slipping; (4) keep the whole math UNIFIED — all AFTER the skeptic FILTERS what's current (clean current-truth baseline first). Transcribed verbatim._
+
+> take stock of what needs to be done? get it vetted, get the fix done in v27, check the math verification layer thats supposed to avoid things like this slipping, and keep the whole math unified etc. after the skeptic filtered whats current
