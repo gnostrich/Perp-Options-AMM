@@ -2699,7 +2699,7 @@ document.getElementById('kappa-input').addEventListener('change', (e) => {
   const el = document.getElementById('tau-input');
   if (el) el.addEventListener(ev, (e) => {
     const v = parseFloat(e.target.value);
-    if (v > 0 && isFinite(v)) { Store.setTau(v); if (window.Viz && Viz.drawAll) Viz.drawAll(Store.state); }
+    if (v > 0 && isFinite(v)) { Store.setTau(v); if (Viz) Viz.drawAll(Store.state); }
   });
 });
 document.getElementById('tick-hours').addEventListener('change', (e) => {

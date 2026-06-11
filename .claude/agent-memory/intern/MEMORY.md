@@ -1,11 +1,27 @@
 # MEMORY — intern
-_Last updated: 2026-06-11 (v28 lens Stage-1 BUILT — polar-lens read layer on the v24 base;
-handed to manager). Rewrite changed bits at task end._
+_Last updated: 2026-06-11 (v28 lens Stage-1 FLAG-1 DEFECT FIX — τ stepper now auto-redraws
+chart 2; handed to manager). Rewrite changed bits at task end._
+
+## Done — v28 lens Stage-1 FLAG-1 FIX (τ-redraw wiring; handed to manager 2026-06-11)
+Build **`engine/builds/temporal_mvp_v28_lens_S1.html`** edited IN PLACE (splice on copy then
+promote, `/tmp/splice_tau_redraw.py`, count==1, blobs never through). md5
+`5e1ff278…` → **`1ed8fe2ddf69a6ef2a2e47dc90d55ba0`**. ONE-LINE fix, L2702 (τ change/input handler):
+`if (window.Viz && Viz.drawAll) Viz.drawAll(Store.state)` → `if (Viz) Viz.drawAll(Store.state)`.
+Root cause (tester FLAG-1): `Viz` is a `const` IIFE (~L3175) never attached to `window`, so the
+`window.Viz` guard was always false → dead redraw branch → τ change yielded 0px live. Chose option
+(b)-aligned: matched the EXACT idiom every other working redraw uses (`if (Viz) Viz.drawAll(...)` —
+lpPreview/band/club/reset/arb/tick all use the lexical `const Viz`, the τ handler was the lone
+`window.Viz` outlier). Lens math, pool, draw all UNTOUCHED. Engine `<script id="engine">` block
+**BYTE-IDENTICAL** (md5 `6ad0d944…` pre==post — UI-script-only change). Diff vs prior build =
+exactly 1 line. Gates: blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (591/444/1744);
+longest non-blob line 553; `lens_selfcheck` **14 PASS 0 FAIL**; `run_all` GREEN (exit 0, routes (W)
+branch → SKIP-as-pass, documented). **Open for tester:** τ stepper now auto-redraws chart 2 (full
+elbow reshape live); chart 1 (plain-v24 pool curve) still inert to τ.
 
 ## Done — v28 POLAR-LENS STAGE 1 (read layer on v24 base; handed to manager 2026-06-11)
 Build: **`engine/builds/temporal_mvp_v28_lens_S1.html`** (NEW, from base
 `temporal_mvp_v24_rebase_fixed_2.html`; HEAD v27 `928cde1c` UNTOUCHED, not promoted, no git).
-md5 **`5e1ff278dbfea889d49b48224ba931d3`** (487837 b). Spec
+md5 **`5e1ff278dbfea889d49b48224ba931d3`** (487837 b) — SUPERSEDED by the FLAG-1 fix above. Spec
 `specs/SPEC_v24_lens_BUILD_2026-06-11.md` + skeptic R6 `notes/skeptic/VERDICT_R6_SPEC_v24_lens_2026-06-11.md`
 (2 binding must-applies). Splices `/tmp/splice_engine.py` (3 reps), `/tmp/splice_ui.py` (5),
 `/tmp/splice_ui2.py` (3) — all count==1, blobs never through. Diff vs base = exactly 20 hunks,
