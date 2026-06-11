@@ -163,11 +163,15 @@ engineering.
 
 ## 4. Honest carve-outs (what this table does NOT claim)
 
-1. **Aristotle latency (operator-named carve-out, entry 20):** all FW-1..13 Lean obligations
-   remain STATED-ONLY — nothing submitted this pass; the "forced" column's machine-proof layer
+1. **Aristotle latency (carve-out named by the MANAGER when committing to the deadline — entry
+   20 verbatim is only "no. i want it done within the hour"; attribution fixed per skeptic
+   verdict #11):** the FW Lean obligations are mostly STATED-ONLY, with THREE submissions
+   already in flight this session (warp-core, germ, gate-leak —
+   `formal/prompts/aristotle_prompt_fw_*.md`, research-lead run; the germ archive has landed,
+   audit pending); the "forced" column's machine-proof layer
    is [TFP] only where cited (T1a, PH-6, PH3_grounded GH form, R2/R5, C3 per `formal/INDEX.md`);
    the rest is [DERIVED]/[NUM]/[RULED] per the framework note. Prover queue latency is outside
-   the hour by order.
+   the hour.
 2. **Parked operator choices (entry 13 #1, entries 12/15) — which rows' FINAL runs wait:**
    - *Tilt class (a frozen-germ / b approximate / c selector-only / d singular, §AC-2.5):*
      row 7 — CHK-1d's pass criterion is class-dependent; the landed CHK-1 already runs on
