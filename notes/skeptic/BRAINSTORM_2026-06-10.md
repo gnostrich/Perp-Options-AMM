@@ -76,3 +76,44 @@ branches on your answer.
 
 _Manager context note (one line): arrived while the skeptic's curve-agnostic-framework pass (same
 session, entry 1) was in flight; skeptic receives this verbatim and replies here next turn._
+
+## SKEPTIC (2026-06-11, replying to the operator's entry above):
+
+**Verdict on the frame: it makes sense — PASS, with the obligations it forces named below.**
+(Attack attempted: I tried to break "intrinsic stays, extrinsic floats" — it holds; see the
+decomposition paragraph.)
+
+**What it settles.** My floor question is answered: an open option keeps its TERMS (strike, the
+American exercise right) and its MARK floats — the curve is the secondary market, and when a trade
+warps it, the optionality premium of every open position re-marks against the new curve.
+Re-dealing everyone's extrinsic per trade is the product, not a bug. Combined with your
+kurtosis-static ruling, the only live re-pricing channel is skew (w); τ doesn't move.
+
+**What "extrinsic" must mean here — there is no expiry, so it cannot be time value.** The
+decomposition that works on our curve: intrinsic = exercise-now value, set by oracle price and
+strike only — curve-independent, warp-immune. Extrinsic = continuation premium = curve value minus
+intrinsic — the c·sNorm leg up to the free boundary. That is exactly the curve-shaped part, so
+"extrinsic re-prices" is coherent. Consequence: exposure is moneyness-sorted — deep-ITM past S* is
+pure intrinsic (warp-immune); OTM is 100% extrinsic (fully exposed). Edges checked: intrinsic
+survives rebase (registration lives in the carry coordinate) and pool trades don't move the
+oracle, so the split is clean.
+
+**What it forces (each must be a row/disposition in the framework table):**
+1. **Exercise on the LIVE curve (#8).** If marks float, then settlement value, display mark,
+   unwind, and the boundary S* = Kγ/(γ+1) must all read the CURRENT post-warp curve. And since a
+   warp moves γ, S* moves per trade — a warp can push an open ITM position across the exercise
+   frontier with the oracle standing still. Product fact; must be stated out loud.
+2. **Funding (#9).** If trades move w, the w=½ anchor must be re-posed for live w; funding becomes
+   the carry on repriced optionality, and funding-vs-extrinsic consistency must be checked or
+   there's an arb (warp cheaply, harvest the difference).
+3. **Solvency (#13).** Aggregate liability re-marks every trade ⇒ solvency must hold over the
+   whole REACHABLE warp set, not just at deployment. Needs a boundedness statement.
+4. **Manipulation row.** The "secondary market" is self-referential — the pool re-marks its own
+   liabilities with its own quotes. The honest floor is the American right: value ≥ intrinsic,
+   always, exercisable on the live curve. That floor is what keeps self-marking non-circular; if
+   any candidate curve ever lets the live quote drop below intrinsic without free exercise, the
+   frame breaks. Cost-to-warp vs extrinsic-moved must be a table column.
+
+**One watch flag (wording, not substance):** nobody imports expiry language — "time value",
+theta. Extrinsic here is early-exercise continuation premium, full stop. Any note using the
+Black-Scholes decomposition gets flagged.

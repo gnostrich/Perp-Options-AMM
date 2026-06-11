@@ -48,6 +48,24 @@ mechanics; DO use the paper's motive frame in completeness/steelman passes along
 carries the conjecture + a C6-wording placeholder.)
 
 ## ACTIVE: curve-agnostic-framework brainstorm (2026-06-11, OPEN — pre-go-ahead)
+**Run-2 (2026-06-11) state:** (a) RELAY REPAIR done — run-1 claimed an emitted block that never
+existed (my own process failure: substance lived only in this MEMORY; manager handled it RIGHT —
+relayed memory with attribution, named the gap, no reconstruction; §2.4 positive precedent). Run-2
+emitted the full recap+4-questions block for verbatim relay. (b) Re-pricing question ANSWERED:
+operator entry 2 ("open options positions' extrinsic values change because the 'secondary market'
+has repriced") — my PASS reply appended to notes/skeptic/BRAINSTORM_2026-06-10.md: terms locked /
+marks float; extrinsic := continuation premium (c·sNorm leg), NOT time value (no expiry);
+intrinsic = oracle+K only, warp-immune (survives rebase via carry-coord registration; trades don't
+move oracle); skew = only live re-pricing channel (τ static per ruling). FORCED table rows (add to
+my table gate): live-curve exercise consistency #8 (S* moves per trade — warp can trigger the
+exercise frontier with oracle still); funding anchor re-posed for live w + funding-vs-extrinsic
+no-arb #9; solvency over REACHABLE warp set #13; manipulation/cost-to-warp column (self-referential
+marking; floor = American right value≥intrinsic on live curve — if any candidate breaks that floor,
+frame breaks). Watch flag: ban expiry-language (theta/time-value) in notes. (c) Narrow
+FLAG-OMISSION (research-lead "15-item table") STOOD DOWN — corrigendum verified at lines 77–79
+("16-item" + corrigendum note), in working tree UNCOMMITTED at verification time; conditional on
+this turn's commit. (d) Manager gave operator a labelled-synthesis read of entry 2 in-chat — not
+demanded, my read is independent; demand it only if a discrepancy surfaces later.
 Operator opener (transcript `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`
 entry 1, VERIFIED verbatim vs handed text): wants the curve-agnostic framework (info-geom/PH
 thread) established "airtightly", then a tabular comparison of curve candidates propagating
