@@ -360,3 +360,10 @@ _Context: after the entry-45 findings (incl. the tester's "bands are warp-neutra
 _Context: continuation of the entry-47 B brainstorm. Operator proposes a conservation law on the premium-vs-strike surface itself and asks for its weighted-Balancer generalization._
 
 > now, if you think of B where theres a conservation law that implies perp option price ('premium') in 'fraction of perp / spot terms' such that the product of strike ray angular deviation from spot angle (the one with 45 degree slope) and premium is constant ..... now if in this context, we interpret this function like xy=k constant product, then what would its 'weighted' balancer analogue be?
+
+---
+
+## Entry 49 — 2026-06-11
+_Context: follow-up to the entry-48 answer (weighted analogue = premium-mass tilt/skew)._
+
+> got it, so thats just tilting / the curve, pretty much same sort of thing. so this approach doesn't give us some shortcut to kurtosis?
