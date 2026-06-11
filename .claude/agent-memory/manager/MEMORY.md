@@ -20,6 +20,17 @@ reserve→skew map + its conservation law, closed-form/arb check); **DISPATCHED 
 g(θ) from scratch; even=kurtosis⊥odd=skew; frozen γ₋,γ₊ corners; weight-free (x,y)→tilt map + its
 conservation law; closed-form/arb-sane; new-object-vs-rechart-of-(W); DOF count; bounded-support
 premium-floor vs value∝S^−γ lock (operator-tier flag). HEAD untouched 928cde1c.
+**RESEARCH-LEAD DELIVERED (a3e8b578), `notes/research/POLAR_density_first_principles_2026-06-11.md`:**
+(a) well-posed (primitive=γ_loc(u) field, ln F=∫γ_loc du); (b) HEADLINE kurtosis⊥skew works,
+(W) can't (even=κ/odd=skew); (c) weight-elimination CONDITIONAL — only under B/spot anchoring;
+under chosen path-A the stored φ reappears = weight in disguise; (d) arb-sane w/ monotonicity
+guard but invariant is closed-form TRANSCENDENTAL (loses √-kernel algebraic tiebreak). Polar
+family CONTAINS (W); 3 DOF {γ₋,γ₊,κ}. CRUX (operator-tier): weight-free ⟺ B ⟺ contradicts A.
+**MANAGER INDEP RE-DERIVE (`/tmp/mgr_polar_check.js`): CONFIRMS frozen-wings-κ-indep +
+kurtosis-at-zero-skew + (W)-weld; FLAGGED 2 for skeptic: (1) even⊥odd is TAUTOLOGICAL (the
+κ=even/skew=odd ASSIGNMENT is the real claim, possible elegance-masquerade); (2) the κ knob drives
+ATM γ_loc <1 and NEGATIVE (κ=5→−2.5) — may VIOLATE the γ>1 lock / monotonicity at ATM = buried
+cost.** SKEPTIC PASS DISPATCHED (aa3ca293, bg) before operator relay.
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
