@@ -41,3 +41,8 @@ _Context: the warp principle stated as a slope-transport rule, addressed to the 
 > skeptic, while i read this and respond: this is for you to note and queue : I also separately want the project ruthlessly restructured so curve specific work lands in a separate folder, and curve agnostic framework remains a first class citizen in its own folder. do you comprehend this? and in the curve specific thing you'd very speifically map the various pivots etc. so its not just a homogenous bulk, but actually makes sense -- recruit another agent if you need, as an organiser or whatever, and maybe offload overlapping responsibilities from the tester -- just do an org chart review and do the needful to make sure the charter is achieved by the team
 
 _Context: arrived while operator reads the skeptic's warp-principle reply. Directive to note and queue: repo restructure (curve-specific vs curve-agnostic split, pivots mapped), org chart review, optional organiser agent, tester offload. Routed to skeptic verbatim same turn for comprehension + queueing; execution = manager, skeptic-audited._
+
+## 9
+> ok now what next? do your to-dos? need me for anything?
+
+_Context: general green light on the queued work. Manager plan stated: restructure slice 1 (non-engine) first so the framework is born in its proper folder, then framework build, org review in parallel, comparison table after; one veto-able default declared on the warp-rule/mode-at-mark tension._
