@@ -1103,3 +1103,33 @@ the operator now carry tables where technical.
    manager's own MEMORY.md as a named recurring miss and recurred within a day (59–68). Never accept
    "lesson recorded in memory" as a remediation; only structural gates (charter rules, pre-dispatch
    checks) count.
+
+26. **2026-06-11 — WIPE-EXECUTION audit (verdict #26; succession plan step 6, operator entry 78
+   "wipe the manager down to basics again and resume him")** →
+   `notes/skeptic/VERDICT_WIPE_EXECUTION_AUDIT_2026-06-11.md`. Audited commit 01c02bf (steps 2–5).
+   **VERDICT: FLAG — 3 lines in `docs/OPEN_OPERATOR_QUESTIONS.md` to redo; legs 2–5 PASS.**
+   PASS legs: archive byte-identical (md5 f4c75fc4 both sides, diffed vs git history); seed
+   MEMORY pointer-only, line-6 flag characterizations verified vs my #23/#24; charter R1–R7
+   operative clauses verbatim (3 trims = example/commentary only, no softening: R2 entry-62/63
+   parenthetical, R4 sample record line, R6 "distinct from full pass" sentence); HEAD 928cde1c
+   re-hashed, only the 5 expected files touched; entry-78 transcribed verbatim. FLAGS: (a) line 9
+   item-3 parenthetical "NOT needed for warp visibility" — true source = ENTRY59 note L150, the
+   run the operator KILLED at entry 63, surfaced under pointers that don't contain it = the exact
+   R4 behavior, committed inside the wipe installing R4; (b) line 13 item-7 PROVENANCE INVERSION —
+   "PROPOSAL (unrequested, dead until revived by name)" mislabels the operator's OWN entry-76 ask
+   ("shouldnt it follow an analytic function instead of us specifying extrinsically") as a dead
+   manager idea ⇒ under R1 the operator's question dies silently; (c) line 7 item-1 "~32% vol"
+   sold flat — I re-derived γ=2r/σ² (q=0) ⇒ σ<√(2r), 32% IS the r=5% case; premise unstated,
+   pointer = untranscribed chat table (no file), and item 7 itself admits the r,q↔carry mapping
+   underived. Resolution: manager redoes the 3 lines only, I re-check, FLAG→PASS, then the resumed
+   manager's first dispatch. MINE-TO-DEFEND: γ>1 ⟺ σ<√(2r) at q=0 (Merton quadratic roots λ₊=1,
+   λ₋=−2r/σ²); ENTRY59-L150 as the true source of the visibility parenthetical.
+
+## Team blind-spot patterns observed (addition, verdict #26)
+14. **Rule-violation inside the rule's installation commit.** The same commit that installs R4
+   (kill-means-silent) cites the killed entry-59 run's conclusion in the canonical operator doc,
+   under pointers that hide the source; and the safe-direction label ("unrequested, dead") was
+   used to bury an operator-raised question (provenance inversion — over-caution can ALSO
+   misrepresent the operator). At any remediation/wipe audit, grep the new artifacts for content
+   sourced from whatever the remediation just outlawed; check every "unrequested" label against
+   the verbatim transcript — the operator may have asked for it.
