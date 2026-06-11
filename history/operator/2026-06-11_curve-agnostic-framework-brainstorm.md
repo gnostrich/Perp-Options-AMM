@@ -66,3 +66,8 @@ _Context: all three pending decisions (AC-2.5 class; transport reading; OPERATOR
 > i'm continuing in parallel but i wont make a choice as of now on 1; 2 also i didnt understand; 3 ok
 
 _Context: decision 1 (tilt class) parked; decision 2 (transport reading) needs a simpler re-explanation — resolved by the degenerate-reading fact (the alternative reading means "no bend", so the operator's entry-7 sentence is the only live reading, proceeding under it); decision 3 = GO on the OPERATOR-VOICE handover (org adoption unlocked: register organiser, condition-5 sweep, first distillation, skeptic audit)._
+
+## 14
+> TLDR i want to see clean flattening steepening allowed, I also want to see curve warp working
+
+_Context: product demand — make both mechanics visible/runnable: (i) the steepness knob acting cleanly (wings pinned), (ii) trades bending the curve. Manager dispatched a standalone demo build (intern; demo/ path, engine untouched) on the already-verified math: (W) elbow family for the knob; paper's Balancer trade formula for the warp. Real-engine build still gated on operator's curve-class choice (decision 1, parked entry 13)._
