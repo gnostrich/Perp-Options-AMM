@@ -1,0 +1,666 @@
+{
+ "date": "2026-06-11T09:13:12.669Z",
+ "probes": {
+  "P1": {
+   "ok": true,
+   "V_sell": 0.3556646055848183,
+   "V_buy": 0.14337613444101618,
+   "N_buy": 0.6978643428573726,
+   "leg1_dy": 28453.168446785465,
+   "leg2_dy": 11470.090755281295,
+   "netPoolY": 39923.25920206676,
+   "s_band": 0.18146936000939462,
+   "slipUsd": 3764.653400778676,
+   "pool_pre": {
+    "x": 10,
+    "y": 303448.27586206904
+   },
+   "final": {
+    "x": 9.57761008713602,
+    "y": 343371.5350641358,
+    "phi": 10.40776237261025
+   },
+   "leg1_newY": 331901.4443088545,
+   "leg1_newX": 9.685066551101688,
+   "display_netCash_wouldBe": 3193860736.1653404
+  },
+  "P2": {
+   "valid": {
+    "dir": "long",
+    "maxChip": "MAX: 0.1250 BTC",
+    "notional": "9.95",
+    "soldInner": "100000",
+    "boughtInner": "52000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "",
+    "executeDisabled": false,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   },
+   "franken": {
+    "dir": "short",
+    "maxChip": "MAX: 0.0625 BTC",
+    "notional": "9.95",
+    "soldInner": "52000",
+    "boughtInner": "100000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "Sell leg: trade exceeds frozen-wing range — split or widen Δw.",
+    "executeDisabled": true,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   }
+  },
+  "P3a": {
+   "executeDisabled": true
+  },
+  "P3b": {
+   "pre": {
+    "dir": "long",
+    "maxChip": "MAX: 0.1250 BTC",
+    "notional": "9.95",
+    "soldInner": "100000",
+    "boughtInner": "52000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "",
+    "executeDisabled": false,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   },
+   "post": {
+    "dir": "long",
+    "maxChip": "MAX: 0.1250 BTC",
+    "notional": "9.95",
+    "soldInner": "100000",
+    "boughtInner": "52000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "",
+    "executeDisabled": false,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   }
+  },
+  "P4": {
+   "pre": {
+    "dir": "long",
+    "maxChip": "MAX: 0.1250 BTC",
+    "notional": "9.95",
+    "soldInner": "100000",
+    "boughtInner": "52000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "",
+    "executeDisabled": false,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   },
+   "post": {
+    "dir": "short",
+    "maxChip": "MAX: 0.0625 BTC",
+    "notional": "9.95",
+    "soldInner": "100000",
+    "boughtInner": "52000",
+    "slippage": "18.1469 %  ·  ≈ $3764.65",
+    "boughtDisplay": "0.697864 BTC",
+    "dySold": "2276253475.7428 $",
+    "dyBought": "917607260.4225 $",
+    "netCash": "$3,193,860,736.165340",
+    "Vsold": "$28,453.17",
+    "Vbought": "$11,470.09",
+    "warn": "Sold-leg strike θ=1.2500 not OTM on put wing (pool spot=1.0000).",
+    "executeDisabled": true,
+    "pool": {
+     "x": 10,
+     "y": 303448.28,
+     "phi": 10.320381356467916,
+     "tau": 0.3
+    },
+    "kpiSpot": "$80,000.00",
+    "evTail": [
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding.",
+     "info: Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added.",
+     "info: Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    ]
+   }
+  },
+  "P5": {
+   "sweep": [
+    {
+     "tau": 0.05,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.1,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.15,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.2,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.25,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.3,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.35,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.4,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.45,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.5,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.55,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.6,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.65,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.7,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.75,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.8,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.85,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.9,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 0.95,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.05,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.1,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.15,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.2,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.25,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.3,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.35,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.4,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.45,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.5,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.55,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.6,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.65,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.7,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.75,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.8,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.85,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.9,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 1.95,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.05,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.1,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.15,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.2,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.25,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.3,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.35,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.4,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.45,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.5,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.55,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.6,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.65,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.7,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.75,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.8,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.85,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.9,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 2.95,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    },
+    {
+     "tau": 3,
+     "short": "REJ",
+     "long": 18.1469,
+     "shortNbuy": null,
+     "longNbuy": 0.697864
+    }
+   ],
+   "hits": []
+  },
+  "P6": {
+   "phi0": 10.320381356467916,
+   "t1": {
+    "n": 1,
+    "previewSlip": "1.4275 %  ·  ≈ $28.11",
+    "execDisabled": false,
+    "postWarn": "",
+    "phi": 10.327792910501472,
+    "evTail": [
+     "trade: Open B1: sold BAR on call N=1.000000 @ θ*=1.5000 → V=2383.01; bought BAR on put N=0.035808 @ θ*=0.8500 → V=757.41. L₀=4.06, slip=1.4275%, fee=$8.0000, club=long-btc.",
+     "info: Perp P3: LONG $400000 (margin $100000, entryMark $80000). Free equity → $101000.",
+     "info: Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding."
+    ]
+   },
+   "t2": {
+    "n": 2,
+    "previewSlip": "2.7770 %  ·  ≈ $105.16",
+    "execDisabled": false,
+    "postWarn": "",
+    "phi": 10.34220180087284,
+    "evTail": [
+     "trade: Open B2: sold BAR on call N=2.000000 @ θ*=1.5000 → V=4642.76; bought BAR on put N=0.073192 @ θ*=0.8500 → V=1553.74. L₀=4.06, slip=2.7770%, fee=$16.0000, club=long-btc.",
+     "trade: Open B1: sold BAR on call N=1.000000 @ θ*=1.5000 → V=2383.01; bought BAR on put N=0.035808 @ θ*=0.8500 → V=757.41. L₀=4.06, slip=1.4275%, fee=$8.0000, club=long-btc.",
+     "info: Perp P3: LONG $400000 (margin $100000, entryMark $80000). Free equity → $101000."
+    ]
+   },
+   "disp": {
+    "maxDispPx": 2.14,
+    "at": [
+     "683",
+     "393"
+    ],
+    "phiNow": 10.34220180087284
+   }
+  }
+ },
+ "pageErrors": []
+}
