@@ -1,5 +1,5 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK BUILD (deliverable A; derivations+numerics; NO submit / NO engine edit / NO git)._
+_Last updated: 2026-06-11, AIRTIGHT CLOSING PASS (FW prover triage+3 submits; OFF-MARK characterization SOLVED; NO engine edit / NO git)._
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -17,6 +17,70 @@ _Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK BUILD (deliverable A; deriva
 > stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
+### AIRTIGHT CLOSING PASS — 2026-06-11 (operator entry 16; FW prover loop + OFF-MARK hole)
+
+**PART 1 — FW-1..FW-13 TRIAGE + 3 SUBMITS (scratch-only; canonical tree untouched; prompts
+`formal/prompts/aristotle_prompt_fw_{warp_core,gate_leak,germ}.md`; ledger RESULTS.md FW RUN):**
+- **SUBMITTED (predicates pinned first):** FW_warp_core `56b4f0fa` (FW-1 flow HasDerivAt + α,β first
+  integrals; FW-2 transport-uniqueness W′(0)=(1−w)/y incl. any-path leg; FW-3 round-trip; FW-4
+  elasticity law (α/β)(y′/x′) + symmetric 1+2t/y; FW-13 semigroup; FW-11 Balancer-instance rebase
+  commute y→y/r,t→t/r). FW_gate_leak `727fc83e` (FW-7 gate identity q′=1+w′/(w(1−w)), strict chain
+  q′>0⇒StrictMono⇒StrictConvexOn, nonstrict iffs R≥0⟺Monotone⟺ConvexOn; FW-8 abstract leak ≥0 both
+  orientations + strict + Bregman-gap form). FW_germ `6d6ba6e6` (FW-5 joint_iff at-the-mark via
+  HasDerivAt encodings TransportFO/ModeFO ⟺ ε′=−½∧A=½ + weight corollary (½,−1/8); FW-6 linear-germ
+  witness + validity strip d²<8). **POLL STATE AT HANDOFF: all 3 RUNNING — audits owed next dispatch**
+  (download → byte-diff 5 canonical modules → token-scan → #print axioms ⊆ std three → re-derive).
+- **No-submit-needed:** FW-9 (T1a 3566d93c [TFP] already abstract over a·S^(−γ); residual = carried
+  FIELD "wings exact power-law + γ(w,τ) map" per candidate).
+- **Blocked on open design (cannot pin predicates):** FW-10 (funding functional choice = operator-tier
+  AC-5(a–d); F3 anchor-rebase rule [OPEN]); FW-12 (per-family mark/intrinsic undefined; B1 conditional
+  [TFP] is the existing template; carried-FIELD by design); FW-11 general (per-family rebase action
+  unpinned — Balancer instance submitted).
+- AUTH re-confirmed: key BARE len-49 — passed VERBATIM (manager's "strip wrapper" note = STALE pattern).
+
+**PART 2 — OFF-MARK CHARACTERIZATION SOLVED (corrigendum-2 hole; verdict-#8 flag 2)
+[DERIVED + NUM mpmath dps=40; scripts /tmp ephemeral, every number restated here]:**
+Setup: profile ε(ũ), mark ũ₀ (ε=1 there), trade at ray q=ũ₀+s, cash dy; y_q/y₀=Y(s)=exp(∫₀ˢ w),
+d ln y/dũ = ε/(1+ε) = w. Per-trade FIRST-ORDER conditions: **(T)** δε(q)=(ε+ε′)(q)·du_q,
+du_q=(dy/y_q)(1+1/ε(q)); **(M)** δε(ũ₀)=−ε′(ũ₀)·du₀, du₀=(dy/y₀)(1+e^{−s}/ε(q)); **(G)** δε′(ũ₀)
+=−ε″(ũ₀)·du₀ (reachability closure: keeps the at-the-mark necessity ε′(mark)=−½ at the NEW state).
+Off-mark (T) and (M)+(G) bind at DIFFERENT points ⇒ no per-trade collision ⇒ satisfiability =
+warp-freedom question. **Results:**
+1. **Necessity survives** (at-the-mark trades always available): ε(mark)=1, ε′(mark)=−½, symmetric-
+   genesis exclusion — unchanged off-mark.
+2. **AC-3 budget (ONE live shape dial) + translating dial** (the natural frozen-germ class): (M)+(G)
+   collapse to dc=du₀; (T)∀q ⇒ **parameter-free ODE** ε′=−(ε+1)/[Y(1+e^{−s}/ε)+1+1/ε], Y′=Yε/(1+ε),
+   ε(0)=1=Y(0) ⇒ **UNIQUE curve** (Picard; two-tol agreement 0.0 @dps40). Jets forced: ε′(0)=−½,
+   ε″(0)=¼, ε‴(0)=−5/32. **Exact put-call symmetry ε(s)ε(−s)=1** (proved: ODE self-maps under
+   ε↦1/ε(−s), Ỹ=eˢY(−s), Picard; numeric 0 @dps40) ⇒ LDF permanently SYMMETRIC ⇒ **no standing skew,
+   ever**. Strictly inside validity gate (q′=1+ε′/ε>0 ⟺ D>1+1/ε, strict). **Wings EXPONENTIAL, no
+   power-law plateau**: ε~C₊e^{−s} call (C₊≈7.188168490), ε~(1/C₊)e^{|s|} put; γ_loc=ε→0 (call)/∞
+   (put); reserves bounded both sides. Values: ε(1)=0.603351186190124877165772633833,
+   ε(2)=0.352377407542269281022069116841, ε(3)=0.192197019731181785538090790878.
+3. **Frozen-germ class: INSUFFICIENT off-mark** — generic member fails (T) at FIRST order in dy;
+   violation coefficient per unit cash **V(s) = (1−4ε″(mark))·s + O(s²)** (hand-derived; confirmed:
+   ε″=0 profile → V/s→1; ε″=½ → −1; linear germ ε″=¼ → V~s²/16, measured 6.2499531e-10 at s=1e-4).
+   Distance enters violation SIZE (linear in s near mark), NOT satisfiability class (no threshold).
+   Each order in s pins one more jet ⇒ the all-orders tower IS the unique profile. Conditionally
+   sufficient = exactly ONE member (the ODE curve). Sufficient at first order with UNRESTRICTED
+   kernel B(ũ;q) (profile-valued state — breaks AC-3 budget).
+4. **One-dial non-translating: generically excluded** — q-free ratio g′/g(mark)=ε″/ε′(mark)=−½ +
+   (T)/(M) functional equation ∀q overdetermine (example sech(ũ−0.3): +0.2913≠−½). Exhaustive
+   classification OPEN (exotic solutions not ruled out). d-dial counting: 3 conditions/trade ⇒ d≥3
+   generically satisfiable pointwise; d=2 construction OPEN [counting only].
+5. **Finite-dy simulation:** ODE profile transport residual O(dy²) (ratio ≈100/decade at s=0.7, 2.0,
+   −1.3, both signs); linear-germ witness R_T/dy → V(s) to 7 digits (0.0194424716 @s=0.7,
+   0.0635763418 @s=1.5). Mode residual ≡ 0 exactly for translating families (dc=du₀ construction).
+**⚠ AC-2.5 MENU IMPACT (operator-tier, FLAGGED not decided):** option (a) exact-germ-class + off-mark
+trades (the paper's product primitive) ⇒ collapses to the single rigid curve: **knobless (no τ),
+skewless (symmetric forever), no power-law wings (γ∈(1,4) lock + entry-15 live-asymptote contracts
+unsatisfiable)** — (a) effectively dead for THIS product unless trades restricted to at-the-mark.
+(b)/(c) become the live routes; off-mark violation budget now quantifiable: (1−4ε″)·s·dy. (d)
+singular: untouched/open. **NEW (e): enlarge live-dial budget to ≥3 shape dials** (generic counting)
+— breaks the AC-3 x,y,w ruling = operator-owned. Relay via manager.
+
+---
 
 ### CURVE-AGNOSTIC FRAMEWORK BUILD — 2026-06-11 (operator entry 1 spec, entry 9 go-ahead; deliverable A DONE)
 **Deliverable: `framework/FRAMEWORK_curve_agnostic_2026-06-11.md`** — 10 admission contracts AC-1…AC-10
