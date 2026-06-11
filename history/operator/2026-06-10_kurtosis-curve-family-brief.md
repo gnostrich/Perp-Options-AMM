@@ -526,3 +526,10 @@ _Context: addressed to the skeptic: TLDR the manager's last message (the itemize
 _Context: standing transparency mandate (addressed also to the skeptic, to enforce in spirit): tabular format for technical content, concise simple-English explanations, show core formulas and edits. The halted build's output was discarded this turn (HEAD verified 928cde1c)._
 
 > still not giving me a single core formula table and showing edits -- by now i consider this kind lack of clarity malicious , skeptic , enforce this kind of transparency not just literally but in spirit --- tabular for technical stuff -- concise and sinple eneligh explanations
+
+---
+
+## Entry 72 — 2026-06-11
+_Context: comprehension question — what do wing weights mean; why are elbow and steepness separate degrees of freedom._
+
+> i dont understand what wing weihts mean, i dont understand how theres elbow and steepness as 2 dof here
