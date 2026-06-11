@@ -116,3 +116,8 @@ _Context: naming demand — the framework must crown ONE named object that every
 > skeptic is the theory satisfactory and singular? does it give you the confidence that changing the curve forces the calculus and then the actual expressions are derived by simpkly solving?
 
 _Context: direct operator question to the skeptic. Skeptic's hour-close audit run was in flight when this arrived; question queued for it VERBATIM immediately behind that run (single skeptic instance at a time — memory write-collision rule). Manager gave a clearly-labelled interim read in chat; skeptic's own answer relays verbatim on its run._
+
+## 24
+> specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md
+
+_Context: bare file path — a handoff spec, presumably from the operator's parallel session. Manager fetched, read, and routed it (skeptic completeness pass + framework reconcile) before acting._
