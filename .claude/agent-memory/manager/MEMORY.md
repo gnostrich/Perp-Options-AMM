@@ -36,6 +36,23 @@ still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern bui
   map. 2 NON-blocking skeptic flags: note's frozen-wing residual digits ~100× optimistic (5e-6 vs true
   5.5e-4 — the RATIO ~60× holds; don't cite 5e-6 as a bound); a gd-table normalization footnote.
   **Net: foundation sound + vetted; build decision (A ≤~1.4× strike cap, intrinsic/unavoidable) back to operator.**
+- **FMI (entry 42, read-only) — hyperbolic alternatives + shoulder localisation governor.** Note
+  `notes/research/FMI_hyperbolic_alts_and_shoulder_localisation_2026-06-11.md`. Q1: alternatives split
+  into (i) re-coords of OUR curve (cosh/tanh-η ≡ √-kernel, 1.1e-16 — not alternatives), (ii) genuinely
+  different 1-knob frozen-wing shoulders (tanh-in-u, Gudermannian, erf — all SHARPER), (iii) GH
+  kernel-in-score (4 params, demoted line, no scalar w to warp), + the 2-knob higher-order family
+  (cosh^n / u/(τ²+u²)^p; ours = p=½). Q2 governor = the kernel's ASYMPTOTIC APPROACH RATE to the wing
+  (W10 decade-width: erf 0.74 < tanh 1.17 < gd 1.47 < √-kernel 4.95 < algebraic 90 — √-kernel soft/
+  widest); in OUR map NOT a separate DOF (τ tunes elbow width AND shoulder together; the missing knob =
+  the kernel exponent = a genuine extra DOF, the operator's "DOF for pricing" instinct); sharper
+  shoulder ⟺ faster w′→0 ⟺ worse gearing (√-kernel gentlest). **MANAGER CATCH (over-claim):** the note's
+  "shoulder TWO-SIDED PINNED → p=½ unique" OVER-REACHES vs entry-41's honest "shoulder UNDER-DETERMINED."
+  My re-derivation: in the s_p-EXPONENT family p=½ is pinned but PRIMARILY by the FROZEN-WINGS
+  requirement (p<½ wing diverges u^{+}, p>½ collapses to w_mid + non-monotone) — somewhat circular; the
+  GENUINE shoulder-shape family ({√,tanh,erf}, all frozen→±1) is UNDER-DETERMINED (√-kernel = integrable
+  + gentlest, NOT uniquely forced). So entry-41's "under-determined/integrability-tiebreak" is the
+  HONEST framing; entry-42's "pinned" holds only in the narrow s_p sense. **Routed to skeptic to
+  reconcile entry-41 vs entry-42 before the operator hears "pinned."** Did NOT relay the over-claim.
 
 ## ★★★ HEAD = v27 (W)-KURTOSIS — OPERATOR-PROMOTED 2026-06-10 (entry 28) — READ THIS FIRST
 **CURRENT HEAD md5 = `1eebfcd6f6ff4f4e3df5f745ac145f19`** (promotion `b245bfda` → UX-restore

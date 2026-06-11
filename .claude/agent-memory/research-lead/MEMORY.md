@@ -1,5 +1,36 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, NATURALNESS of polar/√-kernel kurtosis map (entry 41; READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, FMI hyperbolic-alts + shoulder-localization (entry 42; READ-ONLY/FMI; notes-only; no submit/edit/git/build)._
+
+### FMI — HYPERBOLIC ALTERNATIVES (Q1) + SHOULDER LOCALIZATION GOVERNOR (Q2) — 2026-06-11 (operator entry 42; READ-ONLY/FMI "not trying to change anything"; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path A PAUSED)
+Note: `notes/research/FMI_hyperbolic_alts_and_shoulder_localisation_2026-06-11.md`. Script `/tmp/fmi42.py`
+(python float64+scipy; companions `/tmp/shoulder.py`, `/tmp/naturalness{,2}.py`). Builds on NATURALNESS (entry 41).
+**Q1 — hyperbolic alternatives split THREE classes:** (i) RE-COORDINATIZATIONS of OUR curve — cosh/`tanh η`
+IS our √-kernel (`max|s_sqrt(u/τ)−tanh η|=1.1e-16`, η=asinh(u/τ)); a chart, NOT an alternative. (ii) genuinely
+DIFFERENT 1-knob curves in the SAME w(u) family: tanh-IN-u (≠tanh-in-η; sharp exp shoulder), Gudermannian
+gd(η) (sharp), erf (sharpest super-exp), algebraic u/(τ+|u|) (widest, but wing not crisply frozen). (iii)
+GH-in-latent-SCORE `√(δ²+v²)` (demoted v25→v26c) = DIFFERENT OBJECT, **4 shape params** (λ/α/β/δ), no scalar
+w handle ⇒ why warp failed. Higher-order `cosh^n`/`s_p=u/(τ²+u²)^p`/q-deformed = the 2-KNOB family ours lives
+in (p=½ is ours). √-kernel singled out (entry-41 carry): UNIQUE 1-knob with closed-form ALGEBRAIC invariant.
+**Q2 — shoulder localization GOVERNOR = kernel's asymptotic approach rate to the wing [analytic+numeric].**
+QUANTIFIED measure: decade width W10=x(gap=0.01)−x(gap=0.1) in τ-units (gap g=1−s): erf 0.74 < tanh 1.17 <
+Gudermannian 1.47 < **√-kernel 4.95** < algebraic 90. √-kernel approach POLYNOMIAL (g~1/2x², w′~x⁻³) = WIDE/
+soft shoulder; tanh exp `e⁻²ᵘ` = SHARP; erf super-exp = sharpest. **In OUR map localization is NOT a separate
+DOF**: τ rescales x→u/τ ⇒ W10 in τ-units is τ-INVARIANT (4.95 at τ=0.1/0.3/1.0) ⇒ τ tunes elbow width AND
+shoulder localization TOGETHER, fixed-by-kernel otherwise. The would-be extra DOF = the KERNEL EXPONENT p
+(cosh^n family). **Divergence link CONFIRMED**: sharper shoulder ⟺ faster w′→0 ⟺ worse 1/w′ gearing (G@12τ:
+erf 1.3e49 > tanh 6.6e9 > gd 7.7e7 > √-kernel 1.7e3 > alg 1.7e2) — √-kernel's soft shoulder IS the gentlest
+among crisp-frozen-wing maps (entry-41 confirmed). **p-sweep pins the extra DOF: TWO-SIDED PINNED** — going
+SHARPER blocked by MONOTONICITY (s_p non-monotone for p>½, turns over at u/τ=1/√(2p−1); √-kernel p=½ = sharpest
+MONOTONE member of `(1+x²)^p`); going SOFTER (p<½ / q-deformed) costs the ALGEBRAIC invariant (elementary only
+at p=½ where amplitude=τcosh η, polar lens closes). So a tunable shoulder-sharpness DOF EXISTS = the operator's
+"DOF for pricing" instinct, but in (W) it's SPENT/PINNED by monotonicity + algebraic-invariant contracts.
+**HONEST CARRY:** FMI/understanding only, NOT a curve-change proposal, NO build auth. Extra-DOF = operator-tier
+(flagged, not decided). (α,β)-flow [needs-Aristotle]/OPEN; warp∘rebase + φ-funding OPEN. Nothing submitted/
+built/edited/git. Manager re-derives + routes through SKEPTIC before relaying to operator.
+
+---
+
+_Earlier: 2026-06-11, NATURALNESS of polar/√-kernel kurtosis map (entry 41; READ-ONLY; notes-only; no submit/edit/git/build)._
 
 ### NATURALNESS of the polar/√-kernel kurtosis map — 2026-06-11 (operator entry 41; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A PAUSED)
 Note: `notes/research/NATURALNESS_polar_kurtosis_map_2026-06-11.md`. Scripts `/tmp/naturalness{,2,3b}.py`
