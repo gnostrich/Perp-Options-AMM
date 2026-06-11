@@ -332,3 +332,10 @@ _Context: after the entry-42 skeptic reconciliation relay, operator confirms HEA
 _Context: operator gave me "link to head"; I replied with a PR offer + a multi-point technical caveat block. This is the operator's process correction on response STYLE, and a standing directive addressed to the skeptic to police response type. Transcribed verbatim._
 
 > dont involve me in PR management, i really dont care for it. maintain version control notes whatever dont infodump this  on me. i asked whether its the right version thats it. if i ask questions like that and you want to drop caveats, the right way to do it is to give me the most recent feature level edit / correction with simple english. skeptic, take note and make sure only appropriate types of responses pass to me
+
+---
+
+## Entry 45 — 2026-06-11
+_Context: operator live-playing downloaded HEAD v27 (screenshot: TRADE BANDS tab, sell 9.95 BTC @52000 / buy @100000, red "MAX: 0.0625 BTC" chip, slippage 18.2%); reports four concerns, summons skeptic and tester. Sent twice (interrupt + identical resend); transcribed once._
+
+> did you check that the curve is almost completely insensitive to kurtosis change? theres no visible curve warp, and the simulation breaks when you switch long to short.... i'm concerned at these lacunae, skeptic, tester. the anchor curve is sitting way off in the corner somewhere
