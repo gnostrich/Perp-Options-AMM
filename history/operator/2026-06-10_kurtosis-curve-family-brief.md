@@ -300,6 +300,13 @@ _Context: read-only brainstorm — operator clarifies the B intent: the slippage
 _Context: operator confirms sticking with A (B is adjacent-terrain brainstorm only). Brainstorm hypotheses: (a) B forces a curve shape that is NOT kurtosis-tunable; (b) A gives the DOF needed for pricing American-style on any asset. And challenges the dust-trade divergence: trading far out where slope→∞ goal-seeks another slope ≈∞, so the slope CHANGE is small ⇒ "not a huge warp imo you're probably missing something obvious." Transcribed verbatim._
 
 > we're sticking to A not pivoting, but i'm just brainstorming B because its good to have adjacent terrain explored from a theory standpoint: now, what I think B would do is force a curve shape which is not kurtosis tunable
+
+---
+
+## Entry 41 — 2026-06-11
+_Context: operator is OK with strike caps in principle, but wants read-only clarity on a FOUNDATIONAL question: is the polar map we use to implement the kurtosis "wings / shoulder / elbow" shape the MOST NATURAL one — i.e. is the √-kernel / hyperbolic-angle (W) construction canonical, or did we adopt a convenient encoding (the standing trig flag), and is the warp-divergence a symptom of an unnatural map vs intrinsic to any frozen-wings kurtosis curve. Transcribed verbatim._
+
+> i get what you're saying. i'm not opposed to the strike caps per se, however, I just want a bit more clarity around how whether our polar map that implements this kurtosis wings shoulder thing is the most natural one … read only
 >
 > while A gives us the DOF we need for pricing american styles on any asset i think
 >
