@@ -1,7 +1,39 @@
 # MEMORY — tester
-_Last updated: 2026-06-11, after the ENTRY-45 lacunae verification on HEAD `1eebfcd6` (TEST-ONLY, no build edit)._
+_Last updated: 2026-06-11, after the ENTRY-46 STANDING UI SMOKE-PASS on fixed HEAD `928cde1c` (READ-ONLY; first invocation of the standing smoke gate)._
 
-## ★★★★★ MOST RECENT — ENTRY-45 LACUNAE RUN (HEAD `1eebfcd6`, READ-ONLY, operator live-playing)
+## ★★★★★ MOST RECENT — ENTRY-46 SMOKE-PASS (HEAD `928cde1ccc…`, fix build for entry-45 lacunae)
+Build = entry-45/46 fixes (clearBandPreviewOut L3136; audit raw USD L3242-47; anchor k=√(x·y)
+L3494; τ disclosure L1329). Engine `<script>` byte-identical to `1eebfcd6` — all deltas UI-layer.
+Harness `engine/verify/pw_v27_entry46_smoke.mjs`; evidence `evidence/v27_entry46_smoke/` (INDEX.txt);
+ran ×2 byte-identical; **0 uncaught exceptions / 0 console errors**; run_all 22/22 GREEN; svg blob
+still L1064. Ledger entry appended (feature-keyed #1/#2/#3/#5/#10/#15/#16 + none-beyond;
+OPERATOR-VOICE entries 44/45/46; 3 recon rows → RECONCILED-in-`928cde1c`; +1 new row FINDING-R;
+table rows amended). **VERDICT: PASS — all 4 fix-acceptance items + full smoke.**
+- **(a) stale-on-reject FIXED-verified:** STALE-CHECK FALSE on ⇅-swap, pill-toggle AND 100-BTC
+  !sim.ok paths ×2 runs (every pv-*/N_buy/summary/pill = '—', warn shown, Transact disabled).
+- **(b) audit raw USD FIXED-verified:** reference 9.95 band prints EXACTLY the entry-45 engine
+  truth 28,453.1684 / 11,470.0908 / $39,923.259202 (was $3.19B); 1 BTC band net $3,772.70.
+- **(c) anchor FIXED-verified (pixel):** k=1,741.98; passes 1.15px from the live dot (sampling
+  granularity); bbox (133,21)→(673,371) — re-shot `I3_anchor_curve_default.png`.
+- **(d) τ disclosure visible** 41px above tau-input on Settings ("Visible effect scales with the
+  wing gap…"). τ per-click delta BYTE-MATCHES entry-45 baseline: 3.39px analytic / 3,744px canvas
+  one click; 153.73px full sweep — engine unchanged confirmed behaviorally.
+- Full smoke: perps both sides (8×, liq 70k/90k); bands both dirs (0.0852% / 0.3834% post-swap);
+  steppers toggle + redraw (2,312px) + w-readout 0.725000→130→170; execute commits; **over-carve
+  alert captured via dialog listener** ("band needs $80000 … club free is $14000"); earn
+  deposit/withdraw exact round-trip; γ>1 clamp reflect-back (0.45→0.501, 0.99→0.950); portfolio
+  10 rows no NaN; export/import state-identical ex-eventLog (keyDiffs=[]); reset exact.
+- **FINDING-R (NEW, OPEN, display-only — flag to manager/intern):** post-rebase `kpi-spot-usd` +
+  `hdr-pool-spot` display POOL-FRAME `getMP_raw`, not honest current-$ `poolMark=getMP_raw×r`
+  (engine's own L1660; arb/OTM/funding use it). oracle→90000 ⇒ Spot($) DROPS to $71,232.34;
+  post-arb reads $80,000.00 beside Oracle=90000. Engine self-consistent (arb closes poolMark gap
+  exactly); honest at r=1 only — every prior display check ran at r=1. NOT a regression.
+- Still OPEN carried: boot-log stale "y=$800k, w=0.5" (now L4586); τ-authority + warp-visibility
+  design questions (rolling -1/-2).
+- Gotcha: playwright resolves only under engine/ (symlinked node_modules) — run helper scripts
+  from engine/verify/, not /tmp.
+
+## ★★★★ Prior — ENTRY-45 LACUNAE RUN (HEAD `1eebfcd6`, READ-ONLY, operator live-playing)
 Operator entry 45 verbatim (`history/operator/2026-06-10_kurtosis-curve-family-brief.md:341`):
 "did you check that the curve is almost completely insensitive to kurtosis change? theres no
 visible curve warp, and the simulation breaks when you switch long to short.... i'm concerned at
@@ -142,8 +174,8 @@ paraphrase] / [summary-stub].
   ABSORBED in v26c.
 
 ## File-safety canon
-Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg — L1064 in `1eebfcd6`); 3 `<script>`
-parse. HEAD `1eebfcd6f6ff4f4e3df5f745ac145f19`; prior `9d22cffd`, `b245bfda`, `3914c7f4`;
+Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1064); 3 `<script>` parse.
+HEAD `928cde1cccb0f35fdc9a23a7634414c8` (entry-46 fix build); prior `1eebfcd6`, `9d22cffd`, `b245bfda`, `3914c7f4`;
 v26c_full2 `6cc73563…`; v26b `8df9f8a3…`.
 
 ## Environment quick-ref

@@ -18,24 +18,24 @@ transcripts to distill my objections to each version, open questions etc."** (op
 ## ⭐ FEATURE-STATE TABLE (rolling — the at-a-glance inventory; tester updates rows whose feature
 changed, every entry, no exceptions)
 
-| # | Feature (inventory) | Current state (as of v27 HEAD **display-fix build `1eebfcd6`**, 2026-06-10; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
+| # | Feature (inventory) | Current state (as of v27 HEAD **entry-46 fix build `928cde1c`**, 2026-06-11; promoted line per entry 28; GH line demoted at v26c `6cc73563`, retained + suite green) | Last changed | Verdict |
 |---|---|---|---|---|
-| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side). **Display-fix `1eebfcd6`: Spot($)/Spot KPI + hdr-pool-spot re-pointed to the marginal getMP_raw — $80,000.00 / 1.0000 / "spot $80,000.00" at load (v24 values)** | display-fix `1eebfcd6` | DESIRABLE — v24 feel restored; Spot-KPI basis RECONCILED-in-`1eebfcd6` (y0 delta OPEN-for-ruling) |
-| 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; visual subtlety ACCEPTED (override). **ENTRY-30 obs: warp is premium-driven only (φ=f(dy=±premium)); constant-premium-further-OTM does NOT warp more — operator CHECK-1 claim NOT reproduced, see OPEN -1.** **ENTRY-45 obs: τ visual authority intrinsically small on the default frame — re-anchoring pins the elbow at the live point and wing shift is along-tangent (self-sliding); full-range τ 0.05→3.00 max 153.7px at wing tail yet perceived shape ~unchanged (screenshots); per-click (±0.05) 3.4px max = sub-visible. Redraw FIRES (canvas diff every step). See OPEN -2** |
-| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | display-fix `1eebfcd6` (+ entry-45 TEST-ONLY obs) | DESIRABLE mechanics — stepper+redraw verified live ×2; **BUT ENTRY-45: operator reports (correctly) the CURVE looks "almost completely insensitive" to τ — confirmed intrinsic-small visual authority (one click 3.4px max; 0.30→0.60 19.9px; 0.30→3.00 131px, all at wing tails along-tangent, elbow pinned at live point). NOT a redraw bug. Whether the knob needs more VISUAL authority = OPEN operator-tier (OPEN -2)** |
+| 1 | Balancer base | **HEAD (v27) IS the (W) family on the literal Balancer base** F=x^w·y^(1−w) with position-dependent w(u;φ); τ→∞ recovers plain Balancer. **UX-restore `9d22cffd`: v24 dollar defaults BACK** — oracle 80000, x=10 BTC, marginal=$80,000.000 at load (y0=303,448.28 chosen so load is equilibrium — differs from v24's 800,000; flagged below). Same tabs/KPI labels/chart views/perp+band defaults as v24 (tester side-by-side). **Display-fix `1eebfcd6`: Spot($)/Spot KPI + hdr-pool-spot re-pointed to the marginal getMP_raw — $80,000.00 / 1.0000 / "spot $80,000.00" at load (v24 values)** | entry-46 smoke (`928cde1c`, FINDING-R) | DESIRABLE — v24 feel restored; Spot-KPI basis RECONCILED-in-`1eebfcd6` (y0 delta OPEN-for-ruling). **NEW OPEN (entry-46 smoke, FINDING-R): post-rebase Spot($)/hdr-pool-spot show POOL-FRAME getMP_raw, not current-$ poolMark — oracle→90000 makes Spot($) read $71,232 then post-arb $80,000 beside an Oracle box reading 90000; honest at r=1 only. Display-only; engine self-consistent** |
+| 2 | Curve warp w(u) | HEAD: explicit (W) weight-field w(u;φ); warp = field-center φ shift; engine-correct (selfcheck 21 PASS); curve renders across frame. On-screen per-trade warp is SUBTLE (≈0.5–1px; verified elbow-local — sweep shows no τ matches v24's global warp with frozen wings) | entry-46 fix `928cde1c` (anchor overlay) | HEAD — engine PASS; visual subtlety ACCEPTED (override). **ENTRY-46: anchor (w=½) overlay FIXED-verified — k=√(x·y)=1,742 (was 170.83, 104× low); passes 1.15px from the live reserves dot, pixel-confirmed on the entry-45 frame (`I3_anchor_curve_default.png` re-shoot).** **ENTRY-30 obs: warp is premium-driven only (φ=f(dy=±premium)); constant-premium-further-OTM does NOT warp more — operator CHECK-1 claim NOT reproduced, see OPEN -1.** **ENTRY-45 obs: τ visual authority intrinsically small on the default frame — re-anchoring pins the elbow at the live point and wing shift is along-tangent (self-sliding); full-range τ 0.05→3.00 max 153.7px at wing tail yet perceived shape ~unchanged (screenshots); per-click (±0.05) 3.4px max = sub-visible. Redraw FIRES (canvas diff every step). See OPEN -2** |
+| 3 | Kurtosis knob τ | HEAD: **τ is a NUMBER STEPPER (no slider anywhere — 0 `input[type=range]` in live DOM), step 0.05, range 0.05–3**; keyboard ↑/↓ steps + readout + curve update live; elbow visibly rounds at $80k defaults (τ 0.05→1.5: elbow 5.6px mean/111 max, left wing 0.0px) — tester-confirmed. **Display-fix `1eebfcd6`: spinner ARROWS UN-HIDDEN (CSS L331-337) — mouse-click on the τ up-arrow steps 0.30→0.35 and the curve redraws; ALL settings/perp number fields show spinners (tester pixel+click ×2)** | entry-46 fix `928cde1c` (disclosure sentence) | DESIRABLE mechanics — stepper+redraw verified live ×2; **ENTRY-46: honest disclosure sentence added + visible at the τ control ("Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step…"); per-click delta re-baselined byte-identical (3.39px analytic / 3,744px canvas one click; 153.73px full sweep)** — **BUT ENTRY-45: operator reports (correctly) the CURVE looks "almost completely insensitive" to τ — confirmed intrinsic-small visual authority (one click 3.4px max; 0.30→0.60 19.9px; 0.30→3.00 131px, all at wing tails along-tangent, elbow pinned at live point). NOT a redraw bug. Whether the knob needs more VISUAL authority = OPEN operator-tier (OPEN -2)** |
 | 4 | Carry P=Ny/Nx, q=ln p | HEAD (v27): carry = price leg q=ln p; reads via getMP_raw; engine-consistent (selfcheck) | v27 | DESIRABLE — stable |
-| 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled | v27 | OPEN lemma — theory-risk-accepted |
+| 5 | Rebase (P→P/r) | HEAD (v27): rebase = carry-shift q→q−ln r (NOT rigid x→r·x); **warp∘rebase-commute OPEN [needs-Aristotle]**, deliberately not coupled. **ENTRY-46 smoke: rebase path UI-exercised first time — engine consistent (arb closes the poolMark gap exactly) but the $ KPIs display the pool FRAME, see FINDING-R row #1** | v27 (+ entry-46 smoke obs) | OPEN lemma — theory-risk-accepted; FINDING-R display item OPEN |
 | 6 | Pricing law value∝S^(−γ) | HEAD (v27): value∝S^(−γ_loc) under Reading A (operator-ruled, entry 11 "a"); wings exact power-laws | v27 | DESIRABLE — Reading A ruled |
 | 7 | ITM American smooth-pasting | HEAD (v27): ported with g→γ_loc (Reading A); seam value/slope selfcheck PASS; mark/markFrac split present. NOT carried from the GH line: payoff naked-leg uncap + x-range −90..+200 (HEAD payoff caps at 1, ±50%) — NOTES D9/D10 | v27 (+ Task-2 diff) | HEAD — seam PASS; 2 GH-line payoff upgrades unported (noted for future) |
 | 8 | Uniform strike registration θ=sNorm(K) | HEAD (v27): sNormStrike ((W) inverse) defined+exported (round-trip 1.46e-15, NaN-loud) but **export-only — no regLeg wiring**; payoff sweeps price-ratio (1+r); the v26c one-mark-across-display/exec/chart guarantee + all-γ crossover@K are UNVERIFIED on (W) — NOTES D11/D13/D16 | v27 (+ Task-2 diff) | PARTIAL — function present, uniform wiring unported (noted for future) |
 | 9 | Funding | HEAD (v27): re-pointed to price-anchor p=P, γ→±γ_loc [theory-risk-accepted] — diverges from the GH line's locked w=½ funding; φ-anchor/funding lemma OPEN [needs-Aristotle] | v27 | OPEN — theory-risk; not UI-exercised |
-| 10 | Slippage basis (mpGeom) | HEAD (v27): mpGeom collapses to getMP_raw (price==slope on (W), proven, selfcheck L4). NOT carried: v26a's honest $-tooltip ("Layer-1 reserve-USD, not trader honest-dollar") — HEAD ships the v24 tooltip — NOTES D2 | v27 (+ Task-2 diff; entry-45 TEST-ONLY obs) | DESIRABLE math; $-label honesty unported (noted). **ENTRY-45: 2 NEW OPEN display defects in the band panel: (a) STALE-ON-REJECT — previewBand reject paths (!sim.ok / club guards) set the warn but DON'T clear summary/audit ⇒ slippage/N_buy/net-cash retain the PREVIOUS direction's numbers next to the rejection banner (the operator's screenshot state); (b) ×ORACLE UNIT INFLATION — pv-net-cash/pv-dy-sold/pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool (engine netPoolY=39,923.26 raw USD, correct; display ×80,000)** |
+| 10 | Slippage basis (mpGeom) | HEAD (v27): mpGeom collapses to getMP_raw (price==slope on (W), proven, selfcheck L4). NOT carried: v26a's honest $-tooltip ("Layer-1 reserve-USD, not trader honest-dollar") — HEAD ships the v24 tooltip — NOTES D2 | entry-46 fix `928cde1c` | DESIRABLE math; $-label honesty unported (noted). **ENTRY-46: BOTH entry-45 band-panel display defects RECONCILED-in-`928cde1c`, tester live ×2 — (a) stale-on-reject: `clearBandPreviewOut()` wired on every reject path, STALE-CHECK FALSE on swap/pill/oversize; (b) audit strip prints raw engine USD exactly (28,453.17/11,470.09/39,923.26 on the entry-45 reference band — was $3.19B).** **ENTRY-45 (historical): 2 display defects: (a) STALE-ON-REJECT — previewBand reject paths (!sim.ok / club guards) set the warn but DON'T clear summary/audit ⇒ slippage/N_buy/net-cash retain the PREVIOUS direction's numbers next to the rejection banner (the operator's screenshot state); (b) ×ORACLE UNIT INFLATION — pv-net-cash/pv-dy-sold/pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool (engine netPoolY=39,923.26 raw USD, correct; display ×80,000)** |
 | 11 | Dollar/settlement pipe | Reused byte-identical from the v24 base; curve-independent | — (unchanged) | DESIRABLE — stable (reuse) |
 | 12 | getMP_raw price-coord gotcha | HEAD (v27): price == geometric slope EXACTLY on (W) (no e^μ factor); code comment warns against re-introducing the GH factor on a cross-port | v27 | DESIRABLE — moot by construction, warning kept |
 | 13 | Solvency boundary (B1) | OPEN ship-gate, unchanged by the promotion (not claimed closed) | — | OPEN — the known hole |
 | 14 | Esscher tilt / rapidity group | HEAD (v27): trade = weight-slot field-center translation φ; premise skeptic-verified FAITHFUL to paper+v24 (entry-27 cross-check); no X·Y invariant claimed | v27 | DESIRABLE — grounded |
-| 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | display-fix `1eebfcd6` | DESIRABLE — stable (re-verified entry-45 run: blobs canonical, 3 scripts parse, 0 uncaught exceptions across all probes ×2) |
-| 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; ACCEPTED(operator). **ENTRY-30: composite-ray spread→single-tx at θ*=√(θ₁θ₂) CONFIRMED exactly (residual 0); but premium-controlled warp NOT reproduced (strike not in tradeUpdate) — OPEN -1.** **ENTRY-45 quantification: the band path (the ONLY UI trade) nets sold-premium−bought-premium ⇒ tiny dy ⇒ tiny φ: 1 BTC band nets ≈$1,626 → Δφ 7.4e-3; cumulative 3 BTC/$240k notional → 2.14px max curve shift. Warp invisibility is STRUCTURAL on the band path, compounding the elbow-local subtlety** |
+| 15 | File-safety gate | Display-fix build `1eebfcd6`: blobs canonical `ab663f5c…` (L74) / `c505b08a…` (svg line shifted 1060→1064 by new CSS, content canonical; line-md5 tester re-verified), 3 scripts parse; 0 console errors live ×2 | entry-46 build `928cde1c` | DESIRABLE — stable (re-verified entry-46 smoke: md5 `928cde1c` whole-file, blobs canonical L74/L1064, 3 scripts parse, run_all 22/22, 0 uncaught exceptions ×2) |
+| 16 | **Warp-with-trades (strong-form)** | HEAD (v27): IMPLEMENTED (α=x·w, β=y·(1−w) conserved; φ recenter; selfcheck WARP a–f PASS; skeptic-verified the unique conservation-consistent trade). On-screen warp subtle (elbow-local by design; cannot match v24's global warp with frozen wings — verified sweep). **Operator promoted over my visual blocker (entry 28) — recorded OVERRIDDEN, not resolved**; anchor-overlay/amplified-warp viz still open | v27 promotion (entry 28) (+ entry-30 TEST-ONLY note) | HEAD — engine PASS; ACCEPTED(operator). **ENTRY-30: composite-ray spread→single-tx at θ*=√(θ₁θ₂) CONFIRMED exactly (residual 0); but premium-controlled warp NOT reproduced (strike not in tradeUpdate) — OPEN -1.** **ENTRY-45 quantification: the band path (the ONLY UI trade) nets sold-premium−bought-premium ⇒ tiny dy ⇒ tiny φ: 1 BTC band nets ≈$1,626 → Δφ 7.4e-3; cumulative 3 BTC/$240k notional → 2.14px max curve shift. Warp invisibility is STRUCTURAL on the band path, compounding the elbow-local subtlety** **ENTRY-46 smoke: unchanged (engine byte-identical) — 0.05-BTC execute Δφ=4.44e-4; preview steppers + w-readout (the sub-pixel-legibility surrogate) verified working** |
 
 ## Entry template
 ```
@@ -83,8 +83,11 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    — w=½ overlay drawn with (W)-units depth (k=170.83 ⇒ xy=29,186) sits 104× below the live curve,
    a gray L hugging the origin; known-OPEN viz item, root cause now exact. **(warp)** CONFIRMED
    invisible — band path nets premiums ⇒ Δφ 7.4e-3/BTC ⇒ 2.14px after $240k notional; structural,
-   ties to OPEN -1 and the entry-28-OVERRIDDEN blocker. **Status: OPEN — defects (b)(c) to intern;
-   τ-authority + warp-visibility design questions to operator via manager.**
+   ties to OPEN -1 and the entry-28-OVERRIDDEN blocker. **Status (amended entry-46 smoke, build `928cde1c`): defects (b) stale-on-reject + ×oracle audit
+   and (c) anchor-in-corner are RESOLVED(`928cde1c`, tester live ×2 — STALE-CHECK FALSE ×3 paths;
+   exact-dollar audit; anchor 1.15px through the live dot). REMAINING OPEN: τ visual-authority and
+   warp-visibility design questions (operator-tier); the τ control now carries an honest disclosure
+   sentence (transparency, not a resolution of the design question).**
 
 -1. **★ ENTRY 30 — premium-controlled warp NOT reproduced on HEAD `1eebfcd6` (the central CHECK-1
    claim).** [#2, #16] Operator `[verbatim-transcript]`
@@ -959,6 +962,112 @@ sharpened; stale boot log line).
 ---
 
 
+## v27 `1eebfcd6` → ENTRY-46 FIX BUILD `928cde1c` (entry-45/46 lacunae fixes: stale-on-reject clear, band-audit raw USD, anchor through live point, τ disclosure)   [status: HEAD (in-place fix on the promoted line); tester STANDING UI SMOKE-PASS live ×2 — FIRST invocation of the standing §8 smoke gate]
+
+**Provenance:** live Playwright Chromium on `HEAD_temporal_mvp_v27_wkurtosis.html` md5
+`928cde1cccb0f35fdc9a23a7634414c8` (verified at run start; READ-ONLY honored — no build edit).
+Real UI only (band form, ⇅ swap, pill, Transact + dialog listener, perp form, earn, settings
+inputs/steppers, oracle KPI, arb/tick/reset, page-nav, export/import). Reproduced clean ×2 —
+every verdict-bearing number byte-identical across runs. **0 uncaught exceptions, 0 console
+errors** (2 Canvas2D `willReadFrequently` advisories are harness-induced getImageData readbacks).
+File-safety GREEN (blobs `ab663f5c…` L74 / `c505b08a…` L1064 canonical; 3 scripts parse;
+`run_all.sh` 22/22 PASS [HARD] incl. WARP (g)). Harness `engine/verify/pw_v27_entry46_smoke.mjs`;
+evidence `evidence/v27_entry46_smoke/` (29 shots + crops + `trace_entry46.json` + INDEX.txt).
+
+**FEATURES:** #1 (Spot KPI display basis — NEW post-rebase finding), #2 (anchor overlay FIXED;
+overlay inventory re-confirmed), #3 (τ disclosure sentence; per-click delta re-baselined),
+#5 (rebase — display-layer interaction, FINDING-R), #10 (BOTH entry-45 display defects FIXED:
+stale-on-reject + ×oracle audit inflation), #15 (file-safety re-verified on `928cde1c`),
+#16 (warp path re-exercised unchanged: φ Δ=4.44e-4 on the 0.05-BTC execute; steppers/w-readout
+verified). **None beyond** — #4, #6–#9, #11–#14 unchanged and not implicated (engine script
+byte-identical to `1eebfcd6`; all deltas are UI-layer).
+
+**DESIRABLE (fix-acceptance — intern's 4, ALL PASS):**
+- **(a) STALE-ON-REJECT cleared [#10]:** `clearBandPreviewOut()` (L3136) now resets all 15 pv-*
+  fields, N_buy display, $-sublines, deposit row, mode pills, slippage/fee summary on EVERY
+  reject path. STALE-CHECK = **FALSE on all three reject paths ×2 runs**: ⇅ swap after a valid
+  18.1469% preview (warn "Sell leg: trade exceeds frozen-wing range", every output '—', Transact
+  disabled), pill-toggle ("not OTM" reject — cleared), 100-BTC !sim.ok (cleared). The operator's
+  entry-45 frankenstate is unreachable in these paths. (`A1_path1..3*.png`)
+- **(b) Band audit strip raw USD [#10]:** ×oracle dropped (L3242-47 comment marks the fix).
+  Valid 9.95 band: pv-dy-sold **28453.1684 $**, pv-dy-bought **11470.0908 $**, pv-net-cash
+  **$39,923.259202** — EXACT match to the entry-45 engine truth (raw pool Δy, was displayed
+  $3,193,860,736). 1 BTC band: 2859.61/913.09, net $3,772.70 — engine-scale. (`A2_*.png`)
+- **(c) Anchor overlay through the live reserves point [#2]:** `curveTraceExplicit(0.5,
+  √(x·y))` (L3494): k=1,741.98 (was (W)-units 170.83, 104× low). Anchor passes **1.15px** from
+  the live dot (trace-sampling granularity); in-frame bbox px (133,21)→(673,371) — visually a
+  proper reference hyperbola through the white dot, re-shot on the entry-45 frame
+  (`I3_anchor_curve_default.png`). Pixel-confirmed.
+- **(d) τ disclosure [#3]:** sentence present + visible on Settings, 41px above tau-input:
+  "Visible effect scales with the wing gap (w₊−w₋) and is subtle per 0.05 step — sweep τ widely
+  or widen the wing gap to see it." — honest per the entry-45 quantification. (`A4_*.png`)
+
+**FULL SMOKE (standing gate, every control):** perps long+short (8.0×, liq $70k/$90k, clubs
+correct); bands BOTH directions valid previews (long 0.0852%, post-swap short 0.3834%);
+preview steppers enable on preview, toggle active state, redraw (2,312px diff between leg views),
+w-readout w: 0.725000→0.725130→0.725170; execute commits (pool.y +187.44, φ +4.44e-4, band
+opened); **over-carve honest alert CAPTURED via dialog listener**: "Open failed: Over-carve:
+band needs $80000 notional but club free is $14000." — pool untouched; earn deposit/withdraw
+exact round-trip ($607,271.44→$617,271.44→back); γ>1 clamp REFLECT-BACK verified (0.45→input
+shows 0.501/γ₋=1.00; 0.99→0.950 cap; restore clean); κ/tick-hours set; oracle 80000→90000
+rebase redraws (10,954px); arb + 8h funding tick clean; Portfolio renders (10 rows, no
+NaN/undefined); export/import round-trip state-identical excluding eventLog (keyDiffs=[]);
+reset restores boot exactly. **τ per-click delta (the operator's knob): one ArrowUp 0.30→0.35 =
+3,744 px canvas diff / 3.39px max analytic displacement — byte-matches the entry-45 baseline;
+full sweep 0.05↔3.00 = 153.73px (entry-45: 153.7).** Engine behavior unchanged, confirmed.
+**Overlays identified + sanity-located** (boot frame): live (W) curve through the white reserves
+dot, gray anchor through the same dot (post-fix), faint ATM ray, dashed sold/bought strike rays
+with leg dots (boot-suggested band), preview leg curves/rays when a band previews. Legend matches.
+
+**UNDESIRABLE:**
+- **FINDING-R (NEW, display-only; NOT an entry-46 regression — this path was never smoke-tested
+  before): post-rebase Spot($)/header show POOL-FRAME dollars, not current dollars [#1, #5].**
+  `kpi-spot-usd` + `hdr-pool-spot` display `getMP_raw` (L4325-27, L4277) without the
+  `× oracle/oracle_initial` factor that the engine's own honest Layer-2 mark `poolMark` (L1660)
+  applies and that arb/OTM/funding consume. Live symptom: raise oracle to $90,000 → Spot($)
+  DROPS $80,136.38→$71,232.34; run arb → Spot($) reads **$80,000.00 while the Oracle box reads
+  90000** (engine-consistent: poolMark = 80,000×1.125 = $90,000 = oracle; arb gap correctly
+  closed). Honest at r=1 only — exactly the state every prior display check ran in. **OPEN —
+  intern display fix (use poolMark for the $ KPI, or label the frame); operator-visible
+  confusion class = same display-basis family as the `9d22cffd` Spot-KPI item.**
+- Boot event-log line "y=$800k, w=0.5" still stale (L4586) — entry-45 minor, not in this fix's
+  scope. OPEN (carried).
+
+**NEUTRAL:** export/import eventLog gains an "Imported." entry (by design); svg blob line stays
+L1064; engine `<script>` byte-identical to `1eebfcd6` (the curve math unchanged — all four fixes
+are UI/Viz layer).
+
+**OPERATOR-VOICE (`[verbatim-transcript]`
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md`):**
+- Entry 45 (:341): *"did you check that the curve is almost completely insensitive to kurtosis
+  change? theres no visible curve warp, and the simulation breaks when you switch long to
+  short.... i'm concerned at these lacunae, skeptic, tester. the anchor curve is sitting way off
+  in the corner somewhere"* — status per clause: **"breaks when you switch long to short"
+  (= stale-on-reject + $3.19B audit display) → RESOLVED(this build, STALE-CHECK FALSE ×3 paths
+  ×2 runs + exact-dollar audit match)**; **"anchor … way off in the corner" →
+  RESOLVED(this build, pixel-confirmed through the live dot)**; "almost completely insensitive
+  to kurtosis change" → **mechanics unchanged by design (3.39px/click re-confirmed); the new
+  disclosure sentence is TRANSPARENCY, not authority — whether the knob should have more visual
+  authority stays OPEN (operator-tier design Q, rolling -2)**; "theres no visible curve warp" →
+  **unchanged, OPEN** (structural band cash-neutrality, rolling -1/-2; entry-28 override stands).
+- Entry 46 (:348): *"do the needful"* — **RULED(go-ahead)**: the fix order this build executes.
+  Context: manager held the build until the operator's go.
+- Entry 44 (:334, process directive bearing on how this entry reaches the operator): *"dont
+  involve me in PR management … if i ask questions like that and you want to drop caveats, the
+  right way to do it is to give me the most recent feature level edit / correction with simple
+  english."* — noted as the reporting style contract for relaying this ledger.
+
+**EVIDENCE:** `evidence/v27_entry46_smoke/` (INDEX.txt catalogs all 29 shots + crops +
+`trace_entry46.json` + `export_state.json`); harness `engine/verify/pw_v27_entry46_smoke.mjs`;
+oracle run `engine/verify/run_all.sh` GREEN 22/22. **Tester verdict: PASS — all four
+fix-acceptance items + full smoke; FINDING-R flagged OPEN (display-only).**
+**Table rows updated:** #1, #2, #3, #5, #10, #15, #16. **Rolling list:** item -2 amended
+(defects (b)/(c) resolved; design questions remain). **Reconciliation list:** 3 rows →
+RECONCILED-in-`928cde1c`; +1 new row (FINDING-R); boot-log row carried OPEN.
+
+---
+
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
@@ -976,9 +1085,10 @@ sharpened; stale boot log line).
 | Spot KPI basis: “Spot ($)” shows $30,344.83 = raw reserve ratio y/x, NOT the pool marginal ($80,000) — v24 showed $80,000 at load; first dollar number the operator sees contradicts the $80k world (kpi-spot 0.3793 / kpi-w 0.7250 same basis) | UX-restore `9d22cffd` (exposed by equilibrium-at-load y0) | **RECONCILED in display-fix `1eebfcd6`** — kpi-spot/kpi-spot-usd re-pointed to the marginal getMP_raw (display wiring only, L4304-4306): reads **$80,000.00 / 1.0000** at load, tester pixel+DOM ×2 (`D_02_kpi_spot_crop.png`); hdr-pool-spot fixed to the same basis (L4256, `D_03_hdr_pool_spot_crop.png` — the header line I had not flagged, manager caught it same pass) |
 | τ (and all settings-panel/perp-form) number inputs: up/down spinner ARROWS hidden by CSS (`.field-input-wrap … ::-webkit-inner-spin-button { -webkit-appearance:none }` L326-328) — mouse-click stepping dead on τ (verified: click ×2 no-ops; band-price inputs with the L938-950 visible-spinner CSS DO step 120000→120500 on click); keyboard arrows work | v24 base CSS, carried into v27; bites NOW because the operator's no-sliders ruling makes arrows the only knob affordance | **RECONCILED in display-fix `1eebfcd6`** — `.field-input-wrap` spinner CSS un-hidden (L331-337, inner-spin-button + opacity 1): τ up-arrow MOUSE-CLICK steps 0.30→0.35 and the curve redraws (canvas diff), down-click returns 0.30; ALL settings/perp number inputs show spinners (computed-style probe + pixel `D_04`/`D_06`/`D_08`; tester ×2) |
 | Funding re-pointed to price-anchor p=P, γ→±γ_loc — diverges from HEAD's locked w=½ funding | v27 (candidate) | OPEN — theory-risk-accepted; operator/skeptic-tier |
-| **Band panel STALE-ON-REJECT: previewBand reject paths (!sim.ok / club guards) set warn + disable Transact but DON'T clear summary/audit/N_buy ⇒ previous direction's numbers shown live next to the rejection banner — the operator's entry-45 "breaks when you switch long to short" screenshot state** | v24-pattern UI, bites in v27 (swap/pill + direction-asymmetric validity) | OPEN — intern fix: clear setSummary/pv-*/bought-display on ALL reject paths (entry-45 run, `P2_post_swap_frankenstate.png`) |
-| **Band audit strip ×oracle unit inflation: pv-net-cash / pv-dy-sold / pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool** (engine correct: netPoolY=39,923.26 raw USD = exact Δy; V_* rows display correctly) | v27 HEAD (mixed units in executeBand return vs previewBand's uniform ×oracle) | OPEN — intern fix: drop ×s.oracle on the three raw-USD fields (L3227-3229) (entry-45 run, P1/P2 traces) |
-| **Anchor (w=½) overlay 104× below the live curve — gray L hugging the origin corner** (curveTraceExplicit(0.5, snap.depth, modeSlope) L3473 feeds (W)-units depth k=170.83 into a w=½ trace ⇒ xy=29,186 vs live xy≈3.03e6; correct anchor-through-live-point k=√(x·y)=1,742) | v27 (known-OPEN "anchor-overlay viz" at promotion; root cause exact as of entry-45 run) | OPEN — intern one-liner; operator named it entry 45 ("way off in the corner") |
-| Boot event-log line "Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k." stale vs actual y₀=$303,448.28 / w-field 0.60/0.85 (L4565) | v27 UX-restore (y0 changed, message not) | OPEN (minor) — intern text fix |
+| **Band panel STALE-ON-REJECT: previewBand reject paths (!sim.ok / club guards) set warn + disable Transact but DON'T clear summary/audit/N_buy ⇒ previous direction's numbers shown live next to the rejection banner — the operator's entry-45 "breaks when you switch long to short" screenshot state** | v24-pattern UI, bites in v27 (swap/pill + direction-asymmetric validity) | **RECONCILED in entry-46 build `928cde1c`** — `clearBandPreviewOut()` (L3136) on every reject path; STALE-CHECK FALSE on swap/pill/oversize ×2 runs (entry-46 smoke, `A1_path1..3*.png`) |
+| **Band audit strip ×oracle unit inflation: pv-net-cash / pv-dy-sold / pv-dy-bought multiply raw-USD engine dy by oracle again ⇒ "$3,193,860,736" net cash on a $303k pool** (engine correct: netPoolY=39,923.26 raw USD = exact Δy; V_* rows display correctly) | v27 HEAD (mixed units in executeBand return vs previewBand's uniform ×oracle) | **RECONCILED in entry-46 build `928cde1c`** — ×oracle dropped (L3242-47); displays the exact raw engine dollars (28,453.17/11,470.09/$39,923.26 on the reference band) (entry-46 smoke, `A2_*.png`) |
+| **Anchor (w=½) overlay 104× below the live curve — gray L hugging the origin corner** (curveTraceExplicit(0.5, snap.depth, modeSlope) L3473 feeds (W)-units depth k=170.83 into a w=½ trace ⇒ xy=29,186 vs live xy≈3.03e6; correct anchor-through-live-point k=√(x·y)=1,742) | v27 (known-OPEN "anchor-overlay viz" at promotion; root cause exact as of entry-45 run) | **RECONCILED in entry-46 build `928cde1c`** — k=√(x·y) (L3494); anchor passes 1.15px from the live dot, pixel-confirmed (entry-46 smoke, `I3_anchor_curve_default.png`) |
+| Boot event-log line "Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k." stale vs actual y₀=$303,448.28 / w-field 0.60/0.85 (L4586 in `928cde1c`) | v27 UX-restore (y0 changed, message not) | OPEN (minor) — intern text fix; confirmed still present in `928cde1c` (entry-46 smoke) |
+| **FINDING-R: post-rebase Spot($) + header show POOL-FRAME dollars (`getMP_raw`, L4325-27/L4277) instead of the engine's honest current-$ `poolMark = getMP_raw×(oracle/oracle_initial)` (L1660) — oracle→$90,000 makes Spot($) read $71,232.34, then post-arb $80,000.00 beside an Oracle box reading 90000 (engine self-consistent; honest at r=1 only)** | v27 display wiring `1eebfcd6` (exposed by entry-46 smoke — first UI exercise of the rebase path) | OPEN — intern display fix (point $ KPIs at poolMark, or label the frame); operator-visible confusion |
 
 _Tester: append new entries above the reconciliation list; update the list every entry._
