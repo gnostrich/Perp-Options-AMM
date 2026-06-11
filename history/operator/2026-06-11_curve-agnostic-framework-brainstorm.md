@@ -76,3 +76,8 @@ _Context: product demand — make both mechanics visible/runnable: (i) the steep
 > and havent totally ditched asymptote yet
 
 _Context: clarifies entry 12 — the exact power-law wings are still live in the parallel exploration; no pin changes. Nothing was rebuilt on the drop assumption._
+
+## 16
+> also is the curve agnostic stuff dealed and airtight now? and i dont want the demo another chat id sing it
+
+_Context: (1) status question on deliverable A — answered honestly (built+audited+merged; machine-proof layer and one math hole still open; closing pass dispatched); (2) demo CANCELLED — another chat is doing it; intern's in-flight output will be discarded uncommitted._
