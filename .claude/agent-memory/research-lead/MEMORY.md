@@ -1,5 +1,5 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, AIRTIGHT CLOSING PASS (FW prover triage+3 submits; OFF-MARK characterization SOLVED; NO engine edit / NO git)._
+_Last updated: 2026-06-11, V24+LENS RECONCILE (handoff entry 24; framework-level only; NO engine edit / NO git / NO Aristotle)._
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -17,6 +17,52 @@ _Last updated: 2026-06-11, AIRTIGHT CLOSING PASS (FW prover triage+3 submits; OF
 > stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
+### V24+LENS RECONCILE — 2026-06-11 (operator-routed handoff, entry 24; note `framework/RECONCILE_v24_lens_2026-06-11.md`)
+Source: `specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md` (their session, entries 80–88).
+Architecture: plain weighted-Balancer pool (live w; trades skew) + STATIC polar lens
+h_τ(u)=√(τ²+u²)−τ in the QUERY layer carrying ALL kurtosis; option decay exponent E(u)=γ·h′_τ(u),
+γ=w/(1−w); goal-seek at the trade point IN THE LENSED coordinate (their entry 88). Their items
+(a)–(f) in flight THEIR side — not duplicated. **Verdicts [DERIVED+NUM dps=40, numbers restated
+in note]:**
+1. **Lens = the composition map for this candidate: M = id ⊗ h_τ** (pool state untouched —
+   Balancer instance, α,β = the proved first integrals; readings ∘ lens: lnV = lna − γ|ℓ| exact
+   tent in ℓ(u)=sgn(u)h_τ(u)). AC-10 row → candidate-supplied; CHK-7 blocked → runnable (3 legs
+   specced). **⚠ THE SEAM (load-bearing): R-a vs R-b** — handoff carries BOTH "trades change w
+   per the α,β Trade Formula" AND "goal-seek in the lensed coordinate"; if the lensed goal-seek
+   modifies dw off-ATM (R-b), α,β NOT conserved ⇒ AC-10(c) re-opens. PENDING-THEIRS (a). All
+   AC-10/"proved instance carries" claims conditional on R-a — never relay unconditionally.
+2. **OFF-MARK NO-GO EVADED** (Part-2 rigidity does NOT persist in lensed form): per-trade update
+   factorizes δE(u)=dγ·h′_τ(u) — u-shape is a STATIC factor, never transported (breaks the
+   translating-dial lock δε=−ε′dc that drove the jet tower); (M) mode-at-mark = curve-2 argmax
+   at ATM holds IDENTICALLY (h′ has γ-free unique zero at 0; δE(0)=0 exactly vs Part-2
+   V(s)=(1−4ε″)s); (G) vacuous (no at-the-mark necessity exists — no (T)+(M) collision ever).
+   Per trade: 1 eq ((T)), 1 dial (dw) ⇒ pointwise determined, no functional equation, no
+   rigidity. **Conditions C1–C3:** static query-layer kernel w/ unique h-min at mode + h′>0 +
+   wings h′→1; live dial multiplicative ONLY (any adaptive/trade-dependent lens re-imports the
+   no-go class); mode-at-mark re-scoped to curve-2 argmax. **Price: pool-mode ABANDONED** — pool
+   (const-w≠½) has no unit-slope point; LDF peak at y=x diagonal ≠ mark ray (−0.4055 at w=0.6);
+   if operator re-demands POOL-mode-at-mark the no-go applies unchanged. AC-2.5 menu gains live
+   option (e-lens). Watch: ATM degeneracy ℓ′(0)=0 — possible 1/h′ dw amplification near ATM
+   (their (a) divergence analysis should cover BOTH ends).
+3. **Scorecard:** AC-3 fits exactly (4 numbers; γ-lock⟺w∈(½,⅘) clamp OPEN — their open item 1);
+   AC-2/AC-4 re-scope (their "mode" = curve-2 argmax ≠ our unit-slope μ-reading: pool has none;
+   curve-2 raw u*=τ/√(γ²−1)≠0, e.g. 0.1228 @γ=2.64,τ=0.3; lensed slope ≡ γ never 1 — entry-4
+   conjecture does NOT transfer); AC-5 same-τ clause REGAINS content (lens shapes both reads;
+   (W) Δw=0-anchor τ-degeneracy = negative control), F5 trivial, functional still operator-tier;
+   AC-6/AC-8 partly PENDING-THEIRS (b)/(c); AC-7 W_reach characterized under R-a only; AC-9
+   two-engine-lines fact (their HEAD v27 928cde1c NOT in our tree; ours v26c 6cc73563 canonical)
+   + NEW lens gotcha: slope reads carry triple (π, J_pool, h′_τ) — CHK-9 mixed raw/lensed
+   negative control specced.
+4. **Vocab collisions tabled** (note §4): their w = live steepness (≠ "static steepness" ruling —
+   that attaches to τ here); their γ LIVE ⇒ live wing exponent ⇒ live S* PER TRADE; even lens ⇒
+   symmetric ±γ wing pair unless their (b) adds per-wing exponents — may re-arm the two-root
+   settlement fork (operator-tier, travels with their (b)).
+**Queue:** FW-15 candidate (lens-class: mode-invariance + δE factorization + counting) pinnable
+ONLY after R-a/R-b resolves — NOT pinned, NOT submitted. FW-14 unchanged. No Aristotle traffic.
+2 files touched: new note + this MEMORY.
+
+---
 
 ### AIRTIGHT CLOSING PASS — 2026-06-11 (operator entry 16; FW prover loop + OFF-MARK hole)
 
