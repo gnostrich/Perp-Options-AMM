@@ -47,7 +47,32 @@ mechanics; DO use the paper's motive frame in completeness/steelman passes along
 `docs/feature_inventory.md`. (Verified 2026-06-10: paper exists, §Future Directions L227–237
 carries the conjecture + a C6-wording placeholder.)
 
-## ACTIVE: realtime brainstorm with the operator (2026-06-10, OPEN)
+## ACTIVE: curve-agnostic-framework brainstorm (2026-06-11, OPEN — pre-go-ahead)
+Operator opener (transcript `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`
+entry 1, VERIFIED verbatim vs handed text): wants the curve-agnostic framework (info-geom/PH
+thread) established "airtightly", then a tabular comparison of curve candidates propagating
+through every component. **U1 OBJECT now pinned by the opener:** skew/kurt are of the LIQUIDITY
+DISTRIBUTION (paper Future-Directions (w,κ) object, L229-237), fan-unfolded 90°→180°, mode=spot —
+NOT trader return density, NOT wing-fatness. **U1 remainder still open:** (a) which liquidity
+density operationally (curve-generating measure vs depth-per-log-price — plain Balancer's depth
+is monotone, NO mode; definition is load-bearing); (b) which coordinate for moments (kurtosis
+sign flips between latent/price). My 4 questions posted 2026-06-11 (relay pending): define LDF
+operationally; four-numbers-total (γ derived from w?) or γ a fifth dial; open-option re-pricing
+under trade-moved skew (STILL unanswered — "i'll get to this later"); mode-at-spot exact or
+by-construction. Key structural point I posted: paper w=α/x is DERIVED state ⇒ skew moves EVERY
+trade ⇒ framework cannot stay agnostic on what a trade does to γ/S*/funding-anchor/open options.
+"Scaffolding ready" = code at one pin; curve-agnosticism is the framework's burden of PROOF.
+My table gate (posted, hold them to it): all 16 per family + 5-item gate + per-cell provenance
+labels; predicted drops = #16 as a column, #13 dynamic-w solvency + boundedness row, #4 carry
+derived per family, β-slice labels, #9 anchor re-posed, #8 registration, re-pricing assumption
+explicit. NEW narrow FLAG-OMISSION (standing): research-lead MEMORY line 59 "Full 15-item table
+in note" — note has 16 rows; 3rd recurrence of pattern 6 (item-16 count drops); fix = one line.
+Verified same pass: research-lead truth-up of the 2 broken claims IS done (✗CORRECTED lines
+66/74). Unaudited claim on file: "pivot landed" — audit its gates when the framework note arrives.
+research-lead produced a parallel recap I have NOT seen; my mandatory pass comes on the eventual
+framework/design note.
+
+## PRIOR: realtime brainstorm with the operator (2026-06-10, superseded by the above session)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
 append my reply there (manager is a pure pipe, relays verbatim). Opening posted: 3 questions
 (which curve has the w trades change; does the paper's α/β conservation law survive the kurtosis

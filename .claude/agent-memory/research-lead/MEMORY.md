@@ -1,5 +1,5 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-10, GUDERMANNIAN BRIDGE derivation (notes-only; NO submit/edit/git) + TRUTH-UP of broken entries._
+_Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK recap+brainstorm seeds (text-only; NO submit / NO new derivation / NO git)._
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -17,6 +17,24 @@ _Last updated: 2026-06-10, GUDERMANNIAN BRIDGE derivation (notes-only; NO submit
 > stock-take). Survived attack: asymptote preservation, sign-split + "never ship τ-up=fatter",
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
+
+### CURVE-AGNOSTIC FRAMEWORK BRAINSTORM — 2026-06-11 (operator entry 1; recap+seeds ONLY, pre-go-ahead)
+Operator spec (verbatim source `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`):
+curve-warp AMM where (x,y,w) gives skew + ONE static kurtosis knob of the LIQUIDITY DISTRIBUTION on
+the 180° fan (= my Gudermannian-bridge fan object, mode at spot). Reads as PARTIALLY resolving U1:
+object = the angular/fan density (curve geometry, matches the steepness/flatness ruling); residual
+ambiguity = WHICH density rides the fan (liquidity depth vs latent kernel — kurtosis SIGN flips
+between objects) + the mode-at-spot centering at skew≠0. Returned (text only): recap + framework
+skeleton (admission contracts: generator μ / validity gate / fan contract / power-law-wings⇒forced-S*
+/ Trade-Formula warp / carry+rebase / funding anchor / strike registration / slippage basis /
+solvency-exposure report) + 7 candidate rows (GH-fixed v26c · GH B-MINIMAL · GH B-FULL · (W) family ·
+(W)+Trade-Formula composite · plain Balancer · tanh-score control) + 5 operator questions (fan-density
+object; skew trade-live vs kurt static; which w the Trade Formula moves in a profile family;
+no-hidden-live-state axiom; open-options reprice-vs-keep — still pending from BRAINSTORM_2026-06-10).
+NO derivations, NO Aristotle submits, NO framework/table build — operator go-ahead PENDING. Queue
+unchanged. Truth-up status: DONE (broken claims struck below; not re-asserted).
+
+---
 
 ### GUDERMANNIAN BRIDGE — 2026-06-10 (operator entries 8–9; notes-only; skeptic-gated)
 Note: `notes/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
@@ -56,7 +74,9 @@ DIFFERENT SLOTS (score vs weight/invariant) — broken bridge stays broken, NO i
 **SOLVENCY (#13, explicit):** m=2 X-depth at β=1: 0.0845→0.5630 over δ=0.08→3 (6.7×; reproduces
 skeptic); β=0 reproduces REPARAM 0.034→0.220. B1 re-prices at any shipped setting; extrinsic,
 NOT closed. #8 strike-reg + #9 funding dispositioned: no change proposed; survival on a built
-δ≠0.08 engine = open engine checks (dir_gate/seam/G4 re-reference owed). Full 15-item table in note.
+δ≠0.08 engine = open engine checks (dir_gate/seam/G4 re-reference owed). Full 16-item table in note
+(manager corrigendum 2026-06-11 per skeptic FLAG-OMISSION: "15-item" was the third recurrence of
+the item-16 count dropping; the inventory and the note's table are 16 rows).
 
 ---
 

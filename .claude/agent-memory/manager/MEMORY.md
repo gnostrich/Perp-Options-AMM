@@ -1,7 +1,44 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-10 (branch claude/ecstatic-planck-ridcyr → PR #22 squash-merged to main
-`9c633445`; governance config-only). This is the project's state-of-the-whole; git history is the
-mechanical audit trail._
+_Last updated: 2026-06-11 (branch claude/focused-carson-15117f, LIVE session). This is the
+project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★★ ACTIVE 2026-06-11 — CURVE-AGNOSTIC FRAMEWORK BRAINSTORM (pre-go-ahead; operator in the room)
+- **Transcript:** `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` (3 entries
+  so far, all verbatim, committed in-turn). Engine untouched (HEAD v26c 6cc73563); non-engine branch.
+- **Entry 1 (the spec):** curve-warp AMM; control skew+kurtosis of the LIQUIDITY DISTRIBUTION
+  FUNCTION on the 90°→180° hyperbolic-polar fan (= research-lead's Gudermannian object), mode=spot;
+  ideal: (x,y,w) determine skew, ONE static vol-set kurtosis knob; scaffolding stays, curve is the
+  open slot. Work scoped (NOT started — go-ahead pending): (A) airtight curve-agnostic framework
+  (info-geom/PH lift of the single-μ core), (B) tabular curve comparison propagating all 16
+  inventory components.
+- **Entry 2:** open options DO re-price — "extrinsic values change because the 'secondary market'
+  has repriced" (answers skeptic's standing BRAINSTORM_2026-06-10 question; appended verbatim
+  there). My labelled read relayed in-chat (intrinsic terms fixed, extrinsic floats on live curve).
+- **Entry 3 (answers my 3 propagation consequences):** (1) exercise on the live warped curve = YES;
+  (2) **funding = geometric comparison across curves: anchor curve UNSKEWED, pool curve may be
+  skewed, BOTH same kurtosis** (curve-agnostic generalization of the w=½ anchor — resolves "what
+  replaces w=½ per curve" and the "anchor when w is a field" worry); (3) pool-depth impact =
+  design choice, "not impacted" currently easier; "unified the two ⇒ baked into per-strike-ray
+  pricing alreay i thinl" (my reading = v26c uniform strike registration; AMBIGUITY flagged to
+  operator, confirm owed).
+- **research-lead pass 1 RETURNED** (relayed verbatim to operator): truth-up confirmed; U1 partially
+  resolved (fan density; residual = WHICH density rides the fan — depth vs latent kernel, kurtosis
+  SIGN flips); framework skeleton = admission contracts (generator/validity/fan/wings⇒S*/Trade-
+  Formula-warp/carry-rebase/funding-anchor/registration/slippage/solvency-report); 7 candidate rows
+  (GH-fixed · B-MINIMAL · B-FULL · (W) · (W)+Trade-Formula · Balancer · tanh-score control); 5 qs.
+- **skeptic pass 1 RETURNED:** channel verified (no FLAG-PROCESS); U1 object pinned, remainder =
+  operational LDF definition + moment coordinate; table gate recorded in its MEMORY ("all 16 per
+  family + per-cell provenance"); queued audit of "pivot landed" claim. **RELAY GAP (named to
+  operator, not papered):** its run announced a relay block it never emitted — substance lives in
+  its MEMORY update; follow-up run dispatched to emit the block + verdict entry-2 (appends to
+  BRAINSTORM file itself). Its FLAG-OMISSION (research-lead MEMORY "15-item table") → FIXED by
+  manager corrigendum 2026-06-11 (in-file, attributed); awaiting skeptic stand-down.
+- **CONVERGENCE (headline for operator):** research-lead and skeptic INDEPENDENTLY landed on the
+  same top question — which density operationally IS the LDF (liquidity depth vs latent kernel;
+  sign of kurtosis flips between them; plain-Balancer depth has no mode in one reading).
+- **OWED next:** relay entry 3 verbatim to skeptic+research-lead at next dispatch; relay skeptic's
+  emitted block + entry-2 verdict to operator; operator go-ahead → dispatch framework build (A)
+  then table (B), skeptic mandatory pass on the framework note before any merge.
 
 ## ★ GOVERNANCE CHANGE (2026-06-10) — ROLE-LOCK + ANTI-IMPERSONATION (config-only, self-merged)
 Operator-directed, config-only (no engine edits; HEAD v26c `6cc73563` untouched). Three edits, two

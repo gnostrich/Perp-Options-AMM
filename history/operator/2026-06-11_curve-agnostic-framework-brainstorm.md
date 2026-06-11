@@ -11,3 +11,8 @@ _Context: session opener, addressed to research-lead and skeptic. Pre-go-ahead r
 > open options positions' extrinsic values change because the 'secondary market' has repriced. does this make sense?
 
 _Context: answers the skeptic's standing question from `notes/skeptic/BRAINSTORM_2026-06-10.md` (when a trade warps the curve, do open options re-price or keep their terms). Appended verbatim to that brainstorm file same turn; skeptic's verbatim reply owed when its in-flight pass returns._
+
+## 3
+> consequns: 1 yes; 2  funding is a geometric comparison across curves, anchor curve is unskewed pool curve can be skewed, both to have same kurtosis; 3 design choice whether pool depth is impacted or not, as of now not is easier; since we unified the two using some logic its baked into how the curve is pricing each strike ray alreay i thinl... anything else?
+
+_Context: answers the manager's three propagation consequences from the prior turn (1 = exercise settles on the live warped curve; 2 = funding's role; 3 = solvency/re-marking). Skeptic and research-lead receive this verbatim at their next dispatch (skeptic's entry-2 continuation was already in flight when this arrived)._
