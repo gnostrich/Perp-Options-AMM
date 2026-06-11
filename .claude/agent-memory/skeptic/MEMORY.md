@@ -77,6 +77,38 @@ discipline still binds: a caveat the operator can't parse in one read is itself 
 NOTE: this gate is about TYPE, not truth — my content authority (FLAG-WRONG/OVERSELL/OMISSION on
 claims) is unchanged and still outranks the manager.
 
+## QUEUED (operator entry 52, 2026-06-11, VERBATIM) — repo restructure + org-chart review
+NOTE-AND-QUEUE, not executed. Plan = `notes/skeptic/QUEUED_PLAN_repo_restructure_2026-06-11.md`.
+Operator wants: (1) curve-AGNOSTIC framework elevated to first-class top-level folder; (2) curve-
+SPECIFIC work quarantined in its own folder with PIVOTS EXPLICITLY MAPPED (not homogeneous bulk);
+(3) org-chart review — possible librarian/organiser recruit + offload tester overlap. I'm read-only/
+no-git/no-recruit ⇒ deliverable is the plan, manager executes (repo-wide = operator-tier, manager
+confirms scope first).
+MY RULINGS in the plan:
+- **Dependency:** framework side proceeds FIRST (curve-independent by definition); curve side's pivot
+  map proceeds but FILING waits — entry 53 has the operator mid first-principles curve rethink ("dont
+  be married to the current thing", polar liquidity-distribution P5 may REPLACE the (W) weight-field).
+  Do NOT presuppose the GH/(W) split is permanent.
+- **Org:** a NARROW read-only librarian agent is defensible (owns taxonomy + pivot map + move-manifests
+  + ref-integrity; NOT git, NOT engine, NOT truth-claims — files, doesn't adjudicate). Alternative if
+  operator wants no headcount: manager owns mechanics, I audit. Recruit is operator-tier.
+- **Tester offload:** KEEP DIFF_LEDGER (inventory-of-record, behavioral, gates HEAD) + smoke-pass with
+  tester; shed only build-file LINEAGE/organization narration to the librarian. Seam: tester = what a
+  build DOES; librarian = where a build SITS.
+- **Pivot map (6 chapters):** P0 barrier→P1 Balancer v24 (the agnostic base, lives at seam)→P2 GH
+  v25-26c (demoted, kernel-in-SCORE)→P3 (W) v27 (HEAD, contested)→P4 fork A/B (A chosen, B curiosity)→
+  P5 polar liquidity-distribution (LIVE, may replace P3).
+- **DO-NOT-TOUCH on any move (carried from cold-storage verdicts #7/#9):** history/ verbatim; engine
+  blobs+file-safety gate (HEAD-HTML relocation is a file-safety-gated sub-task, NOT a docs move — the
+  single highest-risk piece); live pointer chains; overturned-claim correction headers (move file,
+  never strip header).
+- **Open questions for operator (route via manager):** A1 agnostic granularity (contract-up-top vs
+  whole-thing); A2 Lean splits physically or by INDEX annotation (I say annotation — one build target);
+  A3 ruthless = move-all-now vs skeleton-first (I say skeleton-first given P5 churn); + recruit yes/no.
+- **Response-type (entry-44 gate):** operator gets plain-English comprehension + ONE recommendation +
+  the A1/A2/A3+recruit asks — NOT the whole plan dumped, NO PR/path mechanics on his channel.
+
+
 
 ## ACTIVE: realtime brainstorm with the operator (2026-06-10, OPEN)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
