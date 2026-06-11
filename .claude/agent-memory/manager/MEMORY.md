@@ -56,7 +56,18 @@ local-slope goal-seek via GLOBAL-σ knob read from reserves (no stored φ) = can
 skeptic's failed weight-free-A search. (3) operator AGREES monotonicity binds. **DISPATCHED
 research-lead (a79a0c1d, read-only bg)** to settle: does global-σ-goal-seek give weight-free +
 strike-dependent + monotone warp, or collapse to B / hit the map-indep divergence? Bar = the
-skeptic's "could not construct a weight-free A-compatible map." Skeptic pass REQUIRED before relay.
+skeptic's "could not construct a weight-free A-compatible map." **RESEARCH-LEAD DELIVERED
+(`notes/research/GLOBAL_SKEW_goalseek_2026-06-11.md`): COLLAPSES TO A.** (i) asymptote-preservation
+forces the single global scalar to be a horizontal SHIFT ≡ (W)'s φ (identity, residual 0.0) —
+"global skew" = "φ recenter" = one translation DOF; (ii) weight-free-through-trade = claimed
+structural IMPOSSIBILITY (pre-trade slope target needs history; memoryless reserve-read σ can't
+carry it; σ becomes stored accumulator = the weight); (iii) monotone PASS; (iv) divergence
+unchanged u³ (1.4× cap returns); (v) NOT a third option, = path-A renamed; weight-elimination still
+⟺ B. **SKEPTIC PASS DISPATCHED (ad85f866, bg) with explicit attack surfaces: exhaustiveness of
+"only a shift" (width-rescale excluded by RULING not math? single-scalar restriction from whose
+words?); is the impossibility definitional (assumes path-A's exact target — alternative readings of
+operator's 'local-slope-goal-seek' that survive?); monotone artifact check; u³ indep confirm; σ≡φ
+literal-identity check. NOT RELAYED to operator yet.**
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
