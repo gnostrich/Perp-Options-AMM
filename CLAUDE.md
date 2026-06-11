@@ -265,7 +265,7 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   skeptic-verified the unique conservation-consistent trade; premise faithful to paper+v24, #14) +
   wing-range guard; γ>1 via w_±>½ clamp; Reading-A settlement (S*=K·γ_loc/(γ_loc+1), exact by
   construction); on (W) **price==slope** (the e^(−ghMu) gotcha is GH-only). Gate =
-  `engine/verify/wcurve_selfcheck.js` (21 PASS [HARD], wired as run_all's (W) branch). Known-OPEN:
+  `engine/verify/wcurve_selfcheck.js` (22 PASS [HARD] — incl. WARP (g) anchoring/#16-gap gate added 2026-06-11, wired as run_all's (W) branch). Known-OPEN:
   warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; warp is elbow-local (verified —
   cannot match v24's global magnitude with frozen wings); anchor-overlay viz, lp-y-delta hardcode,
   default LIQ-PRICE readout. **Prior HEAD demoted to `temporal_mvp_v26c.html`** (`6cc73563…`,

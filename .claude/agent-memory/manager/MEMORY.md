@@ -8,7 +8,7 @@ elbow-at-carry; lp-y-delta dynamic; LIQ-PRICE sane; τ slider→stepper] → DIS
 1060→1064, md5 canonical — run_all blob check now LINE-AGNOSTIC]). **OPERATOR-PLAYABLE: tester-
 confirmed ×2** (load at $80k → curve renders → τ arrows click-step 0.05 + canvas redraws → trades
 execute w/ live readouts → over-size gets honest frozen-wing banner; 0 console errors). Gates green
-both branches (v27 selfcheck 21/21 [HARD]; demoted v26c GH suite via explicit path). **OPEN (honest):**
+both branches (v27 selfcheck 22/22 [HARD] — +WARP (g) #16-anchoring gate 2026-06-11; demoted v26c GH suite via explicit path). **OPEN (honest):**
 warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; anchor-overlay viz (optional —
 makes the elbow-local warp legible); y0=303,448-vs-800,000 default delta = the one entry-29 item
 LEFT FOR OPERATOR RULING (equilibrium-at-load chosen, γ>1 makes v24's exact y impossible);
@@ -66,6 +66,20 @@ portable v26c desirables = `engine/builds/NOTES_v24_to_v26c_desirables.md` (note
   commute + φ-anchor/funding. **This IS the spec for the trade-point fix on v27.** GATES before any BUILD:
   full skeptic vet of this generalisation + the confinement lemma; operator authorization (trade-point
   anchoring = operator-tier §7). Relayed to operator as the theory answer (manager-verified headline).
+- **★ STOCK-TAKE + VERIFICATION-LAYER HARDENING (operator entry 35, on skeptic foundation pass
+  `VERDICT_FOUNDATION_PASS_2026-06-11`).** Skeptic filter+VET: generalisation/fix-spec = **PASS**; gate
+  blind-spot diagnosed (all WARP gates + #14 checked WHAT is conserved, never WHERE/strike the swap is
+  anchored). **DONE this pass (all non-build; HEAD html UNTOUCHED 1eebfcd6):** (1) roadmap
+  `notes/STOCKTAKE_2026-06-11_warp_fidelity_roadmap.md`; (2) **`wcurve_selfcheck.js` hardened → 22 PASS:**
+  WARP (d)/(f) re-scoped honestly (transformation-only / LOCAL-spot — not anchoring/global), **(g) ADDED**
+  = anchoring/strike-dep documenting gate (prints `[KNOWN GAP #16] live=SPOT strike-INDEPENDENT`,
+  non-silent, flips to HARD assert post-fix); manager-run 22/22, run_all green; (3) unify:
+  `feature_inventory.md` #16 amended (transformation-YES / anchoring-OPEN), warp-amm cluster folded into
+  `formal/INDEX.md` (retrieval, NOT trusted-from-prover yet), 21→22 gate-count refs bumped. **CLASS RULE
+  (standing):** a gate/verdict feeding only local reserve state (not the strike/registration coord) is
+  "transformation-only," NEVER "faithful." **HELD for operator:** the trade-point-anchoring FIX (engine
+  change, operator-tier §7) — build on a SIDE build, no HEAD promote while operator plays; awaiting
+  build-now vs hold. research-lead MEMORY κ:=δ recheck = tracked.
 **`engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `b245bfda6a493af0a7017309f1acd3f3` is the
 canonical HEAD** (operator: "commit this version to head because theres nothing useful since v24" —
 an explicit operator ruling that OVERRODE the tester's visual-layer blocker; recorded honestly in
@@ -73,7 +87,7 @@ BUILD_LINEAGE + ledger). v27 = (W) kurtosis curve off the **v24 Balancer base** 
 weight field, static τ knob (elbow rounds / wings frozen), **strong-form φ trades-warp**
 (conservation-unique, skeptic #14 premise-faithful), wing-range guard, γ>1 clamp, Reading-A
 settlement, price==slope (e^(−ghMu) gotcha GH-only). **Gate re-pinned (manager-run, both green):**
-`run_all.sh` default → v27 with a build-type branch — (W) builds → `wcurve_selfcheck.js` 21 PASS
+`run_all.sh` default → v27 with a build-type branch — (W) builds → `wcurve_selfcheck.js` 22 PASS
 [HARD, exit-1-on-fail]; GH builds (explicit path, e.g. demoted `temporal_mvp_v26c.html` `6cc73563`)
 → full GH suite (still green). Blobs canonical/unchanged across v24→v27. CLAUDE.md §4 (curve
 REOPENED note) + §8 + BUILD_LINEAGE + INTEGRITY updated. **GH line v25→v26c retained intact**

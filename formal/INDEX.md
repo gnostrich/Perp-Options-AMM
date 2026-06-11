@@ -71,6 +71,19 @@ place, annotate (do NOT move)**.
 All rows: provenance = **trusted-from-prover** (manager-audited; see `MANAGER_VERIFICATION.md`
 and the per-run audits in `evidence/manager_audit_*.md` + in-commit audit notes).
 
+## ⟢ EXTERNAL / RETRIEVED — the warp-amm Aristotle cluster (added 2026-06-11, entry 33)
+The **continuous trade-point warp** derivation lives in an Aristotle project cluster that PREDATES this
+index and was never folded in: **`warp-amm` / `warp-amm-handoff`** — task IDs `d20dda3a` (base),
+`7f933065` + `4e92e3cb` (Model-C twins); Lean `RequestProject/Warp.lean`; formalizes `warp-amm.tex`.
+Content: the warp is **trade-point-anchored** (tangent at the trade point `(x_B,y_B)`, NOT spot/45°/
+reserves), with closed forms `mode_shift_closed_call=(1/w₀)·log(y_s/y_B)` and rapidity slope integrals
+`2σ·sinhΔξ` / `2σ²(coshΔξ−1)`; token-clean, standard axioms. **It is the scalar-Balancer backing for the
+v27 trade-point-anchoring fix; the (W)-kurtosis generalisation (`dφ/dy=(β/y²)/w′(u)`) is its field lift.**
+⚠ **PROVENANCE = retrieval/read only this pass — NOT re-verified by us, so NOT trusted-from-prover yet.**
+It is in rapidity/mode-shift coordinates, not the paper-draft's exact `β/y²` cash-leg form (that integral
+is elementary; the paper L288 continuous closed-form remains a placeholder). To upgrade: a manager
+artifact audit (token-scan + axioms + diff) like any fold. See `notes/research/WARP_continuous_aristotle_query_2026-06-10.md`.
+
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.
   NOT needed for any structural claim (prob-measure, finite-MGF, monotonicity, frontier shape all

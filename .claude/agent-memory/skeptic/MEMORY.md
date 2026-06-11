@@ -578,3 +578,49 @@ inventory, operator answered — remaining live tail = every curve note must dis
   reconciliation subtlety; full continuous integral is separate/bigger. Anchoring = OPERATOR-TIER.
 - **#14 AMENDED BY ME:** findings stand in scope; "premise faithful/#16 met" framing too broad — it never
   checked swap anchoring or continuity. (Self-instance of blind-spot pattern #4.)
+
+17. **2026-06-11 — FOUNDATION pass (verdict #17, operator entry 35 verbatim)** →
+   `notes/skeptic/VERDICT_FOUNDATION_PASS_2026-06-11.md`. Three-in-one: (A) filter current-truth ledger,
+   (B) VET the (W)-generalisation + trade-point fix spec, (C) diagnose the verification-layer blind spot.
+   **(A) LEDGER:** STANDING = (W)=HEAD (1eebfcd6), strong-form transformation faithful (#12/#14), price==slope,
+   warp-amm Aristotle cluster exists+trade-point-anchored (NOT re-stamped trusted-from-prover), settlement
+   Reading-A locked, THE warp-fidelity gap REAL+LIVE (engine warps at SPOT, re-confirmed bit-level). OPEN =
+   {fix unbuilt (operator-tier anchoring), (α,β)-flow lemma uncertified [needs-Aristotle], warp∘rebase commute,
+   φ-anchor/funding, full continuous integral L288}. **UNIFY items (the "keep math unified" ask):** (1)
+   feature_inventory #16 needs a line "v27 implements warp TRANSFORMATION but at SPOT, anchoring OPEN" — my #14
+   amendment not yet in the inventory; (2) WARP_v24_vs_v27_compare headline stays FLAG-WRONG'd (#13, headed);
+   (3) warp-amm cluster NOT in formal/INDEX.md; (4) research-lead MEMORY may still carry dead κ:=δ claims —
+   re-check; (5) wcurve_selfcheck is stale re current truth (=the (C) deliverable).
+   **(B) VET = PASS.** Re-derived ALL load-bearing claims independently (`/tmp/sk_genB.py`): headline law
+   dφ/dy=du′/dy−(1/w′)·(β/y²) reproduced |diff| 1.24e-10 (note's 1.2e-10 byte-match); dz/dw*=1/w′(u) identity
+   2.6e-9; decomposition +0.124020/−0.131423/−0.007403 exact; Balancer τ→∞⇒w′→0; all 4 contracts re-derived
+   hold. The engine's tradeUpdate L1726-1741 IS the note's §1.2 map byte-for-byte ⇒ the law is the exact
+   differential of the engine's own discrete step ⇒ fix = anchor SAME formula at arbitrageToOracle(state,θ).
+   **(α,β)-flow-confinement lemma = GENUINELY the lone uncertified piece** (path-indep numeric 0.0, NOT Lean;
+   certifies one-global-φ regardless of anchor). 1 labeling caution (non-blocking): the 1.2e-10 is "law ==
+   d(engine step)", not external physics validation — physics rides on the paper premise (#16, confirmed) +
+   contracts (re-derived); tags honest, no overclaim. Convergence-alarm LOW.
+   **(C) BLIND-SPOT DIAGNOSIS:** (i) missing gate = STRIKE-DEPENDENT ANCHORING: same cash leg at different θ
+   must warp DIFFERENTLY (current spot-engine gives bit-identical φ′ → would FAIL; interim honest form = a
+   NEGATIVE gate recording "WARP currently strike-INDEPENDENT, KNOWN GAP #16" so it's not silent). (ii) CLASS:
+   gates check WHAT IS CONSERVED / WELL-FORMED, never WHERE/HOW anchored in the strike continuum — ALL wcurve
+   WARP gates (a)-(f) feed only local reserve state, never the strike; they'd pass identically at spot OR
+   trade-point. Sharpest form of blind-spot pattern #4 (true label, wrong/narrower object). Structural test
+   for the class: "does the gate FEED IN the strike/registration coord, or only local reserve state?" (iii)
+   LOAD-BEARING: (1)price==slope, (3a-c)wing/elbow, (5)seam, WARP(a)(b)(c)conservation+hyperbola+field-consist,
+   (e)wing-cap. FALSE CONFIDENCE: WARP(d) "not a dot sliding" (proves φ MOVED, says nothing re anchor/amount —
+   the gate that fed my #14 over-reach) + (f) path-indep MIS-USED as "globally well-defined" (only spot-single-
+   trade; global = the uncertified (α,β) lemma). Pattern: gate NAME claims faithfulness while BODY checks local
+   invariance only — rename/re-scope (d)/(f), add (g). Verbatim channel HELD (entries 33/34/35 vs history/
+   operator/). No FLAG (PASS); the diagnosis names MY OWN #14 as the class instance (self-adversarial).
+
+## Claims mine-to-defend (verdict #17 — foundation pass)
+- The (W) headline law dφ/dy=du′/dy−(1/w′(u))·(β/y²) and dz/dw*=1/w′(u) are CORRECT (reproduced 1.24e-10 /
+  2.6e-9); τ enters ONLY through w′(u) (static-knob honored); Balancer τ→∞ reduction holds. (`/tmp/sk_genB.py`)
+- The engine's discrete tradeUpdate Step1-4 == the note's §1.2 map byte-for-byte ⇒ the continuous law is the
+  exact differential of the engine's OWN step; the fix is anchoring (arbitrageToOracle(state,θ)), not new math.
+- The (α,β)-flow-confinement lemma is the LONE uncertified load-bearing piece (numeric 0.0, not Lean); it
+  certifies one-global-φ regardless of anchor — the certificate the anchoring fix needs.
+- The verification blind-spot CLASS = "verifies the operation, never its anchor/strike-dependence"; the
+  structural test = does the gate feed in the strike coord. WARP(d)/(f) gave false confidence (name claims
+  faithfulness, body checks local invariance); the (g) strike-anchoring gate is the class fix.

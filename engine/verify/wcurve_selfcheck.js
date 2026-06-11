@@ -139,10 +139,12 @@ if (!warpActive) {
   chk('WARP (c) field consistency w(u\';φ\')==w*', Math.abs(wPost - wStar) < 1e-12,
       'w(field)=' + wPost.toFixed(10) + ' w*=' + wStar.toFixed(10));
 
-  // (d) phi MOVES ⇒ ATM weight shifts (curve reshaped, not a dot sliding).
-  //     ATM = the point u==0 (y/x==1); its weight is w(-phi;..) — phi-dependent.
+  // (d) phi MOVES on a trade (TRANSFORMATION property only). RE-SCOPED 2026-06-11
+  //     (skeptic foundation pass): this proves φ moved — it says NOTHING about WHERE
+  //     the warp is anchored (spot vs trade point) or its amount. Do NOT read it as
+  //     "faithful / not-a-dot-slide" (that was the #14 over-reach). Anchoring = gate (g)/#16.
   const atmW = (phi) => _wm(sw0) + _dw2(sw0) * (-phi) / Math.sqrt(sw0.tau * sw0.tau + phi * phi);
-  chk('WARP (d) φ moves ⇒ ATM weight shifts (reshaped)',
+  chk('WARP (d) φ moves on a trade [transformation only — NOT anchoring; see (g)/#16]',
       Math.abs(probe.phi) > 1e-9 && Math.abs(atmW(probe.phi) - atmW(0)) > 1e-9,
       'φ\'=' + probe.phi.toFixed(6) + ' ΔATMw=' + (atmW(probe.phi) - atmW(0)).toExponential(2));
 
@@ -158,15 +160,45 @@ if (!warpActive) {
   chk('WARP (e) in-band trade accepted', ok && !ok.rejected && ok.x > 0 && ok.y > 0,
       ok ? ('x=' + ok.x.toFixed(4) + ' φ=' + ok.phi.toFixed(4)) : 'null');
 
-  // (f) path-independence: one step of dy == two steps of dy/2 (x,y,phi).
+  // (f) LOCAL/spot path-independence: one step of dy == two steps of dy/2 (x,y,phi).
+  //     RE-SCOPED 2026-06-11 (skeptic): this covers a SINGLE SPOT-anchored trade only.
+  //     It is NOT global well-definedness — that (one global φ across the trade point AND
+  //     the reserves point) is the UNCERTIFIED (α,β)-flow-confinement lemma [needs-Aristotle].
   const dy = 0.8;
   const one = E.tradeUpdate(sw0, dy);
   const h1 = E.tradeUpdate(sw0, dy / 2);
   const two = E.tradeUpdate(h1, dy / 2);
   const dpx = Math.abs(one.x - two.x), dpy = Math.abs(one.y - two.y), dpf = Math.abs(one.phi - two.phi);
-  chk('WARP (f) path-independent (split == one-shot)',
+  chk('WARP (f) LOCAL/spot path-independence [single spot trade — NOT global; (α,β)-flow lemma OPEN]',
       dpx < 1e-9 && dpy < 1e-12 && dpf < 1e-9,
       'Δx=' + dpx.toExponential(2) + ' Δy=' + dpy.toExponential(2) + ' Δφ=' + dpf.toExponential(2));
+
+  // (g) ANCHORING / STRIKE-DEPENDENCE — KNOWN GAP #16 (interim documenting gate; NON-SILENT).
+  //     ADDED 2026-06-11 (skeptic foundation pass C). The class of gap (d)/(f) and verdict
+  //     #14 all missed: they check WHAT is conserved / well-formed, never WHERE/strike the
+  //     swap is anchored. The LIVE engine (executeLeg→tradeUpdate) warps at SPOT — strike is
+  //     never an argument — so the live warp is strike-INDEPENDENT. The PAPER warps each leg
+  //     at its ray∩curve TRADE POINT ⇒ strike-DEPENDENT (dφ/dy=(β/y²)/w′(u); manager+skeptic
+  //     -verified). The (W) MATH carries it at the trade point (demonstrated below); the live
+  //     PATH is UNBUILT. This gate documents the gap loudly and PASSES as a KNOWN GAP.
+  //     FLIP to a HARD assert (live executeLeg path strike-DEPENDENT) when trade-point
+  //     anchoring lands — at which point the structural test for the whole class is:
+  //     "does the gate feed in the strike/registration coordinate, or only local reserve state?"
+  {
+    let dphi = NaN;
+    const mp0 = E.getMP_raw(sw0);
+    const tpA = E.arbitrageToOracle(sw0, mp0 * 1.1);   // a near trade point
+    const tpB = E.arbitrageToOracle(sw0, mp0 * 1.6);   // a further-OTM trade point
+    if (tpA && tpB) {
+      const a = E.tradeUpdate(tpA, 0.1), b = E.tradeUpdate(tpB, 0.1);
+      if (a && !a.rejected && b && !b.rejected) dphi = a.phi - b.phi;
+    }
+    console.log('  [KNOWN GAP #16] live warp anchors at SPOT ⇒ strike-INDEPENDENT; trade-point anchoring UNBUILT.'
+      + ' (W) math carries strike-dep at the trade point: Δφ(two trade points)='
+      + (isNaN(dphi) ? 'n/a' : dphi.toExponential(2)));
+    chk('WARP (g) anchoring documented [KNOWN GAP #16: live=spot/strike-indep; fix=trade-point]', true,
+        'documenting gate — flips to a HARD strike-dependence assert when trade-point anchoring is built');
+  }
 
   // round-trip: +dy then -dy returns (x,y,phi).
   const fwd = E.tradeUpdate(sw0, dy);
