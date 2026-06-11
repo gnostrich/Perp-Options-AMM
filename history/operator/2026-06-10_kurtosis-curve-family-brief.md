@@ -582,3 +582,10 @@ _Context: operator doesn't understand "the lock"; orders the skeptic's wipe plan
 _Context: operator probes whether the manager is conflating the pool curve (first graph) with the derived option-price curves (second graph)._
 
 > now are you conflating the pool curve for the curves we see in the second graph that derive option prices from the pool? :)
+
+---
+
+## Entry 80 — 2026-06-11
+_Context: operator states the design principle — put/call asymmetry is imposed naturally by the second-graph pricing logic even with zero skew; the pool needs exactly ONE flatness/steepness knob._
+
+> the put call asymmetry is naturally imposed by the second graph pricing logic even in the absence of any skew … you dont fucking get that i just need one flatness / steepness knon
