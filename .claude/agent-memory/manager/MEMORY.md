@@ -86,6 +86,13 @@ qualitative acceptance bar = (1) knob → VISIBLE flatten/steepen on canvas, (2)
 curve bend. Inventory all steepness handles (w±, Δw, w_mid, τ×Δw) + warp visibility map
 (one-sided vs bands vs projected path-A) + verdict: existing machinery w/ right settings, or
 something else needs building. Skeptic pass expected before relay.**
+**ENTRY 61 BUILD AUTHORIZATION: "just build the next version to head we'll keep iterating
+there."** Scope = whatever the entry-59 run prescribes for the 2 visible bars: likely (a)
+defaults/settings for visible flatten/steepen, (b) one-sided trade path + path-A trade-point
+anchoring W/ the (g.4) ~1.4× strike cap (operator "not opposed per se" entry 41; FLAG the cap
+plainly at hand-back), (c) FINDING-R fix (post-rebase Spot KPI) opportunistically. PIPELINE:
+entry-59 run lands → skeptic pass on it (build-basis now, mandatory) → intern build v28 →
+gates + standing UI smoke-pass → promote HEAD → hand back. Asymptotes PRESERVED (entry 60).
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):

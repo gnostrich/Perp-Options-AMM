@@ -442,3 +442,10 @@ _Context: operator sets GH aside, points at the existing strike-varying-w work, 
 _Context: clarifier on entry 59 — the asymptotes (frozen power-law wings) are NOT abandoned; entry 57 was exploratory only. The run stays within the asymptote-preserving frame._
 
 > and havent totally ditched asymptote yet
+
+---
+
+## Entry 61 — 2026-06-11
+_Context: build authorization — next version goes to HEAD and iteration continues there. Manager reads this as: build what the entry-59 run prescribes to meet the two visible bars (incl. the A anchoring with its strike cap if that's what warp-visibility needs), gates + smoke-pass, promote._
+
+> so just build the next version to head we'll keep iterating there
