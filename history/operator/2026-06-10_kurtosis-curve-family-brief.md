@@ -633,3 +633,10 @@ _Context: operator confirms the intended shape — lens implements upon v24, sur
 _Context: comprehension request — explain warp anchoring._
 
 > explain warp anchong
+
+---
+
+## Entry 87 — 2026-06-11
+_Context: vocabulary collision — in project usage "anchor curve" = the static w=½ reference; the manager used "anchoring" for the warp goal-seek point. Operator objects._
+
+> what the fuck are you saying. anchor curve never skews; pool curve skews. what the fuck are you anchoring?
