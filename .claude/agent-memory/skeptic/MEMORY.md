@@ -1,5 +1,5 @@
 # MEMORY — skeptic
-_Updated 2026-06-11 (run-6: entry 8 restructure+org directive QUEUED verbatim + audit gate below; comprehension reply emitted ≤170w). Prior: run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3 entries 3-4; run-2; 2026-06-10 charter runs._
+_Updated 2026-06-11 (run-7: restructure slice 1 AUDITED — verdict #6, 2 narrow flags standing; LDF run-4 flags stood down on verified §8 corrigenda). Prior: run-6 entry-8 directive queued + gate; run-5 entry 7 canonical warp pin; run-4 LDF verdict #5; run-3 entries 3-4; run-2; 2026-06-10 charter runs._
 
 ## ⭐ THE PRIZE (your lens — operator's words, 2026-06-10, transcript entry 10, VERBATIM —
 ## the sharpest formulation of the motive; supersedes every secondhand version)
@@ -116,7 +116,6 @@ height-choice-dependent. My table gate (posted, hold them to it): all 16 per fam
 boundedness row, #4 carry derived per family, β-slice labels, #9 anchor re-posed, #8
 registration, re-pricing assumption explicit. Standing narrow FLAG-OMISSION: research-lead
 MEMORY line 59 "Full 15-item table" — note has 16 rows; 3rd recurrence of pattern 6.
-Unaudited claim on file: "pivot landed" — audit its gates when the framework note arrives.
 **Run-3 (2026-06-11, entries 3-4) state:** channel verified. Reply appended to BRAINSTORM file.
 - #8 live-curve exercise: SETTLED by operator "1 yes" (warp can cross S* with oracle still = product).
 - #9 funding: anchor RULED = unskewed curve at SAME kurtosis as pool ⇒ my no-arb check is now
@@ -127,8 +126,10 @@ Unaudited claim on file: "pivot landed" — audit its gates when the framework n
   = curve value, sum ≤ reserves at every reachable w) or run reachable-set check. If any note
   carries it as settled ⇒ FLAG-OVERSELL.
 - Manipulation/cost-to-warp: untouched by entries 3-4, hotter now; column mandatory.
-**Run-4 (2026-06-11, LDF note audit) — VERDICT #5 issued on notes/LDF_DEFINITION_CHECK_2026-06-11.md
-(commit 9e64152): PASS overall (best-labelled artifact yet), 2 narrow demands, pre-flag STOOD DOWN.**
+**Run-4 (2026-06-11, LDF note audit) — VERDICT #5 issued on
+`framework/LDF_DEFINITION_CHECK_2026-06-11.md` (at audit time `notes/LDF_DEFINITION_CHECK…`;
+moved by restructure slice 1; commit 9e64152): PASS overall (best-labelled artifact yet), 2
+narrow demands — corrigenda §8 VERIFIED ON FILE run-7, both STOOD DOWN.**
 - Note adjudicates the w≠½ tension head-on (constant-weight skew = FALSE in every gauge,
   elasticity ≡ −w/(1−w), no tangent-∥-ray point; my ln((1−w)/w) derivation confirmed).
   Height-not-density resolves my 90/180 Jacobian worry (argmax reparam-invariant).
@@ -136,14 +137,15 @@ Unaudited claim on file: "pivot landed" — audit its gates when the framework n
   44.522315, spurious root 0.613509, w'(0)=−1.875, H2-mode w=0.4 → 0.81649658. ALL match.
 - CAUGHT (narrow): note's "1/748.66" digit slip (true 748.62; note and engine AGREE). Manager's
   "pool-constants/rounding" explanation = invented attribution (pattern 7, again).
-- Narrow OVERSELL: summary item 2 omitted the AMM-validity qualifier. Both fixed by corrigenda §8.
+- Narrow OVERSELL: summary item 2 omitted the AMM-validity qualifier. Both fixed by corrigenda §8
+  (§8 also records my carry-forward tension + the entry-5 answer; attribution-invention owned).
 - Entry-5 ruling (verified verbatim): γ computed, never set; four-number budget x,y,w+τ.
 - Settled by run-4 (don't re-attack): (W) anchored-warp mode=unit-slope=diagonal at valid
   settings; Lemma A (min-mode at diagonal for ANY decreasing curve); validity gate == uniqueness
   gate; elasticity-at-mark = e^(−ghMu) identity on live GH.
 
-## QUEUED STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11, entry 8,
-## VERBATIM below — execution = manager; comprehension + audit = me; channel verified vs transcript)
+## STANDING DIRECTIVE: repo restructure + org review (operator 2026-06-11, entry 8, VERBATIM
+## below — execution = manager; comprehension + audit = me; channel verified vs transcript)
 > "I also separately want the project ruthlessly restructured so curve specific work lands in a
 > separate folder, and curve agnostic framework remains a first class citizen in its own folder.
 > do you comprehend this? and in the curve specific thing you'd very speifically map the various
@@ -151,37 +153,33 @@ Unaudited claim on file: "pivot landed" — audit its gates when the framework n
 > if you need, as an organiser or whatever, and maybe offload overlapping responsibilities from
 > the tester -- just do an org chart review and do the needful to make sure the charter is
 > achieved by the team"
-**Comprehension (confirmed to operator, run-6):** (1) curve-SPECIFIC work (GH engine builds, GH
-math, GH-pinned Lean/notes) in its own folder; (2) curve-AGNOSTIC framework first-class in its
-own top-level folder; (3) inside curve-specific an explicit PIVOT MAP — every artifact keyed to
-its era/decision (barrier → GH pivot → ITM v26b → strike-registration v26c → faithfulness pivot
-→ future trade-bends-curve), not homogeneous bulk. Plus org-chart review: organiser agent
-optional, tester offload candidate. I am read-only — manager executes, I audit each step.
-**MY AUDIT GATE for execution (hold every restructure PR to ALL of these):**
-1. No curve-agnostic artifact left buried under curve-specific paths; CONVERSE TOO — no GH-pinned
-   material smuggled into the framework folder (framework claims silently pinned to GH = the same
-   homogenization, reversed).
-2. Pivot map COMPLETE: every curve-specific artifact era-keyed, no orphans; keys consistent with
-   BUILD_LINEAGE.md + DIFF_LEDGER.md; eras = actual decision points, not folder cosmetics.
-3. Provenance/links intact post-move: formal/INDEX.md targets, CLAUDE.md §8 repo map,
-   engine/recipe+splice paths, notes cross-refs. Any broken pointer = FLAG-OMISSION.
-4. `history/` APPEND-ONLY and UNMOVED — transcription-policy citations key on those exact paths.
-5. **File-safety-gate survival (verified run-6 by reading the hook):** hook fires ONLY on
-   `*/engine/*.html` or `temporal_mvp*.html` basenames and calls `$PROJ/engine/verify/run_all.sh`;
-   run_all.sh defaults to `builds/HEAD_temporal_mvp_v26c.html` from `engine/` root. Moving or
-   renaming `engine/` WITHOUT lockstep hook+harness updates SILENTLY DISABLES the guardrail (no
-   red — just no gate). Demand post-move proof the hook still FIRES (deliberate no-op engine edit
-   → PASS line) before any merge that moves engine paths.
-6. Engine single-writer (§6.2 changed-paths test): any slice moving files under `engine/` IS the
-   engine-touching branch — must serialize; never parallel with other engine work.
-7. Tester offload + organiser charter BOTH cross my desk BEFORE adoption. Tester check:
-   DIFF_LEDGER stays (a) operator's inventory of record, (b) OPERATOR-VOICE layer, (c)
-   HEAD-promotion gate — none diluted in handoff. Organiser check: charter in plain English, no
-   coined vocabulary, no claim-authority creep (org mechanics ≠ truth rank §2.1).
-8. Engine-file moves are `git mv` only (content byte-identical), blob md5s unchanged, run_all.sh
-   green at the NEW path.
-**Sequencing (flagged to operator run-6):** parallel-safe ONLY while engine/ paths stay put; the
-engine-path slice serializes behind the warp thread. Warp thread stays primary.
+**Comprehension (confirmed to operator, run-6):** (1) curve-SPECIFIC work in its own folder;
+(2) curve-AGNOSTIC framework first-class in its own top-level folder; (3) inside curve-specific
+an explicit PIVOT MAP — every artifact era-keyed, not homogeneous bulk. Plus org-chart review:
+organiser agent optional, tester offload candidate. I am read-only — manager executes, I audit.
+**MY AUDIT GATE (8 points — full text in run-6 history; applied verdict #6):**
+1 framework purity both directions · 2 pivot map complete/era-keyed/consistent with
+BUILD_LINEAGE+DIFF_LEDGER · 3 links/provenance intact (formal/INDEX, CLAUDE.md §8, recipes,
+cross-refs) · 4 history/ unmoved+append-only · 5 file-safety hook still FIRES (path-keyed —
+silent-disable risk; engine-moving slices owe a deliberate no-op fire-proof) · 6 engine
+single-writer · 7 tester-offload/organiser charters cross my desk BEFORE adoption · 8 git-mv
+only, blob md5s, run_all green.
+**Run-7 state — SLICE 1 (commit dc254ad) AUDITED, verdict #6:** gates 2/4/5/6/7/8 PASS (all
+re-derived myself: 9/9 build md5s exact, 9+ quotes character-exact vs transcripts, renamed-file
+diffs = pure path fixes, harness re-run green end-to-end, history/ untouched, no organiser/tester
+change). **2 NARROW FLAGS STANDING:** (i) FLAG-OVERSELL — framework/README scope sentence
+("holds ONLY … ANY admissible curve") vs day-one contents: port_hamiltonian_consistency.md ("GH
+branch", "instantiate each PH ingredient on the GH curve") + PH_RECAP ("v26c HEAD") self-declare
+GH-instance layers; README §3 line for port_hamiltonian carries no mixture warning. Placement
+steelman HOLDS (operator entry 1 names the PH thread AS the framework); the purity SENTENCE is
+the overclaim. (ii) FLAG-OMISSION — CLAUDE.md §8 repo map silent on framework/+curves/ (shared
+truth doesn't know the first-class folder exists; pattern-6 risk; no queued-fix recorded).
+**Slice 2 owes:** the two flag fixes; rebasing_logic_note.md classification tag (only untagged
+left-behind; carries item-16 reference content §4/§8); DIFF_LEDGER stale refs are ×4 (74/78/81/
+83) not ×1. **My files ruling (run-7):** verdict/stocktake stale paths stay VERBATIM (historical
+records; PIVOT_MAP cross-links them at unmoved notes/skeptic/); MEMORY pointers fixed (this file).
+**Sequencing (flagged run-6, unchanged):** engine-path slices serialize behind the warp thread;
+slice 1 touched no engine paths (verified).
 
 ## PRIOR: realtime brainstorm with the operator (2026-06-10, superseded by the above session)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
@@ -229,9 +227,22 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
    Lean proved the spec's math; the spec↔engine link was deferred/unbuilt and every testing-time
    burn lived in that gap; headlines carried assurance the fine print disclaimed.
 5. **2026-06-11 — LDF note (verdict #5)** → `notes/skeptic/VERDICT_LDF_NOTE_2026-06-11.md`:
-   PASS + 2 narrow demands (748.62 digit slip; validity qualifier) — both fixed by corrigenda §8.
+   PASS + 2 narrow demands (748.62 digit slip; validity qualifier) — corrigenda §8 verified
+   run-7, STOOD DOWN.
+6. **2026-06-11 — restructure slice 1 (verdict #6)** →
+   `notes/skeptic/VERDICT_RESTRUCTURE_SLICE1_2026-06-11.md` (commit dc254ad): 6/8 gates PASS
+   (everything re-derived: md5s ×9, quotes ×9+ script-compared, rename diffs, harness green,
+   history/ intact); 2 NARROW flags standing — framework/README purity sentence OVERSELL;
+   CLAUDE.md §8 repo-map OMISSION (silent on framework//curves/). Most verifiable artifact the
+   team has shipped; manager owned its own 2 spot-check invocation errors in the commit message.
 
 ## Claims that survived attack (settled — don't re-attack without new evidence)
+- **Restructure slice 1 mechanical layer (run-7, MINE):** all 9 BUILD_LINEAGE md5s reproduce on
+  disk; 8 renames R098–R100 with every changed line a path fix (GUDERMANNIAN +
+  port_hamiltonian byte-identical R100); 9+ transcript quotes in framework/README + PIVOT_MAP
+  character-exact (script-compared, unwrap-normalized); run_all.sh green end-to-end from
+  engine/ cwd incl. FAITH 1–5; run_all's `temporal_mvp_v26b_itm.html` args = scratch-staged
+  HEAD copies, not a missing file.
 - **Paper Trade Formula = the integral of its own infinitesimal rule on Balancer (run-5, MINE):**
   α,β invariants ⇒ path-independent; one-shot == 10k micro-steps; slope-transport exact at first
   order (both 1+2dy/y); finite one-shot ≠ read-once would-be slope (1.2000 vs 1.2100 at 10% depth)
@@ -253,6 +264,8 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
   flagged the two claims that broke; every claim with attached digits reproduced. (3 data points.)
 2. **Manager verifies the cheapest load-bearing item, narrates the rest** — narrated claims reach
   shared truth within a day. Always ask "which SPECIFIC number did the manager recompute?"
+  _Run-7 counter-datum (first): slice-1 commit message disclosed the manager's own 2 spot-check
+  invocation errors unprompted — keep watching, but credit it._
 3. **Symmetric-slice numerics sold at the asymmetric engine pin (β=1).** ALWAYS re-check any
   "= engine" label at β=1.
 4. **Construction-slot conflation:** kernel-in-SCORE vs kernel-in-WEIGHT — same formula ≠ same
@@ -261,12 +274,17 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
 5. **Impossibility claims argued from one failed candidate.** Steelman by constructing before
   accepting any "no X exists." (Counter-case: Gudermannian d-law failure survived.)
 6. **Checklist staleness at the verification step:** newest inventory item falls out of frame
-  fastest (item 16, 3 recurrences). Re-count the inventory at gate time.
+  fastest (item 16, 3 recurrences). Re-count the inventory at gate time. Run-7 instance class:
+  new top-level dirs absent from CLAUDE.md §8 map (flagged); untagged leftover note.
 7. **Verification digits with no reproducible map = narration with digits.** Demand map+script.
-  (2nd instance: manager's invented "rounding" attribution for the 748.66 slip.)
+  (2nd instance: manager's invented "rounding" attribution for the 748.66 slip — owned in LDF §8.)
 8. **Infra keyed on literal paths fails SILENT, not red (run-6):** file-safety hook pattern-matches
   `*/engine/*.html` + calls `engine/verify/run_all.sh` — a folder rename disables it with no
   failure signal. At any restructure, demand positive proof gates still FIRE, not just "no red."
+9. **Line-number citations into MUTABLE files rot silently (run-7):** DIFF_LEDGER cites
+  "MEMORY.md:510-511" for the collar parking; manager MEMORY now carries it near :675. The cite
+  was true at writing; the target moved. Prefer quote+anchor over bare line numbers when judging
+  provenance; a rotted line-cite is decay, not fabrication — check the QUOTE before flagging.
 
 ## Method notes (env)
 - mpmath IS importable as of 2026-06-11 (run-4 dps=30). Fallback: float64 + dense Simpson.
@@ -274,6 +292,9 @@ buries the answer. Verbatim duty unchanged for TRANSCRIPTS of the operator's own
 - Trade-mechanic test rig (run-5, reusable): paper law step(x,y,w,dy) = {y'=y+dy;
   Δx=−αβdy/((y−β)(y'−β)); w'=α/x'}; micro-step loop checks path-independence; compare
   w'/(1−w') at trade ray vs read-once destination slope for integral-vs-one-shot.
+- Quote-audit rig (run-7, reusable): unwrap = strip `(^|\n)>?\s*` → single-space collapse; then
+  exact-equal or exact-substring vs transcript entry body. Watch own bug: first line of a
+  blockquote keeps its `> ` unless the regex anchors `^`.
 - Frontier-from-kernel recipe: X(u)=upper tail of f_β, elbow = max|d² log X/du²| by FD.
 - **Verbatim channel auditable:** `history/operator/<date>_<slug>.md` (live from 2026-06-10).
   Pre-policy GH-era (06-08/09) rulings = manager-paraphrase provenance, label when cited.

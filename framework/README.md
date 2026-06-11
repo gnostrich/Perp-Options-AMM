@@ -5,11 +5,16 @@ _Created 2026-06-11 (restructure slice 1). Operator directive (verbatim, transcr
 want the project ruthlessly restructured so curve specific work lands in a separate folder, and
 curve agnostic framework remains a first class citizen in its own folder."_
 
-**Scope rule:** this folder holds ONLY material that makes sense for ANY admissible curve — the
-warp principle, the admission contracts, the information-geometry / port-Hamiltonian scaffold,
-and cross-curve checks. Curve-SPECIFIC work lives in `curves/gh/` (the live engine's family,
-with the pivot decision map) and `curves/balancer_w/` (the (W)/weight-profile family).
-Cross-links to curve-specific files are allowed here; curve-specific *content* is not.
+**Scope rule:** this folder is the home of the curve-AGNOSTIC layer — the warp principle, the
+admission contracts, the information-geometry / port-Hamiltonian scaffold, and cross-curve
+checks. Two resident notes also carry a GH-INSTANTIATED layer alongside their agnostic content
+(`port_hamiltonian_consistency.md` instantiates PH-1…PH-7 on the GH curve; `PH_RECAP_2026-06-08.md`
+is pinned to the v26c HEAD): the contracts/scaffold are the framework content; those GH layers are
+the historical instance the contracts were first proven against, kept with their contracts rather
+than split. NEW GH-specific work goes to `curves/gh/`, not here. Cross-links to curve-specific
+files are allowed here; new curve-specific *content* is not. _(Scope sentence restated 2026-06-11
+per skeptic FLAG-OVERSELL, `notes/skeptic/VERDICT_RESTRUCTURE_SLICE1_2026-06-11.md` gate 1 — the
+old "holds ONLY material that makes sense for ANY admissible curve" overclaimed.)_
 
 ---
 

@@ -51,8 +51,9 @@ records-curation half of the tester's job to it. Nobody's authority over truth c
 - skeptic's audit interfaces unchanged (it still audits ledger vs verbatim transcripts).
 
 **C. Standing organiser queue (first tasks once adopted):**
-1. DIFF_LEDGER: fix line-74 stale path; row #12 "HELD pivot" staleness — **with tester
-   sign-off** (transition: ledger facts stay tester-verified).
+1. DIFF_LEDGER: fix stale paths (lines 74/78/81/83 — skeptic count, slice-1 audit); row #12
+   "HELD pivot" staleness — **with tester sign-off** (transition: ledger facts stay
+   tester-verified).
 2. `docs/routines/aristotle_ph_loop.md:44` stale path; list of agent-MEMORY stale paths
    (owners self-fix on next pass; organiser only lists).
 3. Restructure **slice 2** (engine/ paths) — support only, under single-writer, serialized,

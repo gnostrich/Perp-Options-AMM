@@ -263,6 +263,13 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
   tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
+- **`framework/`** — the curve-AGNOSTIC framework, first-class (operator-directed restructure
+  2026-06-11): README = warp principle (verbatim) + admission contracts; LDF check note; PH
+  recap + PH consistency spec (these two carry a marked GH-instantiated layer). **`curves/`** —
+  curve-SPECIFIC work by family: `curves/gh/` (live engine's family; **`PIVOT_MAP.md`** = the
+  decision map barrier→v25→v26a→v26b→v26c→faith-gates→queued w-warp, artifacts keyed per pivot)
+  + `curves/balancer_w/` ((W)/weight-profile family). Engine paths NOT moved (slice 2, queued,
+  engine-touching + serialized).
 - `specs/` formal spec + ITM spec (`SPEC_itm_exercise_smoothpaste_NEXT.md`). `formal/` Lean project +
   `prompts/` + `MANAGER_VERIFICATION.md` + **`INDEX.md`** (canonical provenance map over all Aristotle
   results — start there) + `README.md` (layout). `paper/` draft + docx. `notes/`, `history/`
