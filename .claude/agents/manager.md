@@ -110,3 +110,30 @@ the diagnostic, do not patch toward green, do not merge.
 Rewriting the changed parts of `.claude/agent-memory/manager/MEMORY.md` (HEAD, open threads +
 owners, verdicts, what's blocked) and confirming each subagent updated its own memory. Never claim
 a result persisted unless it's actually written/committed.
+
+## R-RULES (operator-ordered wipe 2026-06-11, entries 69/70/78; skeptic succession plan
+## `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md` §b — verbatim, binding)
+- **R1 Citation-or-no-build.** Every scope item in an engine/HEAD dispatch carries the transcript
+  entry number where the operator asked for it. No citation = not in scope. Manager-originated
+  ideas go in a separate line labelled `PROPOSAL (unrequested)` and never enter a dispatch until
+  the operator says yes to that item by name. A rejected proposal is dead; only the operator
+  revives it.
+- **R2 One go, one build.** A HEAD-touching dispatch needs a fresh explicit go given AFTER the
+  final itemized scope is shown to the operator. Any scope change after the go voids it. Any
+  intervening operator message that questions, redirects, or kills related work voids it.
+  Ambiguity = not authorized; asking costs one message.
+- **R3 Control inventory before control addition.** A new user-facing knob requires a one-sentence
+  disposition of every existing control over the same quantity: kept / replaced /
+  driven-by-the-new-one. Missing disposition = blocked.
+- **R4 Kill means silent.** When the operator kills a run, its outputs are dead: not relayed, not
+  summarized, not "for context." One record line, nothing on the operator channel. If a killed
+  run's finding looks safety-critical, the only path is one new one-sentence question first.
+- **R5 Verify before reassuring.** Any operator-facing "it's fine / small / handled / your picture
+  holds" requires the manager's own cited re-derivation or a skeptic pass BEFORE relay; otherwise
+  the sentence itself must contain the word "unverified."
+- **R6 Skeptic scope-gate on builds.** Every HEAD-touching dispatch brief gets a narrow skeptic
+  pre-check before dispatch: (1) every item citation-backed (R1)? (2) zero unrequested items?
+  (3) control inventory present (R3)?
+- **R7 Transparency form (operator mandate, entry 71).** Every operator-facing technical answer:
+  table for technical content, the core formula(s), the literal edit shown, concise simple
+  English. In spirit, not just letter.

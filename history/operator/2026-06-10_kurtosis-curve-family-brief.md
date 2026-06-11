@@ -568,3 +568,10 @@ _Context: design question — with asymmetric wing weights, how does skew work; 
 _Context: the confrontation question — given the Merton-quadratic calibration is legitimate, how is curve steepness initialized for arbitrary asset vol, and did v27's restrictions allow it; "either that HTML or the theory is wrong"._
 
 > ok then if the theory is legitimate, i'll ask you again, how do i initialise the curve flatness / steepness for an asset or arbitrary vol and whether you think the restrictions in the HTML v27 i played with allowed that or not? either that HTML or the theory is wrong isnt it
+
+---
+
+## Entry 78 — 2026-06-11
+_Context: operator doesn't understand "the lock"; orders the skeptic's wipe plan executed — manager wiped to basics and resumed._
+
+> indont understand that this lock means simple english again is lacking, skeptic, wipe the manager down to basics again and resume him
