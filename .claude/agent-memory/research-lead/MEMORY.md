@@ -1,7 +1,50 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, V24+POLAR-LENS architecture derivation (entry 89; READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, V24+POLAR-LENS CORRECTED RE-RUN (entries 88/91/93; READ-ONLY; notes-only; no submit/edit/git/build)._
 
-### V24 + POLAR-LENS ARCHITECTURE — 6-item derivation (operator entries 80–88; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit) — 2026-06-11
+### V24 + POLAR-LENS — CORRECTED RE-RUN (prior pass was a GROSS TRUNCATION, operator entry 91) — 2026-06-11 (entries 88/91/93 verbatim; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
+CORRECTION section appended to `notes/research/V24_LENS_derivation_2026-06-11.md` (after the prior body).
+Scripts `/tmp/lensX_{setup,1_goalseek,1b_feedback,2_strikedep,3_cap,4_wellposed,5_settle,6_onetx}.js`
+(node float64; v24 tradeUpdate + lens primitives transcribed). Base = `temporal_mvp_v24_rebase_fixed_2.html`.
+**WHAT THE PRIOR PASS GOT WRONG:** it called the architecture STRIKE-BLIND (warp strike-invariant per
+unit cash) and treated the lens as a divorced pricing overlay. Operator (91 verbatim): "the same curve
+warp goal seek works but as seen through the lens... you'd goal seek as per what you'd see there... gross
+truncation." The object SEEN/goal-sought is the LENSED curve-2; a trade reshapes it STRIKE-DEPENDENTLY.
+**CORRECTED VERDICTS (all 7 items work / works-with-bound):**
+- (1) Pool update = plain v24, LENS-FREE (reads only dy; τ-independent, byte-identical for τ∈{.05,.3,1,5}).
+  w=α/x MOVES on trade (entry 16 faithful). Goal-seek = "mode tracks marginal; lensed slope G(u)=γ·h′(|u−u_mode|)
+  re-reads at u_post=u_pre−d, d=ln(mp′/mp)." Lens touches pool ONLY via fixed-notional dy=N·m_lens(K)·mp0.
+- (2) **STRIKE-DEPENDENT (observable) — the corrected headline.** Same cash ⇒ one mode shift d (blind
+  input), but lensed reshape dG(K)=γ[h′(|u_pre−d|)−h′(|u_pre|)] varies strongly: +1.72 at ATM → −0.029 at
+  4× for +10% trade. LARGEST near mode, decays into wings (OPPOSITE of (W) which grew+diverged in wings).
+- (3) **CAP-FREE = operator RIGHT, verified incl. through the lensed goal-seek.** Hard bound |dG|≤γ
+  (h′∈[0,1]). NO w(u)⇒NO 1/w′ channel (the old ~1.4× (W) cap driver is gone). Lens 1/h″ DOES blow up in
+  wings (3.6e6@u=8) BUT only matters for an INVERSE-lens solve, which the architecture does NOT do (reads
+  slope forward, sizes trade by cash dy). SMALLEST COUNTEREXAMPLE flagged: a naive build that inverts the
+  lens to hit a target wing-slope WOULD re-introduce a blow-up+cap — build must avoid.
+- (4) WELL-POSED: round-trip 0.0, path-indep 0.0, single-valued (α/β flow invariants + deterministic
+  readout). CAVEAT: observable lensed-slope-vs-dy is NON-MONOTONE (1 fold at mode-crossing) — read FORWARD
+  only, never invert (= the C.3 hazard + put/call side-of-mode).
+- (5) SETTLEMENT works-with-bound: closed-form S*=K·g_loc/(g_loc+1) per strike; v26b smooth-paste ports
+  EXACTLY (value+slope to machine zero) even g_loc<1; flat-top band |lnK|<τ/√(γ²−1)=±13.1%@τ=.3 American-
+  reading degenerates (operator-tier, ACCEPTED entry 93 #5).
+- (6) ONE-TX EXECUTION survives (same-wing spread = one net plain-v24 tx, path-indep 0.0); closed-form
+  PRICING shortcut DROPPED (entry 93 #4 "one tx execution is all"); premium leg-by-leg through lens.
+- (7) BOTH v24 gaps resolved: (i) ATM-jump → v26b smooth-paste with g_loc; (ii) local-warp/anchoring →
+  lens makes observable warp APPEAR + STRIKE-DEPENDENT (no w(u) field, no cap).
+**OPERATOR RELAXATIONS (entry 93) VERIFIED:** #2 no cap HOLDS; #3 w>½ clamp GONE (just x/y/w move); #4
+closed-form spread pricing dropped; #5 funding→0 ATM + flat-top semantics accepted.
+**BUILD SCOPE delivered (C.9, ready for operator GO entry 93 #6):** Pool unchanged v24 (drop w-clamp);
+Lens query-layer only [L1 side-of-mode |·| branch MANDATORY; L2 static τ no-arb-unbounded; L3 draw curve-2
+through lens; L4 forward-read only never invert]; Pricing/funding/settlement lensed reads [P1 leg-by-leg
+no composite; P2 funding γ→g_loc; P3 v26b smooth-paste g_loc]; gap-fixes G-i (P3) + G-ii (L3).
+**OPERATOR-TIER FLAGS (via manager):** flat-top g_loc<1 American reading; ATM funding→0 behavioural change;
+τ calibration (flat-top width). **NO Lean obligation ready** (lens=static readout; 1/4/6 inherit v24 α/β
+path-indep; candidates g_loc(|u|)+g_loc′>0 + smooth-paste continuity pin only post-build-freeze). Nothing
+submitted/built/edited/git. Manager re-derives + SKEPTIC before operator GO.
+
+---
+
+### V24 + POLAR-LENS ARCHITECTURE — 6-item derivation (operator entries 80–88; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit) — 2026-06-11 [SUPERSEDED by the CORRECTED RE-RUN above — this prior pass mislabelled the observable as strike-blind]
 Note: `notes/research/V24_LENS_derivation_2026-06-11.md`. Scripts `/tmp/lens_{a,a2,a3,b,b2,c,c2,c3,def,e2}.js`
 (node float64; v24 tradeUpdate + v26b smooth-paste mark transcribed). Spec derived-WITHIN (not redesigned):
 `specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md`. OBJECT: plain Balancer pool (scalar w, γ=w/(1−w),

@@ -17,3 +17,22 @@ Hit session limit; 0 usable output, NO note written, tree clean. The six derivat
 spec `specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md` is pushed and stands on its own
 (architecture + manager-verified numbers + the open questions HONESTLY marked unverified); it did
 NOT claim the derivation was done, so it is safe for the other session as-is.
+
+## ⚑ STANDING AUTONOMOUS BUILD GO (operator entry 95, 2026-06-11 — operator asleep)
+Operator: "i'm going to bed, giving go ahead to build a version once you're satisfied without
+asking me anything. skeptic, you have the mandate, have the needful done." => Build the v24+lens
+version AUTONOMOUSLY once manager-satisfied + skeptic-cleared; NO operator confirmation. Skeptic
+holds the oversight mandate (relay its clause VERBATIM at the audit/scope-gate dispatch).
+PIPELINE (do not skip a step):
+1. Re-run (research-lead af3a7eab, in flight) lands → manager VERIFIES independently (R5).
+2. If the re-run shows the architecture is sound (cap-free OR cap acceptable per entry-93 #2,
+   well-posed, settlement+ATM-jump fix derived): proceed. If NOT satisfied / blocker found:
+   DO NOT BUILD — halt, record, report at operator wake (operator said build "once you're
+   satisfied" — not-satisfied = no build; STOP-ON-RED).
+3. Skeptic audit of the re-run + R6 scope-gate on the itemized build brief (verbatim mandate).
+4. Intern build on the v24 base + lens (read+write through lens) + the 2 v24 gap fixes
+   (ATM-jump settlement, local-warp). FILE-SAFETY GATE every edit. R3 control inventory in scope.
+5. run_all + wcurve/relevant gates + standing UI smoke-pass (tester).
+6. Promote to HEAD; update LINEAGE/INTEGRITY/CLAUDE.md §8; commit; (PR autonomous if needed).
+7. Report a concise build summary at operator wake — tables + simple English (R7).
+Guardrails intact: skeptic FLAG halts; file-safety halts; not-satisfied halts. HEAD now 928cde1c.

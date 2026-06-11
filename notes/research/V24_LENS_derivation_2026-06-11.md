@@ -362,3 +362,243 @@ closed-form pricing no.
 _All numbers float64-checked; scripts `/tmp/lens_{a,a2,a3,b,b2,c,c2,c3,def,e2}.js`. Self-adversarial:
 the (e) breakage and the (a) sign-flip / side-of-mode requirement were actively hunted, not glossed.
 Skeptic re-derives before this reaches the operator as settled._
+
+---
+---
+
+# CORRECTION — re-run after operator rejected the prior pass as a GROSS TRUNCATION (2026-06-11)
+
+_Author: research-lead. READ-ONLY: no engine edit, no git, no Aristotle. HEAD untouched `928cde1c`.
+Base build = `engine/builds/temporal_mvp_v24_rebase_fixed_2.html`. Source of the correction:
+operator transcript entries **88, 91, 93** (verbatim) in
+`history/operator/2026-06-10_kurtosis-curve-family-brief.md`. Scripts re-transcribed below; new files
+`/tmp/lensX_{setup,1_goalseek,1b_feedback,2_strikedep,3_cap,4_wellposed,5_settle,6_onetx}.js`
+(node float64). Tags [analytic]/[numeric]._
+
+## C.0 What the prior pass got wrong, in one paragraph
+
+The prior pass (the body above) reduced the warp to "plain un-lensed v24 `tradeUpdate`, strike-blind at
+the pool, lens only a divorced pricing overlay" and then reported the architecture as **strike-blind**
+in observable terms (see prior (a)/(f): "warp strike-invariant per unit cash"). The operator
+(**entry 91, verbatim**): _"I said that the same curve warp goal seek works but as seen through the lens,
+meaning that the curve looks warped as per the lens, so you'd goal seek as per what you'd see there …
+thats a gross truncation."_ The correction: the object the operator and the trader **see and goal-seek
+against is the LENSED curve-2**, and a trade reshapes that lensed view **differently at different
+strikes** even though the pool input is one cash number. The pool update being strike-blind is true and
+unchanged; calling the **observable** strike-blind was the truncation. Below is the corrected derivation.
+
+The operator's own relaxations confirmed against the math (entry 93): **#2 no cap** (verified — holds,
+hard bound `|dG|≤γ`), **#4 one-tx execution only, closed-form spread pricing dropped** (honoured),
+**#5 funding→0 at ATM accepted** (kept). The w>½ clamp is **gone** (entry 93 #3: "now theres just x y w
+that move").
+
+## C.1 (item 1) Trade-update + lensed goal-seek, explicitly
+
+**The pool update is plain v24, lens-free; the goal-seek is a statement about the LENSED VIEW you read
+it in. [analytic + numeric]**
+
+Plain weighted Balancer `x^w·y^(1−w)=k`. Engine `tradeUpdate` (v24 L1617) conserves `α=x·w`,
+`β=y·(1−w)`; a cash leg `dy` gives, **exactly**:
+
+```
+y' = y + dy
+x' = x − α·β·dy / [ (y−β)·(y'−β) ]
+w' = α / x'                          (w MOVES on the trade — entry 16 faithful)
+mp' = w'·y' / ((1−w')·x')            (new marginal = new mode of curve-2)
+```
+
+This update **reads only `dy`** — it cannot depend on τ or the lens. Verified: the post-trade `(x,y,w)`
+is byte-identical for τ ∈ {0.05, 0.3, 1, 5} (`/tmp/lensX_1_goalseek.js`):
+```
++10% cash, any tau:  x=9.66666667  y=333793.1034  w=0.75000000  mp=103590.96
+```
+
+**What "goal-seek as seen through the lens" (entry 88/91) means precisely.** The mode of curve-2 is the
+live marginal `mp`. A query strike `K` sits at signed log-moneyness `u = ln(K/mp)` **from the mode**. The
+**lensed local exponent** (the slope of the option-price graph as drawn through the polar lens) is
+`G(u) = γ·h′_τ(|u|)`, `h′_τ(u)=u/√(τ²+u²)` (0 at the mode → γ in the wings). A trade shifts the mode by
+`d = ln(mp'/mp)`; a **fixed** strike `K` is re-read at `u_post = u_pre − d`. So the slope **you see** at
+the trade point moves `G(u_pre) → G(u_post)` — and **that** is what you goal-seek against. There is **no
+free warp parameter to root-find** (plain Balancer fixes the trade by `dy`); the goal-seek is the
+deterministic statement "the mode tracks the marginal and the lensed slope at every strike re-reads at
+the shifted moneyness."
+
+**The ONLY channel by which the lens touches the pool is the cash leg sizing** for a fixed NOTIONAL:
+`dy = N·m_lens(K)·mp0`, where the lensed premium `m_lens` is strike-dependent. The pool update of that
+`dy` is still byte-identical Balancer. The lens never re-sizes a given `dy`
+(`/tmp/lensX_1b_feedback.js`). This matches entry 93 #4 ("one tx execution is all") and entry 93 #3/16
+("just x y w that move", "same as balancer literally").
+
+## C.2 (item 2) Strike-dependent or strike-blind — IN OBSERVABLE TERMS
+
+**Observable = STRIKE-DEPENDENT. The pool input is strike-blind; the lensed curve-2 reshape is not.
+[numeric] — this is the exact point the prior run inverted.**
+
+Same cash `dy` ⇒ one mode shift `d` (strike-blind input). But the lensed curve-2 warp at strike `K`,
+`dG(K) = γ·[h′(|u_pre−d|) − h′(|u_pre|)]`, varies strongly by strike (`/tmp/lensX_2_strikedep.js`):
+
+```
++10% cash, mode shift d=0.258423 (one number, strike-blind input)
+K(xmode)  u_pre    u_post   G_pre   G_post   dG        dLnPrem
+1.00      0.0000  -0.2584  0.0000  1.7206   +1.7206   -0.4447
+1.05      0.0488  -0.2096  0.4232  1.5101   +1.0869   -0.2959
+1.10      0.0953  -0.1631  0.7983  1.2593   +0.4611   -0.1293
+1.40      0.3365   0.0780  1.9678  0.6638   -1.3040   +0.6103
+2.00      0.6931   0.4347  2.4195  2.1698   -0.2496   +0.7338
+4.00      1.3863   1.1279  2.5767  2.5478   -0.0289   +0.6985
+```
+
+A trade at/near the money reshapes the lensed curve-2 **strongly** (|dG| up to ~1.7 near the mode);
+far OTM the same cash reshapes it **negligibly** (|dG|≈0.03 at 4×). So **an OTM-strike view and an
+ATM-strike view of the same trade are reshaped differently** — the warp the operator sees is
+genuinely strike-dependent. (Prior run's "strike-invariant per unit cash" described only the pool input,
+not the observable, and mislabelled the architecture as blind.) The strike-dependence is **largest near
+the mode and decays into the wings** — the opposite profile to the old (W) curve, where it grew toward
+the wings and diverged.
+
+## C.3 (item 3) Cap-free? — operator believes YES; VERIFIED YES, even under the lensed goal-seek
+
+**No cap. Hard bound `|dG| ≤ γ` because `h′∈[0,1]`. The lens curvature does NOT re-introduce a blow-up,
+because the architecture READS the lensed slope, it does not INVERT the lens to size the trade.
+[analytic + numeric]**
+
+- **Pool side** (`/tmp/lensX_3_cap.js`): mode shift `d(dy)` is finite and smooth for all finite `dy`;
+  `d` grows like `ln` of the reserve ratio. The only boundary is ordinary Balancer reserve exhaustion
+  (`x→α⁺` as you buy out X) — **not** a frozen-wing cap. There is **no `w(u)` field**, hence **no
+  `1/w′(u)→∞` channel** that produced the old ~1.4× (W) cap.
+- **Lens side — the honest hazard, and why it does not bite.** The lens slope `dG/du = γ·h″_τ(u)`,
+  `h″=τ²/(τ²+u²)^{3/2}`, **→ 0 in the wings**. So its **inverse** `1/(dG/du)` DOES blow up far out
+  (3.6e6 at u=8). **If** the architecture solved an *inverse-lens goal-seek* — "find the trade that makes
+  the VIEWED slope at a wing strike hit a target" — it would divide by that vanishing slope and a cap
+  would return. **It does not:** the trade is sized by cash `dy` (plain v24), and the lensed slope is a
+  **readout**, never a solve. So `1/h″` never enters sizing. (Smallest counterexample, flagged: a naive
+  build that re-sizes the trade to hit a target lensed wing-slope WOULD re-introduce a blow-up and a cap
+  — see C.4.)
+- **Observable warp magnitude** at K=1.1/1.4/2/4/8/20/100× for fixed cash is bounded everywhere by
+  `|dG| ≤ γ` (since `h′∈[0,1]`); numerically `max|dG| = 1.304` at K=1.4× for the +10% trade. **No
+  divergence, no cap forced.**
+
+This **confirms the operator's "no cap" belief** and, importantly, confirms it survives the lensed
+goal-seek (the explicit thing the brief asked to re-verify).
+
+## C.4 (item 4) Well-posed — single-valued, round-trip exact, path-independent
+
+**All three hold to float64; one honest caveat about the OBSERVABLE.** (`/tmp/lensX_4_wellposed.js`)
+- round-trip (+dy then −dy): x/y/w error **0.0** (exact).
+- path-independence (one big trade vs two halves): x/y error **0.0** (α,β are genuine flow invariants).
+- single-valued: `G(u)=γ·h′(|u|)` is a pure function; the mode `=getMP(s)` is a deterministic function
+  of state ⇒ the lensed view is single-valued.
+- **CAVEAT (flag, not a defect):** the *observable* "lensed slope at a fixed strike" is single-valued as
+  a function of `dy` but **NON-MONOTONE** (1 fold) — as the trade pushes the mode across the strike, the
+  side-of-mode `|u|` branch turns the slope around. The state map `dy↦state` is bijective (v24); only the
+  **readout** folds, and it folds exactly at the put/call crossing. This is the same side-of-mode
+  structure as v24's `markFrac`. It means a build must **not** invert "observed lensed slope ↦ dy"
+  (that is the multivalued, blow-up-prone inverse of C.3); it reads forward only.
+
+## C.5 (item 5) Settlement through the lens with the v26b ATM-jump (smooth-paste) fix ported
+
+**Closed-form S* PER STRIKE; the v26b fix ports EXACTLY (value+slope continuous to machine zero), even
+in the flat-top band. [analytic + numeric]** (`/tmp/lensX_5_settle.js`)
+
+v26b Reading-A with the strike-LOCAL exponent `g = g_loc(K) = γ·h′(|ln K|)` (constant per strike, lens
+static): free boundary `sNorm* = θ·((g+1)/g)^g`, price multiple `S* = K·g/(g+1)`, `c = 1/((g+1)·sNorm*)`.
+```
+K       g_loc    sNorm*      S*=g/(g+1)  valGap     slopeGap
+1.05    0.4232   1.670738    0.297359    1.1e-16    0.0
+1.10    0.7983   1.912284    0.443906    1.1e-16    5.6e-17
+1.40    1.9678   2.244713    0.663049    0.0        0.0
+2.00    2.4195   2.309393    0.707557    5.6e-17    0.0
+4.00    2.5767   2.327933    0.720414    5.6e-17    2.8e-17
+```
+Stays real/finite and pastes to machine zero even for `g<1` (tested g=0.4/0.7/0.99/1.0/1.5). The g<1
+flat-top band is `|ln K| < τ/√(γ²−1) = 0.123` ⇒ K ∈ 0.884..1.131 (±13.1% at τ=0.3, γ=2.636); there the
+analytic value law still evaluates but the **American early-exercise reading of S\*** degenerates — a
+**settlement-semantics call (operator-tier, entry-85 "atm jump stuff at feature level")**, accepted by
+the operator at entry 93 #5 ("idc, same geometric thing whatever it implies").
+
+## C.6 (item 6) One-tx vertical-spread EXECUTION survives (pricing shortcut not required)
+
+**Survives. [numeric]** (`/tmp/lensX_6_onetx.js`) A same-wing spread's two legs net to one cash flow;
+by path-independence (C.4) two sequential `tradeUpdate`s equal one net `tradeUpdate` (x/y error 0.0). So
+the spread executes as **ONE plain-v24 pool tx** carrying the net cash, strike-free at the pool. Per
+entry 93 #4 the closed-form `θ*=√(θ₁θ₂)`,`2sinh` **PRICING** shortcut is **dropped** (it breaks under
+per-leg lens exponents — prior (e)); the premium is priced **leg-by-leg through the lens** and summed.
+Execution yes, closed-form pricing no — and the operator no longer requires the latter.
+
+## C.7 (item 7) The two v24 known-gaps and how each is resolved in THIS architecture
+
+1. **(i) ATM-jump settlement (v24 mark is a kinked European `min(s/θ,θ/s)`, slope-discontinuous at the
+   strike).** Resolved by porting the **v26b smooth-pasting** free boundary with the strike-LOCAL
+   exponent `g_loc(K)` (C.5): continuation runs **past** the strike to `S*=K·g_loc/(g_loc+1)`, value and
+   slope continuous to machine zero — no ATM jump, per strike. Closed-form, no new params.
+2. **(ii) The local-warp / anchoring gap (entry 85 "the local warp not happening thing"; v24 trades are
+   a pure dot-slide on a FIXED pricing curve — the curve doesn't visibly reshape; v27's φ-warp was
+   elbow-local and sub-pixel).** Resolved **structurally** by the lens: the object the operator SEES is
+   the **lensed curve-2**, and per C.2 a trade reshapes it **strike-dependently** (|dG| up to ~1.7 near
+   the mode for a 10% trade) — a visible, strike-aware warp that v24 never had, **without** a `w(u)`
+   field and **without** the (W) divergence/cap. The "warp not happening" was an artifact of viewing the
+   un-lensed curve; viewing through the lens makes it appear and be strike-dependent. (The build must
+   draw curve-2 through the lens and read slopes via the side-of-mode `|u−u_mode|` branch — C.1/C.4.)
+
+## C.8 CORRECTED per-item verdict table
+
+| Item | Verdict | Correction vs prior pass / the bound |
+|---|---|---|
+| 1 trade-update + lensed goal-seek | **works** | Pool update = plain v24 (lens-free, reads only dy); goal-seek = "mode tracks marginal, lensed slope re-reads at shifted moneyness." Lens touches pool ONLY via fixed-notional dy sizing. |
+| 2 strike-dependent or blind (observable) | **STRIKE-DEPENDENT** (corrected) | Prior run said strike-blind — that was the truncation. Pool INPUT is strike-blind; the LENSED curve-2 reshape `dG(K)` is strongly strike-dependent, largest near the mode, decaying into the wings. |
+| 3 cap-free | **CAP-FREE (operator right)** | No `w(u)` ⇒ no `1/w′`; hard bound `|dG|≤γ`. Lens `1/h″` blow-up exists only for an INVERSE-lens solve, which the architecture does not do. Verified survives the lensed goal-seek. |
+| 4 well-posed | **works** | round-trip 0.0, path-indep 0.0, single-valued. Caveat: observable lensed slope vs dy is non-monotone (mode-crossing fold) — read forward only, never invert. |
+| 5 settlement + v26b ATM-jump port | **works-with-bound** | Closed-form `S*=K·g_loc/(g_loc+1)` per strike; smooth-paste to machine zero even g<1. Bound: g<1 flat-top band (±13.1%) American-exercise reading = operator-tier (accepted entry 93 #5). |
+| 6 one-tx execution | **works** | Same-wing spread = one net plain-v24 pool tx (path-indep). Closed-form pricing dropped per entry 93 #4. |
+| 7 the two v24 gaps | **both resolved** | (i) ATM-jump → v26b smooth-paste with g_loc; (ii) local-warp → lens makes the observable warp appear and be strike-dependent, no field/cap. |
+
+**Strike-dependent vs blind (observable): STRIKE-DEPENDENT.**
+**Cap needed: NO** — evidence: hard bound `|dG| ≤ γ` (h′∈[0,1]); no `1/w′` channel (no field); inverse-lens
+`1/h″` hazard avoided by construction. Smallest counterexample to "no cap": only a naive build that
+*inverts* the lens to hit a target wing-slope would re-introduce a blow-up — flagged so the build avoids it.
+
+## C.9 ITEMIZED BUILD SCOPE — v24 + polar lens (ready for operator's final GO, entry 93 #6)
+
+Build target = `engine/builds/temporal_mvp_v24_rebase_fixed_2.html`, surgical, lens added in the QUERY
+layer. (Manager/intern execute; this is scope, not authorization.)
+
+**Pool (UNCHANGED from v24 — do not touch):**
+- `tradeUpdate` plain Balancer α/β conservation; w=α/x moves on trade; reads only dy.
+- Remove the (W) w>½ clamp concept entirely — N/A here (entry 93 #3).
+
+**Lens (NEW, query layer only — never touches the pool update):**
+- L1. Static polar lens `h_τ(u)=√(τ²+u²)−τ`, `h′=u/√(τ²+u²)`; lensed local exponent
+  `G(u)=γ·h′(|u−u_mode|)`, mode `u_mode = ln(live marginal)`. **Side-of-mode `|·|` branch mandatory**
+  (matches v24 `markFrac`; without it the exponent goes negative across the mode — C.1/C.4).
+- L2. τ = single static kurtosis knob, vol-set at deploy; no τ bound from no-arb (C.2 above), only the
+  flat-top width calibration.
+- L3. Draw **curve-2 through the lens** (so the warp is visible + strike-dependent — gap-fix ii).
+- L4. **Read slopes forward only**; never invert "observed lensed slope ↦ dy" (C.4 fold + C.3 blow-up).
+
+**Pricing / funding / settlement (lensed reads):**
+- P1. Premium / mark priced **leg-by-leg through the lens** (`g_loc(K)`); no closed-form spread composite
+  (dropped, entry 93 #4).
+- P2. Funding = HEAD formula with `γ→g_loc(K)`; sign unchanged; scale→0 at ATM, →γ in wings (accepted,
+  entry 93 #5).
+- P3. **Settlement = v26b smooth-paste with the strike-local `g_loc`** — gap-fix (i): `S*=K·g_loc/(g_loc+1)`,
+  continuation past strike, value+slope continuous (C.5).
+
+**Two v24 gap-fixes (the operator's explicit build requirement, entry 93 #6):**
+- G-i. ATM-jump settlement → P3 (smooth-paste, per strike).
+- G-ii. Local-warp/anchoring → L3 (lensed curve-2 makes the trade's reshape visible + strike-dependent).
+
+**Operator-tier flags to relay (NOT decided here):**
+- Flat-top band g_loc<1 (±13.1% at τ=0.3): American-exercise reading of S* degenerates — accepted entry
+  93 #5, but flag for the record.
+- ATM funding→0 — accepted entry 93 #5, flag as an expected behavioural change vs constant-γ HEAD.
+- τ calibration (flat-top width) — vol-set, operator/calibration call.
+
+**Lean obligations:** none ready to pin. The lens is a static algebraic readout on a plain-Balancer pool;
+items 1/4/6 inherit v24's α/β path-independence (already covered). Candidate-only (pin AFTER build
+freeze): `g_loc(|u|)+g_loc′(|u|)>0` (forward-monotonicity on the correct-side branch) and smooth-paste
+value+slope continuity at S* for the local exponent. Nothing submitted/built/edited/git this run.
+
+_All numbers float64-checked; scripts `/tmp/lensX_{setup,1_goalseek,1b_feedback,2_strikedep,3_cap,4_wellposed,5_settle,6_onetx}.js`.
+Self-adversarial: the strike-dependence (item 2) and the inverse-lens cap hazard (item 3/4) were hunted,
+not glossed; the smallest counterexample to "no cap" is stated. Skeptic re-derives before this reaches
+the operator as settled._
