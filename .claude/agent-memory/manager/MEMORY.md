@@ -1,5 +1,13 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
 
+## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
+Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
+1. **PR/version mechanics are INVISIBLE.** Do PRs/branches/merges autonomously; NEVER surface them, NEVER offer a PR choice, NEVER volunteer commit hashes / md5 / branch state to the operator.
+2. **Answer the scoped question, then STOP.** Yes/no gets yes/no. No tables, no caveat piles.
+3. **Caveats — permitted FORM only:** "the most recent feature-level edit / correction, in plain English," ONE sentence. Relevance filter (skeptic): must be a feature-level change the operator would ACT ON or play with — a correctly-working internal (cwd ergonomics, a passing gate, hashes) is NOT eligible at any length. Test = feature-level AND one plain jargon-free sentence; if it fails, it does not go to him.
+Skeptic verdict (entry 44) recorded in skeptic MEMORY; it polices the TYPE after-the-fact via transcript, does NOT pre-clear replies.
+
+
 ## ⏳ LIVE THREAD — WARP TRADE-POINT FIX (path A), as of 2026-06-11 (entries 31–40)
 Operator chose **A** (trade-point anchoring, paper-faithful) for the build; **NOT YET BUILT** (HEAD
 still v27 1eebfcd6, spot-warp). Pipeline: spec → skeptic review → intern build → gates → promote.

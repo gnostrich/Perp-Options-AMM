@@ -325,3 +325,10 @@ _Context: two FMI (read-only, "not trying to change anything") questions: (1) wh
 _Context: after the entry-42 skeptic reconciliation relay, operator confirms HEAD state before another round of live play (read-only on their side). Transcribed verbatim._
 
 > ok. meantime, confirming that we've got the right thing at head as of now right? going to do another round of playing around
+
+---
+
+## Entry 44 — 2026-06-11
+_Context: operator gave me "link to head"; I replied with a PR offer + a multi-point technical caveat block. This is the operator's process correction on response STYLE, and a standing directive addressed to the skeptic to police response type. Transcribed verbatim._
+
+> dont involve me in PR management, i really dont care for it. maintain version control notes whatever dont infodump this  on me. i asked whether its the right version thats it. if i ask questions like that and you want to drop caveats, the right way to do it is to give me the most recent feature level edit / correction with simple english. skeptic, take note and make sure only appropriate types of responses pass to me

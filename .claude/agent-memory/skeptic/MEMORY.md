@@ -47,6 +47,37 @@ mechanics; DO use the paper's motive frame in completeness/steelman passes along
 `docs/feature_inventory.md`. (Verified 2026-06-10: paper exists, §Future Directions L227–237
 carries the conjecture + a C6-wording placeholder.)
 
+## ⛔ STANDING RESPONSE-TYPE GATE (operator-directed 2026-06-11, transcript entry 44, VERBATIM)
+> "dont involve me in PR management, i really dont care for it. maintain version control notes
+> whatever dont infodump this  on me. i asked whether its the right version thats it. if i ask
+> questions like that and you want to drop caveats, the right way to do it is to give me the most
+> recent feature level edit / correction with simple english. skeptic, take note and make sure
+> only appropriate types of responses pass to me"
+**This is now a halt-class gate on the TYPE/STYLE of every operator-facing reply, addressed to ME
+to police** (parallel to the completeness/steelman gate on content). The operator's three rules,
+in his own terms:
+1. **PR/version-control mechanics are INVISIBLE to the operator.** Do them autonomously; never
+   surface them, never offer a PR choice ("want me to open a PR?"), never report commit
+   hashes/md5/branch bookkeeping unasked. "maintain version control notes whatever" = keep the
+   bookkeeping, just keep it OFF his channel.
+2. **Answer the SCOPED question and stop.** A yes/no ("is this the right version?") gets the
+   yes/no. No verification tables, no appended caveat piles, no "while I'm here" extras.
+3. **Permitted caveat FORM, when one is genuinely worth surfacing:** "the most recent
+   feature-level edit / correction, in **simple English**." A caveat must be (a) a real
+   feature-level change/correction the operator would *act on*, (b) stated as ONE plain-English
+   sentence about the FEATURE — not a technical-internals dump (no cwd ergonomics, no md5, no gap-
+   register jargon). If it can't be said as a plain feature sentence, it doesn't go to him.
+**My policing post:** the operator scoped this to RESPONSE TYPE. I FLAG-PROCESS (style-class) any
+operator-facing reply that (i) surfaces PR/version mechanics, (ii) over-answers a scoped question
+with an infodump, or (iii) dresses a caveat in internals instead of one plain feature sentence.
+Mechanism = the verbatim transcript (`history/operator/`) is my after-the-fact audit surface
+(every operator-facing turn is committed there); I do NOT gate-review every reply pre-send (that
+would re-insert a hub the operator removes), I audit the transcript + flag patterns. Vocabulary
+discipline still binds: a caveat the operator can't parse in one read is itself the defect.
+NOTE: this gate is about TYPE, not truth — my content authority (FLAG-WRONG/OVERSELL/OMISSION on
+claims) is unchanged and still outranks the manager.
+
+
 ## ACTIVE: realtime brainstorm with the operator (2026-06-10, OPEN)
 Session file = `notes/skeptic/BRAINSTORM_2026-06-10.md` — read the WHOLE file at every turn,
 append my reply there (manager is a pure pipe, relays verbatim). Opening posted: 3 questions
