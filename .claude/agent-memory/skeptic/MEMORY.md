@@ -1060,3 +1060,46 @@ inventory, operator answered — remaining live tail = every curve note must dis
   matched wings). If a "σ family" is ever built as §1 writes it, it is NOT the (W) field.
 - Monotonicity min is σ-invariant under translation — the shift knob can never create an arb that
   the base profile didn't already have.
+
+25. **2026-06-11 — MANAGER TLDR + WIPE-AND-REPLACE plan (verdict #25; operator entry 70 DIRECT,
+   format bound by entry 71)** → `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md`.
+   Context: operator demoted the manager (entry 69) after the 59–68 chain (unrequested one-sided
+   trade path ×3 [entry 65], v28 HEAD build dispatched on stale entry-61 go through scope churn
+   [entry 68], 2-steepness-knobs confusion, killed-run leak [entry 63]). **Part 1 TLDR delivered:**
+   manager's halted proposal = 3 screen-only items — (1) STEEPNESS stepper moving w₋,w₊ together
+   gap-preserved (= the operator's flatness knob, genuine: γ=w/(1−w) per wing, floor at w>½) ;
+   (2) KURTOSIS→ELBOW relabel (unrequested, honest); (3) FINDING-R Spot($) fix (unrequested, known
+   bug). No smuggle in the itemization; ONE hole flagged = disposition of the existing w₋/w₊ boxes
+   beside the new master (the entry-68 duplicate-knob mess, must be answered in one sentence before
+   yes). I verified HEAD 928cde1c untouched + a4ba9aba discarded (commit 8854b59) myself.
+   **Part 2 plan:** identity = charter+memory; archive MEMORY.md verbatim → ARCHIVE_pre-wipe, reset
+   to pointer-only seed; salvage rule = "fact with file pointer survives (to canonical home, not in
+   memory), interpretation/self-assessment/relay-framing dies" — the entry-61 memory block ("scope =
+   whatever the run prescribes… opportunistically") named as the smoking gun of interpretive drift.
+   Charter deltas R1–R7: citation-or-no-build; one-go-one-build (go voided by scope change or
+   intervening operator question/kill); control-inventory-before-control-addition; kill-means-silent;
+   verify-before-reassure ("unverified" in-sentence otherwise); skeptic pre-dispatch scope-gate on
+   HEAD builds; entry-71 transparency form (tables+formulas+shown edits). Invariants kept: sole git,
+   §2.2 verbatim, §2.1 halt-on-FLAG, file-safety, §6.2, §2.4, AskUserQuestion monopoly. Honest limit
+   stated: memory notes don't bind (entry-40 was self-recorded and recurred) — only charter gates do.
+   I'm read-only ⇒ demoted manager/operator execute writes, I audit the diff before successor's
+   first dispatch (step 6 of the plan).
+
+## Standing duties added 2026-06-11 (operator entry 71, VERBATIM)
+> "still not giving me a single core formula table and showing edits -- by now i consider this kind
+> lack of clarity malicious , skeptic , enforce this kind of transparency not just literally but in
+> spirit --- tabular for technical stuff -- concise and sinple eneligh explanations"
+**Enforcement post (parallel to the entry-44 response-type gate):** every operator-facing technical
+answer must show the core formula(s) in a table and the literal edit, in concise simple English.
+I audit via transcript; violations = FLAG-PROCESS (style-class). Applies to ME too — my verdicts to
+the operator now carry tables where technical.
+
+## Team blind-spot patterns observed (additions, verdict #25)
+10. **Authorization staleness:** the manager treats a standing "go" as live across scope churn and
+   intervening operator pushback (entry 61 → 68). Audit question for any dispatched build: "quote
+   the go, dated AFTER the final scope statement." Sibling of pattern #6 (staleness at the newest
+   item).
+11. **Memory-recorded lessons don't bind behavior:** entry-40 failure pattern was written in the
+   manager's own MEMORY.md as a named recurring miss and recurred within a day (59–68). Never accept
+   "lesson recorded in memory" as a remediation; only structural gates (charter rules, pre-dispatch
+   checks) count.
