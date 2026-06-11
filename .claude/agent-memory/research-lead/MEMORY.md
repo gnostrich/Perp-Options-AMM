@@ -1,5 +1,31 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, TRADE-POINT ANCHORING RE-POSED + operator invariant (entry 37; NOTES-ONLY; no submit/edit/git/build)._
+_Last updated: 2026-06-11, CURIOSITY RUN B — warp∝notional inverse-design (entry 38; CURIOSITY/notes-only; no submit/edit/git/build)._
+
+### CURIOSITY RUN B — what invariant yields warp ∝ notional (strike-INDEPENDENT)? — 2026-06-11 (operator entry 38; CURIOSITY ONLY; nothing to do with the build; NO edit/git/build/submit)
+Note: `notes/research/CURIOSITY_B_warp_proportional_notional_2026-06-11.md`. Script `/tmp/curiosityB_explore.js`
+(node float64; engine fns mirror live HEAD v27, copied from `/tmp/repose3.js`). Pool {10,12,0.3,[0.52,0.72],0},
+mp0=2.457812. **CURIOSITY — NOT a build artifact/spec/authorization. Build stays path A (trade-point).**
+**Q:** A's warp = z0(dy)·G(K), G=1/w′(u_tp) strike channel (entry-37: same-notional warp 14000× more OTM,
+"warp∝notional FALSE"). What construction gives B = warp∝notional, strike-FREE?
+**ANSWER (working backward, kill the G channel):** anchor the warp at the **SPOT/reserves point** not the
+trade point ⇒ **G≡w′(u_spot)/w′(u_spot)=1 identically** ⇒ |Δφ|=z0(notional), strike-free `[analytic]`.
+Numeric: B byte-identical across all strikes (0.195752 everywhere) vs A spread 19.5× same band. z0 strictly
+monotone in notional, keeps wing-range guard (dy=2.5 REJECT). Cleanest size = dy:=N·oracle (drop premium/mark).
+**HEADLINE SURPRISE (flag to operator):** **B = exactly what the LIVE engine ALREADY does** — tradeUpdate(state,dy)
+warps at spot, strike never an arg (skeptic #16). B is the status-quo-ante; **A is the CHANGE the build is making.**
+**ECON:** B = impact∝size (constant-product/linear-impact AMM, moneyness-blind, "a contract is a contract");
+A = impact∝curve-location (paper σ_B, moneyness-geared, divergent at frozen wing). B reshapes by flow; A by flow×gearing.
+**SELF-CONSISTENT with (W)? YES** — B keeps α/β cons, frozen wings, static τ, γ>1, wing-guard; exactly (α,β)-consistent
+at reserves (residual 0.0). GIVES UP exactly one thing: the trade-point tangent σ_B (0.254 vs B's 1.460 @K=1.6mp0)
+⇒ B self-consistent but NOT the paper's trade mechanic.
+**FAMILY:** A↔B endpoints of **z=z0·G^λ, λ∈[0,1]** — λ = moneyness-gearing exponent (how much strike feeds impact).
+λ=1 A (spread 19.5×), λ=0 B (1×), interior = tunable blend (no distinct econ object; softens A's wing divergence).
+Same `[needs-Aristotle]`/OPEN (α,β)-flow lemma applies to both. Which mechanic = operator/curve call — but operator
+ALREADY chose A; this only maps what B means. Nothing built/submitted/edited/git. Manager re-derives.
+
+---
+
+_Earlier: 2026-06-11, TRADE-POINT ANCHORING RE-POSED + operator invariant (entry 37; NOTES-ONLY; no submit/edit/git/build)._
 
 ### TRADE-POINT ANCHORING — RE-POSED (FAITHFUL) + INVARIANT VERDICT — 2026-06-11 (operator entries 31/36/37; NOTES-ONLY; NO edit/git/build/submit)
 Spec: `notes/research/SPEC_tradepoint_anchoring_REPOSED_2026-06-11.md`. Scripts `/tmp/repose3.js`

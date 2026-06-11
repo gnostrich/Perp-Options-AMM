@@ -675,3 +675,55 @@ inventory, operator answered — remaining live tail = every curve note must dis
   |φ_far|>|φ_near| with pinned pool/dy. (Gate moot until the relocation bug is fixed.)
 - Pattern: manager re-derived the cheap consistency numbers (path-indep 0.0, spot-red 1.67e-16) and never asked
   "where does the pool sit post-trade" — pattern #2 (verify cheapest, narrate rest) + #4 (true label, wrong object).
+
+19. **2026-06-11 — RE-POSED trade-point-anchoring spec (verdict #19; operator chose path A, entry 38)** →
+   `notes/skeptic/VERDICT_tradepoint_anchoring_REPOSED_2026-06-11.md`. The corrected spec after my #18
+   FLAG-WRONG. Artifact = `notes/research/SPEC_tradepoint_anchoring_REPOSED_2026-06-11.md`. Re-derived
+   independently vs LIVE engine (1eebfcd6, confirmed) in Node vm; built `reposed(s,dy,tp)` from the spec's
+   §1 block (z=z0·G, G=w′(u_spot)/w′(u_tp)); did NOT trust spec's /tmp/repose3.js or mgr's /tmp/mgr_repose_verify.js.
+   Script `/tmp/verify_repose.js`. **(1) TELEPORT FIXED — CONFIRMED.** §1.1 table reproduced byte-for-byte
+   (x′=9.959812/y′=12.100000 IDENTICAL across all K at dy=0.1, == legacy; φ′ −0.001104/−0.054467/−0.684490/
+   −1.724384 exact). Reserves move from LIVE point on pool's own hyperbola; strike enters ONLY φ′ via G read at
+   tp. Spot-reduction byte-EXACT 0.0 (G=1 algebraic identity, not bisection). #18 bug genuinely gone. **(2)
+   FAR-STRIKE DIVERGENCE = divergence-BLOCKS-escalate-to-operator.** G=((τ²+u_tp²)/(τ²+u_spot²))^1.5 (verified
+   closed form: K=8→202.49, K=1000→7493.06), w′(u_tp)→0 as tp enters frozen wing, u_tp≈ln K ⇒ **G~(ln K)³,
+   UNBOUNDED.** |φ′| at dy=0.1: 0.68(K=1.6)/1.72(K=2)/39.4(K=8)/303(K=60)/1467(K=1000). THREE pathology facts
+   (all verified): (a) reserves wing-cap does NOT bound it — live w*=0.67465 in-band at EVERY K, tp is what's in
+   the wing; NO guard caps strike-registration distance; arbitrageToOracle gives valid in-band tp to K=1000·mp0
+   (gap_to_wPlus=9.5e-5, never reaches) ⇒ **spec's claimed "frozen-wing range cap" (L165/217-219) DOES NOT
+   EXIST**; (b) DUST dy=0.001 @K=8·mp0 → φ′=−36.8 (vs legacy spot −7e-6), ~5M× amplification = exploitable; (c)
+   φ′=−39.4 shoves ATM weight 0.62→0.7200=wPlus saturated ⇒ elbow ERASED, kurtosis-knob purpose destroyed.
+   **Continuous integral (paper L288) does NOT cure it** — re-derived: ~15× smaller constant (cont |Δφ| 0.059/
+   2.64/97.7 vs discrete 0.68/39.4/1467) but SAME (ln K)³ kernel 1/w′(u_tp) ⇒ still diverges. **Divergence
+   intrinsic to (trade-point anchoring + frozen wings), discrete-vs-continuous-independent.** Only fixes = cap
+   on |φ′|/strike-range OR different anchoring object = operator-tier. SAFE BOUNDARY (this pool, dy=0.1):
+   |φ′|≤τ(0.3) up to K≈1.35·mp0, ≤1 up to K≈1.70·mp0, wing-saturation ~8×; tightens w/ larger dy, smaller τ,
+   narrower Δw (calibration-dep ⇒ operator must set policy). Operator authorized path A (entry 38) WITHOUT
+   being shown the (ln K)³ blow-up / dust amplification — must see it + choose a cap before intern builds.
+   I CONFIRM the spec's §2 entry-37 invariant verdict ("same notional≠same warp; warp=z0(dy)·G(K), strike
+   dominant") — it's the SAME G channel as this divergence; spec honest there but did NOT escalate that the
+   channel is UNBOUNDED as a blocker. **(3) GATE g.1 sound for strike-dep but NO magnitude assert** —
+   reproduced |Δφ|=0.630023, ordered TRUE, spotReduce=0.0 exact, FLOOR=max(·,EPSILON) mandatory+present;
+   BUT |φ′|=39.4@K=8 PASSES g.1 unchanged (only checks near<far + noise floor) = blind-spot pattern #4 again
+   (name claims faithfulness, body checks narrower prop, like WARP(d)/(f) in #17). **REQUIRED: add (g.4)
+   SANITY BOUND on |φ′| across legal strike band** (threshold = operator's cap; interim = a recording/negative
+   assert so divergence is gated-visible not silently green). **NET: reserves channel green; divergence is
+   the live BLOCKER — escalate to operator with the cap decision before build.** Verbatim channel HELD (entry
+   38 relayed as context; reviewed artifact + live engine directly). Convergence-alarm MODERATE — spec is
+   honest about strike-dominance (§2) AND fixed the #18 bug cleanly, but treats the divergence as "a large but
+   FINITE φ′" / "the frozen-wing cap" (a cap that does not exist) rather than a blocker; the manager's re-derive
+   confirmed faithfulness/spot-reduction but (again, pattern #2) did not push G to the divergent regime or test
+   the dust trade.
+
+## Claims mine-to-defend (verdict #19 — re-posed trade-point anchoring)
+- RE-POSED construction is FAITHFUL: x′,y′ strike-invariant at fixed dy (== legacy), strike enters ONLY φ′ via
+  G=w′(u_spot)/w′(u_tp); spot-reduction byte-EXACT 0.0 (G=1 identity). #18 teleport FIXED. (`/tmp/verify_repose.js`)
+- G=((τ²+u_tp²)/(τ²+u_spot²))^1.5 ~ (ln K)³ → UNBOUNDED as tp enters frozen wing; dust dy=0.001 @K=8·mp0 → φ′=−36.8;
+  φ′=−39.4 saturates ATM weight to wPlus (elbow erased). Reserves wing-cap does NOT bound it (no strike-range guard;
+  arbitrageToOracle valid to K=1000·mp0). The spec's "frozen-wing range cap" does NOT exist.
+- Continuous integral (L288) does NOT cure the divergence — ~15× smaller constant, SAME (ln K)³ kernel. Divergence
+  intrinsic to (trade-point anchoring + frozen wings), discrete-vs-continuous-independent. Fix = cap/different-anchor
+  = operator-tier.
+- Safe boundary (gate pool, dy=0.1): |φ′|≤τ up to K≈1.35·mp0, ≤1 up to K≈1.70·mp0, wing-saturation ~8×.
+- Gate g.1 (noise-floor-relative + ordered, pinned pool/dy, FLOOR=max guard) is correct for strike-dep but has NO
+  |φ′| magnitude bound — |φ′|=39 passes unchanged. Needs (g.4) sanity bound (threshold = operator cap).
