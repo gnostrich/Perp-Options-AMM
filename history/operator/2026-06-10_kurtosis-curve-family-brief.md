@@ -279,3 +279,10 @@ _Context: operator authorizes building the trade-point-anchoring warp fix and PR
 _Context: operator queues another read-only check for research-lead — whether the CORRECT (re-posed) trade-point construction ensures the SAME curve warp for ANY strike at the SAME notional (evaluate after the sell leg, single tx for simplicity). This is the warp∝notional invariant — it unifies "same notional → same warp" with the earlier "same premium → more warp OTM" (same premium OTM needs more notional ⇒ more warp). Folded into the spec re-pose. Transcribed verbatim._
 
 > another read only check to queue for research guy is whether the correct version ensures the same curve warp for any strike same notional (we evaluate after sell leg for single tx simplicity)
+
+---
+
+## Entry 38 — 2026-06-11
+_Context: operator resolves the A-vs-B warp fork — picks **A (trade-point anchoring, paper-faithful, strike-driven)** for the build; and separately asks the research guy for a CURIOSITY run on **B** (what invariant/mechanism would yield warp∝notional / same-notional-same-warp) purely to understand it — explicitly NOT for the current build. Manager proceeds to build A (skeptic re-review of the re-posed A spec + its far-strike divergence first); dispatches the B curiosity separately. Transcribed verbatim._
+
+> A, but separately ask the research guy to do a curiosity run on B just to understand what invariant would do that (nothing to do with the current built)
