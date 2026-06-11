@@ -1,5 +1,39 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, GLOBAL-SKEW goal-seek (entry 55/56; READ-ONLY; notes-only; no submit/edit/git/build)._
+_Last updated: 2026-06-11, ENTRY-59 flatten/steepen + warp-visibility run (READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### ENTRY-59 RUN — "w varies with strike: does it work?" vs the VISIBLE bar — 2026-06-11 (operator entry 59; READ-ONLY; HEAD untouched md5 928cde1c pre+post; NO edit/git/build/submit)
+Note: `notes/research/ENTRY59_flatten_steepen_and_warp_visibility_2026-06-11.md`. Scripts
+`/tmp/run59{,b,c,d,e}.js` (node float64, LIVE engine sandboxed; curveTraceW math transcribed).
+**Bar:** (1) knob VISIBLY flattens/steepens drawn curve; (2) trade VISIBLY warps curve.
+**METHOD (load-bearing):** honest metric = PERPENDICULAR polyline separation in px (Hausdorff,
+pt-to-seg, frame-clipped); axis-aligned px overstates ~10× on steep sections (τ-click 11.9px axis
+vs 0.92px perp — reconciles manager's 0.56–0.59%-invisible + my 167.6px axis ≈ their 153px sweep).
+Default frame x∈[0,30], y∈[0,910345]; plot 618×398px; 1% width=6.18px; px/BTC=20.6.
+**(A) BAR-1 = YES — THE knob is the WING PAIR (w₋,w₊), NOT τ:** per click 1.8–2.6px (+frame-jump
+0.3–1.8% — setWingWeights/setTau NULL __curveFrame, axes re-freeze); 3–5 clicks 5–13px visible;
+full travel 15–90px. Clean inside locks (wings exact power-laws ANY w±, γ>1 clamp; moving asymptote
+exponents IS what steepening means). **τ-click px = 3.6·Δw px [numeric law]** ⇒ ≤1.6px everywhere
+locks allow (per-click-visible τ needs Δw≈0.8 — IMPOSSIBLE inside γ>1+UI locks; flag, not decided).
+τ full-sweep 0.05→3 = 24.6–41.5px (cumulative only).
+**(B) BAR-2 = YES mechanism / NO ui-path:** one-sided cash ≥~$90–100k (12% of $800k pool) ⇒
+10.7–11.9px VISIBLE (sell −$90k defaults 11.9px; buy +$100k at WIDE Δw=0.55/0.92 10.7px; buy-side
+non-monotone at defaults: +100k→5.6px, +200k→3.0px u′/z cancellation; near-cap kink 50+px). UI has
+NO one-sided path: same-wing spread bands net-cancel (0.27px@$800k notional); COLLARS COMPOUND
+(both legs same swap direction, ~2×premium — "warp-neutral bands" refined) 6.2px@$2.4M; arb path
+NEVER warps (φ fixed). **PATH-A PROJECTION (validated byte-exact vs reposed-spec gate pool): NOT
+the visibility ingredient** — default pool sits AT elbow center, dlnp/du=3.09 compresses strikes ⇒
+G=1.016/1.087/1.206 at K=1.1/1.25/1.4× (vs gate pool 1.27–4.49); in-cap A perpPx ≈ legacy or
+LOWER (gearing offsets u′ drift); A beats legacy only CAP-EXCEEDED (K=2.3×, 11.4px). A = strike-
+dependence/paper-faithfulness, not visibility.
+**(C) VERDICT relayed:** (1) existing machinery meets BOTH bars — recipe: wing-pair clicks for
+flatten/steepen; one-sided ≥$90–100k trade (wide-Δw helps) for warp. (2) MISSING = a one-sided
+trade UI path (the bar-2 blocker; build-tier) + default-Δw calibration call (operator). (3) CANNOT
+inside locks: per-click-visible τ; v24-magnitude global warp (structural, unchanged).
+**HONEST CARRY:** projection-only; (α,β)-flow + warp∘rebase + φ-anchor/funding stay
+[needs-Aristotle]/OPEN; nothing submitted/built/edited/git; tester live pass = pixel confirmation
+layer. Manager re-derives + skeptic before operator.
+
+---
 
 ### GLOBAL-SKEW GOAL-SEEK — does "local-slope goal-seek via one global skew σ" beat the weight? — 2026-06-11 (operator entry 55/56 "go"; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
 Note: `notes/research/GLOBAL_SKEW_goalseek_2026-06-11.md`. Script `/tmp/skew55.py` (python float64+scipy).
