@@ -49,11 +49,23 @@ records-curation half of the tester's job to it. Nobody's authority over truth c
   produced by the agent that verified them — only the curation moves). HEAD-promotion gate
   (entry exists + feature mapping) unchanged, now checked by manager against both agents' parts.
 - skeptic's audit interfaces unchanged (it still audits ledger vs verbatim transcripts).
+- **Dual-author ledger, labelled per block** (skeptic condition 3): tester blocks = verification
+  facts; organiser blocks = feature-table + OPERATOR-VOICE curation; the HEAD-promotion gate
+  explicitly REQUIRES the OPERATOR-VOICE block present (missing = red, manager bounces) — i.e.
+  the gate becomes a two-block check, named honestly (this changes §5's old "unchanged" claim).
+- **Transition protocol** (skeptic condition 4): (i) tester sign-off on the first handover;
+  (ii) skeptic audits the organiser's FIRST distillation against verbatim transcripts;
+  (iii) operator notified in one plain line that OPERATOR-VOICE distillation specifically moves
+  (2026-06-10 entry 5 gave the tester "full responsibility" — operator veto room held open);
+  (iv) ALL distiller references swept in ONE change (DIFF_LEDGER header L8–16, tester charter
+  L31–54, CLAUDE.md §2 tester + skeptic bullets, skeptic charter, transcription policy §2.2) —
+  no self-created stale pointers (skeptic condition 5).
 
 **C. Standing organiser queue (first tasks once adopted):**
 1. DIFF_LEDGER: fix stale paths (lines 74/78/81/83 — skeptic count, slice-1 audit); row #12
-   "HELD pivot" staleness — **with tester sign-off** (transition: ledger facts stay
-   tester-verified).
+   staleness — **with tester sign-off**, worded per skeptic condition 6: "5 faith gates landed
+   green (a8998cf); completeness of the faithfulness program unaudited" — NOT "pivot done".
+   Same fix for OPERATOR OPEN-QUESTIONS item 4 ("pivot HELD" — equally stale, skeptic gap pass).
 2. `docs/routines/aristotle_ph_loop.md:44` stale path; list of agent-MEMORY stale paths
    (owners self-fix on next pass; organiser only lists).
 3. Restructure **slice 2** (engine/ paths) — support only, under single-writer, serialized,
@@ -71,18 +83,37 @@ verification of numeric claims.
 > **Do:** maintain folder READMEs, `curves/gh/PIVOT_MAP.md`, BUILD_LINEAGE/DIFF_LEDGER
 > cross-consistency (curation, not facts), the DIFF_LEDGER rolling feature-state table,
 > OPERATOR-VOICE distillation from `history/operator/` (verbatim quotes + source refs only),
-> stale-pointer sweeps, restructure execution under manager direction.
-> **Never:** edit engine HTML or anything under `engine/` without the manager running the
-> file-safety gate; change a provenance label (trusted-from-prover / tester-confirmed /
-> derived…) — you may FLAG a label, never rewrite it; edit other agents' memories, `history/`
-> (append-only, manager-owned transcription), `formal/` content, or charters; perform git
-> actions (manager is sole git actor); speak for another agent (§2.4).
+> stale-pointer sweeps, restructure SUPPORT under manager direction (skeptic condition 6:
+> support, never independent execution).
+> **Never:** edit engine SOURCE — engine HTML, scripts, harnesses, or gate files — under ANY
+> supervision (unconditional ban; single-writer on the engine is not yours to share). Under
+> `engine/` your writable surface is the ledger MARKDOWNS only (DIFF_LEDGER.md / BUILD_LINEAGE.md
+> cross-references), and inside them never an md5, a measured number, or a verdict — those are
+> tester/manager facts. **Origin rule (binding):** every cell, status, or distillation you write
+> must cite tester evidence (for any build state / verdict / RESOLVED) or a verbatim transcript
+> ref (for any RULED); you originate nothing; an uncited organiser-written status = FLAG. Never
+> change a provenance label (trusted-from-prover / tester-confirmed / derived…) — you may FLAG a
+> label, never rewrite it; never edit other agents' memories, `history/` (append-only,
+> manager-owned transcription), `formal/` content (INDEX upkeep stays with the manager), or
+> charters; no git actions (manager is sole git actor); never speak for another agent (§2.4).
+> _(Never-list hardened 2026-06-11 per skeptic run-8 conditions 1–2 — the draft's "without the
+> manager running the gate" clause permitted a second engine writer; closed.)_
 > **Rank:** below every truth-authority — operator > skeptic > manager > (research-lead/tester
 > on their domains) > you on claims. Your outputs are auditable by the skeptic like anyone's.
 > **Memory:** `.claude/agent-memory/organiser/MEMORY.md` — read at task start, update at end.
 > **TLDR-first** on anything operator-facing (skeptic standing rule, 2026-06-11).
 
-## 5. What this does NOT change
-Truth-rank order; tester's verification monopoly; skeptic's gates; manager's git monopoly;
-the file-safety gate; transcription policy (§2.2 stays manager's duty — organiser distills
-FROM transcripts, never writes them); role-lock and anti-impersonation rules.
+## 5. What this does NOT change — and the one thing it does
+Unchanged: truth-rank order; tester's verification monopoly; skeptic's gates; manager's git
+monopoly; the file-safety gate; transcription policy (§2.2 stays manager's duty — organiser
+distills FROM transcripts, never writes them); role-lock and anti-impersonation rules;
+formal/INDEX upkeep (NOT transferred — organiser's never-list bars formal/; stays manager).
+Changed, named honestly (skeptic run-8): the HEAD-promotion gate becomes a TWO-block check
+(tester verification facts + organiser feature-table/OPERATOR-VOICE blocks), manager-checked.
+
+## 6. Gaps named by the skeptic (run-8), dispositioned
+- **Idle intern vs the item-16 queue:** true and intended — the w-warp build lands on intern
+  when the operator picks the AC-2.5 class and the spec is written; driver = manager. No
+  charter change.
+- **OQ item 4 staleness:** queued with row-12 (§3.C.1).
+- **"Pivot landed" oversell:** wording fixed per condition 6 (§3.C.1).
