@@ -477,3 +477,10 @@ _Context: sent while the manager was finishing the entry-63 housekeeping turn._
 _Context: operator asks for the straight verdict — is the flatness knob impossible? (warp deemed surmountable)._
 
 > tell me straight is it impossible to get what i'm asking - the flatness knob thing? warp seems surmountable as sort of had it already
+
+---
+
+## Entry 65 — 2026-06-11
+_Context: operator rejects the manager's repeatedly-proposed "one-sided trade path" — an unrequested trade-mechanics addition. Manager drops it from the build scope entirely._
+
+> i didnt fucking ask for any change to trade mechanics one side whatevrr thr fuck youre slipping in desperately
