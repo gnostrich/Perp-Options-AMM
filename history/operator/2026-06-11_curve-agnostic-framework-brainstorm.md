@@ -46,3 +46,8 @@ _Context: arrived while operator reads the skeptic's warp-principle reply. Direc
 > ok now what next? do your to-dos? need me for anything?
 
 _Context: general green light on the queued work. Manager plan stated: restructure slice 1 (non-engine) first so the framework is born in its proper folder, then framework build, org review in parallel, comparison table after; one veto-able default declared on the warp-rule/mode-at-mark tension._
+
+## 10
+> simpler english please
+
+_Context: re-explain the AC-2.5 decision relay in plain words._
