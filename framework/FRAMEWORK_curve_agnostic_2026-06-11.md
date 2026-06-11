@@ -220,8 +220,9 @@ margin min[w′+w(1−w)] = +0.125 > 0 over ũ∈[−6,6], w ∈ [0.4, 0.6], win
    and feeds AC-10.
 
 **§AC-2.5 OPERATOR ESCALATION (via manager — default-shaping, not procedural).** The joint
-contract is satisfiable but only on a permanently tilted-germ class that excludes symmetric
-genesis. Options the operator must pick among (framework admits all three; none chosen here):
+contract is satisfiable — for at-the-mark trades (corrigendum 2 scope; off-mark OPEN) — but only
+on a permanently tilted-germ class that excludes symmetric genesis. Options the operator must
+pick among (framework admits all four; none chosen here):
 (a) accept the frozen-germ class (every reachable state carries the (½,−1/8) germ; genesis
 already tilted); (b) demote mode-at-mark to approximate/asymptotic (small standing violation
 (2ε′+1)du per trade, e.g. ε′≈0 near genesis); (c) keep mode-at-mark as a family-selector
