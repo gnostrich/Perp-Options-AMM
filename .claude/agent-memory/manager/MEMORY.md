@@ -31,6 +31,24 @@ kurtosis-at-zero-skew + (W)-weld; FLAGGED 2 for skeptic: (1) even⊥odd is TAUTO
 κ=even/skew=odd ASSIGNMENT is the real claim, possible elegance-masquerade); (2) the κ knob drives
 ATM γ_loc <1 and NEGATIVE (κ=5→−2.5) — may VIOLATE the γ>1 lock / monotonicity at ATM = buried
 cost.** SKEPTIC PASS DISPATCHED (aa3ca293, bg) before operator relay.
+**SKEPTIC VERDICT #23 IN (`notes/skeptic/VERDICT_POLAR_density_2026-06-11.md`) — HEADLINE BROKEN,
+STANDING FLAG.** The note runs TWO incompatible kurtosis constructions & swaps: (A) tanh-blend
+γ_loc=γ₋+(γ₊−γ₋)·½(1+tanh κu) — lock-safe, monotone, but INERT at γ₋=γ₊ (= (W)'s weld, can't do
+the headline); (B) additive even bump lvl−κ·sech²u — the ONLY one giving the "−1.25→−12.5"
+kurtosis-at-zero-skew headline, and under it ATM exponent goes <1 (κ=2→0.5) then NEGATIVE
+(κ=5→−2.5): VIOLATES γ>1 lock (note's own §1.2 three-way identity binds it everywhere, no
+wings-only escape) AND non-monotone/arbitrageable (min(γ+γ′)=−0.53 at κ=2). Lock-safe window
+κ≲1.3, never bounded. **FLAG-WRONG ×2.** Orthogonality even⊥odd = TAUTOLOGICAL (FLAG-OVERSELL);
+"(W) can't" is true but from the τ-Δw weld, not orthogonality. SURVIVES (sound, don't re-litigate):
+well-posedness; weight-free-ONLY-under-B crux (genuine hard A-vs-B tension, operator-tier); transcendental
+cost; polar⊃(W) (near-vacuous — the extra IS the lock-violating part). **MY MISS:** my re-derivation
+used Construction B and I relayed "kurtosis-at-zero-skew works" to operator as good-news-with-caveat;
+skeptic showed the caveat is FATAL, and I missed the A/B construction-swap linking my 2 flags.
+FRAMING MISMATCH (skeptic, honest): operator entries 3/4 = "steepness/kurtosis interchangeable, one
+static knob"; never asked for kurtosis-indep-of-skew — the headline is unrequested + broken.
+**RELAY DONE w/ correction. NET for operator: weight-free skew map = YES under fork B; free
+lock-respecting kurtosis-at-zero-skew = NO (neither (W) nor polar); the one call = B-vs-A (weights
+or not). HEAD untouched 928cde1c. No build, no claim encoded.**
 
 ## ⚑ STANDING OPERATOR RESPONSE-TYPE GATE (entry 44, 2026-06-11) — APPLY EVERY OPERATOR REPLY
 Operator ruling + skeptic-ruled (skeptic now AUDITS this post-hoc against the transcript; FLAG-PROCESS style-class):
