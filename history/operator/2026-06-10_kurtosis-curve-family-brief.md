@@ -414,3 +414,10 @@ _Context: operator pushes back on the relay of the skeptic-flagged polar verdict
 _Context: go-ahead to dispatch the research-lead derivation on entry-55 point 2 (global-skew goal-seek)._
 
 > go
+
+---
+
+## Entry 57 — 2026-06-11
+_Context: brainstorm continues. Operator asks whether giving up the asymptotes (frozen power-law wings) buys more flatness/steepness (kurtosis) control._
+
+> if we give up asymptotes can we get more control over the flatness / steepness...?
