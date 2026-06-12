@@ -529,7 +529,7 @@ BEFORE any qualifier/table. High-blast-radius subset (promotion/ship/"done"/agre
 is BLOCKING.
 
 ### Verdict #feasibility (2026-06-12, entry 150) — OPERATOR-DIRECT straight feasibility answer
-→ `notes/skeptic/VERDICT_FEASIBILITY_entry150_2026-06-12.md` (relayed verbatim). Operator (150):
+→ `notes/skeptic/VERDICT_FEASIBILITY_STRAIGHT_entry150_2026-06-12.md` (relayed verbatim). Operator (150):
 "answer me straight ... is it feasible or not." NOT a flag — a summary verdict for the operator,
 both layers. **PRODUCT = YES-WITH-X.** Standing parts (lens+pool+frozen wings, no blow-up; tau knob
 on chart2; settle-at-lensed; smooth-paste; value prop S^-gamma; gamma>1 steepness) are built+gated
