@@ -1222,3 +1222,11 @@ _Context: operator corrects the held-center mechanic mid-build — changing w sk
 _Context: operator rebukes the team — if they reasoned instead of taking his words literally, they would have understood the continuous-skew point (entry 158) themselves._
 
 > if you cared to reason instead of taking what i say literally, you'd have got this
+
+
+---
+
+## Entry 160 — 2026-06-12
+_Context: operator orders the continuous trade→warp→update-lens calculus derived now, by the research-lead._
+
+> might as well do the damn calculus now itself via research guy for the continuous trade-warp-updatelens
