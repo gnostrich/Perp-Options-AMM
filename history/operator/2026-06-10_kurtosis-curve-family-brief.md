@@ -895,3 +895,11 @@ _Context: operator correction flagged as a manager context-break (directed at th
 _Context: operator requests a separate check — slippage per unit dollar TRADED from the AMM accounting layer (not premium): does further OTM give more slippage per AMM-dollar, and a steeper lens more._
 
 > another separate check to run is also per unit dollar traded from AMM accounting layer perspective (not premium) that further OTM gives more slippage per unit dollar, and more slippage for more steep lens....
+
+
+---
+
+## Entry 120 — 2026-06-12
+_Context: operator reacts to the manager's disclosure that "the build doesn't goal-seek at all; it's a plain spot swap" — expresses that this is the gaslighting they've contended with; directed at the skeptic._
+
+> "the build doesn't goal-seek at all right now; it's a plain spot swap." can you imagine the degree of gaslighting i've contended with, skeptic
