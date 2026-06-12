@@ -1,5 +1,24 @@
 # MEMORY — tester
-_Last updated: 2026-06-12, after the A14 AT-STRIKE §8 live confirmation (HEAD `de28c937`, PROMOTED post-skeptic-clear, READ-ONLY). VERDICT: 5/5 PASS ×2 byte-stable, 34/34 oracle ⇒ §8 LIVE CONFIRMATION = PASS. Prior: CONTWARP `4378bc11` (4/4 PASS, promoted); C16 `abd46149` (SCRAPPED, never promoted)._
+_Last updated: 2026-06-12, after the **-A14b KURTOSIS-vs-WARP targeted live test** (HEAD `de28c937` UNCHANGED, READ-ONLY). VERDICT: -A14b RESOLVED(evidence) — UNDERLYING swap-warp kurtosis-FREE; SEEN chart-2 reshape kurtosis-DEPENDENT. Prior: A14 AT-STRIKE §8 = 5/5 PASS ×2, 34/34 oracle; CONTWARP `4378bc11` (4/4 PASS, promoted)._
+
+## ★★★★★ MOST RECENT — -A14b KURTOSIS-vs-WARP targeted live test, HEAD `de28c937` (UNCHANGED, READ-ONLY) = RESOLVED(evidence) ×2
+Resolves the owed -A14b OPEN item (operator entries 184/185/203 — the kurtosis half left untested by the A14 §8 smoke).
+Harness `engine/verify/pw_v28_a14_kurtosis.mjs` (single A/B arg); evidence `evidence/v28_a14_kurtosis/` (INDEX + RUN_LOG_run{A,B}
+byte-stable modulo header + {A,B}_item2_tau{1,0p3,0p05}.png). 0 console / 0 pageerrors both runs. Build md5 `de28c937…` UNCHANGED post-run.
+Ledger A14b verification entry appended (feature-keyed #16/#2/#3/#15 + none-beyond; OPERATOR-VOICE 184/185/203; table #16/#2/#3 amended;
+rolling -A14b → RESOLVED(evidence); reconciliation KURTOSIS-WARP-TEST → RESOLVED-in-test-on-`de28c937`). NO git, no engine edit (manager commits).
+- **ITEM 1 — UNDERLYING swap-warp kurtosis-FREE (PASS):** same single sold call N=0.1, K=$120k (θ=1.5), oracle 80000, executed at
+  τ=1.0/0.3/0.05 → dy=$12,000 / Δw=0.0073891626 / Δsteepness=dy/β=0.030000 ALL BYTE-IDENTICAL (max|Δdy|=0, max|Δw spread|=0).
+  `executeLeg` dy=(wingSign·legSign)·N·(θ·oracle) has NO τ arg (L1780-81). Lensed V moves with τ (0.02976/0.01930/0.01675) but sizes only buy-leg+position value.
+- **ITEM 2 — SEEN warp (chart-2 reshape) kurtosis-DEPENDENT (PASS, with direction nuance):** fixed sold-call trade dy=$60k, mode 1.0→0.8696.
+  Reshape |ψ_post−ψ_pre| at τ=1.0/0.3/0.05 — PEAK at the mode θ=1.0 GROWS 0.453→0.660→0.794 (dense θ-sweep: peak at θ=1.0 all τ);
+  at fixed OTM θ=1.25 SHRINKS 0.148→0.090→0.045 (θ=1.5: 0.086→0.049→0.036; θ=4.0: 0.0161→0.0136→0.0133). On-screen band slippage
+  11.89%→12.08%→12.84%. Render: τ=0.05 = narrow ATM spike (wings flat); τ=1.0 = broad humps, dashed diverges wide.
+- **NET FOR OPERATOR (entry 185 "sharper ⇒ a strike reads further-OTM ⇒ more warp"):** TRUE for the PEAK/near-money SEEN warp;
+  the literal "further-OTM ⇒ more warp" INVERTS at a fixed-OTM strike (reshape shrinks — sharp lens pins pre+post to the low asymptote,
+  "less value in the html" confirmed). UNDERLYING swap-warp kurtosis-free throughout. ESCALATE: which reading of entry-185 to encode (operator-tier, via manager).
+- **GOTCHAS (this run):** SEEN warp pixel-COUNT is whole-curve-saturated (2635/2651/2689 flat across τ) — NOT the discriminating metric;
+  use the ANALYTIC per-strike |ψ_post−ψ_pre| via Engine.gLoc + Engine.markLensed (both reachable in evaluate). The dashed curve = drawState(sNorm_preview, dashed, previewPool, τ), ψ=markLensed(wing,θ,sNorm,gLoc(previewPool,θ,τ)); reshape is the pre(live)→post(preview) gap read at each τ.
 
 ## ★★★★★ MOST RECENT — A14 AT-STRIKE §8 live confirmation, HEAD `de28c937` = 5/5 PASS ×2, 34/34 ORACLE
 Build `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `de28c93712ffb1a7fcafc66b36a0ea83` (UNCHANGED post-run, READ-ONLY).

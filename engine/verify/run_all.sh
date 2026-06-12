@@ -23,6 +23,13 @@ if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD";
   echo "================ v28 polar-lens build -> lens_selfcheck.js [HARD GATE] ================"
   node verify/lens_selfcheck.js "$HEAD"
   echo ""
+  echo "================ A16 no-jump ATM position-value gate -> a16_atm_gate.js [HARD GATE] ================"
+  # Locks the live held-position value path (markEff/legValueUnified/pfComponents
+  # via markLensed) continuous across the OTM↔ITM (ATM g_loc→0) crossing — no jump,
+  # no regime branch in the value. Distinct from lens_selfcheck (4) (the S* seam).
+  # SKIPs-as-pass on a non-lens build. set -e => any FAIL aborts run_all.
+  node verify/a16_atm_gate.js "$HEAD"
+  echo ""
   echo "lens build green. (GH/(W) suites N/A here.)"
   exit 0
 fi
