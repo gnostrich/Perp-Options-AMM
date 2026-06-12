@@ -1319,3 +1319,76 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
   correct; numbers wrong-pool. (`/tmp/sk_r6d.js`)
 - Rebase: sNorm/w/γ invariant; strike ray θ=K/oracle scales 1/r; u(K) shifts −ln r (correct, not a
   bug). Lens safe iff u read live. Spec's "mode→mode/r" prose is wrong. (`/tmp/sk_r6e.js`)
+
+30. **2026-06-12 — R6 WRITE/SETTLE-THROUGH-LENS Stage-2 scope-gate (verdict #30; operator entry 95/96
+   build-oversight mandate)** → `notes/skeptic/VERDICT_R6_WRITE_SETTLE_LENS_2026-06-12.md`. Gates §11 of
+   `SPEC_v24_lens_BUILD_2026-06-11.md` (lens becomes unit-of-account everywhere: pricing/exec/settle/
+   portfolio). Build = `temporal_mvp_v28_lens_S1.html` (md5 1ed8fe2d). Manager's solvency spot-check
+   FAILED (wrong signature) ⇒ rested on me. **DECISION: CLEAR-TO-BUILD + 1 HALT-CLASS must-apply + gate
+   strengthen + 2 record flags. Solvency CLEAN, no-arb CLEAN (real test), W8 CLEAN — none operator-tier.**
+   Re-derived with REAL signatures `markLensed(wing,theta,sNorm,g)` / `gLoc(state,theta_K,tau)`
+   (`/tmp/t1..t14`).
+   - **CLAIM 1 solvency PASS:** markLensed ∈[0,1] over BOTH a free sweep AND the COUPLED path (g pinned to
+     gLoc(K) at live mode, w∈[.52,.9]/γ 1.08–9, τ∈[.05,10], strikes ±6, spot swept) = [9.6e-5,1.000], max
+     never >1, zero NaN, incl g_loc(ATM)~1e-13 (finite, =1 at mode) + flat-top g<1. No "settle for more
+     than pool holds" hole. (`/tmp/t1,t2,t3`)
+   - **CLAIM 2 no-arb:** the spec's "markLensed_open−markLensed_settle=0" is a SAME-FUNCTION TAUTOLOGY
+     (can't fail unless helper differs) — relabel "one-helper witness," NOT "the no-arb gate." The REAL
+     test (open lensed, pool moves plain-v24, close lensed) SURVIVES: lensed MTM≠raw MTM by design (lens=
+     unit of account, entry 96) but NOT farmable — open+immediate-reverse leaves residual IN the pool
+     (pool-favourable slippage), no costless cycle. (`/tmp/t4,t5`)
+   - **CLAIM 3 = the HALT-CLASS must-apply (the load-bearing hazard):** `gLoc` HARDCODES u=ln(θ/getSNorm)
+     = RECIPROCAL mode (build L1634). closeBand builds rays θ=K/oNow (PRICE) + settled leg consumes
+     markEff(sNorm0) where sNorm0=poolMark/oNow (PRICE, L1983) — and the engine comment L1981-82 says it
+     DELIBERATELY switched FROM getSNorm TO sNorm0. Meanwhile OTM leg uses legPrice→mark(getSNorm)
+     (RECIPROCAL, L1717). So the two band legs ALREADY evaluate mark against DIFFERENT sNorm conventions
+     for the same registered θ (raw tolerates it: min(s/θ,θ/s) benign). **markLensed is NOT
+     reciprocal-symmetric** — g IS coord-invariant (|u| even, spec §1.1 right about g) but the markLensed
+     VALUE is not (recip-call 0.081 ≠ price-call 0.221; recovered only by ALSO flipping wing). **The spec
+     CONFLATES "g coord-invariant" with "markLensed value coord-invariant" — 2nd is FALSE.** ⇒ following
+     §11.4-caveat's "use getSNorm for the lens" while markEff lives in price-coord gives a 6× basis split
+     (`/tmp/t6`: 0.081 vs 0.512) = exact v27-class leak §11.2 forbids; passing K/oNow to gLoc mixes coords
+     (`/tmp/t8`: g 2.57 vs correct 2.21). MUST-APPLY = convert settled-leg inputs to reciprocal/sNorm
+     coord BEFORE the lens call, keep sNorm0 for the legacy regime test only, never pass price rays/spots
+     into gLoc/markLensed. (`/tmp/t6,t7,t8,t13`)
+   - **gate-5 PARTIALLY sufficient:** catches a gross ITM-leg coord mismatch (`/tmp/t9`: raw_net 0.31
+     >>1e-10) IF implemented as described AND at a realistic state — but spec doesn't PIN the test state,
+     and NEITHER-ITM nets zero even when both legs use the same wrong coord. STRENGTHEN: steep
+     OFF-EQUILIBRIUM oNow≠marginal + ONE-ITM case explicit (the only case crossing the two conventions);
+     gate-4 (both call the lens) necessary NOT sufficient (doesn't check SAME coord).
+   - **CLAIM 4 W8 PASS:** attribPnL/equityAtClose = pure perp-mark fractional move (engine 2110-13), NO
+     option mark; enters dollarFigure as a MULTIPLIER once, not summed into raw_net (`/tmp/t14`). Don't
+     lens = correct (category error otherwise). Tester: confirm UI doesn't additively combine lensed-option
+     $ + un-lensed-perp $ in one column.
+   - **SCOPE R1 PASS** (all W-sites entry-96-backed, verbatim verified L710; W8 correctly excluded; zero
+     unrequested). **R3 PASS** (inherited Stage-1 controls). **Staging SANE** (own stage/gate/smoke-pass +
+     file-safety §3). **L4 PRESERVED** (tradeUpdate/arb/rebase byte-identical, forward-read, arb lens-free).
+   Convergence-alarm LOW (spec self-adversarially HUNTS the 2-leg split + ln γ close-side trap, doesn't
+   hide them — but under-specifies the fix + leans on the false value-coord-invariance). Manager's
+   wrong-signature solvency check = process miss not hidden break (solvency genuinely holds). Verbatim
+   channel HELD (95/96 verified). No FLAG-PROCESS.
+
+## Claims mine-to-defend (verdict #30 — write/settle through lens)
+- markLensed ∈[0,1] for ALL strikes/τ/pool states incl g_loc(ATM)~1e-13 and flat-top g<1 (real
+  signature markLensed(wing,theta,sNorm,g); g pinned to gLoc(K) at live mode). Solvency clean. (`/tmp/t2`)
+- The spec's open==settle=0 is a same-function tautology; the real no-arb (pool-moves round-trip) holds
+  and is pool-favourable (residual stays in pool). (`/tmp/t4,t5`)
+- gLoc hardcodes the RECIPROCAL mode (getSNorm, L1634); closeBand settled leg lives in PRICE coord
+  (sNorm0=poolMark/oNow, L1983); legPrice OTM leg lives in RECIPROCAL coord (getSNorm, L1717). g is
+  coord-invariant (|u| even) but markLensed VALUE is NOT (inverts under reciprocal; recovered only by
+  flipping wing). The spec's "use getSNorm for the lens" recommendation is insufficient — gives a 6×
+  basis split if markEff stays in price coord. MUST-APPLY: convert to one coord before the lens call.
+  (`/tmp/t6,t7,t8,t13`)
+- gate-5 must test at a steep OFF-EQUILIBRIUM state + the ONE-ITM case to catch the coordinate split;
+  as written it doesn't pin the state and the neither-ITM case cancels. (`/tmp/t9`)
+
+## Team blind-spot pattern (addition, verdict #30) — #15
+15. **Invariance of a SCALAR sold as invariance of the VALUE it parametrizes.** §11/§1.1 proves g_loc is
+   coordinate-invariant (|u| even) and slides that into "so the lens call is coordinate-safe" — but the
+   markLensed VALUE (asymmetric smooth-paste) is NOT coordinate-invariant; only the exponent is. Sibling
+   of #10 (property of one object cited about another) and #4 (slot conflation). Structural test for lens/
+   coordinate claims: "is the invariance about the EXPONENT or about the priced VALUE? They are different
+   objects; an even-|u| exponent does not make an asymmetric fraction coordinate-free." Also: when two code
+   paths historically used two coordinate conventions that were benign under a SYMMETRIC kernel
+   (min(s/θ,θ/s)), a new ASYMMETRIC kernel (smooth-paste) silently breaks the tolerance — always check
+   whether the old consistency depended on a symmetry the new object lacks.
