@@ -119,12 +119,14 @@ positivity is a separate requirement:
 x + Δx > 0     and     y + Δy > 0.
 ```
 
-Neither follows from the pole condition. Counterexamples (both exact):
+Neither follows from the pole condition. (Insufficiency of the pole alone = the **skeptic's
+break of 2026-06-12**, manager-verified, re-derived exactly here.) Counterexamples (all exact):
 
 - `(x,y,w) = (10,10,½)`, θ = 100 ⇒ `(x_T,y_T) = (1,100)`, pole at Δy = −50; Δy = −20 passes the
   pole yet `y + Δy = −10 < 0`.
-- `(x,y,w) = (10,10,½)`, θ = 0.01 ⇒ `(x_T,y_T) = (100,1)`; Δy = 1000 passes the pole yet
-  `x + Δx ≈ −39.98 < 0`.
+- `(x,y,w) = (10,10,½)`, θ = 0.01 ⇒ `(x_T,y_T) = (100,1)`, β_T = ½; the **manager-verified
+  instance** Δy = +10 satisfies `y_T + Δy = 11 > β_T` yet Δx = −250/5.25 = −47.619…, next state
+  (−37.619…, 20, 21/22 ≈ 0.9545); Δy = 1000 likewise gives `x + Δx ≈ −39.98 < 0`.
 
 **Interval characterization.** On the pole domain, `x+Δx` is strictly decreasing and `y+Δy`
 strictly increasing in Δy, so the admissible set is an open interval `(Δy_min, Δy_max) ∋ 0`:
@@ -138,6 +140,14 @@ strictly increasing in Δy, so the admissible set is an open interval `(Δy_min,
 of −Δx is `x_T·(1−w) = x_T − α_T`: a single off-ATM trade can extract at most the trade point's
 x-distance to its own local pair — but that bound can exceed the global reserve x, hence the
 constraint.
+
+**Where the constraint binds (not a technicality).** The feasibility cap binds hardest in the
+**deep wings** — exactly the strike continuum this AMM exists to serve: the further θ is from
+spot, the larger the trade-point reserve on one side relative to the global pool, so a
+T-computed flow can dwarf the global reserve (θ=0.01 above: Δy_max = 0.125, i.e. 1.25% of pool
+y, while the pole alone would admit any Δy > −0.5). The admissible domain `(Δy_min, Δy_max)` is
+therefore a **real, stateable per-trade size cap** that any implementation (and the paper's §5
+text) must enforce per ray — not a degenerate corner case.
 
 ### 5.3 Sign conventions and the instrument gate (recorded, not re-derived)
 
@@ -226,17 +236,28 @@ deliberately does not satisfy that requirement off-ATM, so there is no contradic
 Module: `formal/aristotle_runs/OFFATM_trade/OffATMTrade.lean` (standalone, `import Mathlib`,
 Lean 4.28.0 / Mathlib v4.28.0). Prompt: `formal/prompts/aristotle_prompt_offatm_trade.md`.
 
+All 9 theorems: **proved (trusted-from-prover)** — Aristotle project `90056417`, returned archive
+audited 2026-06-12 (statements character-identical, token-clean, concrete tactics only, pins
+v4.28.0, axioms = exactly {propext, Classical.choice, Quot.sound} per Aristotle's report). NOT
+"verified" (that label = manager's canonical-env build).
+
+**Domain version: STRONG.** Every obligation was stated and submitted with the §5 admissible
+domain — pole (`Δy > −w·y_T` ⟺ `y_T+Δy > β_T`) **AND** `x+Δx > 0` **AND** `y+Δy > 0`
+(`next_state_valid` carries the positivity hypotheses explicitly; `pole_does_not_bound_state`
+certifies in-kernel that the pole alone is insufficient). No weak-domain obligation was ever
+completed: the canceled unpinned first attempt `f3776478` never returned and is superseded.
+
 | Obligation | Lean name | Lemma | Status |
 |---|---|---|---|
-| trade-point existence/uniqueness | `tradePoint_exists_unique` | L1a | see ledger |
-| w′ closed form | `wNext_eq` | helper | see ledger |
-| pole ⇒ w′∈(0,1) | `wNext_mem_Ioo` | L1b | see ledger |
-| next-state validity on domain | `next_state_valid` | L1b | see ledger |
-| pole does not bound state | `pole_does_not_bound_state` | L1c | see ledger |
-| per-step local conservation | `local_conservation` | L3 | see ledger |
-| spot reduction + hyperbola | `spot_reduction_global_conservation` | L2 | see ledger |
-| w-storage necessity (exhibit) | `w_storage_necessary` | L4 | see ledger |
-| distinct operator signature (exhibit) | `offATM_distinct_operator_signature` | L5 (bonus) | see ledger |
+| trade-point existence/uniqueness | `tradePoint_exists_unique` | L1a | proved (trusted-from-prover) |
+| w′ closed form | `wNext_eq` | helper | proved (trusted-from-prover) |
+| pole ⇒ w′∈(0,1) | `wNext_mem_Ioo` | L1b | proved (trusted-from-prover) |
+| next-state validity on domain | `next_state_valid` | L1b | proved (trusted-from-prover) |
+| pole does not bound state | `pole_does_not_bound_state` | L1c | proved (trusted-from-prover) |
+| per-step local conservation | `local_conservation` | L3 | proved (trusted-from-prover) |
+| spot reduction + hyperbola | `spot_reduction_global_conservation` | L2 | proved (trusted-from-prover) |
+| w-storage necessity (exhibit) | `w_storage_necessary` | L4 | proved (trusted-from-prover) |
+| distinct operator signature (exhibit) | `offATM_distinct_operator_signature` | L5 (bonus) | proved (trusted-from-prover) |
 
 Verdict ledger: `formal/aristotle_runs/RESULTS.md` (OFFATM section). L5 is normatively a scope
 remark (§6); the bonus theorem only certifies the numeric signature fact.
