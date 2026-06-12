@@ -935,3 +935,11 @@ _Context: operator asks for a simple-English explanation of the one thing that d
 _Context: operator notes they had also floated (entry 121) the possibility that warp required could be EQUAL irrespective of how OTM; asks if that is right or wrong._
 
 > i'd also said it could be equal w warp required irrespective of how OTM is a possibility remember — is that right or wrong
+
+
+---
+
+## Entry 125 — 2026-06-12
+_Context: operator notes entry-121 reasoning was from a no-lens standpoint; directs that the through-lens version be tested and airtighted, and expects the HTML fixed within the hour._
+
+> now i said all this from a no lens standpoint, so have the through lens thing tested and airtighted as well, and i'm looking forward to having the html fixed within the hour now
