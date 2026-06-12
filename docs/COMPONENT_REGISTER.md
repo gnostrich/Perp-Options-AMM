@@ -85,7 +85,24 @@ Canonical: `.claude/agents/manager.md`, `notes/skeptic/VERDICT_MANAGER_TLDR_AND_
 — no agent work goes to merge/promote/state-flip unchecked by the skeptic; no claim-bearing operator
 reply ships unfiltered. Halt-class; manager cannot route around it.
 
-## PART D — Theory↔implementation bidirectional consistency (QUEUED — operator entry 141, NOT yet populated)
+## PART D — Theory↔implementation bidirectional consistency → integrated modular monolith (QUEUED — operator entries 141–145, NOT yet populated)
+_**The shape (operator entry 145):** one object, four LAYERS per component, all cross-referenced, single
+source of truth — an "integrated modular monolith." Each register row (per component/agreement) carries a
+pointer into each layer; the paper is the top layer that literally references the sections below it, so paper
+writing = choosing the plain-English+notation view over already-proven sections (minimal incremental work)._
+
+| Layer | Artifact | Per-component pointer |
+|---|---|---|
+| **Object / notation** | the pure-math object (metriplectic / free-potential; the formulas) | the def / equation |
+| **Code** | the engine subset (HEAD HTML functions) | function @ line + its gate |
+| **Lean** | the proof (`formal/INDEX.md` row / `.lean` archive / Aristotle store) | the theorem + provenance |
+| **Paper (English)** | plain-English + notation layer ON TOP, references the three below | the paper section |
+
+Bidirectional check runs across object↔code (the Node oracle today, Lean L3 the target) and object↔Lean
+(GROUNDED/CARRIED). The paper consumes only rows proven both ways. **Modular** = per component; **monolith** =
+one object, one register spine, one source of truth.
+
+### Bidirectional theory↔implementation consistency (operator entry 141 — mechanism)
 _Operator (entry 141): the math/theory must be checked **bidirectionally** against the implementation
 for theory↔impl consistency **tied to the single mathematical object** (metriplectic / port-Hamiltonian
 free-potential — see `formal/INDEX.md`), which also de-risks the paper with minimal incremental work._
