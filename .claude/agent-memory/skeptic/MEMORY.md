@@ -1799,3 +1799,54 @@ g, verified vs literal tradeUpdate to 6 digits.
    build, demand the manager state in one plain sentence whether that mechanic EXISTS in the base at
    all before accepting "same". A premise about a non-existent feature is the purest assurance-
    laundering surface. Sibling of #10 (property of a neighbour object) and the #37 relay-gate.
+
+39. **2026-06-12 — GOALSEEK_WARP magnitude far OTM (verdict #39; operator entry 121, READ-ONLY)** →
+   `notes/skeptic/VERDICT_GOALSEEK_WARP_far_otm_2026-06-12.md`. Adjudicates research-lead's split of
+   the operator's entry-121 "more warp far OTM per unit dollar" physics claim. **VERDICT: PASS** —
+   attacked all three halves on a fresh path (`/tmp/sk121_a..f.js`, NOT the note's gsw_*), every
+   load-bearing claim survived/reproduced. Verbatim channel HELD (L913, incl. typos). Convergence-alarm
+   LOW (note SPLITS the claim, vindicates operator where right — opposite of the #36 confident-hard-NO).
+   **THE 3 RULINGS (relay all three plainly — operator is right on 2/3):**
+   - **(1) WARP MAGNITUDE per $ far OTM: operator WRONG / research-lead RIGHT, and it's an EXACT
+     IDENTITY not float64-flat.** Crux I verified cold: `g_loc(K)` is a PURE function of `(w,θ_K,τ)`,
+     independent of x,y (gLoc==gLocW to machine zero) — because mode=getSNorm=(1−w)/w=1/γ ⇒
+     u=ln(θ)+ln(γ); the ONLY curve DOF in g_loc is the single scalar w. So restoring slope at ONE
+     strike restores w hence ALL strikes ⇒ warp-to-restore = w*−w0 = ±1.11e-16 at every K & τ. The
+     operator's mechanism fails at "moves the point more ⇒ more warp": `du/dy` (real reserve move in
+     moneyness coord) is STRIKE-INDEPENDENT (0.016598 at 1.5× AND 8×; tradeUpdate strike-blind); the
+     "moves more far out" is pure LENS magnification (|Δu_eff|/dy=h′(|u|)·du/dy) of the SAME move, and
+     w is global ⇒ no per-strike warp DOF. dg/dw saturates 9.41→6.24 (note byte-match). My number
+     −3.996e-3 vs note −2.500e-2 = dy/y normalization only; FLATNESS identical.
+   - **(2) BOUNDED on lens, no (ln K)³ runaway: RIGHT (key new claim REAL).** Lens gearing 1/(dg/dw)
+     SATURATES ≈0.160 (note byte-match); (W) runaway 1/w′ blows up 13.9→10884 (~u³, #19). Runaway
+     needs a weight FIELD w(u) w/ w′→0; plain Balancer has only scalar w ⇒ channel structurally
+     absent. τ→0 doesn't blow up (warp=w-restoration identity, τ-indep). ⇒ goal-seek is
+     bounded-BUILDABLE on lens-Balancer — real new datum for A-vs-B (operator-tier, note flags it).
+   - **(3) SLIPPAGE per $ far OTM under goal-seek: operator VINDICATED.** Execution at strike ray ⇒
+     per-$ impact = g_loc(K) RISES 0→γ saturating (0/1.21/1.38/1.47/1.48, note identical). He
+     conflated slippage-rising (TRUE, B-exec) with warp-magnitude-rising (FALSE). Consistent w/ my
+     #36/#37/#119 metric-fork (inventory #12 sibling): BUILT spot-swap feels strike-blind spot slope
+     (flat, #119); goal-seek feels lensed strike-ray slope (rises).
+   **FLAG-OMISSION (soft, non-blocking):** no inventory-disposition section; silent on #8 (strike-reg
+   — "execution at the strike ray" IS strike policy), #9, #4, #13. Narrow physics note, not design ⇒
+   soft, doesn't gate (same as #24/#36 sibling). **No FLAG-OVERSELL:** hunted for a smuggled "warp"
+   definition trivializing the answer — none; M1(Δw) & M2(visible Δg_loc) both honest & both fall/flat
+   OTM; flatness is machine-zero identity not fitted; self-adversarial section genuine.
+   **RELAY-GATE:** do NOT relay "your analysis is just wrong" flatly — operator is RIGHT on slippage
+   (rises) AND on the physics premise (point moves more, but lens-magnified not bigger pool action);
+   WRONG only on the warp-magnitude inference (flat, one global w-knob, no per-strike DOF). Plus the
+   good news: runaway gone, goal-seek bounded-buildable here.
+
+## Claims mine-to-defend (verdict #39 — goalseek warp far OTM)
+- g_loc(K) is a PURE function of (w,θ_K,τ), independent of x,y separately (mode=1/γ ⇒ u=ln(θ)+ln γ);
+  the only g_loc curve-DOF on lens-Balancer is the single scalar w. (`/tmp/sk121_a.js`)
+- Warp-to-restore-g_loc per $ is an EXACT IDENTITY = −dw_swap/dy, strike- AND τ-degenerate
+  (w*−w0=±1.11e-16 at every K,τ); operator's "more far out" FALSE on M1 (exact) and M2 (falls). NOT
+  merely float64-flat — structural. (`/tmp/sk121_b/c.js`)
+- du/dy (real reserve move in moneyness coord) is STRIKE-INDEPENDENT (tradeUpdate strike-blind);
+  Effect-1 "point moves more far out" = lens magnification h′(|u|) of the SAME move, not bigger pool
+  action ⇒ no extra warp demanded. (`/tmp/sk121_f.js`)
+- Lens gearing 1/(dg/dw) saturates ≈0.160 (bounded); (W) 1/w′ blows up ~u³. Runaway needs weight
+  FIELD w(u); plain Balancer has none ⇒ goal-seek bounded-buildable on lens. (`/tmp/sk121_d.js`)
+- Under goal-seek, per-$ slippage = g_loc(K) rises 0→γ OTM — operator vindicated on the slippage
+  half (distinct from the flat warp-magnitude half). (`/tmp/sk121_d.js`)
