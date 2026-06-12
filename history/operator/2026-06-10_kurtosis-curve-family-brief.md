@@ -1492,3 +1492,11 @@ _Context: operator sets the check-in — heading home, dinner, back in ~1.5 hour
 > i'll head home from the co-work, have dinner and check after 1.5 hrs
 >
 > get it done by then
+
+
+---
+
+## Entry 193 — 2026-06-12 16:27 UTC
+_Context: operator restates the two-layer model for the in-flight fix — AMM bookkeeping vs option prices derived from it; notional drives the AMM bookkeeping; option pricing (min of slope or reciprocal formula) converts what you sold into how much you can buy; sell = purely AMM; think pure AMM ignoring option pricing to get it right._
+
+> basically there are 2 layers -- AMM bookkeeping, and option prices derived from this -- the notional determines AMM bookkeeping, the optin pricing determines how much you can buy for what you sold as per the AMM prices (min of slope or reciprocal formuka); so the sell part is purely AMM and the buy part notional is determined by this option pricing thing --- does this make sense? and for now if you think AMM and ignore option pricing (for a minute) to get this right, you'll see what i'm saying
