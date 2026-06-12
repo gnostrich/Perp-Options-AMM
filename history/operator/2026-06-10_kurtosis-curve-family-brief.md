@@ -823,3 +823,11 @@ _Context: operator requests being able to edit the kurtosis (lens τ) on the fly
 _Context: operator corrects the manager's slippage framing — the lensing changes the EFFECTIVE trade point and EFFECTIVE slope goal-seek, so slippage does respond to kurtosis._
 
 > listen carefully -- the lensing has the effect of changing the effective trade point and effective slope goal seek
+
+
+---
+
+## Entry 111 — 2026-06-12
+_Context: operator says "yes" (go on the one-line live-slippage-refresh wire) and directs the skeptic to comprehensively audit every lensing touchpoint (queries, AMM tx, funding, …) for integrity compromises._
+
+> yes, also please check everything else where there's a lensing thing queries etc. amm tx funding .... i really want that theres no integrity compromises, skeptic
