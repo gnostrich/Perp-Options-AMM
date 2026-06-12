@@ -17,4 +17,11 @@ _Context note: answered with in-flight status (commit 3e43ea8 pushed; paper agen
 ## Entry 3
 > head is v28 what are you saying?
 
-_Context note: manager had reported HEAD = v26c from its memory/CLAUDE.md; checking repo state in-turn._
+_Context note: manager had reported HEAD = v26c from its memory/CLAUDE.md; checking repo state in-turn.
+Manager error owned: true HEAD = v28-lens on exciting-archimedes (corrigendum commit 4d63eef)._
+
+## Entry 4
+> tldr is this refutal from paper being weakly framed or something core to the mechanism
+
+_Context note: answered with the split — one core hole (off-ATM trade spec, = live entry-117 question),
+rest framing/honesty/logistics; econ objections = open design levers, not curve-math refutations._
