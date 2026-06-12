@@ -2724,7 +2724,7 @@ document.getElementById('kappa-input').addEventListener('change', (e) => {
   const el = document.getElementById('tau-input');
   if (el) el.addEventListener(ev, (e) => {
     const v = parseFloat(e.target.value);
-    if (v > 0 && isFinite(v)) { Store.setTau(v); if (Viz) Viz.drawAll(Store.state); }
+    if (v > 0 && isFinite(v)) { Store.setTau(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
   });
 });
 document.getElementById('tick-hours').addEventListener('change', (e) => {

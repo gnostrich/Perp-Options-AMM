@@ -65,7 +65,7 @@ gloss)? Any "no" → DON'T SEND, rewrite. Canonical: notes/skeptic/STANDING_RESP
 Skeptic backstops with FLAG-PROCESS (style-class, halt-class) via post-hoc transcript audit.
 
 ## ★★★ HEAD PROMOTED 2026-06-12 → v28-lens (operator entries 84/94/96/106)
-**CURRENT HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `989752294bfeff49d6c92e0ab7ca6ccd`.**
+**CURRENT HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7e1ae39baa00fda087033174cfc652b8`.**
 v24 plain-Balancer pool (pool fns byte-identical to v24) + static polar lens (read+write+settle through
 one helper at the live 45°-tangent mode); one τ knob; lens_selfcheck 23/0; tester FINAL 27/27; warp
 legible; no blow-up/no cap; round-trip pool-favourable (skeptic #32). Pins updated: CLAUDE.md §8,

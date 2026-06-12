@@ -1,6 +1,28 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 lens CLEANUP BATCH C1–C9 built — new file
-temporal_mvp_v28_lens_FINAL.html; handed to manager). Rewrite changed bits at task end._
+_Last updated: 2026-06-12 (v28 lens HEAD entry-111 τ band-preview wire — one-line, IN PLACE).
+Rewrite changed bits at task end._
+
+## Done — v28 lens HEAD: τ stepper band-preview re-run (entry 111 "yes"; IN PLACE, no git)
+Edited **`engine/builds/HEAD_temporal_mvp_v28_lens.html`** IN PLACE (promoted-HEAD display-refresh
+update; md5 changed `989752294bfeff49d6c92e0ab7ca6ccd` → **`7e1ae39baa00fda087033174cfc652b8`**).
+Splice `/tmp/splice_tau_band_preview.py` (count==1, blobs never through; copy `/tmp/work_tau_band.html`
+then promote). ONE line, L2727 — the τ stepper handler:
+- BEFORE: `if (v > 0 && isFinite(v)) { Store.setTau(v); if (Viz) Viz.drawAll(Store.state); }`
+- AFTER:  `if (v > 0 && isFinite(v)) { Store.setTau(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }`
+Matches the strike-input idiom (L3170–3171 `previewBand(); render();`). Scope confirmed: τ handler
+(L2727), `previewBand` (L2979 fn decl), `render` (L4079 fn decl), strike-input handler (L3170) are
+ALL in the same `<script id="ui">` block (L2650+) — `previewBand`/`render` lexically reachable, no
+restructuring needed. **Nothing else changed** — no math/pool/lens/control. Display-refresh wire only.
+Now turning τ recomputes the band preview (live slippage readout) before the chart redraw.
+- **Safety/gates:** surgical diff = exactly 1 line; blobs `ab663f5c`@74 / `c505b08a`@1060 canonical;
+  3 scripts parse (612/446/1754 lines, longest 509); pool `tradeUpdate`/`arbitrageToOracle`/`rebase`
+  BYTE-IDENTICAL to v24 (387/314/96 b, gate 6b); `node verify/lens_selfcheck.js …HEAD_…v28_lens.html`
+  **23 PASS 0 FAIL**; `sh verify/run_all.sh` GREEN exit 0; file-safety hook no-block.
+- **Open for tester:** live — turning τ now updates the slippage readout (band preview re-runs);
+  chart 1 (plain-v24 pool curve) still inert to τ; chart 2 still reshapes.
+
+---
+_(history below)_
 
 ## Done — v28 lens CLEANUP BATCH C1–C9 (NEW file, handed to manager 2026-06-12)
 Build **`engine/builds/temporal_mvp_v28_lens_FINAL.html`** (NEW, from S2 `b53ace99`; HEAD v27

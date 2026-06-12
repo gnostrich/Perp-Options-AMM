@@ -10,7 +10,7 @@
 | `temporal_mvp_v26a.html` | `89ae89e9` | slipfix — the blob-layer reconcile below was verified on this build; **demoted, succeeded by v26b then v26c** |
 | `temporal_mvp_v26c.html` | `6cc73563` | uniform strike registration θ=sNorm(K); GH-line endpoint — **demoted 2026-06-10 on v27 promotion (operator entry 28)** |
 | `temporal_mvp_v27_wkurtosis.html` | `928cde1c` | (W) kurtosis curve off the v24 base — **DEMOTED 2026-06-12 on v28-lens promotion**; retained, `wcurve_selfcheck.js` 22 PASS via explicit path |
-| **`HEAD_temporal_mvp_v28_lens.html`** | **`989752294`** | **current canonical HEAD** — v24 plain-Balancer pool (pool fns byte-identical to v24) + static polar lens in the query/write layer; one τ kurtosis knob; settle/read/write at lensed prices (entry 96); gate = `lens_selfcheck.js` **23 PASS**; **PROMOTED 2026-06-12 (operator entries 84/94/96/106)**; tester FINAL 27/27; see `BUILD_LINEAGE.md` + `CHANGELOG_v28_lens.md` |
+| **`HEAD_temporal_mvp_v28_lens.html`** | **`7e1ae39b`** | **current canonical HEAD** — v24 plain-Balancer pool (pool fns byte-identical to v24) + static polar lens in the query/write layer; one τ kurtosis knob; settle/read/write at lensed prices (entry 96); gate = `lens_selfcheck.js` **23 PASS**; **PROMOTED 2026-06-12 (operator entries 84/94/96/106)**; tester FINAL 27/27; see `BUILD_LINEAGE.md` + `CHANGELOG_v28_lens.md` |
 
 The two blobs are unchanged across the entire lineage (v24 → v26c → v27). That is the file-safety invariant; it has held.
 

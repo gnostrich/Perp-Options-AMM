@@ -51,4 +51,4 @@ steepness) in the wings; one static knob τ sets its width.
 
 ## Build sequence (files retained for diff)
 - `temporal_mvp_v28_lens_S1.html` — read lens (md5 `1ed8fe2d`).
-- `temporal_mvp_v28_lens_S2.html` — + write/settle through lens (md5 `b53ace99`). `temporal_mvp_v28_lens_FINAL.html` (+cleanup C1–C9, md5 `989752294`) — **PROMOTED TO HEAD 2026-06-12 as `HEAD_temporal_mvp_v28_lens.html`** (operator entries 84/94/96/106; tester FINAL 27/27; v27 demoted, retained).
+- `temporal_mvp_v28_lens_S2.html` — + write/settle through lens (md5 `b53ace99`). `temporal_mvp_v28_lens_FINAL.html` (+cleanup C1–C9, md5 `989752294`) — **PROMOTED TO HEAD 2026-06-12 as `HEAD_temporal_mvp_v28_lens.html`** (operator entries 84/94/96/106; tester FINAL 27/27; v27 demoted, retained). **+ 1-line live-slippage-refresh wire 2026-06-12 (entry 111): the τ stepper now re-runs the band preview so slippage updates live when kurtosis changes — md5 989752294→`7e1ae39b`, pool byte-identical, gate 23/0.**

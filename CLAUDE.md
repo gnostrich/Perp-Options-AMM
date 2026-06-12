@@ -257,7 +257,7 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `989752294…`;
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `7e1ae39b…`, +live-slippage-refresh wire;
   **PROMOTED 2026-06-12 by operator ruling, entries 84/94/96/106**). **v24 plain-Balancer pool +
   a static polar LENS in the query/write layer.** The AMM pool curve is **unchanged plain v24**
   (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24; x,y,w move; ~6% / 285-line edit
