@@ -1,8 +1,52 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 HELD-CENTER WARP drawing fix — NEW file, handed to manager; no git).
+_Last updated: 2026-06-12 (v28 CONTINUOUS-WARP preview — NEW file, handed to manager; no git).
 Rewrite changed bits at task end._
 
-## Done — v28 HELD-CENTER WARP DRAWING FIX (NEW file, handed to manager 2026-06-12)
+## Done — v28 CONTINUOUS WARP PREVIEW (NEW file, handed to manager 2026-06-12, operator deadline)
+Build **`engine/builds/temporal_mvp_v28_lens_contwarp.html`** (NEW, from CLEAN HEAD `7e1ae39b`;
+HEAD UNTOUCHED, no promote, no git). md5 **`4378bc1192878cfe437b8fa5551c5b88`**. Authority:
+operator entries 158/163; scope = skeptic `notes/skeptic/VERDICT_CONTINUOUS_SKEW_entry158_2026-06-12.md`
+(held-center machinery SCRAPPED — `_heldwarp.html` is DEAD, do not extend; live-centered read is
+the correct end state; continuous = sampled live frames, renderer-only, NO new curve math).
+Splices: `/tmp/splice_contwarp.py` (build, 1 rep count==1, purely additive diff at the old
+drawPricing def line ~L3497), `/tmp/splice_lenscheck_contwarp.py` (gate file, line-range slice).
+- **Build change (UI/draw layer ONLY; engine `<script>` BYTE-IDENTICAL to HEAD, gate-verified):**
+  `framePool(state,dy,s) = Engine.tradeUpdate(state, dy*s)` (tradeUpdate verified pure — returns
+  fresh `{x,y,alpha,beta}`, never mutates); old `drawPricing` body renamed `renderPricingFrame`
+  (unchanged); new `drawPricing` wrapper sweeps the dashed chart-2 preview s:0→1 over 800ms via
+  requestAnimationFrame, each frame `renderPricingFrame(state, framePool(pre, previewPool.y−pre.y, s))`
+  — the EXISTING live draw path at THAT frame's own 45°-tangent center, no override. Lands on the
+  exact previewPool object at s=1. Keyed on pool.x|pool.y|preview.x|preview.y: re-animates only on
+  preview CHANGE; same key mid-flight → let it run; same key idle → static s=1; null preview / no
+  rAF → today's static behavior (graceful degrade). Tick redraw (L4152) only fires w/o preview, so
+  it never interrupts.
+- **Gates (lens_selfcheck.js):** REMOVED the dead held-warp block (old L426–576, routed on the
+  scrapped 4-arg-gLoc build; carried banned `modeOverride` tokens). ADDED CF block routed on
+  `function framePool` token: **CF1** frames off the ACTUAL extracted-and-eval'd framePool source —
+  s=0==pre exact, s=1==full preview exact (===), w monotone, drawn exponent array (the matched gAt
+  pool-branch SOURCE expression, per skeptic #C16 rule) === gLoc of each frame; **CF2** skeptic
+  telescoping identity, N=100 per-step (held-warp + lens-recenter) increments == live end−start
+  (maxErr 8.9e-16); **CF3** end picture = live read: wings steepen (d(0.25×)=+1.24, d(4×)=+1.37),
+  swept 0.7×center strike DIPS **d(0.7×)=−1.2304** (documented as the mechanic per skeptic standing
+  caution), zero override tokens (assembled split so the gate file greps clean), zero 4-arg gLoc;
+  **CF4** animation tokens draw-layer-only, money paths token-clean, engine byte-identical + numeric
+  == clean HEAD (behavMax=0; identity-green after promotion, W-OVR precedent).
+- **Results:** contwarp **27 PASS 0 FAIL**; bare run still checks HEAD **23 PASS**; run_all.sh exit 0
+  on both; blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (613/447/1803), longest
+  line 509; IIFE intact; diff vs HEAD purely additive (2 insert hunks, 1 region). Banned grep
+  (`goalSeekW|wing exponent|wing steepness|target steepness|modeOverride`) = 0 hits in build AND
+  gate file. Suite on other builds: S1 14 PASS, S2 23, warp/heldwarp now 23 each (their special
+  blocks removed — both builds DEAD).
+- **Open for tester:** staging/changing a band preview animates the dashed chart-2 curve sweeping
+  to the post-trade shape (~0.8s), incl. the φ_m marker sliding; final frame == old static preview;
+  no animation on load/execute/clear; chart 1 inert. **Open for manager:** promote decision; the
+  scrapped `_heldwarp.html` file still sits in builds/ (disposal is manager's call).
+
+---
+_(history below; the heldwarp build below is SCRAPPED per skeptic VERDICT_CONTINUOUS_SKEW 2026-06-12 —
+its gate block was removed from lens_selfcheck.js with the contwarp work)_
+
+## Done — v28 HELD-CENTER WARP DRAWING FIX (SCRAPPED 2026-06-12 by skeptic continuous-skew ruling)
 Build **`engine/builds/temporal_mvp_v28_lens_heldwarp.html`** (NEW, from CLEAN HEAD `7e1ae39b`;
 HEAD UNTOUCHED, no promote, no git). md5 **`586e8c4ad8b97fe00be0dfd0131f3959`**. Authority:
 operator entry 153 #1/#2 + 155; skeptic `notes/skeptic/VERDICT_R6_heldcenter_warp_fix_2026-06-12.md`
