@@ -1548,3 +1548,11 @@ _Context: operator gives the close-semantics rule — when ITM there is no AMM t
 _Context: operator narrows the model — think of individual options in this context, not spreads._
 
 > and we think of individual options in this contexy not spreads
+
+
+---
+
+## Entry 200 — 2026-06-12 17:52 UTC
+_Context: operator asks what is pending._
+
+> ok whats pending
