@@ -2189,3 +2189,28 @@ g, verified vs literal tradeUpdate to 6 digits.
    **NEW blind-spot pattern #12 (on MYSELF):** *the skeptic's own output is part of the combinatorial
    explosion (~45 verdicts in 2 days) and a component-by-component skeptic that never demands the
    structural register is doing half the job — catch the CLASS via a binding board, not just instances.*
+
+47. **2026-06-12 — COMPONENT_REGISTER first-state audit (verdict #47; clears MY OWN #45/#46 halt)** →
+   `notes/skeptic/VERDICT_COMPONENT_REGISTER_FIRSTSTATE_2026-06-12.md`. **VERDICT: CLEAR** — the
+   register first-state is honest+complete; halt LIFTED to "register-gated" (HEAD promotion + "done"
+   relays may resume, each gated on a same-turn register update + my per-pass register-vs-transcript
+   audit). **Attacked it, did NOT rubber-stamp:** re-ran `lens_selfcheck.js` on the real HEAD
+   (`7e1ae39b…` md5 confirmed) = **23 PASS/0 FAIL** → C1/C3/C6/C7 VERIFIED rows are gate-backed not
+   narrated; read HEAD source for C16 = **zero goal-seek/inverse-lens tokens, `tradeUpdate(s,dy)` no
+   strike arg** ⇒ C16 "AGREED+SPEC'D, UNBUILT, NEVER label as built" is code-honest (the item most
+   tempting to oversell given entries 119→133 is NOT oversold); cross-checked 4 settled-by citations
+   (A4=entry96 ✓, A10=entry132 "works with it not against amplifying" ✓, A12=126/127+#44 ✓,
+   A2=entry14#3 ✓) against verbatim. **All 16 inventory map 1:1; C10/C12 correctly N/A-on-v28
+   (price==slope, e^−ghMu GH-only); needs-verify honestly applied to C4/C5/C8/C9/C11; C9 discloses
+   "LOCKED CONTRACT ALTERED: ATM funding→0 (op-ACCEPTED entry93#5)" = change-as-change not buried;
+   C13 solvency OPEN/B1-CARRIED honest.** Regression gate has REAL teeth (STOP-class, operator-reopen-
+   only, same-turn promotion duty stated, FLAG-PROCESS on missing row). **3 NON-BLOCKING fix-next-pass
+   notes (precision, NOT state lies):** (A) A1 cites "entries 1/10/16" but mixes TWO transcript files —
+   "not a dot sliding" = entry 1 of `kurtosis-curve-family-brief`, "its w that changes" = entry 16 of
+   `project-status-review` (entry 16 of the brief is the unrelated "2-7× step" Q); SETTLED-BY needs
+   `<file>#<entry>` (3 same-date transcripts exist). (B) A8 banned-term has no GATE cell — needs a
+   named check (even "skeptic audit") or it's a paper rule. (C) PART B (12 agreements) is a curated
+   subset of ~138 entries — completeness is a MAINTAINED property (same-turn gate + my tail-audit),
+   not one-time. Convergence-alarm LOW (I designed it #45; manager built close-to-spec without
+   inflating C16/needs-verify rows — opposite of tidy-but-false). **This was my own halt; my call to
+   lift, manager re-derives nothing.**

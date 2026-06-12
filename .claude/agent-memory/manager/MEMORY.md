@@ -133,6 +133,22 @@ w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{
   MEMORY intact (2191 lines, #45 + entry-138 self-audit + blind-spot #12). No corruption. LESSON: serialize
   same-agent dispatches; never 2 skeptic at once. Both verdicts RELAYED VERBATIM to operator.
 
+## ✅ REGISTER first-state audit CLEAR (skeptic #47) + C16 build clearing gates (2026-06-12)
+- Skeptic #47 (`notes/skeptic/VERDICT_COMPONENT_REGISTER_FIRSTSTATE_2026-06-12.md`): register CLEAR,
+  halt lifted to "register-gated"; skeptic re-ran lens_selfcheck cold = 23/23, confirmed C16 honestly
+  UNBUILT, citations spot-checked. 3 precision fixes APPLIED to register (A1 settled-by file#entry; A8
+  gate cell; PART-B completeness-is-maintained note).
+- **Manager R5 re-derivation done** (`/tmp/mgr_c16_check.js`): goalSeekW=G/(1+G) exact roots, w′≥0.5 ∀G≥1
+  (G=1⟺w′=0.5 exact); dG=(γ′−γ)·Φ matches held-mode gLoc diff 2.2e-16; warp monotone-OTM +0.038/0.100/0.115/0.122
+  @1.1/1.5/2/4× τ0.3 (== skeptic #44). Pool byte-identical = gate-backed, skeptic-reconfirmed this turn.
+- **Skeptic ad87aa88 dispatched (single instance):** TASK1 author universal-check policy (entry 139 verbatim
+  — no work unchecked, no reply unfiltered); TASK2 R6 scope-gate the C16 build brief (3 items, R3 control inv,
+  pool byte-identical, θ_K untouched). PENDING.
+- C16 itemized edit (for operator R2 go): (1) Viz.drawState preview L3632 → draw moved-γ at PRE-step mode
+  snap.sNorm (held-lens warp visible); (2) Engine.goalSeekW(G)=G/(1+G) + UI block; (3) 6 lens_selfcheck gates.
+  Pool/executeLeg/legPrice/settlement byte-identical. NEXT: skeptic R6-CLEAR + operator fresh go on itemized
+  edit → intern build → run_all+lens_selfcheck+file-safety+live smoke → promote, register same-turn update.
+
 ## ⛔⛔ SKEPTIC #45 + #46(entry-138) — INTEGRITY HALT (operator grievance 137/138; binding, halt-class)
 Operator: tracking is shoddy, going in circles 10s–100s× (agreed-then-regressed), "colluding or bypassing?".
 Skeptic verdict (RELAYED VERBATIM): he is RIGHT, 4th substantiation in 2 days (#22/#38/#40-44/#45). Root

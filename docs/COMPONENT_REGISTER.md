@@ -56,17 +56,20 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 ---
 
 ## PART B — Operator-agreed constraints (binding; a violation = REGRESSED = STOP)
+_Completeness is a MAINTAINED property, not one-time: this is a curated subset of the binding
+agreements across ~139 transcript entries; the same-turn promotion duty + the skeptic's per-pass
+register-vs-transcript tail-audit keep it complete. A binding agreement found un-rowed = FLAG-PROCESS._
 
 | ID | Agreed constraint | STATE | SETTLED-BY | Note / gate |
 |----|-------------------|-------|-----------|-------------|
-| A1 | **Trades warp the curve — it is `w` that changes; NOT a dot sliding** | AGREED | entries 1/10/16 | C16 realizes it; **signed gate** — a w′=w₀ reset that re-flattens VIOLATES this (skeptic #41) |
+| A1 | **Trades warp the curve — it is `w` that changes; NOT a dot sliding** | AGREED | `brief#1` ("not a dot sliding") + `project-status-review#16` ("its w that the trade changes") | C16 realizes it; **signed gate** — a w′=w₀ reset that re-flattens VIOLATES this (skeptic #41) |
 | A2 | Kurtosis is **static, vol-set, NOT changed by trades** | AGREED | entry 14#3 | the τ knob is the curve geometry, not a trader statistic |
 | A3 | **HEAD = v28 lens** (curve reopened; Balancer + polar lens) | AGREED | entry 28 | C1/C3 |
 | A4 | **Settle / record / value at lensed prices** | AGREED→BUILT | entry 96 | C11 |
 | A5 | **Asymptotes preserved** — any floor/saturation in deep wings disqualified | AGREED | entries 55(1)/60 | lens wings frozen power-law γ |
 | A6 | **Monotonicity / no-arbitrage** is binding | AGREED | entry 55(3) | `lens_selfcheck` monotone |
 | A7 | Balancer weights **complementary, sum to 1**, always | AGREED | entry 73 | else "the thing is void" |
-| A8 | **BANNED TERM: "spot swap slippage"** — a trade is a swap that WARPS; one thing | AGREED | entry 122 | speak in warp terms |
+| A8 | **BANNED TERM: "spot swap slippage"** — a trade is a swap that WARPS; one thing | AGREED | entry 122 | speak in warp terms. **GATE:** manager pre-send self-check + skeptic transcript style-audit (FLAG-PROCESS, style-class) |
 | A9 | **Communication form:** table + core formula(s) + the literal edit + plain English | AGREED | entries 44/71/81/99 | R7; pre-send self-check |
 | A10 | Warp read through the **pre-step (held) lens**; lens **AMPLIFIES** skew (works WITH it, not neutralise); per-step sequence | AGREED | entries 129/131/132 | skeptic #43/#44; the "restore→flat" target is the rejected neutralise op |
 | A11 | Honest limit: single-w warp = **vertical rescale in ONE step**; strike-differentiated **skew grows ACROSS the sequence** as the mode updates | AGREED | skeptic #44 + entry 132 | UI copy must NOT over-claim a per-strike in-step bend |
