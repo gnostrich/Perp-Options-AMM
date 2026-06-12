@@ -1850,3 +1850,52 @@ g, verified vs literal tradeUpdate to 6 digits.
   FIELD w(u); plain Balancer has none ⇒ goal-seek bounded-buildable on lens. (`/tmp/sk121_d.js`)
 - Under goal-seek, per-$ slippage = g_loc(K) rises 0→γ OTM — operator vindicated on the slippage
   half (distinct from the flat warp-magnitude half). (`/tmp/sk121_d.js`)
+
+40. **2026-06-12 — R1/R2 goal-seek warp CRUX (verdict #40; URGENT operator 1-hr clock, READ-ONLY)** →
+   `notes/skeptic/VERDICT_R1_R2_goalseek_warp_CRUX_2026-06-12.md`. Resolved the research-lead SPLIT in
+   `specs/SPEC_v28_goalseek_warp_BUILD_2026-06-12.md` (R1 write-relocate = BLOCKED, R2 attribution-view =
+   INTERN-READY). Re-derived cold `/tmp/sk_crux{,2,3}.js` from HEAD L1599-1687. **BOTTOM LINE (decisive,
+   no hedge): the operator's FIXED-MODE goal-seek warp ("the curve actually warps at the trade point") is
+   GENUINELY BLOCKED on plain-Balancer+static-lens — it NEEDS the demoted (W) weight field. R1-BLOCKED
+   conclusion CORRECT, but the STATED reason (BLOCKER-A) is a STRAWMAN.** Four rulings:
+   - **(1) BLOCKER-A = strawman:** it computes mode-collapse (1.376597→0.000000, reproduced byte-exact)
+     by MOVING the live mode onto θ_K (w'=1/(1+θ_K)) — the move-the-pool maneuver the operator DISCLAIMED
+     in entry-118 ("the mode stays put, lens shifts the trade outward"). Same strawman I flagged in #36,
+     recycled as the R1 blocker. FLAG-OVERSELL (research-lead reason, not conclusion).
+   - **(2) THE REAL BLOCKER (mine, load-bearing):** mode=(1-w)/w=1/γ is NOT a free knob — a plain-Balancer
+     trade FORCES it to move (dy=10: 0.6667→0.5714, it must). Two ways to "hold mode fixed": (A) a stored
+     SCALAR m_ref (one number, decoupled) — defeats BLOCKER-A (slope doesn't collapse from a frozen ref:
+     1.21/1.38/1.47) AND reconstructs the whole slope profile from {γ,τ}=2 scalars, NO field; BUT gives
+     only a VIEW — plain Balancer's local exponent is a CONSTANT power law γ, no strike-local bend to warp,
+     θ_eff never enters tradeUpdate. (B) put the bend IN the curve = position-dependent w(u;φ) = the demoted
+     (W) curve. **A scalar cannot make a curve bend at a strike; only a field can.** So: warp-as-VIEW =
+     1 scalar (=R2 w/ frozen anchor); warp-as-CURVE-BEND (operator's literal R1) = the (W) field. BLOCKED.
+   - **(3) SCALAR-vs-FIELD verdict (the recurring #37 crux, SETTLED):** research-lead's "stored reference =
+     (W) φ field" is OVERSTATED for the slope-READ (φ = per-trade field; m_ref = one number; scalar≠field,
+     #37 re-confirmed). The (W) field IS needed — but for the right reason (curve-bend), not mode-collapse.
+   - **(4) BLOCKER-B real but DERIVATIVE:** O5 gaps reproduced byte-exact (0.082563/0.035796/0.015091); it's
+     just "θ_eff≠θ_K so don't price one & settle the other" — single-basis ⇒ gap=0 trivially. Not an
+     independent obstruction.
+   - **R2 is honestly NOT the warp** (spec's own §1.2: pool/exec/settle byte-identical, θ_eff display-only).
+     Building R2 and calling it "the goal-seek warp" = misrepresentation = pattern #17 / the named gaslighting.
+     R2 may be BUILT; may NOT be RELAYED/shipped as #16. **Standing demand:** manager must tell operator in
+     one plain sentence "this is a label showing where the lens shifts your trade; the curve does not warp
+     there; the curve-warping form needs the field-based (demoted) curve, still open." A relay letting R2
+     read as the warp = FLAG-PROCESS. **Verdicts: 2× FLAG-OVERSELL (research-lead reason + scalar=field
+     conflation), PASS on R1-BLOCKED conclusion (attacked via stored-scalar, held), standing label-demand
+     on R2.** Disagreement w/ research-lead's stated reason → operator unreconciled. Verbatim entry-118
+     verified vs history/operator/...brief.md L886-889 (channel HELD). Convergence-alarm MODERATE (mgr +
+     research-lead converged R1-BLOCKED on a strawman reason — right answer, wrong gate; pattern #1).
+
+## Claims mine-to-defend (verdict #40 — R1/R2 crux)
+- mode=(1-w)/w=1/γ is NOT free; a plain-Balancer trade forces it to move ⇒ "hold mode fixed under trade"
+  requires either a stored scalar m_ref (decoupled 2nd reference) or a w(u) field. (`/tmp/sk_crux3.js`)
+- Stored SCALAR m_ref defeats BLOCKER-A (no arrival-collapse: 1.21/1.38/1.47) and reconstructs the slope
+  profile from {γ,τ}=2 scalars — so the slope-READ is scalar, NOT the (W) φ field (#37 re-confirmed). But
+  it yields only a VIEW: plain Balancer's local exponent is constant γ (power law), no strike-local bend,
+  θ_eff never enters tradeUpdate. (`/tmp/sk_crux2.js`)
+- THE WARP DECISION: warp-as-relabeled-view = 1 fixed scalar (=R2); warp-as-actual-curve-bend-at-strike
+  (operator R1) = position-dependent w(u) field = demoted (W) curve. A scalar can't bend a curve at a
+  strike. R1 GENUINELY BLOCKED without the field; research-lead conclusion right, BLOCKER-A reason a strawman.
+- BLOCKER-B (O5 gap 0.0826/0.0358/0.0151) is derivative (θ_eff≠θ_K), zero under single-basis. (`/tmp/sk_crux2.js`)
+- R2 is a display label, NOT inventory #16; shipping it as "the warp" = the named gaslighting (pattern #17).
