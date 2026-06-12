@@ -1448,3 +1448,13 @@ _Context: operator pins the separate-layer trade rule — option pricing factors
 _Context: operator confirms the asymmetry — relative option pricing squarely determines the BUY notional; in the sell leg pricing does not factor into the notional._
 
 > there the relative option pricing squarely determines the buy notional; but in sell; this doesnt factor into notionsl rigjht
+
+
+---
+
+## Entry 188 — 2026-06-12 16:22 UTC
+_Context: operator, signing off, asks whether HEAD was updated._
+
+> did you update head or something? goodnight before i check it
+>
+> ?
