@@ -720,3 +720,11 @@ _Context: operator resolves the settlement-semantics fork (settle at LENSED pric
 _Context: operator rejects the manager's #8/#9 feature question as under-specified (R7/entry-71 standard: table + literal edit + plain English)._
 
 > your question isn't worded to my standards
+
+
+---
+
+## Entry 98 — 2026-06-12
+_Context: operator dispositions the two payoff-chart features — #8 manager's call; #9 IN (naked leg uncapped, like any American option)._
+
+> 1 take a call, 2 yes, like any american style option …
