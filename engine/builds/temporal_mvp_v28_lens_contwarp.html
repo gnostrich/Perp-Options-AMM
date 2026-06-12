@@ -3494,7 +3494,55 @@ const Viz = (function() {
   }
 
   // ── Pricing view (v11-style: polar angle φ° on x-axis) ─────────────────
+  // ── v28 contwarp — CONTINUOUS warp rendering (operator entry 158; skeptic
+  // VERDICT_CONTINUOUS_SKEW_entry158_2026-06-12). RENDERER-ONLY: every frame is
+  // the EXISTING live lensed read of an intermediate pool along the trade path —
+  // no new curve math, no held center, no override; each frame's curve draws at
+  // that frame's OWN 45°-tangent point (the live read). The money path is
+  // untouched: framePool only calls the PURE Engine.tradeUpdate (returns a
+  // fresh state, never mutates its argument).
+  // framePool(state, dy, s): the pool after executing fraction s of the trade's
+  // cash dy. s=0 ⇒ the pre-trade state; s=1 ⇒ the full preview pool.
+  function framePool(state, dy, s) {
+    return Engine.tradeUpdate(state, dy * s);
+  }
+  let _cwKey = null, _cwRaf = null;   // continuous-warp animation bookkeeping (draw layer only)
+
   function drawPricing(state, previewPool) {
+    // When a NEW preview is staged, sweep the dashed curve continuously from the
+    // live pool to the preview pool (s: 0→1 over ~0.8s via requestAnimationFrame),
+    // each frame drawn by the SAME live draw path (renderPricingFrame) on that
+    // frame's pool. Lands exactly on the s=1 static frame (= today's picture).
+    // Unchanged preview ⇒ static draw (no re-trigger); no preview or no rAF ⇒
+    // degrade gracefully to today's static behavior.
+    const raf = (typeof requestAnimationFrame === 'function') ? requestAnimationFrame : null;
+    const key = previewPool
+      ? (state.pool.x + '|' + state.pool.y + '|' + previewPool.x + '|' + previewPool.y)
+      : null;
+    if (key === _cwKey && _cwRaf !== null) return;          // same preview already animating
+    if (_cwRaf !== null && typeof cancelAnimationFrame === 'function') cancelAnimationFrame(_cwRaf);
+    _cwRaf = null;
+    if (!previewPool || !raf || key === _cwKey) {           // cleared / no rAF / unchanged
+      _cwKey = key;
+      renderPricingFrame(state, previewPool);
+      return;
+    }
+    _cwKey = key;
+    const prePool = state.pool;
+    const dyFull = previewPool.y - prePool.y;               // the trade's net cash
+    const t0 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    const DUR_MS = 800;
+    const step = (tNow) => {
+      const el = (isFinite(tNow) ? tNow : Date.now()) - t0;
+      const sFrac = Math.min(1, Math.max(0, el / DUR_MS));
+      const fp = (sFrac >= 1) ? previewPool : (framePool(prePool, dyFull, sFrac) || previewPool);
+      renderPricingFrame(state, fp);
+      _cwRaf = (sFrac < 1) ? raf(step) : null;
+    };
+    _cwRaf = raf(step);
+  }
+
+  function renderPricingFrame(state, previewPool) {
     const cv = document.getElementById('canvas-pricing');
     if (!cv) return;
     const ctx = cv.getContext('2d');
