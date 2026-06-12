@@ -776,3 +776,18 @@ _Context: operator restates the lens as a tangent-slope multiplier that's a func
 _Context: operator notes this was probably a small edit from v24 and directs keeping a good feature-level changelog._
 
 > so this probably was a very small edit from v24 right? make sure you keep a good feature level changelog etc.
+
+
+---
+
+## Entry 105 — 2026-06-12
+_Context: operator didn't understand "standing offer"; manager re-posed the remaining-work question plainly._
+
+> didn't understand standing offer
+
+---
+
+## Entry 106 — 2026-06-12
+_Context: operator authorizes the finishing work — cleanup batch + warp check + final test + promote to live._
+
+> please do
