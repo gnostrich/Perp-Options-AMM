@@ -839,3 +839,11 @@ _Context: operator says "yes" (go on the one-line live-slippage-refresh wire) an
 _Context: operator requests a test — same-dollar-premium trade at different strikes and kurtosis; hypotheses: (a) further OTM → more slippage per dollar; (b) sharper curve (less kurtosis = smaller τ via the inverse knob) → more slippage._
 
 > can you now also run the test for trade of same dollar value (premium) at different strikes and kurtosis --- i'd sat further OTM more slippage per dollar, and also sharper curve (less kurtosis as per the inverse knob) more slippage?
+
+
+---
+
+## Entry 113 — 2026-06-12
+_Context: operator pushes back on the flat-slippage finding — argues the goal-seek sees a steeper slope far out so a simple swap should slip more per dollar OTM._
+
+> no gang, i think you're wrong -- the goal seek is going to see a steeper slope far out won't it, which means more slippage per dollar doesn't it (since the trade for AMM bookkeeping purposes is a simple swap isn't it) ...?
