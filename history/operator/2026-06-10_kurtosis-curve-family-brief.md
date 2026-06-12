@@ -1182,3 +1182,11 @@ _Context: operator answers the skeptic's 9-item sequence + #1. Sharp corrections
 _Context: operator orders the agent memories purged too, and a RAG / internal-context-management system stood up to stop the breakdown; and to start work on the monolith._
 
 > ok purge agent memory etc also, and do an RAG or whatever you need for internal context management because the breakdown is beyond acceptable; additionally let's work on the mononlith
+
+
+---
+
+## Entry 155 — 2026-06-12
+_Context: operator clarifies the sequencing — the memory purge / RAG / monolith all assume HEAD is fixed first._
+
+> all this assuming head is fixed
