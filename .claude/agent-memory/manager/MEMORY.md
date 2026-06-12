@@ -49,3 +49,9 @@ row (steepness=derived-w unchanged; τ=new static knob); L4 strengthen (ban lens
 STAGE the build (S1 read-layer, S2 warp). Output → `specs/SPEC_v24_lens_BUILD_2026-06-11.md`.
 NEXT: research-lead lands → manager verify → skeptic R6 re-gate the spec → intern Stage 1 → gate +
 smoke-pass → Stage 2 → gate + smoke-pass → promote HEAD → morning report. HEAD 928cde1c untouched.
+
+## v24+lens build — STAGE MAP (2026-06-12, entry 96 expanded scope)
+- Stage 1 READ lens: BUILT `temporal_mvp_v28_lens_S1.html` md5 1ed8fe2d (FLAG-1 tau-redraw FIXED, manager-gate-verified; LIVE tester re-check adaea371 RAN but returned NO verdict — τ-redraw live confirmation DEFERRED into the final Stage-2 smoke-pass, not assumed passed).
+- Stage 2 WRITE/SETTLE lens: BUILDING (intern aa46cd29 → v28_lens_S2). Entry-96 "settle at lensed". Skeptic #30 CLEAR + halt-class must-apply (markLensed VALUE not coord-invariant; settled-leg inputs → ONE sNorm coord before lens call or 6× v27-class basis leak) + gate-5 strengthen. Solvency PASS (markLensed≤1), no-arb holds (basis gap by-design, pool-favourable).
+- Stage 3 VISIBLE WARP + BUG-BATCH + FEATURES: PENDING. Bug-batch (xoracle/anchor/stale-on-reject/N_buy/lp-y/LIQ + seam/dir test gates) auto-in. FEATURES #8 payoff x-range, #9 naked-leg uncap = AWAITING operator in/out.
+NEXT: Stage 2 lands → manager verify → tester smoke (covers write/settle + τ-redraw + chart isolation) → bug-batch intern pass → Stage 3 warp → full gate+smoke → promote HEAD. HEAD 928cde1c untouched.
