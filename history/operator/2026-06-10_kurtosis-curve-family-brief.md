@@ -1474,3 +1474,11 @@ _Context: operator clarifies his HEAD question — he meant the warp/at-strike s
 _Context: continuation of entry 189 — the warp rule the manager agreed with (A14, entries 184–187)._
 
 > that you agreed with
+
+
+---
+
+## Entry 191 — 2026-06-12 16:25 UTC
+_Context: operator asks the ETA to fix the at-strike rule tonight and then resume the monolith work._
+
+> how much eta to fix that tonight and then resume the other monolith stuff/
