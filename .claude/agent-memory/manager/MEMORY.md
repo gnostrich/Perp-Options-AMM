@@ -67,8 +67,11 @@ Skeptic backstops with FLAG-PROCESS (style-class, halt-class) via post-hoc trans
 ## ★★★ HEAD PROMOTED 2026-06-12 → v28-lens (operator entries 84/94/96/106)
 **CURRENT HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7e1ae39baa00fda087033174cfc652b8`.**
 v24 plain-Balancer pool (pool fns byte-identical to v24) + static polar lens (read+write+settle through
-one helper at the live 45°-tangent mode); one τ knob; lens_selfcheck 23/0; tester FINAL 27/27; warp
-legible; no blow-up/no cap; round-trip pool-favourable (skeptic #32). Pins updated: CLAUDE.md §8,
+one helper at the live 45°-tangent mode); one τ knob; lens_selfcheck 23/0; tester FINAL 27/27. **WARP HONESTY (skeptic #38): the GOAL-SEEK
+warp (trades reshape the curve to a targeted point — operator entries 85/88/91/118) is NOT BUILT =
+inventory #16, open since day 1, stalled on the (ln K)³ runaway. What IS built/visible: passive w-move
+(point slides on the v24 curve) + the lensed VIEW (chart-2) reshaping. NEVER call those the goal-seek
+warp.** round-trip pool-favourable (skeptic #32). Pins updated: CLAUDE.md §8,
 INTEGRITY, BUILD_LINEAGE, run_all.sh default+md5, CHANGELOG_v28_lens. v27 (`928cde1c`) DEMOTED+retained
 as `temporal_mvp_v27_wkurtosis.html`; v26c GH endpoint retained. OPEN (non-blocking): FINDING-RT display
 caveat (not a leak); payoff chart+strike-marker still unbent (cosmetic, operator-excluded). Branch only —
