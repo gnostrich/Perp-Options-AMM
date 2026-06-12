@@ -959,3 +959,16 @@ _Context: operator corrects the manager's "needs the field" framing — the mech
 _Context: operator diagnoses the flat-warp result as a wrong AMM-tx model — the option trade is an asset-for-dollars swap AT THE STRIKE, not a premium-sized cash swap at spot._
 
 > that's probably because you're not doing the AMM tx right. buy call is buy asset for dollars at strike on AMM, buy put is sell asset for dollars at strike on AMM
+
+
+---
+
+## Entry 128 — 2026-06-12
+_Context: operator restates the model in 4 crisp points and calls out the manager's consistent failure to simplify._
+
+> you've failed at simplifying things alarmingly consistently despite changing your constitution 
+>
+> 1. we change w to warp the curve
+> 2. goal seeks that tell us how much to warp w are as seen through the lens
+> 3. every interaction with the curve is read through the lens
+> 4. w changes directly in the balancer formula to change the picture seen through the lens
