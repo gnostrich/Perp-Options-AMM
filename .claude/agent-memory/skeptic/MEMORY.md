@@ -530,6 +530,29 @@ cleanliness-is-suspicious held. **MINE-TO-DEFEND:** cross-wing at-strike band le
 dy at close (call/put $120k, put/call $56k, default pool); same-wing telescopes exact; the at-strike
 open moves spot ~2× harder than premium-sizing so ITM-at-close is the COMMON case not a corner.
 
+### Verdict #A14-recheck (2026-06-12) — **HOLD DISSOLVED → CLEAR/promotable** on temporal_mvp_v28_lens_atstrike.html
+→ `notes/skeptic/VERDICT_A14_atstrike_RECHECK_2026-06-12.md`. Operator entries 198/199 removed BOTH
+props the $120k HOLD stood on: 198 "ITM → direct intrinsic+extrinsic payout, NO AMM reversal; open
+swap legitimately stands" (kills round-trip-neutral expectation); 199 "individual options not spreads"
+(kills the cross-wing band frame). Re-derived on live engine: **for a SINGLE option there is no
+free-money.** DECISIVE FACT: trader's realized P&L = `trader_payout = L0·raw_net·carvedEquityAtClosure`
+and `raw_net = Y−X` is built from option VALUES (markEff/legValueUnified) ONLY — **the open at-strike
+`dy` is NEVER referenced in the close P&L** (traced: sold call N=1 K=$120k, open dy=+120k into pool,
+close@flat-oracle leaves pool y +120k but touches trader books nowhere). Trader cash-IN = carved CLUB
+EQUITY (openBand `carveEquityAbs`, NOT the pool dy); cash-OUT = option value ± perp-slice P&L. **No
+double-count**: trader never "receives N·K" (it's a pool reserve move). Pool retaining the swap = the
+operator's intended curve-warp persistence, NOT a leak. **ITM cash-settle-without-reversal is now
+CORRECT (entry-198 rule implemented), not a leak** — my prior flag on that exact code was right ONLY
+under the now-rejected round-trip expectation. Steelman for STILL-HOLD ("self-inflicted ITM crossing
+lets trader collect smooth-paste value") FAILED: seller is SHORT, ITM short PAYS the value (X enters
+raw_net with a minus) ⇒ self-inflicted ITM makes seller WORSE off, opposite of extraction. **Build
+needs NO correctness tweak.** RESIDUAL FINDING (FLAG-OVERSELL, UI-layer, NON-blocking, operator's
+call): preview HTML L1211 header "Pool Δ (cash-conserving ⇒ Δy_net ≈ 0)" + L1214/L3133 label `netPoolY`
+as "net trader cash @ open" — but at-strike `netPoolY = +$161,864` on a cross-wing band (measured:
+leg1 dy +120k call + leg2 dy +41.9k put, both push cash SAME way), NOT ≈0. Mislabeled pool-warp as
+trader cash; doesn't touch P&L. **MINE-TO-DEFEND going forward:** P&L reads option-value only, open dy
+is pool-warp; that's why single-option at-strike is fair. Scripts `/tmp/{single,band,pnl}.js`.
+
 ### Verdict #manager-comms (2026-06-12) — FLAG-PROCESS + FLAG-OVERSELL on the manager's operator-facing replies
 → `notes/skeptic/VERDICT_MANAGER_COMMS_2026-06-12.md` (goes to operator verbatim, entry 148 summons).
 Operator (148, VERBATIM): "your wording is again slippery and evasive. fucking skeptic where are

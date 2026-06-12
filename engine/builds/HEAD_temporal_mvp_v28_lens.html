@@ -1735,6 +1735,10 @@ const Engine = (function() {
     return { V: N * (mIn - mOut), theta_star, delta, m_star: mIn, mode: 'spread' };
   }
 
+  // A14 reserve-guard depth fraction (engine constant, operator-editable; the
+  // hard wall at 1.0 is the y→β singularity, 0.90 keeps a margin). NOT a UI knob.
+  const DEPTH_FRAC = 0.90;
+
   // Generic leg execution. legType ∈ {sell, buy}. Dispatches via legPrice.
   // Primitive: barrier swap (single strike). Spread translates through it
   // via the composite-ray identity (single trade at θ*).
@@ -1759,16 +1763,38 @@ const Engine = (function() {
   // a costless collar is sell-one-wing + buy-the-other, and on the AMM both
   // those swaps run the SAME direction.
   function executeLeg(state, legType, wing, theta_inner, theta_outer, N, oracle, tau) {
-    const p = legPrice(state, wing, theta_inner, theta_outer, N, tau);   // V now LENSED (W2); dy form unchanged
+    // legPrice / V is STILL computed and STILL returned — it remains the
+    // settle/position-value basis (entry 96) AND the buy-leg proceeds sizer
+    // (executeBand N_buy). It just NO LONGER sizes the pool swap dy.
+    const p = legPrice(state, wing, theta_inner, theta_outer, N, tau);   // V LENSED; basis for value + N_buy only
     const fx = (isFinite(oracle) && oracle > 0) ? oracle : 1;
-    const V_usd = p.V * fx;
     const wingSign = (wing === 'call') ? +1 : -1;
     const legSign  = (legType === 'sell') ? +1 : -1;
-    const dy = (wingSign * legSign) * V_usd;   // cash delta on the pool's y leg
+    // ── A14 AT-STRIKE sizing (register A14, operator entries 127/153 #4/187;
+    // arb-stop OVERRULED operator entry 197 "transact at whatever the curve
+    // is"). The pool swap is notional × strike, PREMIUM-FREE: K_usd =
+    // theta_inner × oracle (the leg's strike in dollars; at open θ=K/oracle
+    // so θ·oracle == K exactly, and at close θ=K_inner/oNow so θ·oNow ==
+    // K_inner — the dollar strike is oracle-drift-invariant ⇒ reversal dy =
+    // −open dy ⇒ pool reserves round-trip EXACT).
+    const K_usd = theta_inner * fx;
+    const dy = (wingSign * legSign) * N * K_usd;   // cash delta on the pool's y leg (AT-STRIKE)
+    // ── Reserve guard (spec §2.3) — cash-OUT (dy<0) may not exceed the pool's
+    // cash depth y−β. HONEST REJECT with the numbers; NEVER a silent cap,
+    // never a mutated N. (Cash-IN legs are always representable on the
+    // hyperbola.) DEPTH_FRAC < 1 keeps a margin off the y→β singularity.
+    if (dy < 0) {
+      const depth = state.y - state.beta;
+      if (N * K_usd >= DEPTH_FRAC * depth) {
+        return { rejected: true,
+                 reason: `At-strike cash $${(N * K_usd).toFixed(2)} exceeds ${(DEPTH_FRAC * 100).toFixed(0)}% of pool cash depth $${depth.toFixed(2)} — trade rejected.` };
+      }
+    }
     const post = tradeUpdate(state, dy);
     if (!post) return null;
     return { newState: post, V: p.V, theta_star: p.theta_star, delta: p.delta, dy,
-             m_star: p.m_star, inner: theta_inner, outer: theta_outer, wing, N, legType, mode: p.mode };
+             m_star: p.m_star, inner: theta_inner, outer: theta_outer, wing, N, legType, mode: p.mode,
+             K_usd };
   }
 
   // Back-compat alias.
@@ -1831,6 +1857,7 @@ const Engine = (function() {
     }
 
     const leg1 = executeLeg(state, 'sell', sold_wing, sold.inner, sold.outer, N_sell, oracle, tau);
+    if (leg1 && leg1.rejected) return { ok: false, reason: leg1.reason };   // A14 reserve guard
     if (!leg1) return { ok: false, reason: 'Sell leg failed (singular state).' };
     const V_sell = leg1.V;
 
@@ -1852,6 +1879,7 @@ const Engine = (function() {
     if (!(Math.abs(denom) > 1e-12)) return { ok: false, reason: 'Bought-leg geometry degenerate.' };
     const N_buy = V_sell / denom;
     const leg2 = executeLeg(leg1.newState, 'buy', bought_wing, bought.inner, bought.outer, N_buy, oracle, tau);
+    if (leg2 && leg2.rejected) return { ok: false, reason: leg2.reason };   // A14 reserve guard
     if (!leg2) return { ok: false, reason: 'Bought leg failed.' };
 
     // Per-leg slippage (display-only). The PERCENTAGE is |Δ(w/(1-w)) ratio|
@@ -2004,6 +2032,25 @@ const Engine = (function() {
     };
     band = { ...band, sold: liveRay(band.sold), bought: liveRay(band.bought) };
 
+    // ── A14 AT-STRIKE close reversal (register A14; operator entry 197) ──────
+    // The OPEN leg moved the pool by the at-strike cash dy = wingSign·legSign·
+    // N·K_usd (executeLeg). To make the pool RESERVES round-trip EXACT, the
+    // close reverses each leg with dy = −(open dy) using the SAME stored N and
+    // K_inner (dollars — oracle-drift-invariant, see executeLeg). The lensed
+    // premium X/Y below is UNCHANGED and STILL the trader-valuation basis
+    // (entry 96); only the pool swap is at-strike. (The residual mark-on-own-
+    // bend valuation netting is the A15 deferred item, NOT closed here.)
+    //   open dy (sold,  legSign +1) =  wingSign·N·K   ⇒ reverse = −wingSign·N·K
+    //   open dy (bought, legSign −1) = −wingSign·N·K   ⇒ reverse = +wingSign·N·K
+    const oForK   = (oNow > 0) ? oNow : 1;
+    const Ksold   = (isFinite(band.sold.K_inner)   && band.sold.K_inner   > 0) ? band.sold.K_inner   : band.sold.inner   * oForK;
+    const Kbought = (isFinite(band.bought.K_inner) && band.bought.K_inner > 0) ? band.bought.K_inner : band.bought.inner * oForK;
+    const wsSold   = (sold_wing   === 'call') ? +1 : -1;
+    const wsBought = (bought_wing === 'call') ? +1 : -1;
+    // reversal dy = −(open dy): sold open legSign +1, bought open legSign −1.
+    const dyRevSold   = -(wsSold   * (+1) * band.sold.N   * Ksold);
+    const dyRevBought = -(wsBought * (-1) * band.bought.N * Kbought);
+
     // (1) Which leg, if any, is ITM — POOL-MARK-referenced (Item 2):
     // live sNorm vs the leg's live θ, same-layer test companion of
     // `mark`. Compute regime BEFORE wing-lock so the wing-lock loop
@@ -2060,8 +2107,9 @@ const Engine = (function() {
       // Bought leg is the live OTM leg → reverse on AMM (LENSED legPrice,
       // same reciprocal coordinate — both legs move together, §11.4-C).
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
-      Y = px_b.V; m_b = px_b.m_star;
-      const s_after_Y = tradeUpdate(s, -Y);
+      Y = px_b.V; m_b = px_b.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
+      // Pool reversal is AT-STRIKE = −(open dy) ⇒ exact reserve restoration.
+      const s_after_Y = tradeUpdate(s, dyRevBought);
       if (!s_after_Y) return { ok: false, reason: 'Bought-leg (live) close singular.' };
       s = s_after_Y;
       live_leg = 'bought';
@@ -2073,22 +2121,25 @@ const Engine = (function() {
       settled_cash_leg = 'bought';
       // Sold leg is the live OTM leg → reverse on AMM (LENSED legPrice).
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
-      X = px_s.V; m_s = px_s.m_star;
-      const s_after_X = tradeUpdate(s, +X);
+      X = px_s.V; m_s = px_s.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
+      // Pool reversal is AT-STRIKE = −(open dy) ⇒ exact reserve restoration.
+      const s_after_X = tradeUpdate(s, dyRevSold);
       if (!s_after_X) return { ok: false, reason: 'Sold-leg (live) close singular.' };
       s = s_after_X;
       live_leg = 'sold';
     } else {
-      // (a) Neither leg ITM — both live, both reversed on the AMM.
+      // (a) Neither leg ITM — both live, both reversed on the AMM AT-STRIKE.
+      // X/Y stay the lensed VALUE (entry-96 basis); the pool moves by the
+      // at-strike reversal dy = −(open dy) per leg ⇒ reserves restore exact.
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
       X = px_s.V; m_s = px_s.m_star;
-      const s_after_X = tradeUpdate(s, +X);
+      const s_after_X = tradeUpdate(s, dyRevSold);
       if (!s_after_X) return { ok: false, reason: 'Sold-leg close singular.' };
       s = s_after_X;
 
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
       Y = px_b.V; m_b = px_b.m_star;
-      const s_after_Y = tradeUpdate(s, -Y);
+      const s_after_Y = tradeUpdate(s, dyRevBought);
       if (!s_after_Y) return { ok: false, reason: 'Bought-leg close singular.' };
       s = s_after_Y;
     }
