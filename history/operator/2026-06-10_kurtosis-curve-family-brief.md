@@ -847,3 +847,11 @@ _Context: operator requests a test — same-dollar-premium trade at different st
 _Context: operator pushes back on the flat-slippage finding — argues the goal-seek sees a steeper slope far out so a simple swap should slip more per dollar OTM._
 
 > no gang, i think you're wrong -- the goal seek is going to see a steeper slope far out won't it, which means more slippage per dollar doesn't it (since the trade for AMM bookkeeping purposes is a simple swap isn't it) ...?
+
+
+---
+
+## Entry 114 — 2026-06-12
+_Context: brainstorm — operator proposes the two-layer model (AMM swap accounting + buy-leg cash via premium accounting so layers don't conflict) and asks: for the same AMM-standpoint swap, further OTM + more skewed (lower kurtosis number, inverted) → more curve warp (slippage)?_
+
+> so we get this clear lets both brainstorm --- you have a trade as per the AMM as the accounting layer where it looks like an actual swap, but then for the buy leg, we don't assume cash as per the pool, but rather as per the premium accounting if that makes sense; this way the layers don't conflict --- now, nevertheless, for same dollar value swap from the AMM standpoint, further OTM, and more skewed (lower kurtosis number since its inverted) would mean more curve warp (slippage) ...?
