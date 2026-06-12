@@ -1,0 +1,88 @@
+# COMPONENT REGISTER — the single place to take stock
+
+_Created 2026-06-12 on operator grievance (entries 137/138) + **skeptic VERDICT #45**
+(`notes/skeptic/VERDICT_PROCESS_COMPONENT_TRACKING_entry137_2026-06-12.md`). This file exists
+because agreements were living only as prose in transcripts and memories — narration, not gated
+state — so agreed things kept regressing while the operator went in circles. This is the binding
+register. **One row per inventory component AND per operator-agreed constraint.**_
+
+## How to read STATE (one word, no hedging)
+- **AGREED** — the operator ruled it; it is binding. May or may not be built yet.
+- **BUILT** — present in HEAD, manager-verified at the code/numeric level.
+- **VERIFIED** — BUILT **and** independently confirmed (tester live and/or skeptic cold-derive and/or a HARD gate).
+- **OPEN** — not settled / not built / under derivation.
+- **REGRESSED** — was AGREED/BUILT/VERIFIED and a later change violated it. **This is a STOP-class state.**
+
+## ⛔ THE REGRESSION GATE (the teeth — skeptic #45, binding same class as the file-safety gate)
+**No merge, no HEAD promotion, no spec, and no operator-facing relay may flip an AGREED or VERIFIED
+row toward REGRESSED without an explicit operator reopen entry.** A would-be regression is a
+STOP-class halt: the manager halts and reports it as a finding (does NOT patch toward green), exactly
+like a red file-safety gate. **The manager promotes every operator ruling from the transcript into
+this register in the SAME turn it is acted on** — that pairing IS the gate. The skeptic audits this
+register against the transcript and `docs/feature_inventory.md` every pass; a missing row, a stale
+state, or an un-gated regression is a FLAG-PROCESS against the manager.
+
+## Provenance honesty
+`VERIFIED` requires a named confirmation (gate name / tester run / skeptic verdict #). Where the
+manager has NOT personally re-confirmed HEAD state this session, the row says **needs-verify** in
+LAST-VERIFIED rather than asserting green — manufacturing false-green here would defeat the register's
+entire purpose. Those rows carry a queued tester/skeptic confirmation.
+
+---
+
+## PART A — Inventory components (1:1 with `docs/feature_inventory.md`)
+
+HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plain v24 Balancer pool + static polar lens.
+
+| ID | Component | STATE | OWNER | SETTLED-BY | GATE | LAST-VERIFIED |
+|----|-----------|-------|-------|-----------|------|---------------|
+| C1 | Balancer base `x^w·y^(1−w)=k` | VERIFIED | manager | motive / entry 28 (HEAD=v28) | `lens_selfcheck` pool-byte-identical | 2026-06-12 (pool fns byte-identical to v24) |
+| C2 | The curve warp (position-dependent **weight FIELD**) | OPEN — **NOT in HEAD** | research-lead | entry 28 demoted v27→ lens | — | the (W) field is DEMOTED (`v27_wkurtosis`); v28 warp is the lens (C3), not a w(u) field |
+| C3 | Kurtosis knob τ (the **lens**) | VERIFIED | intern/tester | entries 84/94 | `lens_selfcheck` 23 PASS [HARD] | 2026-06-12 |
+| C4 | Carry `P=Ny/Nx`, `u=log price − log P` | BUILT (inherited) | research-lead | locked arch | — | needs-verify (inherited v24; lens moneyness-origin = live mode, spec'd) |
+| C5 | Rebase (P→P/r, θ→θ/r, anchor w=½) | BUILT (inherited) | research-lead | locked arch | — | needs-verify; **warp∘rebase-commute lemma OPEN [needs-Aristotle]** |
+| C6 | Pricing law value∝S^(−γ), γ∈(1,4) | VERIFIED | tester | locked (G4) | `lens_selfcheck` frozen-wings | 2026-06-12 (wings → γ exact) |
+| C7 | ITM American smooth-pasting `S*=K·g/(g+1)` | VERIFIED | intern/tester | entry 85/93#6 | `lens_selfcheck` settle==lensed | 2026-06-12 |
+| C8 | Uniform strike registration θ=sNorm(K) | BUILT (inherited) | tester | v26c ruling | — | needs-verify on v28 lens path |
+| C9 | Funding = slope-deviation (±g_loc through lens) | BUILT | intern | entry 93#5 | `lens_selfcheck` funding | needs-verify live; ⚠ **LOCKED CONTRACT ALTERED**: ATM funding→0 (operator-ACCEPTED entry 93#5) |
+| C10 | Slippage basis `mpGeom=getMP_raw·e^(−ghMu)` | N/A on v28 | manager | GH-line only | — | v28 plain Balancer: price==slope, the e^−ghMu gotcha is GH-only |
+| C11 | Dollar / settlement pipe (settle-at-lensed) | BUILT | intern | **entry 96** | `lens_selfcheck` single-basis | needs-verify live |
+| C12 | THE gotcha (getMP_raw = price-coord not slope) | N/A on v28 | manager | GH-line only | — | GH-only; v28 single-basis |
+| C13 | Solvency boundary (B1 real floor) | OPEN | research-lead | ship-gate | — | conditional-only (B1 CARRIED[coverage]); geometry does NOT close solvency |
+| C14 | Esscher tilt / latent rapidity group | trusted-from-prover | research-lead | motivation-layer | Aristotle (audited) | RUN-2 (motivation-layer, not load-bearing for build) |
+| C15 | File-safety gate (blobs, splices, scripts) | VERIFIED | manager | locked (§3) | `file_safety_gate.sh` PostToolUse hook | 2026-06-12 (blobs canonical, 3 scripts parse) |
+| C16 | **Warp-with-trades / goal-seek warp** | **AGREED + SPEC'D, UNBUILT** | research-lead/intern | entries 10/14/16; 128–133 | (build gates pending) | **OPEN since day 1.** Spec `SPEC_v28_goalseek_warp_RECONCILED`. Build HELD behind this register (entry 137/138 grievance). **NEVER label as built.** |
+
+---
+
+## PART B — Operator-agreed constraints (binding; a violation = REGRESSED = STOP)
+
+| ID | Agreed constraint | STATE | SETTLED-BY | Note / gate |
+|----|-------------------|-------|-----------|-------------|
+| A1 | **Trades warp the curve — it is `w` that changes; NOT a dot sliding** | AGREED | entries 1/10/16 | C16 realizes it; **signed gate** — a w′=w₀ reset that re-flattens VIOLATES this (skeptic #41) |
+| A2 | Kurtosis is **static, vol-set, NOT changed by trades** | AGREED | entry 14#3 | the τ knob is the curve geometry, not a trader statistic |
+| A3 | **HEAD = v28 lens** (curve reopened; Balancer + polar lens) | AGREED | entry 28 | C1/C3 |
+| A4 | **Settle / record / value at lensed prices** | AGREED→BUILT | entry 96 | C11 |
+| A5 | **Asymptotes preserved** — any floor/saturation in deep wings disqualified | AGREED | entries 55(1)/60 | lens wings frozen power-law γ |
+| A6 | **Monotonicity / no-arbitrage** is binding | AGREED | entry 55(3) | `lens_selfcheck` monotone |
+| A7 | Balancer weights **complementary, sum to 1**, always | AGREED | entry 73 | else "the thing is void" |
+| A8 | **BANNED TERM: "spot swap slippage"** — a trade is a swap that WARPS; one thing | AGREED | entry 122 | speak in warp terms |
+| A9 | **Communication form:** table + core formula(s) + the literal edit + plain English | AGREED | entries 44/71/81/99 | R7; pre-send self-check |
+| A10 | Warp read through the **pre-step (held) lens**; lens **AMPLIFIES** skew (works WITH it, not neutralise); per-step sequence | AGREED | entries 129/131/132 | skeptic #43/#44; the "restore→flat" target is the rejected neutralise op |
+| A11 | Honest limit: single-w warp = **vertical rescale in ONE step**; strike-differentiated **skew grows ACROSS the sequence** as the mode updates | AGREED | skeptic #44 + entry 132 | UI copy must NOT over-claim a per-strike in-step bend |
+| A12 | **θ_K stays the payoff/settlement strike** — execution-relocation to a lens-shifted point (R1) is BLOCKED + an operator-tier settlement-semantics change | AGREED | research spec + #44 | moving it = undisclosed semantics change + basis-leak arb |
+
+---
+
+## PART C — Process rules in force (R1–R7, succession plan)
+R1 citation-or-no-build · R2 one-go-one-build · R3 control-inventory · R4 kill-means-silent ·
+R5 verify-before-reassuring · R6 skeptic scope-gate on builds · R7 tables+simple-English.
+Canonical: `.claude/agents/manager.md`, `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md`.
+
+## Queued confirmation pass (to clear the `needs-verify` rows)
+Tester + skeptic to confirm C4/C5/C8/C9/C11 live-state on HEAD v28 and stamp LAST-VERIFIED, so no
+row sits on manager assertion alone. Owner: manager to dispatch after the integrity verdicts fold.
+
+## Maintenance
+Owner: **manager**, every turn an operator ruling lands or a build changes a row. Skeptic audits
+against the transcript + `feature_inventory.md` every pass. `main` wins on disagreement.

@@ -127,10 +127,26 @@ w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{
   unbuilt warp read as built #38; skeptic positioned post-hoc not pre-relay-gate — my defect). PIPELINE NOW:
   skeptic integrity verdict + COMPONENT REGISTER land → manager re-derive a28df44 float64 + verify pool md5
   byte-identical → skeptic R6 scope-gate → SHOW OPERATOR itemized edit + FRESH go (R2) → intern → gates+smoke → promote.
-- **⚠ SELF-INFLICTED: TWO skeptic instances running concurrently** (ac96e2b entry-137, afeaeb9 entry-138
-  follow-up) — no SendMessage tool available so I spawned a 2nd instead of continuing the 1st. RISK: both
-  Write notes/skeptic/ + skeptic MEMORY.md → collision. RECONCILE at fold (manager is git actor): merge both
-  verdict files, hand-fix skeptic MEMORY.md last-writer-wins loss. Do NOT spawn a 3rd.
+- **TWO skeptic instances ran concurrently** (ac96e2b entry-137, afeaeb9 entry-138) — no SendMessage tool,
+  spawned 2nd instead of continuing 1st. RESOLVED-LUCKY: both folded into ONE verdict file
+  `notes/skeptic/VERDICT_PROCESS_COMPONENT_TRACKING_entry137_2026-06-12.md` (entry-138 = ADDENDUM); skeptic
+  MEMORY intact (2191 lines, #45 + entry-138 self-audit + blind-spot #12). No corruption. LESSON: serialize
+  same-agent dispatches; never 2 skeptic at once. Both verdicts RELAYED VERBATIM to operator.
+
+## ⛔⛔ SKEPTIC #45 + #46(entry-138) — INTEGRITY HALT (operator grievance 137/138; binding, halt-class)
+Operator: tracking is shoddy, going in circles 10s–100s× (agreed-then-regressed), "colluding or bypassing?".
+Skeptic verdict (RELAYED VERBATIM): he is RIGHT, 4th substantiation in 2 days (#22/#38/#40-44/#45). Root
+cause = **agreements live as PROSE not GATED STATE.** Skeptic self-audit: not colluding/not override-bypassed,
+but (1) complicit by carried-frame error in 4 of 5 flat-warp rounds; (2) bypassed by LATENCY (post-hoc,
+dispatch-gated — gaslighting ran ~30 entries before audited). FIX (built this turn): **`docs/COMPONENT_REGISTER.md`**
+— one row per component + per operator-agreed constraint; STATE∈{AGREED/BUILT/VERIFIED/OPEN/REGRESSED};
+**REGRESSION GATE: no merge/promote/spec/relay may flip AGREED|VERIFIED→REGRESSED without explicit operator
+reopen = STOP-class halt.** Manager promotes every operator ruling into the register the SAME turn (the pairing
+IS the gate). **SKEPTIC HALT-CLASS STANDING CALL: no further HEAD promotion + no "component done" relay until
+the register EXISTS (✅ created this turn) AND skeptic audits its FIRST STATE (PENDING — dispatched).** Skeptic
+asks its register-audit be bound as an IN-LINE gate on every HEAD change + every "done" relay (chokepoint, not
+dispatched task). Operator can overrule; manager cannot. **BUILD (C16 goal-seek warp, spec'd, READY) STAYS HELD**
+behind: register first-audit clears → show operator itemized edit → fresh go (R2) → build.
 - **QUEUED (entries 134/135/136, do NOT start until a28df44 lands — research-lead memory single-writer):**
   (i) FIRST check/refresh the MOST-RECENT STATE of the port-Hamiltonian → information-geometry →
   free-potential theory line (operator entry 135 recall): the metriplectic "one object" T2

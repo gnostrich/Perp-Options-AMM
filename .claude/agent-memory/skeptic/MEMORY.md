@@ -2159,3 +2159,33 @@ g, verified vs literal tradeUpdate to 6 digits.
     that settled it, and the gate that BLOCKS a regression? If any is missing, it WILL evaporate. The
     fix is `docs/COMPONENT_REGISTER.md` + the regression-as-halt gate (verdict #45). Until it exists,
     re-flag every "agreed X" the build contradicts as a halt, not a soft omission.
+
+13. **2026-06-12 — PROCESS grievance #45 (entry 137) + SELF-AUDIT (entry 138)** →
+   `notes/skeptic/VERDICT_PROCESS_COMPONENT_TRACKING_entry137_2026-06-12.md` (one file, two parts).
+   **Entry 137 (component tracking shoddy): operator RIGHT, SUBSTANTIATED.** Named 4 distinct
+   regression mechanisms with citations: (A) OPEN gap carried in operator's vocab, re-sold as done
+   (#16 goal-seek, entries 85→119, my #38); (B) the 5-round flat-warp circle (#40–#44); (C) stale
+   inherited-code claims coexisting w/ live BLOCKED specs (#22 anchor overlay drawn 104× wrong while
+   ledger said "absent"); (D) decision-channel vs build-channel unreconciled (signed entry-1 "not a
+   dot slide" violated, nothing gated it). Root cause: agreements live only as transcript/memory
+   PROSE, nothing makes an operator-agreed item BINDING. FIX (my completeness lane, not engine):
+   `docs/COMPONENT_REGISTER.md` — one row per inventory item + per agreed-constraint; columns
+   ID/Component/STATE(AGREED|BUILT|VERIFIED|OPEN|REGRESSED, ONE word)/OWNER/SETTLED-BY(transcript
+   entry)/GATE/LAST-VERIFIED; regression gate = no merge/relay may flip AGREED|VERIFIED→REGRESSED
+   without an operator REOPEN entry; manager owns updates, I audit. Manager = primary EXECUTION
+   failure point (#26 wiped once, recurred) but fix is STRUCTURAL not another wipe.
+   **Entry 138 (collude or bypassed?): ruled NEITHER cleanly — COMPLICIT-by-carried-frame + BYPASSED-
+   by-latency.** Self-audit, owned plainly: (1) I was complicit in 4/5 flat-warp rounds (#40–#43,
+   blind-spots #10/#11) — re-derived in the team's wrong FRAME, not bought; the dedicated skeptic was
+   INSIDE the circle the operator is angriest about. (2) Not manager-override-bypass (no case of mgr
+   shipping over a standing FLAG; the one "promoted over my blocker" = DIFF_LEDGER #16 entry-28 was
+   the OPERATOR overruling, legitimate). The bypass is LATENCY: I am post-hoc + dispatch-gated, so
+   regressions between dispatches reach him first (entry-119 gaslighting ran ~30 entries before I
+   substantiated it at #38). (3) My convergence-alarm catches CONTENT not PROCESS. **Standing
+   request to operator (in the verdict):** bind my register-audit as an IN-LINE gate on every HEAD
+   change + every "X is done" relay, not a dispatched task — converts me from post-hoc to chokepoint.
+   **Halt-class call issued:** no further HEAD promotion / no "component done" relay until the
+   register exists and I audit its first state. Operator can overrule; manager cannot.
+   **NEW blind-spot pattern #12 (on MYSELF):** *the skeptic's own output is part of the combinatorial
+   explosion (~45 verdicts in 2 days) and a component-by-component skeptic that never demands the
+   structural register is doing half the job — catch the CLASS via a binding board, not just instances.*
