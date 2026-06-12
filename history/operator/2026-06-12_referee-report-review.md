@@ -58,3 +58,10 @@ DEFERS the round-trip/path-residual question (operator's rationale: same problem
 dynamic-function AMMs e.g. Curve — recorded as operator rationale, not project-verified). Ruling
 note: `notes/operator_ruling_2026-06-12_offATM_trade_rule.md`; research-lead spec+Lean dispatch
 this turn._
+
+## Entry 9
+> once you done asking questions / clarifying with me give me an MD to send to the agent that gave that refutal note to us
+
+_Context note: author-response MD drafted this turn at
+`evidence/aft2026_review/RESPONSE_TO_REFEREES_2026-06-12.md`; delivered to operator with the caveat
+that the skeptic pass + in-flight research-lead/Lean results may upgrade or correct specific lines._
