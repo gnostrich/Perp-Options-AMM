@@ -879,3 +879,11 @@ _Context: operator refines the comprehension point — it's not the cash but the
 _Context: operator authorizes spec'ing the full lensed lifecycle + transact/goal-seek at the lens-shifted trade point; asks if it's possible / what they might be missing, noting ~100 regressions fought since inception._
 
 > yes, look through the lens for every part of the lifecycle where the curve is seen / interacted with....; and transact / goal seek wrt the trade point ... is this possible? am i missing something? because i've fought almost 100 regressions in this project since inception
+
+
+---
+
+## Entry 118 — 2026-06-12
+_Context: operator correction flagged as a manager context-break (directed at the skeptic) — the lens has zero effect at the mode (unit tangent slope) and distorts only OUTWARD; so the lens shifts the effective trade point further OTM (sharper lens = further still); the mode does NOT re-center on the trade. Same for the goal-seek (more warp with a sharper lens)._
+
+> no. the lens as i clarified earlier, and skeptic, note this as a manager context break: the lens has zero effect at unit tangent slope ('mode') but only outwards from there does its distortion show up; so without lens i'd trade OTM, but through lens would trade OTM+, and sharper lens OTM++ ... does that make sense; same goes for the goal seek, it would goal seek for more warp with sharper lens
