@@ -972,3 +972,11 @@ _Context: operator restates the model in 4 crisp points and calls out the manage
 > 2. goal seeks that tell us how much to warp w are as seen through the lens
 > 3. every interaction with the curve is read through the lens
 > 4. w changes directly in the balancer formula to change the picture seen through the lens
+
+
+---
+
+## Entry 129 — 2026-06-12
+_Context: operator corrects the manager's "lens re-centers as w changes" argument — the warp goal-seek is read through the lens as it was PRE-warp (frozen reference); it lies in the proforma._
+
+> let me correct you there. "warp goal seeking as seen through the lens pre warp" make sense? it lies in the proforma …
