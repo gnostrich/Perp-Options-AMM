@@ -1576,3 +1576,43 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
   (cash-conserving, #31 fix); preview+exec share legPrice ⇒ τ-wire consistent. (Node vm)
 - The τ display-refresh wire is exactly 1 line (L2727 previewBand+render redraws), display-only,
   lens architecture byte-identical committed↔working-tree.
+
+35. **2026-06-12 — SLIPPAGE per-dollar vs strike & τ (verdict #35; manager could NOT re-derive,
+   3 failed measurements) — adjudicates research-lead note vs manager entry-114 brainstorm** →
+   `notes/skeptic/VERDICT_SLIPPAGE_strike_tau_2026-06-12.md`. Re-derived from LIVE HEAD v28
+   (md5 `7e1ae39b` confirmed) by transcribing the v28 primitives myself (L1600–1772):
+   `/tmp/skeptic_v28*.js`. **FLAG-WRONG on the manager's entry-114 brainstorm** ("option-price
+   slippage more further OTM, sharper τ, bounded, no cap, already in the build") — the DIRECTION is
+   backwards. **PASS on the research-lead note** (attack failed; all tables reproduced byte-level).
+   **THE RESULT (mine to defend):** on a fixed-dollar swap the lensed-mark %move is LARGEST at ATM
+   and FALLS monotonically into the wings. Decomposition (`/tmp/skeptic_v28c.js`, marginal dy=0.01,
+   τ=0.3): %move = constant bare pool mode-move (−0.0167% at EVERY strike) + a lens re-stamp that is
+   −0.674% at ATM, decaying to a −0.0128% floor in the wing (|%move| 0.69→0.11→0.066→0.040→0.032→
+   0.0294 over u=0→4). Finite dy=+5 table (iv) reproduced to the digit: ATM 60.98 / 1.5x 16.58 /
+   2x 14.17 / 3x 13.50 (τ=0.3) — FALLS OTM. **WHY:** the kurtosis-knob design working as specified
+   (inventory #2/#3) — frozen power-law wings (g_loc→γ, only feel the bare pool move) + active ATM
+   elbow (g_loc→0, smooth-paste continuation most mode-sensitive). The option price is MOST
+   mode-sensitive at ATM by construction, so a pool move shows up MOST at ATM, LEAST in the wings.
+   τ-direction is an ATM-only effect (sharper τ raises ATM %move 0.14→3.12 as τ 2→0.05; wings
+   τ-frozen ≈−0.0294%). **(3) operator intuition correct ONLY for the (un-built) trade-point
+   mechanic:** g_loc(K)=γ·h′_τ(|u|) rises 0(ATM)→γ(wing), rises as τ falls (Q3 table reproduced to
+   the digit) — but v28 swaps at SPOT (tradeUpdate takes only {s,dy}; strike/τ only size dy);
+   inventory #16 trade-point ANCHORING is OPEN. **(4) bounded forward-read trade-point swap EXISTS:**
+   forward dG/du=γ·h″ bounded (γ/τ at mode →0 wings); only INVERTING the lens (1/h″: 12.6/91.9/717/
+   5701 at u=1/2/4/8) re-introduces the cap; sizing impact by g_loc forward stays ≤γ (saturates,
+   doesn't diverge). Q4 correct. **Convergence-alarm LOW** (research-lead landed the self-adversarial
+   build-faithful answer AGAINST the manager's confident brainstorm; the disagreement was real, not
+   laundered). **Pattern #1 reinforced** (confidence anti-correlates with verification — the manager's
+   CONFIDENT brainstorm answer to the operator was the defect; the digit-bearing research note held).
+   This gates the manager's correction to the operator. Verbatim channel: entries 112/113/114 verified
+   vs `history/operator/2026-06-10_kurtosis-curve-family-brief.md` L838–857 (replies not transcribed
+   per §2.2 — manager's entry-114 claim handed via task brief, not in transcript; no FLAG-PROCESS).
+
+## Claims mine-to-defend (verdict #35 — slippage vs strike/τ)
+- BUILD-AS-IS: option-price %move is LARGEST at ATM and FALLS monotonically into the wings (NOT more
+  OTM). Decomposes into a strike-CONSTANT bare pool mode-move + a lens re-stamp that peaks at ATM.
+  The manager's entry-114 "more further OTM" brainstorm is backwards. (`/tmp/skeptic_v28*.js`)
+- τ-direction ("sharper ⇒ more") is an ATM-only effect; OTM/wing %move is τ-frozen (frozen-wing design).
+- TRADE-POINT mechanic (un-built, #16-OPEN): operator's intuition IS right — g_loc rises 0→γ OTM and
+  rises as τ falls — but bounded by γ (saturates). A forward-read swap is bounded/cap-free; only
+  inverting the lens (1/h″ blows up in wings) re-introduces the cap.
