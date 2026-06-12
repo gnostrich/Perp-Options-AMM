@@ -1480,3 +1480,48 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
    numéraire, and check it conserves against the counterparty (pool).** A leak claim that doesn't show
    the pool LOSING reserves is unproven. Sibling of #10/#15 (a true statement about a neighbour/partial
    object promoted to the whole) — here the neighbour is one ledger row of the trader's position.
+
+33. **2026-06-12 — R6 SCOPE-GATE v28-lens CLEANUP BATCH (C1–C9) pre-intern-dispatch (verdict #33)** →
+   build `temporal_mvp_v28_lens_S2.html` (md5 b53ace99). Operator entry 106 "please do" on manager's
+   itemized table (entries 96/98). **VERDICT: CLEAR-TO-BUILD with ONE C6 RE-SCOPE (display-only, no
+   ledger arithmetic) + exclusion CONFIRMED.** Checked the engine read-only, not narrated.
+   - **Citations (R1):** C1 entry96 "yes fix bug"✓; C2/C3 entry96 "anchor curve, atm jump, other bugs
+     we fixed in subsequent versions"✓; C4/C5 same entry96 subsequent-version clause✓; C7 = my own #31
+     RIDER (manager added to batch, fine — it's a flagged consistency twin not a new feature); C8 entry98
+     "#8 take a call" = manager's authorized call✓; C9 entry98 "yes, like any american style option"✓
+     (verbatim). **C6 = my #32 RESIDUAL, NOT in entry96/98** — manager sourced it to "skeptic #32".
+   - **C6 RULING (the one to watch):** legitimate IN-SCOPE as a *display-label honesty* fix, BUT must be
+     scoped to NOT do entry-cost arithmetic. KEY ENGINE FACT (verified L2573-2585 closeBand): trader_payout
+     /club_delta are a **band OVERLAY, explicitly "SEPARATE, never folded into equity"** — settled equity
+     is `club.equity += retEquity` (carved bundle), INDEPENDENT of raw_net. So raw_net/trader_payout is
+     ALREADY display-only; C6 is pure display. **DANGER:** "subtract entry cost" as a *number* is NOT a
+     one-liner — per #32 the entry cost lives in the RESERVE MOVE, not in raw_net (Y−X); computing it needs
+     the full closed-loop reserve-flow valuation (a new economic calc). If the intern tries to make the
+     dollar cell show "true round-trip P&L" by subtracting an entry-cost figure, that's an unrequested new
+     computation → out of scope / would need its own operator yes. IN-SCOPE C6 = relabel/annotate so the
+     cell is not READ as walk-away trader cash (drop the "trader-favourable"-implying presentation; the
+     pf-dollar-cell title currently says "settlement value", L4348; the close-log says `trader=$…`, L2588).
+     Plain rule handed to intern: **C6 may change wording/labelling/sign-presentation of an already-
+     displayed overlay; C6 may NOT introduce a new entry-cost subtraction number, and may NOT touch
+     trader_payout/club_delta/raw_net as COMPUTED (they're engine-solvent per #32).**
+   - **Exclusion CONFIRMED CORRECT:** "payoff chart + strike marker onto the lens" stays OUT. Operator
+     never said yes (offered entry101 cosmetic, no ratification) ⇒ R1 excludes it. Not a correctness hole:
+     the payoff chart is a forward P&L *projection over a swept spot* (drawState anchor-curve sweep), a
+     different object from the live lensed pricing curve (chart-2). A projection drawn in raw coords while
+     execution is lensed is a tolerable display gap, NOT a settle/price inconsistency (settlement still
+     runs through closeBand lensed). It's display-on-lens cosmetics = operator-tier if ever wanted, not a
+     cleanup obligation. SOUND exclusion.
+   - **R3 control inventory: CONFIRMED** — only new control is τ (already in); C1–C9 add zero user controls
+     (all readout/render/label/range/cap edits). Held.
+   - **Surgical/display test (Q4): ALL PASS** — C1 (pv-net-cash L3074 setVal), C2/C3 (anchor-trace + stale
+     preview render), C4 (N_buy state→state.pool sizing-display), C5 (lp-y/LIQ readouts), C6 (overlay label,
+     above), C7 (payoff-preview denom L3886 drawState), C8 (xMin/xMax L3851), C9 (legFraction min(1,·)
+     L3903-05 payoff render) — NONE reaches tradeUpdate/rebase/arbitrageToOracle/pool-reserve mutation or
+     the lensed settle pipe. L4 (engine byte-identity) must hold; flag any edit that drifts those 3 fns.
+   - **WARP-VISIBILITY folded into smoke-pass: SOUND.** chart-2 already reshapes through the lens on a trade
+     (tester-confirmed S1/S2; strong-form φ-warp is in v27/v24-base, L4-preserved). "Visible warp" needs no
+     NEW build work — it's a smoke-pass OBSERVATION (confirm chart-2 visibly reshapes on a trade + per-click
+     τ delta), not a build stage. Manager's reasoning holds. (Caveat already standing: τ per-click delta is
+     sub-pixel at default Δw — disclosure sentence exists; smoke-pass should still LOOK, not assume.)
+   - Convergence-alarm LOW: manager self-scoped C6 conservatively and flagged it for my call rather than
+     bundling it silent; exclusion offered honestly. The one real catch is C6-as-arithmetic creep, pre-empted.
