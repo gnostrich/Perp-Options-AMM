@@ -1516,3 +1516,11 @@ _Context: operator confirms his read of the current build — the AMM tx moves o
 _Context: operator queues a to-do — the right way to apply slippage to the bought option/spread; AMM slippage is visible but doesn't directly feed option proceeds unless you deduct total AMM slippage from proceeds as if at pre-trade price; queueable unless it fits naturally; asks if this is what the seam finding was highlighting._
 
 > got it, so i think as a note for to do later, you'd probably want to think of the right way to apply slippage to the bought option / spread (we can easily see it on the AMM side, but i think it's not directly feeding into options received unless you actually take the total slippage from the AMM slippage and deduct from option proceeds as if they were at pre price, but this can be queued imo unless theres some way this fits in naturally. you can think about this) — is this sort of what you were highlighting too?
+
+
+---
+
+## Entry 196 — 2026-06-12 16:56 UTC
+_Context: operator asks for the decision/question restated in simple English._
+
+> simple english on your Q,
