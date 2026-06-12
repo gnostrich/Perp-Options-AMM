@@ -1318,3 +1318,11 @@ _Context: operator asks whether the continuous/integral mechanism ultimately jus
 _Context: operator expects, given the closed form exists, that the post-trade proforma shown is the one resulting from the continuous trade-warp-update-lens._
 
 > andif you already have a closed form expression / integral done i'd expect to see the post trade proforma resulting from this one (continous trade-warp-updatelens)
+
+
+---
+
+## Entry 172 — 2026-06-12 15:34 UTC
+_Context: operator asks what the actual question about the two traces was._
+
+> so what was the question about 2 traces? i didn’t get it
