@@ -76,8 +76,18 @@ const x0 = 10, y0 = 80000;
 // dS/10. The max adjacent |Δ markEff| must SHRINK with the step (ratio ≈ 10, in
 // [5,50]) — i.e. continuous, NO fixed floor. The reference scaling in the spec
 // (step 1e-5→8e-8 ⇒ jump 3.9e-4→6.2e-7, ≈ linear in step) is reproduced here.
+// The no-jump-at-ATM statement has TWO parts, both asserted here:
+//   (i)  STEP-SCALING — the max adjacent |Δ markEff| across the crossing window
+//        shrinks with the step (→0, no floor); a fixed-jump step would floor.
+//   (ii) ONE-SIDED-LIMIT AGREEMENT (the precise discriminator) — the left and
+//        right one-sided limits of markEff at θ→mode converge to the SAME value;
+//        their gap |L⁻ − L⁺| → 0 as the offset shrinks (ratio ≈ 10). A genuine
+//        value jump at ATM floors this gap at the jump height. (ii) is what
+//        distinguishes a jump from the continuous cusp unambiguously — (i) alone
+//        can be masked when the smooth approach dominates the window max.
 {
   let ratioMin = Infinity, ratioMax = -Infinity, worstFloor = '', floorBad = false;
+  let limRatioMin = Infinity, limWorst = '', limBad = false;
   const refLines = [];
   // γ from w: γ = w/(1−w) ⇒ w = γ/(γ+1)
   for (const gam of [1.5, 2, 3, 4]) {
@@ -86,8 +96,8 @@ const x0 = 10, y0 = 80000;
     const mode = E.getSNorm(sp);
     for (const tau of [0.1, 0.3, 1.0]) {
       for (const wing of ['call', 'put']) {
-        // sweep θ across the mode in a tight window; the crossing is θ === mode.
-        // measure max adjacent |Δ markEff| at two step sizes a decade apart.
+        // (i) sweep θ across the mode in a tight window; max adjacent |Δ markEff|
+        //     at two step sizes a decade apart.
         const sweepMax = (dS, half) => {
           let prev = null, mx = 0;
           for (let off = -half; off <= half + 1e-15; off += dS) {
@@ -107,19 +117,29 @@ const x0 = 10, y0 = 80000;
         const dS2 = dS1 / 10;               // fine step (one decade finer)
         const j1 = sweepMax(dS1, half);
         const j2 = sweepMax(dS2, half);
-        // continuity ⇒ j shrinks ≈ linearly with step ⇒ ratio j1/j2 ≈ 10.
-        // a genuine JUMP would floor: j2 ≈ j1 (ratio ≈ 1). Require ratio ∈ [5,50].
         const ratio = j2 > 0 ? j1 / j2 : Infinity;
         if (ratio < ratioMin) ratioMin = ratio;
         if (isFinite(ratio) && ratio > ratioMax) ratioMax = ratio;
         if (!(ratio >= 5 && ratio <= 50)) { floorBad = true; worstFloor = 'γ=' + gam + ' τ=' + tau + ' ' + wing + ' j1=' + j1.toExponential(2) + ' j2=' + j2.toExponential(2) + ' ratio=' + (isFinite(ratio) ? ratio.toFixed(2) : ratio); }
-        if (gam === 2 && tau === 0.3) refLines.push(wing + ' j(dS=' + dS1.toExponential(1) + ')=' + j1.toExponential(2) + ' j(dS=' + dS2.toExponential(1) + ')=' + j2.toExponential(2) + ' ratio=' + ratio.toFixed(1));
+
+        // (ii) one-sided-limit gap |markEff(mode−ε) − markEff(mode+ε)| at ε and
+        //      ε/10. Continuity ⇒ gap → 0 ∝ ε ⇒ ratio ≈ 10. A value jump of
+        //      height h ⇒ gap → h (floors) ⇒ ratio → 1. Require gapRatio ≥ 5.
+        const eps1 = mode * 1e-5, eps2 = mode * 1e-6;
+        const gap = (eps) => Math.abs(E.markEff(sp, wing, mode - eps, tau) - E.markEff(sp, wing, mode + eps, tau));
+        const g1 = gap(eps1), g2 = gap(eps2);
+        const gapRatio = g2 > 0 ? g1 / g2 : Infinity;
+        if (gapRatio < limRatioMin) limRatioMin = gapRatio;
+        if (!(gapRatio >= 5)) { limBad = true; limWorst = 'γ=' + gam + ' τ=' + tau + ' ' + wing + ' gap(ε)=' + g1.toExponential(2) + ' gap(ε/10)=' + g2.toExponential(2) + ' ratio=' + (isFinite(gapRatio) ? gapRatio.toFixed(2) : gapRatio); }
+
+        if (gam === 2 && tau === 0.3) refLines.push(wing + ' j(dS=' + dS1.toExponential(1) + ')=' + j1.toExponential(2) + ' j(dS=' + dS2.toExponential(1) + ')=' + j2.toExponential(2) + ' ratio=' + ratio.toFixed(1) + ' | limGap(ε=' + eps1.toExponential(1) + ')=' + g1.toExponential(2) + '→(ε/10)=' + g2.toExponential(2) + ' ratio=' + gapRatio.toFixed(1));
       }
     }
   }
-  chk('(A16.1) NO-JUMP: max adjacent |Δ markEff| scales with step (ratio∈[5,50], no floor)',
-      !floorBad,
-      (floorBad ? 'FLOOR/JUMP DETECTED: ' + worstFloor : 'ratio range [' + ratioMin.toFixed(2) + ',' + ratioMax.toFixed(2) + '] over γ∈{1.5,2,3,4}×τ∈{.1,.3,1}×{call,put}') +
+  chk('(A16.1) NO-JUMP: window max-|Δ| scales with step (no floor) AND one-sided limits agree (gap→0∝ε, ratio≥5)',
+      !floorBad && !limBad,
+      (floorBad ? 'STEP-FLOOR: ' + worstFloor + ' ' : '') + (limBad ? 'LIMIT-JUMP: ' + limWorst : '') +
+      (!floorBad && !limBad ? 'stepRatio[' + ratioMin.toFixed(2) + ',' + ratioMax.toFixed(2) + '] limGapRatioMin=' + limRatioMin.toFixed(2) + ' over γ∈{1.5,2,3,4}×τ∈{.1,.3,1}×{call,put}' : '') +
       ' | ref(γ=2,τ=0.3): ' + refLines.join(' ; '));
 }
 

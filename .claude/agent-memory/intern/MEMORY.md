@@ -1,6 +1,40 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 AT-STRIKE swap A14 — NEW file, handed to manager; no git).
+_Last updated: 2026-06-12 (A16 no-jump-ATM HARD gate — verify-only, handed to manager; no git).
 Rewrite changed bits at task end._
+
+## Done — A16 no-jump-ATM HARD gate (verify-only, handed to manager 2026-06-12; NO engine edit, NO git)
+NEW gate **`engine/verify/a16_atm_gate.js`** per `specs/SPEC_A16_no_jump_atm_2026-06-12.md` §5.
+Target HEAD `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `de28c937…`, UNCHANGED — touched
+no build). Sandboxes `<script id="engine">` in `vm` (lens_selfcheck pattern); SKIPs-as-pass on a
+build without `gLoc`/`markLensed`. LOCKS the diagnosis: the live held-position value path
+(markEff→legValueUnified→pfComponents, all via smooth-pasted `markLensed`) is CONTINUOUS across
+OTM↔ITM (ATM g_loc→0) — no jump, no regime branch in the VALUE. 5 asserts:
+- **A16.1 NO-JUMP** (γ∈{1.5,2,3,4}×τ∈{.1,.3,1}×{call,put}): TWO parts — (i) window max adjacent
+  |Δ markEff| scales with step (stepRatio≈8.3–8.7, no floor); (ii) **one-sided-limit agreement**
+  |markEff(mode−ε)−markEff(mode+ε)|→0 ∝ε (limGapRatioMin=9.96, require ≥5). (ii) is the precise
+  no-jump-at-ATM discriminator — neg-control: a non-degenerate +0.05 ATM jump floors the gap →
+  ratio 1.00 ⇒ A16.1 FAILS (verified, gate is NOT a no-op). NOTE the metric subtlety I found: the
+  window-max-|Δ| alone (i) can be MASKED when the continuous cusp's steep approach dominates the
+  window max — a saturate-to-1 jump is degenerate at ATM (both sides→1) so it correctly is NOT a
+  value-jump there; the real regression risk is flat-ITM-band saturation, which A16.3 catches.
+- **A16.2 ATM peak == 1**: `markLensed(wing,mode,mode,0)===1` exactly + `markEff(ATM)`==1 (≤1e-12);
+  both one-sided limits monotone ↑ to 1.
+- **A16.3-struct NO-REGIME-BRANCH** (source check, comments stripped): `markEff` returns
+  `markLensed(...)` UNCONDITIONALLY (no isOTM/legIsITM/`?1:`/bare `return 1`); `pfComponents`
+  `value=part.sign*leg.N*m` with `m=markLensed(...)`, `itm` flag feeds ONLY `effK` (display, ordered
+  before `value`, never in the value expr). **A16.3-numeric**: ITM `markEff`<1 (HEAD 0.27–0.56,
+  smooth-paste) NOT old flat=1 — the genuine v24-regression discriminator.
+- **A16.4 cross-layer single-basis**: pfComponents fraction == markEff across the ATM crossing
+  (maxFracErr 0.0); dollar mark LINEAR in markLensed (legValueUnified=N·m witness).
+Did NOT duplicate/weaken lens_selfcheck (4)'s settle==lensed S* seam check (distinct locus).
+**Routed** in `run_all.sh` lens branch (`grep markLensed && !wField`) AFTER lens_selfcheck, [HARD
+GATE], set -e aborts on FAIL. **Results:** HEAD **5 PASS 0 FAIL** exit 0; v24 base **SKIP-as-pass**
+exit 0; `run_all.sh` on HEAD GREEN exit 0 (lens_selfcheck 34 PASS + A16 5 PASS); blobs
+`ab663f5c`@74/`c505b08a`@1060 canonical; HEAD md5 `de28c937…` UNCHANGED. **Open for manager:** the
+spec's §4 A16-CUSP (non-C¹ peak at ATM) is the only operator-tier item — NOT in this gate's scope
+(gate covers value continuity / no-jump only).
+
+---
 
 ## Done — v28 AT-STRIKE AMM SWAP (register A14, NEW file, handed to manager 2026-06-12, URGENT)
 Build **`engine/builds/temporal_mvp_v28_lens_atstrike.html`** (NEW, from CLEAN HEAD `4378bc11`;
