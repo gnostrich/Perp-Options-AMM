@@ -807,3 +807,19 @@ _Context: operator asks whether varying the lens steepness/intensity (τ) visibl
 _Context: operator (1) OK with the knob inversion IF it's from the natural math — asks to verify that once; (2) didn't understand the manager's point-2 and calls out the assure-then-undermine ("gaslight") pattern._
 
 > 1. as long as the knob does the right thing for the right reason and the inversion is from the natural math of it, i'm ok with that -- check that once, 2. didn't understand -- this sounds like 'gas,light gasloight it doesnt work gaslight"
+
+
+---
+
+## Entry 109 — 2026-06-12
+_Context: operator requests being able to edit the kurtosis (lens τ) on the fly and see how slippage differs across settings._
+
+> can you make the kurtosis thing such that i can edit on the fly and see how slippage is different with different settings?
+
+
+---
+
+## Entry 110 — 2026-06-12
+_Context: operator corrects the manager's slippage framing — the lensing changes the EFFECTIVE trade point and EFFECTIVE slope goal-seek, so slippage does respond to kurtosis._
+
+> listen carefully -- the lensing has the effect of changing the effective trade point and effective slope goal seek
