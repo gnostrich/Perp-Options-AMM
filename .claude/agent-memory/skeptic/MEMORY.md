@@ -2548,3 +2548,29 @@ research's "optional second trace — warp the trade injected per strike (the po
 - Research note `CONTINUOUS_trade_warp_lens_calculus_2026-06-12.md` audited in passing: provenance
   labels honest (§7 separates DERIVED+VERIFIED / definition-level / retrieval-only), no FLAG.
 - Verbatim channel HELD (entry 168 grep-matched incl. typos "ecxplan"/"soundfs"). No FLAG-PROCESS.
+
+### Verdict #contwarp-postpromote (2026-06-12) — CLEAR (post-promote) on HEAD 4378bc11
+→ `notes/skeptic/VERDICT_CONTWARP_POSTPROMOTE_2026-06-12.md`. Operator entry 181 (verbatim verified:
+"but id like to see head now before i go to bed") overruled gate ordering — audit done POST-HOC by
+direction, not skipped. **CLEAR, no revert.** What I verified COLD: (1) diff static→promoted = purely
+additive 48 lines, ONE ui-block site (renderPricing → rAF sweep wrapper + renamed renderPricingFrame);
+engine/state blocks + blobs byte-untouched (script boundaries 1584-2196/2200-2646/2650-4452 checked);
+framePool = pure Engine.tradeUpdate(state,dy*s) — fresh object, α/β conserved ⇒ frames ARE the trade
+hyperbola, can't execute money; banned tokens 0 (own grep); NO second trace (entry-173 proforma-only
+honored). Exactly my entry-158 scope. (2) Re-ran lens_selfcheck on promoted HEAD = 27/27 (CF2
+telescoping 8.88e-16 = my own identity, now a gate). **Prior #C16 HOLD defect class ABSENT and the
+gates now satisfy pattern #12: CF1 extracts the ACTUAL framePool from UI source + machine-compares the
+ACTUAL drawn gAt expression vs gLoc, FAIL-CLOSED on regex mismatch; CF3 bans override/4-arg gLoc; CF4
+money zero-delta.** Tester verified the PICTURE ×2 byte-stable. C16→VERIFIED honest. (3) Dip caution
+locked in CF3 with teeth (d(0.7×)<−0.1 asserted on E.gLoc; future "fix" = red gate); relay-to-operator
+is manager-asserted (replies untranscribed by §2.2 design) but operator AUTHORED the causal mechanic
+(158) — sufficiency rests on the gate. (4) Promote commit honest (audit-owed + revert path named).
+**2 non-blocking fixes handed to manager:** (a) C16 row still ENDS with stale held-lens-era text
+"NOT yet promoted; HEAD unchanged 7e1ae39b; NEVER label as built" contradicting its own STATE cell —
+pattern #6 staleness inside a single register row; (b) NO PART-B A-row binds the dip mechanic — add
+A13 so a flatten is REGRESSED-class on the board, not just a red gate. Pattern note (not flag): the
+operator's ordering overrule also carried the VERIFIED flip — future operator-directed promotes should
+flip BUILT+PROMOTED and let VERIFIED wait on the audit. Carried-OPEN honest (at-strike 153#4 separate;
+post-execute re-sweep UX call; FINDING-WARP-DIR superseded-not-dropped). Edge probes mine: anim key
+omits alpha/τ ⇒ worst case skipped sweep w/ correct static picture; mid-sweep state change ⇒ <0.8s
+stale frames, draw-only. Verbatim channel HELD (158/159/163/164/173/177/181 all read in transcript).

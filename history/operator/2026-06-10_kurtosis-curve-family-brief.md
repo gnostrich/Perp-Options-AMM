@@ -1408,3 +1408,11 @@ _Context: operator wants HEAD now, before bed; the monolith work queues behind i
 _Context: operator orders a read-only investigation — the amount of curve warp (underlying curve and through the lens) per dollar NOTIONAL: qualitatively understand why more-OTM same-notional gives less warp and why more skew gives less warp, given his understanding that option premium doesn't factor into the SELL leg's AMM trade (unlike the buy leg, sized by premium proceeds) — if it's only wrt the AMM, selling further out at same notional would be a larger trade, so maybe more warp?_
 
 > read only check: i want you to also dig into the 'amount of curve warp' (both underlying curve and through lens) per dollar notional etc. tests and sort of qualitatively make sense of this so we don't have any lapses -- i'm not saying anything is wrong, but basically understanding why more OTM same notional gives less warp, and why with more skew its less warp --- since option premium / price doesn't factor into the sell leg at all (unlike buy where the option price proceeds tell how much you can buy not the actual AMM proceeds) --- like if its only wrt AMM, then selling long further out would be a larger trade so maybe there shoudl be more warp?
+
+
+---
+
+## Entry 183 — 2026-06-12 16:17 UTC
+_Context: operator asks for the warp-per-notional dig now (not queued)._
+
+> can you do the dig now?
