@@ -1482,3 +1482,13 @@ _Context: continuation of entry 189 — the warp rule the manager agreed with (A
 _Context: operator asks the ETA to fix the at-strike rule tonight and then resume the monolith work._
 
 > how much eta to fix that tonight and then resume the other monolith stuff/
+
+
+---
+
+## Entry 192 — 2026-06-12 16:25 UTC
+_Context: operator sets the check-in — heading home, dinner, back in ~1.5 hours — and gives the go._
+
+> i'll head home from the co-work, have dinner and check after 1.5 hrs
+>
+> get it done by then
