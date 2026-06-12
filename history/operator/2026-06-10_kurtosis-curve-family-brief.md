@@ -1278,3 +1278,11 @@ _Context: operator explains the design intent behind the continuous limit — it
 _Context: operator links the continuous-limit design intent (entry 165) to the monolith philosophy._
 
 > sort of along the lines of the monolith
+
+
+---
+
+## Entry 167 — 2026-06-12 15:22 UTC
+_Context: operator completes the thought — the continuous limit is worth it even if it frontloads the math._
+
+> even it it frontloads the math we need to do
