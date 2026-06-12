@@ -1190,3 +1190,11 @@ _Context: operator orders the agent memories purged too, and a RAG / internal-co
 _Context: operator clarifies the sequencing — the memory purge / RAG / monolith all assume HEAD is fixed first._
 
 > all this assuming head is fixed
+
+
+---
+
+## Entry 156 — 2026-06-12
+_Context: operator asks for a non-disruptive status update on HEAD._
+
+> nondisruptive status update on head
