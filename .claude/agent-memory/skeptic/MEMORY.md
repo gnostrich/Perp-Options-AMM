@@ -499,6 +499,37 @@ dot-sliding does NOT move toward delivered (visible warp still the re-registered
 satisfied. Fix named (exponent must take the held sNorm; W1 must call the real draw fn) — not
 designed.
 
+### Verdict #A14-promote (2026-06-12) — HOLD on temporal_mvp_v28_lens_atstrike.html
+→ `notes/skeptic/VERDICT_A14_atstrike_PROMOTE_2026-06-12.md`. Pre-promotion universal-gate audit of the
+at-strike AMM swap build (md5 de28c937, from clean HEAD 4378bc11). Arb-stop OVERRULED entry 197 (not
+re-litigated). **HOLD = FLAG-OVERSELL on AS2 ("open→close reserves restore exact / the −$254k leak is
+GONE").** Re-derived on the live engine: TRUE only for SAME-WING bands (call/call, put/put) where the
+two legs push the pool's cash side OPPOSITE ways and net negative, keeping both legs OTM at close. For
+the CANONICAL CROSS-WING band (sell call / buy put — what the live UI trades), the strike-scale
+at-strike open (dy=N·K·oracle, +$120k vs ~$15k premium-sized) shoves spot 1.0→1.97, flips the sold
+call ITM at close ⇒ `closeBand` takes the settle-to-cash branch, does NOT AMM-reverse that leg ⇒ its
+open dy is NEVER undone ⇒ **pool y leaks $120k (call/put) / $56k (put/call)** — the exact leak AS2
+claims closed. AS2 gate tests ONLY the two same-wing shapes that dodge it (green over the hidden
+regression; pattern #12 again). **What PASSED attack (NOT the hold):** (a) same-wing round-trip IS a
+genuine improvement (dy=−open dy telescopes exactly on fixed-(α,β), both orders → 0; clean HEAD leaves
+−0.0138 residual on same band); (b) BOTH modified gates HONEST — 8.8 isA14 branch checks the ACTUAL
+new dy line `(wingSign*legSign)*N*K_usd`; CF4 skips HEAD-equality (false-by-design) and AS4 genuinely
+carries pool-fn byte-id-to-v24 (re-confirmed green); (c) AS6 HONESTLY documents the A15-deferred
+valuation seam, prints residual, does NOT claim it closed; (d) scope clean — pool fns byte-id (AS4),
+N_buy formula unchanged (2.34 vs 1.56 = correct at-strike consequence, pricing basis==HEAD), no
+un-bend/inverse-lens/goalSeek (banned-token scan NONE); run_all RC=0, 34/34. **Operator tension
+flagged (not my call):** entry 197 verbatim "no dont think round trip for now" vs the build's central
+mechanic = precise at-strike REVERSAL engineered to make the pool round-trip exact (AS2/AS6 purpose).
+Spec §2.1 already had reserves round-trip exact (1.8e-15) in the premium HARD-RED version ⇒ "the
+−$254k" was OPEN-side pool Δy, never a reserve residual; "leak GONE" conflates open swap size with a
+leak. **HOOK BUG confirmed real + build-independent (operator must hear straight):** file_safety_gate.sh
+L104 `grep -Eq 'FAIL'` matches the GREEN summary "0 FAIL" ⇒ blocks even clean HEAD (RC=0). Manager's
+fix correctly denied as safety-gate self-mod needing operator auth. Convergence-alarm: build was
+manager-verified 34/34 + clean; the leak hid behind a gate that only tests the non-leaking shapes —
+cleanliness-is-suspicious held. **MINE-TO-DEFEND:** cross-wing at-strike band leaks the ITM leg's open
+dy at close (call/put $120k, put/call $56k, default pool); same-wing telescopes exact; the at-strike
+open moves spot ~2× harder than premium-sizing so ITM-at-close is the COMMON case not a corner.
+
 ### Verdict #manager-comms (2026-06-12) — FLAG-PROCESS + FLAG-OVERSELL on the manager's operator-facing replies
 → `notes/skeptic/VERDICT_MANAGER_COMMS_2026-06-12.md` (goes to operator verbatim, entry 148 summons).
 Operator (148, VERBATIM): "your wording is again slippery and evasive. fucking skeptic where are
