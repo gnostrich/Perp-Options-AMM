@@ -1500,3 +1500,11 @@ _Context: operator sets the check-in — heading home, dinner, back in ~1.5 hour
 _Context: operator restates the two-layer model for the in-flight fix — AMM bookkeeping vs option prices derived from it; notional drives the AMM bookkeeping; option pricing (min of slope or reciprocal formula) converts what you sold into how much you can buy; sell = purely AMM; think pure AMM ignoring option pricing to get it right._
 
 > basically there are 2 layers -- AMM bookkeeping, and option prices derived from this -- the notional determines AMM bookkeeping, the optin pricing determines how much you can buy for what you sold as per the AMM prices (min of slope or reciprocal formuka); so the sell part is purely AMM and the buy part notional is determined by this option pricing thing --- does this make sense? and for now if you think AMM and ignore option pricing (for a minute) to get this right, you'll see what i'm saying
+
+
+---
+
+## Entry 194 — 2026-06-12 16:33 UTC
+_Context: operator confirms his read of the current build — the AMM tx moves option-price × notional, i.e. only a FRACTION of the notional hits the AMM tx._
+
+> so you basically do an amm tx that moves option price * notional so its a fraction of the notional on the AMM tx is it?
