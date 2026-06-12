@@ -943,3 +943,11 @@ _Context: operator notes they had also floated (entry 121) the possibility that 
 _Context: operator notes entry-121 reasoning was from a no-lens standpoint; directs that the through-lens version be tested and airtighted, and expects the HTML fixed within the hour._
 
 > now i said all this from a no lens standpoint, so have the through lens thing tested and airtighted as well, and i'm looking forward to having the html fixed within the hour now
+
+
+---
+
+## Entry 126 — 2026-06-12
+_Context: operator corrects the manager's "needs the field" framing — the mechanic is: read through the lens, execute on the Balancer curve by CHANGING WEIGHTS to goal-seek the post-trade-point slope AS SEEN THROUGH THE LENS; the lens is an interpretive layer that tells you what to execute on / read from the curve._
+
+> you fail to understand what i'm saying. you read through the lens, and execute on the balancer curve changing weights to goal seek as per the post trade point slope (as seen through lens) — lens is an interpretative layer which tells you what to execute on / read from the curve
