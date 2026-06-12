@@ -87,6 +87,15 @@ register-vs-transcript tail-audit keep it complete. A binding agreement found un
 - **A14-label (UX):** preview header "Pool Δ (cash-conserving ⇒ Δy_net ≈ 0)" / "net trader cash @ open" now MISLABELS the at-strike pool warp (showed $16,623 net Δ, not ≈0). Display relabel (intern); operator to pick wording.
 - **A14-kurtosis-test:** the live test covered warp-magnitude vs OTM but NOT vs kurtosis (entry 203 half-answered). Honest nuance: under at-strike the SWAP is kurtosis-free (dy=N·K); kurtosis shapes the warp SEEN through the lens (manager dig entry 185). A targeted vs-τ warp test is owed.
 
+
+### ⚠ MONOLITH RE-BASE REQUIRED (operator entry 209) — index NOT yet in line with HEAD:
+`docs/MONOLITH_INDEX.md` was written 16:08, BEFORE the contwarp (4378bc11) + at-strike (de28c937)
+promotions. STALE/ABSENT: HEAD pointer (7e1ae39b→de28c937), C16 state ("NOT promoted"→promoted),
+the AT-STRIKE swap (dy=N·K — zero mentions; trade-formula/C11 still describe premium-sized), ITM
+direct-payout settlement, and the A14/A15/A16 rows. HARD overnight deliverable: research-lead
+re-bases the index on HEAD de28c937 across ALL components (after the structure-build + Aristotle fold,
+to avoid clobbering + include their results), skeptic-audited, GAP-labelled where it can't be aligned.
+
 ### ⟳ FULL-LOOP CLOSURE (operator entry 204) — the two items to close the loop (part of the monolith):
 1. **A15** — actual slippage on the bought option/spread: apply the AMM-trade-layer slippage to REDUCE the bought output below its pre-trade-option-price size (entry 205; NOT proceeds-netting).
 2. **A16** — no-jump ATM position value: CLEAN CLOSE ON BOTH SIDES (entry 207) — theory (continuity lemma, Lean/monolith) AND implementation (live position-value path has no ATM jump, gate+tester).
