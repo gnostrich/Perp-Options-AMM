@@ -1,6 +1,66 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 lens STAGE-2 WRITE/SETTLE-THROUGH-LENS built — new file
-temporal_mvp_v28_lens_S2.html; handed to manager). Rewrite changed bits at task end._
+_Last updated: 2026-06-12 (v28 lens CLEANUP BATCH C1–C9 built — new file
+temporal_mvp_v28_lens_FINAL.html; handed to manager). Rewrite changed bits at task end._
+
+## Done — v28 lens CLEANUP BATCH C1–C9 (NEW file, handed to manager 2026-06-12)
+Build **`engine/builds/temporal_mvp_v28_lens_FINAL.html`** (NEW, from S2 `b53ace99`; HEAD v27
+UNTOUCHED, no promote, no git). md5 **`989752294bfeff49d6c92e0ab7ca6ccd`**. Operator entry 106
+"please do"; skeptic R6-CLEARED verdict #33 (C6 re-scoped LABEL-ONLY). ALL 9 = display/render/readout
+layer — none touched the pool, lens math, or settle-at-lensed-value pipe. Splices on the FINAL copy
+(each count==1, blobs never through): `/tmp/splice_c1.py`, `_c2.py`, `_c3.py`, `_c4c7.py`, `_c8c9.py`,
+`_c8ticks.py`, `_c5.py`, `_c6.py`.
+- **C1** (~L3080 setVal): dropped `* s.oracle` on pv-dy-sold/pv-dy-bought/pv-net-cash — `leg.dy`/
+  `netPoolY` already USD (executeLeg multiplies V·oracle inside; headless: leg.dy=42112.58==V·oracle,
+  old showed ~$3.4B). NOTE pv-bought-V `sim.V_buy * s.oracle` LEFT — V_buy is asset-units, that ×oracle
+  is correct.
+- **C2** (~L3285): anchor w=½ trace `curveTraceExplicit(0.5, snap.depth, …)` → `…, Math.sqrt(snap.x*
+  snap.y), …`. snap.depth=x^w·y^(1−w) is LIVE-w units (off ~9.6× at w=0.7); k=√(x·y) makes the w=½
+  constant-product pass EXACTLY through the live reserves point (verified xc=10.0, yc=800000).
+- **C3** (~L2991): new `clearBandPreviewOut()` helper (15 pv-* ids + bought-display + 2 sublines +
+  setModeTags(null,null)+setSummary(null×4)) defined after local setVal; called at TOP of ALL 6
+  reject/early-returns (was: only the first ksOK/N reject cleared; clubSide/club-notional/club-equity/
+  !sim.ok/fee-equity left stale). Deposit-row input echo deliberately NOT cleared (render() drives it
+  from live N_sell — it's input, not preview output).
+- **C4** (~L3882, D14): `Engine.legPrice(state,…)` → `Engine.legPrice(state.pool,…)`. The wrapper has
+  no x/alpha → getSNorm NaN → catch → silent N_buy=N_sell. With the pool it derives (headless ratio
+  0.9698≠1).
+- **C7** (~L3884/3888, twin of W1): bought-leg denom raw `Engine.mark` → `Engine.legPrice(state.pool,
+  bought_wing, thBuyIn, thBuyOut, 1, state.tau).V` — same lensed single-pricing entry execution books
+  N_buy with. Display-only; preview now shares ONE basis with the booked N_buy. (Preview prices both
+  legs at state.pool; execution prices the bought leg at the post-sold pool — preview is not byte-equal
+  to the booked N_buy by construction, but the BASIS now matches, which is C7's mandate.)
+- **C5** (~L2259 + L4145): added `_initial_y: 800000.0` to initialState; `lp-y-delta` hardcode
+  `p.y − 800000` → `p.y − s._initial_y` (legacy state w/o field → NaN, loud). LIQ-PRICE
+  (`perp-liq-display` ~L2853 `S*(1∓1/L)`) already the textbook isolated-margin formula → SANE as-is,
+  NO change needed (the v27-line LIQ defect was v27-specific).
+- **C6** (LABEL-ONLY, skeptic #33 binding): close-log (~L2591) `trader=$…`→`band P&L vs entry
+  (trader)=$…`, `Δclub=$…`→`Δclub equity=$…`; pf-dollar cell title (~L4358) "settlement value = …"→
+  "band P&L at close (Δ vs entry, not walk-away cash) = …". NO new entry-cost figure; computed
+  trader_payout/club_delta/raw_net UNCHANGED. (No separate visual close overlay element exists —
+  trader_payout/club_delta render ONLY in the log line + the dollar cell; both relabeled.)
+- **C8** (~L3859): xMin/xMax −0.5/0.5 → −0.9/2.0 (entry 98 #8). x-tick loop `-50..50 step10`→
+  `-50..200 step50` so ticks span the new frame (−90 edge unticked, v26c precedent).
+- **C9** (~L3909 legFraction): naked (barrier, `isBarrier(thOuter)`) leg now returns UNCAPPED
+  `Engine.mark(...)`; spread legs (has outer) STILL `Math.min(1,·)` each barrier. Only the
+  naked/single path changed.
+- **EXCLUDED (R1, did NOT do):** payoff chart / strike marker onto the lens — operator never approved.
+- **L4 hard invariant PRESERVED:** `tradeUpdate`/`arbitrageToOracle`/`rebase` BYTE-IDENTICAL to v24
+  (extracted+compared char-for-char: 387/314/96 bytes, identical). No edit drifted them.
+- **Safety:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (613/447/1755);
+  longest non-blob line 553; file-safety hook exit 0; surgical diff vs S2 = exactly the C1–C9 hunks.
+- **GATES:** `node verify/lens_selfcheck.js …FINAL.html` **23 PASS 0 FAIL**; `sh verify/run_all.sh
+  …FINAL.html` GREEN exit 0.
+- **Open for tester (smoke per C-item + warp-visibility):** C1 net-cash ~order-$10k not billions;
+  C2 anchor (w=½) trace passes through reserves point; C3 swap-then-reject shows warn + all preview
+  '—' on EVERY reject path (no-club / no-notional / wing-range / fee); C4/C7 payoff N_buy derives
+  (≠N_sell) and matches booked basis; C5 lp y-delta $0 at load, LIQ-PRICE sane (~$70k/$90k @8×);
+  C6 close log + dollar-cell tooltip read as band P&L delta NOT pocket cash; C8 frame −90%..+200% with
+  ticks; C9 naked leg climbs uncapped past the capped spread leg; AND chart-2 visibly reshapes on a
+  trade (warp). **Open for manager:** C7 preview prices at state.pool (basis-match, not byte-equal to
+  the post-sold-pool booked N_buy) — flagged as the in-scope display reading.
+
+---
+_(history below)_
 
 ## Done — v28 lens STAGE-2 WRITE/SETTLE THROUGH LENS (NEW file, handed to manager 2026-06-12)
 Build **`engine/builds/temporal_mvp_v28_lens_S2.html`** (NEW, from S1 `1ed8fe2d…`; HEAD v27
