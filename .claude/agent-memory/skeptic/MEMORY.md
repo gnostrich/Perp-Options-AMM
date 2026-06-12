@@ -424,6 +424,18 @@ inventory, operator answered — remaining live tail = every curve note must dis
   framing). When auditing relevance, force the two axes apart explicitly — and refuse to let a
   framing choice (port-Hamiltonian) be treated as settled-objective by the team; that's an operator
   call. Sibling of pattern #4 (slot conflation): a true label in the wrong column.
+10. **Wrong-frame / wrong-target conflation as a "collapse" verdict (verdict #14, 2026-06-12).**
+  The whole team (ME included, verdicts #126/#127/CRUX) reported the operator's lens warp as
+  "flat / collapses to w′=w₀ / needs the field" — but answered the WRONG TARGET (restore-the-slope,
+  which the operator never asked for) AND read his ACTUAL mechanic (swap changes w) through the
+  WRONG CENTER (the LIVE re-centering mode=(1−w)/w instead of his frozen pre-warp m_ref). The
+  re-centering scrambled a clean monotone-OTM strike-dependent warp into non-monotone "flatness."
+  When a verdict says "X collapses / is blocked," CHECK (a) is the target the operator's actual
+  target or the team's restate, and (b) is the reference frame the operator's stated frame or a
+  live-recomputed one. A "collapse" can be an artifact of evaluating the right object in the wrong
+  frame. The operator's gaslighting grievance was SUBSTANTIATED here: the masking frame was carried
+  across ~4 verdicts. Robustness check: re-derive the negation under the operator's EXACT frame
+  before reporting any impossibility/flatness (sibling of pattern #5, but for frame not candidate).
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
@@ -1990,3 +2002,53 @@ g, verified vs literal tradeUpdate to 6 digits.
   entry-118 disclaimed move-the-pool; chart-2 still single-w (moved mode, not a bend). (`/tmp/sk127_warp.js`)
 - At-strike swap is UNBOUNDED in reserves (y_t~1/θ_K) far OTM = solvency hazard the premium swap lacked.
   Goal-seek w' itself bounded/no-runaway. (`/tmp/sk127_bounded.js`)
+
+43. **2026-06-12 — FROZEN PRE-WARP LENS goal-seek (verdict #43; URGENT, operator entry-129 correction
+    of the lens CENTER used in #40/#41/#42 + CRUX; gaslighting grievance, READ-ONLY)** →
+    `notes/skeptic/VERDICT_FROZEN_PREWARP_LENS_goalseek_2026-06-12.md`. Operator entry-129 verbatim:
+    "warp goal seeking as seen through the lens PRE WARP … it lies in the proforma" + entry-128 4-pt
+    model. The correction: the lens center is SNAPSHOTTED before the trade and HELD FIXED (one stored
+    scalar m_ref=(1−w₀)/w₀); w changes ONLY γ=w/(1−w), NOT the center. Every prior verdict used the
+    LIVE re-centering center mode=(1−w)/w. Re-derived COLD (`/tmp/sk_frozen*.py`, float64, did NOT
+    default to flat). **THE ANSWER SPLITS BY TARGET:**
+    - **(i) RESTORE pre-warp slope at θ_K → STILL FLAT w′=w₀, ROBUST to the frozen center.** With center
+      frozen, lens factor Φ_τ(θ_K)=h′_τ(|ln(θ_K/m_ref)|) is CONSTANT in w ⇒ g_loc(K;w)=γ(w)·Φ(K) ⇒
+      "restore g" divides out Φ ⇒ restores γ ⇒ w′=w₀ exactly at every K{1.1,1.5,2,4×}×τ{1,0.3,0.05,0.001}.
+      So the prior flat result was CORRECT *for the restore target* — not a re-centering artifact.
+    - **(ii) SWAP changes w (entry-128 pt1 "we change w to warp"), warp read through FROZEN lens →
+      STRIKE-DEPENDENT, MONOTONE-OTM, BOUNDED, saturating.** warp(K)=(γ(w_nat)−γ(w₀))·Φ_τ(K); a plain
+      5% swap moves w₀=0.6→w_nat=0.61905 (strike-BLIND swap), and the frozen-lens warp grows monotonically
+      toward the wings (τ=0.3: +0.038/+0.100/+0.115/+0.122 @1.1/1.5/2/4×; monotone to 8×; saturates at
+      γ-gap). MATCHES entry-31 "more warp far OTM." **This is the masked thing — every prior verdict read
+      THIS mechanic through the LIVE center, scrambling the monotone-OTM profile into non-monotone
+      "flatness" (τ=0.3 live: +0.366/+0.177/+0.138/+0.126 — non-monotone).**
+    - **FLAG-WRONG on my own #40/#41/#42/CRUX:** they reported the operator's mechanic as "flat / needs
+      the field" by conflating the RESTORE target (flat) with his actual SWAP-warp target, AND reading
+      the latter through the wrong (live) center. The operator's gaslighting grievance is SUBSTANTIATED:
+      the masking frame was carried across ~4 verdicts.
+    - **PASS on bounded-buildable-scalar:** warp bounded (saturates, no 1/w′ runaway — that was the (W)
+      field, not here); single-valued (frozen center REMOVES the verdict-#41 fold — Φ no longer w-dependent);
+      solvent (w∈(0.5,1)); single-basis (price==slope plain Balancer); reconstructs from 3 scalars
+      {γ,τ,m_ref}, NO per-strike field. **THIS IS THE SCALAR RESOLUTION, distinct from the demoted (W)
+      curve.**
+    - **HONEST LIMIT (caution, not flag — must reach operator undressed):** single global w ⇒
+      g_loc(K)=γ(w)·Φ(K) ⇒ cross-strike RATIO is w-INDEPENDENT to float64 (≤5.6e-17). w is a PURE
+      VERTICAL SCALE of a frozen shape; it warps MORE far OTM in absolute terms but CANNOT bend one
+      strike independently. Real bounded scalar warp ≠ the (W) field's per-strike bend. Whether it's
+      "enough" is the operator's curve call — but NOT blocked, NOT flat.
+    Verbatim entry-129 verified vs history/operator/...brief.md L982 (channel HELD). Convergence-alarm
+    LOW (self-attacked my own 4 prior verdicts; both centers tabulated side-by-side; float64-clean).
+
+## Claims mine-to-defend (verdict #43 — frozen pre-warp lens)
+- RESTORE-target flat (w′=w₀) is ROBUST to the frozen center — NOT a re-centering artifact. The prior
+  flat verdicts were right *about the restore target*; their error was answering it instead of the
+  operator's swap-warp target, and reading the latter through the live center. (`/tmp/sk_frozen.py`)
+- SWAP-warp under the FROZEN center is strike-dependent, monotone-OTM, bounded, saturating —
+  (γ(w_nat)−γ(w₀))·Φ_τ(K). Masked in all prior verdicts by the live re-centering center. (`/tmp/sk_frozen6/8.py`)
+- Single global w ⇒ g_loc(K)=γ(w)·Φ_τ(K): cross-strike ratio w-independent to ≤5.6e-17 ⇒ w is a pure
+  vertical SCALE, cannot bend one strike vs another. A bounded scalar warp, NOT the (W) per-strike bend.
+  (`/tmp/sk_frozen5/7.py`)
+- Frozen center REMOVES the verdict-#41 fold (spurious roots {0.5686,0.6667,0.7415} were a LIVE-center
+  artifact — Φ depended on w there); frozen-center goal-seek is single-rooted. (`/tmp/sk_frozen7.py`)
+- The buildable resolution = one stored scalar m_ref pre-trade + plain Balancer + static lens; 3 scalars
+  {γ,τ,m_ref} reconstruct the whole g_loc(K); distinct from the demoted (W) weight field.
