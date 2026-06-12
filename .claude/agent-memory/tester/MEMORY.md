@@ -1,23 +1,52 @@
 # MEMORY — tester
-_Last updated: 2026-06-12, after the C16 GOAL-SEEK-WARP candidate smoke (build `abd46149`, READ-ONLY, gates HEAD promotion). VERDICT: MECHANICS PASS ×2 byte-stable + ONE gating nuance FLAGGED (FINDING-WARP-DIR) — escalated to manager→operator, NOT auto-promotable on "warp grows OTM". Prior: v28-lens HEAD `7e1ae39b` slippage-wire PASS ×2._
+_Last updated: 2026-06-12, after the CONTWARP candidate smoke (build `4378bc11`, READ-ONLY, GATES HEAD PROMOTION — operator entry-163 deadline). VERDICT: 4/4 PASS ×2 byte-stable, NO new undesirables ⇒ promotion gate CLEAR from my side. Prior: C16 goal-seek-warp `abd46149` (SCRAPPED by entry 158 + skeptic verdict, never promoted)._
 
-## ★★★★★ MOST RECENT — C16 GOAL-SEEK-WARP candidate `abd46149` (held-lens warp VIEW + goal-seek readout) = MECHANICS PASS ×2, ONE FLAG
-Build `engine/builds/temporal_mvp_v28_lens_warp.html` md5 `abd46149961cab45f1992b7e21850d5f` (UNCHANGED post-run, READ-ONLY; CANDIDATE, NOT HEAD). Adds vs lens-HEAD: (1) held-lens WARP VIEW on trade preview (dashed post-trade chart-2 curve drawn at the HELD mode so per-strike warp stays visible, not re-registered), (2) GOAL-SEEK readout (G input ⇒ w′=Engine.goalSeekW(G)=G/(1+G), live read-pt γ/w′/γ′). Pool/exec/settle byte-unchanged (mgr pre-verify lens_selfcheck 29/29). This is the build for operator entries 127–134 (goal-seek-warp directive).
-Harnesses `engine/verify/pw_v28_lens_warp_smoke.mjs` (A+B) + `pw_v28_lens_warp_zoom.mjs`; evidence `evidence/v28_lens_warp/` (INDEX + RUN_LOG_run{A,B} byte-identical + shots + **ZOOM_pricing_step1.png** = THE warp screenshot). Live Playwright ×2 byte-stable, **0 console / 0 pageerrors**. File-safety GREEN (build md5 unchanged; webp L74 `ab663f5c…`, svg L1060 `c505b08a…` via **sed line-md5** — NOTE python-split md5 differs because it drops the trailing \n; 3 scripts parse engine/state/ui). Ledger version-transition entry appended (feature-keyed #16/#2/#3/#10 + none-beyond; OPERATOR-VOICE entries 127–134 RULED/OPEN/QUEUED; table rows #16/#2/#3 amended; +2 recon rows; +2 rolling OPEN -5/-6).
-- **FEATURE 2 GOAL-SEEK = PASS exact ×2:** G=3⇒w′=0.7500/γ′=3.0000; G=2⇒0.6667/2; G=10⇒0.9091/10; **G=0.5(<1)⇒ w′ cell "G≥1 required", γ′ "—" (NaN-LOUD, no clamp)**. Read-pt γ=1.0000 @ default w=0.5; after a pool-moving trade (w→0.50112) readout refreshes γ→1.0045. render() L4211 auto-calls updateGoalSeek.
-- **FEATURE 3 honest copy = PASS:** advisory copy reads (verbatim) "…the trade is still the actuator (size = the walk). NOTE one trade warps the WHOLE profile by one factor (more in the wings, scaled by the lens Φ_τ) — it does NOT bend one strike independently of another in a single step. The asymmetric skew builds ACROSS the sequence…" — does NOT claim per-strike in-step bend. Matches operator entry-131/132.
-- **FEATURE 1 held-lens warp = VISIBLE (PASS) but with the gating nuance:** zoom-confirmed the dashed preview curve has a SEPARATE, lower, LEFT-SHIFTED peak and diverges into an obvious ASYMMETRIC SKEW (NOT flat/re-registered) — first build with an unmistakable single-trade warp. **★ FINDING-WARP-DIR (OPEN, the FLAG): the DRAWN value-warp |Δψ| is LARGEST at the elbow and SHRINKS OTM (call θ=1.05→0.2742, θ=4.0→0.0063; deep wings converge) — OPPOSITE of the spec's literal "visible separation grows OTM". The EXPONENT/slope warp dG(u)=(γ′−γ)·Φ_τ(|u|) DOES grow OTM (|u|=0.05→0.0254 … 1.40→0.1510). Root: mark ψ→0 OTM so both curves squeeze to the axis (honest geometry, NOT a bug). Slope-warp grows OTM, value-warp doesn't.** Operator-tier: which measure does "warps more at further otm strikes" (entry L239) mean? His own dust-trade reasoning (entry L320 "not a huge warp … missing something obvious") predicts a SMALL far-OTM warp = consistent with what renders.
-- **★ FINDING-TRADE-AT-STRIKE (OPEN, carried):** entry-127 (L961) "buy call is buy asset for dollars AT STRIKE on AMM" — operator's root-cause for flat-warp — is NOT in this READOUT/VIEW build; trade still moves w from band net-cash. Scope unruled (operator-tier).
-- **FEATURE 4 regression = PASS:** τ 0.3→2 reshapes chart-2 live (event-driven) incl. real ArrowUp; chart-1 (plain-v24 pool curve) UNCHANGED on τ 0.3→3 with band cleared (read/write separation HOLDS); dir swap long 0.4487%→short 0.4786% no warn; open+close band raw_net=+2.66e-5 finite; arb/tick click clean.
+## ★★★★★ MOST RECENT — CONTWARP candidate `4378bc11` (continuous trade-preview sweep, entry 158) = PASS ×2, GATE CLEAR
+Build `engine/builds/temporal_mvp_v28_lens_contwarp.html` md5 `4378bc1192878cfe437b8fa5551c5b88` (UNCHANGED post-run).
+ONE ui-layer delta vs HEAD `7e1ae39b` (~50 diff lines; engine+state scripts BYTE-IDENTICAL, block md5 85ab5a6f/05b81eee):
+`drawPricing` = rAF wrapper — new preview ⇒ ~0.8s sweep pre→post on chart-2, each frame = `renderPricingFrame` (old body,
+unmodified) of `Engine.tradeUpdate(prePool, dyFull·s)` at that frame's OWN 45°-tangent point; key-guard
+(`pool.x|y|preview.x|y`) prevents re-sweep on unchanged preview; final frame short-circuits to exact previewPool.
+Skeptic scope ruling: `notes/skeptic/VERDICT_CONTINUOUS_SKEW_entry158_2026-06-12.md` (held-center C16 SCRAPPED;
+live-centered stands; dip = mechanic, DO NOT "fix"; telescoping identity ⇒ landed frame == static == continuous result).
+Harness `engine/verify/pw_v28_contwarp_smoke.mjs` (A+B) + `pw_v28_contwarp_zoom.mjs`; evidence `evidence/v28_contwarp/`
+(INDEX + RUN_LOG_run{A,B} byte-stable modulo timing + ZOOM_sweep_{t0,t200,t450,landed}.png = THE sweep captures).
+0 console / 0 pageerrors both pages both runs. File-safety GREEN (md5 unchanged; webp L74 `ab663f5c…`, svg L1060
+`c505b08a…` sed line-md5; 3 scripts parse). Ledger entry appended (feature-keyed #16/#15 + #3/#1 regression + none-beyond;
+OPERATOR-VOICE entries 153/158/163/164/165-167/170-171/173; table row #16 amended; rolling -6 FINDING-WARP-DIR →
+RESOLVED(superseded by entry 158 + skeptic verdict); -5 FINDING-TRADE-AT-STRIKE carried OPEN).
+- **Item 1 (sweep renders) PASS:** 10 distinct chart-2 frames in the 800ms window (lit 10591→11507 monotone); landed
+  byte-stable; retriggered landing px-diff 0 (deterministic); landed px-diff **0 vs clean-HEAD static** staged identically
+  (previewPool x=9.864547/y=811137.99 exact match); center marker slides (visually + mode 1.000000→0.972909 monotone).
+- **Item 2 (geometry) PASS:** wings steepen g(θ=4) 0.9774→1.0055; crossed strike θ=0.985 DIPS 0.0503→0.0044→0.0423
+  (interior min ≈0 as the tangent point passes — THE mechanic, skeptic-ruled; relay undressed).
+- **Item 3 (no-sweep guards) PASS:** unchanged re-dispatch = 1 distinct frame/1.1s; cleared ⇒ __previewPool null + no
+  dotted curve + stable; chart-1 = 1 distinct hash THROUGHOUT the sweep; execute commits (0→1) — **NOTE: ONE post-execute
+  re-preview sweep plays (render()→previewBand() with inputs still filled re-stages vs the NEW pool ⇒ new key), lit
+  10346→10628 over ~840ms then byte-stable >1.6s — terminates, NOT a loop; HEAD-inherited re-preview semantics; recorded
+  NEUTRAL in ledger (clear-form-on-execute would remove it if unwanted).**
+- **Item 4 (regression) PASS:** τ 0.3→2.0 chart-2 6,532px (band cleared); 0 errors.
 - **GOTCHAS (critical for re-runs):**
-  - **openBand is POSITIONAL and takes DOLLAR strikes:** `Store.openBand(sold_wing, bought_wing, {inner:$,outer}, {inner:$,outer}, N_btc, clubSide)` — it divides by oracle INTERNALLY. Passing K/oracle gives θ=0.0000 "not OTM" reject.
-  - **Held-lens warp lives in drawPricing (canvas-pricing / "Mark Across Strikes"), NOT canvas-curve.** Switch chart via `#chart-select` value=pricing. Dashed preview draws only when previewPool present AND its mode differs from held (`Math.abs(snapPost.sNorm-snap.sNorm)>1e-6`, L3696).
-  - **The warp is read off the STEP-selected preview pool:** `setPreviewStep(1)` = after-sold-leg (big one-sided w-move = the visible warp); step 2 = after-both-legs. In the default w=0.5 collar both steps moved w identically here (0.500→0.536).
-  - **Viz/render NOT reachable from page.evaluate (standing gotcha holds on this build too):** drive redraws via real handlers (τ change event, btn-reset, btn-tick, blanking band inputs to clear preview). Engine/Store ARE reachable.
-  - **sed line-md5 ≠ python-split md5** for the blobs (newline): always verify blobs with `sed -n 'Np'|md5sum`.
+  - **#preview-step-1 lives in the CURVE chart card** — click it under `#chart-select`=curve, THEN switch to pricing;
+    clicking with pricing selected silently no-ops (step stays 2). drawPricing still draws when canvas hidden.
+  - **Retrigger a sweep by blanking ONLY #band-notional then refilling** (strikes stay). Blanking ALL fields then
+    refilling notional alone = zero preview (strike-empty reject) — my rev-A false-FAIL.
+  - **0.5 BTC band OVER-CARVES the boot-seeded club on EXECUTE** ("needs $40000 … club free $10000") — use ≤0.1 BTC
+    for the execute test; 0.5 BTC is fine for PREVIEW-only sweeps (preview doesn't carve).
+  - Sample sweep frames IN-PAGE (performance.now timer + getImageData hash every ~70ms inside one evaluate);
+    Playwright-side per-sample evaluates with full rgb transfer are too slow/skewed for 800ms windows.
+  - Stale RUN_LOG trap again: rm the old log before a re-run, or diff against the task output file.
+  - tradeUpdate(s,dy) needs `{x,y,alpha,beta}` — state.pool has them; previewPool (leg1State/finalState) is pool-shaped.
+
+## ★★★★ Prior — C16 GOAL-SEEK-WARP candidate `abd46149` = MECHANICS PASS ×2, then SCRAPPED (entry 158 + skeptic verdict)
+Held-lens warp VIEW + goal-seek readout (G⇒w′=G/(1+G)). NEVER PROMOTED — operator entry 158 re-ruled the mechanic
+continuous/live-centered; skeptic VERDICT_CONTINUOUS_SKEW FLAG-WRONGed the held-frame premise (mine included: my
+FINDING-WARP-DIR was measured in the scrapped frame → rolling -6 now RESOLVED(superseded)). FINDING-TRADE-AT-STRIKE
+(entry-127 asset-at-strike trade model NOT in any build; trade still moves w from band net-cash) carried OPEN (-5).
+Goal-seek numbers (if it returns): G=3⇒0.7500/3.0000, G<1 NaN-loud; evidence `evidence/v28_lens_warp/`.
 
 
-## ★★★★★ MOST RECENT — v28-lens HEAD `7e1ae39b` SLIPPAGE-REFRESH WIRE (targeted re-check, READ-ONLY) = PASS ×2
+## ★★★★ Prior — v28-lens HEAD `7e1ae39b` SLIPPAGE-REFRESH WIRE (targeted re-check, READ-ONLY) = PASS ×2
 HEAD now `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7e1ae39baa00fda087033174cfc652b8` (= FINAL `989752294`
 + ONE LINE: L2727 τ-input handler now also calls `previewBand()` before render/drawAll). Engine+lens math BYTE-UNCHANGED.
 Harness `engine/verify/pw_v28_lens_slipfresh_recheck.mjs`; evidence `evidence/v28_lens_FINAL/RECHECK_INDEX.txt`

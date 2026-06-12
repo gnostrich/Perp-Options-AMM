@@ -1,0 +1,72 @@
+============ v28 CONTWARP smoke — RUN B ============
+build: temporal_mvp_v28_lens_contwarp.html (4378bc11) vs HEAD 7e1ae39b
+
+===== ITEM 1: sweep renders; final frame == clean-HEAD static =====
+  preview-step-1: disabled-before-click=false  __previewStep after click=1
+  dir=long step=1 tau=0.3
+  pool  x=10.000000 y=800000.00 w=0.500000
+  prevP x=9.864547 y=811137.99 w=0.506866
+  previewPool match vs HEAD = true  (HEAD step=1 x=9.864547 y=811137.99)
+  final-frame px diff vs clean-HEAD static = 0  (expect 0)
+  retrigger staged immediately=true  staged at end=true
+  sweep samples (t ms -> chart2 hash:lit):
+    t=  15  97745755:10577  [sweep]
+    t= 102  -1260130069:10782  [sweep]
+    t= 180  -1146205054:10983  [sweep]
+    t= 257  275857707:11123  [sweep]
+    t= 334  1895601988:11271  [sweep]
+    t= 414  -319924025:11350  [sweep]
+    t= 493  2087682808:11363  [sweep]
+    t= 570  -1509614493:11424  [sweep]
+    t= 648  -731007865:11437  [sweep]
+    t= 726  323861561:11467  [sweep]
+    t= 803  -1164928250:11488  [landed]
+    t= 881  -2098890885:11507  [landed]
+    t= 958  -2098890885:11507  [landed]
+    t=1036  -2098890885:11507  [landed]
+    t=1114  -2098890885:11507  [landed]
+    t=1191  -2098890885:11507  [landed]
+    t=1268  -2098890885:11507  [landed]
+    t=1346  -2098890885:11507  [landed]
+    t=1424  -2098890885:11507  [landed]
+    t=1501  -2098890885:11507  [landed]
+  distinct chart-2 frames inside 800ms window = 10 (expect >=4: continuous sweep)
+  landed frames (t>1000ms) stable = true
+  chart-1 distinct hashes across whole sweep = 1 (expect 1: inert during animation)
+  retriggered landed frame px diff vs first landed frame = 0 (expect 0: deterministic landing)
+  ITEM1 (sweep renders, lands byte-equal to HEAD static) = PASS
+
+===== ITEM 2: per-frame geometry (marker slide / wing steepen / tangent-point dip) =====
+  s     w        mode(45deg pt)  gamma    g(0.90)  g(0.93)  g(0.97)  g(0.985)  g(1.25)  g(4.00)
+  0.00  0.500000  1.000000       1.0000   0.3314   0.2351   0.1010   0.0503   0.5968   0.9774
+  0.25  0.501734  0.993087       1.0070   0.3139   0.2152   0.0787   0.0274   0.6128   0.9844
+  0.50  0.503457  0.986269       1.0139   0.2959   0.1948   0.0561   0.0044   0.6285   0.9914
+  0.75  0.505167  0.979543       1.0209   0.2774   0.1740   0.0333   0.0189   0.6439   0.9984
+  1.00  0.506866  0.972909       1.0278   0.2583   0.1528   0.0103   0.0423   0.6590   1.0055
+  marker (mode/45deg-tangent pt) slides monotonically: true  (1.0000 -> 0.9729)
+  wing theta=4 steepens through sweep: true  (0.9774 -> 1.0055)
+  strikes crossed by sliding tangent pt: [0.985]  dip(interior min) seen=true at theta=0.985 min g=0.0044
+  NOTE: the dip IS the mechanic (skeptic caution) — frame center passes the strike, |u|->0, g_loc->0.
+  ITEM2 (expected geometry) = PASS
+
+===== ITEM 3: no sweep on unchanged / cleared / executed; chart-1 inert =====
+  3a unchanged preview re-dispatch: distinct chart-2 frames over 1.1s = 1 (expect 1)
+  3b cleared: __previewPool null=true  lit stable over 0.8s=true (lit=9431)
+     post-execute lit samples: 0:10448 95:10499 188:10513 282:10533 375:10552 468:10572 561:10585 654:10603 749:10618 842:10628 935:10628 1028:10628 1121:10628 1214:10628 1307:10628 1400:10628 1494:10628 1586:10628 1679:10628 1772:10628 1865:10628 1958:10628 2051:10628 2144:10628 2237:10628 2330:10628 2423:10628 2515:10628
+  3c execute: bands 0->1  newDialogs=[]
+     re-preview after execute (render->previewBand, inputs still filled) = true  frames in first 1.4s = 10 (1 = no sweep; >1 = one re-preview sweep, HEAD-inherited re-preview + new key)
+     post-execute tail (t>1.4s) stable = true (MUST be true: no loop)
+  3d chart-1 inert during sweep (from item-1b interleave) = true
+  ITEM3 (no animation when it should not; execute terminates) = PASS
+
+===== ITEM 4: spot-regression =====
+  tau 0.3->2.0 chart-2 px diff = 6532 (expect >100)
+  console errors=0  pageerrors=0  [HEAD page] console=0 pageerrors=0
+  ITEM4 (tau redraw + trade executed in 3c + 0 errors) = PASS
+
+================ VERDICTS (RUN B) ================
+  item1: PASS
+  item2: PASS
+  item3: PASS
+  item4: PASS
+  OVERALL: PASS

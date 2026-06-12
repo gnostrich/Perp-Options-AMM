@@ -1,0 +1,40 @@
+v28 CONTWARP candidate — live smoke evidence (tester, 2026-06-12)
+Build: engine/builds/temporal_mvp_v28_lens_contwarp.html  md5 4378bc1192878cfe437b8fa5551c5b88
+  (UNCHANGED post-run, READ-ONLY). vs HEAD 7e1ae39b: engine + state <script> blocks BYTE-IDENTICAL
+  (block md5 85ab5a6f / 05b81eee both builds); ONE ui-layer delta = drawPricing rAF sweep wrapper
+  (~50 diff lines): 800ms continuous sweep pre->post trade-preview on chart-2 (canvas-pricing),
+  each frame = Engine.tradeUpdate(prePool, dyFull*s) drawn by the unmodified renderPricingFrame
+  (= old drawPricing body) at that frame's OWN live 45-degree tangent point (mode=(1-w)/w).
+Harness: engine/verify/pw_v28_contwarp_smoke.mjs (RUN A + RUN B byte-stable modulo timing lines)
+         engine/verify/pw_v28_contwarp_zoom.mjs (canvas-only sweep captures)
+VERDICT: 4/4 items PASS x2. 0 console errors / 0 pageerrors. File-safety GREEN
+  (webp L74 ab663f5c..., svg L1060 c505b08a..., 3 scripts parse, build md5 unchanged).
+
+Files:
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt — full step logs (diff = run header + timing lines only)
+  R_{A,B}_I1_final_landed.png   — full page, sweep landed (step-1 one-sided preview, 0.5 BTC)
+  R_{A,B}_I1_HEAD_static.png    — clean HEAD 7e1ae39b same staging: px diff vs landed = 0
+  R_{A,B}_I1_mid{1,2,3}.png     — full page mid-sweep
+  R_{A,B}_I1_landed2.png        — retriggered sweep landing (deterministic, px diff 0)
+  R_{A,B}_I3_after_execute.png  — post-execute state (band committed)
+  ZOOM_sweep_t0.png             — canvas-only: dotted preview coincident with live curve at s~0
+  ZOOM_sweep_t200.png           — canvas-only: dotted curve separating, peak shifting left
+  ZOOM_sweep_t450.png           — canvas-only: larger separation, preview center marker visible left of live
+  ZOOM_sweep_landed.png         — canvas-only: final = static post-trade preview
+  ZOOM_pre_landed.png           — canvas-only landed frame from first staging (same shape)
+  ZOOM_cleared_nopreview.png    — canvas-only: preview cleared, NO dotted curve, single 45-deg marker
+
+Key numbers (identical run A == run B):
+  sweep: 10 distinct chart-2 frames inside the 800ms window (lit 10591->11507 monotone),
+         landed frames byte-stable, retriggered landing px-diff 0 vs first landing,
+         final landed frame px-diff 0 vs clean-HEAD static, previewPool x/y exact match HEAD.
+  marker: mode slides 1.000000 -> 0.972909 monotone (w 0.500000 -> 0.506866, step-1 sold leg).
+  geometry: wing theta=4 g_loc 0.9774 -> 1.0055 (steepens); theta=0.985 (crossed by the sliding
+         tangent point) dips 0.0503 -> 0.0044 -> 0.0423 (interior min ~0 = THE mechanic,
+         per skeptic VERDICT_CONTINUOUS_SKEW_entry158: not a bug, do not "fix").
+  no-sweep guards: unchanged preview re-dispatch = 1 distinct frame / 1.1s; cleared = stable,
+         __previewPool null; chart-1 (canvas-curve) 1 distinct hash THROUGHOUT the sweep.
+  execute: band commits (0->1, no dialogs); NOTE render() re-runs previewBand with inputs still
+         filled -> ONE re-preview sweep vs the NEW pool (lit 10346->10628 over ~840ms) then
+         byte-stable >1.6s — terminates, NOT a loop (HEAD-inherited re-preview semantics).
+  regression: tau 0.3->2.0 chart-2 px diff 6532; trade executes; 0 errors both pages.

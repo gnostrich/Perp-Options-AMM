@@ -71,18 +71,42 @@ place, annotate (do NOT move)**.
 All rows: provenance = **trusted-from-prover** (manager-audited; see `MANAGER_VERIFICATION.md`
 and the per-run audits in `evidence/manager_audit_*.md` + in-commit audit notes).
 
-## ⟢ EXTERNAL / RETRIEVED — the warp-amm Aristotle cluster (added 2026-06-11, entry 33)
-The **continuous trade-point warp** derivation lives in an Aristotle project cluster that PREDATES this
-index and was never folded in: **`warp-amm` / `warp-amm-handoff`** — task IDs `d20dda3a` (base),
-`7f933065` + `4e92e3cb` (Model-C twins); Lean `RequestProject/Warp.lean`; formalizes `warp-amm.tex`.
-Content: the warp is **trade-point-anchored** (tangent at the trade point `(x_B,y_B)`, NOT spot/45°/
-reserves), with closed forms `mode_shift_closed_call=(1/w₀)·log(y_s/y_B)` and rapidity slope integrals
-`2σ·sinhΔξ` / `2σ²(coshΔξ−1)`; token-clean, standard axioms. **It is the scalar-Balancer backing for the
-v27 trade-point-anchoring fix; the (W)-kurtosis generalisation (`dφ/dy=(β/y²)/w′(u)`) is its field lift.**
-⚠ **PROVENANCE = retrieval/read only this pass — NOT re-verified by us, so NOT trusted-from-prover yet.**
-It is in rapidity/mode-shift coordinates, not the paper-draft's exact `β/y²` cash-leg form (that integral
-is elementary; the paper L288 continuous closed-form remains a placeholder). To upgrade: a manager
-artifact audit (token-scan + axioms + diff) like any fold. See `notes/research/WARP_continuous_aristotle_query_2026-06-10.md`.
+## ⟢ EXTERNAL — the warp-amm Aristotle cluster (added 2026-06-11, entry 33; **UPGRADED 2026-06-12 → trusted-from-prover**)
+The **continuous trade-point warp** derivation: **`warp-amm` / `warp-amm-handoff`** — project IDs
+`d20dda3a` (base, Model A/pivot — superseded), `7f933065` + `4e92e3cb` (Model-C twins,
+statement-identical, proof scripts differ; `7f933065` newest = canonical); Lean
+`RequestProject/Warp.lean`; formalizes `warp-amm.tex`. Content: the warp is **trade-point-anchored**
+(tangent at the trade point `(x_B,y_B)`, NOT spot/45°/reserves), with `mode_shift` =
+`ln(y_s/x_s)−ln(y_B/x_B)`, closed call form `(1/w₀)·log(y_s/y_B)` (pre-curve constraint), and rapidity
+slope integrals `2σ·sinhΔξ` / `2σ²(coshΔξ−1)`; 22–23 theorems per archive.
+**PROVENANCE UPGRADE (research-lead audit 2026-06-12, entry-142 sweep; archives folded to
+`aristotle_runs/WARPAMM_external/`):** token scan CLEAN (all three; `Main.lean` = set_options only);
+summaries assert axioms ⊆ {propext, Classical.choice, Quot.sound}; statements re-derived by hand,
+all intended (incl. mode_shift via σ_B substitution and the closed-call log algebra); twins diff =
+proof-scripts/comments only. FRAGILE-TACTICS flags: `grind` (`mode_shift_closed_call`), heavy
+`nlinarith` (`mode_shift`) — no-math. **Now trusted-from-prover** (manager fold-confirmation
+pending per protocol). Caveats kept: Model-C anchoring is the trade point, NOT v28's live-mode lens;
+`mode_shift_closed_call` is the frozen-w first approximation of the exact
+`Δln center = −ln((y₁−β)/(y₀−β))` (CONTINUOUS note §2); engine link NOT claimed.
+
+## ⟢ SWEEP 2026-06-12 (entry 142) — proven-but-UNFOLDED store results (parallel-session submissions; manager to route)
+- `fw_proj_warp_core` 56b4f0fa (FW-1/2/3/13: w′=(1−w)/y, α/β conserved, transport uniqueness,
+  round-trip, semigroup) — COMPLETE; token-clean; unchanged modules byte-identical to working tree.
+- `fw_proj_gate_leak` 727fc83e (FW-7/8: validity=convexity gate, leak≥0, leak=Bregman) —
+  **COMPLETE_WITH_ERRORS server status vs clean-compile summary: reconcile before fold.**
+- `fw_proj_germ` 6d6ba6e6 (FW-5/6 germ: ε′=−1/2, A=1/2, validity strip) — COMPLETE; token-clean.
+- `offatm_submit` 90056417 (+twin f3776478) (off-ATM trade point existence/uniqueness, w′∈(0,1)) —
+  COMPLETE; token-clean.
+- Pre-repo cluster (4–7 wk: Two-AMM/SU(1,1)/Minkowski/closed-form/geometric/policy) — retrieval
+  candidates only, NOT audited.
+
+## ⟢ SUBMITTED 2026-06-12 overnight (this session — rows added on fold)
+- **LENSKERNEL** d7da8597 (`prompts/aristotle_prompt_lenskernel_L2.md`): v28 engine-subset L2 defs
+  (Pool/tradeUpdate/rebase/lens, line-cited to HEAD) + flow law γ′=γ+dy/β + lens basics +
+  `gLoc_rebase_invariant` + smooth-paste port `valueMatch_g`/`slopeMatch_g` (g>0, incl. g<1).
+- **WARPCALC** 24e6497e (`prompts/aristotle_prompt_warpcalc_L1.md`): ΔG=∫Φ_τ(|ln θγ|)dγ —
+  potential/FTC exactness, path-independence, round-trip 0, 0≤ΔG≤Δγ, strict positivity,
+  single-signedness, decomposition live = ΔG + recentering (kink-split).
 
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.
