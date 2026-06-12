@@ -180,7 +180,12 @@ behind: register first-audit clears → show operator itemized edit → fresh go
   or honestly OPEN?); PAPER consumes VERIFIED two-way rows = minimal incremental paper work.** **[entry 142]
   THEORY-LINK sourced from ALL THREE: notes+INDEX, the ACTUAL stored .lean archives, AND a SEARCH of
   Aristotle's full store of past work (aristotlelib) to surface PROVEN-but-unfolded results (e.g. warp-amm
-  continuous-warp cluster, retrieval-only) — each tied to its component w/ honest provenance.** research-lead
+  continuous-warp cluster, retrieval-only) — each tied to its component w/ honest provenance.** **[entry 144:
+  RAG DROPPED; RIGOROUS END-STATE = formal LEAN VERIFICATION of the CORE IMPLEMENTATION SUBSET vs spec + object.
+  3 layers: L1 math/spec object in Lean (mostly GROUNDED, extend to lens/warp); L2 engine fns as Lean defs proven
+  to satisfy L1; L3 THE HARD GAP = JS-computes-the-Lean-def (extraction faithfulness) — today only Node-oracle
+  bridged = a TEST not a proof; NEVER claim "HTML Lean-verified" when L3 is oracle-only. See register PART D.]**
+  research-lead
   theory task; serialize AFTER the build spec (one research thread/branch). Skeptic audits BOTH directions +
   folds bidirectional-consistency into the universal-gate policy (entry 141 "skeptic take note" — relay at
   its next pass; do NOT spawn a concurrent skeptic now; 2 already running: a5a4648 consistency-audit, intern aed30827).

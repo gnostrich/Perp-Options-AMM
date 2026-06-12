@@ -1086,3 +1086,11 @@ _Context: operator directs that the Lean work — via notes, the actual stored L
 _Context: operator says if a table is insufficient, explore alternative data structures (e.g. a RAG) to maintain the register/index rigorously — not handwritten scratch notes gathering dust._
 
 > if you need, and a table is insuffienent, explore alternative data structures like a RAG or something to maintain this... we have to do it rigorously not like handwritten scratch notes lying gathering dust
+
+
+---
+
+## Entry 144 — 2026-06-12
+_Context: operator pivots from the RAG idea — instead, aim to have the core implementation (the actual subset of the HTML) formally VERIFIED in Lean against the spec and the pure mathematical object._
+
+> infact instead of the rag, lets aim to have the core implementation (actual subset of HTML) actually formally verified in lean against the spec and the pure math object

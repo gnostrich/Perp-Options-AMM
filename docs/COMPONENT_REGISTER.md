@@ -99,10 +99,16 @@ mismatch = FLAG. The **paper** draws claims directly from VERIFIED two-way rows 
 (1) the notes (`notes/research/`, `formal/INDEX.md`, `formal/MANAGER_VERIFICATION.md`);
 (2) the **actual stored Lean** archives (`formal/aristotle_runs/**/extracted/**/*.lean` — the returned proofs themselves, not just the index summary);
 (3) a **search of Aristotle's full store of all past work** (research-lead via the aristotlelib interface) to surface results PROVEN but never folded — e.g. the `warp-amm`/`warp-amm-handoff` continuous-warp cluster (INDEX.md §⟢ EXTERNAL, retrieval-only/un-verified). Every such result gets a register row tied to its component, with honest provenance (GROUNDED / CARRIED / trusted-from-prover / retrieval-only).
-**Owner:** research-lead populates the THEORY-LINK (its queued singular-object grounding pass, entries
-134/135/136/142) → skeptic audits bidirectionally → manager folds into this register → paper consumes.
-**Until populated, do NOT claim theory↔impl consistency for any row.** This part is the workflow target,
-not a current state.
+**RIGOROUS END-STATE (operator entry 144 — supersedes the RAG idea, entry 143 DROPPED): formal Lean
+verification of the CORE IMPLEMENTATION SUBSET against the spec AND the pure-math object.** Not a search
+index — an actual proof chain. Honest scoping of what that means here (3 layers, the 3rd is the hard gap):
+- **(L1) the math/spec object in Lean** — already substantially GROUNDED (`formal/INDEX.md`: settlement R1/T1a/T1b, value∝S^−γ, no-arb/frontier, metriplectic single-object T2, Merton tie). EXTEND to the lens/warp: `gLoc=γ·h′_τ(|u|)`, `goalSeekW=G/(1+G)` unique root, smooth-paste `S*=K·g/(g+1)`, pool=Balancer invariant, monotonicity.
+- **(L2) the engine functions as precise definitions** — extract the core numerical kernel (gLoc/markLensed/tradeUpdate/goalSeekW/lens math) as Lean defs; prove they SATISFY the L1 spec properties.
+- **(L3) THE HARD GAP — JS-computes-the-Lean-def (extraction faithfulness):** Lean does not ingest JS. Today this is bridged ONLY by the Node oracle gates (`lens_selfcheck` etc.) checking the JS against the same formulas — a TEST, not a proof. A true proof needs a verified extraction / transpilation or a hand-audited correspondence. **This gap must be stated honestly on every "formally verified" claim — never assert the HTML is Lean-verified when only L1+L2 are proven and L3 is oracle-bridged.**
+**Owner:** research-lead drives L1→L2 (Aristotle), defines the engine-subset, states obligations; skeptic audits
+provenance + the L3 honesty; manager re-derives + folds per-function rows into the register THEORY-LINK; paper
+consumes GROUNDED rows. Queued behind the C16 promotion (entries 134/135/136/142/144).
+**Until proven, do NOT claim theory↔impl consistency or "Lean-verified implementation" for any row.** Target, not state.
 
 ## Queued confirmation pass (to clear the `needs-verify` rows)
 Tester + skeptic to confirm C4/C5/C8/C9/C11 live-state on HEAD v28 and stamp LAST-VERIFIED, so no
