@@ -212,7 +212,12 @@ async function main() {
     set(bn,'0.6');
     await new Promise(r=>setTimeout(r,30));
     const pp2 = window.__previewPool ? {x:window.__previewPool.x,y:window.__previewPool.y} : null;
-    window.__sweepProbe = { pp1, pp2 };
+    const warn = document.getElementById('warn-area');
+    window.__sweepProbe = { pp1, pp2,
+      warn: warn ? warn.textContent.trim() : null,
+      dir: (document.getElementById('band-dir-sell')||{}).dataset && document.getElementById('band-dir-sell').dataset.dir,
+      si: si.value, bi: bi.value, bn: bn.value,
+      oracle: Store.state.oracle, clubsLong: Store.state.clubs.long ? Store.state.clubs.long.totalNotional : null };
     return await new Promise(resolve => {
       const hashes = new Set(); let frames=0; const t0 = performance.now();
       function tick(){
