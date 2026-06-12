@@ -728,3 +728,11 @@ _Context: operator rejects the manager's #8/#9 feature question as under-specifi
 _Context: operator dispositions the two payoff-chart features — #8 manager's call; #9 IN (naked leg uncapped, like any American option)._
 
 > 1 take a call, 2 yes, like any american style option …
+
+
+---
+
+## Entry 99 — 2026-06-12
+_Context: operator flags the manager's "scope expansion" jargon as a breach of the simple-English protocol (R7/entry-71) and directs the skeptic to queue + enforce it._
+
+> whats the scope expansion thing? didn't we establish a simple english communication protocol? relay to skeptic for his queue that this has to be implemented
