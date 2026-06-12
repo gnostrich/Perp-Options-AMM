@@ -2409,3 +2409,39 @@ g, verified vs literal tradeUpdate to 6 digits.
     must not be read as "warp done." Convergence-alarm LOW (manager built the board close to my #45 spec
     WITHOUT inflating the two oversell-tempting rows — C16 stayed UNBUILT, needs-verify stayed
     needs-verify; opposite of tidy-but-false).
+
+### Verdict #entry153-reply (2026-06-12) — operator answered my 9-item sequence; THREE critical
+→ `notes/skeptic/REPLY_OPERATOR_ENTRY153_2026-06-12.md` (operator-facing, manager relays verbatim).
+Verified vs live HEAD v28_lens md5 7e1ae39b + lens_selfcheck.js, read code not summaries.
+- **ITEM 8 — MY conflation, owned to operator.** Operator FURIOUS ("what is wing steepness you fuck
+  ... i'll be real mad and wipe all of you permanently if this some version conflation"). It WAS (W)/
+  v27-era language; I pulled "wing steepness" from STALE `docs/OPEN_OPERATOR_QUESTIONS.md` items 6/7
+  ("wing exponents / hand-set boxes"). **Engine itself is CLEAN** — searched HEAD: NO `wField` (the
+  (W)-curve fn), NO `w_mid/w_plus/w_minus/deltaW/wKurt`. Live = {Balancer x,y,w} (byte-identical v24
+  pool: tradeUpdate/arbitrageToOracle/rebase) + {one lens intensity τ=state.tau}. ONLY knob. The many
+  "wing" code hits are geometry labels (call side vs put side of the ONE curve), not weight-exponents.
+  So conflation was in the DOC + my question, NOT the engine. Instructed manager to PURGE OQ items 6/7
+  + all live-doc "wing exponent/box/steepness master" language. LESSON: stale-doc vocabulary is a live
+  FLAG vector — a dead word in a to-do file became a near-team-wipe. AUDIT MY OWN QUESTION SOURCES
+  against HEAD before putting a term in front of the operator. New blind-spot pattern: I enforce
+  inventory dispositioning on OTHERS' notes but sourced my own operator question from an undispositioned
+  stale doc.
+- **ITEMS 1&2 — center def, reconciled w/ my seq-#1 held-center fix.** Op: warp center = 45°-tangent
+  point; warp does NOT move it "by definition"; amplifies slope by polar deviation. MAPPING: 45°-tangent
+  point = getSNorm=(1−w)/w = EXACTLY the live lens center (item 1 MATCHES HEAD). BUT item 2 does NOT
+  match HEAD: gLoc reads getSNorm(state) LIVE every call, so a trade moving w MOVES the center (the
+  exact re-centering masking artifact, verdict #10/#11/#14/#C16). Two readings put to op: A=frozen
+  anchor (he already rejected "no fuck no"), B=held-during-a-step (my held-center fix). Item-2 wording
+  reads as B; asked op to confirm B-not-A in one word. Held-lens machinery is in SPEC+gate but NOT HEAD:
+  `goalSeekW` does NOT exist in HEAD ⇒ the W1/W6 held-lens gates DON'T FIRE on HEAD (guarded by
+  `if typeof E.goalSeekW==='function'`). So "RECONCILED held-lens build" = unbuilt spec, not promoted.
+  Stated this as unbuilt, not done.
+- **ITEM 4 — foundational-but-UNMET, stated straight.** Op: "AMM txn is virtual bookkeeping that skews
+  curve which prices option on chart 2" was meant for EVERY build (foundational/in-scope). HONEST: today
+  moves w from net cash (spirit-ok) but does NOT do "buy call = buy asset for $ AT STRIKE on AMM" (entry
+  127 root-cause, tester FINDING-TRADE-AT-STRIKE). Registered foundational + UNMET, refused "done."
+- ITEM 7 notation discipline acknowledged (γ = bare symbol, op refused to engage — correct). Re-pose
+  γ>1 question in plain English later. (3) chart-1 untouched/chart-2 lensed CONFIRMED vs build. (5) pool
+  size editable, default free — registered as build req. (6) τ visible on chart-2 registered. (9) "live
+  verifiability test" for HTML core = honest L3 bridge (runnable self-check harness, not Lean) confirmed.
+- Verbatim channel: entry 153 received raw from manager, no FLAG-PROCESS this turn.
