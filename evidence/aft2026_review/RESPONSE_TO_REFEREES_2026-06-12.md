@@ -256,9 +256,9 @@ rule). We do not improvise it here.
 The reference implementation is a research prototype (a self-contained browser simulator used to
 exercise the pricing, funding, and settlement paths); it is not an on-chain implementation, and we
 will either report simulator-based behaviour explicitly labelled as such or drop the mention. Gas
-figures are not claimed. L0 selection/bounds and multi-winner club dynamics are open: the
-magnitude-aware floor of §5/Q5 is the first commitment; a full collateralisation analysis is
-future work and will be listed as such.
+figures are not claimed. L0 selection/bounds and multi-winner club dynamics are open and are
+covered by the Q5 disposition above (specify or list as an explicit limitation); a full
+collateralisation analysis is future work and will be listed as such.
 
 ---
 
