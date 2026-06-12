@@ -114,13 +114,14 @@ const FLAGS = [];
   // default pool w=0.5; sold-CALL OTM strikes must sit above pool spot (sNorm). Use a long band.
   const dir = await setBandDir('long');
   say('  band dir = ' + dir);
-  // A valid OTM long band on the default pool (sold call high, bought call lower-but-still-OTM).
-  await fillBand({ sold_inner: 120000, bought_inner: 100000, notional: 0.05 });
+  // Valid OTM long band on default pool (oracle 80000, spot sNorm=1.0):
+  // sold=CALL inner above oracle (θ>1), bought=PUT inner below oracle (θ<1).
+  await fillBand({ sold_inner: 100000, bought_inner: 60000, notional: 0.05 });
   let ps = await previewState();
   say('  preview: disabled=' + ps.disabled + ' warn="' + ps.warn + '" slip=' + ps.slip + ' netcash=' + ps.netcash);
   if (ps.disabled || !/%/.test(ps.slip) || /^0?\.?0+\s*%$/.test(ps.slip.replace(/[^0-9.%]/g,''))) {
     // try a slightly different band if the default got rejected
-    await fillBand({ sold_inner: 130000, bought_inner: 110000, notional: 0.1 });
+    await fillBand({ sold_inner: 120000, bought_inner: 50000, notional: 0.1 });
     ps = await previewState();
     say('  retry preview: disabled=' + ps.disabled + ' warn="' + ps.warn + '" slip=' + ps.slip);
   }
@@ -195,17 +196,18 @@ const FLAGS = [];
   // ───────── STEP 6: trade still executes + both charts render (previewBand call didn't break trade path)
   say('\n===== STEP 6: trade executes, both charts render =====');
   await setBandDir('long');
-  await fillBand({ sold_inner: 120000, bought_inner: 100000, notional: 0.05 });
+  await fillBand({ sold_inner: 100000, bought_inner: 60000, notional: 0.05 });
   let ps6 = await previewState();
   if (ps6.disabled) {
-    await fillBand({ sold_inner: 130000, bought_inner: 110000, notional: 0.1 });
+    await fillBand({ sold_inner: 120000, bought_inner: 50000, notional: 0.1 });
     ps6 = await previewState();
   }
   const c1pre = await rawpix(page, 'canvas-curve');
   const c2pre = await rawpix(page, 'canvas-pricing');
   const nBefore = await page.evaluate(()=>Store.state.bands.length);
   const dlgBefore = dialogs.length;
-  await page.click('#btn-execute');
+  const execDisabled = await page.evaluate(()=>document.getElementById('btn-execute')?.disabled);
+  if (!execDisabled) await page.click('#btn-execute'); else say('  STEP6 band preview disabled: warn="' + ps6.warn + '"');
   await page.waitForTimeout(350);
   const nAfter = await page.evaluate(()=>Store.state.bands.length);
   const c1post = await rawpix(page, 'canvas-curve');
