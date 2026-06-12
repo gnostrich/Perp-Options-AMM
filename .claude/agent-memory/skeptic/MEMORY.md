@@ -1382,6 +1382,40 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
 - gate-5 must test at a steep OFF-EQUILIBRIUM state + the ONE-ITM case to catch the coordinate split;
   as written it doesn't pin the state and the neither-ITM case cancels. (`/tmp/t9`)
 
+31. **2026-06-12 — executeBand N_buy denom lensing (verdict #31; the last open Stage-2 item)** →
+   `notes/skeptic/VERDICT_R6_EXECUTEBAND_NBUY_2026-06-12.md`. Build = `temporal_mvp_v28_lens_S2.html`
+   (md5 b53ace99). Targeted 1-decision audit: intern routed `executeBand`'s inline N_buy sizing denom
+   (NOT one of the spec's 5 W-sites) through the SAME lensed `legPrice` (W1 entry) instead of the S1
+   raw `mark(…)·2sinh(δ)` at price-coord sNorm2; FLAGGED it. **DECISION: CONFIRM — keep it,
+   consistency-MANDATED (within R1, not overreach) + correct.** Plus 1 FLAG-OMISSION + 1 record note;
+   none operator-tier, none gates executeBand.
+   - **Q1 REQUIRED:** `N_buy=V_sell/denom` is single-basis; W2 lensed the NUMERATOR ⇒ leaving denom raw
+     is a NEW mismatch CREATED by the W2 edit, not a legacy path. A site the requested edit forces into
+     inconsistency is in scope to repair (entry-96 + #30 one-helper). MEASURED V_buy/V_sell when denom
+     left raw: **1.388 (eq), 0.776, 0.181 (off-eq) — up to 5.5× off, NOT "~2×"** (intern understated).
+     NEW lensed denom ⇒ **exactly 1.00000000** in all states (sizing helper == executing helper, same fn).
+   - **Q2 CORRECT:** MUST-APPLY-A PASS — denom is `legPrice(…).V` which reads `getSNorm` (reciprocal,
+     L1723), SAME coord as V_sell; price-coord sNorm2 no longer consumed. Also correctly drops the S1
+     composite-ray `2sinh(δ)` (per-leg g_loc form). L4 PASS byte-level: tradeUpdate/rebase/arb IDENTICAL
+     S1→S2 (max diff <1e-12); change moves the sizing VALUE not the swap mechanic.
+   - **Q3 FLAG-OMISSION (live):** a SECOND copy of the SAME raw-denom bug survives at the **payoff-preview
+     render L3870-3887** — lensed `legPrice` numerator over a RAW `Engine.mark(…)·2sinh(δ)` denom (L3886).
+     Display-only (executed trade uses executeBand's result.N_buy, L2477/2503), so NOT a solvency/settle
+     break and does NOT gate executeBand — but previewed bought-N ≠ booked bought-N by 1.4–5×, a visible
+     inconsistency by the intern's own rule. **Tester smoke-pass: confirm preview pv-N-bought vs trade-log
+     booked N_buy after open**; intern one-line fix (swap to legPrice). RECORD: dead consts
+     sNorm2/ts2/d2/m2/buyMode (L1840,1849-50) — harmless (const, block-local, no refs) but re-wire
+     footgun; delete for hygiene.
+   - Convergence-alarm LOW: intern flagged not smuggled, correct basis reason, routed through the one
+     helper. I only added the 2nd occurrence it didn't reach.
+
+## Claims mine-to-defend (verdict #31)
+- Leaving N_buy denom raw while V_sell lensed breaks cash-conservation V_buy/V_sell to 0.18–1.39× across
+  pool states (5.5× worst); routing denom through legPrice restores it to EXACTLY 1 (same-helper). The
+  expansion is required, not overreach. L4 byte-preserved S1→S2 (tradeUpdate/rebase/arb).
+- The raw-denom bug has a SECOND home at the payoff-preview render L3886 (lensed num / raw denom) — fixed
+  in executeBand, NOT fixed there; display-only so not a break, but preview-N≠booked-N.
+
 ## Team blind-spot pattern (addition, verdict #30) — #15
 15. **Invariance of a SCALAR sold as invariance of the VALUE it parametrizes.** §11/§1.1 proves g_loc is
    coordinate-invariant (|u| even) and slides that into "so the lens call is coordinate-safe" — but the
