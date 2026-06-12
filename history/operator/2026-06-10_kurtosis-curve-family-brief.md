@@ -1286,3 +1286,11 @@ _Context: operator links the continuous-limit design intent (entry 165) to the m
 _Context: operator completes the thought — the continuous limit is worth it even if it frontloads the math._
 
 > even it it frontloads the math we need to do
+
+
+---
+
+## Entry 168 — 2026-06-12
+_Context: operator asks for an unambiguous explanation of the research-lead's "optional second trace — warp the trade injected per strike (the potential)" — it sounds important._
+
+> Research adds that an optional second trace — "warp the trade injected per strike" (the potential above ---- ecxplan this it soundfs important and i dont want room for ambiguity
