@@ -78,3 +78,8 @@ when the paper agent returns)._
 
 _Context note: plain-language Q&A summary section added at the top of RESPONSE_TO_REFEREES (v4) and
 printed inline in-chat._
+
+## Entry 12
+> give the updated md file
+
+_Context note: full RESPONSE_TO_REFEREES_2026-06-12.md (v4) printed inline._
