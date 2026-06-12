@@ -1,7 +1,51 @@
 # MEMORY — tester
-_Last updated: 2026-06-11, after the v28 POLAR-LENS STAGE-1 STANDING UI SMOKE-PASS (candidate build `5e1ff278`, READ-ONLY; operator ASLEEP, autonomous build entry 95). HEAD unchanged = v27 `928cde1c`._
+_Last updated: 2026-06-12, after the v28 POLAR-LENS STAGE-2 STANDING UI SMOKE-PASS (candidate build `b53ace99`, READ-ONLY; write/settle-through-lens + FLAG-1 fix). HEAD unchanged = v27 `928cde1c`._
 
-## ★★★★★ MOST RECENT — v28 POLAR-LENS STAGE-1 SMOKE (CANDIDATE `5e1ff278`, NOT HEAD; new line off PLAIN v24)
+
+## ★★★★★ MOST RECENT — v28 POLAR-LENS STAGE-2 SMOKE (CANDIDATE `b53ace99`, NOT HEAD; v24-base lens line, write/settle THROUGH the lens)
+Build = `engine/builds/temporal_mvp_v28_lens_S2.html` (md5 `b53ace9996930249cad85fc1e37e6c61`, UNCHANGED
+post-run, READ-ONLY). Stage 2 = operator entry 96 (L710 [verbatim]): "settle at lenses prices … recording the
+lensed version" — trades/portfolio/settlement now record the LENSED value. Manager pre-verify: pool byte-identical
+to v24 (tradeUpdate Δ0), `lens_selfcheck.js` 23/0, blobs canonical. Harness `engine/verify/pw_v28_lens_S2_smoke.mjs`;
+evidence `evidence/v28_lens_S2/` (15 shots + RUN_LOG_runA/B + INDEX + probes/). Live Playwright ×2 byte-stable,
+**0 console errors / 0 pageerrors**. File-safety GREEN (webp L74 `ab663f5c…`, svg L1060 `c505b08a…`, 3 scripts parse).
+Ledger entry appended (feature-keyed #3/#6/#7/#9/#10/#11/#14/#15/#16 + none-beyond; OPERATOR-VOICE entry 96 RULED;
+table rows #3/#7/#10/#11/#15 amended; OPEN -3 FLAG-1→RESOLVED, +OPEN -4 FINDING-RT; reconciliation FLAG-1→RECONCILED
++1 FINDING-RT row). **VERDICT: ALL 12 step/gate verdicts PASS ×2 byte-stable ⇒ Stage-2 hand-back GATE = PASS.**
+- **★ FLAG-1 RESOLVED (the Stage-1 blocker, deferred confirmation DONE):** the τ stepper EVENT now auto-redraws
+  chart 2 LIVE — event-only px: 0.3→0.05 = **5,199**, 0.3→2 = **6,545**, real keyboard **ArrowUp** 0.3→0.35 = **3,894**.
+  `window.Viz` is STILL undefined, but L2724 now calls `if (Viz) Viz.drawAll(...)` reaching Viz via the ui-script
+  closure (dead window.Viz guard gone). Blocker is gone.
+- **★ FINDING-RT (NEW, OPEN, INHERITED-v24 — the one thing to surface):** an instant net-cash-zero open→close
+  round-trip on a TWO-OTM-LEG band yields POSITIVE raw_net = Y−X (TRADER-favourable per engine L2146) that SCALES
+  with slippage: N=0.01→+1.57e-4, N=0.05→+3.71e-3, N=0.2→+4.30e-2 (slip 0.24/1.17/4.25%). **CONTRADICTS the brief's
+  "tiny residual = pool-favourable, NOT a leak" on the SIGN.** Root = v24 closeBand geometry (both same-sign legs
+  reverse in the trader's favour). **VERIFIED byte-identical raw_net in S1 AND v24 base** (`probes/compare_S2_S1_v24.txt`)
+  ⇒ INHERITED-v24, NOT a Stage-2 regression. The one-ITM-leg steep case (S6) is correctly pool-favourable (raw_net<0).
+  Does NOT block the gate by itself (Stage-2 settles correctly vs its base) — **escalate the SIGN convention to the operator**
+  (entry 96 ruled "settle at lensed prices" but did NOT rule on round-trip direction).
+- **Step verdicts (all PASS ×2):** (1) τ auto-redraw chart 2 live — PASS (FLAG-1 RESOLVED). (2) chart 1 INERT to τ:
+  px-diff across {0.05,1,2,3} = **0 every τ** — PASS HARD (the read/write separation). (3) round-trip: finite small
+  residual raw_net=3.86e-3, no settled-cash leg — PASS [sign = FINDING-RT]. (4) portfolio open-band value moves with τ
+  (Δ=4.544e-2 across 0.3→2); closed bands freeze settlement $ ($35.16/$12.14 same at τ0.3/τ2) — PASS. (5) near-ATM
+  g_loc≈0 settles finite (raw_net=7.17e-4, markLensed g=0→1, no NaN) — PASS. (6) steep pool w=0.6, sold-call driven ITM
+  (oracle 80k→160k): settled_cash_leg=sold/live_leg=bought, raw_net=−4.80e-3 (pool-favourable), finite — reciprocal-coord
+  one-ITM-leg path PROVEN — PASS; dir swap flips inputs+dir — PASS. (7) no mixed-basis: 8 carved-perp-unit cells carry no
+  `$`; exactly 1 $ settlement cell; carved perp slice un-lensed not summed — PASS. (8) standing: both band dirs open,
+  swap control, arb, tick, LP round-trip ($1.6M→$1.6M), all 4 overlays lit, reset — PASS.
+- **Gotchas this run (CRITICAL for re-runs):**
+  - **#perp-notional is in BTC** (default 0.1), #perp-margin in USD — feeding USD-scale numbers (e.g. 100000) inflates
+    the club ~1e4× (100000 BTC × 80000 = $8e9), blowing up L0 to ~7e5. Use small BTC notionals (1–2 BTC).
+  - **Page vs subtab:** Transact and Portfolio are SEPARATE top-level pages (`.page-nav-link[data-page="transact"|"portfolio"]`).
+    tau-input / btn-tick / btn-arb / chart-select live on Transact > **Settings subtab**; perp/band forms on other subtabs of
+    the SAME Transact page. setTau/setPool must re-activate Transact+Settings first or the input is "not visible".
+  - **band warn banner is `#warn-area`** (NOT #band-warn). OTM-only open guard: sold-call needs strike θ > pool-spot-θ;
+    a STEEP pool raises spot-θ (w=0.6→θ=1.5, w=0.78→θ=3.55) so OTM sold-call strikes must be well ABOVE oracle (K>120k at w=0.6).
+  - **band direction = `#band-dir-sell` dataset.dir (long/short)**; swap flips dir AND swaps inner/outer inputs. To open a
+    specific direction deterministically, click #band-dir-sell to the wanted dir first, then fill strikes.
+  - closeBand return is reachable via `Store.closeBand(id)` in evaluate (returns {raw_net,X,Y,settled_cash_leg,live_leg,…}).
+
+## ★★★★ Prior — v28 POLAR-LENS STAGE-1 SMOKE (CANDIDATE `5e1ff278`, NOT HEAD; new line off PLAIN v24)
 Build = `engine/builds/temporal_mvp_v28_lens_S1.html` (md5 `5e1ff278dbfea889d49b48224ba931d3`). Static
 polar lens (knob τ) reshapes CHART 2 (option/value) + funding; CHART 1 (pool curve) + all trade
 mechanics are plain v24 byte-identical (manager pre-verify tradeUpdate Δ0; lens_selfcheck 14/0).
@@ -225,7 +269,7 @@ Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg); 3 `<script>` pars
 build: L1064 on the v27 line (`928cde1c` etc.), L1060 on the v28-S1 candidate (`5e1ff278`) — content
 canonical either way; key off the line md5, not the number.**
 HEAD `928cde1cccb0f35fdc9a23a7634414c8` (entry-46 fix build); prior `1eebfcd6`, `9d22cffd`, `b245bfda`, `3914c7f4`;
-v26c_full2 `6cc73563…`; v26b `8df9f8a3…`. **v28-S1 candidate `5e1ff278dbfea889d49b48224ba931d3` (NOT HEAD).**
+v26c_full2 `6cc73563…`; v26b `8df9f8a3…`. **v28-S1 candidate `5e1ff278…` (NOT HEAD); v28-S2 candidate `b53ace9996930249cad85fc1e37e6c61` (NOT HEAD, write/settle-through-lens, svg L1060).**
 
 ## Environment quick-ref
 `cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/<harness>.mjs` — playwright

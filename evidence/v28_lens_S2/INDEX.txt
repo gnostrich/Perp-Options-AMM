@@ -1,0 +1,46 @@
+v28 POLAR-LENS STAGE-2 STANDING UI SMOKE-PASS — evidence index
+Build: engine/builds/temporal_mvp_v28_lens_S2.html  md5 b53ace9996930249cad85fc1e37e6c61 (READ-ONLY, unchanged post-run)
+HEAD unchanged = v27 928cde1c. NOT a promotion. Stage-2 hand-back GATE evidence.
+Harness: engine/verify/pw_v28_lens_S2_smoke.mjs  (live Playwright chromium, ran x2 byte-stable)
+Run logs: RUN_LOG_runA.txt / RUN_LOG_runB.txt (RUN_LOG.txt = last run). 0 pageerrors / 0 console errors both runs.
+
+PER-STEP VERDICTS (all PASS, both runs):
+  S1  τ stepper auto-redraws chart-2 LIVE (FLAG-1 deferred confirmation) — event-only px: 0.3->0.05=5199, 0.3->2=6545, real ArrowUp=3894 -> FLAG-1 RESOLVED.
+  S2  chart-1 (pool curve) INERT to τ — max px-diff across {0.05,1,2,3} sweep = 0 (HARD).
+  S3  open->close immediate round-trip — finite small residual raw_net=3.8555e-3, no settled-cash leg. [see FINDING-RT on sign]
+  S4  portfolio band value MOVES with τ — analytic open-band value Δ=4.544e-2 across τ0.3->2 (lens = unit of account).
+  S5  near-ATM band settles FINITE — raw_net=7.166e-4 finite; markLensed at g_loc=0 -> 1 (no NaN/Inf); portfolio text NaN/Inf-free.
+  S6  steep pool w=0.6, sold-call driven ITM (oracle 80k->160k) — settled_cash_leg=sold, live_leg=bought, raw_net=-4.797e-3 (pool-favourable), finite; reciprocal-coord one-ITM-leg path exercised.
+  S7  no mixed-basis — 8 carved-perp-unit value/funding cells, NONE carry '$'; exactly 1 dollar cell (settlement total). perp slice un-lensed, not summed onto option basis.
+  S8  standing coverage — both band directions OPEN (pill long + short), swap control flips inputs+dir, arb, tick, LP deposit/withdraw round-trip ($1.6M->$1.6M), all 4 overlays lit + located, reset to clean.
+
+SCREENSHOTS (runB canonical):
+  S1_00/01/02  chart-2 at τ0.3 / τ0.05(event) / τ2(event) — visible reshape per stepper event.
+  S2_01/02     chart-1 pool curve at τ0.3 / τ3 — visually identical (px-diff 0).
+  S3_01/02     portfolio with open band / after immediate close.
+  S4_01/02     portfolio at τ0.3 / τ2.
+  S5_01        portfolio with near-ATM band settled (no NaN).
+  S6_01/02     steep one-ITM-leg settlement / band form after swap.
+  S7_01        portfolio basis columns (carved-perp units vs single $ cell).
+  S8_01/02     overlays / after reset.
+
+probes/ (supporting analysis):
+  roundtrip_dissect.txt   — leg-by-leg open vs close marks (S2).
+  sign_vs_slippage.txt    — raw_net POSITIVE and scales with slippage across N=0.01/0.05/0.2 (S2).
+  compare_S2_S1_v24.txt   — raw_net byte-identical in S1 AND v24 base => FINDING-RT is INHERITED-v24, not Stage-2.
+
+FINDING-RT (INHERITED-v24, NOT a Stage-2 regression — reported, not a gate fail):
+  An instant net-cash-zero open->close round-trip on a TWO-OTM-LEG band yields POSITIVE raw_net (trader-favourable
+  per engine close logic L2146) that SCALES with slippage. Verified byte-identical raw_net in S1 and v24 base.
+  The brief's "tiny residual = pool-favourable" framing is contradicted ON THE SIGN for the two-OTM-leg case.
+  (The one-ITM-leg steep case S6 is correctly pool-favourable, raw_net<0.) Escalate the sign-convention question.
+
+HARNESS GOTCHAS (recorded for re-runs):
+  - #perp-notional is in BTC (default 0.1), #perp-margin in USD — feeding USD-scale numbers inflates the club ~1e4x
+    (100000 BTC * 80000 = $8e9), blowing up L0; use small BTC notionals (1-2 BTC).
+  - tau-input / btn-tick / btn-arb / chart-select live on the Transact page > Settings subtab; perp/band forms on
+    other subtabs of the SAME Transact page; Portfolio is a SEPARATE top-level page (.page-nav-link[data-page]).
+    setTau/setPool must re-activate Transact+Settings first.
+  - band warn banner is #warn-area (not #band-warn). OTM-only open guard: sold-call needs strike θ>pool-spot-θ;
+    in a steep pool spot θ rises (w=0.6 -> θ=1.5), so OTM sold-call strikes must be well above oracle.
+  - band direction is #band-dir-sell dataset.dir (long/short); swap flips dir AND swaps inner/outer inputs.

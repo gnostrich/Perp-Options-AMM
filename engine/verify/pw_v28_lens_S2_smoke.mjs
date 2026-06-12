@@ -98,7 +98,7 @@ const FLAGS = [];
     await page.dispatchEvent('#band-notional', 'input');
     await page.waitForTimeout(250);
     const disabled = await page.evaluate(()=>document.getElementById('btn-execute').disabled);
-    const warn = await page.evaluate(()=>document.getElementById('band-warn')?.textContent || '');
+    const warn = await page.evaluate(()=>document.getElementById('warn-area')?.textContent || '');
     if (disabled) return { opened:false, warn };
     const nBefore = await page.evaluate(()=>Store.state.bands.length);
     const dlgBefore = dialogs.length;
@@ -169,7 +169,7 @@ const FLAGS = [];
 
   // ───────────────────────────────────────────────────────── STEP 3: settle-at-lensed round-trip
   say('\n========== STEP 3: open a band, close immediately → finite settled residual; report sign ==========');
-  await addPerp('long', 100000, 10000);
+  await addPerp('long', 2, 20000);
   const ob = await openBandUI({ sold_inner: 84000, bought_inner: 76000, notional: 0.05 });
   say('  openBand result: ' + JSON.stringify(ob));
   await gotoPortfolio();
@@ -197,7 +197,7 @@ const FLAGS = [];
 
   // ───────────────────────────────────────────────────────── STEP 4: portfolio value reflects lensed marks
   say('\n========== STEP 4: portfolio band value MOVES when τ changes (lens = unit of account) ==========');
-  await addPerp('long', 100000, 10000);
+  await addPerp('long', 2, 20000);
   const ob4 = await openBandUI({ sold_inner: 92000, bought_inner: 70000, notional: 0.08 });
   say('  open band for τ-sensitivity: ' + JSON.stringify(ob4));
   async function bandValuesAtTau(tau) {
@@ -251,8 +251,8 @@ const FLAGS = [];
     return { sn, gA, mCall, mPut, finite: [gA,mCall,mPut].every(v=>isFinite(v)) };
   });
   say('  ATM (strike at mode): g_loc=' + atmFinite.gA.toExponential(3) + ' markLensed call=' + atmFinite.mCall + ' put=' + atmFinite.mPut + ' finite=' + atmFinite.finite);
-  await addPerp('long', 100000, 10000);
-  const obATM = await openBandUI({ sold_inner: 80500, bought_inner: 79500, notional: 0.03 });
+  await addPerp('long', 2, 20000);
+  const obATM = await openBandUI({ sold_inner: 86000, bought_inner: 76000, notional: 0.03 });
   say('  near-ATM band open: ' + JSON.stringify(obATM));
   let atmClose = { skipped: true };
   if (obATM.opened) {
@@ -276,25 +276,31 @@ const FLAGS = [];
   if (atmClose.skipped) say('  (note: UI rejected the tight ATM band — analytic g_loc≈0 path still proven finite)');
 
   // ───────────────────────────────────────────────────────── STEP 6: steep-pool one-ITM-leg band
-  say('\n========== STEP 6: steep pool (w>0.5), sold-call ITM → reciprocal-coord settlement; direction swaps ==========');
-  await setPool(10, 7.8, 800000, 624000);
+  say('\n========== STEP 6: steep pool (w>0.5), sold-call driven ITM → reciprocal-coord settlement; direction swaps ==========');
+  // clean slate so the band is opened IN the steep context (not a leftover); mild steepening
+  // keeps near-spot strikes OTM-openable, then we push the oracle to drive the sold call ITM.
+  await page.click('.page-nav-link[data-page="transact"]').catch(()=>{});
+  await page.click('.tab[data-subtab="settings"]').catch(()=>{});
+  await page.waitForTimeout(120);
+  await page.click('#btn-reset'); await page.waitForTimeout(250);
+  await setPool(10, 6, 800000, 480000); // w≈0.6 (steeper than the 0.5 default, strikes still openable)
   const steepW = await page.evaluate(()=>Engine.getW(Store.state.pool));
   const steepSN = await page.evaluate(()=>Engine.getSNorm(Store.state.pool));
   say('  steep pool w=' + steepW.toFixed(4) + ' getSNorm=' + steepSN.toFixed(4));
-  await addPerp('long', 100000, 10000);
+  await addPerp('long', 2, 20000);
   const oracleNow = await page.evaluate(()=>Store.state.oracle);
   say('  oracle now: ' + oracleNow);
-  const obSteep = await openBandUI({ sold_inner: 88000, bought_inner: 72000, notional: 0.05 });
-  say('  steep band open: ' + JSON.stringify(obSteep));
+  const obSteep = await openBandUI({ sold_inner: 140000, bought_inner: 100000, notional: 0.05 });
+  say('  steep band open (OTM-at-open): ' + JSON.stringify(obSteep));
   const steepClose = await page.evaluate(() => {
     const s = Store.state;
-    s.oracle = 120000; // sold call (strike 88k) goes ITM
+    s.oracle = 160000; // sold call (strike 140k) now ITM (oracle > strike, steep spot)
     const open = [...Store.state.bands].reverse().find(b => b.status === 'open');
-    if (!open) return { none: true };
+    if (!open) return { none: true, nBands: Store.state.bands.length };
     const r = Store.closeBand(open.id);
     return { ok:r.ok, raw_net:r.raw_net, X:r.X, Y:r.Y,
              settled_cash_leg:r.settled_cash_leg||null, live_leg:r.live_leg||null,
-             finite:[r.raw_net,r.X,r.Y].every(v=>isFinite(v)) };
+             finite:[r.raw_net,r.X,r.Y].every(v=>isFinite(v)), bandId:open.id };
   });
   say('  steep one-ITM-leg settle: ' + JSON.stringify(steepClose));
   VERDICTS.s6_steep_itm_finite = (steepClose.ok === true && steepClose.finite);
@@ -332,17 +338,30 @@ const FLAGS = [];
 
   // ───────────────────────────────────────────────────────── STEP 8: standing coverage
   say('\n========== STEP 8: standing coverage — every control, both directions, arb, tick, LP, reset ==========');
-  await addPerp('long', 12000, 1200);
-  await addPerp('short', 9000, 900);
-  await gotoTransact();
-  await page.click('.tab[data-subtab="bands"]').catch(()=>{}); await page.waitForTimeout(120);
-  const obL = await openBandUI({ sold_inner: 90000, bought_inner: 72000, notional: 0.04 });
-  say('  long-dir band: ' + JSON.stringify(obL));
+  await addPerp('long', 1, 12000);
+  await addPerp('short', 1, 9000);
+  // deterministic band direction via the #band-dir-sell pill dataset (swap flips it).
+  async function setBandDir(dir) {
+    await gotoTransact();
+    await page.click('.tab[data-subtab="bands"]').catch(()=>{}); await page.waitForTimeout(100);
+    const cur = await page.evaluate(()=>document.getElementById('band-dir-sell')?.dataset.dir);
+    if (cur !== dir) { await page.click('#band-dir-sell').catch(()=>{}); await page.waitForTimeout(150); }
+    return await page.evaluate(()=>document.getElementById('band-dir-sell')?.dataset.dir);
+  }
+  const dirA = await setBandDir('long');
+  const obL = await openBandUI({ sold_inner: 92000, bought_inner: 70000, notional: 0.04 });
+  say('  band dir A (pill=' + dirA + ', sold-call/bought-put): ' + JSON.stringify(obL));
+  // exercise the swap CONTROL itself (flip inputs+dir), then open the OPPOSITE direction band
   await gotoTransact();
   await page.click('.tab[data-subtab="bands"]').catch(()=>{}); await page.waitForTimeout(100);
+  const swA = await page.evaluate(()=>({ s:document.getElementById('sold-inner')?.value, b:document.getElementById('bought-inner')?.value, dir:document.getElementById('band-dir-sell')?.dataset.dir }));
   await page.click('#band-swap-btn').catch(()=>{}); await page.waitForTimeout(200);
-  const obS = await openBandUI({ sold_inner: 72000, bought_inner: 90000, notional: 0.04 });
-  say('  swapped-dir band: ' + JSON.stringify(obS));
+  const swB = await page.evaluate(()=>({ s:document.getElementById('sold-inner')?.value, b:document.getElementById('bought-inner')?.value, dir:document.getElementById('band-dir-sell')?.dataset.dir }));
+  say('  swap control flips inputs+dir: ' + JSON.stringify(swA) + ' -> ' + JSON.stringify(swB));
+  const dirB = await setBandDir('short');
+  const obS = await openBandUI({ sold_inner: 70000, bought_inner: 92000, notional: 0.04 });
+  say('  band dir B (pill=' + dirB + ', sold-put/bought-call): ' + JSON.stringify(obS));
+  VERDICTS.s8_both_dirs_open = (obL.opened === true && obS.opened === true);
   await page.click('.tab[data-subtab="settings"]').catch(()=>{}); await page.waitForTimeout(150);
   await page.click('#btn-arb'); await page.waitForTimeout(200); say('  ran arbitrage-to-oracle');
   await page.click('#btn-tick'); await page.waitForTimeout(150); say('  advanced one tick');

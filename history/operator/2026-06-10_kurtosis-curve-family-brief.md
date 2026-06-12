@@ -736,3 +736,11 @@ _Context: operator dispositions the two payoff-chart features — #8 manager's c
 _Context: operator flags the manager's "scope expansion" jargon as a breach of the simple-English protocol (R7/entry-71) and directs the skeptic to queue + enforce it._
 
 > whats the scope expansion thing? didn't we establish a simple english communication protocol? relay to skeptic for his queue that this has to be implemented
+
+
+---
+
+## Entry 100 — 2026-06-12
+_Context: operator asks to re-verify the far-OTM "dust trade" reshape (the old frozen-wing blow-up) on the new v24+lens build — not a dealbreaker, due-diligence._
+
+> also check the dust trade on wingsbblowup thing again — not a dealbreaker, but good to know
