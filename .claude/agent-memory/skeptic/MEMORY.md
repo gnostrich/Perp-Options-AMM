@@ -1710,3 +1710,39 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
 - Forward goal-seek (γ·h″, peak γ/τ, saturates ≤γ) = bounded "more warp with sharper lens"; inverse
   (1/h″, blows up + #24 history) = the cap hazard. The operator's words read forward = the bounded one.
   (`/tmp/sk118e.js`)
+
+### ADDENDUM to verdict #37 — entry-119 (per-AMM-DOLLAR slippage, the THIRD denominator)
+Operator entry-119 (VERBATIM, L913–916, channel HELD): "per unit dollar traded from AMM accounting
+layer perspective (not premium) that further OTM gives more slippage per unit dollar, and more
+slippage for more steep lens." DIFFERENT normalization from #35 (mark-%-move) and #36 (per-premium-$).
+Denominator = the cash `dy` actually swapped on the pool. Folded into the SAME verdict note
+(`VERDICT_LENS_entry118_mechanism_goalseek_2026-06-12.md` ADDENDUM). Fresh path `/tmp/sk119*.js`.
+**EXACT Balancer closed form (the load-bearing object, no curvature hand-waving):**
+`slip = (1−(1+f)^(−1/g))/(f/g) − 1 ≈ (1+g)/(2g)·f`, f=dy/y_reserve, g=local exponent — DECREASING in
+g, verified vs literal tradeUpdate to 6 digits.
+- **(1) AS-BUILT FLAT — CONFIRMED structurally (not numeric):** tradeUpdate(s,dy) takes ONLY {s,dy};
+  strike & τ are NOT arguments ⇒ at fixed dy the pool slip is identically flat across all strikes/τ
+  *by the function signature*. Manager's "0.71% flat" CONFIRMED in its load-bearing half (flat
+  across strike/τ); the NUMBER is a dy-size/depth artifact (0.71%↔dy≈0.43 on x=y=100 w=0.6; dy=5→7.69%)
+  — quote the FLATNESS, never "0.71% = the pool slippage." ⇒ entry-119 claim FALSE for as-built.
+- **(2) SHIFTED-WRITE = WRONG SIGN (both readings):** (i) different point on the REAL plain-Balancer
+  pool walking OTM → slip FALLS (1.64→0.38% fixed dy=1, sNorm 0.667→0.154; OTM grows cash-side depth).
+  (ii) hypothetical g_loc-engaging swap → slip∝(1+g)/(2g), g_loc RISES 0→γ outward ⇒ (1+g)/(2g) FALLS
+  outward AND falls with sharper τ. Per-AMM-$ relative slip is LARGEST at the mode (g→0, divide by
+  near-zero marginal), smallest in wings — same ATM-peaked shape as #35.
+- **(3) THE FORK (inventory #12 sibling, surfaced not buried):** direction is METRIC-DEPENDENT.
+  RELATIVE execution slip (avg/marginal−1, the AMM accounting layer's native per-$ penalty) FALLS OTM
+  / FALLS sharper-τ. ABSOLUTE price-impact % (mark-%-move, #35) RISES OTM. Operator's verbatim "per
+  unit dollar traded from AMM accounting layer" = the RELATIVE one ⇒ wrong sign. His intuition holds
+  ONLY on the absolute price-impact axis = per-unit-PRICE, not per-AMM-dollar, and that itself needs
+  the un-built trade-point mechanic.
+- **VERDICT FOR OPERATOR: (c) FALSE** on the per-AMM-dollar axis (as-built flat; shifted-write falls).
+  The discriminator does NOT favor the trade-point build on the cash-slippage axis — on that axis the
+  build is flat and the mechanic would make slip FALL not rise. "More OTM" lives entirely on the
+  price-impact (mark-%) axis. **FLAG (entry-119 claim, per-AMM-$): WRONG SIGN.** Self-correction
+  logged: I discarded TWO of my own proxy mis-signs (sk119b/c/d `(g+1)/2` heuristic) before the exact
+  form settled it — be explicit about WHICH dy is fixed and WHICH point the swap lands on (the
+  operator's standing instruction; the manager's prior flat/rising confusion is the failure mode).
+- **Mine-to-defend:** Balancer per-AMM-$ relative slip ∝ (1+g)/(2g)·f, decreasing in g; falls OTM,
+  falls with sharper τ; LARGEST at mode. As-built flat is structural (signature), not measurement.
+  Relative-slip-vs-absolute-price-impact is the price/slope fork on the slippage-basis axis.

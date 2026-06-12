@@ -157,3 +157,120 @@ _Attack documented: lens displacement h(u)≤|u| and slope g_loc=γ·h′ direct
 (`/tmp/sk118d.js`); forward γ·h″ (peak γ/τ, bounded) vs inverse 1/h″ (blows up) cap-fork computed
 (`/tmp/sk118e.js`); goal-seek absence grep-confirmed in HEAD pool path; #35-vs-#36 metric tension
 resolved as mark-%-move vs premium-$._
+
+---
+
+# ADDENDUM — entry-119: slippage per AMM-DOLLAR swapped (the THIRD denominator)
+
+_Operator entry-119 (relayed VERBATIM, `history/operator/2026-06-10_kurtosis-curve-family-brief.md`
+L913–916 — read live, HELD, no FLAG-PROCESS):_
+> "another separate check to run is also per unit dollar traded from AMM accounting layer
+> perspective (not premium) that further OTM gives more slippage per unit dollar, and more slippage
+> for more steep lens...."
+
+This is a **DIFFERENT normalization** from verdict #36 (per-premium-$, which rises OTM) and from
+verdict #35 (mark %-move). Now the denominator is the **cash `dy` actually swapped on the pool**.
+Re-derived on a fresh path (`/tmp/sk119*.js`) from the HEAD v28 primitives; the EXACT Balancer
+slippage closed form is the load-bearing object (no curvature hand-waving — I caught and discarded
+two of my own proxy mis-signs en route).
+
+**Float64 discipline (held explicit, per the operator's instruction — what is held fixed, where the
+swap lands):** the metric is relative execution slip `|avg_exec_price / pre_marginal_price − 1|`,
+the cash `dy` is the held-fixed quantity, and the swap is `tradeUpdate(state, dy)`. The EXACT form,
+derived from the invariant (`/tmp/sk119e.js`): for a Balancer point of local exponent `g` and a
+swap of fraction `f = dy/y_reserve`, `slip = (1−(1+f)^(−1/g))/((f/g)) − 1`, which expands to
+`slip ≈ (1+g)/(2g)·f` — **DECREASING in g**, verified against the literal `tradeUpdate` finite swap
+to 6 digits.
+
+## (1) AS-BUILT (HEAD spot swap): FLAT across strike AND τ — CONFIRMED (structural, not numeric).
+`tradeUpdate(s, dy)` (engine L1679) takes **only `{s, dy}`**. Strike `θ_K` and `τ` are **not
+arguments** — they reach the transaction ONLY by sizing `dy` upstream (`dy = ±N·markLensed·oracle`).
+So at a **fixed cash `dy`**, the pool outcome is a pure function of `(pre-pool, dy)` and is therefore
+**identically flat across every strike and every τ** — not "flat to measurement," flat *by the
+function signature*. (`/tmp/sk119.js`: dy=1 → 1.639%, dy=5 → 7.69%, dy=10 → 14.29% — these vary with
+dy and with pool depth, NOT with strike or τ.) **The manager's earlier "0.71% flat" is CONFIRMED in
+its load-bearing half (flat across strike/τ)** but its *number* is a dy-size/depth artifact, not a
+constant of the pool: on the x=y=100, w=0.6 pool, 0.71% corresponds to dy≈0.43; at dy=5 it is 7.69%.
+**Do not quote 0.71% as "the pool slippage"** — quote the flatness, which is the structural fact.
+⇒ **For the AS-BUILT, the operator's entry-119 claim is FALSE**: the cash swaps at spot regardless of
+strike, so per-AMM-dollar slippage *cannot see the strike or τ*. (Verdict #35 sub-(1) already
+established the strike-blindness of the pool swap; this confirms it under the dy-fixed normalization.)
+
+## (2) SHIFTED-WRITE (the entry-118 trade-point mechanic, NOT in HEAD): claim is the WRONG SIGN — FLAG.
+This is the discriminator the operator wanted. I checked **both** defensible readings of "swap the
+same dy at the lens-shifted/steeper point θ_eff," and **both invert his claim** for per-AMM-dollar
+*relative* slip:
+
+- **Reading (i) — a different point on the REAL plain-Balancer pool curve** (the live point walks
+  OTM along the actual reserves). `/tmp/sk119f.js`: fixed dy=1, walking the call side OTM →
+  slip **FALLS** 1.64% → 1.10% → 0.71% → 0.38% (sNorm 0.667→0.154). Because pushing OTM **grows the
+  cash-side reserve** (the pool gets *deeper* on the leg you pay in), so the same `dy` is a smaller
+  fraction and slips LESS. Depth dominates. **Falls OTM.**
+- **Reading (ii) — a hypothetical build where the swap engages the lensed local exponent `g_loc` at
+  θ_eff** (the entry-118 trade-point warp, equal depth). Per-fraction slip `∝ (1+g)/(2g)` and
+  `g_loc` **RISES** 0→γ outward, so `(1+g)/(2g)` **FALLS** outward (`/tmp/sk119f.js` (ii):
+  slip∝ 0.84→0.83 wings vs 2.75 near mode at low g). Sharper τ raises `g_loc` ⇒ `(1+g)/(2g)` falls
+  ⇒ **sharper lens gives LESS** relative slip per AMM-$, not more. **Falls OTM, falls with sharper τ.**
+
+So under the *relative* (avg/marginal−1) reading the operator named — "slippage per unit dollar
+traded" — **neither reading supports "more OTM, more with steeper lens." Both give the opposite,**
+and the per-AMM-$ relative slip is in fact **LARGEST at the mode (g→0, divide-by-near-zero-marginal)
+and smallest in the wings** — the same ATM-peaked shape as the #35 mark-%-move.
+
+## (3) THE FORK the operator must hear (do not let it collapse): relative slip vs absolute price-impact.
+The *direction* of "slippage" here is **metric-dependent** — this is the price-vs-slope sibling
+(pattern #4 / inventory #12), and burying it would be the exact dodge I exist to catch
+(`/tmp/sk119g.js`):
+- **Relative execution slip** (avg exec price / pre-marginal − 1, the standard "slippage per dollar"
+  penalty): on a flatter (mode, g→0) curve the marginal price barely moves, but the *ratio* avg/marg
+  is large (you divide by a near-zero marginal) ⇒ **LARGEST at the mode, FALLS OTM, FALLS with
+  sharper τ.** This is the literal reading of "slippage per unit dollar traded."
+- **Absolute marginal price-impact %** (how much the marginal price itself moves per fraction
+  swapped): a steeper (wing, g→γ) curve moves the price MORE ⇒ **RISES OTM, RISES with sharper τ**
+  (g=0.05 mode: 0.05 g → tiny 23% only because near-zero base; honest monotone in g: price-impact
+  ∝ (1+1/g)→ careful — but the *steeper-curve-moves-price-more* intuition lands in absolute terms).
+  Recompute: marginal-price move per 1% fraction is **larger where the curve is steeper** only after
+  you account for the base; the clean monotone statement is "a steeper local curve produces a larger
+  *price* excursion for the same fractional trade." THIS is the reading under which the operator's
+  intuition ("steeper out there ⇒ more impact") is geometrically right.
+
+**The operator's verbatim phrase is "slippage per unit dollar TRADED from the AMM accounting layer."
+The AMM accounting layer's native slippage = the relative execution penalty per cash-$ (avg vs
+marginal).** Under that, his claim is the wrong sign. His intuition is right only under the *absolute
+price-impact* reading, which is the #35 mark-%-move object — and which is NOT "per AMM-dollar," it is
+"per unit of price." The two must be named when relaying; conflating them is precisely the
+inventory-#12 gotcha.
+
+## VERDICT FOR THE OPERATOR (crisp — the (a)/(b)/(c) the entry asked for):
+**Per-AMM-dollar slippage rising OTM + with a steeper lens is (c) FALSE — under the relative
+execution-slip reading the AMM accounting layer actually uses — in BOTH the as-built (flat) and the
+shifted-write (falls OTM, falls with sharper τ).** It is the as-built that is flat (strike/τ-blind);
+it is the shifted-write that *falls*; neither rises. The operator's "more OTM, more with steeper
+lens" holds ONLY for the **absolute price-impact / mark-%-move** quantity (verdict #35 sub-(3)), which
+is a *per-unit-price* object, not a *per-AMM-dollar* one, and which itself needs the un-built
+trade-point mechanic to rise OTM. **This is the clean discriminator the operator wanted: it does NOT
+favor the trade-point build on the per-AMM-dollar axis — on that axis the build is flat and the
+mechanic would make slippage FALL, not rise. The "more OTM" intuition lives entirely on the
+price-impact (mark-%) axis, not the cash-slippage axis.**
+
+## Inventory disposition (`docs/feature_inventory.md`)
+Touches #10 (slippage basis — the core; this addendum adds a THIRD basis, per-AMM-cash-$, distinct
+from #35 mark-% and #36 premium-$, and the basis-dependence of the *direction* is the finding),
+#12 (THE gotcha — relative-slip-vs-absolute-price-impact is a price/slope sibling; named, not
+buried), #2/#16 (warp/trade-point — the shifted-write is the un-built mechanic; confirmed not in
+HEAD). No silent absence.
+
+## Convergence-alarm: LOW (and a self-correction logged).
+I discarded TWO of my own intermediate proxies that mis-signed the g-direction (`/tmp/sk119b.js`
+(2B) and `/tmp/sk119c.js`/`sk119d.js` — a `(g+1)/2` curvature heuristic that ran the *wrong* way once
+depth/marginal were held properly) before the EXACT closed form (`/tmp/sk119e.js`) settled it. The
+exact `(1+g)/(2g)·f` form is verified against the literal `tradeUpdate` finite swap to 6 digits. The
+finding (per-AMM-$ relative slip FALLS OTM / with sharper τ; flat in the as-built) is robust;
+the metric fork (relative vs absolute) is the honest caveat the operator must receive.
+
+**FLAG (entry-119 claim, per-AMM-dollar axis): the operator's "more slippage OTM + with a steeper
+lens per AMM-dollar" is the WRONG SIGN for the relative execution-slip metric (the AMM accounting
+layer's native slippage) — FALSE as-built (flat) and falls under the shifted-write. Counter:
+closed-form slip ∝ (1+g)/(2g)·f, decreasing in g; g_loc rises OTM; verified to 6 digits.** The
+intuition is correct only on the absolute price-impact / mark-%-move axis (verdict #35), which is
+per-unit-price, not per-AMM-dollar — name the metric when relaying (inventory #12).
