@@ -919,3 +919,11 @@ _Context: operator challenges the per-AMM-dollar "slippage falls OTM" finding wi
 _Context: operator bans the manager's coined term/framing "spot swap slippage."_
 
 > ban it
+
+
+---
+
+## Entry 123 — 2026-06-12
+_Context: operator asks for a simple-English explanation of the one thing that differs from what they said._
+
+> simple english explanation of what differs from what i said
