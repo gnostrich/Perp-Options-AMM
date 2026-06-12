@@ -1,0 +1,10 @@
+# Operator transcript — 2026-06-12 — referee-report review session
+_Verbatim per CLAUDE.md §2.2. Append-only; corrections by dated corrigenda only._
+
+## Entry 1 (session opener; acted on this turn)
+> @"/root/.claude/uploads/14764594-81e6-557a-ab52-03da64b280e1/0d4e1f5d-REFEREE_REPORT.md" @"/root/.claude/uploads/14764594-81e6-557a-ab52-03da64b280e1/f77be748-aft2026_submission.pdf" can you review this in light of the most recent HTML and state of the project and address the issues.. my suspicion is the paper opens with the balancer function misleadingly described / portrayed as an invariant rather than the substrate for a state transition system (we've defined formally in the research side and lean stuff)
+
+_Context note: two uploaded artifacts — a consolidated AFT 2026 referee report (REJECT 4/5) and
+the 21-page anonymous submission PDF "Singular Dynamic AMM Pricing Perpetual Options Across the
+Strike Continuum" (the dynamic-weight w-warp paper). Copies mirrored into `evidence/aft2026_review/`
+this turn._
