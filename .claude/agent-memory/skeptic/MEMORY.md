@@ -1945,3 +1945,48 @@ g, verified vs literal tradeUpdate to 6 digits.
 - engine tradeUpdate does NOT conserve raw slope (2.0→2.347, dy=5) ⇒ ≠ paper slope-warp = the entry-120 gap.
 - MY CRUX #40 "BLOCKED needs field" answered the strike-LOCAL bend (R1), NOT entry-126's single-w peg — do
   not conflate the two construals; self-corrected.
+
+42. **2026-06-12 — ENTRY-127 "AMM tx done wrong" / at-strike swap (verdict #42; URGENT 1-hr clock,
+    gaslighting grievance, READ-ONLY)** → `notes/skeptic/VERDICT_ENTRY127_atstrike_amm_tx_2026-06-12.md`.
+    Operator (entry 127): the flat-warp is because the team models the trade as premium-cash-at-spot when
+    it's an asset-for-$ swap AT THE STRIKE K. I re-derived COLD from HIS model (`/tmp/sk127_*.js`, fresh
+    path, NOT reusing #41), did NOT default to #41's answer. **THREE rulings:**
+    - **(a) Build IS mis-modeled — operator RIGHT. PASS.** executeLeg L1761: dy=±N·markLensed(K)·oracle =
+      premium-cash swap at the LIVE point; tradeUpdate L1679 moves x,y along the fixed hyperbola at spot;
+      K enters ONLY via premium sizing. NOT an at-strike asset swap. His diagnosis of the build is correct
+      — **the headline he is owed.**
+    - **(b) BUT the at-strike re-model does NOT make the warp strike-dependent — STILL FLAT. FLAG-WRONG on
+      the EXPECTATION (re-derived from HIS model, not assumed).** Decisive: the goal-seek equation
+      gLoc(w';θ_K,τ)=g_pre depends ONLY on (θ_K,τ), NOT on swap size/pool travel ⇒ w'=w0 to ≤4.6e-13 at
+      every K∈{1.1,1.5,2,4×} and every τ∈{1,0.3,0.05,0.001} (`/tmp/sk127_goalseek.js`). NOT float64-flat,
+      τ-robust incl τ→0. **STRUCTURAL root (DOF count, the killer arg):** chart-2 = g_loc(K;w,τ), τ static
+      ⇒ ONE live param w (steepness w/(1−w) AND mode (1−w)/w both fns of the single w); goal-seek = 1 eqn
+      ⇒ whole curve pinned ⇒ NO per-strike DOF. Flatness is ARCHITECTURAL (single scalar w), not a
+      consequence of the spot-premium trade model. Re-modeling the trade changes pool TRAVEL, not the
+      chart-2 parameter count. (`/tmp/sk127_structural.js`)
+    - **(c) Strike-dep survives ONLY by keeping Step-1's at-strike landing w_t (1/(1+θ_K), strike-dep:
+      0.273@4× / 0.577@1.1×) and NOT goal-seeking — but that re-centers mode→θ_K = the move-the-pool the
+      operator DISCLAIMED entry-118; and chart-2 is still single-w, a moved mode not a per-strike bend.**
+      The genuine strike-dependent reshape needs a weight FIELD w(u) = demoted (W) curve (#40 settled,
+      "scalar can't bend a curve at a strike; only a field can"). Not green-lit as the warp fix.
+    - **Boundedness:** goal-seek w' bounded(0.5,1)/unique/no-runaway. BUT the at-strike SWAP itself is
+      UNBOUNDED in reserves (y_t~1/θ_K→4.0e2 at θ_K=1e-3) = real far-OTM solvency hazard the premium swap
+      lacked (dust-trade blowup family, entry 41/100). (`/tmp/sk127_bounded.js`)
+    - **Reconciles (#39/#41):** operator VINDICATED on slippage-rising-OTM (g_loc 0→γ, at-strike makes it
+      sharper); WRONG only on the inference slippage-rising⇒curve-reshape-strike-dep. **2 of 3 of his
+      points hold; the one that doesn't is structural, re-derived from his own model.**
+    Verbatim entry-127 verified vs history/operator/...brief.md L961 (channel HELD). Convergence-alarm
+    LOW (self-attacked the prior answer; goal-seek-flatness re-derived from the NEW model, held).
+
+## Claims mine-to-defend (verdict #42 — entry-127 at-strike)
+- Build trade IS mis-modeled vs entry-127: executeLeg swaps premium-cash at spot (dy=±N·markLensed(K)·oracle),
+  NOT asset-for-$ at strike K. Operator correct on the build. (`/tmp/sk127_atstrike.js`, HEAD L1761/1679)
+- The goal-seek gLoc(w';θ_K,τ)=g_pre is SWAP-SIZE-INDEPENDENT ⇒ w'=w0 ≤4.6e-13 at every K & τ (incl τ→0);
+  at-strike vs premium swap gives the SAME goal-seek root ⇒ flat warp survives the at-strike re-model.
+  (`/tmp/sk127_goalseek.js`)
+- ARCHITECTURAL flatness: chart-2 = one-param(w) family (τ static) ⇒ 1-eqn goal-seek pins whole curve ⇒
+  no per-strike DOF. Strike-dep reshape ⇒ weight FIELD w(u), not scalar (#40 re-confirmed). (`/tmp/sk127_structural.js`)
+- At-strike swap Step-1 lands strike-dep w_t=1/(1+θ_K) (0.273@4×/0.577@1.1×) but re-centers mode→θ_K =
+  entry-118 disclaimed move-the-pool; chart-2 still single-w (moved mode, not a bend). (`/tmp/sk127_warp.js`)
+- At-strike swap is UNBOUNDED in reserves (y_t~1/θ_K) far OTM = solvency hazard the premium swap lacked.
+  Goal-seek w' itself bounded/no-runaway. (`/tmp/sk127_bounded.js`)
