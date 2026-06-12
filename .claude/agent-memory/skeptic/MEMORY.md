@@ -1525,3 +1525,54 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
      sub-pixel at default Δw — disclosure sentence exists; smoke-pass should still LOOK, not assume.)
    - Convergence-alarm LOW: manager self-scoped C6 conservatively and flagged it for my call rather than
      bundling it silent; exclusion offered honestly. The one real catch is C6-as-arithmetic creep, pre-empted.
+
+34. **2026-06-12 — CAPSTONE lens-integrity sweep (verdict #34; operator entry 111 verbatim:
+   "check everything else where there's a lensing thing queries etc. amm tx funding .... i
+   really want that theres no integrity compromises, skeptic")** →
+   `notes/skeptic/VERDICT_CAPSTONE_LENS_INTEGRITY_2026-06-12.md`. The done-gate sweep over EVERY
+   lens touchpoint (consolidates #30 write/settle, #31 N_buy, #32 round-trip, #33 cleanup).
+   **VERDICT: PASS — INTEGRITY INTACT, no compromise, no halt.** Re-derived fresh in a Node vm of
+   the live `<script id=engine>` (not narrated). Build = HEAD working tree md5 7e1ae39b (committed
+   989752294 + the parallel 1-line τ display-refresh wire, diff-confirmed below).
+   **THE structural finding (the eliminator):** every lens helper (gLoc/lensU/markEff/markLensed-
+   via-legPrice) RECOMPUTES getSNorm(state) ITSELF — there is NO externally-injected spot/mode to
+   mismatch; the only external arg is theta (the registered ray, same arg raw `mark` takes). This
+   is why the v27-class basis leak the operator feared CANNOT occur: re-derived legPrice.V ==
+   markEff == direct markLensed BIT-IDENTICAL (0.04031432995136933) for the same strike/pool.
+   Price-coord sNorm0 (closeBand L1999) + S (funding L2176) feed ONLY regime/leg-pick + the
+   (S−1)/S deviation factor, never a lens call — #30 MUST-APPLY-A closed by self-sourcing.
+   **Touchpoints all CLEAN:** (1) chart-2 drawState shared helpers reciprocal mode; (2a) sizing==
+   display V_buy/V_sell==1.0 exact; (2b) tradeUpdate/rebase/arbitrageToOracle EXTRACTED + diffed
+   vs temporal_mvp_v24_rebase_fixed_2.html → BYTE-IDENTICAL (387/96/314 chars, L4 confirmed);
+   (2c) forward-read-only — ZERO inverse/bisect/solve/goalseek/newton/while near lens, helpers
+   pure-forward; (3) funding ±g_loc f→0 ATM/→γ wings/sign call−put+; (4) settle both legs getSNorm
+   (settled=legValueUnified(s), OTM=legPrice(s)), sNorm0 regime-only, smooth-paste continuous incl
+   g<1; (5) portfolio pfComponents lensed (W6), perp-slice NOT lensed (W8, #31), dollarFigure =
+   lensed-value × un-lensed-equity = MULTIPLY not mixed sum; (6) slippage 0.22%→0.54% as τ 0.05→3
+   (lensed V sizes cash), V_buy/V_sell==1.0 all τ, preview+exec same helper (#31/C7) ⇒ τ-wire shows
+   consistent not stale number. **Solvency:** coupled sweep (w∈[.51,.95]/τ∈[.05,10]/u±6/both wings)
+   markLensed∈[4.68e-5, 1.00000000], NEVER>1, zero NaN; ATM g=0→markLensed=1 (bounded flat-top peak,
+   sStar=θ, ≤1, accepted degenerate #30). **No inversion** (|dG|≤γ, h′∈[0,1]); the (ln K)³ #19
+   divergence does NOT exist (no root-find on lensed qty). **Gate lens_selfcheck 23/23 PASS covers
+   every touchpoint** (mapping in verdict file); no gap. **Raw-not-lensed exclusions CORRECT:**
+   legFraction/composedEquity (L3908-3936) = operator-EXCLUDED payoff PROJECTION over swept spot
+   (#33/entry101), a different object from live pricing, not a value path; perp slice = category-
+   correct un-lensed. **Parallel wire confirmed display-only:** git diff = exactly 1 line, τ-handler
+   L2727 adds previewBand()+render() redraw calls before Viz.drawAll; touches no lens/pool/value
+   logic; lens architecture byte-identical committed vs working-tree. Convergence-alarm LOW (anti-
+   convergence: attacked basis-split/inversion/solvency/slippage independently, each held by re-
+   derivation). Verbatim channel HELD (entry 111 verified vs history/operator/...kurtosis-curve-
+   family-brief.md). No FLAG-PROCESS.
+
+## Claims mine-to-defend (verdict #34 — capstone lens integrity)
+- Every lens helper self-sources getSNorm(state); the only external arg is theta (registered ray).
+  ⇒ legPrice.V == markEff == direct markLensed bit-identical for same strike/pool. No basis-split
+  surface exists; price-coord sNorm0/S feed only regime + (S−1)/S, never a lens call. (Node vm)
+- tradeUpdate/rebase/arbitrageToOracle BYTE-IDENTICAL to v24 base (387/96/314 chars). Pool = plain
+  v24; lens is read/write-VALUE-only. L4 holds at source level.
+- markLensed∈[4.68e-5,1.0] over coupled w/τ/strike/wing sweep, never>1, zero NaN; ATM g=0→1 bounded.
+  No inverse-lens anywhere; |dG|≤γ; (ln K)³ divergence absent (no root-find on lensed qty).
+- Slippage tracks τ (0.22→0.54% as τ 0.05→3) because lensed V sizes dy; V_buy/V_sell==1.0 ∀τ
+  (cash-conserving, #31 fix); preview+exec share legPrice ⇒ τ-wire consistent. (Node vm)
+- The τ display-refresh wire is exactly 1 line (L2727 previewBand+render redraws), display-only,
+  lens architecture byte-identical committed↔working-tree.
