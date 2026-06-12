@@ -32,7 +32,7 @@ entire purpose. Those rows carry a queued tester/skeptic confirmation.
 
 ## PART A — Inventory components (1:1 with `docs/feature_inventory.md`)
 
-HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plain v24 Balancer pool + static polar lens.
+HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `4378bc11…`, contwarp, promoted entry 181): plain v24 Balancer pool + static polar lens + continuous warp animation.
 
 | ID | Component | STATE | OWNER | SETTLED-BY | GATE | LAST-VERIFIED |
 |----|-----------|-------|-------|-----------|------|---------------|

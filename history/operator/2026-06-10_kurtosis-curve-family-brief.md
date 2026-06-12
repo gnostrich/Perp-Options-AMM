@@ -1416,3 +1416,11 @@ _Context: operator orders a read-only investigation — the amount of curve warp
 _Context: operator asks for the warp-per-notional dig now (not queued)._
 
 > can you do the dig now?
+
+
+---
+
+## Entry 184 — 2026-06-12 16:18 UTC
+_Context: operator sharpens the dig — the option-price layer is a separate layer from the AMM tx; if the AMM tx for selling a more-OTM long is a larger dollar tx, there'd be more slippage plus higher curve slope, so more warp goal-seek; his earlier conflation of option pricing with the AMM tx let this slip notice._
+
+> like the option price thing is separate layer from the AMM tx; if the AMM tx thing is selling more OTM long, then it woudl mean larger dollar tx so more slippage plus higher curve slope so more warp goal seek... my previoius conflation of option pricing with this allowed this to slip notice
