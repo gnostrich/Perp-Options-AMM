@@ -700,3 +700,15 @@ _Context: operator's clean restatement of the locked architecture._
 _Context: operator going to bed; grants autonomous build go (build a version once the manager is satisfied, no further asking) and gives the skeptic the oversight mandate. Skeptic-directed clause relayed verbatim to the skeptic at the audit/scope-gate step._
 
 > i'm going to bed, giving go ahead to build a version once you're satisfied without asking me anything. skeptic, you have the mandate, have the needful done
+
+
+---
+
+## Entry 96 — 2026-06-12
+_Context: operator resolves the settlement-semantics fork (settle at LENSED prices — the lens translates all queries incl. portfolio value AND the AMM-tx write; strike unchanged, the lensed value is what's recorded/queried/settled), approves the xoracle bug fix, and directs porting the bug-fixes made in subsequent versions (anchor curve, ATM jump, etc)._
+
+> everything works the same, the lens just translates queries incl portfolio value etc. and writes (amm tx) — so yes settle at lenses prices — this doesn't mean the strike changes or whatever, but you'd be recording the lensed version to query if that answers your question deeply enough
+>
+> yes fix bug
+>
+> and other bugs we fixed in subsequent versions including something about anchor curve, the atm jump etc etc…
