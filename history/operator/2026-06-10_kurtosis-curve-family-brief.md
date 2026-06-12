@@ -1598,3 +1598,11 @@ _Context: operator asks for monolith status; and adds two loop-closure requireme
 _Context: operator corrects the slippage mechanic (A15) — it is NOT proceeds-netting; it is applying the slippage calculated in the AMM trade layer to reduce the bought-option output below what it would have been at pre-trade option prices._
 
 > slippage isn't about proceeds netting, its basically applying the slippage as calcukated in the AMM trade layer to reduce the bought option output as it woukd have been based on pre trade option prices
+
+
+---
+
+## Entry 206 — 2026-06-12 18:14 UTC
+_Context: operator confirms the slippage sequence — buy quantity/notional sized at pre-trade prices, then at the END of the trade the total slippage is obtained and applied._
+
+> yes that seems right, because when we calculate the buy option quantity and thus the buy notional, we use pre trade prices, then at the end of the trade we get the total slippage and we apply that, make sense?

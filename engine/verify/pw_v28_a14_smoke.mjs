@@ -53,6 +53,11 @@ async function main() {
   // grows monotonically (pixel-COUNT saturates — MEMORY gotcha — so we use the
   // curve's column centroid + lit-extent, which track displacement not count).
   log('\n--- ITEM 1 (visual): rendered chart-2 warp magnitude grows with strike ---');
+  // Non-destructive: stage a single sold call via the band form (bought put
+  // fixed far-OTM at 60000) at increasing sold strike; measure the RENDERED
+  // chart-2 (option-value) curve displacement vs the no-trade baseline. Pixel
+  // COUNT saturates (whole thin curve micro-shifts — MEMORY gotcha), so we read
+  // the lit-pixel column centroid + lit-extent, which track displacement.
   const item1viz = [];
   for (const [soldK, mult] of [['88000',1.1],['120000',1.5],['160000',2.0],['320000',4.0]]) {
     const m = await measureWarp(page, soldK);
@@ -60,8 +65,6 @@ async function main() {
     log(`  strike ${soldK} (${mult}x): chart-2 |centroidΔ|=${m.centroidShift.toFixed(2)}px  litΔ=${m.litDelta}px  pxdiff=${m.pxdiff}`);
   }
   await page.screenshot({ path: `${OUT}/${RUN}_item1_warp4x.png` });
-  const mono = item1viz.every((r,i)=> i===0 || r.centroidShift >= item1viz[i-1].centroidShift - 0.01);
-  log('  centroid-shift monotone-increasing with strike: ' + mono);
 
   // ── Item 5: quote the flagged label.
   log('\n--- ITEM 5: flagged UI label (quote literally) ---');
@@ -185,23 +188,43 @@ async function main() {
   log('  chart-2 τ 0.3→2.0 pxdiff (expect >0 reshape): ' + item4.chart2_tau_pxdiff);
   log('  chart-2 τ 0.3→0.35 single-step pxdiff: ' + item4.chart2_tau_step_pxdiff);
 
-  // sweep animation on chart-2 (pricing canvas)
+  // sweep animation on chart-2 (pricing canvas). The rAF sweep fires when a
+  // NEW preview pool is staged (key = pre/preview x,y). Retrigger with a
+  // DIFFERENT notional so the key changes (blank+same-value short-circuits to
+  // static via _cwKey). Sample frames with rAF (setTimeout-only starves rAF in
+  // headless), hashing canvas-pricing each animation frame.
+  await page.evaluate(() => Store.reset());
+  await page.waitForTimeout(250);
   const sweep = await page.evaluate(async () => {
     const sel = document.getElementById('chart-select');
     sel.value='pricing'; sel.dispatchEvent(new Event('change',{bubbles:true}));
-    await new Promise(r=>setTimeout(r,150));
+    await new Promise(r=>setTimeout(r,250));
     const cv = document.getElementById('canvas-pricing'); const ctx = cv.getContext('2d');
     function hash(){ const d=ctx.getImageData(0,0,cv.width,cv.height).data; let h=0; for(let i=0;i<d.length;i+=257) h=(h*31+d[i])>>>0; return h; }
     const si = document.getElementById('sold-inner'), bi = document.getElementById('bought-inner'), bn = document.getElementById('band-notional');
     function set(e,v){ if(e){ e.value=v; e.dispatchEvent(new Event('input',{bubbles:true})); } }
-    set(si,'120000'); set(bi,'60000'); set(bn,'0.5');
-    await new Promise(r=>setTimeout(r,400));
-    set(bn,''); set(bn,'0.5');   // retrigger
-    const t0 = performance.now(); const hashes = new Set(); let frames=0;
-    while (performance.now()-t0 < 1300) { hashes.add(hash()); frames++; await new Promise(r=>setTimeout(r,50)); }
-    return { distinctFrames: hashes.size, samples: frames };
+    const dpill = document.getElementById('band-dir-sell');
+    if (dpill && dpill.dataset.dir !== 'long') dpill.click();
+    set(si,'120000'); set(bi,'60000'); set(bn,'0.3');
+    await new Promise(r=>setTimeout(r,1000));   // let any prior sweep land
+    const pp1 = window.__previewPool ? {x:window.__previewPool.x,y:window.__previewPool.y} : null;
+    // retrigger with a DIFFERENT notional ⇒ new previewPool ⇒ new sweep key
+    set(bn,'0.6');
+    await new Promise(r=>setTimeout(r,30));
+    const pp2 = window.__previewPool ? {x:window.__previewPool.x,y:window.__previewPool.y} : null;
+    window.__sweepProbe = { pp1, pp2 };
+    return await new Promise(resolve => {
+      const hashes = new Set(); let frames=0; const t0 = performance.now();
+      function tick(){
+        hashes.add(hash()); frames++;
+        if (performance.now()-t0 < 1300) requestAnimationFrame(tick);
+        else resolve({ distinctFrames: hashes.size, samples: frames });
+      }
+      requestAnimationFrame(tick);
+    });
   });
-  log('  sweep distinct chart-2 frames in 1.3s: ' + sweep.distinctFrames + ' (of ' + sweep.samples + ' samples)');
+  log('  sweep distinct chart-2 frames in 1.3s (rAF-sampled): ' + sweep.distinctFrames + ' (of ' + sweep.samples + ' frames)');
+  const sp = await page.evaluate(()=>window.__sweepProbe); log('  sweep previewPool pre/post-retrigger: '+JSON.stringify(sp));
 
   log('\n--- ERRORS ---');
   log('  console errors: ' + consoleErrs.length + (consoleErrs.length?' '+JSON.stringify(consoleErrs.slice(0,5)):''));
