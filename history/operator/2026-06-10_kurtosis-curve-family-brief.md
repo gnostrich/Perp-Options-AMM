@@ -712,3 +712,11 @@ _Context: operator resolves the settlement-semantics fork (settle at LENSED pric
 > yes fix bug
 >
 > and other bugs we fixed in subsequent versions including something about anchor curve, the atm jump etc etc…
+
+
+---
+
+## Entry 97 — 2026-06-12
+_Context: operator rejects the manager's #8/#9 feature question as under-specified (R7/entry-71 standard: table + literal edit + plain English)._
+
+> your question isn't worded to my standards
