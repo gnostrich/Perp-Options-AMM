@@ -831,3 +831,11 @@ _Context: operator corrects the manager's slippage framing — the lensing chang
 _Context: operator says "yes" (go on the one-line live-slippage-refresh wire) and directs the skeptic to comprehensively audit every lensing touchpoint (queries, AMM tx, funding, …) for integrity compromises._
 
 > yes, also please check everything else where there's a lensing thing queries etc. amm tx funding .... i really want that theres no integrity compromises, skeptic
+
+
+---
+
+## Entry 112 — 2026-06-12
+_Context: operator requests a test — same-dollar-premium trade at different strikes and kurtosis; hypotheses: (a) further OTM → more slippage per dollar; (b) sharper curve (less kurtosis = smaller τ via the inverse knob) → more slippage._
+
+> can you now also run the test for trade of same dollar value (premium) at different strikes and kurtosis --- i'd sat further OTM more slippage per dollar, and also sharper curve (less kurtosis as per the inverse knob) more slippage?
