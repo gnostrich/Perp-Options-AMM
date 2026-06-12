@@ -1540,3 +1540,11 @@ _Context: operator OVERRULES the round-trip/arb stop — don't engineer the un-b
 _Context: operator gives the close-semantics rule — when ITM there is no AMM tx; intrinsic + extrinsic value is paid out directly per formula; asks if this resolves the seam._
 
 > ok when ITM, there's no AMM tx to the extent I know, just the intrinsic + extrinsic value is paid out directly as per formula? does this resplve for tou?
+
+
+---
+
+## Entry 199 — 2026-06-12 17:51 UTC
+_Context: operator narrows the model — think of individual options in this context, not spreads._
+
+> and we think of individual options in this contexy not spreads
