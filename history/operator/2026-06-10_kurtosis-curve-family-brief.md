@@ -1198,3 +1198,11 @@ _Context: operator clarifies the sequencing — the memory purge / RAG / monolit
 _Context: operator asks for a non-disruptive status update on HEAD._
 
 > nondisruptive status update on head
+
+
+---
+
+## Entry 157 — 2026-06-12
+_Context: operator asks when HEAD updates._
+
+> when does head update?
