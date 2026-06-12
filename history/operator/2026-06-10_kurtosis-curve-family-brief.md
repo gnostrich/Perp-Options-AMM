@@ -1532,3 +1532,11 @@ _Context: operator asks for the decision/question restated in simple English._
 _Context: operator OVERRULES the round-trip/arb stop — don't engineer the un-bend, transact at whatever the curve is, forget arb for now; slippage is paid continuously via the continuous-integral formulas; reaffirms option pricing is a separate layer from AMM pricing._
 
 > no dont think round trip for now, transact at whatever the curve is; forget arb forntime being; short answer slippage is being paid continuously if you're using the continuous integral formulas, secondly, as my prev message highlighted option pricing is a separate layer from AMM pricing
+
+
+---
+
+## Entry 198 — 2026-06-12 17:49 UTC
+_Context: operator gives the close-semantics rule — when ITM there is no AMM tx; intrinsic + extrinsic value is paid out directly per formula; asks if this resolves the seam._
+
+> ok when ITM, there's no AMM tx to the extent I know, just the intrinsic + extrinsic value is paid out directly as per formula? does this resplve for tou?
