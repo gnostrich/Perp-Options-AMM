@@ -1,0 +1,34 @@
+-A14b KURTOSIS-vs-WARP targeted live test — HEAD de28c937 (READ-ONLY)
+Operator entries 184/185/203. Resolves the owed -A14b ledger item.
+
+Harness: engine/verify/pw_v28_a14_kurtosis.mjs  (live Playwright ×2)
+Build  : engine/builds/HEAD_temporal_mvp_v28_lens.html  md5 de28c93712ffb1a7fcafc66b36a0ea83 (UNCHANGED post-run)
+
+RUN_LOG_runA.txt  ==  RUN_LOG_runB.txt   (byte-stable modulo header line; 0 console / 0 pageerrors both runs)
+
+Screenshots (chart-2 = canvas-pricing, MARK ACROSS STRIKES view, fixed sold-call band staged):
+  {A,B}_item2_tau1.png      τ=1.0  — broad rounded humps; post-trade dashed curve diverges across a WIDE strike band
+  {A,B}_item2_tau0p3.png    τ=0.3
+  {A,B}_item2_tau0p05.png   τ=0.05 — curves collapse to a narrow ATM spike; wings pinned flat, reshape concentrated at the mode
+
+RESULT (both runs):
+  ITEM 1 — UNDERLYING swap-warp is kurtosis-FREE.
+    Same single sold call N=0.1, K=$120k (θ=1.5), oracle 80000, executed at τ=1.0/0.3/0.05:
+    dy=$12,000.00, Δw=0.0073891626, Δsteepness=dy/β=0.030000  ALL THREE IDENTICAL.
+    max|Δdy| across τ = 0.000e+0 ; max|Δw spread| = 0.000e+0.
+    (Lensed leg value V moves with τ: 0.02976/0.01930/0.01675 — sizes buy-leg + position value only, NOT the swap.)
+
+  ITEM 2 — SEEN warp (chart-2 lensed option-value reshape) DOES depend on kurtosis.
+    Fixed trade (sold call N=0.5, K=$120k) → τ-free pool move dy=$60,000, mode 1.000000→0.869565.
+    Reshape |ψ_post−ψ_pre| at τ=1.0 / 0.3 / 0.05:
+      θ=1.0  ($80k,  mode/ATM): 0.45311 → 0.65993 → 0.79440   (PEAK; GROWS with sharper τ)
+      θ=1.25 ($100k):           0.14758 → 0.08964 → 0.04478   (SHRINKS with sharper τ)
+      θ=1.5  ($120k):           0.08613 → 0.04881 → 0.03584
+      θ=2.0  ($160k):           0.04563 → 0.02971 → 0.02662
+      θ=4.0  ($320k):           0.01613 → 0.01358 → 0.01327
+    Dense θ-sweep: the reshape PEAK sits AT θ=1.0 for all three τ (mode point).
+    On-screen band slippage: τ1.0 "11.8895 % · ≈ $3270.96" / τ0.3 "12.0849 % · ≈ $3312.10" / τ0.05 "12.8369 % · ≈ $3494.36".
+
+VERDICT: -A14b RESOLVED(evidence). UNDERLYING swap-warp kurtosis-FREE; SEEN warp kurtosis-DEPENDENT.
+NUANCE for operator (entry 185): "sharper ⇒ more warp" TRUE for the peak/near-money SEEN warp; the
+literal "further-OTM ⇒ more warp" INVERTS (fixed-OTM reshape shrinks). One operator-tier clarification flagged.
