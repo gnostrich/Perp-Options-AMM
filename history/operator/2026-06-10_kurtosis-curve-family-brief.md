@@ -1556,3 +1556,11 @@ _Context: operator narrows the model — think of individual options in this con
 _Context: operator asks what is pending._
 
 > ok whats pending
+
+
+---
+
+## Entry 201 — 2026-06-12 17:57 UTC
+_Context: operator asks the manager to define "at strike" — a check on the manager's understanding before promotion._
+
+> what does at strike mean?
