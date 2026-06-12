@@ -62,7 +62,9 @@ pair is conserved at machine precision: (x_T + Δx)(w + Δw) = 3.5355 = α_T.
   β: 5 → 5.137. Nothing is violated — under the transition-rule semantics those were never claimed
   constant across off-ATM trades; §5.1's contrary statement is retracted.
 - **w is state.** After the trade above, α₀/x′ = 0.523 ≠ w′ = 0.533: the weight is not recoverable
-  from reserves and must be stored. §5.1's "no additional state storage" is withdrawn.
+  from reserves and must be stored. §5.1's "no additional state storage" is withdrawn. An exact
+  rational exhibit: from (10, 10, ½), the θ = 4 trade point is (5, 20); Δy = 1 gives
+  w′ = 11/21 while α₀/x′ = 22/43.
 
 **Revision commitments for this finding:** (a) §5.1 rewritten as the transition rule above, with the
 global-invariant phrasing corrected and the spot case identified as the special case — the same
@@ -70,9 +72,16 @@ scoping applies to §3's description of the trajectory hyperbola as "the locus a
 reserves point actually moves", which is true of the spot-trade operator only; (b) Appendix D
 (three-operator (α,β)-signature classification) and Appendix F (single global trajectory hyperbola
 as the reachable set) explicitly **scoped to the spot-trade operator** — the off-ATM trade is a
-distinct operator and will be stated as such; (c) the well-definedness, spot-reduction, per-step
-conservation, and w-storage lemmas added to the formal ledger (formalization underway; it will be
-part of the deposited artifact, not claimed as verified before then); (d) the framing throughout
+distinct operator and will be stated as such; (c) the lemmas behind this rule are **already proved
+in Lean 4** (sorry-free; standard Mathlib axioms only — propext, Classical.choice, Quot.sound) and
+will be part of the deposited artifact: existence/uniqueness of the trade point, validity of the
+next state on the corrected admissible domain together with an exact exhibit that the pole
+condition alone is *not* sufficient (the feasibility constraints are load-bearing), per-step local
+conservation (viewed from T, every trade is a §5.1-conserving trade), the spot-reduction theorem
+(at θ = y/x the rule *is* the paper's global trade formula), the w-storage necessity exhibit above,
+and a proof that the off-ATM trade realises none of Appendix D's three (α,β)-signatures
+(α′/α = 43/42, β′/β = 22/21 in the rational instance) — i.e. it is a distinct fourth primitive
+operator, which is precisely the scope correction Appendix D will carry; (d) the framing throughout
 (abstract, §1, §3, §14) corrected from "governed by the invariant" to the level-set/substrate
 language — k is a dependent readout and is itself not conserved by trades (k: 10.0 → 9.8614 in a
 w = ½, Δy = 2 instance), a fact the submission's own Appendix F notes and the opening contradicted.
@@ -205,7 +214,7 @@ future work and will be listed as such.
 2. collarSurplus derived, printed, domain-pinned, counterexample exhibited, claim stated at its
    true strength; the swap-composition prose claim withdrawn pending a result that covers it.
 3. Anonymised Lean artifact deposit at submission; static-vs-transition status of every formal
-   result stated; new transition-rule lemmas added to the ledger.
+   result stated; the transition-rule lemmas (already proved, §1) added to the ledger.
 4. All four localised errors fixed; references corrected and re-verified; prior art added and the
    novelty claim repositioned; naming collision resolved.
 5. Funding given a functional form and analysed against the equilibrium-drift objection; settlement
