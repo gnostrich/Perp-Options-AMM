@@ -744,3 +744,11 @@ _Context: operator flags the manager's "scope expansion" jargon as a breach of t
 _Context: operator asks to re-verify the far-OTM "dust trade" reshape (the old frozen-wing blow-up) on the new v24+lens build — not a dealbreaker, due-diligence._
 
 > also check the dust trade on wingsbblowup thing again — not a dealbreaker, but good to know
+
+
+---
+
+## Entry 101 — 2026-06-12
+_Context: operator asks for clear, checkable assurance the lens is implemented correctly — splaying / changing directions from the 45° tangent-slope point on the curve, consistently across all parts._
+
+> how do i get a clear assurance you've implemented lensing properly. i.e. its splaying / changing directions from 45 degree tangent slope point on curve — this matters for the purpose of correctness of all the parts
