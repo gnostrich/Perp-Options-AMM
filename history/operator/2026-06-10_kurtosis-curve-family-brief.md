@@ -760,3 +760,11 @@ _Context: operator asks for clear, checkable assurance the lens is implemented c
 _Context: brainstorm-only — operator conjectures the blow-up degree depends on lensing intensity but is multiplicative/constant-scaled (not hyperbolic) so no blow-up; and the round-trip/arb is ~same as before (inherited)._
 
 > brainstorm on the blowup aspect — basically the degree of this thing depends on the intensity of the lensing that we set, which is likely sort of proportional to constant / multiplicative rather than hyperbolic in its effect so that theres no blowup? and the arbitrage thing / round trip also would be same as before prtyyy mych i think )brainstormi only
+
+
+---
+
+## Entry 103 — 2026-06-12
+_Context: operator restates the lens as a tangent-slope multiplier that's a function of polar-angle divergence from the mode (the 45° tangent-slope point). Comprehension check._
+
+> lens is basically a sort of tangent slope amplification / multiplier that's a function of relative polar angle divergence from the angle passing through mode (45 degree tangent slope to curve) right?
