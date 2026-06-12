@@ -73,3 +73,10 @@ INTEGRITY, BUILD_LINEAGE, run_all.sh default+md5, CHANGELOG_v28_lens. v27 (`928c
 as `temporal_mvp_v27_wkurtosis.html`; v26c GH endpoint retained. OPEN (non-blocking): FINDING-RT display
 caveat (not a leak); payoff chart+strike-marker still unbent (cosmetic, operator-excluded). Branch only —
 no PR to main (platform default; operator didn't ask).
+
+## ⛔ BANNED TERM (operator entry 122, 2026-06-12): "spot swap slippage"
+Do NOT use "spot swap slippage" or the framing that treats a trade's price-impact as a thing
+SEPARATE from the warp. Operator's frame (use it): a trade is a swap that WARPS the curve — ONE
+thing. The only live question is whether the warp PER DOLLAR is bigger far OTM (operator entry 121),
+which hinges on whether the swap engages the far/steep point (goal-seek, unbuilt #16) or the live
+point (built). Speak in warp terms, never "spot swap slippage."
