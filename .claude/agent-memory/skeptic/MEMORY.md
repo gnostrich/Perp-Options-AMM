@@ -2214,3 +2214,47 @@ g, verified vs literal tradeUpdate to 6 digits.
    not one-time. Convergence-alarm LOW (I designed it #45; manager built close-to-spec without
    inflating C16/needs-verify rows — opposite of tidy-but-false). **This was my own halt; my call to
    lift, manager re-derives nothing.**
+
+48. **2026-06-12 — UNIVERSAL SKEPTIC GATE policy (operator entry 139 VERBATIM, authored BY me at
+    operator request) + R6 scope-gate of the goal-seek-warp build** → policy file
+    `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`. Entry 139 (verified vs
+    history/operator/...brief.md L1064, channel HELD): "make a policy that no agent's work goes
+    unchecked by you, and no reply comes to me without being filtered by you … complete whats
+    pending and ship quick." **TASK 1 — POLICY AUTHORED (ratifies my #13/#46 in-line-gate request,
+    binds #45/#47 register machinery):** R-A (work gate) = 5 MANDATORY chokepoints, no skeptic token
+    ⇒ no pass {HEAD/engine change pre-merge/promote; spec pre-intern-dispatch=R6; register STATE flip
+    esp →BUILT/VERIFIED or any regression dir; engine merge to main; new operator-tier claim into
+    shared truth}; EXEMPT {git mechanics, intern keystrokes inside an R6-CLEAR build, tester runs,
+    pre-spec scratch, private memories} — PRINCIPLE: gate the CLAIM + STATE-CHANGE, not every
+    keystroke. R-B (reply gate) = claim-bearing replies {done/built/verified/proved, technical
+    result, promotion/ship, agreement-disposition} need pre-send skeptic pass; trivial acks exempt;
+    SPEED via 2-tier: Tier-1 skeptic-owned 5-item checklist mgr self-applies + binding after-the-fact
+    FLAG-PROCESS audit (routine claims, no blocking wait); Tier-2 BLOCKING synchronous pass for
+    high-blast {HEAD-promotion/ship announce, new uncleared technical claim, agreement disposition}.
+    **BANDWIDTH HONESTY (§4, the part the operator must SEE):** stated plainly literally-every-word-
+    synchronously is NOT sustainable (single serial reviewer re-inserts the hub-and-spoke latency he
+    killed); proposed strongest workable form; flagged 3 RESIDUALS not silently narrowed {serial-
+    reviewer latency under load→operator picks checklist-vs-headcount; Tier-1 self-apply is a
+    post-hoc trust point; cross-session gaps must QUEUE chokepoints never pass}. Teeth = FLAG-PROCESS
+    halt-class on a chokepoint/reply passed without a token; binds through mgr obligations (no new
+    git/dispatch power to me). Mgr must link from CLAUDE.md §2.1 / charter / COMPONENT_REGISTER (I
+    flag absence).
+    **TASK 2 — R6-CLEAR on `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md` (intern may
+    build).** VERIFIED against live HEAD not narrated: (1) Item-1 is exactly a 1-arg READ/VIEW swap —
+    HEAD L3632 currently `drawState(snapPost.sNorm,true,previewPool,...)` (POST-trade mode = the
+    masking re-center); spec → `snap.sNorm` (held pre-step mode); gAt closure L3576 reads γ off
+    poolForLens, mode off passed sNorm ⇒ held-mode+moved-γ yields dG=(γ′−γ)·Φ, mechanic correct in
+    code. (2) `goalSeekW` does NOT yet exist (grep: only markLensed L1655) ⇒ Item-2 genuinely NEW,
+    not a re-sell (pattern #17 NOT present). (3) wField absent / markLensed present ⇒ gate auto-route
+    honest. R6 checks all pass: every item citation-backed (§G maps to entries 128/129/131/132/133,
+    all verified in transcript L966-1016); ZERO unrequested; R3 control inventory present (§C: w KEPT
+    /trade size KEPT/τ KEPT static/preview-trace REPLACED view-only/goalSeekW NEW display-only-drives-
+    nothing); no item needs BLOCKED R1 or touches settlement/θ_K (pool fns byte-identical per §B +
+    code; §D no 1/h″/inversion/slope-as-pool-input; §F STOP-if-R1-leaks). §H2 carries the single-step
+    "symmetric vertical rescale, skew emerges across the SEQUENCE not in-step, UI must not over-claim
+    per-strike in-step bend" caveat UNDRESSED = my #43/#44 STANDING CAUTION pre-empted, not buried.
+    Did NOT re-derive goalSeekW=G/(1+G) or dG (mgr did, match 2.2e-16; consistent w/ my #44 mine-to-
+    defend); do not disbelieve. REGISTER reminder: C16 = AGREED+SPEC'D UNBUILT; flips to BUILT only
+    same-turn the 6 lens_selfcheck gates land green, and I audit that flip — no "warp done" relay
+    before gates pass. Convergence-alarm LOW (attacked the safety claim against live code; the most
+    oversell-tempting item (goalSeekW NEW vs entries 119→133 re-sell history) is honestly NEW).

@@ -16,9 +16,13 @@
 'use strict';
 const fs = require('fs'), vm = require('vm'), path = require('path');
 
+// Default is the canonical HEAD (NOT the Stage-1 build): a bare invocation must
+// check the live HEAD, never silently green-light a stale stage file. Pass an
+// explicit path to check any other build.
 const file = process.argv[2] ||
-  path.join(__dirname, '..', 'builds', 'temporal_mvp_v28_lens_S1.html');
+  path.join(__dirname, '..', 'builds', 'HEAD_temporal_mvp_v28_lens.html');
 const t = fs.readFileSync(file, 'utf8');
+console.log('lens_selfcheck CHECKING: ' + path.basename(file));
 const baseFile = path.join(__dirname, '..', 'builds', 'temporal_mvp_v24_rebase_fixed_2.html');
 const tBase = fs.readFileSync(baseFile, 'utf8');
 

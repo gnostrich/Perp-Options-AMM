@@ -83,6 +83,11 @@ skeptic's seniority means in practice, and the manager is BOUND by it:
   provide it and relay verdicts to the operator verbatim.
 - When skeptic and manager disagree, BOTH positions go to the operator, skeptic's stated first
   and unedited.
+- **Universal Skeptic Gate (operator entry 139, 2026-06-12): `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`**
+  — no agent work reaches merge/promote/state-flip unchecked by the skeptic, and no claim-bearing
+  operator reply ships unfiltered. Halt-class; the manager cannot route around it. The binding
+  take-stock board is `docs/COMPONENT_REGISTER.md` (regression gate: AGREED|VERIFIED→REGRESSED needs
+  an explicit operator reopen).
 
 ### 2.2 Operator transcription policy (operator-directed 2026-06-10 — full text: `docs/transcription_policy.md`)
 The operator's messages are transcribed **VERBATIM** (exact text — case, typos, ellipses; no

@@ -36,9 +36,9 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 
 | ID | Component | STATE | OWNER | SETTLED-BY | GATE | LAST-VERIFIED |
 |----|-----------|-------|-------|-----------|------|---------------|
-| C1 | Balancer base `x^w·y^(1−w)=k` | VERIFIED | manager | motive / entry 28 (HEAD=v28) | `lens_selfcheck` pool-byte-identical | 2026-06-12 (pool fns byte-identical to v24) |
+| C1 | Balancer base `x^w·y^(1−w)=k` | VERIFIED | manager | motive / entry 28 (HEAD=v28) | `lens_selfcheck` (6b) pool-byte-identical | **2026-06-12 manager-ran: gate 6b PASS (tradeUpdate/arbitrageToOracle/rebase byte-identical to v24)** |
 | C2 | The curve warp (position-dependent **weight FIELD**) | OPEN — **NOT in HEAD** | research-lead | entry 28 demoted v27→ lens | — | the (W) field is DEMOTED (`v27_wkurtosis`); v28 warp is the lens (C3), not a w(u) field |
-| C3 | Kurtosis knob τ (the **lens**) | VERIFIED | intern/tester | entries 84/94 | `lens_selfcheck` 23 PASS [HARD] | 2026-06-12 |
+| C3 | Kurtosis knob τ (the **lens**) | VERIFIED | intern/tester | entries 84/94 | `lens_selfcheck` 23 PASS [HARD] | **2026-06-12 manager-ran on HEAD: 23 PASS / 0 FAIL** |
 | C4 | Carry `P=Ny/Nx`, `u=log price − log P` | BUILT (inherited) | research-lead | locked arch | — | needs-verify (inherited v24; lens moneyness-origin = live mode, spec'd) |
 | C5 | Rebase (P→P/r, θ→θ/r, anchor w=½) | BUILT (inherited) | research-lead | locked arch | — | needs-verify; **warp∘rebase-commute lemma OPEN [needs-Aristotle]** |
 | C6 | Pricing law value∝S^(−γ), γ∈(1,4) | VERIFIED | tester | locked (G4) | `lens_selfcheck` frozen-wings | 2026-06-12 (wings → γ exact) |
@@ -50,7 +50,7 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 | C12 | THE gotcha (getMP_raw = price-coord not slope) | N/A on v28 | manager | GH-line only | — | GH-only; v28 single-basis |
 | C13 | Solvency boundary (B1 real floor) | OPEN | research-lead | ship-gate | — | conditional-only (B1 CARRIED[coverage]); geometry does NOT close solvency |
 | C14 | Esscher tilt / latent rapidity group | trusted-from-prover | research-lead | motivation-layer | Aristotle (audited) | RUN-2 (motivation-layer, not load-bearing for build) |
-| C15 | File-safety gate (blobs, splices, scripts) | VERIFIED | manager | locked (§3) | `file_safety_gate.sh` PostToolUse hook | 2026-06-12 (blobs canonical, 3 scripts parse) |
+| C15 | File-safety gate (blobs, splices, scripts) | VERIFIED | manager | locked (§3) | `file_safety_gate.sh` PostToolUse hook | **2026-06-12 manager-ran: webp `ab663f5c…` + svg `c505b08a…` canonical; 3 scripts parse** |
 | C16 | **Warp-with-trades / goal-seek warp** | **AGREED + SPEC'D, UNBUILT** | research-lead/intern | entries 10/14/16; 128–133 | (build gates pending) | **OPEN since day 1.** Spec `SPEC_v28_goalseek_warp_RECONCILED`. Build HELD behind this register (entry 137/138 grievance). **NEVER label as built.** |
 
 ---
@@ -77,10 +77,13 @@ register-vs-transcript tail-audit keep it complete. A binding agreement found un
 
 ---
 
-## PART C — Process rules in force (R1–R7, succession plan)
+## PART C — Process rules in force (R1–R7, succession plan, universal skeptic gate)
 R1 citation-or-no-build · R2 one-go-one-build · R3 control-inventory · R4 kill-means-silent ·
 R5 verify-before-reassuring · R6 skeptic scope-gate on builds · R7 tables+simple-English.
 Canonical: `.claude/agents/manager.md`, `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md`.
+**Universal Skeptic Gate (operator entry 139): `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`**
+— no agent work goes to merge/promote/state-flip unchecked by the skeptic; no claim-bearing operator
+reply ships unfiltered. Halt-class; manager cannot route around it.
 
 ## Queued confirmation pass (to clear the `needs-verify` rows)
 Tester + skeptic to confirm C4/C5/C8/C9/C11 live-state on HEAD v28 and stamp LAST-VERIFIED, so no
