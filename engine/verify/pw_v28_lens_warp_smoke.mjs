@@ -222,6 +222,25 @@ const pageerrs = [];
   }
   await shot(page, '21_pricing_warp_step1');
 
+  // ---- MODE-CONTROLLED warp shape (isolate the per-strike Phi_tau growth) ----
+  // The drawn dG above is confounded by the preview pool's MODE shift (its sNorm
+  // moves, so gLoc(previewPool,theta) reads u from the shifted mode). To test the
+  // DESIGN CLAIM "more in the wings, scaled by the lens Phi_tau", hold ONE mode
+  // and evaluate the pure warp dG(u) = (gamma' - gamma)*Phi_tau(|u|), Phi_tau =
+  // |u|/sqrt(tau^2+u^2), as a function of log-moneyness u from a FIXED mode=1.
+  const pureWarp = await page.evaluate(() => {
+    const s = Store.state; const pp = window.__previewPool;
+    const tau = s.tau;
+    const gLive = (()=>{const w=Engine.getW(s.pool);return w/(1-w);})();
+    const gPrev = (()=>{const w=Engine.getW(pp);return w/(1-w);})();
+    const Phi = (u) => Math.abs(u)/Math.sqrt(tau*tau+u*u);
+    const rows = [0.05,0.1,0.2,0.4,0.7,1.0,1.4].map(u => ({ u, Phi: Phi(u), dG: (gPrev-gLive)*Phi(u) }));
+    return { gLive, gPrev, dGamma: gPrev-gLive, tau, rows };
+  });
+  log('mode-controlled pure warp dG(u)=(gamma\'-gamma)*Phi_tau(|u|), dGamma=' + pureWarp.dGamma.toFixed(4) + ' tau=' + pureWarp.tau + ':');
+  for (const r of pureWarp.rows)
+    log('     |u|=' + r.u.toFixed(2) + '  Phi_tau=' + r.Phi.toFixed(4) + '  dG=' + r.dG.toFixed(4));
+
   // canvas px confirmation: the preview must change canvas-pricing vs baseline
   const pricingWithPreview = await canvasDiff('canvas-pricing', pricingBaseline);
   log('canvas-pricing changed by preview? ' + pricingWithPreview.changed + ' (nz ' + pricingWithPreview.nzBefore + ' -> ' + pricingWithPreview.nzAfter + ')');

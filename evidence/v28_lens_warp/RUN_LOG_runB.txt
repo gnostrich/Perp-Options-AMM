@@ -1,4 +1,4 @@
-=== RUN A === build=/home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_warp.html
+=== RUN B === build=/home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_warp.html
 
 --- FEATURE 2: GOAL-SEEK readout ---
 G=3 (default): {"G":"3","live":"1.0000","wp":"0.7500","gp":"3.0000"}

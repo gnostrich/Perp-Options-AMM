@@ -1,0 +1,36 @@
+v28-lens-WARP (C16 goal-seek-warp) LIVE smoke-pass evidence — promotion gate
+Build: engine/builds/temporal_mvp_v28_lens_warp.html  md5 abd46149961cab45f1992b7e21850d5f (READ-ONLY, unchanged post-run)
+Tester: live Playwright (chromium-1194), ran A + B byte-stable, 0 console errors / 0 pageerrors both runs.
+File-safety GREEN: webp L74 ab663f5c… (sed line-md5), svg L1060 c505b08a… (sed line-md5), 3 <script> parse OK (engine/state/ui).
+
+Harnesses:
+  engine/verify/pw_v28_lens_warp_smoke.mjs   (main; run A and B)
+  engine/verify/pw_v28_lens_warp_zoom.mjs    (canvas-pricing clipped zoom + full analytic ψ dump)
+
+Logs:
+  RUN_LOG_runA.txt  ==  RUN_LOG_runB.txt   (byte-identical measured values)
+
+Screenshots (A_/B_ prefixes):
+  00_load                  app loaded
+  10_goalseek_G3           goal-seek readout at G=3
+  11_goalseek_Glo          goal-seek at G=0.5 (<1) → "G≥1 required"
+  20_pricing_baseline      Mark Across Strikes, no preview
+  21_pricing_warp_step1    held-lens warp on a 2-BTC sold-leg-only (step-1) preview
+  22_pricing_warp_step2    after-both-legs preview (contrast)
+  23_goalseek_after_trade  read-point γ refreshed after a pool-moving trade
+  30_tau_live              τ stepper reshapes chart-2 live
+  31_dir_swap              band direction swap (long↔short)
+  40_final                 end state
+  ZOOM_pricing_step1       high-DPR clip of canvas-pricing showing the dashed warp preview
+                           (separate lower, LEFT-SHIFTED peak; converges to live in deep wings)
+
+KEY MEASUREMENTS (identical A==B):
+  GOAL-SEEK: G=3⇒w'=0.7500,γ'=3.0000 · G=2⇒0.6667/2 · G=10⇒0.9091/10 · G=0.5⇒"G≥1 required"(no number)
+             read-pt γ=1.0000 at default w=0.5; after pool-moving trade w=0.50112 ⇒ γ readout 1.0045.
+  WARP (step1, 2-BTG sold-CALL leg, w 0.50000→0.53583, γ 1.0000→1.1544, τ=0.3, held mode=1.0000):
+    DRAWN |Δψ| (visible curve separation) is LARGEST at the elbow and SHRINKS OTM:
+      call θ=1.05 |Δψ|=0.2742 → θ=4.0 |Δψ|=0.0063 ; deep-wing curves converge (zoom-confirmed).
+    EXPONENT warp dG(u)=(γ'−γ)·Φ_τ(|u|) GROWS with |u| (the design "more in the wings"):
+      |u|=0.05 dG=0.0254 → |u|=1.40 dG=0.1510 (monotone, saturates to Δγ=0.1544).
+  REGRESSION: τ 0.3→2 reshapes canvas-pricing (live, event-driven) ; τ 0.3→3 leaves canvas-CURVE (pool) UNCHANGED (read/write separation holds) ;
+              band dir swap long(0.4487%)→short(0.4786%) no warn ; open+close band raw_net=+2.66e-5 finite.

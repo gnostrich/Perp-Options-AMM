@@ -125,6 +125,12 @@ index — an actual proof chain. Honest scoping of what that means here (3 layer
 **Owner:** research-lead drives L1→L2 (Aristotle), defines the engine-subset, states obligations; skeptic audits
 provenance + the L3 honesty; manager re-derives + folds per-function rows into the register THEORY-LINK; paper
 consumes GROUNDED rows. Queued behind the C16 promotion (entries 134/135/136/142/144).
+**NEXT-SESSION ENABLER (operator entry 146):** install a LOCAL Lean toolchain + access so the team builds the
+object in Lean DIRECTLY and runs verification-DEBATE in Lean, with **Aristotle as an EXTERNAL EXAMINER** (not the
+sole prover/build). This removes the current env-block: results upgrade from **trusted-from-prover → actually
+"verified"** (local canonical-kernel build, CLAUDE.md §5 / §8 "verified" label currently env-blocked), and makes
+the L3 reference-impl-in-Lean + cross-check path tractable. This session must leave the program brief + register
+spine ready so the Lean-equipped next session executes immediately.
 **Until proven, do NOT claim theory↔impl consistency or "Lean-verified implementation" for any row.** Target, not state.
 
 ## Queued confirmation pass (to clear the `needs-verify` rows)
