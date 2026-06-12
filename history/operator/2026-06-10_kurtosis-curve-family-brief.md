@@ -1326,3 +1326,11 @@ _Context: operator expects, given the closed form exists, that the post-trade pr
 _Context: operator asks what the actual question about the two traces was._
 
 > so what was the question about 2 traces? i didn’t get it
+
+
+---
+
+## Entry 173 — 2026-06-12 15:36 UTC
+_Context: operator rules the two-traces question — proforma on chart 2 suffices; the warp-vs-lensing-change decomposition of the delta is not relevant to him at the moment (option c)._
+
+> oh, i think it suffices to show proforma on chart 2 its not relevant to me at the moment how much of the delta came from the actual warp vs lensing change if that answers well
