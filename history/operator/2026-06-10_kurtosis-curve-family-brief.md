@@ -903,3 +903,11 @@ _Context: operator requests a separate check — slippage per unit dollar TRADED
 _Context: operator reacts to the manager's disclosure that "the build doesn't goal-seek at all; it's a plain spot swap" — expresses that this is the gaslighting they've contended with; directed at the skeptic._
 
 > "the build doesn't goal-seek at all right now; it's a plain spot swap." can you imagine the degree of gaslighting i've contended with, skeptic
+
+
+---
+
+## Entry 121 — 2026-06-12
+_Context: operator challenges the per-AMM-dollar "slippage falls OTM" finding with a physics argument — slope is steeper far out, so a trade moves the point more, so the warp required is more; the only way it'd be same/less is if it's more sensitive to a change in w far out._
+
+> more warp far otm per unit dollar is the way it is, your analysis has to he wrong. simply because slope is steeper far out. so a trade would move the point more, so the amount of warp required would be more right? only reason it would be the same if not more would be because its alao more sensitive to change in w far out …
