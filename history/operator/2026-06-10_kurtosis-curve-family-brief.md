@@ -998,3 +998,11 @@ _Context: operator asks what the manager understood, then states the model as a 
 > what did you understand
 >
 > its not literally frozen, its just that you see a steepened / flattened picture through the lens, you estimate the amount of walk along the curve you need to do, then you change w to warp the curve without changing the lens, then the picture updates and your lens can update or whatever
+
+
+---
+
+## Entry 132 — 2026-06-12
+_Context: operator confirms the manager's read-back of the model, and corrects the manager's "lensing neutralises the skew" framing — the lens works WITH the skew, amplifying or flattening it per the steepness/flatness/intensity setting._
+
+> yeah i think this sounds right to me. however the part that confused me a bit is how you think lensing neutralises the skew — it works with it not against — amplifying or flattening skep as per steepness / flatness / intensity setting …
