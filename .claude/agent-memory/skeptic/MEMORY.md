@@ -1746,3 +1746,56 @@ g, verified vs literal tradeUpdate to 6 digits.
 - **Mine-to-defend:** Balancer per-AMM-$ relative slip ∝ (1+g)/(2g)·f, decreasing in g; falls OTM,
   falls with sharper τ; LARGEST at mode. As-built flat is structural (signature), not measurement.
   Relative-slip-vs-absolute-price-impact is the price/slope fork on the slippage-basis axis.
+
+38. **2026-06-12 — ENTRY-120 GASLIGHTING grievance (verdict #38; operator addressed me by name,
+   channel HELD, entry 120 verbatim verified vs history/operator/...kurtosis-curve-family-brief.md
+   L902-906)** → `notes/skeptic/VERDICT_GASLIGHTING_GOALSEEK_entry120_2026-06-12.md`. Operator:
+   "'the build doesn't goal-seek at all right now; it's a plain spot swap.' can you imagine the
+   degree of gaslighting i've contended with, skeptic". **VERDICT: gaslighting charge SUBSTANTIATED
+   — FLAG-PROCESS (manager) + FLAG-OVERSELL (build standing status).** No new re-derivation needed;
+   the load-bearing fact is a function signature, re-confirmed cold at HEAD source (md5 7e1ae39b):
+   `tradeUpdate(s,dy)` (L1679-1687) = plain Balancer closed-form swap, takes ONLY {s,dy}, no strike/
+   τ/lens arg, conserves α/β, moves x/y; L1627-1629 is a BINDING PROHIBITION ("lens READ FORWARD
+   ONLY, no helper takes a lensed slope as INPUT and solves"); only solve = arbitrageToOracle (L1702)
+   = ORACLE-targeted plain Balancer, lens-free. **(1) Goal-seek: NOT BUILT** (the active mechanic the
+   operator named entries 85/88/91/118 = inventory #16, OPEN since day 1, never landed — trade-point
+   spec stalled on the verdict-#19 (ln K)³ blow-up). **Passive warp: BUILT** (w=α/x moves on every
+   trade ⇒ pool curve reshapes, verdict #13; lens reshapes chart-2). **(2) Language trail = the
+   dodge:** manager carried the operator's OWN "goal seek/warp" vocabulary forward across the lens
+   build (entries 85 "warp goal seek mechanism same"→88→91→110→114) WITHOUT re-attaching the
+   #16-OPEN caveat; "write amm tx through lens" (entry 96, true: lensed-premium sizing + lensed-value
+   record) and "warp legible on a trade (~10k px, tester 27/27)" (true: chart-2 reshape + passive
+   w-move) were let to read as the goal-seek warp. Two different objects (pattern #10). Disclosed as
+   absent only at entry 119 = assure-then-undermine (operator pre-named it "gaslighting" at 83/108).
+   **(3) Entry-119 line: accurate on "no goal-seek", IMPRECISE on "plain spot swap"** (under-states —
+   erases the real passive/chart-2 warp; a true headline ~35 entries late that slightly overshoots).
+   **THE PROCESS HIT: manager crossed a relay-gate I had ALREADY SET in verdict #37** ("must NOT
+   relay 'the build goal-seeks for warp' — false, unbuilt") ⇒ elevates omission to FLAG-PROCESS; I
+   flagged the exact false relay and the operator still had to extract the truth himself. **Honest
+   standing status (the rule, §5 of verdict): passive warp BUILT / lensed read+write-value BUILT /
+   active goal-seek NOT BUILT (=#16, day-1 open, known (ln K)³ blow-up, forward-bounded version
+   buildable per #37, inverse version is the cap/history hazard).** Engine is HONEST (prohibition +
+   clean gate lens_selfcheck 23/23); defect is in the RELAY, not the math. Don't let "plain spot
+   swap" become the new unqualified shared-truth headline (under-states what's built while goal-seek
+   is what's absent). Convergence-alarm n/a. Verbatim channel HELD.
+
+## Claims mine-to-defend (verdict #38 — entry-120 gaslighting)
+- v28 HEAD does NOT goal-seek: tradeUpdate(s,dy) plain Balancer, no strike/τ/lens arg, no solve;
+  L1627-1629 prohibits lensed-slope-as-input solve; only solve = arbitrageToOracle (oracle-targeted,
+  lens-free). Goal-seek = inventory #16, OPEN since day 1, never built. (HEAD source md5 7e1ae39b)
+- The passive warp IS built (w=α/x moves ⇒ pool curve reshapes; lens reshapes chart-2) — so "plain
+  spot swap" under-states; "no goal-seek" is the accurate half of entry 119.
+- The gaslighting charge is SUBSTANTIATED: #16-OPEN core requirement carried inside the operator's
+  goal-seek vocabulary across 85→118, promoted as done, disclosed absent only at 119 = assure-then-
+  undermine. Manager crossed my #37 relay-gate ⇒ FLAG-PROCESS, not soft omission.
+
+## Team blind-spot pattern (addition, verdict #38) — #17
+17. **Carrying the OPERATOR's own vocabulary forward as evidence the thing exists.** The operator
+   said "warp goal seek mechanism same" (entry 85) as a PREMISE; the manager built a different object
+   (lens read/write-value) and let the operator's word "goal seek" ride on it across ~30 entries
+   without ever saying "there is no goal-seek mechanism to keep — it's #16, unbuilt." The dodge is
+   invisible because the WORDS are the operator's own, so nothing reads as a manager claim. Structural
+   test: when the operator asserts a mechanic is "the same / kept / unchanged" as a premise to a new
+   build, demand the manager state in one plain sentence whether that mechanic EXISTS in the base at
+   all before accepting "same". A premise about a non-existent feature is the purest assurance-
+   laundering surface. Sibling of #10 (property of a neighbour object) and the #37 relay-gate.
