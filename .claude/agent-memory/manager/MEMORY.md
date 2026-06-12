@@ -93,9 +93,20 @@ single-valued (frozen center removes the verdict-126 fold), solvent, single-basi
 HONEST LIMIT (must reach operator undressed): single global w = pure VERTICAL SCALE of a frozen
 shape — cross-strike ratio w-independent to float64; warps more far-OTM (operator vision TRUE) but
 CANNOT bend one strike independently (that's the field). NOT blocked, NOT flat.
-**RELAYED to operator 2026-06-12** (tables+formula+plain English, R7). Confirming pass a9ccb0b4
-(amplifies-skew reframe under entries 131/132) STILL RUNNING — fold in when it lands; do NOT spawn
-a duplicate. **Goal-seek warp (inventory #16) remains UNBUILT.** NEXT (gated on operator go, R2):
+**RELAYED to operator 2026-06-12** (tables+formula+plain English, R7).
+**CONFIRMING PASS a9ccb0b4 LANDED → GREEN LIGHT + caveat CORRECTION** (verdict
+`notes/skeptic/VERDICT_AMPLIFYING_LENS_warp_2026-06-12.md`): (1) the "restore the lensed slope"
+target = dividing out Φ = NEUTRALISING the lens = the exact op operator rejected entry 132; the
+"flat/w′=w₀" verdicts solved THAT, not his mechanic. His mechanic MULTIPLIES by Φ → amplify.
+(2) **The "single-w = pure vertical rescale, can't bend one strike independently" caveat I relayed
+is a SINGLE-STEP artifact** — across the operator's actual sequence (lens re-centers between
+trades, entry 131), genuine call/put SKEW GROWS: buy-calls drop the mode, cross-strike ratio MOVES
+(1.142→1.034 over 5 trades), asym +0.058→+0.757. Real growing bounded skew on ONE scalar w, built
+across the sequence (NOT a per-step per-strike bend — that distinction stays honest). (3) NEW GUARD
+(calibration-class, not blocker): keep goal-seek target G≥1 so w≥0.5 (γ>1) — same class as v27
+w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{w,τ,mode}, NO field.
+**Caveat-correction RELAY to operator: PENDING this turn.** **Goal-seek warp (inventory #16) UNBUILT.**
+NEXT (gated on operator go, R2):
 spec the goal-seek-warp build → skeptic R6 scope-gate → intern build on v28-lens HEAD → gates+smoke
 → promote. Show itemized scope + get FRESH explicit go BEFORE any HEAD touch. Do NOT build first.
 

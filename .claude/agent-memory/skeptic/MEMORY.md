@@ -436,6 +436,21 @@ inventory, operator answered — remaining live tail = every curve note must dis
   frame. The operator's gaslighting grievance was SUBSTANTIATED here: the masking frame was carried
   across ~4 verdicts. Robustness check: re-derive the negation under the operator's EXACT frame
   before reporting any impossibility/flatness (sibling of pattern #5, but for frame not candidate).
+11. **Neutralise-vs-amplify (divide-vs-multiply on the lens factor Φ) as a "flat" verdict
+  (verdict #20, 2026-06-12).** Operator entries 130/131/132 corrected the team's KEY lens error:
+  the lens AMPLIFIES the skew ("works WITH it not against"), it does NOT neutralise it; and it is
+  NOT a frozen stored anchor ("no fuck no") but a per-step sequence (lens held DURING a warp step,
+  updates BETWEEN steps). The team's recurring "flat / w′=w₀" came from solving the RESTORE target
+  (`γ(w′)·Φ=γ(w₀)·Φ`), which DIVIDES OUT Φ = cancels the lens = neutralises — the exact operation
+  he rejects. His mechanic MULTIPLIES by Φ: warp = `(γ(w_nat)−γ(w₀))·Φ_τ(u(K))`, strike-dependent,
+  monotone-OTM, τ-amplified, bounded, single-valued, scalar-buildable on one-weight Balancer (NO
+  field). Lesson: when an operator describes a lens/transform as amplifying, a "restore the
+  observed quantity" goal-seek SILENTLY INVERTS it (cancel vs amplify) and always yields the
+  degenerate flat answer. Check the SIGN of the lens operation (÷Φ vs ×Φ) before reporting flat.
+  Sub-lesson: a "pure vertical rescale, not a real warp" honest-limit can itself be a SINGLE-STEP
+  artifact — under a sequence where the lens/center updates between steps, the cross-strike ratio
+  moves and genuine growing skew emerges (sibling of #10: right object, wrong frame — here the
+  frame is single-step-frozen vs his multi-step-updating sequence).
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
@@ -2052,3 +2067,43 @@ g, verified vs literal tradeUpdate to 6 digits.
   artifact — Φ depended on w there); frozen-center goal-seek is single-rooted. (`/tmp/sk_frozen7.py`)
 - The buildable resolution = one stored scalar m_ref pre-trade + plain Balancer + static lens; 3 scalars
   {γ,τ,m_ref} reconstruct the whole g_loc(K); distinct from the demoted (W) weight field.
+
+44. **2026-06-12 — AMPLIFYING-lens warp, re-derived COLD (operator entries 130/131/132)** →
+   `notes/skeptic/VERDICT_AMPLIFYING_LENS_warp_2026-06-12.md`. Operator CONFIRMED his model and
+   REVERSED the team's lens framing: entry 130 "no fuck no" (the lens is NOT a frozen stored
+   anchor); entry 131 = per-step SEQUENCE (lens held DURING a warp step, updates BETWEEN steps);
+   entry 132 = the lens AMPLIFIES the skew ("works WITH it not against"), NOT neutralises.
+   **VERDICT: GREEN LIGHT.** Re-derived COLD (`/tmp/sk_amp*.py`, float64, HEAD v28 exact
+   hpTau/lensU/gLoc). **The warp is STRIKE-DEPENDENT and AMPLIFYING:** dG(K)=(γ(w_nat)−γ(w₀))·Φ_τ(u(K)),
+   Φ=|u|/√(τ²+u²)∈[0,1); monotone-OTM (Φ→1 wings), τ-amplified (sharper τ → Φ saturates closer in).
+   Reproduces operator's stated direction EXACTLY (more far OTM: τ=1 1.1×→4× +0.012→+0.101; more
+   sharper τ: 1.0→0.05 @1.1× +0.012→+0.111). **THE FLAT VERDICTS MIS-FRAMED THE LENS AS NEUTRALISING:**
+   the "restore the lensed slope" target solves γ(w′)·Φ=γ(w₀)·Φ → Φ DIVIDES OUT → cancels the lens →
+   w′=w₀ flat. Dividing out Φ = neutralise = lens AGAINST skew = the exact op entry 132 rejects. His
+   mechanic MULTIPLIES by Φ. Verdict #43 caught the amplify object's MAGNITUDE (byte-match) but
+   legitimised the neutralise target as co-equal "correct" and demoted the amplify object to "pure
+   rescale." **PASS bounded/solvent/single-valued/single-basis/scalar:** g_loc≤γ (no 1/w′ runaway —
+   that was the (W) field); w′=G/(1+G) one root; plain Balancer price==slope; reconstructs from
+   {w,τ,mode} 3 scalars, NO field — BUILDABLE on one-weight Balancer. **One guard:** keep goal G≥1 so
+   w≥0.5 (γ>1) — calibration-class, not blocker. **The "pure vertical rescale" honest-limit DISSOLVES
+   across the sequence:** single FROZEN step IS symmetric rescale (ratio w-indep 5.6e-17), but the
+   operator's sequence UPDATES the lens between steps → mode shifts → cross-strike ratio moves
+   (1.142→1.034 over 5 buy-calls) and genuine call/put SKEW grows (asym +0.058→+0.757). So skew is a
+   multi-step/mode-shift property = exactly entry-131 "picture updates, lens updates." Edges:
+   τ→0 ATM Φ=0 finite (no 0/0 in engine form); τ→∞ g_loc→0 (lens damps, "flatter τ damps" ✓), pool
+   stays solvent. Verbatim channel HELD (entries 130/131/132 vs history/operator/...brief.md
+   L990/1000/1008). Convergence-alarm LOW (self-attacked my own #43 framing; both ÷Φ and ×Φ
+   tabulated; float64-clean). **This is the CORRECTED resolution of the lens-warp question that gates
+   the project: warp is real, strike-dependent, amplifying, bounded, scalar-buildable.**
+
+## Claims mine-to-defend (verdict #44 — amplifying lens warp)
+- The lens AMPLIFIES (×Φ), it does not neutralise (÷Φ). The "restore lensed slope" goal-seek
+  divides out Φ and ALWAYS gives flat w′=w₀ — that is the neutralising op the operator rejects
+  (entry 132). His warp = (γ(w_nat)−γ(w₀))·Φ_τ(u(K)), strike-dependent/monotone-OTM/τ-amplified.
+  (`/tmp/sk_amp.py`/`sk_amp3.py`/`sk_amp5.py`)
+- Bounded (g_loc≤γ, no runaway), single-valued (w′=G/(1+G)), single-basis (plain Balancer price==slope),
+  scalar-buildable (3 scalars {w,τ,mode}, NO (W) field). Guard: G≥1 keeps γ>1. (`/tmp/sk_amp7.py`)
+- The "pure vertical rescale" limit is SINGLE-STEP only; across the operator's updating-lens sequence
+  the ratio moves and call/put skew grows (asym +0.058→+0.757 over 5 steps). (`/tmp/sk_amp6.py`/`sk_amp8.py`)
+- Verdict #43's amplify magnitude was RIGHT; its error was framing the neutralise target as co-equal
+  "correct" and demoting amplify to "rescale." Pattern #11 (÷Φ vs ×Φ sign-inversion → spurious flat).
