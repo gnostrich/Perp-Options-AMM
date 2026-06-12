@@ -752,3 +752,11 @@ _Context: operator asks to re-verify the far-OTM "dust trade" reshape (the old f
 _Context: operator asks for clear, checkable assurance the lens is implemented correctly — splaying / changing directions from the 45° tangent-slope point on the curve, consistently across all parts._
 
 > how do i get a clear assurance you've implemented lensing properly. i.e. its splaying / changing directions from 45 degree tangent slope point on curve — this matters for the purpose of correctness of all the parts
+
+
+---
+
+## Entry 102 — 2026-06-12
+_Context: brainstorm-only — operator conjectures the blow-up degree depends on lensing intensity but is multiplicative/constant-scaled (not hyperbolic) so no blow-up; and the round-trip/arb is ~same as before (inherited)._
+
+> brainstorm on the blowup aspect — basically the degree of this thing depends on the intensity of the lensing that we set, which is likely sort of proportional to constant / multiplicative rather than hyperbolic in its effect so that theres no blowup? and the arbitrage thing / round trip also would be same as before prtyyy mych i think )brainstormi only

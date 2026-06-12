@@ -1428,3 +1428,55 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
    whether the old consistency depended on a symmetry the new object lacks.
 
 ## [pointer 2026-06-12] STANDING response-type/simple-English protocol UPGRADED + ENFORCED (operator entry 99, 3rd strike). Canonical: notes/skeptic/STANDING_RESPONSE_TYPE_PROTOCOL_2026-06-12.md. Violations (a) unglossed jargon/hash/path/agent-id (b) format-bare technical (no table/formula/literal-edit) (c) PR-mechanics unasked (d) needs scrollback. Enforce = post-hoc transcript audit, FLAG-PROCESS style-class vs manager (halt-class).
+
+32. **2026-06-12 — FINDING-RT reconciliation vs my #30 CLAIM-2 (verdict #32)** →
+   `notes/skeptic/VERDICT_FINDING_RT_roundtrip_2026-06-12.md`. Tester FINDING-RT (DIFF_LEDGER OPEN -4)
+   claimed an instant open→close round-trip on a TWO-OTM-LEG band is TRADER-favourable (raw_net>0,
+   scales: N=0.01/0.05/0.2 → +1.57e-4/+3.71e-3/+4.30e-2), contradicting my #30 CLAIM-2
+   (pool-favourable, not farmable). **DECISION: NOT-A-LEAK. #30 CLAIM-2 STANDS, scope sharpened.
+   NOT a blocker, NOT operator-tier — clear DIFF_LEDGER OPEN -4 as RESOLVED-not-a-leak.**
+   - **raw_net>0 IS real + scales** — reproduced byte-faithful through the live S2 UI (Store.closeBand),
+     default pool x10/y8e5/α5/β4e5, barrier legs 84000/76000.
+   - **THE BREAK (tester's inferential error):** raw_net = Y−X is the CLOSE-leg book value in
+     carved-perp units ONLY; the tester treated OPEN as net-zero and read raw_net AS the round-trip
+     P&L. The band carries real BTC↔USD reserve flows across both legs of both open AND close that
+     raw_net does NOT capture. **I traced the actual pool reserve Δx/Δy over the full cycle + valued the
+     trader (pool's counterparty) at oracle: trader TOTAL $ P&L = −2.28/−56.42/−871.87 = EXACTLY minus
+     the pool's reserve-USD gain** (conserved 2-party system). Trader LOSES ~2× the one-way open slipUsd
+     (both-leg slippage on open and close). Pool-favourable. No costless cycle, no money pump.
+   - **Why raw_net>0 while trader loses:** open legs sized to net-zero (V_at_open sold==bought, an S2-UI
+     storage identity — confirmed `=` exactly), so the trader's entry COST lives in the reserve move, not
+     in a nonzero open raw_net; Y−X>0 is close-leg mark geometry on the slipped pool, NOT walk-away cash.
+   - **#30 CLAIM-2 STANDS:** #30 tested a single pool-dy round-trip (pool-favourable); the two-leg band is
+     ALSO pool-favourable — agree. Correction is precision-only: raw_net (Y−X) ≠ round-trip trader P&L;
+     the reserve-flow valuation is. Logged as standing caveat (don't re-read raw_net>0 as "trader wins").
+   - **Lens NEUTRAL in direction:** trader $ P&L NEGATIVE on BOTH S2 (−56.42) and v24 base (−146.51) @
+     N=0.05; lens rescales recorded marks (raw_net magnitude differs) but tradeUpdate is byte-identical
+     v24 (L4) so the CASH path is unchanged. Tester's "INHERITED-v24, not Stage-2 regression" correct;
+     extended: inherited AND benign on both — nothing to inherit, no leak either side.
+   - **Residual (display-honesty, non-gating, intern/tester):** the close log + portfolio "raw" cell
+     surface raw_net (Y−X) with trader_payout=L0·raw_net·equity POSITIVE on an instant round-trip — a
+     trader reading it would think the round-trip pays them. Engine solvent + self-consistent; display
+     just doesn't subtract the entry-cost reserve leg. Tester smoke-pass should note it; NOT a leak.
+   - Convergence-alarm LOW (ANTI-convergence: I broke the tester's reading AND re-confirmed my own #30 by
+     an independent reserve-trace path, not from memory). Verbatim: entry 96 (L710) = settle-at-lensed
+     only, no round-trip-sign ruling — so the operator-escalation OPEN -4 contemplates is unnecessary.
+
+## Claims mine-to-defend (verdict #32 — FINDING-RT round-trip)
+- raw_net (Y−X, carved-perp units) is a CLOSE-leg book component, NOT the round-trip trader P&L. The
+  trader's true P&L = value of the net pool reserve move over the full cycle = −(pool's USD gain).
+- Instant open→close on a two-OTM-leg band: trader LOSES (−2.28/−56.42/−871.87 at N=0.01/0.05/0.2),
+  pool GAINS the same, ~2× one-way slipUsd. Pool-favourable, NOT a money pump, NOT farmable. Both S2 and
+  v24 base, both signs negative — lens does not flip it. (live S2 UI reserve-trace + v24 sandbox)
+- Open legs net-zero by the V_at_open sold==bought sizing identity (S2 UI); the trader's entry cost is in
+  the reserve move, which is why raw_net>0 is NOT trader-favourable cash.
+
+## Team blind-spot pattern (addition, verdict #32) — #16
+16. **A book-keeping COMPONENT read as the economic P&L (partial-ledger overclaim).** raw_net=Y−X is one
+   leg of a multi-leg, two-asset cash cycle; reading its sign as "trader wins/loses" drops the open-side
+   reserve cost entirely. The tester's evidence + sign were honest; the single broken link was
+   sign(component) ⇒ sign(P&L). Structural test for any "trader-favourable / leak / money-pump" claim:
+   **demand the FULL closed-loop cash trace (every asset, every leg, open AND close) valued in ONE
+   numéraire, and check it conserves against the counterparty (pool).** A leak claim that doesn't show
+   the pool LOSING reserves is unproven. Sibling of #10/#15 (a true statement about a neighbour/partial
+   object promoted to the whole) — here the neighbour is one ledger row of the trader's position.
