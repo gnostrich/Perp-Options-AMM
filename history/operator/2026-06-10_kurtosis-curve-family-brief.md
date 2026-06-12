@@ -1270,3 +1270,11 @@ _Context: operator, watching the current HEAD's second graph — some comfort, r
 _Context: operator explains the design intent behind the continuous limit — it couples things tighter so the room for error is actively reduced._
 
 > the continuous limit was something i thought would couple things tighter so the room for error is actively reduced
+
+
+---
+
+## Entry 166 — 2026-06-12 15:22 UTC
+_Context: operator links the continuous-limit design intent (entry 165) to the monolith philosophy._
+
+> sort of along the lines of the monolith
