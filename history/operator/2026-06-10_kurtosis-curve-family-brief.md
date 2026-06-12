@@ -768,3 +768,11 @@ _Context: brainstorm-only — operator conjectures the blow-up degree depends on
 _Context: operator restates the lens as a tangent-slope multiplier that's a function of polar-angle divergence from the mode (the 45° tangent-slope point). Comprehension check._
 
 > lens is basically a sort of tangent slope amplification / multiplier that's a function of relative polar angle divergence from the angle passing through mode (45 degree tangent slope to curve) right?
+
+
+---
+
+## Entry 104 — 2026-06-12
+_Context: operator notes this was probably a small edit from v24 and directs keeping a good feature-level changelog._
+
+> so this probably was a very small edit from v24 right? make sure you keep a good feature level changelog etc.
