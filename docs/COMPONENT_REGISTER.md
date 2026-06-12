@@ -85,6 +85,21 @@ Canonical: `.claude/agents/manager.md`, `notes/skeptic/VERDICT_MANAGER_TLDR_AND_
 — no agent work goes to merge/promote/state-flip unchecked by the skeptic; no claim-bearing operator
 reply ships unfiltered. Halt-class; manager cannot route around it.
 
+## PART D — Theory↔implementation bidirectional consistency (QUEUED — operator entry 141, NOT yet populated)
+_Operator (entry 141): the math/theory must be checked **bidirectionally** against the implementation
+for theory↔impl consistency **tied to the single mathematical object** (metriplectic / port-Hamiltonian
+free-potential — see `formal/INDEX.md`), which also de-risks the paper with minimal incremental work._
+**Plan (honest status: DESIGNED, NOT DONE):** add a **THEORY-LINK** column to PARTS A/B — each component
+and agreement carries its theoretical object/lemma (the `formal/INDEX.md` row / Aristotle result /
+derivation note that grounds it) **and** the implementation gate that realizes it, with a **two-way
+check**: (i) impl→theory (does the built behavior match the proven object?), (ii) theory→impl (is every
+proven object actually instantiated, or honestly OPEN?). The skeptic audits BOTH directions each pass;
+mismatch = FLAG. The **paper** draws claims directly from VERIFIED two-way rows (no separate paper ledger).
+**Owner:** research-lead populates the THEORY-LINK (its queued singular-object grounding pass, entries
+134/135/136) → skeptic audits bidirectionally → manager folds into this register → paper consumes.
+**Until populated, do NOT claim theory↔impl consistency for any row.** This part is the workflow target,
+not a current state.
+
 ## Queued confirmation pass (to clear the `needs-verify` rows)
 Tester + skeptic to confirm C4/C5/C8/C9/C11 live-state on HEAD v28 and stamp LAST-VERIFIED, so no
 row sits on manager assertion alone. Owner: manager to dispatch after the integrity verdicts fold.

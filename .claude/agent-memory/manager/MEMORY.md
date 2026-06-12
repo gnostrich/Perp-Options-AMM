@@ -174,8 +174,13 @@ behind: register first-audit clears → show operator itemized edit → fresh go
   re-verified/NOT trusted-from-prover yet (INDEX.md §⟢ EXTERNAL). (ii) THEN the continuous
   closed-form-integral derivation (discrete per-step warp is what's being BUILT now). (iii) AND
   ground ALL moving parts (lens/warp/carry/funding/settlement) as NATURAL emergent parts of that
-  singular object, NOT tacked-on; flag loudly anything that does NOT fall out. research-lead theory
-  task; serialize AFTER the build spec (one research thread/branch).
+  singular object, NOT tacked-on; flag loudly anything that does NOT fall out. (iv) **[entry 141]
+  populate COMPONENT_REGISTER THEORY-LINK (PART D): each component/agreement → its formal object/lemma +
+  the BIDIRECTIONAL check (impl→theory matches proven object?; theory→impl every proven object instantiated
+  or honestly OPEN?); PAPER consumes VERIFIED two-way rows = minimal incremental paper work.** research-lead
+  theory task; serialize AFTER the build spec (one research thread/branch). Skeptic audits BOTH directions +
+  folds bidirectional-consistency into the universal-gate policy (entry 141 "skeptic take note" — relay at
+  its next pass; do NOT spawn a concurrent skeptic now; 2 already running: a5a4648 consistency-audit, intern aed30827).
 
 ## (superseded) Goal-seek warp (inventory #16) UNBUILT. NEXT (gated on operator go, R2):
 spec the goal-seek-warp build → skeptic R6 scope-gate → intern build on v28-lens HEAD → gates+smoke
