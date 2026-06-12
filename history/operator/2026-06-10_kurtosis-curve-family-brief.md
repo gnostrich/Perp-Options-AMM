@@ -988,3 +988,13 @@ _Context: operator corrects the manager's "lens re-centers as w changes" argumen
 _Context: operator rejects the manager's "frozen stored reference / one stored number / wrong lens" re-framing of entry 129._
 
 > no fuck no
+
+
+---
+
+## Entry 131 — 2026-06-12
+_Context: operator asks what the manager understood, then states the model as a sequence: not literally frozen; you see the steepened/flattened picture through the lens, estimate the walk along the curve, change w to warp WITHOUT changing the lens, then the picture updates and the lens can update._
+
+> what did you understand
+>
+> its not literally frozen, its just that you see a steepened / flattened picture through the lens, you estimate the amount of walk along the curve you need to do, then you change w to warp the curve without changing the lens, then the picture updates and your lens can update or whatever
