@@ -1321,6 +1321,24 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="sim-aid-label">polar-lens kurtosis knob · STATIC (vol-set at deploy) · rounds the ATM elbow of the option/value curve; wings stay exact power-laws. Smaller τ ⇒ sharper elbow.</div>
             </div>
           </div>
+          <!-- Goal-seek warp readout (Item 2): w′=G/(1+G), the weight for a target wing-exponent G. -->
+          <div class="field-row two-col" style="margin-bottom: 6px;">
+            <div class="field-label">GOAL-SEEK G</div>
+            <div class="field-input-wrap">
+              <input type="number" id="goalseek-g-input" min="1" max="40" step="0.1" value="3">
+              <div class="sim-aid-label">target wing-exponent G (steepness) at the read point · advisory readout, drives nothing automatically. G≥1 ⇒ γ&gt;1.</div>
+            </div>
+          </div>
+          <div class="stat-line"><span class="label">read-point γ (live)</span><span class="val" id="gs-gamma-live">—</span></div>
+          <div class="stat-line"><span class="label">w′ for target G</span><span class="val" id="gs-wprime">—</span></div>
+          <div class="stat-line"><span class="label">resulting γ′</span><span class="val" id="gs-gamma-prime">—</span></div>
+          <div class="sim-aid-label" style="padding: 6px 8px 0;">
+            Closed-form w′ = G/(1+G) — the Balancer weight whose wing-exponent γ = w/(1−w) equals the target G,
+            read THROUGH the held lens. Advisory only: it tells you how far to move w; the trade is still the
+            actuator (size = the walk). NOTE one trade warps the WHOLE profile by one factor (more in the wings,
+            scaled by the lens Φ_τ) — it does NOT bend one strike independently of another in a single step. The
+            asymmetric skew builds ACROSS the sequence as the picture (mode + lens) updates between steps.
+          </div>
         </div>
         <div class="panel-section">
           <div class="panel-section-title">Loop Controls</div>
@@ -1663,6 +1681,18 @@ const Engine = (function() {
       if (sNorm >= sStar) return sStar / ((g + 1) * sNorm);  // continuation (incl. boundary)
       return 1 - Math.pow(sNorm / theta, 1 / g);        // intrinsic 1 − K/S
     }
+  }
+
+  // Goal-seek the weight for a TARGET wing-exponent G (entry 128 pt 2 — "how
+  // much to warp w"). Closed-form FORWARD inverse of γ(w)=w/(1−w): w′=G/(1+G).
+  // Guard G≥1 ⇒ w′≥0.5 ⇒ γ>1 (the γ>1 lock); G<1/non-finite ⇒ NaN (loud, no
+  // clamp-to-edge). L4: this is NOT a lens inversion — it never takes an
+  // observed/lensed slope, never reads h″/1·h⁻¹, and is NEVER an argument to
+  // tradeUpdate/arbitrageToOracle. The target G is on the wing-exponent γ; the
+  // lens factor Φ_τ is never divided out (that rejected neutralise op gives the
+  // flat w′=w₀). Single algebraic root, monotone in G.
+  function goalSeekW(G) {
+    return (G >= 1 && isFinite(G)) ? G / (1 + G) : NaN;
   }
 
   // Composite ray: θ* = √(θ₁θ₂), δ = ½ log(θ₂/θ₁). Takes (lo, hi).
@@ -2185,7 +2215,7 @@ const Engine = (function() {
   return {
     getW, getSNorm, getDepth, getMP_raw, poolMark,
     mark, compositeRay, vsValue, bsValue,
-    hTau, hpTau, lensU, gLoc, markLensed,        // v28 polar lens (Stage 1, read layer)
+    hTau, hpTau, lensU, gLoc, markLensed, goalSeekW,   // v28 polar lens (Stage 1 read) + goal-seek warp (Item 2)
     tradeUpdate, rebase, arbitrageToOracle,
     legPrice, executeLeg, executeBand,
     executeCompositeLeg, executeFourStrikeSpread,    // aliases for back-compat
@@ -3628,8 +3658,13 @@ const Viz = (function() {
     const snap = snapshot(state);
     drawState(snap.sNorm, false, state.pool, state.tau);
     if (previewPool) {
+      // HELD-LENS warp (Item 1, spec §A/B): draw the MOVED-γ preview curve at the
+      // PRE-step (held) mode snap.sNorm — NOT the post-trade mode snapPost.sNorm.
+      // Re-centering to snapPost.sNorm re-registers the profile and MASKS the
+      // strike-dependent warp dG(K)=(γ′−γ)·Φ_τ(u(K)); the held mode makes it visible.
+      // γ is read off previewPool (the moved-w pool); the mode is the passed snap.sNorm.
       const snapPost = snapshot(state, previewPool);
-      if (Math.abs(snapPost.sNorm - snap.sNorm) > 1e-6) drawState(snapPost.sNorm, true, previewPool, state.tau);
+      if (Math.abs(snapPost.sNorm - snap.sNorm) > 1e-6) drawState(snap.sNorm, true, previewPool, state.tau);
     }
 
     // Strike markers — band strikes plotted at φ = atan(θ)

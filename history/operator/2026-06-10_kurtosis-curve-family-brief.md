@@ -1070,3 +1070,11 @@ _Context: operator asks the skeptic to make a binding policy — no agent's work
 _Context: operator wants the math/theory checked BIDIRECTIONALLY against the implementation for theory↔impl consistency tied to the single mathematical object — which also de-risks the academic paper (minimal incremental work) — and asks for an integrated, transparent, truthful workflow; addressed to the skeptic to note._
 
 > i also want the math thing to be consistenly checked bidirectionallly to encure theoretical and implementation consistency with the single object thing, this will also help with the academic paper stuff so there's minimal incremental work required ... an integrated, transparent, truthful workflow would be nice, skeptic take note
+
+
+---
+
+## Entry 142 — 2026-06-12
+_Context: operator directs that the Lean work — via notes, the actual stored Lean, or by searching Aristotle's store of all past work — must also be tied into this index (the register THEORY-LINK / bidirectional-consistency index)._
+
+> the lean work we've done also by either seeing notes, lean actual stored, or searching aristotle's store of all past work, must pe tied to this index too

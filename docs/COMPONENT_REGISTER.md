@@ -95,8 +95,12 @@ derivation note that grounds it) **and** the implementation gate that realizes i
 check**: (i) impl→theory (does the built behavior match the proven object?), (ii) theory→impl (is every
 proven object actually instantiated, or honestly OPEN?). The skeptic audits BOTH directions each pass;
 mismatch = FLAG. The **paper** draws claims directly from VERIFIED two-way rows (no separate paper ledger).
+**THEORY-LINK sourcing (operator entry 142 — comprehensive, all three):**
+(1) the notes (`notes/research/`, `formal/INDEX.md`, `formal/MANAGER_VERIFICATION.md`);
+(2) the **actual stored Lean** archives (`formal/aristotle_runs/**/extracted/**/*.lean` — the returned proofs themselves, not just the index summary);
+(3) a **search of Aristotle's full store of all past work** (research-lead via the aristotlelib interface) to surface results PROVEN but never folded — e.g. the `warp-amm`/`warp-amm-handoff` continuous-warp cluster (INDEX.md §⟢ EXTERNAL, retrieval-only/un-verified). Every such result gets a register row tied to its component, with honest provenance (GROUNDED / CARRIED / trusted-from-prover / retrieval-only).
 **Owner:** research-lead populates the THEORY-LINK (its queued singular-object grounding pass, entries
-134/135/136) → skeptic audits bidirectionally → manager folds into this register → paper consumes.
+134/135/136/142) → skeptic audits bidirectionally → manager folds into this register → paper consumes.
 **Until populated, do NOT claim theory↔impl consistency for any row.** This part is the workflow target,
 not a current state.
 

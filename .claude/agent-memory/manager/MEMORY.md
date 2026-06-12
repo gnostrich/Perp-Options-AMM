@@ -177,7 +177,10 @@ behind: register first-audit clears → show operator itemized edit → fresh go
   singular object, NOT tacked-on; flag loudly anything that does NOT fall out. (iv) **[entry 141]
   populate COMPONENT_REGISTER THEORY-LINK (PART D): each component/agreement → its formal object/lemma +
   the BIDIRECTIONAL check (impl→theory matches proven object?; theory→impl every proven object instantiated
-  or honestly OPEN?); PAPER consumes VERIFIED two-way rows = minimal incremental paper work.** research-lead
+  or honestly OPEN?); PAPER consumes VERIFIED two-way rows = minimal incremental paper work.** **[entry 142]
+  THEORY-LINK sourced from ALL THREE: notes+INDEX, the ACTUAL stored .lean archives, AND a SEARCH of
+  Aristotle's full store of past work (aristotlelib) to surface PROVEN-but-unfolded results (e.g. warp-amm
+  continuous-warp cluster, retrieval-only) — each tied to its component w/ honest provenance.** research-lead
   theory task; serialize AFTER the build spec (one research thread/branch). Skeptic audits BOTH directions +
   folds bidirectional-consistency into the universal-gate policy (entry 141 "skeptic take note" — relay at
   its next pass; do NOT spawn a concurrent skeptic now; 2 already running: a5a4648 consistency-audit, intern aed30827).
