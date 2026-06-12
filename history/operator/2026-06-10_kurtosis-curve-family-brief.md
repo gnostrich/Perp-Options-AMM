@@ -791,3 +791,11 @@ _Context: operator didn't understand "standing offer"; manager re-posed the rema
 _Context: operator authorizes the finishing work — cleanup batch + warp check + final test + promote to live._
 
 > please do
+
+
+---
+
+## Entry 107 — 2026-06-12
+_Context: operator asks whether varying the lens steepness/intensity (τ) visibly affects the second (option-value) graph._
+
+> so i'll be able to vary the 'steepness' / 'intensity' of the lens and see impact on second graph right?
