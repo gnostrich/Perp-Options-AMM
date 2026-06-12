@@ -1,5 +1,57 @@
 # MEMORY — tester
-_Last updated: 2026-06-12, after the CONTWARP candidate smoke (build `4378bc11`, READ-ONLY, GATES HEAD PROMOTION — operator entry-163 deadline). VERDICT: 4/4 PASS ×2 byte-stable, NO new undesirables ⇒ promotion gate CLEAR from my side. Prior: C16 goal-seek-warp `abd46149` (SCRAPPED by entry 158 + skeptic verdict, never promoted)._
+_Last updated: 2026-06-12, after the A14 AT-STRIKE §8 live confirmation (HEAD `de28c937`, PROMOTED post-skeptic-clear, READ-ONLY). VERDICT: 5/5 PASS ×2 byte-stable, 34/34 oracle ⇒ §8 LIVE CONFIRMATION = PASS. Prior: CONTWARP `4378bc11` (4/4 PASS, promoted); C16 `abd46149` (SCRAPPED, never promoted)._
+
+## ★★★★★ MOST RECENT — A14 AT-STRIKE §8 live confirmation, HEAD `de28c937` = 5/5 PASS ×2, 34/34 ORACLE
+Build `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `de28c93712ffb1a7fcafc66b36a0ea83` (UNCHANGED post-run, READ-ONLY).
+CHANGE vs prior HEAD (contwarp `4378bc11`): AMM swap now AT-STRIKE — `executeLeg` (L1773-1797) pool cash per leg
+`dy=(wingSign·legSign)·N·K_usd`, K_usd=θ_inner·oracle (NOT old premium-fraction N·V). DEPTH_FRAC=0.90 (L1740). Open + OTM-close
+swap at-strike; ITM close pays direct intrinsic+extrinsic (legValueUnified settled-to-cash, NO AMM reversal). Reserve guard
+(L1786-91): cash-OUT (dy<0) with N·K≥0.90·(y−β) REJECTS with both $ figures; N never mutated; wired via executeBand both legs.
+Buy-leg N_buy=V_sell/denom UNCHANGED (option pricing sizes the bought leg only — operator entries 186/187).
+Harness `engine/verify/pw_v28_a14_smoke.mjs` (single A/B arg); evidence `evidence/v28_a14/` (INDEX + RUN_LOG_run{A,B}
+byte-stable modulo header + {A,B}_item1_warp4x.png + {A,B}_item5_label.png). 0 console/0 pageerrors both runs.
+File-safety GREEN (md5 unchanged; webp L74 `ab663f5c…`, svg L1060 `c505b08a…` sed line-md5; 3 scripts parse).
+run_all.sh = **34 PASS / 0 FAIL** (A14 gates AS1 at-strike dy / AS2 reserves-restore-exact / AS3 N_buy-unchanged /
+AS4 pool-fns-byte-id-v24 / AS5 warp-rises-OTM / AS6 honesty / AS-guard). Ledger A14 entry appended (feature-keyed
+#16/#7/#15 + #3/#1 regression + none-beyond; OPERATOR-VOICE entries 127/186/187/197/198/199/203/204/205; table #16/#7/#3/#1
++ HEAD header amended; rolling -5 FINDING-TRADE-AT-STRIKE → RESOLVED(evidence), +OPEN -A14a FLAGGED-LABEL / -A14b
+KURTOSIS-WARP-TEST; reconciliation FINDING-TRADE-AT-STRIKE → RESOLVED-in-`de28c937` +2 OPEN rows).
+- **Item 1 (at-strike warp rises OTM) PASS:** single sold call N=0.1 oracle 80000 τ0.3, mult 1.1/1.5/2/4: dy=$8,800/$12,000/
+  $16,000/$32,000 (=N·θ·oracle exactly), Δw=0.00544/0.00739/0.00980/0.01923 (monotone); AS5 Δsteepness==dy/β byte-corroborates.
+  4× dashed post-trade curve visibly diverges on chart-2 (`A_item1_warp4x.png`).
+- **Item 2 (ITM payout) PASS:** full Store path (openBand long, setOracle 300000 + setPerpMark 300000 + runArbitrage so sold-call
+  crosses strike, closeBand) → ok, settled_cash_leg='sold'/live_leg='bought', raw_net=−4.506e-3 finite, trader_payout=−$205.49
+  finite, L0=10, no throw, logged. AS2 reserves restore exact (≤1.78e-15), AS6 close pays at lensed mark.
+- **Item 3 (reserve guard) PASS:** sold-PUT cash-out N·K=$380,000 vs depth $400,000 (95%) ⇒ reject verbatim
+  "At-strike cash $380000.00 exceeds 90% of pool cash depth $400000.00 — trade rejected."; 80%·depth leg (N·K=$320,000)
+  EXECUTES dy=−320000, N un-mutated. AS-guard byte-corroborates.
+- **Item 4 (no regression) PASS:** continuous sweep animates 46–47 distinct chart-2 frames/1.3s (rAF-sampled); τ reshapes
+  chart-2 (0.3→2.0=6,545px, 0.3→0.35 step=3,893px); chart-1 (plain-v24 pool curve) INERT to τ (0px); AS4 pool fns byte-id v24.
+- **Item 5 (FLAGGED-LABEL, observed+quoted, NOT fixed) PASS-as-reported:** band-preview Audit header literally
+  "Pool Δ (cash-conserving ⇒ Δy_net ≈ 0)" + field "net trader cash @ open" shows **"$16,623.290372"** for a valid long band
+  (sold-call 120000/bought-put 60000/N=0.1, τ0.3) = `netPoolY=leg1.dy+leg2.dy` (Δy(sold)="12000.0000 $" + Δy(bought)="4623.2904 $").
+  At-strike swap NO LONGER cash-conserving ⇒ header MISLABELS (≈0/trader-cash false). Slippage beside reads "4.1558 % · ≈ $400.82".
+  Intern relabel, not engine. (read-only on source.)
+- **ESCALATIONS to manager→operator:** (1) -A14b KURTOSIS-WARP-TEST: operator entry 203 [verbatim L1582] asked if warp-magnitude
+  vs OTM AND **kurtosis** was tested — OTM half ANSWERED (Item 1); the steeper-τ⇒more-warp coupling (entries 184/185 L1434) still
+  OWED a targeted vs-τ magnitude test. (2) -A14a FLAGGED-LABEL relabel. FINDING-RT superseded-in-scope by entry 197 ("transact at
+  whatever the curve is; forget arb") + AS2; A15 lensed-mark netting + no-jump-ATM operator-DEFERRED (entries 204/205).
+- **GOTCHAS (critical for A14 re-runs):**
+  - **TWO separate canvases:** `canvas-curve` (chart-1 pool curve) and `canvas-pricing` (chart-2 option/value). `document.querySelector('canvas')`
+    ALWAYS grabs canvas-curve ⇒ chart-2 measures read the wrong/hidden canvas (false 0px / 1-frame sweep). Read by ID per view.
+  - **Sweep needs a FRESH page + intact boot-seeded club.** previewBand's club-guard rejects ("Club has no perp notional. Add a perp.")
+    once the long club is drained (Item-2 openBand carve) or after `Store.reset()` (reset does NOT re-seed the demo perps) ⇒ no
+    previewPool ⇒ static (1 frame). Reload the page before the sweep test. Retrigger a NEW sweep with a DIFFERENT notional (0.3→0.6)
+    so the rAF key (`pre.x|pre.y|preview.x|preview.y`) changes; blank+same-value short-circuits to static via `_cwKey`.
+  - **rAF sampling, not setTimeout:** sample the sweep with `requestAnimationFrame` inside one evaluate (setTimeout-only starves rAF
+    in headless ⇒ 1 frame). Probe got 46 frames; main harness got 1 until I reloaded + rAF-sampled.
+  - **strike input IDs are `sold-inner`/`bought-inner` (dollar values), `band-notional` (BTC), `band-dir-sell` dataset.dir (long/short).**
+    NOT band-strike-sold. dir=long ⇒ sold-CALL (K>oracle) + bought-PUT (K<oracle). previewBand fires via input/change listeners
+    (L3221-22) — dispatch input events, don't call previewBand() (closure-bound, unreachable from evaluate).
+  - **ITM-close engine path needs the FULL Store band (has `entry.L0`/`carved`).** Hand-assembling a `band` for Engine.closeBand
+    throws "Cannot read 'L0'". Use Store.openBand → Store.closeBand(id). closeBand uses `state.perpMark` for the ITM regime test —
+    setPerpMark high too. Item-2 leaves oracle drifted + club drained ⇒ run viz/regression items on a fresh page after it.
+  - Engine.executeLeg(state,'sell'|'buy','call'|'put',θ_inner,θ_outer(NaN ok),N,oracle,tau) → {newState,dy,K_usd,V,...} or {rejected,reason}.
 
 ## ★★★★★ MOST RECENT — CONTWARP candidate `4378bc11` (continuous trade-preview sweep, entry 158) = PASS ×2, GATE CLEAR
 Build `engine/builds/temporal_mvp_v28_lens_contwarp.html` md5 `4378bc1192878cfe437b8fa5551c5b88` (UNCHANGED post-run).
