@@ -424,26 +424,29 @@ const hp = (v) => v / Math.sqrt(tau * tau + v * v);
 }
 
 // ═════════════════════════════════════════════════════════════════════════
-//  HELD-CENTER WARP DRAWING FIX  (operator entry 153 #1/#2 + 155; skeptic R6
-//  narrow scope — spec CORRECTION APPENDIX C.1 changes 1/2/3 ONLY: gLoc gains
-//  an optional modeOverride, drawState threads it in the pool branch, and the
-//  dashed after-trade preview is drawn at the HELD pre-step 45°-tangent center).
-//  Auto-routes on the 4-arg gLoc signature (gLoc.length ≥ 4) — the token unique
-//  to the held-warp build. Do NOT key on any other export.
-//   (W1)   real-path held warp: gLoc(previewPool,θ,τ,heldMode) − gLoc(pre,θ,τ)
-//          == (γ′−γ)·Φ_τ(ln(θ/heldMode)); single-signed; |dG| grows OTM.
-//   (W1b)  LOCKED regression (skeptic counterexample): θ=0.7×heldMode, γ
-//          2.636→3.182 — the OLD no-override read MUST sign-flip negative
-//          (fails the old way); the held-center read MUST be positive.
-//   (W6)   behavioral: after-trace exponent array (built exactly as drawState's
-//          gAt builds it) minus live array == (γ′−γ)·Φ_τ(u_held) across the θ
-//          grid, AND the UI dashed call passes snap.sNorm as the override.
-//   (W-OVR) leak guard: the override reaches gLoc from EXACTLY ONE call site
-//          (the dashed after-trace); legPrice/markEff/legValueUnified/
-//          fundingPerStrike/closeBand/executeLeg/executeBand/pfComponents pass
-//          NO 4th arg (token scan) AND equal clean HEAD numerically.
+//  CONTINUOUS WARP PREVIEW  (operator entries 158/163; skeptic
+//  VERDICT_CONTINUOUS_SKEW_entry158_2026-06-12 — the held-center build is
+//  SCRAPPED and its gate block removed; this block replaces it).
+//  The dashed chart-2 preview sweeps s: 0→1 along the trade path; EVERY frame
+//  is the EXISTING live read — gLoc at that frame's OWN 45°-tangent center,
+//  no override anywhere. Auto-routes on the frame-helper token
+//  `function framePool` (unique to the contwarp build). Per the skeptic's
+//  #C16 rule the gates run the ACTUAL drawn path: framePool is extracted from
+//  the UI script source and bound to the real Engine, and the drawn-exponent
+//  expression is the matched gAt pool-branch source, not a re-typed formula.
+//   (CF1) frame correctness: s∈{0,.25,.5,.75,1} — w monotone pre→post; s=0 ==
+//         pre exact; s=1 == the full preview pool exact; each frame's drawn
+//         exponent array == Engine.gLoc of that frame's pool (machine-eq).
+//   (CF2) continuous-limit identity (N=100): per-step increments, each read at
+//         the then-current center (held warp + lens re-center), sum to the
+//         live end-read minus start-read to ≤1e-12 (telescoping, skeptic R2).
+//   (CF3) end picture = the live read: wings steepen on a γ-raising trade; the
+//         swept 0.7×center strike DIPS (documented — the mechanic, not a bug);
+//         zero override tokens, zero 4-arg gLoc calls in the build.
+//   (CF4) money-path leak guard: animation helpers referenced ONLY in the
+//         draw layer; money paths token-clean AND numerically == clean HEAD.
 // ═════════════════════════════════════════════════════════════════════════
-if (typeof E.gLoc === 'function' && E.gLoc.length >= 4) {
+if (/function framePool\(/.test(t)) {
   const grabFn = (src, name) => {
     const i = src.indexOf('function ' + name);
     if (i < 0) return null;
@@ -451,107 +454,132 @@ if (typeof E.gLoc === 'function' && E.gLoc.length >= 4) {
     for (let k = j; k < src.length; k++) { if (src[k] === '{') depth++; else if (src[k] === '}') { depth--; if (depth === 0) return src.slice(i, k + 1); } }
     return null;
   };
-  const Phi = (u) => Math.abs(u) / Math.sqrt(tau * tau + u * u);   // h′_τ(|u|)
-  const heldMode = E.getSNorm(s);                                  // pre-step (held) 45°-tangent center
-  const gammaPre = E.getW(s) / (1 - E.getW(s));
+  const uiBody = (/<script id="ui">([\s\S]*?)<\/script>/.exec(t) || [, ''])[1];
+  const stateBody = (/<script id="state">([\s\S]*?)<\/script>/.exec(t) || [, ''])[1];
+  // The ACTUAL frame helper, extracted from the UI draw-layer source and bound
+  // to the real Engine (so every frame below is what the renderer would draw).
+  const fpSrc = grabFn(uiBody, 'framePool');
+  const framePool = fpSrc ? new Function('Engine', 'return ' + fpSrc + ';')(E) : null;
+  // The ACTUAL drawn-exponent expression: drawState's gAt pool branch source.
+  const mGat = /const gAt = \(theta\) => poolForLens\s*\?\s*(Engine\.gLoc\(poolForLens,\s*theta,\s*tau_v\))/.exec(uiBody);
+  const drawnExp = mGat ? new Function('Engine', 'poolForLens', 'theta', 'tau_v', 'return ' + mGat[1] + ';') : null;
+  const gammaOf = (p) => E.getW(p) / (1 - E.getW(p));
+  const mode0 = E.getSNorm(s);
 
-  // ── (W1) real-path held-center warp across trades and strikes ──
+  // ── (CF1) frame correctness on the actual helper + the actual drawn expression ──
   {
-    let maxerr = 0, signOK = true, monoOK = true, worst = '';
-    for (const dy of [-12000, -3000, 3000, 12000, 30000]) {
-      const post = E.tradeUpdate(s, dy);
-      if (!post) continue;
-      const wPost = E.getW(post), gammaPost = wPost / (1 - wPost);
-      const sgn = Math.sign(gammaPost - gammaPre);
-      for (const wingMults of [[0.9, 0.7, 0.5, 0.3], [1.2, 1.5, 2.5, 4.0]]) {
-        let prevAbs = -Infinity;
-        for (const mult of wingMults) {                            // ordered away from the center
-          const thetaK = heldMode * mult;
-          const uHeld = Math.log(thetaK / heldMode);
-          const gA = E.gLoc(post, thetaK, tau, heldMode);          // the REAL after-trace draw path
-          const gB = E.gLoc(s, thetaK, tau);                       // live trace at pre pool (mode == heldMode)
-          const dG = gA - gB;
-          const expect = (gammaPost - gammaPre) * Phi(uHeld);      // warp read at the held center
-          const e = Math.abs(dG - expect);
-          if (e > maxerr) { maxerr = e; worst = 'dy=' + dy + ' mult=' + mult; }
-          if (Math.sign(dG) !== sgn) signOK = false;               // single-signed (no sign-flip)
-          if (Math.abs(dG) < prevAbs - 1e-12) monoOK = false;      // grows away from the center
-          prevAbs = Math.abs(dG);
-        }
+    const dy = 9000;
+    const previewFull = E.tradeUpdate(s, dy);          // the existing full preview pool
+    const grid = [0, 0.25, 0.5, 0.75, 1];
+    const frames = framePool ? grid.map(sf => framePool(s, dy, sf)) : [];
+    const eq = (a, b) => !!a && !!b && a.x === b.x && a.y === b.y && a.alpha === b.alpha && a.beta === b.beta;
+    const s0ok = frames.length === 5 && eq(frames[0], s);          // s=0 ⇒ pre-trade state (exact)
+    const s1ok = frames.length === 5 && eq(frames[4], previewFull); // s=1 ⇒ full preview pool (exact)
+    let mono = frames.length === 5;
+    const dir = previewFull ? Math.sign(E.getW(previewFull) - E.getW(s)) : 0;
+    for (let i = 1; i < frames.length && mono; i++) {
+      if (Math.sign(E.getW(frames[i]) - E.getW(frames[i - 1])) * dir < 0) mono = false;
+    }
+    // each frame's drawn exponent array (gAt source, LIVE center of that frame's
+    // pool — gLoc reads getSNorm(frame) internally) == Engine.gLoc, machine-eq.
+    const threeArg = mGat ? mGat[1].split(',').length === 3 : false;
+    let drawnEq = !!drawnExp;
+    if (drawnExp) for (const fp of frames) {
+      for (let lu = -1.6; lu <= 1.6001; lu += 0.08) {
+        const theta = mode0 * Math.exp(lu);
+        if (drawnExp(E, fp, theta, tau) !== E.gLoc(fp, theta, tau)) drawnEq = false;
       }
     }
-    chk('(W1) real-path held warp dG=(γ′−γ)·Φ_τ(u_held), single-signed, grows OTM',
-        maxerr < 1e-12 && signOK && monoOK,
-        'maxErr=' + maxerr.toExponential(2) + ' sign=' + signOK + ' mono=' + monoOK + ' ' + worst);
+    chk('(CF1) framePool: s0==pre, s1==full preview (exact); w monotone; drawn exponents == gLoc of frame (machine-eq)',
+        !!framePool && !!previewFull && s0ok && s1ok && mono && drawnEq && threeArg,
+        's0=' + s0ok + ' s1=' + s1ok + ' mono=' + mono + ' drawnEq=' + drawnEq + ' threeArgGAt=' + threeArg);
   }
 
-  // ── (W1b) LOCKED regression case (the skeptic counterexample, must stay red on the old frame) ──
+  // ── (CF2) the continuous-limit telescoping identity (skeptic Result 2) ──
+  // N=100 steps along the ACTUAL frame path; each step's increment is read at
+  // that step's then-current center: (γ_{i+1}−γ_i)·Φ(u(mode_i)) held-warp part
+  // + γ_{i+1}·(Φ(u(mode_{i+1}))−Φ(u(mode_i))) lens re-center part. The sum
+  // must equal the live end-read minus start-read (state function, ~1e-12).
   {
-    const gTarget = 35 / 11;                                       // γ′ = 3.181818…
-    const wT = gTarget / (1 + gTarget);
-    const xNew = s.alpha / wT, dx = xNew - s.x, A = s.y - s.beta;
-    const dyT = -dx * A * A / (dx * A + s.alpha * s.beta);         // invert tradeUpdate for the dy hitting γ′
-    const post = E.tradeUpdate(s, dyT);
-    const gammaPost = E.getW(post) / (1 - E.getW(post));
-    const calOK = Math.abs(gammaPost - gTarget) < 1e-9;
-    const thetaK = 0.7 * heldMode;
-    const dG_old = E.gLoc(post, thetaK, tau) - E.gLoc(s, thetaK, tau);            // OLD no-override frame
-    const dG_held = E.gLoc(post, thetaK, tau, heldMode) - E.gLoc(s, thetaK, tau); // held-center frame
-    const expect = (gammaPost - gammaPre) * Phi(Math.log(thetaK / heldMode));
-    const oldFlips = dG_old < -0.1;                                // ≈ −0.459 — the masked frame FAILS
-    const heldOK = dG_held > 0 && Math.abs(dG_held - expect) < 1e-12;  // ≈ +0.417 — held frame PASSES
-    chk('(W1b) LOCKED regression @0.7×center: old read sign-flips, held read positive',
-        calOK && oldFlips && heldOK,
-        'γ′=' + gammaPost.toFixed(6) + ' dG_old=' + dG_old.toFixed(4) +
-        ' dG_held=' + dG_held.toFixed(4) + ' expect=' + expect.toFixed(4));
-  }
-
-  // ── (W6) behavioral: the drawn exponent arrays (screen y-values pre-toPx), not a regex ──
-  {
-    const previewPool = E.tradeUpdate(s, 9000);
-    const wPost = E.getW(previewPool), gammaPost = wPost / (1 - wPost);
-    let maxerr = 0;
-    for (let lu = -1.4; lu <= 1.4001; lu += 0.04) {
-      const theta = heldMode * Math.exp(lu);
-      const gLive = E.gLoc(s, theta, tau);                         // live trace: gLoc(state.pool, θ, τ)
-      const gAfter = E.gLoc(previewPool, theta, tau, heldMode);    // after-trace: gLoc(previewPool, θ, τ, snap.sNorm)
-      const expect = (gammaPost - gammaPre) * Phi(Math.log(theta / heldMode));
-      maxerr = Math.max(maxerr, Math.abs((gAfter - gLive) - expect));
+    const dyT = 30000, N = 100;
+    const pools = [];
+    for (let i = 0; i <= N; i++) pools.push(framePool(s, dyT, i / N));
+    let maxerr = 0, worst = '', ok = pools.every(p => !!p);
+    if (ok) {
+      const Phi = (theta, m) => E.hpTau(Math.abs(Math.log(theta / m)), tau);
+      for (const mult of [0.3, 0.5, 0.7, 0.95, 1.1, 1.5, 2.0, 4.0]) {
+        const theta = mode0 * mult;
+        let acc = 0;
+        for (let i = 0; i < N; i++) {
+          const gi = gammaOf(pools[i]), gi1 = gammaOf(pools[i + 1]);
+          const mi = E.getSNorm(pools[i]), mi1 = E.getSNorm(pools[i + 1]);
+          acc += (gi1 - gi) * Phi(theta, mi)            // warp during step, then-current center
+               + gi1 * (Phi(theta, mi1) - Phi(theta, mi)); // lens re-center between steps
+        }
+        const live = E.gLoc(pools[N], theta, tau) - E.gLoc(pools[0], theta, tau);
+        const e = Math.abs(acc - live);
+        if (e > maxerr) { maxerr = e; worst = 'mult=' + mult; }
+      }
     }
-    // and the UI dashed call actually wires the held center (axis arg AND override arg)
-    const uiBody = (/<script id="ui">([\s\S]*?)<\/script>/.exec(t) || [, ''])[1];
-    const heldCall = /drawState\(\s*snap\.sNorm\s*,\s*true\s*,\s*previewPool\s*,\s*state\.tau\s*,\s*snap\.sNorm\s*\)/.test(uiBody);
-    const noRecenter = !/drawState\(\s*snapPost\.sNorm/.test(uiBody);
-    chk('(W6) after-trace exponents == live + (γ′−γ)·Φ(u_held); UI passes held override',
-        maxerr < 1e-12 && heldCall && noRecenter,
-        'maxErr=' + maxerr.toExponential(2) + ' heldCall=' + heldCall + ' noRecenter=' + noRecenter);
+    chk('(CF2) N=100 per-step increments telescope to live end−start (state function)',
+        ok && maxerr < 1e-12, 'maxErr=' + maxerr.toExponential(2) + ' ' + worst);
   }
 
-  // ── (W-OVR) leak guard: the override is after-trace-only ──
+  // ── (CF3) end picture = the live read; the dip is the mechanic (documented) ──
   {
-    // (a) token scan over the whole build: every gLoc( call with ≥4 args — must be
-    // exactly ONE, and it must be drawState's poolForLens branch.
-    const calls = [...t.matchAll(/(?<!function )\bgLoc\(([^()]*)\)/g)];
-    const fourArg = calls.filter(m => m[1].split(',').length >= 4);
-    const onlyDraw = fourArg.length === 1 && /poolForLens,\s*theta,\s*tau_v,\s*modeOverride/.test(fourArg[0][1]);
-    // exactly ONE drawState call passes the 5th (override) arg — the dashed after-trace
-    const dsCalls = [...t.matchAll(/(?<!function )drawState\(([^()]*)\)/g)];
-    const fiveArg = dsCalls.filter(m => m[1].split(',').length >= 5);
-    const onlyPreview = fiveArg.length === 1 && /snap\.sNorm\s*,\s*true\s*,\s*previewPool/.test(fiveArg[0][1]);
-    // money-path consumers contain NO 4-arg gLoc call
+    const dyT = 30000;                                  // sweeps the 45° point past 0.7×mode0
+    const post = E.tradeUpdate(s, dyT);                 // γ 2.636→4.0, mode 0.379→0.250
+    const dAt = (mult) => E.gLoc(post, mode0 * mult, tau) - E.gLoc(s, mode0 * mult, tau);
+    const dPut = dAt(0.25), dCall = dAt(4.0), d07 = dAt(0.7);
+    // wings (both sides, away from the swept band) steepen with γ; the swept
+    // 0.7×center strike ends near the NEW at-the-money and its lensed
+    // steepness DIPS — skeptic standing caution: this is the skew moving, and
+    // nobody may "fix" it.
+    const wingsUp = dPut > 0 && dCall > 0;
+    const dipDocumented = isFinite(d07) && d07 < -0.1;
+    // no override machinery anywhere in this build: zero override tokens, zero
+    // 4-arg gLoc calls (token assembled so this gate file itself greps clean).
+    const bannedToks = ['goal' + 'SeekW', 'wing ' + 'exponent', 'wing ' + 'steepness', 'target ' + 'steepness', 'mode' + 'Override'];
+    let tokHit = '';
+    for (const tok of bannedToks) if (t.indexOf(tok) >= 0) tokHit += tok + ' ';
+    const fourArg = [...t.matchAll(/(?<!function )\bgLoc\(([^()]*)\)/g)].filter(m => m[1].split(',').length >= 4);
+    chk('(CF3) end picture = live read: wings steepen, swept 0.7× strike dips (mechanic); no override tokens, no 4-arg gLoc',
+        wingsUp && dipDocumented && tokHit === '' && fourArg.length === 0,
+        'd(0.25×)=' + dPut.toFixed(4) + ' d(4×)=' + dCall.toFixed(4) +
+        ' d(0.7×)=' + d07.toFixed(4) + ' [dip = strike near new ATM — the skew moved; NOT a bug]' +
+        ' tokHit=' + (tokHit || 'none') + ' gLoc4=' + fourArg.length);
+  }
+
+  // ── (CF4) money-path leak guard: draw-layer-only tokens + numeric == clean HEAD ──
+  {
+    const animTok = /framePool|_cwKey|_cwRaf|renderPricingFrame|requestAnimationFrame|cancelAnimationFrame/;
+    const engClean = !animTok.test(engineBody);
+    const stClean = !animTok.test(stateBody);
+    // helper referenced ONLY in the UI draw layer
+    const totalRefs = t.split('framePool').length - 1;
+    const uiRefs = uiBody.split('framePool').length - 1;
+    const drawOnly = totalRefs === uiRefs && uiRefs >= 2;   // def + the drawPricing call
+    // money-path function bodies token-clean
     let dirty = '';
-    for (const fn of ['legPrice', 'markEff', 'legValueUnified', 'fundingPerStrike', 'closeBand', 'executeLeg', 'executeBand', 'pfComponents']) {
-      const src = grabFn(t, fn) || '';
-      const bad = [...src.matchAll(/\bgLoc\(([^()]*)\)/g)].some(m => m[1].split(',').length >= 4);
-      if (bad) dirty += fn + ' ';
+    for (const fn of ['tradeUpdate', 'arbitrageToOracle', 'rebase', 'legPrice', 'executeLeg', 'executeBand', 'closeBand', 'markEff', 'legValueUnified', 'fundingPerStrike']) {
+      const src = grabFn(engineBody, fn) || '';
+      if (animTok.test(src)) dirty += fn + ' ';
     }
-    // (b) behavioral equality of the money paths against clean HEAD (numeric, max|Δ|=0).
-    // (After a promotion this compares the file to itself — stays green by identity.)
+    if (animTok.test(grabFn(uiBody, 'pfComponents') || '')) dirty += 'pfComponents ';
+    // numeric equality vs clean HEAD (engine byte-identity + behavioral sweep).
+    // (After a promotion this compares the file to itself — green by identity.)
     const headFile = path.join(__dirname, '..', 'builds', 'HEAD_temporal_mvp_v28_lens.html');
-    let behavMax = 0, behavRan = false;
+    let behavMax = Infinity, engineByteId = false;
     if (fs.existsSync(headFile)) {
-      behavRan = true;
-      const EH = engineOf(fs.readFileSync(headFile, 'utf8')).E;
+      const tHead = fs.readFileSync(headFile, 'utf8');
+      const headEng = engineOf(tHead);
+      engineByteId = headEng.body === engineBody;
+      const EH = headEng.E;
+      behavMax = 0;
+      const mkB = (soldK, boughtK, orc) => ({ sold_wing: 'call', bought_wing: 'put',
+        sold:   { inner: soldK / orc,  outer: NaN, N: 2, K_inner: soldK,  K_outer: NaN },
+        bought: { inner: boughtK / orc, outer: NaN, N: 1, K_inner: boughtK, K_outer: NaN },
+        entry: { L0: 1, oracle: orc }, carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orc } });
       for (const W2 of [0.6, 0.725, 0.85]) {
         const sp = mkPool(10, 80000, W2);
         const orc = E.getMP_raw(sp);
@@ -562,16 +590,28 @@ if (typeof E.gLoc === 'function' && E.gLoc.length >= 4) {
               Math.abs(E.gLoc(sp, theta, tau) - EH.gLoc(sp, theta, tau)),
               Math.abs(E.legPrice(sp, wing, theta, NaN, 2, tau).V - EH.legPrice(sp, wing, theta, NaN, 2, tau).V),
               Math.abs(E.markEff(sp, wing, theta, tau) - EH.markEff(sp, wing, theta, tau)),
+              Math.abs(E.legValueUnified(sp, wing, { inner: theta, outer: NaN, N: 2 }, tau)
+                     - EH.legValueUnified(sp, wing, { inner: theta, outer: NaN, N: 2 }, tau)),
               Math.abs(E.fundingPerStrike(sp, theta, wing, 1, 1, 0.1, orc * 1.05, orc, tau)
                      - EH.fundingPerStrike(sp, theta, wing, 1, 1, 0.1, orc * 1.05, orc, tau)));
           }
+          const ca = E.closeBand(sp, mkB(orc * 1.5, orc * 0.5, orc), { equity: 1e12 }, orc, orc, 80000, tau);
+          const cb = EH.closeBand(sp, mkB(orc * 1.5, orc * 0.5, orc), { equity: 1e12 }, orc, orc, 80000, tau);
+          if (ca.ok !== cb.ok) behavMax = Infinity;
+          else if (ca.ok) behavMax = Math.max(behavMax, Math.abs(ca.X - cb.X));
+        }
+        for (const dy of [1, 250, -250, 5000, -5000]) {
+          const a = E.tradeUpdate(sp, dy), b = EH.tradeUpdate(sp, dy);
+          behavMax = Math.max(behavMax, Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+          const aa = E.arbitrageToOracle(sp, orc * 1.1), bb = EH.arbitrageToOracle(sp, orc * 1.1);
+          behavMax = Math.max(behavMax, Math.abs(aa.x - bb.x), Math.abs(aa.y - bb.y));
         }
       }
     }
-    chk('(W-OVR) override after-trace-only: one 4-arg gLoc site, one 5-arg draw call, money paths clean + == HEAD',
-        onlyDraw && onlyPreview && dirty === '' && behavRan && behavMax === 0,
-        'gLoc4=' + fourArg.length + ' draw5=' + fiveArg.length + ' dirty=' + (dirty || 'none') +
-        ' behavMax=' + behavMax + ' vsHEAD=' + behavRan);
+    chk('(CF4) leak guard: animation tokens draw-layer-only; money paths token-clean, engine byte-identical + numeric == clean HEAD',
+        engClean && stClean && drawOnly && dirty === '' && engineByteId && behavMax === 0,
+        'engClean=' + engClean + ' stClean=' + stClean + ' drawOnly=' + drawOnly +
+        ' dirty=' + (dirty || 'none') + ' engByteId=' + engineByteId + ' behavMax=' + behavMax);
   }
 }
 
