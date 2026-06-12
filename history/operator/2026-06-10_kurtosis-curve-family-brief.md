@@ -1262,3 +1262,11 @@ _Context: operator sets the deadline — his correct version promoted to HEAD be
 _Context: operator, watching the current HEAD's second graph — some comfort, right direction, though the team has needed his constant correction to stay on course in the design space._
 
 > for whatever its worth, the second graph in the current head thing gives me some comfort that we're moving in the right direction, although you have needed my constant correction to not go astray in the design space
+
+
+---
+
+## Entry 165 — 2026-06-12
+_Context: operator explains the design intent behind the continuous limit — it couples things tighter so the room for error is actively reduced._
+
+> the continuous limit was something i thought would couple things tighter so the room for error is actively reduced
