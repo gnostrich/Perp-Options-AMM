@@ -1246,3 +1246,11 @@ _Context: operator asks for a nondisruptive update._
 _Context: operator asks for the ETA._
 
 > whats the eta
+
+
+---
+
+## Entry 163 — 2026-06-12
+_Context: operator sets the deadline — his correct version promoted to HEAD before he logs out, within the next hour._
+
+> i want my correct version as head before i log out wthin the next hour
