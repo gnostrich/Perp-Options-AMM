@@ -77,6 +77,28 @@ as `temporal_mvp_v27_wkurtosis.html`; v26c GH endpoint retained. OPEN (non-block
 caveat (not a leak); payoff chart+strike-marker still unbent (cosmetic, operator-excluded). Branch only —
 no PR to main (platform default; operator didn't ask).
 
+## ★ FROZEN-PRE-WARP VINDICATION (skeptic SELF-CORRECTION, 2026-06-12, entries 128–132)
+Verdict `notes/skeptic/VERDICT_FROZEN_PREWARP_LENS_goalseek_2026-06-12.md` (committed 1ecfbd0).
+Skeptic FLAG-WRONG on its OWN #40/#41/#42: prior verdicts read the warp through the LIVE
+re-centering lens center (mode=(1−w)/w moves with w) → masked a real warp, looked flat; AND tested
+a "restore the pre-trade slope" target the operator never asked for (that one IS flat, robustly).
+Under the operator's ACTUAL mechanic (entry 128 pt1 "we change w to warp"; warp read through the
+PRE-WARP/proforma lens center held fixed for the step, entry 129/131): warp(K) = (γ_after−γ_before)·Φ_τ(K),
+Φ_τ = h′ runs 0 at-money → 1 in wings. STRIKE-DEPENDENT, monotone-OTM, BOUNDED, saturating.
+Numbers (5% trade γ 1.5→~1.55, through pre-trade lens): warp at 1.1/1.5/2/4× = τ0.3: +0.038/+0.100/+0.115/+0.122;
+τ0.05 (sharp): +0.111/+0.124/+0.125/+0.125 (sharper lens AMPLIFIES — matches operator entry 132
+"lens works WITH the skew, amplifies/flattens per intensity", NOT neutralises). BUILDABLE on
+one-weight Balancer + ONE stored scalar m_ref ({γ,τ,m_ref}, NO field, NOT the demoted (W) curve);
+single-valued (frozen center removes the verdict-126 fold), solvent, single-basis.
+HONEST LIMIT (must reach operator undressed): single global w = pure VERTICAL SCALE of a frozen
+shape — cross-strike ratio w-independent to float64; warps more far-OTM (operator vision TRUE) but
+CANNOT bend one strike independently (that's the field). NOT blocked, NOT flat.
+**RELAYED to operator 2026-06-12** (tables+formula+plain English, R7). Confirming pass a9ccb0b4
+(amplifies-skew reframe under entries 131/132) STILL RUNNING — fold in when it lands; do NOT spawn
+a duplicate. **Goal-seek warp (inventory #16) remains UNBUILT.** NEXT (gated on operator go, R2):
+spec the goal-seek-warp build → skeptic R6 scope-gate → intern build on v28-lens HEAD → gates+smoke
+→ promote. Show itemized scope + get FRESH explicit go BEFORE any HEAD touch. Do NOT build first.
+
 ## ⛔ BANNED TERM (operator entry 122, 2026-06-12): "spot swap slippage"
 Do NOT use "spot swap slippage" or the framing that treats a trade's price-impact as a thing
 SEPARATE from the warp. Operator's frame (use it): a trade is a swap that WARPS the curve — ONE
