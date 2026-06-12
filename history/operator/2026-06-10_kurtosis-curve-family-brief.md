@@ -951,3 +951,11 @@ _Context: operator notes entry-121 reasoning was from a no-lens standpoint; dire
 _Context: operator corrects the manager's "needs the field" framing — the mechanic is: read through the lens, execute on the Balancer curve by CHANGING WEIGHTS to goal-seek the post-trade-point slope AS SEEN THROUGH THE LENS; the lens is an interpretive layer that tells you what to execute on / read from the curve._
 
 > you fail to understand what i'm saying. you read through the lens, and execute on the balancer curve changing weights to goal seek as per the post trade point slope (as seen through lens) — lens is an interpretative layer which tells you what to execute on / read from the curve
+
+
+---
+
+## Entry 127 — 2026-06-12
+_Context: operator diagnoses the flat-warp result as a wrong AMM-tx model — the option trade is an asset-for-dollars swap AT THE STRIKE, not a premium-sized cash swap at spot._
+
+> that's probably because you're not doing the AMM tx right. buy call is buy asset for dollars at strike on AMM, buy put is sell asset for dollars at strike on AMM
