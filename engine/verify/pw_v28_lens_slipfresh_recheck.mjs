@@ -177,8 +177,20 @@ const FLAGS = [];
   VERDICTS.step3 = d_c2 > 100 ? 'PASS' : 'FAIL';
   say('  chart-2 px diff τ0.3→2 = ' + d_c2 + '  => STEP3 = ' + VERDICTS.step3);
 
-  // ───────── STEP 4: chart-1 (plain v24 pool curve) inert to τ
-  say('\n===== STEP 4: chart-1 inert to τ (0 px) =====');
+  // ───────── STEP 4: chart-1 (plain v24 pool curve) inert to τ.
+  // The new wire re-runs previewBand() on τ; when a band preview is ACTIVE that
+  // re-draws the band-preview GHOST overlay on chart-1 (sim.finalState depends on
+  // τ via lensed N_buy) — that is DESIRED, not a regression. The underlying plain-v24
+  // pool CURVE must still be byte-inert to τ. So measure with the band CLEARED.
+  say('\n===== STEP 4: chart-1 pool curve inert to τ (band cleared) =====');
+  await bands();
+  await page.fill('#sold-inner', ''); await page.fill('#sold-outer', '');
+  await page.fill('#bought-inner', ''); await page.fill('#bought-outer', '');
+  await page.fill('#band-notional', '');
+  await page.dispatchEvent('#band-notional', 'input');
+  await page.waitForTimeout(200);
+  const noPrev = await page.evaluate(()=>!window.__previewBand && !window.__previewPool);
+  say('  band preview cleared (no __previewBand/__previewPool) = ' + noPrev);
   await setTauEvent(0.3);
   const c1b = await rawpix(page, 'canvas-curve');
   let c1max = 0;
@@ -190,8 +202,23 @@ const FLAGS = [];
     c1max = Math.max(c1max, d);
   }
   await setTauEvent(0.3);
-  VERDICTS.step4 = c1max === 0 ? 'PASS' : 'FAIL';
-  say('  chart-1 max px diff across τ = ' + c1max + '  => STEP4 = ' + VERDICTS.step4);
+  VERDICTS.step4 = (noPrev && c1max === 0) ? 'PASS' : 'FAIL';
+  say('  chart-1 pool-curve max px diff across τ = ' + c1max + '  => STEP4 = ' + VERDICTS.step4);
+
+  // ───────── STEP 4b: with an ACTIVE band preview, the τ-driven ghost redraw on
+  // chart-1 is the NEW desired behavior (preview re-runs on τ). Record it, non-gating.
+  say('\n===== STEP 4b: active-preview ghost on chart-1 redraws on τ (DESIRED side-effect) =====');
+  await setBandDir('long');
+  await fillBand({ sold_inner: 100000, bought_inner: 60000, notional: 0.05 });
+  const hasPrev = await page.evaluate(()=>!!window.__previewBand);
+  await setTauEvent(0.3);
+  const g1b = await rawpix(page, 'canvas-curve');
+  await setTauEvent(1.5);
+  const g1a = await rawpix(page, 'canvas-curve');
+  const gd = rgbDiff(g1b, g1a);
+  say('  active-preview hasPrev=' + hasPrev + '  chart-1 ghost px diff τ0.3→1.5 = ' + gd
+      + '  (expected >0: preview ghost depends on τ via lensed N_buy)');
+  await setTauEvent(0.3);
 
   // ───────── STEP 6: trade still executes + both charts render (previewBand call didn't break trade path)
   say('\n===== STEP 6: trade executes, both charts render =====');

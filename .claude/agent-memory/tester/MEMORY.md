@@ -1,5 +1,27 @@
 # MEMORY — tester
-_Last updated: 2026-06-12, after the v28 POLAR-LENS FINAL STANDING UI SMOKE-PASS = PROMOTION GATE (build `989752294`, READ-ONLY). VERDICT 27/27 PASS ×2 byte-stable ⇒ gate = PASS; manager promotes to HEAD on this. Prior HEAD = v27 `928cde1c`._
+_Last updated: 2026-06-12, after the v28-lens HEAD SLIPPAGE-REFRESH-WIRE targeted re-check (build `7e1ae39b`, READ-ONLY). VERDICT PASS ×2 byte-stable — the one-line wire took. Prior gate: v28 FINAL `989752294` 27/27 (promoted to HEAD)._
+
+## ★★★★★ MOST RECENT — v28-lens HEAD `7e1ae39b` SLIPPAGE-REFRESH WIRE (targeted re-check, READ-ONLY) = PASS ×2
+HEAD now `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7e1ae39baa00fda087033174cfc652b8` (= FINAL `989752294`
++ ONE LINE: L2727 τ-input handler now also calls `previewBand()` before render/drawAll). Engine+lens math BYTE-UNCHANGED.
+Harness `engine/verify/pw_v28_lens_slipfresh_recheck.mjs`; evidence `evidence/v28_lens_FINAL/RECHECK_INDEX.txt`
++ `RECHECK_RUN_A.txt`==`RECHECK_RUN_B.txt` + `R_{A,B}_S1/S2/S3/S6_*.png`. File-safety GREEN (build md5 UNCHANGED post-run;
+webp L74 `ab663f5c…`, svg L1060 `c505b08a…`, 3 scripts). 0 console / 0 pageerrors. Ledger version-transition entry appended
+(feature-keyed #3/#10 + none-beyond; OPERATOR-VOICE entry-106 RULED carried + entry-45 supporting; table rows #3/#10 + header amended).
+**VERDICT: PASS ×2 byte-stable — the slippage wire took; build is DONE.**
+- **STEP1** band open ⇒ #band-slippage shows "0.5569 % · ≈ $6.18" (valid OTM LONG band: sold-CALL inner 100000/θ=1.25,
+  bought-PUT inner 60000/θ=0.75, oracle 80000, notional 0.05; btn-execute enabled).
+- **STEP2 (the wire)** τ stepper ALONE (no trade-input touch) moves slippage: τ0.3→0.5569%, τ1.0→0.9031%, τ0.1→0.4258%,
+  back to τ0.3→0.5569% (returns EXACTLY — non-stale, recomputes), real ArrowUp 0.3→0.35→0.5915%. 4 distinct, monotone-with-τ,
+  matches manager ~0.25→0.76% trend. Root: legPrice lensed/τ-threaded (L1848) ⇒ N_buy ⇒ leg2 reserve move ⇒ s2 ⇒ s_band τ-dep.
+- **STEP3** chart-2 (canvas-pricing) still reshapes on τ (6,545 px τ0.3→2) — redraw regression holds.
+- **STEP4** chart-1 (canvas-curve, plain-v24 pool curve) px diff τ0.3→{0.1,1,2,3} = 0 EVERY τ — but ONLY with the band
+  CLEARED. **GOTCHA:** with an ACTIVE band preview the τ change re-draws the band-preview GHOST on chart-1 (~1,902px; sim.finalState
+  depends on τ via lensed N_buy) — that's a DESIRED side-effect of the wire, NOT a pool-curve regression. STEP4b records it.
+- **STEP6** trade still executes (band 0→1), both charts re-render (chart-1 Δ4,742 / chart-2 Δ5,646, no dialogs) — execute path intact.
+- **Re-run gotchas:** band dir=long ⇒ sold_wing=CALL (K>oracle, θ>1) / bought_wing=PUT (K<oracle, θ<1) — readBand L2917; my first
+  pass failed using both strikes >oracle (bought-PUT rejected "not OTM on put wing"). Slippage % is computed from the w-ratio on the
+  conservation hyperbola (L1864), NOT g_loc — but the LEG SIZING (N_buy via lensed legPrice) is τ-dependent, so s_band moves with τ.
 
 
 ## ★★★★★ MOST RECENT — v28 POLAR-LENS *FINAL* SMOKE = PROMOTION GATE (build `989752294`, → HEAD on PASS)

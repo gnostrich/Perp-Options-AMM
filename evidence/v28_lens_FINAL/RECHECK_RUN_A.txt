@@ -1,0 +1,47 @@
+============ v28 lens slip-refresh RE-CHECK — RUN A ============
+build md5-key: 7e1ae39b (HEAD_temporal_mvp_v28_lens.html)
+
+===== STEP 1: open a band ⇒ slippage shows =====
+  band dir = long
+  preview: disabled=false warn="" slip=0.5569 %  ·  ≈ $6.18 netcash=$2,227.597328
+  STEP1 (band open, slippage>0 showing) = PASS  slip@τ=0.3 is 0.5569 %  ·  ≈ $6.18
+
+===== STEP 2: τ stepper alone ⇒ slippage readout recomputes (non-stale) =====
+  τ→slip samples:
+    τ=0.3  slip=0.5569 %  ·  ≈ $6.18
+    τ=1  slip=0.9031 %  ·  ≈ $16.20
+    τ=0.1  slip=0.4258 %  ·  ≈ $3.62
+    τ=0.3  slip=0.5569 %  ·  ≈ $6.18
+    τ=0.35  slip=0.5915 %  ·  ≈ $6.97  [ArrowUp from 0.3]
+  distinct slip values across τ = 4 ; ArrowUp moved slip = true (0.5569 %  ·  ≈ $6.18 -> 0.5915 %  ·  ≈ $6.97)
+  STEP2 (slippage recomputes from τ alone, non-stale) = PASS
+
+===== STEP 3: chart-2 reshapes on τ (redraw regression) =====
+  chart-2 px diff τ0.3→2 = 6545  => STEP3 = PASS
+
+===== STEP 4: chart-1 pool curve inert to τ (band cleared) =====
+  band preview cleared (no __previewBand/__previewPool) = true
+    chart-1 px diff τ0.3→0.1 = 0
+    chart-1 px diff τ0.3→1 = 0
+    chart-1 px diff τ0.3→2 = 0
+    chart-1 px diff τ0.3→3 = 0
+  chart-1 pool-curve max px diff across τ = 0  => STEP4 = PASS
+
+===== STEP 4b: active-preview ghost on chart-1 redraws on τ (DESIRED side-effect) =====
+  active-preview hasPrev=true  chart-1 ghost px diff τ0.3→1.5 = 1902  (expected >0: preview ghost depends on τ via lensed N_buy)
+
+===== STEP 6: trade executes, both charts render =====
+  bands 0→1 executed=true  chart-1 Δpx=4742  chart-2 Δpx=5646  newDialogs=[]
+  STEP6 (trade executes, both charts lit) = PASS
+
+===== STEP 5: console / page errors across τ interactions =====
+  console errors = 0  pageerrors = 0
+
+================ VERDICTS (RUN A) ================
+  step1: PASS
+  step2: PASS
+  step3: PASS
+  step4: PASS
+  step6: PASS
+  step5: PASS
+  OVERALL: PASS
