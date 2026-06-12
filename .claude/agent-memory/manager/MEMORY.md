@@ -105,8 +105,26 @@ trades, entry 131), genuine call/put SKEW GROWS: buy-calls drop the mode, cross-
 across the sequence (NOT a per-step per-strike bend — that distinction stays honest). (3) NEW GUARD
 (calibration-class, not blocker): keep goal-seek target G≥1 so w≥0.5 (γ>1) — same class as v27
 w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{w,τ,mode}, NO field.
-**Caveat-correction RELAY to operator: PENDING this turn.** **Goal-seek warp (inventory #16) UNBUILT.**
-NEXT (gated on operator go, R2):
+**Caveat-correction RELAYED to operator.** **Operator GO given (entry 133 "get it done gang").**
+
+## ★ GOAL-SEEK WARP BUILD — IN FLIGHT (entry 133 go; R2 itemized-scope step still owed before HEAD touch)
+- **STALE SPEC caught:** `specs/SPEC_v28_goalseek_warp_BUILD_2026-06-12.md` concluded BLOCKED but
+  predates entry-129/131/132 — its blocker (construal-II "goal-seek inverts lens 1/h″→∞") used the
+  LIVE re-centering lens = the masking error the operator corrected. SUPERSEDED. Do NOT build off it.
+- **Dispatched research-lead a28df44206e4e9574** (read-only spec) → `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md`:
+  exact change-set to build the verified warp (held-lens dG(K)=(γ′−γ)·Φ + goal-seek w′=G/(1+G),
+  G≥1 guard), pool byte-identical plain v24, single-basis (one premium @θ_K, NO two-strike R1
+  write-relocation = that stays BLOCKED/operator-tier), R3 control inventory, no-inversion gates.
+- PIPELINE: research-lead spec lands → manager re-derive float64 + verify byte-identical claims →
+  skeptic R6 scope-gate → SHOW OPERATOR itemized scope + get FRESH go (R2; I promised this) →
+  intern build → lens_selfcheck + run_all + file-safety + live smoke-pass → promote HEAD.
+- **QUEUED (entry 134, do NOT start until a28df44 lands — research-lead memory single-writer):**
+  continuous closed-form-integral derivation (the discrete per-step warp is what's being built now)
+  + coherent pure-math grounding of ALL moving parts (lens/warp/carry/funding/settlement) as
+  NATURAL emergent parts of the singular mathematical object (port-Hamiltonian / free-potential
+  system), NOT tacked-on. research-lead theory task; serialize AFTER the build spec.
+
+## (superseded) Goal-seek warp (inventory #16) UNBUILT. NEXT (gated on operator go, R2):
 spec the goal-seek-warp build → skeptic R6 scope-gate → intern build on v28-lens HEAD → gates+smoke
 → promote. Show itemized scope + get FRESH explicit go BEFORE any HEAD touch. Do NOT build first.
 
