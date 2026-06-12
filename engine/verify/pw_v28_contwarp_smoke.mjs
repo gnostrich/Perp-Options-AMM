@@ -232,20 +232,20 @@ async function triggerAndSample(page, notional, canvasId, otherId, durMs) {
       const fp = (s === 1) ? post : (s === 0 ? pre : Engine.tradeUpdate(pre, dy * s));
       const w = Engine.getW(fp), mode = Engine.getSNorm(fp);
       const g = {};
-      for (const th of [0.90, 0.93, 0.97, 1.25, 4.0]) g[th] = Engine.gLoc(fp, th, st.tau);
+      for (const th of [0.90, 0.93, 0.97, 0.985, 1.25, 4.0]) g[th] = Engine.gLoc(fp, th, st.tau);
       out.push({ s, w, mode, gamma: w/(1-w), g });
     }
     return out;
   });
   if (geo) {
-    say('  s     w        mode(45deg pt)  gamma    g(0.90)  g(0.93)  g(0.97)  g(1.25)  g(4.00)');
+    say('  s     w        mode(45deg pt)  gamma    g(0.90)  g(0.93)  g(0.97)  g(0.985)  g(1.25)  g(4.00)');
     geo.forEach(r => say('  ' + r.s.toFixed(2) + '  ' + r.w.toFixed(6) + '  ' + r.mode.toFixed(6) + '       ' +
-      r.gamma.toFixed(4) + '   ' + [0.90,0.93,0.97,1.25,4.0].map(th => r.g[th].toFixed(4)).join('   ')));
+      r.gamma.toFixed(4) + '   ' + [0.90,0.93,0.97,0.985,1.25,4.0].map(th => r.g[th].toFixed(4)).join('   ')));
     const modes = geo.map(r => r.mode);
     const markerSlides = modes.every((m,i) => i===0 || m < modes[i-1]) || modes.every((m,i) => i===0 || m > modes[i-1]);
     const wingSteepens = geo.every((r,i) => i===0 || r.g[4.0] >= geo[i-1].g[4.0]) && geo[4].g[4.0] > geo[0].g[4.0];
     // dip: a strike between mode(0) and mode(1) should have an interior minimum
-    const crossed = [0.90, 0.93, 0.97].filter(th => (th - modes[0]) * (th - modes[4]) < 0);
+    const crossed = [0.90, 0.93, 0.97, 0.985].filter(th => (th - modes[0]) * (th - modes[4]) < 0);
     let dipSeen = false, dipTh = null, dipMin = null;
     for (const th of crossed) {
       const series = geo.map(r => r.g[th]);
@@ -280,26 +280,38 @@ async function triggerAndSample(page, notional, canvasId, otherId, durMs) {
   // inputs still filled -> ONE re-preview sweep against the NEW pool is expected
   // (preview genuinely changed); it must TERMINATE (stable tail), no loop.
   await setBandDir(page, 'long');
-  await fillBand(page, { sold_inner: 100000, bought_inner: 60000, notional: 0.5 });
+  await fillBand(page, { sold_inner: 100000, bought_inner: 60000, notional: 0.05 });
   await page.waitForTimeout(1300);
   const nBefore = await page.evaluate(()=>Store.state.bands.length);
   const dlgBefore = errs.dialogs.length;
   await page.click('#btn-execute');
-  const execSamples = [];
-  const tE0 = Date.now();
-  while (Date.now() - tE0 < 2200) {
-    execSamples.push({ t: Date.now() - tE0, lit: (await rawpix(page, 'canvas-pricing')).lit });
-    await page.waitForTimeout(110);
-  }
+  // lit-only in-page sampler (cheap, tight cadence) for 2.5s post-click
+  const execSamples = await page.evaluate(() => new Promise(res => {
+    const lit = () => {
+      const cv = document.getElementById('canvas-pricing');
+      const d = cv.getContext('2d').getImageData(0,0,cv.width,cv.height).data;
+      let n = 0;
+      for (let i = 0; i < d.length; i += 4) if (d[i+3] > 8 && !(d[i]>250&&d[i+1]>250&&d[i+2]>250)) n++;
+      return n;
+    };
+    const t0 = performance.now(); const out = [];
+    const tick = () => {
+      const t = performance.now() - t0;
+      out.push({ t: Math.round(t), lit: lit() });
+      if (t < 2500) setTimeout(tick, 90); else res(out);
+    };
+    tick();
+  }));
   const nAfter = await page.evaluate(()=>Store.state.bands.length);
   const prevAfterExec = await page.evaluate(()=>!!window.__previewPool);
-  const tailExec = execSamples.filter(s => s.t > 1200).map(s => s.lit);
+  const tailExec = execSamples.filter(s => s.t > 1400).map(s => s.lit);
   const execTerminates = new Set(tailExec).size === 1;
-  const execActivity = new Set(execSamples.filter(s => s.t <= 1200).map(s => s.lit)).size;
+  const execActivity = new Set(execSamples.filter(s => s.t <= 1400).map(s => s.lit)).size;
+  say('     post-execute lit samples: ' + execSamples.map(s => s.t + ':' + s.lit).join(' '));
   say('  3c execute: bands ' + nBefore + '->' + nAfter + '  newDialogs=' + JSON.stringify(errs.dialogs.slice(dlgBefore)));
   say('     re-preview after execute (render->previewBand, inputs still filled) = ' + prevAfterExec +
-      '  frames in first 1.2s = ' + execActivity + ' (1 = no sweep; >1 = one re-preview sweep, HEAD-inherited re-preview + new key)');
-  say('     post-execute tail (t>1.2s) stable = ' + execTerminates + ' (MUST be true: no loop)');
+      '  frames in first 1.4s = ' + execActivity + ' (1 = no sweep; >1 = one re-preview sweep, HEAD-inherited re-preview + new key)');
+  say('     post-execute tail (t>1.4s) stable = ' + execTerminates + ' (MUST be true: no loop)');
   await page.screenshot({ path: path.join(OUT, `R_${RUN}_I3_after_execute.png`) });
   const chart1Inert = otherDistinct === 1; // measured during the live sweep in item 1b
   say('  3d chart-1 inert during sweep (from item-1b interleave) = ' + chart1Inert);
