@@ -1667,3 +1667,46 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
   holds only for the per-position case. (`/tmp/sk117.js`,`/tmp/sk117b.js`)
 - #24 (restore-pre-trade-slope = history) binds construal-II/goal-seek-inverse, NOT the memoryless
   simple-swap reading of entry-113. The reduction-to-#24 is asserted, not earned, for the operator's ask.
+
+37. **2026-06-12 — entry-118 mechanism + GOAL-SEEK (verdict #37, continues #36)** →
+   `notes/skeptic/VERDICT_LENS_entry118_mechanism_goalseek_2026-06-12.md`. Operator entry-118 relayed
+   VERBATIM as a flagged "manager context break" directed at me (channel HELD, no FLAG-PROCESS).
+   Re-derived on a fresh path `/tmp/sk118*.js` from HEAD v28 primitives. **3 CONFIRM/REFUTE rulings:**
+   **(1) "through the lens OTM+, sharper lens OTM++" = SAME as construal IV (premium-leverage),
+   ALREADY in HEAD.** Build-faithful: executeLeg (L1761) sizes dy=premium=±N·markLensed(K); tradeUpdate
+   (L1679) is plain-Balancer spot swap, strike-blind given dy. Far-OTM premium small ⇒ slip-per-prem-$
+   = 1/(mode·mark) RISES OTM (4.07→31.7 at γ=1.5,τ=.3) AND rises with sharper lens at a fixed OTM strike
+   (2×: 16.1>15.1>10.8>7.7 as τ 0.05→2). Both his slippage claims already true in HEAD, no field/no
+   stored mode. SHARPENING (mine): his "effective trade point shifts out" is the trader-DESCRIPTION of
+   premium-leverage (a magnitude denominator), NOT the strike-LOCAL slope mechanic verdict #35 flagged
+   as un-built; θ_eff shifted-write = display-only, not the active mechanism. Directions coincide so
+   intuition lands either way. **Mode-no-recenter = CONFIRM** (the no-collapse reading): $1-premium buy
+   moves mode identically at every strike (tracks reserves not strike, 0.6667→0.6557); he explicitly
+   DISCLAIMS the only-NO from #36 (move-pool-to-far-point). **(2) GOAL-SEEK:** (a) the build does NOT
+   goal-seek at all — v28 pool = byte-identical plain v24 spot swap, NO goal-seek mechanic (L1628 = the
+   L4 PROHIBITION on inverting the lens); the only "warp" is the bare pool point moving (swap side-effect,
+   verdict #13). "Build goal-seeks for warp" = FALSE for v28. (b) "more warp with sharper lens" =
+   BUILDABLE-bounded forward, a REAL cap-free change, NOT already-built, NOT the inverse cap: forward
+   warp-rate γ·h″=γτ²/(τ²+u²)^1.5 peaks γ/τ at mode (30@τ.05 vs 5@τ.3), grows as τ falls, saturates
+   ≤γ — bounded. Becomes the cap/history hazard ONLY if goal-seek = INVERT to a target slope (1/h″ blows
+   up 12.6/91.9/717/5701 at u=1/2/4/8; + #24 two-history). His plain words read FORWARD = bounded member.
+   **(3) NET:** keep scalar-vs-field crisp (all build-true items memoryless/live, no φ; field only for
+   target-slope-restoration he isn't asking) + forward-vs-inverse crisp (slippage + forward goal-seek =
+   forward read of g_loc, cap-free; cap only under inverse). **#35-vs-#36 tension RESOLVED:** #35
+   measured mark-%-move (strike-local slope, rises OTM only via un-built trade-point mechanic), #36/118
+   measure slip-per-premium-$ (rises OTM in build via leverage) — different denominators, both right,
+   inventory #12 sibling; name the metric on relay. **RELAY-GATE:** the manager may relay (slippage
+   OTM+/sharper-OTM++/mode-no-recenter = already true in HEAD) as SETTLED; must NOT relay "the build
+   goal-seeks for warp" (false — unbuilt) and must DISAMBIGUATE forward-bounded vs inverse-cap before
+   any goal-seek build. Convergence-alarm LOW (operator supplied the mechanism; every digit reproduced).
+
+## Claims mine-to-defend (verdict #37 — entry-118 + goal-seek)
+- In HEAD v28, slip-per-premium-$ rises OTM (premium-leverage 1/(mode·mark)) AND rises with a sharper
+  lens at a fixed OTM strike — both ALREADY TRUE, memoryless, no field. (`/tmp/sk118c.js`)
+- The lensed-premium sizing (dy=premium) is the active mechanism; the θ_eff "effective trade point
+  shifts out" is a DESCRIPTION of that leverage, not the un-built strike-local-slope swap (#35). Same
+  direction, different physical quantity.
+- The build does NOT goal-seek — v28 pool is byte-identical plain v24 spot swap; goal-seek is UNBUILT.
+- Forward goal-seek (γ·h″, peak γ/τ, saturates ≤γ) = bounded "more warp with sharper lens"; inverse
+  (1/h″, blows up + #24 history) = the cap hazard. The operator's words read forward = the bounded one.
+  (`/tmp/sk118e.js`)
