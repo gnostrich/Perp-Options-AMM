@@ -56,3 +56,10 @@ smoke-pass → Stage 2 → gate + smoke-pass → promote HEAD → morning report
 - Stage 2 N_buy expansion: skeptic #31 CONFIRM (required basis-fix, correct, pool untouched) + RIDER: same raw-denom twin survives in payoff-PREVIEW drawState L3886 (display-only, pv-N-bought; one-line fix -> route to legPrice) — ADDED TO BUG-BATCH.
 - Stage 3 VISIBLE WARP + BUG-BATCH + FEATURES: PENDING. Bug-batch (xoracle/anchor/stale-on-reject/N_buy/lp-y/LIQ + seam/dir test gates) auto-in. FEATURES RESOLVED (entry 98): #8 payoff x-range -0.5/0.5 -> -0.9/2.0 = IN (manager's call, display bug-fix); #9 naked-leg uncap (min(1,mark)->mark; spreads still cap) = IN (operator: 'like any american style option'). Both payoff-chart display only.
 NEXT: Stage 2 lands → manager verify → tester smoke (covers write/settle + τ-redraw + chart isolation) → bug-batch intern pass → Stage 3 warp → full gate+smoke → promote HEAD. HEAD 928cde1c untouched.
+
+## ⚑ PRE-SEND SELF-CHECK (skeptic-ordered, operator entry 99 — RUN BEFORE EVERY OPERATOR-FACING MSG)
+Could the operator read this ONCE — no scrollback, no internal vocabulary — and act on it? If
+technical: is there a now-vs-proposed table, the core formula, AND the literal edit shown? Have I
+stripped every jargon token / md5 / path / agent-id / PR-mechanic (replace the word, don't append a
+gloss)? Any "no" → DON'T SEND, rewrite. Canonical: notes/skeptic/STANDING_RESPONSE_TYPE_PROTOCOL_2026-06-12.md.
+Skeptic backstops with FLAG-PROCESS (style-class, halt-class) via post-hoc transcript audit.

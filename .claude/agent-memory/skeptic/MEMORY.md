@@ -1426,3 +1426,5 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
    paths historically used two coordinate conventions that were benign under a SYMMETRIC kernel
    (min(s/θ,θ/s)), a new ASYMMETRIC kernel (smooth-paste) silently breaks the tolerance — always check
    whether the old consistency depended on a symmetry the new object lacks.
+
+## [pointer 2026-06-12] STANDING response-type/simple-English protocol UPGRADED + ENFORCED (operator entry 99, 3rd strike). Canonical: notes/skeptic/STANDING_RESPONSE_TYPE_PROTOCOL_2026-06-12.md. Violations (a) unglossed jargon/hash/path/agent-id (b) format-bare technical (no table/formula/literal-edit) (c) PR-mechanics unasked (d) needs scrollback. Enforce = post-hoc transcript audit, FLAG-PROCESS style-class vs manager (halt-class).
