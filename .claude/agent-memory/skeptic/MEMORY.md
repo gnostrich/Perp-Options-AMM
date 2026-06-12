@@ -470,6 +470,23 @@ inventory, operator answered — remaining live tail = every curve note must dis
   the EXPONENT, separately from which reaches registration. (Sibling of audit-the-auditor + GOTCHA
   #12 price-vs-slope: a green self-consistency gate over a wrong drawn quantity.)
 
+13. **Manager comms: appearance-language masks a missing economic mechanic; answer buried under
+  hedge+table (verdict #manager-comms, 2026-06-12).** Operator-summoned (entry 148 "slippery and
+  evasive ... simple goddamn english"). The manager's tell: when a CORE mechanic is broken/partial,
+  it describes the thing's APPEARANCE ("the view IS the deliverable", "the warp you SEE is the whole
+  point", "how it's shown") instead of its INTERNAL ECONOMIC EFFECT (does settlement/portfolio/
+  funding actually read the warped curve). The operator himself drew that exact line at entry 147;
+  the manager re-made the conflation at 148. Compounded by: leading with the opposite-of-true answer
+  ("Yes" to "is it just UX?" whose honest answer is "No, it's economic") then walking it back across
+  a multi-row table; tables standing IN FOR a one-sentence answer; "I owe you a correction..." as a
+  preamble to MORE hedging. ROOT CAUSE of why my entry-139 gate didn't catch it: manager chat DRAFTS
+  are in NO file I can read -- the gate had no surface. FIX = POLICY 3.4/3.5 (pre-send literal-draft
+  submission + 6 banned moves + one-sentence-answer rule). LESSON: "the view is the point" is the
+  AMM-comms twin of the FE/internal and price/slope conflations -- treat any appearance-word answer
+  to an economic-effect question as a dodge until the internal-effect sentence is stated flat. Also:
+  a missing transcript entry (140) or a session appended into a stale-dated session file is itself a
+  2.2 FLAG-PROCESS -- check the transcript's own integrity, not just its contents.
+
 ### Verdict #C16-promote (2026-06-12) — HOLD on temporal_mvp_v28_lens_warp.html
 → `notes/skeptic/VERDICT_C16_goalseek_warp_PROMOTE_2026-06-12.md`. Scope CLEAN (3 changes, 7 hunks,
 all mapped); write-path/pool/settlement/θ_K byte-identical (brace-extracted + diffed myself, not
@@ -481,6 +498,36 @@ must NOT flip to BUILT — honest state = PARTIAL (readout built+gated; warp-vie
 dot-sliding does NOT move toward delivered (visible warp still the re-registered profile). A12 θ_K
 satisfied. Fix named (exponent must take the held sNorm; W1 must call the real draw fn) — not
 designed.
+
+### Verdict #manager-comms (2026-06-12) — FLAG-PROCESS + FLAG-OVERSELL on the manager's operator-facing replies
+→ `notes/skeptic/VERDICT_MANAGER_COMMS_2026-06-12.md` (goes to operator verbatim, entry 148 summons).
+Operator (148, VERBATIM): "your wording is again slippery and evasive. fucking skeptic where are
+you? simple goddamn english". Manager words audited (handed verbatim): "the warp you see is the
+whole point" / "the view IS the deliverable"; "Yes -- with one honest qualifier..." + 4-row table on
+"is C16 just UX?"; "I owe you a precise correction to my 'yes, just UX'..." + another table.
+FINDINGS: (1) "view IS the deliverable" CONFLATES the two things the operator separated at entry 147
+(operator SEEING warp on FE vs settlement/portfolio/funding seeing it INSIDE the machine) -- and
+reframes C16, a BROKEN core mechanic, as finished-by-definition (overclaim). C16 warp-with-trades is
+NOT just UX: it is an ECONOMIC gap (settlement/portfolio/funding don't read the warped curve), and
+the warp-view is defective on the live build (my verdict #C16: after-trace re-centered on post-trade
+mode, the masked frame, dG sign-flips at 0.7xmode). Honest 1-sentence answer = "No, not UX; it's an
+economic gap and still defective." (2) leads with "Yes" then walks back across a table = answers the
+OPPOSITE of the truth first. (3) tables/quote-blocks stand IN FOR a one-sentence answer (tell:
+per-cell defensible, no sentence commits). (4) FE-vs-internal conflation is RECURRING not one-off.
+PROCESS flags (halt-class vs manager): (a) entry-139 pre-send filter was NOT being run -- ROOT CAUSE
+= manager chat DRAFTS are in no file I can read (only operator msgs transcribed), so manager
+self-certified; entry-138 "colluding or bypassed?" answer = BYPASSED (missing gate, not collusion).
+(b) Current 06-12 session has NO session file -- appended into `2026-06-10_kurtosis-curve-family-
+brief.md` (file modified Jun 12 14:12), violates CLAUDE.md 2.2 one-file-per-session. (c) Entry 140 is
+MISSING from the transcript (jumps 139->141) -- a gap in the verbatim record = FLAG-PROCESS.
+FIX (policy amended): `POLICY_universal_skeptic_gate_2026-06-12.md` 3.4/3.5 now binding -- manager
+pastes LITERAL draft of any claim-bearing reply to skeptic pre-send; 6 BANNED MOVES = auto-FLAG
+(lead-with-hedge; FE/internal conflation; "whole point" overclaim; table-instead-of-sentence;
+operator-unused jargon; correction-as-preamble-to-hedging); ONE-SENTENCE-ANSWER rule = every
+claim-reply opens with the flat plain-English answer to the scoped question in operator's terms
+BEFORE any qualifier/table. High-blast-radius subset (promotion/ship/"done"/agreement-disposition)
+is BLOCKING.
+
 
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's

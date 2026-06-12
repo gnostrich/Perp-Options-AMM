@@ -1066,6 +1066,14 @@ _Context: operator asks the skeptic to make a binding policy — no agent's work
 
 ---
 
+## Entry 140 — 2026-06-12
+_Context: operator asks the manager to take stock of every single component to confirm alignment / no regression, then do the fix. CORRIGENDUM 2026-06-12: this entry was OMITTED from the transcript when first acted on (the component-register/stock-take turn) — restored in-position on skeptic FLAG-PROCESS (a439954c, §2.2 gap audit). Verbatim text preserved._
+
+> will you be kind enough to take stock of every single component of the whole thing just to make sure that we're aligned and not regressing. tbh it takes a toll. i've spent more time and tokens than i can express to you. honesty, do a component-wise tabulation and overall consistency check conscientiously, then go ahead and do the fix
+
+
+---
+
 ## Entry 141 — 2026-06-12
 _Context: operator wants the math/theory checked BIDIRECTIONALLY against the implementation for theory↔impl consistency tied to the single mathematical object — which also de-risks the academic paper (minimal incremental work) — and asks for an integrated, transparent, truthful workflow; addressed to the skeptic to note._
 
@@ -1126,3 +1134,11 @@ _Context: operator corrects the manager's "the warp you see is the whole point" 
 _Context: operator calls the manager's wording slippery and evasive, summons the skeptic (the entry-139 pre-send filter on manager replies was not being run), and demands simple plain English._
 
 > your wording is again slippery and evasive. fucking skeptic where are you? simple goddamn english
+
+
+---
+
+## Entry 149 — 2026-06-12
+_Context: operator pastes a block of the manager's recent messages and asks the skeptic to explain it to him in his own plain language so he can act on it; he refuses to read the manager's language._
+
+> [pasted a block of the manager's prior messages: the "Yes — with one honest qualifier" UX-or-not message, the tester FINDING-WARP-DIR / FINDING-TRADE-AT-STRIKE message with the two product questions, and the fold/record messages] ... to me, skeptic, in my language, so i can act on it. i refuse to read this language

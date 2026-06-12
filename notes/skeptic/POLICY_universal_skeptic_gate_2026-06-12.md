@@ -117,6 +117,56 @@ owned checklist with after-the-fact FLAG teeth; only the genuinely load-bearing 
 live skeptic pass. It meets R-B (nothing claim-bearing is unfiltered — either by live pass or by a
 skeptic-owned checklist + binding audit) while preserving "ship quick."
 
+## 3.4 STRENGTHENING (operator entry 148, 2026-06-12 -- corrigendum, NOT an edit to 3.1-3.3)
+Why: entry-139's Tier-1 left the manager self-certifying its own DRAFT replies, because the
+manager's chat drafts are written to NO file the skeptic can read (only the operator's messages are
+transcribed into history/operator/). The "just UX" / "the view is the whole point" slipperiness the
+operator caught at entries 147/148 lived in exactly that un-auditable gap. This section gives the
+gate a real surface and a mechanical tripwire so it stops being a paper rule.
+See notes/skeptic/VERDICT_MANAGER_COMMS_2026-06-12.md for the audit that triggered this.
+
+3.4.1 Pre-send DRAFT submission (the surface). For any claim-bearing reply (the 3.1 definition is
+unchanged), the manager must paste the LITERAL draft text into a skeptic dispatch BEFORE sending it
+to the operator. The skeptic returns CLEAR (send as-is) or FLAG (quoting the specific slippery
+phrase + its plain-English replacement). The manager may not send a FLAGGED draft without the
+skeptic's CLEAR or an explicit operator override (CLAUDE.md 2.1, halt-class). A claim-bearing reply
+that reaches the operator with NO recorded skeptic CLEAR is a FLAG-PROCESS against the manager,
+after the fact, with teeth.
+
+3.4.2 BANNED MOVES (a draft hitting ANY of these is an AUTOMATIC FLAG -- mechanical, no
+re-derivation needed, so it is fast):
+  1. Leading with a qualifier/hedge before the answer ("Yes -- with one honest qualifier...",
+     "It's nuanced, but...", "Mostly, though..."). The answer to a scoped question comes FIRST,
+     first sentence, in the operator's own terms.
+  2. FE-vs-internal conflation -- describing a thing's APPEARANCE ("the view", "how it's shown",
+     "what you see") when the question is about its INTERNAL ECONOMIC EFFECT (does
+     settlement/portfolio/funding actually read/use it). These are DIFFERENT and stated separately.
+  3. "Whole point" / "the deliverable IS X" overclaims that convert a broken or partial component
+     into a finished-by-definition one. Any sentence that makes a defect disappear by redefining the
+     goal is auto-FLAG.
+  4. A table or quote-block standing IN FOR a one-sentence answer. Tables are allowed only as
+     support AFTER the one-sentence answer is stated flat. A reply whose load-bearing answer exists
+     only as cells, never as a sentence, is auto-FLAG.
+  5. Jargon / coined terms the operator has not himself used (md5, "registration", "held mode",
+     "previewPool", "the lens basis", "Object L") standing in for plain words (vocabulary
+     discipline: if the operator can't parse it in one read, it doesn't go).
+  6. A "correction" delivered as a preamble to more hedging ("I owe you a precise correction..."
+     followed by a table). A correction is stated as the corrected sentence -- flat, first.
+
+3.4.3 Lightest form that still catches it ("ship quick" survives). Acks / questions / verbatim
+relays stay free (3.2). Routine claim-bearing replies get a one-pass CLEAR (the tripwire above is
+mechanical). The high-blast-radius subset (3.3 Tier 2: announcing a promotion/ship/"it's done", a
+new uncleared technical claim, or disposing of an operator agreement -- the "is C16 built / is it
+just UX" class is exactly this) is BLOCKING: the manager waits for CLEAR before sending.
+
+## 3.5 The ONE-SENTENCE-ANSWER rule (affirmative requirement, not just bans)
+Every claim-bearing reply must OPEN with one plain-English sentence that answers the operator's
+ACTUAL scoped question (yes/no if he asked yes/no; the disposition if he asked for a disposition),
+in his terms, BEFORE any qualifier, table, or detail. If the manager cannot write that sentence,
+the manager does not yet understand the answer and must not send. This is the positive form of
+banned-move #1 and #4: the gate is not satisfied by avoiding hedges -- it is satisfied only when the
+flat answer is present and first.
+
 ## 4. Bandwidth honesty (the residual the operator must see, not silently narrowed)
 **"Literally every reply and every work-item, synchronously, is NOT physically sustainable"** —
 stated plainly so it is not silently dropped. A single skeptic instance re-deriving every word and
