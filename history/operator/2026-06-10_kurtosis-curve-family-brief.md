@@ -1424,3 +1424,11 @@ _Context: operator asks for the warp-per-notional dig now (not queued)._
 _Context: operator sharpens the dig — the option-price layer is a separate layer from the AMM tx; if the AMM tx for selling a more-OTM long is a larger dollar tx, there'd be more slippage plus higher curve slope, so more warp goal-seek; his earlier conflation of option pricing with the AMM tx let this slip notice._
 
 > like the option price thing is separate layer from the AMM tx; if the AMM tx thing is selling more OTM long, then it woudl mean larger dollar tx so more slippage plus higher curve slope so more warp goal seek... my previoius conflation of option pricing with this allowed this to slip notice
+
+
+---
+
+## Entry 185 — 2026-06-12 16:19 UTC
+_Context: operator extends the dig — if kurtosis is made steeper (lower number in the html), a given strike reads as further-OTM, so that should mean even MORE warp, not less, right?_
+
+> so similarly if i make kurtosis steeper (less value in the html), that would imply that i'm seeing a further OTM+ strike so that would mean even more warp not less right
