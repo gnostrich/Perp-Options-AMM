@@ -1,0 +1,125 @@
+================ v28 lens FINAL smoke — RUN B ================
+
+========== STEP 0: τ stepper auto-redraws CHART-2 live; CHART-1 inert ==========
+  τ 0.3→2 EVENT-only: chart-2 px changed = 6545  Store.tau=2
+  real ArrowUp 0.3→0.35: chart-2 px changed = 3894
+    chart-1 px-diff vs τ0.3 at τ=0.05: 0
+    chart-1 px-diff vs τ0.3 at τ=1: 0
+    chart-1 px-diff vs τ0.3 at τ=2: 0
+    chart-1 px-diff vs τ0.3 at τ=3: 0
+
+========== STEP C1: audit "net trader cash @ open" reads order-$10k, NOT billions ==========
+  pv-net-cash = $2,928.837797  (parsed 2928.837797)
+
+========== STEP C2: anchor (w=½) overlay passes through the live reserves point ==========
+  live reserves (x=10.0000, y=800000.00); k=√(xy)=2828.43
+  anchor y at live x = 800000.00  passes-through=true
+
+========== STEP C3: valid preview → drive to each reject path; fields → "—" + warn ==========
+  valid preview: disabled=false net-cash=$2,928.837797 N_buy=0.048090 BTC
+  reject[zero-notional]: disabled=true warn="Notional must be positive." fields-cleared=true (net-cash=—)
+  reject[bad-strike(not-OTM)]: disabled=true warn="Sold-leg strike θ=0.6250 not OTM on call wing (pool spot=1.0" fields-cleared=true (net-cash=—)
+  reject[crossed-strikes]: disabled=true warn="Sold-leg strike θ=0.8750 not OTM on call wing (pool spot=1.0" fields-cleared=true (net-cash=—)
+  reject[no-club]: disabled=true warn="Club has no perp notional. Add a perp." fields-cleared=true (net-cash=—)
+  every preview-time reject disabled+cleared+warned: true
+  over-carve execute (notional 100 BTC): band opened=false alert=["Open failed: Over-carve: band needs $8000000 notional but club free is $160000."]
+
+========== STEP C4/C7: payoff N_buy derives ≠ N_sell, matches booked basis ==========
+  booked band sizing: null (nBands=0)
+  fresh band: N_sell=0.04 N_buy=0.04102762480503153 differ=true V_sell=0.012563224923585128 V_buy=0.012563224923585128
+
+========== STEP C5: LP "Pool y delta"=$0.00 at load; LIQ-PRICE sane (~70k long/90k short @8×) ==========
+  LP Pool y delta @load: $0.00
+  LIQ-PRICE long 8× = $70000.00  short 8× = $90000.00
+
+========== STEP C6: close a band — close-log + $-tooltip read as band P&L vs entry, not walk-away ==========
+  close-log line: Close B1: X=0.017719 carved-perp units, Y=0.018560 carved-perp units, raw=0.000841 carved-perp units, L₀=8.10, carvedClose=$494.12, band P&L vs entry (trader)=$3.36, Δclub equity=$2.95 [both legs reversed on AMM].
+  $-cell tooltips matching P&L/payout/entry: ["carved entry equity — f_N · club equity, frozen at carve-time","entry perp mark — frozen at carve-time","attributable P&L — carvedNotional · (perpMark − entryPerpMark) / entryPerpMark; dimensionally [USD]","carved equity at closure = entry equity + attributable P&L"]
+
+========== STEP C8: payoff frame spans −90%…+200% with x-ticks across it ==========
+  payoff canvas 900x420 lit px=105414
+
+========== STEP C9: naked leg payoff climbs past capped spread leg deep-ITM ==========
+  deep-ITM: naked=0.8031 spread(tent)=0.1871 naked>spread=true
+
+========== WARP (skeptic #33): a trade VISIBLY reshapes chart-2 (lensed warp) ==========
+  warp trade band opened: true
+  >>> chart-2 px changed by trade = 9953 (w 0.50182384591346→0.5186824562424869)
+
+========== STANDING: perp long & short; over-size rejection ==========
+  perp long added=true; short added=true
+  invalid perp (zero notional): added=false dialogs=["Notional and margin must be positive."]
+
+========== STANDING: bands both directions, pre/post swap; swap control; preview steppers ==========
+  band dir A(pill=long): opened=true
+  preview stepper w-readout: step1="w: 0.50146 → 0.50207 → 0.50268 · Δw +0.00122" step2="w: 0.50146 → 0.50207 → 0.50268 · Δw +0.00122"
+  swap: {"s":"96000","b":"64000","dir":"long"} -> {"s":"64000","b":"96000","dir":"short"}
+  band dir B(pill=short): opened=true
+
+========== STANDING: EARN deposit/withdraw round-trip ==========
+  LP value: $1,599,773.49 -dep-> $1,649,773.49 -wd-> $1,599,773.49
+
+========== STANDING: τ stepper redraw confirm + κ (kappa) control (no wminus/wplus in v24-base) ==========
+  wminus/wplus present in v24-base build: false (expected false); κ 0.02→0.03
+
+========== STANDING: oracle change/rebase; arb; tick ==========
+  oracle after change: 90000
+  ran arb-to-oracle
+  advanced one tick
+
+========== STANDING: PORTFOLIO tab; all overlays lit + sanity-located ==========
+  portfolio rows=15 NaN/Inf count=0
+  overlay [curve/canvas-curve] lit px = 13627
+  overlay [pricing/canvas-pricing] lit px = 12159
+  overlay [payoff/canvas-payoff] lit px = 104766
+  overlay [trajectory/canvas-ratio] lit px = 7140
+
+========== STANDING: settle-at-lensed round-trip finite; near-ATM finite; steep one-ITM-leg ==========
+  round-trip: {"ok":true,"raw_net":0.008346671351438845,"settled_cash_leg":null,"finite":true} raw_net=8.347e-3
+  near-ATM g_loc=0.000e+0 markCall=1 markPut=1 finite=true
+  steep band dir set to: long (need long=sold-call)
+  steep band open: opened=true warn=""
+  steep one-ITM-leg: {"ok":true,"raw_net":-0.004797260939328808,"settled_cash_leg":"sold","live_leg":"bought","finite":true} raw_net=-4.797e-3
+
+========== STANDING: EXPORT/IMPORT round-trip ==========
+  export/import state identical (ex-eventLog): true (len=5222)
+  after reset: {"x":10,"y":800000,"tau":0.3,"bands":0}
+
+========== CONSOLE / ERRORS ==========
+  uncaught pageerrors: 0
+  console errors: 0
+  dialogs seen (2): ["Open failed: Over-carve: band needs $8000000 notional but club free is $160000.","Notional and margin must be positive."]
+
+========== FLAGS ==========
+  FINDING-RT (INHERITED-v24, OPEN, not a regression): instant net-cash-zero open→close on a two-OTM-leg band yields POSITIVE raw_net (8.347e-3) = trader-favourable, scales with slippage. Verified byte-identical in S1/S2/v24 base. Contradicts the brief "tiny pool-favourable residual" on the SIGN. SIGN convention unresolved by operator (entry 96 ruled "settle at lensed" but not round-trip direction). Escalate.
+
+========== VERDICT SUMMARY ==========
+  PASS  s0_tau_chart2_live
+  PASS  s0_chart1_inert
+  PASS  C1_netcash_order10k
+  PASS  C2_anchor_through_live
+  PASS  C3_rejects_clear_and_warn
+  PASS  C3_overcarve_execute_guard
+  PASS  C4C7_Nbuy_derives
+  PASS  C5_lp_delta_zero_liq_sane
+  PASS  C6_close_pnl_label
+  PASS  C8_payoff_frame
+  PASS  C9_naked_above_capped
+  PASS  warp_chart2_reshapes
+  PASS  standing_perp_both
+  PASS  standing_perp_invalid_reject
+  PASS  standing_bands_both_dirs
+  PASS  standing_swap_flips
+  PASS  standing_earn_roundtrip
+  PASS  standing_no_v27_wing_inputs
+  PASS  standing_kappa_control
+  PASS  standing_oracle_arb_tick
+  PASS  standing_portfolio_no_nan
+  PASS  standing_all_overlays_lit
+  PASS  standing_roundtrip_finite
+  PASS  standing_atm_finite
+  PASS  standing_steep_one_itm
+  PASS  standing_export_import
+  PASS  zero_console_errors
+
+  OVERALL (gate verdicts): PASS

@@ -77,9 +77,12 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    NOT introduced by the lens. NOT an operator question yet; entry 96 ruled "settle at lensed prices" but did
    NOT rule on whether an instant round-trip should be trader- or pool-favourable. **Status: OPEN — manager to
    escalate the sign convention to the operator. Cannot be marked resolved without an engine change or an
-   operator ruling that the current trader-favourable round-trip is acceptable.** Evidence
-   `evidence/v28_lens_S2/probes/` (sign_vs_slippage / compare_S2_S1_v24 / roundtrip_dissect), harness
-   `engine/verify/pw_v28_lens_S2_smoke.mjs` (Step 3).
+   operator ruling that the current trader-favourable round-trip is acceptable.** **CARRIED to the
+   v28-FINAL promotion build `989752294` — re-confirmed live ×2 (raw_net=+8.347e-3 two-OTM-leg;
+   the one-ITM-leg steep case is correctly POOL-favourable raw_net=−4.797e-3). Does NOT block the
+   promotion gate.** Evidence `evidence/v28_lens_FINAL/RUN_LOG_run{A,B}.txt` (STD settle step) +
+   `evidence/v28_lens_S2/probes/` (sign_vs_slippage / compare_S2_S1_v24 / roundtrip_dissect), harnesses
+   `engine/verify/pw_v28_lens_FINAL_smoke.mjs` + `pw_v28_lens_S2_smoke.mjs` (Step 3).
 
 -3. **★ v28-S1 (tester finding) — the KURTOSIS τ knob did NOT auto-redraw chart 2 on the Stage-1 lens
    build → RESOLVED in v28 Stage 2 (`b53ace99`).** [#3] NOT an operator question yet (the build post-dates the last
@@ -1326,11 +1329,54 @@ account, no mixed-basis), #15 (new build file-safety green). **Rolling list:** O
 ---
 
 
+## v28 polar-lens Stage 2 (`b53ace99`) → FINAL `temporal_mvp_v28_lens_FINAL.html` (`989752294`)   [status: PROMOTION CANDIDATE → HEAD on this gate's PASS; operator-authorized promotion entry 106 "please do"; replaces HEAD v27 `928cde1c`]
+FEATURES (inventory #s touched): #1 (Balancer base — pool byte-identical to v24, manager-verified), #2 (curve warp / lensed chart-2 reshape on a trade), #3 (kurtosis knob τ — live chart-2 redraw confirmed; no slider; κ funding-decay knob present), #6 (pricing value∝S^(−γ_loc) READ through the lens), #7 (ITM smooth-paste settle-at-lensed; one-ITM-leg reciprocal coord), #9 (funding-through-lens), #10 (slippage basis; FINDING-RT carried), #11 (dollar/settlement pipe = lensed unit of account, no mixed-basis), #15 (file-safety green; new build md5). **NONE BEYOND** — #4/#5 carry/rebase unchanged (oracle-change rebase UI-exercised, consistent); #8 strike registration unchanged from the lens line; #12 price==slope unchanged; #13 solvency boundary unchanged (still the known OPEN ship-gate, not touched); #14 esscher/rapidity unchanged; #16 warp-with-trades transformation present (lensed warp visible — see DESIRABLE), trade-point anchoring still the standing OPEN/LIVE gap (transformation-faithful, anchoring-OPEN).
+
+DESIRABLE (cleanup batch C1–C9, all tester-confirmed live ×2 byte-stable):
+  - C1 [#10]: band audit "net trader cash @ open" = **$2,928.837797** (order-$10k) — the S1/S2 inherited-v24 xoracle DOUBLE-MULTIPLY ($618M-class) is FIXED on this build (L3082 drops ×oracle; pv-dy-* already-USD). RECONCILES the entry-96 bug-batch xoracle item ON THIS LINE.
+  - C2 [#2]: anchor (w=½) overlay passes THROUGH the live reserves point — k=√(x·y) (L3285), anchor-y-at-live-x == live y exactly (passes-through=true), pixel-confirmed (`*_C2_anchor_curve.png`). Same fix-class as v27 entry-46; now present on the lens line.
+  - C3 [#10,#11]: every PREVIEW-time reject path (zero-notional / not-OTM sold strike / crossed strikes / no-club) shows a warn AND clears EVERY preview field to '—' AND disables Transact — STALE-ON-REJECT (entry-45 frankenstate class) is clean on this line (`clearBandPreviewOut` L2996). Over-carve is an EXECUTE-time guard: notional-100-BTC band rejects with alert "Over-carve: band needs $8000000 notional but club free is $160000." (no pool move, no booked band).
+  - C4/C7 [#7]: payoff N_buy DERIVES distinct from N_sell (fresh band N_sell=0.04, N_buy=0.04102762…) with V_buy==V_sell (cash-conserving bridge, L1853 lensed legPrice); booked basis matches.
+  - C5 [#11]: LP "Pool y delta (vs initial)" = **$0.00** at load (dynamic _initial_y baseline); LIQ-PRICE sane — long **$70,000.00** / short **$90,000.00** @8× at $80k defaults.
+  - C6 [#11]: close-log + portfolio $-cell tooltips read as a band P&L VS ENTRY, not money the trader walks away with — close-log: *"…band P&L vs entry (trader)=$3.36, Δclub equity=$2.95 [both legs reversed on AMM]"*; portfolio tooltips: "attributable P&L — carvedNotional·(perpMark−entryPerpMark)/entryPerpMark; dimensionally [USD]" etc. Label-only fix (number unchanged).
+  - C8 [#7]: payoff frame spans −90%…+200% (xMin=−0.9, xMax=2.0, L3859) with x-ticks −50/0/+50/+100/+150/+200% across it (`*_C8_payoff_frame.png`, 104766 lit px). RECONCILES the v27 NOTES-D9 ±50% gap on this line.
+  - C9 [#7]: a NAKED (single-barrier) leg's payoff climbs past the CAPPED spread (tent) leg deep-ITM — analytic deep-ITM naked=0.8031 > spread=0.1871 (L3901 cap-at-1 per-barrier; spread = inner−outer tent). RECONCILES v27 NOTES-D10 naked-leg-cap on this line.
+  - WARP [#2,#16] (skeptic #33, operator due-diligence L744): a trade VISIBLY reshapes chart-2 (the option/value curve) — a 0.5-BTC band execute moved w 0.50182→0.51868 and changed chart-2 by **9,953 px** (`*_WARP_chart2_aftertrade.png`). The lensed warp is legible (NOT the sub-pixel band-cash-neutral problem of the v27 line) because the lens amplifies the elbow reshape.
+  - τ read-lens [#3]: τ stepper EVENT auto-redraws chart-2 live (0.3→2 = 6,545 px, real ArrowUp 0.3→0.35 = 3,894 px) AND chart-1 is HARD-inert to τ (0 px across {0.05,1,2,3}) — the read/write separation holds (FLAG-1 fix carried from S2).
+  - settle-at-lensed [#7,#11]: round-trip finite (no settled-cash leg, raw_net=8.347e-3); near-ATM g_loc≈0 settles finite (markLensed g=0→1, no NaN); steep one-ITM-leg POOL-favourable (raw_net=−4.797e-3, sold leg settled-to-cash, bought leg reversed on AMM).
+
+UNDESIRABLE:
+  - FINDING-RT [#10,#11] — instant net-cash-zero open→close on a TWO-OTM-LEG band is TRADER-favourable (raw_net=+8.347e-3, scales with slippage). **OPEN — INHERITED-v24** (byte-identical raw_net verified in S1/S2/v24 base across N=0.01/0.05/0.2). Brief's "tiny pool-favourable residual" is contradicted on the SIGN. Sign convention NOT operator-ruled (entry 96 ruled "settle at lensed", not round-trip direction). **Does NOT block this gate** (settles correctly vs its base; the ONE-ITM-leg case IS pool-favourable). **Escalate the sign convention to the operator.**
+  - Boot-log stale-label class (carried v24/v27, minor) — not re-checked this run; intern text item. OPEN(minor).
+  - NONE NEW introduced by this build vs S2 beyond the C-batch (all C-batch are FIXES, not regressions).
+
+NEUTRAL: τ disclosure context; κ control present (funding-decay); no wminus/wplus wing inputs on this v24-base line (v27-(W) artifact, correctly absent — confirmed in DOM).
+
+OPERATOR-VOICE (distilled from `history/operator/2026-06-10_kurtosis-curve-family-brief.md`, all [verbatim-transcript]):
+  - RULED — promotion authorized, entry 106 (L791-793): _Context "operator authorizes the finishing work — cleanup batch + warp check + final test + promote to live."_ → *"please do"*. This gate IS that final test; on PASS the manager promotes to HEAD. RULED-and-this-build-implements.
+  - RULED — settle at lensed prices, entry 96 (L708-710): *"everything works the same, the lens just translates queries incl portfolio value etc. and writes (amm tx) — so yes settle at lenses prices … you'd be recording the lensed version to query"*. v28-S2/FINAL implement it; tester-confirmed (open-band value moves with τ, one-ITM-leg reciprocal settle, no mixed-basis). RULED-and-implemented.
+  - RULED — the xoracle + subsequent-version bug-batch, entry 96 (L708 context + the prior ruling): operator approved the xoracle fix and directed porting the anchor-curve / ATM-jump fixes from subsequent versions. **C1 (xoracle) + C2 (anchor) are now FIXED on this build** — these operator-directed fixes are RECONCILED on the lens line (the S1/S2 OPEN xoracle item closes here).
+  - RULED — lens-correctness assurance, entry 98-class (L754, L770): *"how do i get a clear assurance you've implemented lensing properly. i.e. its splaying / changing directions from 45 degree tangent slope point on curve"* / *"lens is basically a sort of tangent slope amplification / multiplier that's a function of relative polar angle divergence from the angle passing through mode (45 degree tangent slope to curve) right?"* → assurance evidence on this gate: lens_selfcheck 23/0 (g_loc=γ·h′_τ(|u|) about the mode, ATM g=0, wings→γ, cap-free) + the WARP observation (a trade splays chart-2 about the mode by 9,953 px). The 45°-tangent splay is the markLensed math the selfcheck pins.
+  - OPEN (no recorded ruling) — the round-trip residual SIGN (FINDING-RT). Operator ruled the lensed value is settled but has NOT ruled trader- vs pool-favourable on an instant round-trip. Escalate; cannot be marked resolved without an engine change or an operator ruling.
+  - No operator OBJECTION recorded against the FINAL build specifically (it post-dates entry 106's go).
+
+EVIDENCE: `evidence/v28_lens_FINAL/` — A_*/B_* shots (00 charts_tau, C1 audit, C2 anchor, C3 rejects, C4 payoff, C5 lp/liq, C6 close-pnl, C8 payoff-frame, WARP, STD perps/bands/oracle/portfolio/overlays/settle/reset), RUN_LOG_runA.txt == RUN_LOG_runB.txt (byte-stable, 27/27 PASS, 0 console errors), INDEX.txt. Harness `engine/verify/pw_v28_lens_FINAL_smoke.mjs` (live Playwright, READ-ONLY). Node `lens_selfcheck.js` 23/0. File-safety: webp L74 `ab663f5c…`, svg L1060 `c505b08a…`, 3 scripts parse, build md5 `989752294` UNCHANGED post-run.
+**VERDICT: 27/27 gate verdicts PASS ×2 byte-stable; C1–C9 + warp all confirmed; 0 uncaught/console errors. PROMOTION GATE = PASS.** One finding to surface (not blocking): FINDING-RT round-trip SIGN (INHERITED-v24, escalate to operator).
+
+**Table rows updated:** #1 (pool byte-identical v24; C5 LP/LIQ sane on this build), #2 (C2 anchor-through-live FIXED; WARP visible 9,953px), #3 (τ chart-2 live redraw confirmed on FINAL; κ present; no wing inputs), #7 (C4/C7 N_buy derives; C8 frame −90..+200; C9 naked>capped; settle-at-lensed one-ITM reciprocal), #10 (C1 xoracle FIXED on this line; FINDING-RT carried), #11 (C6 P&L-vs-entry label; settle/portfolio lensed unit; no mixed-basis), #15 (FINAL build file-safety green, md5 `989752294`). **Rolling list:** OPEN item -4 (FINDING-RT) stays OPEN (carried to FINAL); xoracle item → RECONCILED-on-the-lens-line-in-`989752294`. **Reconciliation list:** +rows for C1/C2/C8/C9 RECONCILED-in-`989752294`; FINDING-RT row updated (now also on FINAL).
+
+---
+
+
 ## Standing reconciliation list (all OPEN undesirables, one place)
 | Item | Introduced | Status |
 |---|---|---|
 | v28-S1 FLAG-1: KURTOSIS tau stepper did NOT auto-redraw chart 2 | v28-S1 (`5e1ff278`) | **RECONCILED-in-`b53ace99` (v28 Stage 2)** — tester live ×2: stepper EVENT now reshapes chart 2 (0.3->0.05=5,199px, 0.3->2=6,545px, ArrowUp=3,894px); L2724 calls `if (Viz) Viz.drawAll(...)` via closure |
 | **v28-S2 FINDING-RT: instant open->close round-trip is TRADER-favourable (raw_net>0, scales with slippage) — brief expected pool-favourable** | v24 base, present in v28-S2 | OPEN — INHERITED-v24 (byte-identical raw_net in S1+v24); sign-convention question, escalate to operator; does NOT block the Stage-2 hand-back |
+| **v28-FINAL xoracle band-audit inflation (pv-net-cash/pv-dy-* double-×oracle)** | v24 base, present in S1/S2 | **RECONCILED-on-the-lens-line-in-`989752294`** — C1 fix (L3082 drops ×oracle): pv-net-cash reads $2,928.84 (order-$10k), tester live ×2 |
+| **v28-FINAL anchor (w=½) overlay off-scale** | v24/lens line | **RECONCILED-in-`989752294`** — C2: k=√(x·y) (L3285), anchor passes through the live reserves dot, pixel-confirmed |
+| **v28-FINAL payoff ±50% x-range + naked-leg cap** (v27 NOTES D9/D10 unported) | v24 base on lens line | **RECONCILED-in-`989752294`** — C8 frame −90%…+200% with ticks; C9 naked(0.8031)>capped-spread(0.1871) deep-ITM, tester live ×2 |
+| **v28-FINAL FINDING-RT carried to the promotion build** | v24 base | OPEN — INHERITED-v24; round-trip SIGN unresolved (entry 96 didn't rule direction); does NOT block the promotion gate; escalate to operator |
 | v28-S1 band audit xoracle inflation (pv-net-cash/pv-dy-* multiply already-USD dy by oracle again; $618M on $800k pool) - INHERITED byte-identical from v24 base (L1755 V_usd already xoracle, L3050-52 xoracle again) | v24 base, present in v28-S1 | OPEN - inherited-v24; candidate "known-gap" correction per operator entry-93 |
 | Payoff ray-legend overprint (cosmetic) | v26c | OPEN — intern polish, non-blocking |
 | Collar-aggressiveness slippage magnitude | v26a (exposed) | ACCEPTED — operator parked |

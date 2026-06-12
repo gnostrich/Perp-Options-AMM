@@ -1,6 +1,34 @@
 # MEMORY — tester
-_Last updated: 2026-06-12, after the v28 POLAR-LENS STAGE-2 STANDING UI SMOKE-PASS (candidate build `b53ace99`, READ-ONLY; write/settle-through-lens + FLAG-1 fix). HEAD unchanged = v27 `928cde1c`._
+_Last updated: 2026-06-12, after the v28 POLAR-LENS FINAL STANDING UI SMOKE-PASS = PROMOTION GATE (build `989752294`, READ-ONLY). VERDICT 27/27 PASS ×2 byte-stable ⇒ gate = PASS; manager promotes to HEAD on this. Prior HEAD = v27 `928cde1c`._
 
+
+## ★★★★★ MOST RECENT — v28 POLAR-LENS *FINAL* SMOKE = PROMOTION GATE (build `989752294`, → HEAD on PASS)
+Build = `engine/builds/temporal_mvp_v28_lens_FINAL.html` (md5 `989752294bfeff49d6c92e0ab7ca6ccd`, UNCHANGED post-run,
+READ-ONLY). = v24 + polar-lens (read + write/settle-at-lensed) + **cleanup batch C1–C9**. Operator authorized
+promotion entry 106 ("please do", `kurtosis-curve-family-brief.md:793`). Manager pre-verify: pool byte-identical
+to v24, lens_selfcheck **23/0**, blobs canonical. Harness `engine/verify/pw_v28_lens_FINAL_smoke.mjs`; evidence
+`evidence/v28_lens_FINAL/` (16 A-shots + 16 B-shots + RUN_LOG_runA/B + INDEX). Live Playwright ×2 **byte-stable**
+(RUN_LOG_runA==runB modulo header), **0 console errors / 0 pageerrors**. File-safety GREEN (webp L74 `ab663f5c…`,
+svg **L1060** `c505b08a…`, 3 scripts parse). Ledger promotion-candidate entry appended (feature-keyed
+#1/#2/#3/#6/#7/#9/#10/#11/#15 + none-beyond [#4/#5/#8/#12/#13/#14/#16 unchanged]; C1–C9 dispositions; OPERATOR-VOICE
+entries 96/98/106 RULED; table rows #1/#2/#3/#7/#10/#11/#15 amended; +4 recon rows C1/C2/C8/C9 RECONCILED-in-`989752294`;
+OPEN item -4 FINDING-RT carried to FINAL, non-blocking). **VERDICT: 27/27 gate verdicts PASS ×2 ⇒ PROMOTION GATE = PASS.**
+- **C-batch (all PASS ×2 byte-stable):** C1 pv-net-cash=$2,928.84 order-$10k (xoracle DOUBLE-MULTIPLY of S1/S2 **FIXED**
+  here L3082); C2 anchor k=√(xy) passes THROUGH live reserves dot (pixel-confirmed); C3 every PREVIEW reject
+  (zero-notional/not-OTM/crossed/no-club) warns+clears+disables, over-carve EXECUTE alerts ("needs $8000000 … club free $160000");
+  C4/C7 N_buy 0.04103≠N_sell 0.04, V_buy==V_sell; C5 LP y-delta $0.00 @load, LIQ long $70000/short $90000 @8×;
+  C6 close-log "band P&L vs entry (trader)=$3.36" (label-only); C8 payoff frame −90%…+200% w/ ticks; C9 naked 0.8031 > capped-spread 0.1871 deep-ITM.
+- **WARP (skeptic #33, operator due-diligence L744):** a 0.5-BTC band trade reshapes chart-2 by **9,953 px** (w 0.50182→0.51868) — lensed warp LEGIBLE (not the v27 sub-pixel band-cash-neutral problem).
+- **τ read/write separation:** τ EVENT redraws chart-2 (0.3→2=6,545px, ArrowUp 0.3→0.35=3,894px); chart-1 HARD-inert (0px across {0.05,1,2,3}).
+- **settle-at-lensed:** round-trip finite; near-ATM g_loc≈0 finite (g=0→1 no NaN); steep one-ITM-leg POOL-favourable (raw_net=−4.797e-3, sold leg settled-to-cash).
+- **★ FINDING-RT (carried OPEN, INHERITED-v24, ESCALATE):** two-OTM-leg instant round-trip raw_net=+8.347e-3 TRADER-favourable, scales w/ slippage — byte-identical S1/S2/v24. Brief expected pool-favourable; SIGN convention NOT operator-ruled (entry 96 ruled "settle at lensed", not round-trip dir). Does NOT block the gate (one-ITM-leg is pool-favourable; settles correctly vs base).
+- **Coverage corrections vs the brief/old MEMORY (IMPORTANT for re-runs):**
+  - **NO wminus/wplus wing-range inputs on this v24-base lens line** — those were v27-(W) controls. Kurtosis control = τ ONLY; κ (kappa-input, funding-decay) is the other steepness-adjacent knob. Harness verified `wminus-input` absent.
+  - **Perps are NOT notional-capped** — over-leverage shows in liq-price, not a reject. The trade-size rejection is the BAND over-carve guard (execute-time alert via `previewBand`/`executeBand` L2468). Invalid perp (zero notional/margin) DOES alert.
+  - `Store.recomputeClubs` is NOT exported (private) — to empty a club in evaluate use exported `Store.removePerp(id)`.
+  - **Band direction must be set to long (sold-CALL) before a steep sold-call ITM test** — the dir pill (`#band-dir-sell` dataset.dir) persists from prior steps; a left-over "short" makes 140000 a sold-PUT (not-OTM reject). Click #band-dir-sell to 'long' first.
+  - log() **unshifts** (newest at index 0) — read the close event by `eventLog.find(e=>e.kind==='close')`, not slice(before).
+  - Background-task stdout to /tmp buffers; the authoritative log is `evidence/.../RUN_LOG_run{A,B}.txt` written at the end. Don't trust a stale shared RUN_LOG when two runs target the same filename.
 
 ## ★★★★★ MOST RECENT — v28 POLAR-LENS STAGE-2 SMOKE (CANDIDATE `b53ace99`, NOT HEAD; v24-base lens line, write/settle THROUGH the lens)
 Build = `engine/builds/temporal_mvp_v28_lens_S2.html` (md5 `b53ace9996930249cad85fc1e37e6c61`, UNCHANGED
