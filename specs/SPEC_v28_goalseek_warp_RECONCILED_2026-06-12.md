@@ -219,3 +219,234 @@ structural-impossibility), which is OUT of this build's scope. Nothing submitted
 
 _Skeptic R6-gates this spec before intern dispatch; manager re-derives the float64 + re-checks the
 byte-identical (`tradeUpdate`/`arbitrageToOracle`/`rebase`) md5 claims before any build._
+
+---
+---
+
+# CORRECTION APPENDIX — held-mode WARP exponent fix (research-lead · 2026-06-12, dated)
+
+_READ-ONLY produced. NO engine edit, NO git, NO build, NO Aristotle. This appendix CORRECTS §A gap (i),
+§B `Viz.drawState` row, and §E gate-1/gate-6 of the original spec above. The original is left intact as
+the record; **where this appendix and the body disagree, this appendix governs the build.**_
+
+## C.0 — Why the original under-specified the draw (the defect, owned)
+
+The body said (§B L79): _"call `drawState(snap.sNorm, true, previewPool, state.tau)` so the dashed curve
+uses the **held** mode + the **moved** γ … passing the held `snap.sNorm` … yields `dG=(γ′−γ)·Φ` exactly."_
+**That is false about the code.** In HEAD the `drawState` exponent closure is
+
+```
+3576    const gAt = (theta) => poolForLens
+3577      ? Engine.gLoc(poolForLens, theta, tau_v)          // <-- mode read INTERNALLY off the pool
+3578      : (function(){ const w = sNorm > 0 ? 1/(1+sNorm) : 0.5; ... })();
+```
+
+and `Engine.gLoc(state, θ, τ)` (HEAD L1639) reads its mode from the pool, NOT from any argument:
+
+```
+1639    function gLoc(state, theta_K, tau) {
+1640      const w = getW(state);
+1641      const gamma = w / (1 - w);
+1642      const u = lensU(state, theta_K);                  // lensU -> getSNorm(state)  (L1633-1637)
+1643      ...
+1644      return gamma * hpTau(Math.abs(u), tau);
+1645    }
+```
+
+So when `poolForLens = previewPool`, the exponent's mode is `getSNorm(previewPool)` = the **POST-trade
+mode**. The `sNorm` argument to `drawState` only feeds `tmDeg` (x-axis, L3573), the `psiAt` ATM-center
+fallback (L3582), and `markLensed`'s smooth-paste center (L3583) — **it never reaches the exponent.**
+On a single Balancer pool the mode is locked to γ (`getSNorm = (1−w)/w`, the reciprocal of `γ = w/(1−w)`),
+so passing `previewPool` moves BOTH γ AND the mode → the after-trace is re-centered = the masked frame
+the operator corrected (entries 129/131/132). I re-derived this on the live engine: at θ=0.7×heldMode the
+CURRENT screen `dG` is **−0.4589** (flatter, sign-flipped) while the promised held-warp is **+0.4176**
+(steeper). Receipt: `/tmp/rl_heldmode_warp_check.js` + the calibrated reproduction below (C.4).
+
+## C.1 — The fix: a mode-OVERRIDE parameter on `gLoc`, threaded ONLY through the after-trace
+
+The held (pre-step) mode must enter the EXPONENT, separately from γ (which comes from the moved
+`previewPool`). Add an optional 4th parameter to `gLoc`; default = today's behavior (byte-identical).
+
+**Change 1 — `Engine.gLoc` (HEAD L1639–1645), add `modeOverride`:**
+
+```js
+function gLoc(state, theta_K, tau, modeOverride) {
+  const w = getW(state);
+  const gamma = w / (1 - w);                         // γ from the (moved) pool — UNCHANGED
+  const mode = (modeOverride !== undefined && modeOverride !== null && modeOverride > 0)
+             ? modeOverride                          // held (pre-step) mode, supplied by the after-trace only
+             : getSNorm(state);                      // OMITTED ⇒ live mode ⇒ byte-identical to today
+  const u = Math.log(theta_K / mode);
+  if (!isFinite(u) || !(mode > 0) || !(theta_K > 0)) return NaN;   // loud (subsumes lensU's guard)
+  return gamma * hpTau(Math.abs(u), tau);
+}
+```
+
+Notes binding on the intern:
+- When `modeOverride` is omitted/null/≤0, `mode = getSNorm(state)` and the body is **mathematically
+  identical to current `gLoc`** (re-derived: max |new−old| = 0.0 over a 100-point grid, C.4-(C)). The
+  inlined `u = Math.log(theta_K/mode)` reproduces `lensU` exactly (lensU IS `Math.log(theta_K/getSNorm(state))`
+  with the same guards). **`lensU` MAY be left as-is and unused-by-gLoc, OR gLoc may keep calling
+  `lensU(state,theta_K)` in the omitted branch** — intern's choice, but the override branch must use the
+  explicit `Math.log(theta_K/modeOverride)`. Do NOT change `lensU`'s own signature.
+- γ is ALWAYS `getW(state)/(1−getW(state))` — the override touches the MODE only, never γ. (This is the
+  whole point: moved γ, held mode.)
+
+**Change 2 — `drawState` exponent closure (HEAD L3572, L3576–3579), thread a held-mode arg:**
+
+Give `drawState` an optional `modeOverride` parameter and pass it into `gLoc` in the `poolForLens` branch:
+
+```js
+function drawState(sNorm, dashed, poolForLens, tau, modeOverride) {    // L3572 (+1 param)
+  const tmDeg = Math.atan(sNorm) * 180 / Math.PI;
+  const tau_v = (isFinite(tau) && tau > 0) ? tau : 0.3;
+  const gAt = (theta) => poolForLens
+    ? Engine.gLoc(poolForLens, theta, tau_v, modeOverride)            // L3577 (+ modeOverride)
+    : (function(){ ... unchanged non-pool fallback ... })();
+  ...
+}
+```
+
+The non-`poolForLens` fallback branch (L3578-3579) is UNCHANGED (it already uses `sNorm` as its mode and
+has no pool). `tmDeg`/`psiAt`/`markLensed` continue to use the `sNorm` argument as the x-axis + smooth-paste
+center — that is correct and must stay (the after-trace is registered on the held axis AND its exponent is
+now also held).
+
+**Change 3 — the preview-trace draw CALL (HEAD L3630–3632):** draw the after-trace at the **held** mode
+on BOTH the axis and the exponent. The held mode is `snap.sNorm` (= `getSNorm(state.pool)`, the pre-step
+live mode). Pass it as both the `sNorm` arg AND the `modeOverride`:
+
+```js
+const snap = snapshot(state);
+drawState(snap.sNorm, false, state.pool, state.tau);                  // live trace — UNCHANGED (no override)
+if (previewPool) {
+  // HELD-LENS after-trace: moved γ (previewPool) read through the HELD pre-step mode (snap.sNorm),
+  // axis + smooth-paste center + exponent ALL at snap.sNorm. dG = (γ'-γ)·Φ_τ(ln(θ/heldMode)).
+  const movedW = previewPool.alpha / previewPool.x;
+  if (Math.abs(movedW - snap.w) > 1e-6)
+    drawState(snap.sNorm, true, previewPool, state.tau, snap.sNorm);  // <-- modeOverride = HELD mode
+}
+```
+
+This REPLACES the L3632 `snapPost.sNorm`/no-override call. The redraw trigger is now "w moved"
+(`movedW − snap.w`) rather than "mode moved" (`snapPost.sNorm − snap.sNorm`) — equivalent for a single
+Balancer pool (mode is a monotone function of w) but states the intent (a w-warp) directly. The
+`snapshot(state, previewPool)` for `snapPost` is no longer needed by this block (the after-trace is drawn
+on the held axis); the intern may drop the `snapPost` local here if nothing else uses it, else leave it.
+
+## C.2 — HARD CONSTRAINT (gate/guard): the override is AFTER-TRACE ONLY
+
+The `modeOverride` argument is passed by EXACTLY ONE call site — the dashed after-trace draw (C.1 change 3).
+It MUST NOT be threaded into any other `gLoc` caller. The following stay at the LIVE mode
+`getSNorm(state)` and are **byte-identical** (they already pass no 4th arg, and the new param defaults to
+live):
+
+| Consumer (HEAD line) | `gLoc` call — stays live-mode |
+|---|---|
+| `legPrice` (L1725, L1733-1734) | `gLoc(state, …, tau)` — premium at θ_K, live mode |
+| `markEff` / settlement (L1918) | `gLoc(state, theta, tau)` — settled fraction, live mode |
+| `fundingPerStrike` (L2178) | `gLoc(state, strike_theta, tau)` — funding, live mode |
+| portfolio value display (L4217) | `Engine.gLoc(pool, part.theta, tau)` — live mode |
+| live trace draw (L3629) | `drawState(snap.sNorm, false, state.pool, state.tau)` — NO override |
+
+**Guard (gate W-OVR, NEW — see §E-replacement below):** a source/structural assertion that `modeOverride`
+(the 4th positional arg of `gLoc`) is supplied at EXACTLY ONE call site, and that site is the dashed
+after-trace `drawState(..., true, previewPool, ..., snap.sNorm)`. Any `gLoc(` call with 4 args anywhere in
+`legPrice`/`markEff`/`fundingPerStrike`/portfolio/the live trace ⇒ FAIL (basis break / A12 / single-basis
+violation). This is the mechanical twin of the one-helper single-basis invariant.
+
+## C.3 — CORRECTED gates (replace §E gate 1 and gate 6; add W-OVR)
+
+The body's §E gate 1 ("held-lens warp matches the formula") and gate 6 ("held-mode draw assertion") were
+the green-over-defect holes the skeptic found: gate 1 hand-rolled `Phi(uHeld)` and checked the trivial
+identity `(γ′−γ)Φ = γ′Φ − γ′Φ` (machine-zero, tests nothing the screen draws); gate 6 was a regex on the
+call string. **Both are replaced to call the ACTUAL exponent path.**
+
+**Gate W1 (CORRECTED) — exercise the real draw exponent, prove monotone-OTM, kill the sign-flip:**
+For a grid of (pool, dy, τ): build `previewPool = tradeUpdate(pre, dy)`; let `heldMode = getSNorm(pre)`,
+`γ = getW(pre)/(1−getW(pre))`, `γ′ = getW(previewPool)/(1−getW(previewPool))`. For each θ on a strike grid
+spanning both wings (θ/heldMode ∈ {0.3,0.5,0.7,0.9,1.2,1.5,2.5,4.0}):
+1. **Call the real path:** `gA = Engine.gLoc(previewPool, θ, τ, heldMode)` (the after-trace exponent) and
+   `gB = Engine.gLoc(pre, θ, τ)` (the live trace at the held mode = pre mode). Screen warp = `gA − gB`.
+2. **Assert it equals the formula:** `|(gA − gB) − (γ′−γ)·Φ_τ(ln(θ/heldMode))| ≤ 1e-12`. (Φ_τ(u) =
+   |u|/√(τ²+u²). This MUST use `Engine.gLoc` with the override, NOT a hand-rolled `Phi` — the whole point
+   is to test the function the screen calls.)
+3. **Monotone-OTM, no sign-flip:** assert `sign(gA − gB)` is the SAME (= `sign(γ′−γ)`) at every θ ≠ heldMode
+   on the grid, and that `|gA − gB|` is non-decreasing as |ln(θ/heldMode)| grows on each wing (to a tol).
+4. **The skeptic's counterexample is the locked regression case:** include the explicit point
+   `(pre = Balancer w=0.725, dy chosen so γ:2.636→3.182, τ=0.3, θ=0.7×heldMode)`. Assert:
+   - the **OLD/buggy** quantity `Engine.gLoc(previewPool, θ, τ)` − `Engine.gLoc(pre, θ, τ)` (NO override,
+     i.e. the post-mode after-trace) **sign-flips negative** (≈ −0.459) — i.e. the bug is real and the gate
+     would FAIL on the old draw; AND
+   - the **FIXED** quantity (with `heldMode` override) is **positive** (≈ +0.418) and matches
+     `(γ′−γ)·Φ_τ(ln 0.7)`. The gate PASSES only when the fixed path is wired.
+   This is the discriminating test: green requires the override to actually reach the exponent.
+
+**Gate W-OVR (NEW) — override is after-trace-only (replaces the old regex gate 6):** structural check that
+(a) the dashed after-trace call passes `snap.sNorm` as BOTH the axis arg and the `modeOverride` arg with
+`previewPool`, and (b) no `gLoc` call in `legPrice`/`markEff`/`fundingPerStrike`/portfolio/the live trace
+passes a 4th argument. If feasible beyond regex: instrument/spy that during a `drawAll(state, previewPool)`
+the only `gLoc` invocation receiving a non-undefined 4th arg is from the after-trace closure; settlement/
+funding/portfolio invocations all receive `undefined`. (At minimum a brace-scoped source scan of each named
+consumer for a 4-arg `gLoc(`.)
+
+**Gate W6 (CORRECTED — more than a regex if feasible):** the old W6 regex'd the call string. Replace with
+a behavioral assertion: build the live and after traces' exponent arrays by CALLING `Engine.gLoc` exactly
+as `drawState` does (live: `(state.pool, θ, τ)`; after: `(previewPool, θ, τ, snap.sNorm)`), and assert the
+after-array minus live-array equals `(γ′−γ)·Φ_τ(u_held)` across the θ grid to 1e-12 — i.e. test the drawn
+picture, not the source text. If a full DOM/canvas harness is infeasible in the Node oracle, W6 = the
+exponent-array equality above (which is the screen's y-values pre-`toPx`), explicitly labelled as the
+exponent path and NOT a string match.
+
+Gates 2 (goal-seek single-root), 3 (pool byte-identical md5), 4 (g_loc ≤ γ), 5 (no-inversion token scan)
+from the body §E are UNCHANGED and still apply.
+
+## C.4 — Re-derivation receipts (mine, live engine, float64)
+
+Script `/tmp/rl_heldmode_warp_check.js` (loads the live HEAD `Engine` via `vm`, transcribes nothing — calls
+`Engine.gLoc`/`Engine.tradeUpdate` directly). Calibrated reproduction of the skeptic case
+(`pre` = Balancer w=0.725, dy=150 ⇒ γ 2.636→3.182, heldMode=0.3793, postMode=0.3143, τ=0.3):
+
+| θ/heldMode | held-formula `(γ′−γ)·Φ_τ(u_held)` | CURRENT screen `gLoc(post)−gLoc(pre)` (buggy) |
+|---|---|---|
+| 0.30 | +0.5294 | +0.4936 |
+| 0.50 | +0.5007 | +0.3163 |
+| **0.70** | **+0.4176** | **−0.4589  ← sign-flip = the bug** |
+| 0.90 | +0.1808 | −0.0275 |
+| 1.20 | +0.2834 | +1.1036 |
+| 1.50 | +0.4386 | +0.7206 |
+| 4.00 | +0.5333 | +0.5490 |
+
+- **(A)** CURRENT after-trace (`gLoc(previewPool,θ,τ)`, post mode) sign-flips at 0.7×mode — matches the
+  skeptic verdict table (−0.4586) to rounding. The bug is confirmed on the live engine.
+- **(B)** held-override identity: `gLoc(post,θ,τ,held) − gLoc(pre,θ,τ,held) == (γ′−γ)·Φ_τ(u_held)` to
+  **max 7.1e-15**; `|dG|` monotone-OTM both wings = TRUE; NO sign-flip (sign = sign(γ′−γ) at every strike).
+- **(C)** override-OMITTED identity: `gLoc(pool,θ,τ)` with the new param omitted == current `Engine.gLoc`
+  to **max 0.0e0** over a 100-point grid (both pre and post pools) — the omitted path is byte-identical,
+  so `legPrice`/`markEff`/`fundingPerStrike`/portfolio/live-trace are untouched.
+
+`tradeUpdate`/`arbitrageToOracle`/`rebase`/`executeLeg`/`legPrice`/settlement (`markEff`/`closeBand`/
+`fundingPerStrike`) stay **BYTE-IDENTICAL** — the only diffs are: `gLoc` gains an optional 4th param
+(default = today), `drawState` gains an optional 5th param threaded only into the pool branch, and the
+one dashed after-trace call site swaps `snapPost.sNorm`(no-override) → `snap.sNorm`(+`snap.sNorm` override).
+
+## C.5 — Change-set (function @ HEAD line | change)
+
+| Function / site (HEAD line) | Change |
+|---|---|
+| `Engine.gLoc` (L1639–1645) | **MODIFY** — add optional 4th param `modeOverride`; mode = override if supplied & >0 else `getSNorm(state)`; inline `u = Math.log(theta_K/mode)`. Omitted ⇒ byte-identical. γ unchanged. |
+| `Viz.drawState` signature + `gAt` (L3572, L3576–3577) | **MODIFY** — add optional 5th param `modeOverride`; pass it as `gLoc(poolForLens, theta, tau_v, modeOverride)` in the `poolForLens` branch only. Non-pool fallback (L3578-3579), `tmDeg`, `psiAt`, `markLensed` unchanged. |
+| preview after-trace call (L3630–3632) | **MODIFY** — replace `drawState(snapPost.sNorm, true, previewPool, state.tau)` with `drawState(snap.sNorm, true, previewPool, state.tau, snap.sNorm)`; redraw trigger on `movedW − snap.w`. Live trace call (L3629) unchanged. |
+| `lensU` (L1633–1637) | **BYTE-IDENTICAL** (signature unchanged; gLoc's omitted branch reproduces it). |
+| `legPrice` (L1722–1734), `markEff` (L1915–1918), `fundingPerStrike` (L2175–2182), portfolio (L4217), live trace (L3629) | **BYTE-IDENTICAL** — no 4th `gLoc` arg; default = live mode. |
+| `tradeUpdate`/`arbitrageToOracle`/`rebase`/`executeLeg`/settlement | **BYTE-IDENTICAL** (W3 md5 vs v24). |
+| `lens_selfcheck.js` | gate W1 + W6 corrected, gate W-OVR added (C.3); gates 2/3/4/5 unchanged. |
+
+## C.6 — BOTTOM LINE
+
+**Buildable as ONE intern pass: YES.** Net = 1 param on `gLoc`, 1 param on `drawState`, 1 changed draw
+call, + the corrected/added gates (W1, W6, W-OVR). No operator-tier flag NEW to this correction — the
+mechanic is the already-approved frozen-pre-warp lens (entries 129/131/132, skeptic #43/#44, inventory #16);
+the §H operator-tier flags of the body (R1 = BLOCKED + out of scope; the single-step symmetric-rescale
+honesty caveat #2) STILL STAND unchanged and must reach the operator. **Skeptic R6-gates this correction
+before the intern rebuilds.**

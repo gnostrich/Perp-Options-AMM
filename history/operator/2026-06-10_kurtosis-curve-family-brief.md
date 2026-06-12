@@ -1110,3 +1110,19 @@ _Context: operator frames the integrated vision — the paper becomes a simple-E
 _Context: operator's idea for after this session — equip the team with Lean itself + permissions/access to build the whole object in Lean directly and run verification-debate in Lean, with Aristotle as an external examiner (rather than the sole prover/build)._
 
 > i have an idea, once we conclude with this session, i'll equip us with lean actually and the permssions and access so we can literally build the whole object in lean ourselves and do verification-debate in lean with aristotle as an external examiner
+
+
+---
+
+## Entry 147 — 2026-06-12
+_Context: operator corrects the manager's "the warp you see is the whole point" framing — distinguishes the operator SEEING the warp on the front-end from the settlement/portfolio/funding seeing it within the machine / internal interfaces; warns the manager to be careful with such statements. (Operator reviewing the rest of the prior message, replying as he reads.)_
+
+> "the warp you see is the whole point" -- there's a distinction between me seeing it on the FE, and the settlements / portfolio / funding thing seeing it within the machine / internal interfaces -- be very careful saying stuff like this... reviewing the rest of your message and replying as i read
+
+
+---
+
+## Entry 148 — 2026-06-12
+_Context: operator calls the manager's wording slippery and evasive, summons the skeptic (the entry-139 pre-send filter on manager replies was not being run), and demands simple plain English._
+
+> your wording is again slippery and evasive. fucking skeptic where are you? simple goddamn english
