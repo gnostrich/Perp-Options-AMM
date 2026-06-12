@@ -1,0 +1,44 @@
+=== RUN A === build=/home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_warp.html
+
+--- FEATURE 2: GOAL-SEEK readout ---
+G=3 (default): {"G":"3","live":"1.0000","wp":"0.7500","gp":"3.0000"}
+G=2: {"wp":"0.6667","gp":"2.0000"} (expect w'=0.6667 g'=2)
+G=10: {"wp":"0.9091","gp":"10.0000"} (expect w'=0.9091 g'=10)
+G=0.5 (<1): {"wp":"G≥1 required","gp":"—"} (expect "G>=1 required", no number)
+read-point gamma (live) @ default pool: 1.0000 (expect ~1.0000, w=0.5)
+
+--- FEATURE 3: honest copy ---
+GOAL-SEEK G input label:
+   "target wing-exponent G (steepness) at the read point · advisory readout, drives nothing automatically. G≥1 ⇒ γ>1."
+GOAL-SEEK advisory copy:
+   "Closed-form w′ = G/(1+G) — the Balancer weight whose wing-exponent γ = w/(1−w) equals the target G, read THROUGH the held lens. Advisory only: it tells you how far to move w; the trade is still the actuator (size = the walk). NOTE one trade warps the WHOLE profile by one factor (more in the wings, scaled by the lens Φ_τ) — it does NOT bend one strike independently of another in a single step. The asymmetric skew builds ACROSS the sequence as the picture (mode + lens) updates between steps."
+
+--- FEATURE 1: held-lens warp on trade preview ---
+canvas-pricing baseline (no preview): nz=11357
+band dir = long
+after preview: warn="" slippage=15.4388 %  ·  ≈ $4277.56
+warp profile (step1, sold-leg-only preview):
+   wLive=0.50000 -> wPrev=0.53583  gammaLive=1.0000 -> gammaPrev=1.1544
+   theta=1.1: g_loc 0.3028 -> 0.7191  |dG|=0.4163
+   theta=1.6: g_loc 0.8429 -> 1.0371  |dG|=0.1941
+   theta=2.6: g_loc 0.9541 -> 1.1136  |dG|=0.1596
+   theta=3.5: g_loc 0.9725 -> 1.1286  |dG|=0.1561
+canvas-pricing changed by preview? true (nz 11357 -> 11627)
+px separation (live teal vs preview coffee), call wing:
+   plot x-range [51,882]
+   theta=1.15 x=514 yTeal=227 yCoffee=-1 gap_px=null
+   theta=1.6 x=599 yTeal=274 yCoffee=332 gap_px=58
+   theta=2.4 x=687 yTeal=294 yCoffee=-1 gap_px=null
+   theta=3.2 x=737 yTeal=303 yCoffee=332 gap_px=29
+step2 (both legs): wLive=0.50000 -> wPrev=0.53583
+
+--- read-point gamma refresh after EXECUTE ---
+execute dialogs=["Open failed: Over-carve: band needs $160000 notional but club free is $10000."] warn=""
+read-point gamma (live) AFTER trade: 1.0000 (default was 1.0000)
+
+--- FEATURE 4: regression checks ---
+FATAL page.evaluate: ReferenceError: Viz is not defined
+    at eval (eval at evaluate (:290:30), <anonymous>:1:63)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /home/user/Perp-Options-AMM/engine/verify/pw_v28_lens_warp_smoke.mjs:305:14

@@ -51,7 +51,7 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 | C13 | Solvency boundary (B1 real floor) | OPEN | research-lead | ship-gate | — | conditional-only (B1 CARRIED[coverage]); geometry does NOT close solvency |
 | C14 | Esscher tilt / latent rapidity group | trusted-from-prover | research-lead | motivation-layer | Aristotle (audited) | RUN-2 (motivation-layer, not load-bearing for build) |
 | C15 | File-safety gate (blobs, splices, scripts) | VERIFIED | manager | locked (§3) | `file_safety_gate.sh` PostToolUse hook | **2026-06-12 manager-ran: webp `ab663f5c…` + svg `c505b08a…` canonical; 3 scripts parse** |
-| C16 | **Warp-with-trades / goal-seek warp** | **AGREED + SPEC'D, UNBUILT** | research-lead/intern | entries 10/14/16; 128–133 | (build gates pending) | **OPEN since day 1.** Spec `SPEC_v28_goalseek_warp_RECONCILED`. Build HELD behind this register (entry 137/138 grievance). **NEVER label as built.** |
+| C16 | **Warp-with-trades / goal-seek warp** | **PARTIAL — readout BUILT; warp-view DEFECTIVE, NOT promoted** | research-lead/intern | entries 10/14/16; 128–133 | skeptic promote-audit = **HOLD/FLAG-WRONG** | **OPEN since day 1.** Goal-seek readout `goalSeekW=G/(1+G)` built + gate-verified (W2). **Held-lens warp VIEW FAILED skeptic promote-audit (`VERDICT_C16_goalseek_warp_PROMOTE`):** after-trace exponent `gLoc(previewPool,θ,τ)` reads mode off the POST-trade pool (mode=1/γ locked to γ) → still re-centered = the masked frame; screen dG sign-flips at 0.7×mode. **W1 gate tested the algebra not the draw path (audit-the-auditor hole).** FIX = lens helper must take the HELD mode separately from γ; W1 must call the real draw fn. **NOT promoted; HEAD unchanged 7e1ae39b. A1 does NOT advance. NEVER label as built.** |
 
 ---
 

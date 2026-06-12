@@ -133,6 +133,25 @@ w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{
   MEMORY intact (2191 lines, #45 + entry-138 self-audit + blind-spot #12). No corruption. LESSON: serialize
   same-agent dispatches; never 2 skeptic at once. Both verdicts RELAYED VERBATIM to operator.
 
+## ⛔ C16 PROMOTE = HOLD (skeptic FLAG-WRONG, 2026-06-12) — DO NOT PROMOTE; HEAD stays 7e1ae39b
+Skeptic promote-audit `notes/skeptic/VERDICT_C16_goalseek_warp_PROMOTE_2026-06-12.md` = HOLD. The held-lens
+warp VIEW (build's whole point) does NOT render the held-mode warp: after-trace exponent is
+`gLoc(previewPool,θ,τ)` which reads mode = getSNorm(previewPool) = POST-trade mode (mode=1/γ LOCKED to γ on
+one Balancer pool) → still re-centered = the masked frame the operator corrected (129/131/132); screen dG
+SIGN-FLIPS at 0.7×mode (−0.46 vs promised +0.42). **Gate W1 tested the ALGEBRA (γ′Φ−γΦ identity) not the
+draw path; W6 regex-only → 29/29 green but the picture is wrong = audit-the-auditor hole (skeptic pattern #12).**
+MY MISS: I accepted 29/29 as "warp renders" — it didn't test the real draw fn. Owned to operator + relayed HOLD verbatim.
+What PASSED (held): scope = exactly 3 changes no creep; pool/write/settle/θ_K byte-identical (skeptic brace-diffed);
+goalSeekW=G/(1+G) closed-form forward, NaN-loud G≥1, honest A11 copy. So the READOUT half is good; the VIEW half failed.
+**ROOT FIX (forced, = frozen-pre-warp mechanic #43/#44): the lens helper must take the HELD mode SEPARATELY from γ**
+(gLoc variant w/ explicit mode override, PREVIEW-AFTER-TRACE ONLY — must NOT leak to settle/write/portfolio = live
+mode, else basis break); corrected gate W1 must CALL the real draw fn & compare to (γ′−γ)·Φ_τ(u_held).
+Register C16 → PARTIAL (readout built; warp-view defective, NOT promoted). A1 does NOT advance.
+PIPELINE: research-lead spec-correct (its spec under-specified gLoc mode-source — own defect) → skeptic R6 →
+intern REBUILD on warp file → corrected gates + skeptic re-audit + tester → promote. Warp build file abd46149
+retained as the defective-attempt record (NOT promoted). Tester a87ea99 live-smoke STILL RUNNING (fold when lands;
+HOLD stands regardless — its visual PASS would be a W1-class false-green, skeptic code-derivation overrides).
+
 ## ✅ REGISTER first-state audit CLEAR (skeptic #47) + C16 build clearing gates (2026-06-12)
 - Skeptic #47 (`notes/skeptic/VERDICT_COMPONENT_REGISTER_FIRSTSTATE_2026-06-12.md`): register CLEAR,
   halt lifted to "register-gated"; skeptic re-ran lens_selfcheck cold = 23/23, confirmed C16 honestly

@@ -452,6 +452,36 @@ inventory, operator answered — remaining live tail = every curve note must dis
   moves and genuine growing skew emerges (sibling of #10: right object, wrong frame — here the
   frame is single-step-frozen vs his multi-step-updating sequence).
 
+12. **Gate-tests-the-formula-not-the-draw; held-mode held in registration but not the exponent
+  (verdict #C16-promote, 2026-06-12 → HOLD/FLAG-WRONG).** The C16 goal-seek-warp build claimed to
+  draw the held-lens warp `(γ′−γ)·Φ_τ(u_held)`, but the dashed after-trace exponent is
+  `Engine.gLoc(previewPool,θ,τ)` and **gLoc reads the mode off the pool you pass it**
+  (`getSNorm(previewPool)` = POST-trade mode). The held `snap.sNorm` arg only set the x-axis +
+  smooth-paste center, NOT the exponent ⇒ the after-trace is STILL re-centered on the moved mode =
+  the exact masking frame the operator rejected (entries 129/131/132; sibling of #10/#11). On the
+  live engine the screen dG even flips SIGN vs the promised held-mode dG at θ=0.7×mode (−0.46 vs
+  +0.42). **Gate W1 passed at 4.44e-16 because it hand-rolls `Phi(uHeld)` and checks the trivial
+  algebra `(γ′−γ)Φ=γ′Φ−γΦ` — it NEVER calls `gLoc(previewPool,…)`, the function the screen draws.**
+  W6 is a regex confirming the string exists. So 29/29 green is true-for-the-formula, false-for-the-
+  picture. LESSON: when a view-layer change claims to fix a re-centering/masking artifact, the gate
+  must call the ACTUAL draw function and compare to the target — a self-rolled re-derivation of the
+  target tests nothing about the draw. And "held mode" can be held in registration/x-axis while the
+  load-bearing EXPONENT silently re-derives the mode from the pool. Always trace which mode reaches
+  the EXPONENT, separately from which reaches registration. (Sibling of audit-the-auditor + GOTCHA
+  #12 price-vs-slope: a green self-consistency gate over a wrong drawn quantity.)
+
+### Verdict #C16-promote (2026-06-12) — HOLD on temporal_mvp_v28_lens_warp.html
+→ `notes/skeptic/VERDICT_C16_goalseek_warp_PROMOTE_2026-06-12.md`. Scope CLEAN (3 changes, 7 hunks,
+all mapped); write-path/pool/settlement/θ_K byte-identical (brace-extracted + diffed myself, not
+taken on word); `goalSeekW=G/(1+G)` genuinely closed-form forward, advisory, NaN-loud guard, never
+feeds a write — the READOUT half is honest; on-screen copy carries the A11 single-step caveat
+correctly. **HOLD = FLAG-WRONG on change 1 (held-lens view):** after-trace exponent re-centered on
+post-trade mode (gLoc reads previewPool's own mode); gate W1 tests the algebra not the draw. C16
+must NOT flip to BUILT — honest state = PARTIAL (readout built+gated; warp-view not delivered). A1
+dot-sliding does NOT move toward delivered (visible warp still the re-registered profile). A12 θ_K
+satisfied. Fix named (exponent must take the held sNorm; W1 must call the real draw fn) — not
+designed.
+
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
   mpmath digits to ~1e-3 or better; calibrate against a known note value first.
