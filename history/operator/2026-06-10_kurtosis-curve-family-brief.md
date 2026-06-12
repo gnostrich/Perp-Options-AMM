@@ -1432,3 +1432,11 @@ _Context: operator sharpens the dig — the option-price layer is a separate lay
 _Context: operator extends the dig — if kurtosis is made steeper (lower number in the html), a given strike reads as further-OTM, so that should mean even MORE warp, not less, right?_
 
 > so similarly if i make kurtosis steeper (less value in the html), that would imply that i'm seeing a further OTM+ strike so that would mean even more warp not less right
+
+
+---
+
+## Entry 186 — 2026-06-12 16:21 UTC
+_Context: operator pins the separate-layer trade rule — option pricing factors in ONLY at the buy leg, where the actual premium proceeds determine how much you can buy._
+
+> the only place the option pricing thing factors in would be in the buy leg where the avtual proceeds determine how much you can buy
