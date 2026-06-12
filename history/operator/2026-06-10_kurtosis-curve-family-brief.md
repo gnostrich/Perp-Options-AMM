@@ -863,3 +863,11 @@ _Context: brainstorm — operator proposes the two-layer model (AMM swap account
 _Context: operator comprehension check on the trade mechanic — the sold-part cash is irrelevant; the premium value determines the amount of the bought leg._
 
 > did you understand clearly that the cash from sold part is irrelevant, and its the premium value that determined the amount of bought leg?
+
+
+---
+
+## Entry 116 — 2026-06-12
+_Context: operator refines the comprehension point — it's not the cash but the sold-leg's AMM-tx PROCEEDS that aren't used to size the bought leg; the PREMIUM is._
+
+> not cash specifically but proceeds from sold leg as per AMM tx isnt used to calculate the bought leg, but the premium, does that make sense?
