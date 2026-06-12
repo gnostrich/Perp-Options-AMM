@@ -855,3 +855,11 @@ _Context: operator pushes back on the flat-slippage finding — argues the goal-
 _Context: brainstorm — operator proposes the two-layer model (AMM swap accounting + buy-leg cash via premium accounting so layers don't conflict) and asks: for the same AMM-standpoint swap, further OTM + more skewed (lower kurtosis number, inverted) → more curve warp (slippage)?_
 
 > so we get this clear lets both brainstorm --- you have a trade as per the AMM as the accounting layer where it looks like an actual swap, but then for the buy leg, we don't assume cash as per the pool, but rather as per the premium accounting if that makes sense; this way the layers don't conflict --- now, nevertheless, for same dollar value swap from the AMM standpoint, further OTM, and more skewed (lower kurtosis number since its inverted) would mean more curve warp (slippage) ...?
+
+
+---
+
+## Entry 115 — 2026-06-12
+_Context: operator comprehension check on the trade mechanic — the sold-part cash is irrelevant; the premium value determines the amount of the bought leg._
+
+> did you understand clearly that the cash from sold part is irrelevant, and its the premium value that determined the amount of bought leg?
