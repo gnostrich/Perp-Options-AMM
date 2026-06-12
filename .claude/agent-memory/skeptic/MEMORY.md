@@ -2526,3 +2526,25 @@ ALWAYS derive the step-size→0 limit before gating a build on the step version 
 quantity under dispute is a STATE FUNCTION (end-state independent of stepping), which dissolves
 frame fights (held-vs-live) by telescoping. Sibling of #10/#11 (frame errors) but temporal: the wrong
 frame here was "one big step."
+
+### Reply #entry168-two-traces (2026-06-12) — operator-facing explanation of the two-trace split
+→ `notes/skeptic/REPLY_TO_OPERATOR_entry168_two_traces_2026-06-12.md` (relay-only, verbatim).
+Operator entry 168 (verified verbatim, transcript L1296) asked for a zero-ambiguity explanation of
+research's "optional second trace — warp the trade injected per strike (the potential)".
+- **Re-verified COLD before asserting** (`/tmp/sk_entry168_decomp.py`): decomposition identity
+  `live diff = ΔG(riding-lens potential) + recentering term` — derived by hand (chain rule on
+  γ·Φ_τ(|ln(θγ)|): dg/dγ = Φ(|v|) + sign(v)·τ²/(τ²+v²)^{3/2}) AND numerically. Calibrated triple
+  reproduces exactly: 0.7× strike −0.4586 = +0.3513 − 0.8099 (resid 3e-15). FRESH case (sell,
+  y0=800/w0=0.66/D=−90/τ=0.45): identity ≤3e-15, ΔG all-negative (single-signed confirmed both
+  directions), round-trip 2e-16, bound |ΔG|≤|Δγ| holds. NOTE: fixed-grid Simpson leaves ~1e-5
+  resid at strikes the centre path CROSSES (|v| corner) — integrator error, not the identity;
+  use adaptive there.
+- **SETTLED (mine to defend now):** trace one = live post-trade lensed curve (the money curve,
+  ratified 3-ways, chart-2 standing); trace two = ∫Φ dγ accumulated riding-lens warp = a per-strike
+  potential (path-independent, single-signed, V-shaped in log-strike with min in the swept band,
+  saturates at Δγ, round-trip zero); they differ by the recentering term at EVERY strike. The
+  labelling rule relayed to operator: trace two must never be presented as "the curve after your
+  trade". Decision (add as 2nd chart line / tooltip / omit) = operator's, open, nothing blocked.
+- Research note `CONTINUOUS_trade_warp_lens_calculus_2026-06-12.md` audited in passing: provenance
+  labels honest (§7 separates DERIVED+VERIFIED / definition-level / retrieval-only), no FLAG.
+- Verbatim channel HELD (entry 168 grep-matched incl. typos "ecxplan"/"soundfs"). No FLAG-PROCESS.
