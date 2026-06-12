@@ -1580,3 +1580,13 @@ _Context: operator confirms the manager's "at-strike" definition is correct._
 _Context: operator (away from laptop) asks whether the warp-magnitude-vs-OTM and vs-kurtosis behavior was actually tested._
 
 > im not infront of laptop, so did u test thr tiings is mentioned about curve warp magbitude otm kurtosis etc..?
+
+
+---
+
+## Entry 204 — 2026-06-12 18:05 UTC
+_Context: operator asks for monolith status; and adds two loop-closure requirements that belong to that context — closing the actual slippage on options, and the no-jump ATM position-value continuity — for the full loop to be closed._
+
+> also hows the monolith thing coming along?
+>
+> in that context we have to close the actual slippage on options and the no jump atm position value thing too full loop closed
