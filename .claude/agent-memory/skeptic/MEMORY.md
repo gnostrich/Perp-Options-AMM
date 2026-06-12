@@ -2574,3 +2574,44 @@ flip BUILT+PROMOTED and let VERIFIED wait on the audit. Carried-OPEN honest (at-
 post-execute re-sweep UX call; FINDING-WARP-DIR superseded-not-dropped). Edge probes mine: anim key
 omits alpha/τ ⇒ worst case skipped sweep w/ correct static picture; mid-sweep state change ⇒ <0.8s
 stale frames, draw-only. Verbatim channel HELD (158/159/163/164/173/177/181 all read in transcript).
+
+### Verdict #A14-seam-realclose (2026-06-12) — NEEDS-OPERATOR-DECISION on SPEC_atstrike_swap_A14 §2
+→ `notes/skeptic/VERDICT_A14_seam_realclose_2026-06-12.md`. HALT-class check, ~17:55 UTC. Question:
+is the spec's "+$125,409 riskless round-trip" a REAL arb or a harness artifact? **Both partly.**
+The ALARM IS REAL (build stays blocked, operator owns the call); the spec's NUMBERS and its
+"pool restores 1.8e-15" claim are harness artifacts. What I verified COLD on the real engine
+(HEAD 4378bc11, closeBand L1971–2162):
+- **closeBand NEVER calls executeLeg** (spec §1 L80 says it does → FLAG-OVERSELL). It reverses with
+  `tradeUpdate(s,±X)`, X=legPrice().V = lensed PREMIUM, NOT at-strike N·K. So at-strike OPEN +
+  premium CLOSE ⇒ **pool does NOT restore**: open warps y by −$254,463, real close reverses by −$1.
+  Residual −$254k left in the pool forever. The harness reversed BOTH legs at-strike (its own
+  executeLegAS) ⇒ that's where its 1.8e-15 "restore" came from. The engine has NO single-leg close
+  path either ⇒ the spec's per-leg table (+$6,350… I reproduced 6350.48 from its formula) measures a
+  quantity the engine never computes.
+- **But raw_net IS positive on the real closeBand**, strike-scale, every band: sellC1.5/buyC2.0
+  +$66,983; sellC1.5/buyP0.667 +$12,513; sellP0.667/buyC1.5 +$37,021 (per unit carvedEquity, ×L0).
+  Paid out of carved-equity via trader_payout=L0·raw_net·carvedEquityAtClosure (L2143). Self-pump is
+  real: at-strike open warps γ 1→0.36, bought leg marks UP on the trader's own bend (m_b 0.72–1.68).
+- So there are TWO leaks: (1) premium-ledger raw_net +$13k–$67k/unit-equity (real, SMALLER than spec's
+  +$125k); (2) pool-not-restored −$250k-scale (real, spec missed it / claimed the OPPOSITE).
+- Least-invasive §2.4 closure I named (NOT chose): make closeBand reverse AT-STRIKE (reverse dy =
+  −open dy) so the pool genuinely restores and legs value at the restored=entry state → kills both
+  leaks; it's a settlement-semantics change (operator-tier) + touches entry-96 single-basis.
+- Operator's one-sentence decision: "on close, value on the bent curve you just made (today → free
+  money) or un-bend first then value (no free money)?" His call; build not shippable without it.
+- Verbatim channel HELD: entries 184/186/187/193 read in transcript; A14 register row L76 read.
+  Two-layer model (193/1502): notional→AMM bookkeeping (sell=purely AMM), pricing→buy notional only.
+
+## Team blind-spot pattern (addition, verdict #A14-seam) — #19
+**Harness models a close/settlement the ENGINE DOESN'T HAVE; "pool restores" + headline $ are
+artifacts of the invented close.** The A14 spec's harness reversed the at-strike open with its OWN
+at-strike close (executeLegAS on both legs) and a single-leg buy-back valuation — neither exists in
+HEAD (closeBand reverses premium-sized, band-only, no single-leg path). Result: a clean 1.8e-15
+"pool restores" AND a $125,409 figure, both false-to-engine; the real closeBand restores NOTHING
+(−$254k residual) and gives +$67k. LESSON: when a spec measures a round-trip on a *simplified*
+harness, the FIRST check is whether the harness's close/settle path is byte-faithful to the engine's
+actual close fn — re-run the round trip through `Engine.closeBand` itself, never the harness's model
+of it. A "leak" can be over- OR under-stated by a close the engine doesn't run. Sibling of #12
+(gate-tests-the-formula-not-the-draw) and the price/slope gotcha: here it's measure-the-arb-on-a-
+close-the-engine-doesn't-do. Also: a spec that says "reversal inherits X automatically" must be
+checked against whether the reversal code path even CALLS the function X lives in (it didn't).
