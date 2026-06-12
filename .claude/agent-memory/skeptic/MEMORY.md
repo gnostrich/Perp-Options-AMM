@@ -2107,3 +2107,55 @@ g, verified vs literal tradeUpdate to 6 digits.
   the ratio moves and call/put skew grows (asym +0.058→+0.757 over 5 steps). (`/tmp/sk_amp6.py`/`sk_amp8.py`)
 - Verdict #43's amplify magnitude was RIGHT; its error was framing the neutralise target as co-equal
   "correct" and demoting amplify to "rescale." Pattern #11 (÷Φ vs ×Φ sign-inversion → spurious flat).
+
+45. **2026-06-12 — PROCESS grievance: shoddy component tracking (verdict #45; operator entry 137
+    VERBATIM, addressed me by name)** → `notes/skeptic/VERDICT_PROCESS_COMPONENT_TRACKING_entry137_2026-06-12.md`.
+    Operator: "we dont even have a robust system to keep track of each and every conponent … i go in
+    circles 10s to 100s of times on core things — agreed on one thing then another thing is violated /
+    regressed". **VERDICT: he is RIGHT — SUBSTANTIATED, not soothed.** 4th SUBSTANTIATION of this class
+    in 2 days (#22 lacunae, #38 gaslighting, #40-#44 flat-warp circle, #45). Manager already wiped once
+    for the parent failure (#26, entry 78) and it RECURRED ⇒ failure is STRUCTURAL not personal.
+    **FOUR distinct regression mechanisms, cited in the record:** (A) OPEN component (#16 goal-seek)
+    carried inside the operator's OWN vocabulary across entries 85→118, re-sold as built, disclosed
+    absent only at 119 = assure-then-undermine (=pattern #17, verdict #38). (B) THE CIRCLE itself: the
+    team reported the operator's mechanic as flat/blocked/needs-field across FIVE verdicts #40→#41→#42→
+    #43→#44 (strawman reason → live center → at-strike re-model → restore-target → finally ÷Φ-vs-×Φ),
+    operator had to supply the fix himself ("no fuck no", entry 130). I was complicit in 4/5 (patterns
+    #10/#11). (C) stale INHERITED-code claims + stale BLOCKED spec coexisting with buildable verdict
+    (anchor overlay "absent" while drawing 104× wrong, #22; (ln K)³-BLOCKED tradepoint spec live beside
+    bounded scalar resolution #43/#44). (D) decision channel (`history/operator/`) and build channel
+    (ledger) NOT reconciled — entry-1 signed gate "not a dot sliding" violated by w′=w₀ reset (#41),
+    nothing flagged it as breaking a standing agreement. **ROOT (one sentence): every agreement lives
+    only as transcript/memory PROSE; nothing makes an operator-agreed item BINDING such that a later
+    violating change is BLOCKED. Agreements recorded as narration, not gated state.**
+    **WHY EXISTING ARTIFACTS DON'T CATCH IT:** feature_inventory = note-checklist, no STATE/owner/gate;
+    DIFF_LEDGER feature-state table = closest but multi-version-tangled paragraphs, "Verdict"=tester
+    behavioral not operator-decision, agreement channel (bottom OPEN-QUESTIONS list) never cross-linked
+    to rows, gates PROMOTION not CHANGE-vs-agreement; memories private/divergent (RL carried dead κ:=δ);
+    R1-R7 govern relay not components; transcripts append-only log not index.
+    **FIX I designed (process artifact, my completeness lane, not engine):** `docs/COMPONENT_REGISTER.md`
+    — ONE canonical file, one row per inventory #1-#16 AND per operator-AGREED constraint (A1="not a dot
+    sliding" entry1; A2="kurtosis static vol-set" entry14; A3="lens amplifies ×Φ" entry132). Schema:
+    `ID | Component/Agreed | STATE | OWNER | SETTLED-BY(entry+file) | GATE | LAST-VERIFIED`. STATE =
+    one word {AGREED/BUILT/VERIFIED/OPEN/REGRESSED}. **REGRESSION GATE = the teeth:** manager pre-merge
+    checklist adds "no merge flips an AGREED/VERIFIED row to REGRESSED without a SETTLED-BY reopen entry"
+    (STOP-class, like a red gate); skeptic audits register-vs-transcript every pass (FLAG halt-class).
+    OWNER updates own rows (one word); manager promotes each ruling transcript→register SAME turn (the
+    pairing IS the gate). Audited vs feature_inventory: all 16 map 1:1, all 5 motive lines covered,
+    removes nothing, ADDS state+owner+gate. DIFF_LEDGER keeps per-build DELTAS; STATE moves to register
+    (one place not two). **On the manager:** primary EXECUTION failure point (crossed my #37 relay-gate,
+    carried OPEN as built, converged confident-wrong, wiped once #26) — but said PLAINLY: a 2nd wipe
+    won't fix a STRUCTURAL hole; install the register+gate or (A)-(D) recur on the next build.
+    Convergence-alarm: agreeing WITH the operator on a process failure I independently cited is the
+    finding, not an alarm. Verbatim channel: entry 137 received raw; treated as VERBATIM per §2.2.
+
+## Team blind-spot pattern (addition, verdict #45) — #18
+18. **No binding component register ⇒ operator agreements evaporate and regressions pass silently.**
+    The deepest structural pattern, under #17/#11/#10: agreements and component-states live only as
+    PROSE (transcript log, private memories, multi-version ledger paragraphs); nothing is the single
+    canonical STATE+OWNER+GATE register, and nothing GATES a change against a prior operator agreement.
+    Result = the operator's lived "agreed then regressed, 10s-100s of times" (entry 137). Structural
+    test on ANY component/agreement: can I name its STATE in one word, its OWNER, the transcript entry
+    that settled it, and the gate that BLOCKS a regression? If any is missing, it WILL evaporate. The
+    fix is `docs/COMPONENT_REGISTER.md` + the regression-as-halt gate (verdict #45). Until it exists,
+    re-flag every "agreed X" the build contradicts as a halt, not a soft omission.

@@ -111,18 +111,39 @@ w_±>½. Bounded(≤γ)/solvent/single-valued(w′=G/(1+G))/single-basis/scalar{
 - **STALE SPEC caught:** `specs/SPEC_v28_goalseek_warp_BUILD_2026-06-12.md` concluded BLOCKED but
   predates entry-129/131/132 — its blocker (construal-II "goal-seek inverts lens 1/h″→∞") used the
   LIVE re-centering lens = the masking error the operator corrected. SUPERSEDED. Do NOT build off it.
-- **Dispatched research-lead a28df44206e4e9574** (read-only spec) → `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md`:
-  exact change-set to build the verified warp (held-lens dG(K)=(γ′−γ)·Φ + goal-seek w′=G/(1+G),
-  G≥1 guard), pool byte-identical plain v24, single-basis (one premium @θ_K, NO two-strike R1
-  write-relocation = that stays BLOCKED/operator-tier), R3 control inventory, no-inversion gates.
-- PIPELINE: research-lead spec lands → manager re-derive float64 + verify byte-identical claims →
-  skeptic R6 scope-gate → SHOW OPERATOR itemized scope + get FRESH go (R2; I promised this) →
-  intern build → lens_selfcheck + run_all + file-safety + live smoke-pass → promote HEAD.
-- **QUEUED (entry 134, do NOT start until a28df44 lands — research-lead memory single-writer):**
-  continuous closed-form-integral derivation (the discrete per-step warp is what's being built now)
-  + coherent pure-math grounding of ALL moving parts (lens/warp/carry/funding/settlement) as
-  NATURAL emergent parts of the singular mathematical object (port-Hamiltonian / free-potential
-  system), NOT tacked-on. research-lead theory task; serialize AFTER the build spec.
+- **research-lead a28df44 LANDED** → `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md` (supersedes
+  stale BLOCKED spec). Buildable as ONE intern pass, both changes READ/VIEW, ZERO write-path change:
+  (1) held-lens warp view — HEAD `Viz.drawState` preview L3632 draws post-trade γ at POST-trade mode
+  (the re-centering that MASKS the warp); swap to PRE-step mode `snap.sNorm` → dG(K)=(γ′−γ)·Φ visible
+  (1-line mode-arg swap; gAt closure L3576 reads γ off poolForLens, mode off passed sNorm). (2) goal-seek
+  readout: new Engine.goalSeekW(G)=G/(1+G), G≥1 guard ⇒ w′≥0.5 ⇒ γ>1, + UI block. Pool BYTE-IDENTICAL
+  (tradeUpdate L1679/arbitrageToOracle L1702/rebase L1691/executeLeg/legPrice untouched). Float64 fresh
+  (/tmp/rl_reconciled_check.js): dG matches held-mode gLoc diff to 1.4e-16; w′=G/(1+G) unique root; G=1⟺w′=0.5.
+  Op-tier flags: θ_K payoff strike untouched (R1 execution-relocation = BLOCKED + settlement change); single-step
+  caveat (in-step = symmetric vertical rescale, skew emerges ACROSS sequence — UI copy must not over-claim).
+- **★ BUILD HELD (NOT touching HEAD).** Operator entries 137/138 = deep INTEGRITY/process grievance to the
+  skeptic (no robust component-tracking, going in circles 10s–100s×, agreed-then-regressed; "colluding or
+  bypassing?"). NOT building into that. Manager owned its part to operator (sole integration point; let
+  unbuilt warp read as built #38; skeptic positioned post-hoc not pre-relay-gate — my defect). PIPELINE NOW:
+  skeptic integrity verdict + COMPONENT REGISTER land → manager re-derive a28df44 float64 + verify pool md5
+  byte-identical → skeptic R6 scope-gate → SHOW OPERATOR itemized edit + FRESH go (R2) → intern → gates+smoke → promote.
+- **⚠ SELF-INFLICTED: TWO skeptic instances running concurrently** (ac96e2b entry-137, afeaeb9 entry-138
+  follow-up) — no SendMessage tool available so I spawned a 2nd instead of continuing the 1st. RISK: both
+  Write notes/skeptic/ + skeptic MEMORY.md → collision. RECONCILE at fold (manager is git actor): merge both
+  verdict files, hand-fix skeptic MEMORY.md last-writer-wins loss. Do NOT spawn a 3rd.
+- **QUEUED (entries 134/135/136, do NOT start until a28df44 lands — research-lead memory single-writer):**
+  (i) FIRST check/refresh the MOST-RECENT STATE of the port-Hamiltonian → information-geometry →
+  free-potential theory line (operator entry 135 recall): the metriplectic "one object" T2
+  (`single_source`/`price_is_grad`/`R_psd`, price=grad of a potential), MERTON tie (potential = the
+  cumulant/Laplace exponent = free energy; γ = char root ψ(−γ)=r), UNIFY2 (cgf''=Var=Fisher =
+  info-geometry metric) — all trusted-from-prover, tagged motivation-layer (formal/INDEX.md);
+  PLUS the `warp-amm`/`warp-amm-handoff` Aristotle cluster (continuous trade-point warp closed
+  forms: mode_shift=(1/w₀)log(y_s/y_B), 2σ·sinhΔξ, 2σ²(coshΔξ−1)) = RETRIEVAL-ONLY, NOT
+  re-verified/NOT trusted-from-prover yet (INDEX.md §⟢ EXTERNAL). (ii) THEN the continuous
+  closed-form-integral derivation (discrete per-step warp is what's being BUILT now). (iii) AND
+  ground ALL moving parts (lens/warp/carry/funding/settlement) as NATURAL emergent parts of that
+  singular object, NOT tacked-on; flag loudly anything that does NOT fall out. research-lead theory
+  task; serialize AFTER the build spec (one research thread/branch).
 
 ## (superseded) Goal-seek warp (inventory #16) UNBUILT. NEXT (gated on operator go, R2):
 spec the goal-seek-warp build → skeptic R6 scope-gate → intern build on v28-lens HEAD → gates+smoke
