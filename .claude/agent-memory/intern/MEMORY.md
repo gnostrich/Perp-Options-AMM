@@ -1,6 +1,67 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 CONTINUOUS-WARP preview — NEW file, handed to manager; no git).
+_Last updated: 2026-06-12 (v28 AT-STRIKE swap A14 — NEW file, handed to manager; no git).
 Rewrite changed bits at task end._
+
+## Done — v28 AT-STRIKE AMM SWAP (register A14, NEW file, handed to manager 2026-06-12, URGENT)
+Build **`engine/builds/temporal_mvp_v28_lens_atstrike.html`** (NEW, from CLEAN HEAD `4378bc11`;
+HEAD UNTOUCHED, no promote, no git). md5 **`de28c93712ffb1a7fcafc66b36a0ea83`**. Authority:
+spec `specs/SPEC_atstrike_swap_A14_2026-06-12.md` §1/§2.3 + operator entry 197 OVERRULING the
+spec's §2 HARD-RED arb stop ("transact at whatever the curve is; forget arb for now; option
+pricing is a separate layer from AMM pricing"). Splices on `/tmp/work_atstrike.html`:
+`/tmp/splice_atstrike_engine.py` (executeLeg+DEPTH_FRAC), `_band.py` (guard propagation),
+`_close.py` (close reversal); gate `/tmp/splice_lenscheck_atstrike.py` + 3 Edits.
+- **OPEN (executeLeg, was L1761):** dy now AT-STRIKE `dy = (wingSign*legSign)*N*K_usd`,
+  `K_usd = theta_inner*oracle` (premium-FREE). legPrice/V STILL computed + returned (settle
+  basis + N_buy sizer per entry 96/187) — just no longer sizes dy. Added `K_usd` to leg return.
+- **Reserve guard (spec §2.3):** new engine const `DEPTH_FRAC=0.90` (before executeLeg). If dy<0
+  and `N*K_usd >= 0.90*(y−beta)` → `{rejected:true, reason:"At-strike cash $X exceeds 90% of pool
+  cash depth $Y — trade rejected."}`. NEVER a silent cap, N never mutated. executeBand propagates
+  via `if(leg && leg.rejected) return {ok:false, reason:leg.reason}` (added before both `if(!leg)`).
+- **CLOSE (closeBand, ~L2005+):** added at-strike reversal-dy helper after band rebuild —
+  `dyRevSold = -(wsSold*(+1)*N_sold*Ksold)`, `dyRevBought = -(wsBought*(-1)*N_buy*Kbought)`,
+  K from stored `K_inner` (oracle-drift-invariant). Replaced all 3 reversal `tradeUpdate` sites
+  (sold-ITM→bought reverse, bought-ITM→sold reverse, neither-ITM→both) `tradeUpdate(s,±X/Y)` →
+  `tradeUpdate(s, dyRev*)`. X/Y (lensed premium VALUE) UNCHANGED = trader-valuation basis (entry
+  96). reverse dy = −open dy ⇒ reserves round-trip EXACT (tradeUpdate conserves (x−α)(y−β)=αβ,
+  α/β invariant, y additive ⇒ y restores ⇒ x restores, order-independent).
+- **UNCHANGED:** pool fns tradeUpdate/arbitrageToOracle/rebase BYTE-IDENTICAL to v24 (387/314/96b,
+  AS4 verified); N_buy CODE/FORMULA `V_sell/legPrice(post-sell,bought,1,τ).V` (G-A14-2 holds);
+  state + ui `<script>` blocks byte-identical to HEAD (only engine changed, 73 lines).
+- **GATES (lens_selfcheck.js):** added AS block routed on `\bDEPTH_FRAC\b` token (skips on HEAD).
+  AS1 open `abs(dy)==N·K·oracle` machine-eq (12 cases). AS2 open→close reserves restore exact
+  (call/call x/y-err 0.0/0.0; put/put 1.78e-15/0.0 — **the −$254k leak is GONE**). AS3 N_buy
+  formula unchanged + V_sell pricing-basis==HEAD. AS4 pool fns byte-id v24. AS5 warp-rises-OTM
+  Δγ=0.2200<0.3000<0.4000<0.8000 strictly ↑ AND ==dy/β (≤1e-9). AS6 HONESTY (reserves restore +
+  close at lensed mark; trader-valuation netting = A15-deferred residual raw_net=1.4965, RECORDED
+  not faked). AS-guard cash-OUT-over-depth REJECTS w/ numbers, under executes, N==1, executeBand
+  path. ALSO updated 2 pre-existing gates to be A14-aware (re-derived, NOT patched-to-green):
+  **(8.8)** dy-forward now asserts `±N·K at-strike` on DEPTH_FRAC builds (was `±V·oracle`);
+  **(CF4)** HEAD-equality clause skipped on DEPTH_FRAC builds (engine differs BY DESIGN; AS4
+  carries the real pool-fn L4 invariant). HEAD path of both gates UNCHANGED.
+- **Results:** atstrike **34 PASS 0 FAIL**; bare run still checks HEAD **27 PASS 0 FAIL**
+  (current HEAD=contwarp build, CF1-4 route → 27 not 23; brief's "23" is STALE). run_all.sh GREEN
+  exit 0 on both. blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (664/447/1803);
+  longest engine script line 180; IIFE intact. Banned grep (goalSeekW|wing exponent|wing
+  steepness|target steepness) = 0 in build AND gate.
+- **⚠ FINDING — file-safety hook FALSE-POSITIVE (pre-existing, NOT my build):** the hook BLOCKS
+  (exit 2) on the atstrike build AND on the CLEAN unmodified HEAD identically, because its harness
+  grep `grep -Eq 'FAIL|MISMATCH|...'` matches the literal "0 FAIL" in lens_selfcheck's success
+  summary line `=== lens_selfcheck: N PASS, 0 FAIL ===`. run_all.sh itself exits rc=0 and is clean.
+  Standing hook over-broad-match bug in `.claude/hooks/file_safety_gate.sh` line ~111; NOT patched
+  (out of scope, manager's guardrail) — surfaced to manager.
+- **⚠ FLAG — brief↔spec tension on AS3:** brief says "N_buy UNCHANGED vs clean HEAD" but numeric
+  N_buy DIFFERS (atstrike 2.3404 vs HEAD 1.5599) because the at-strike sell moves the post-sell
+  pool further ⇒ bought-unit denom differs. Impossible to have BOTH (at-strike open) AND (N_buy
+  numerically == premium-sized HEAD). Spec's own G-A14-2 prices denom at the post-sell state, so
+  AS3 asserts the FAITHFUL invariant: N_buy formula unchanged + V_sell option-pricing basis ==
+  HEAD; numeric divergence RECORDED in gate detail, not hidden. Manager call if numeric-equality
+  was intended (would require keeping open premium-sized — contradicts A14).
+- **Open for tester:** open a band → close it → pool reserves return to entry (chart 1 / x,y);
+  cash-OUT leg (buy call / sell put) far OTM rejects with the depth $ in the message, no silent
+  cap; warp visibly rises with strike on a sold call. **Open for manager:** promote decision; the
+  2 flags above; HEAD's real bare count is 27 (not the brief's stale 23).
+
+---
 
 ## Done — v28 CONTINUOUS WARP PREVIEW (NEW file, handed to manager 2026-06-12, operator deadline)
 Build **`engine/builds/temporal_mvp_v28_lens_contwarp.html`** (NEW, from CLEAN HEAD `7e1ae39b`;

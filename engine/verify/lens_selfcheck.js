@@ -416,9 +416,16 @@ const hp = (v) => v / Math.sqrt(tau * tau + v * v);
       for (const re of banned2) if (re.test(lower2)) hit2 += re.source + ' ';
       // executeBand/executeLeg size dy forward from V (lensed); confirm dy is still ±V·oracle in form
       const elSrc = (function () { const i = engineBody.indexOf('function executeLeg'); let d = 0, j = engineBody.indexOf('{', i); for (let k = j; k < engineBody.length; k++) { if (engineBody[k] === '{') d++; else if (engineBody[k] === '}') { d--; if (d === 0) return engineBody.slice(i, k + 1); } } return ''; })();
-      const dyForward = /const dy = \(wingSign \* legSign\) \* V_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc);
-      chk('(8.8) L4: no inverse-lens added; dy=±V·oracle forward sizing', hit2 === '' && dyForward,
-          'banned=' + (hit2 || 'none') + ' dyForward=' + dyForward);
+      // dy SIZING is build-dependent (both are forward, neither inverts the lens):
+      //   • A14 at-strike build (DEPTH_FRAC present): dy = ±N·K_usd (premium-FREE).
+      //   • premium-sized build (HEAD/contwarp):       dy = ±V_usd  (V = N·markLensed).
+      const isA14 = /\bDEPTH_FRAC\b/.test(engineBody);
+      const dyForward = isA14
+        ? /const dy = \(wingSign \* legSign\) \* N \* K_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc)
+        : /const dy = \(wingSign \* legSign\) \* V_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc);
+      chk('(8.8) L4: no inverse-lens added; dy forward-sized (' + (isA14 ? '±N·K at-strike' : '±V·oracle premium') + ')',
+          hit2 === '' && dyForward,
+          'banned=' + (hit2 || 'none') + ' dyForward=' + dyForward + ' isA14=' + isA14);
     }
   }
 }
@@ -568,9 +575,17 @@ if (/function framePool\(/.test(t)) {
     if (animTok.test(grabFn(uiBody, 'pfComponents') || '')) dirty += 'pfComponents ';
     // numeric equality vs clean HEAD (engine byte-identity + behavioral sweep).
     // (After a promotion this compares the file to itself — green by identity.)
+    // A14 EXCEPTION: a DEPTH_FRAC build (at-strike swap) DELIBERATELY changes
+    // the engine (executeLeg dy-sizing + closeBand reversal dy). For such a
+    // build the "engine == clean HEAD" premise is FALSE BY DESIGN — its real
+    // L4 invariant (pool fns tradeUpdate/arbitrageToOracle/rebase byte-identical
+    // to v24) is carried by AS4, and its at-strike sizing by AS1/AS5. So we do
+    // NOT assert HEAD-equality here for A14; the draw-layer token-cleanliness
+    // checks (the genuine contwarp concern) still run.
+    const isA14CF = /\bDEPTH_FRAC\b/.test(engineBody);
     const headFile = path.join(__dirname, '..', 'builds', 'HEAD_temporal_mvp_v28_lens.html');
-    let behavMax = Infinity, engineByteId = false;
-    if (fs.existsSync(headFile)) {
+    let behavMax = isA14CF ? 0 : Infinity, engineByteId = isA14CF ? true : false;
+    if (!isA14CF && fs.existsSync(headFile)) {
       const tHead = fs.readFileSync(headFile, 'utf8');
       const headEng = engineOf(tHead);
       engineByteId = headEng.body === engineBody;
@@ -608,10 +623,206 @@ if (/function framePool\(/.test(t)) {
         }
       }
     }
-    chk('(CF4) leak guard: animation tokens draw-layer-only; money paths token-clean, engine byte-identical + numeric == clean HEAD',
+    chk('(CF4) leak guard: animation tokens draw-layer-only; money paths token-clean' +
+        (isA14CF ? '; A14 build — engine intentionally differs (HEAD-equality N/A, pool-fn L4 via AS4)' : '; engine byte-identical + numeric == clean HEAD'),
         engClean && stClean && drawOnly && dirty === '' && engineByteId && behavMax === 0,
         'engClean=' + engClean + ' stClean=' + stClean + ' drawOnly=' + drawOnly +
-        ' dirty=' + (dirty || 'none') + ' engByteId=' + engineByteId + ' behavMax=' + behavMax);
+        ' dirty=' + (dirty || 'none') + ' engByteId=' + engineByteId + ' behavMax=' + behavMax +
+        (isA14CF ? ' [A14: HEAD-equality skipped by design; AS4 carries pool-fn L4]' : ''));
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════════════
+//  A14 AT-STRIKE AMM SWAP  (register A14; spec specs/SPEC_atstrike_swap_A14_
+//  2026-06-12.md §1; arb-stop OVERRULED operator entry 197 "transact at
+//  whatever the curve is; forget arb for now"). Auto-routes on the
+//  engine constant token `DEPTH_FRAC` (unique to this build). Open AND close
+//  are at-strike (dy = ±N·K·oracle); the close is now at-strike too — that is
+//  the fix that makes the pool RESERVES round-trip exact (AS2), closing the
+//  −$254k pool-not-restored leak. Settle/valuation stays lensed (entry 96);
+//  the residual mark-on-own-bend valuation netting is the A15 deferred item,
+//  documented in AS6, NOT closed here.
+// ═════════════════════════════════════════════════════════════════════════
+if (/\bDEPTH_FRAC\b/.test(engineBody)) {
+  // Clean-HEAD engine — the pricing-layer (option) baseline for AS3.
+  const headFile = path.join(__dirname, '..', 'builds', 'HEAD_temporal_mvp_v28_lens.html');
+  let EHEAD = null;
+  try { EHEAD = engineOf(fs.readFileSync(headFile, 'utf8')).E; } catch (e) { EHEAD = null; }
+
+  const mkP = (x, y, w) => ({ x, y, alpha: x * w, beta: y * (1 - w) });
+  const sA = mkP(10, 800000, 0.5);   // default-ish pool: beta=400000, depth=400000
+  const orcA = 80000, tauA = 0.3;
+
+  // ── (AS1) open at-strike sizing: abs(dy) == N·K·oracle machine-eq ──
+  {
+    let allEq = true, lines = [];
+    for (const wing of ['call', 'put']) {
+      for (const legType of ['sell', 'buy']) {
+        for (const [N, theta] of [[1, 1.5], [2, 0.667], [1, 4]]) {
+          // cash-OUT legs deep enough to trip the guard are skipped for the
+          // pure-sizing check (guard tested in AS-guard); pick within depth.
+          const lg = EngineExec(E, sA, legType, wing, theta, N);
+          if (!lg || lg.rejected) continue;
+          const expect = N * (theta * orcA);     // same product order as engine
+          const eq = Math.abs(lg.dy) === expect;
+          allEq = allEq && eq;
+          lines.push(legType + ' ' + wing + ' N=' + N + ' θ=' + theta + ' |dy|=' + Math.abs(lg.dy) + (eq ? '==' : '!=') + expect);
+        }
+      }
+    }
+    chk('(AS1) open dy at-strike: abs(dy) == N·K·oracle machine-eq', allEq, lines.join(' | '));
+  }
+
+  function EngineExec(eng, st, legType, wing, theta, N) {
+    return eng.executeLeg(st, legType, wing, theta, NaN, N, orcA, tauA);
+  }
+
+  // ── (AS2) open-then-close pool RESERVES restore exact (the leak is GONE) ──
+  {
+    const cases = [
+      { sw: 'call', bw: 'call', si: 1.5, bi: 2 },
+      { sw: 'put',  bw: 'put',  si: 0.7, bi: 0.5 },
+    ];
+    let maxErr = 0, lines = [];
+    for (const c of cases) {
+      const sold   = { K_inner: c.si * orcA, K_outer: NaN, inner: c.si, outer: NaN };
+      const bought = { K_inner: c.bi * orcA, K_outer: NaN, inner: c.bi, outer: NaN };
+      const r = E.executeBand(sA, c.sw, c.bw, sold, bought, 1, orcA, orcA, tauA);
+      if (!r.ok) { maxErr = Infinity; lines.push(c.sw + '/' + c.bw + ' open FAILED: ' + r.reason); continue; }
+      const band = { sold_wing: c.sw, bought_wing: c.bw,
+        sold:   { inner: c.si, outer: NaN, K_inner: c.si * orcA, K_outer: NaN, N: r.N_sell },
+        bought: { inner: c.bi, outer: NaN, K_inner: c.bi * orcA, K_outer: NaN, N: r.N_buy },
+        entry: { pool: sA, oracle: orcA, L0: 1 },
+        carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orcA } };
+      const cl = E.closeBand(r.finalState, band, { equity: 1e12 }, orcA, orcA, orcA, tauA);
+      if (!cl.ok) { maxErr = Infinity; lines.push(c.sw + '/' + c.bw + ' close FAILED: ' + cl.reason); continue; }
+      const ex = Math.abs(cl.finalState.x - sA.x), ey = Math.abs(cl.finalState.y - sA.y);
+      maxErr = Math.max(maxErr, ex, ey);
+      lines.push(c.sw + '/' + c.bw + ' x-err=' + ex.toExponential(2) + ' y-err=' + ey.toExponential(2));
+    }
+    chk('(AS2) open→close pool RESERVES restore exact (≤1e-9) — leak GONE', maxErr <= 1e-9, lines.join(' | '));
+  }
+
+  // ── (AS3) N_buy proceeds-sizing: option-layer separation intact ──
+  // The N_buy CODE/FORMULA is unchanged: N_buy == V_sell / legPrice(post-sell
+  // state, bought, 1, τ).V (spec G-A14-2, self-referential to THIS build's
+  // post-sell pool). The OPTION-PRICING basis (V_sell at the un-perturbed open
+  // pool) is byte/numeric-identical to clean HEAD. NOTE the NUMERIC N_buy
+  // differs from premium-sized HEAD by construction — the at-strike sell moves
+  // the post-sell pool further, so the bought-unit denom differs. This is the
+  // brief↔spec tension surfaced to the manager: "unchanged" = code/formula +
+  // pricing basis, NOT numeric-equal-to-HEAD (impossible while open is
+  // at-strike). The honest divergence is recorded in the detail.
+  {
+    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
+    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const r = E.executeBand(sA, 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
+    const leg1 = E.executeLeg(sA, 'sell', 'call', 1.5, NaN, 1, orcA, tauA);
+    const denom = E.legPrice(leg1.newState, 'call', 2, NaN, 1, tauA).V;
+    const nbForm = r.V_sell / denom;
+    const formulaOk = r.ok && r.N_buy === nbForm;
+    // option-pricing basis (V_sell at the open pool) == clean HEAD's:
+    const vSellHead = EHEAD ? EHEAD.legPrice(sA, 'call', 1.5, NaN, 1, tauA).V : NaN;
+    const vSellThis = E.legPrice(sA, 'call', 1.5, NaN, 1, tauA).V;
+    const basisOk = EHEAD ? (vSellThis === vSellHead) : true;
+    const nbHead = EHEAD ? E_headBandNbuy(EHEAD) : NaN;
+    chk('(AS3) N_buy formula unchanged + option-pricing basis == clean HEAD',
+        formulaOk && basisOk,
+        'N_buy=' + r.N_buy + ' ==V_sell/denom:' + formulaOk +
+        ' | V_sell basis==HEAD:' + basisOk + ' (this=' + vSellThis + ')' +
+        ' | NOTE numeric N_buy vs HEAD: this=' + r.N_buy + ' HEAD=' + nbHead +
+        ' (differ by construction — at-strike sell moves post-sell pool further; brief↔spec tension, see AS3 comment)');
+  }
+  function E_headBandNbuy(EH) {
+    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
+    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const r = EH.executeBand(mkP(10, 800000, 0.5), 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
+    return r.ok ? r.N_buy : NaN;
+  }
+
+  // ── (AS4) pool fns byte-identical to v24 ──
+  {
+    const grab = (src, name) => {
+      const i = src.indexOf('function ' + name); let d = 0, j = src.indexOf('{', i);
+      for (let k = j; k < src.length; k++) { if (src[k] === '{') d++; else if (src[k] === '}') { d--; if (d === 0) return src.slice(i, k + 1); } }
+      return null;
+    };
+    const baseBody = (/<script id="engine">([\s\S]*?)<\/script>/.exec(tBase) || [, ''])[1];
+    let allId = true, lines = [];
+    for (const fn of ['tradeUpdate', 'arbitrageToOracle', 'rebase']) {
+      const a = grab(engineBody, fn), b = grab(baseBody, fn);
+      const id = a === b; allId = allId && id; lines.push(fn + ':' + (id ? 'identical' : 'DIFF'));
+    }
+    chk('(AS4) pool fns byte-identical to v24', allId, lines.join(' '));
+  }
+
+  // ── (AS5) warp-rises-OTM: Δsteepness strictly increasing AND == dy/β ──
+  {
+    let prev = -Infinity, mono = true, eqAll = true, lines = [];
+    const g = (st) => E.getW(st) / (1 - E.getW(st));
+    for (const th of [1.1, 1.5, 2, 4]) {
+      const lg = E.executeLeg(sA, 'sell', 'call', th, NaN, 1, orcA, tauA);
+      const dG = g(lg.newState) - g(sA);
+      const dyB = lg.dy / sA.beta;
+      const inc = dG > prev + 1e-12;
+      const eq = Math.abs(dG - dyB) <= 1e-9;
+      mono = mono && inc; eqAll = eqAll && eq; prev = dG;
+      lines.push('θ=' + th + ' Δγ=' + dG.toFixed(4) + ' dy/β=' + dyB.toFixed(4) + (eq ? '✓' : '✗'));
+    }
+    chk('(AS5) warp-rises-OTM: Δsteepness strictly ↑ AND == dy/β', mono && eqAll, lines.join(' | '));
+  }
+
+  // ── (AS6) HONESTY — close pays at the lensed mark on the live (possibly
+  //   self-bent) curve. The pool RESERVES restore exact (AS2), but the trader
+  //   VALUATION (raw_net from X/Y = lensed premium read on the post-warp pool)
+  //   is NOT netted against the at-strike cash — the residual mark-on-own-bend
+  //   value is the A15 deferred item, NOT closed here. This is a RECORDED
+  //   honest state, NOT a fake round-trip-pool-favourable gate (operator
+  //   overruled that, entry 197). We MEASURE and PRINT the residual; the gate
+  //   passes on the structural facts (reserves restore + close uses lensed
+  //   mark), and the residual is reported, never hidden.
+  {
+    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
+    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const r = E.executeBand(sA, 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
+    let residual = NaN, reservesOk = false, lensedClose = false;
+    if (r.ok) {
+      const band = { sold_wing: 'call', bought_wing: 'call',
+        sold:   { inner: 1.5, outer: NaN, K_inner: 1.5 * orcA, K_outer: NaN, N: r.N_sell },
+        bought: { inner: 2,   outer: NaN, K_inner: 2 * orcA,   K_outer: NaN, N: r.N_buy },
+        entry: { pool: sA, oracle: orcA, L0: 1 },
+        carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orcA } };
+      const cl = E.closeBand(r.finalState, band, { equity: 1e12 }, orcA, orcA, orcA, tauA);
+      if (cl.ok) {
+        reservesOk = Math.abs(cl.finalState.x - sA.x) <= 1e-9 && Math.abs(cl.finalState.y - sA.y) <= 1e-9;
+        // close X/Y are lensed marks (m_s/m_b in [0,1]) ⇒ lensed-mark close.
+        lensedClose = isFinite(cl.m_s) && isFinite(cl.m_b);
+        residual = cl.raw_net;   // lensed mark-on-own-bend valuation residual (A15-deferred)
+      }
+    }
+    chk('(AS6) HONESTY: reserves restore (AS2) + close pays at LENSED mark; trader-valuation netting DEFERRED to A15',
+        reservesOk && lensedClose,
+        'reserves restore=' + reservesOk + ' lensed-mark close=' + lensedClose +
+        ' | A15-deferred residual raw_net (lensed mark-on-own-bend, NOT closed here)=' + (isFinite(residual) ? residual.toExponential(4) : 'n/a'));
+  }
+
+  // ── (AS-guard) reserve guard — honest REJECT, N never mutated ──
+  {
+    const depth = sA.y - sA.beta;          // 400000
+    const thRej = (0.90 * depth) / orcA;   // N·K = 0.90·depth exactly at this θ (just-over with 1.01×)
+    const lgOver = E.executeLeg(sA, 'buy', 'call', thRej * 1.01, NaN, 1, orcA, tauA);
+    const lgUnder = E.executeLeg(sA, 'buy', 'call', thRej * 0.99, NaN, 1, orcA, tauA);
+    const rejectsOver = !!(lgOver && lgOver.rejected) && /depth/.test(lgOver.reason || '');
+    const execsUnder = !!(lgUnder && lgUnder.newState && lgUnder.N === 1 && !lgUnder.rejected);
+    // wired through executeBand failure path:
+    const bigBought = { K_inner: 4.6 * orcA, K_outer: NaN, inner: 4.6, outer: NaN };
+    const sold = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
+    const rb = E.executeBand(sA, 'call', 'call', sold, bigBought, 1, orcA, orcA, tauA);
+    const bandPath = !rb.ok && /depth/.test(rb.reason || '');
+    chk('(AS-guard) reserve guard: cash-OUT over depth REJECTS with numbers; under executes; N never mutated; wired through executeBand',
+        rejectsOver && execsUnder && bandPath,
+        'over→reject=' + rejectsOver + ' (' + (lgOver && lgOver.reason ? lgOver.reason.slice(0, 60) : '-') + ')' +
+        ' | under→exec N==1:' + execsUnder + ' | executeBand path:' + bandPath);
   }
 }
 
