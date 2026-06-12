@@ -1078,3 +1078,11 @@ _Context: operator wants the math/theory checked BIDIRECTIONALLY against the imp
 _Context: operator directs that the Lean work — via notes, the actual stored Lean, or by searching Aristotle's store of all past work — must also be tied into this index (the register THEORY-LINK / bidirectional-consistency index)._
 
 > the lean work we've done also by either seeing notes, lean actual stored, or searching aristotle's store of all past work, must pe tied to this index too
+
+
+---
+
+## Entry 143 — 2026-06-12
+_Context: operator says if a table is insufficient, explore alternative data structures (e.g. a RAG) to maintain the register/index rigorously — not handwritten scratch notes gathering dust._
+
+> if you need, and a table is insuffienent, explore alternative data structures like a RAG or something to maintain this... we have to do it rigorously not like handwritten scratch notes lying gathering dust

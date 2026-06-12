@@ -36,7 +36,7 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 
 | ID | Component | STATE | OWNER | SETTLED-BY | GATE | LAST-VERIFIED |
 |----|-----------|-------|-------|-----------|------|---------------|
-| C1 | Balancer base `x^w·y^(1−w)=k` | VERIFIED | manager | motive / entry 28 (HEAD=v28) | `lens_selfcheck` (6b) pool-byte-identical | **2026-06-12 manager-ran: gate 6b PASS (tradeUpdate/arbitrageToOracle/rebase byte-identical to v24)** |
+| C1 | Balancer base `x^w·y^(1−w)=k` | VERIFIED | manager | motive (locked base); curve reopened entry 28; **v28-lens HEAD promoted entries 84/94/96/106** | `lens_selfcheck` (6b) pool-byte-identical | **2026-06-12 manager-ran: gate 6b PASS (tradeUpdate/arbitrageToOracle/rebase byte-identical to v24)** |
 | C2 | The curve warp (position-dependent **weight FIELD**) | OPEN — **NOT in HEAD** | research-lead | entry 28 demoted v27→ lens | — | the (W) field is DEMOTED (`v27_wkurtosis`); v28 warp is the lens (C3), not a w(u) field |
 | C3 | Kurtosis knob τ (the **lens**) | VERIFIED | intern/tester | entries 84/94 | `lens_selfcheck` 23 PASS [HARD] | **2026-06-12 manager-ran on HEAD: 23 PASS / 0 FAIL** |
 | C4 | Carry `P=Ny/Nx`, `u=log price − log P` | BUILT (inherited) | research-lead | locked arch | — | needs-verify (inherited v24; lens moneyness-origin = live mode, spec'd) |
@@ -44,7 +44,7 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`): plai
 | C6 | Pricing law value∝S^(−γ), γ∈(1,4) | VERIFIED | tester | locked (G4) | `lens_selfcheck` frozen-wings | 2026-06-12 (wings → γ exact) |
 | C7 | ITM American smooth-pasting `S*=K·g/(g+1)` | VERIFIED | intern/tester | entry 85/93#6 | `lens_selfcheck` settle==lensed | 2026-06-12 |
 | C8 | Uniform strike registration θ=sNorm(K) | BUILT (inherited) | tester | v26c ruling | — | needs-verify on v28 lens path |
-| C9 | Funding = slope-deviation (±g_loc through lens) | BUILT | intern | entry 93#5 | `lens_selfcheck` funding | needs-verify live; ⚠ **LOCKED CONTRACT ALTERED**: ATM funding→0 (operator-ACCEPTED entry 93#5) |
+| C9 | Funding = slope-deviation (±g_loc through lens) | BUILT | intern | entry 93 (loose) | `lens_selfcheck` funding | needs-verify live; ⚠ **LOCKED CONTRACT ALTERED**: ATM funding→0. ⚠ operator acceptance entry 93 was LOOSE ("idc, same geometric thing whatever it implies") — NOT a crisp ratification of the zero; **flagged for explicit re-confirm** |
 | C10 | Slippage basis `mpGeom=getMP_raw·e^(−ghMu)` | N/A on v28 | manager | GH-line only | — | v28 plain Balancer: price==slope, the e^−ghMu gotcha is GH-only |
 | C11 | Dollar / settlement pipe (settle-at-lensed) | BUILT | intern | **entry 96** | `lens_selfcheck` single-basis | needs-verify live |
 | C12 | THE gotcha (getMP_raw = price-coord not slope) | N/A on v28 | manager | GH-line only | — | GH-only; v28 single-basis |
@@ -64,7 +64,7 @@ register-vs-transcript tail-audit keep it complete. A binding agreement found un
 |----|-------------------|-------|-----------|-------------|
 | A1 | **Trades warp the curve — it is `w` that changes; NOT a dot sliding** | AGREED | `brief#1` ("not a dot sliding") + `project-status-review#16` ("its w that the trade changes") | C16 realizes it; **signed gate** — a w′=w₀ reset that re-flattens VIOLATES this (skeptic #41) |
 | A2 | Kurtosis is **static, vol-set, NOT changed by trades** | AGREED | entry 14#3 | the τ knob is the curve geometry, not a trader statistic |
-| A3 | **HEAD = v28 lens** (curve reopened; Balancer + polar lens) | AGREED | entry 28 | C1/C3 |
+| A3 | **HEAD = v28 lens** (curve reopened; Balancer + polar lens) | AGREED | entry 28 reopened the curve (→ v27 (W)); **v28 lens promoted entries 84/94/96/106** | C1/C3 |
 | A4 | **Settle / record / value at lensed prices** | AGREED→BUILT | entry 96 | C11 |
 | A5 | **Asymptotes preserved** — any floor/saturation in deep wings disqualified | AGREED | entries 55(1)/60 | lens wings frozen power-law γ |
 | A6 | **Monotonicity / no-arbitrage** is binding | AGREED | entry 55(3) | `lens_selfcheck` monotone |

@@ -2757,6 +2757,35 @@ document.getElementById('kappa-input').addEventListener('change', (e) => {
     if (v > 0 && isFinite(v)) { Store.setTau(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
   });
 });
+// Goal-seek warp readout (Item 2). Closed-form w′ = Engine.goalSeekW(G) = G/(1+G):
+// the Balancer weight whose wing-exponent γ=w/(1−w) equals the target G. ADVISORY
+// only — it drives nothing automatically; the trade stays the actuator that moves w.
+// L4: goalSeekW is never an argument to tradeUpdate/arbitrageToOracle. Read-point γ
+// is the LIVE pool steepness w/(1−w) (the held mode the held-lens warp draws against).
+function updateGoalSeek() {
+  const gEl = document.getElementById('goalseek-g-input');
+  const liveEl = document.getElementById('gs-gamma-live');
+  const wpEl = document.getElementById('gs-wprime');
+  const gpEl = document.getElementById('gs-gamma-prime');
+  if (!gEl || !liveEl || !wpEl || !gpEl) return;
+  const p = Store.state.pool;
+  const wLive = Engine.getW(p);
+  const gammaLive = wLive / (1 - wLive);
+  liveEl.textContent = isFinite(gammaLive) ? fmtNum(gammaLive, 4) : '—';
+  const G = parseFloat(gEl.value);
+  const wPrime = Engine.goalSeekW(G);   // NaN-loud for G<1 / non-finite
+  if (isFinite(wPrime)) {
+    wpEl.textContent = fmtNum(wPrime, 4);
+    gpEl.textContent = fmtNum(wPrime / (1 - wPrime), 4);   // = G by construction
+  } else {
+    wpEl.textContent = 'G≥1 required';   // honest flag, no clamp-to-edge
+    gpEl.textContent = '—';
+  }
+}
+['change','input'].forEach(ev => {
+  const gEl = document.getElementById('goalseek-g-input');
+  if (gEl) gEl.addEventListener(ev, updateGoalSeek);
+});
 document.getElementById('tick-hours').addEventListener('change', (e) => {
   Store.setTickHours(parseFloat(e.target.value));
 });
@@ -4179,6 +4208,7 @@ function render() {
   document.getElementById('lp-pool-value').textContent = fmtUSD(p.y + p.x * (p.y / p.x), 2);
   document.getElementById('lp-y-delta').textContent = fmtUSD(p.y - s._initial_y, 2);   // C5: dynamic baseline (legacy state w/o _initial_y → NaN, loud)
 
+  if (typeof updateGoalSeek === 'function') updateGoalSeek();   // refresh read-point γ (live) + w′
   renderPerps();
   renderBands();
   renderEventLog();
