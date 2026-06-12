@@ -8,3 +8,13 @@ _Context note: two uploaded artifacts — a consolidated AFT 2026 referee report
 the 21-page anonymous submission PDF "Singular Dynamic AMM Pricing Perpetual Options Across the
 Strike Continuum" (the dynamic-weight w-warp paper). Copies mirrored into `evidence/aft2026_review/`
 this turn._
+
+## Entry 2
+> nondistuptive status update?
+
+_Context note: answered with in-flight status (commit 3e43ea8 pushed; paper agent running; skeptic queued)._
+
+## Entry 3
+> head is v28 what are you saying?
+
+_Context note: manager had reported HEAD = v26c from its memory/CLAUDE.md; checking repo state in-turn._

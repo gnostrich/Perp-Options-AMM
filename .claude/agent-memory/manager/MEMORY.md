@@ -1,6 +1,57 @@
 # MEMORY — manager (cross-role rollup = state of the whole project)
-_Last updated: 2026-06-11 (branch claude/focused-carson-15117f, LIVE session). This is the
-project's state-of-the-whole; git history is the mechanical audit trail._
+_Last updated: 2026-06-12 (branch claude/laughing-albattani-olb3xg, referee-report session). This is
+the project's state-of-the-whole; git history is the mechanical audit trail._
+
+## ★★★ 2026-06-12 — MAIN IS STALE; TRUE HEAD = v28-LENS on `claude/exciting-archimedes-txs2wx` (operator-caught)
+- **Canonical HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7e1ae39b…`** (I verified
+  from the branch), operator-PROMOTED 2026-06-12 (entries 84/94/96/106 of that session). That
+  branch is **210 commits ahead of main** and live (last commit 2026-06-12 10:39Z, session
+  01Cs1cJ4yQMcmxqbEVrDpqHd = the engine single-writer; this session stays NON-ENGINE).
+- Lineage there: **GH line (v25→v26c) DEMOTED 2026-06-10 (operator entry 28)** → v27_wkurtosis
+  ((W) kurtosis curve; **strong-form trades-warp, α,β conserved per trade, "skeptic-verified the
+  UNIQUE conservation-consistent trade"**) promoted 06-10, demoted 06-12 → **v28-lens = plain v24
+  Balancer pool (trajectory-hyperbola trade at reserves point, w=α/x) + static polar lens
+  h_τ(u)=√(τ²+u²)−τ, g_loc=γ·h′(|u|), one τ kurtosis knob; settle-at-lensed S*=K·g_loc/(g_loc+1);
+  funding ±g_loc→0 at ATM; lens_selfcheck 23/23; tester FINAL 27/27.** Open there: trade-point
+  transact/goal-seek spec (entry 117, ~100 regressions), FINDING-RT display caveat, warp∘rebase
+  lemmas [needs-Aristotle].
+- **Everything below dated ≤2026-06-11 that says "HEAD = v26c" is true of MAIN ONLY — stale as
+  project truth.** CLAUDE.md §4/§8 on main are likewise stale (the archimedes branch repoints its
+  own pins). LESSON (operator-enforced): scan open branches before asserting project HEAD;
+  memory-follows-main resolves memory conflicts, it does NOT make unmerged operator-ruled
+  promotions invisible.
+
+## ★★ 2026-06-12 — AFT2026 REFEREE-REPORT REVIEW (this session, branch laughing-albattani)
+- Operator uploaded consolidated AFT2026 referee report (REJECT 4/5) + the 21-page w-warp
+  submission PDF; ask = review vs latest HTML + project state, address issues; operator suspicion
+  = paper opens with Balancer fn portrayed as "invariant" not state-transition substrate.
+  Transcript: `history/operator/2026-06-12_referee-report-review.md` (3 entries, verbatim).
+- **Artifacts (committed 3e43ea8 + corrigendum commit):** `evidence/aft2026_review/` = mirrored
+  report+PDF, `verify_referee_claims.py` (ALL 5 checkable referee claims CONFIRMED by my own
+  re-derivation: off-ATM trade point off the hyperbola 18.93-vs-25; App-B display wrong; Fig-1
+  caption false + **k NOT conserved under trades (10.0→9.8614)**; sNorm/mp reciprocal conflict;
+  collarSurplus artifact mismatch), `MANAGER_REVIEW_2026-06-12.md` (disposition + same-day
+  CORRIGENDUM re-basing it from v26c to v28-lens after operator catch).
+- **Operator suspicion CONFIRMED + strengthened** (k literally not invariant under the paper's own
+  trade law; true invariants α,β; formal side already has the state-transition system).
+- **Fatal #2 = paper text outran our own ⚠ CARRIED label:** `C2.lean` posits
+  collarSurplus=θ·((1−w)/w−1) (θ-independent zero-set, NO mark-formula derivation, NO exhibited
+  counterexample) while the submission's App G claims both. Honest-weakening in flight (paper
+  agent); proper fix queued for research-lead (derive surplus from mark formula + sign rule,
+  admissible domain, numeric counterexample, re-prove).
+- **Fatal #1 (off-ATM trade undefined): REAL+OPEN for v28 HEAD;** v27's conservation-consistent
+  trade (see above) is the in-repo candidate answer to referee Q1 — needs dedicated check +
+  operator curve decision. Fatal #3 (artifacts withheld): deposit decision = operator, gated on
+  fatal-#2 fix.
+- **In flight:** paper agent (bg) revising `paper/temporal_paper_draft.md` (opening reframe,
+  4 math-text fixes, honest App-G, refs incl. fabricated Panoptic citation, prior art, off-ATM
+  flagged-not-resolved); owes a follow-up patch: engine-state passage must cite v28-lens not GH
+  (brief item 6(iii) was written pre-corrigendum). Then MANDATORY skeptic pass (operator words
+  verbatim) over my review + the revision. NO merge to main before skeptic verdict; this branch
+  is non-engine throughout.
+- **Operator decisions owed (relay with skeptic verdict):** off-ATM trade-spec path (v27 trade law
+  vs new design — referee Q1), anonymized Lean deposit, settlement-ledger gaps (1× wedge, club
+  floor magnitude, raw_net<0, carved-equity floor), venue strategy (AFT resubmit vs WINE/FMBC).
 
 ## ★★ ACTIVE 2026-06-11 — CURVE-AGNOSTIC FRAMEWORK BRAINSTORM (pre-go-ahead; operator in the room)
 - **Transcript:** `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md` (3 entries

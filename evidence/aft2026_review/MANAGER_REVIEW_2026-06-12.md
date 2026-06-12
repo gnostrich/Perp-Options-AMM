@@ -1,5 +1,43 @@
 # Manager review — AFT 2026 referee report vs. current project state (2026-06-12)
 
+> ## ⚠ CORRIGENDUM (2026-06-12, same day, manager — operator-caught)
+> **This review's §2 mis-states the current HEAD.** It was written against `main` (9c9ca6b,
+> 2026-06-11, HEAD = v26c GH) per the memory-follows-main rule; the operator corrected me:
+> the **current canonical HEAD is `HEAD_temporal_mvp_v28_lens.html` (md5 `7e1ae39b…`)** on the
+> unmerged branch `claude/exciting-archimedes-txs2wx` (210 commits ahead of main, live
+> 2026-06-12). Per that branch's BUILD_LINEAGE: the **GH line (v25→v26c) was DEMOTED 2026-06-10**
+> (operator entry 28); v27_wkurtosis ((W) kurtosis curve, strong-form trades-warp) was promoted
+> then demoted 2026-06-12 in favour of **v28-lens = plain v24 Balancer pool + static polar lens**
+> `h_τ(u)=√(τ²+u²)−τ` (one static τ kurtosis/vol knob; lensed exponent `g_loc=γ·h′(|u|)`; pricing,
+> settlement `S*=K·g_loc/(g_loc+1)`, funding ±g_loc→0 at ATM all through one lensed helper;
+> pool fns byte-identical to v24). **I verified the build md5 from the branch myself.**
+> Corrections to the dispositions below:
+> 1. **§2 first bullet weakens and partly reverses.** The submission is *closer* to current HEAD
+>    than this review said: v24/v28's pool IS the paper's substrate — trades move along the
+>    trajectory hyperbola `(x−α)(y−β)=αβ` with `w=α/x` derived, i.e. the paper's §5 Trade Formula
+>    **at the reserves point is implemented in the live HEAD**. What remains unimplemented is the
+>    off-ATM *trade-point* mechanic — referee fatal #1's exact subject — which is the live open
+>    spec question on that branch (its transcript entry 117, "~100 regressions" estimate).
+> 2. **§3.1 update:** "awaiting green-light since 2026-06-10" is stale. The demoted-but-retained
+>    v27 implemented the **strong-form trades-warp with α,β conserved per trade**, recorded in its
+>    lineage as "skeptic-verified the UNIQUE conservation-consistent trade" on the (W) curve. So
+>    the project holds a concrete in-repo candidate answer to referee Q1 (which conserved pair,
+>    induced (x,y,w) update) — pending a dedicated check that it answers the referee's exact
+>    objection, and pending the operator's curve decision (v27 was demoted on visual-warp/product
+>    grounds, not on the trade law). Fatal #1 remains REAL and OPEN for the v28 HEAD.
+> 3. **§2 second bullet re-bases:** the answer-direction to the "vol-free mark" critique is now the
+>    **v28 τ lens** (static, vol-calibrated kurtosis knob per operator ruling 3), not GH γ. The
+>    smooth-pasting family persists in lensed form (`S*=K·g_loc/(g_loc+1)`), so the paper-era
+>    ray-parking is still superseded — by v28's settle-at-lensed, not v26c. The funding row stands:
+>    v28 funding →0 at ATM/anchor, so referee Q4 (what charges the carried wing at equilibrium)
+>    stays open.
+> 4. **Process:** asserting "HEAD stays v26c" to the operator without scanning open branches was
+>    my error (memory-follows-main covers memory conflicts; it does not make unmerged
+>    operator-ruled promotions invisible). The engine single-writer is the archimedes session;
+>    this session stays non-engine. The paper revision's engine-state passage (brief item 6(iii))
+>    gets a follow-up patch to cite v28-lens, not the GH engine.
+
+
 **Inputs (mirrored in this directory):** `REFEREE_REPORT.md` (consolidated PC report, REJECT 4/5)
 and `aft2026_submission.pdf` / `aft2026_submission_extracted.txt` (21-page anonymous submission,
 the dynamic-weight w-warp paper). Operator request + suspicion: verbatim in
