@@ -1206,3 +1206,11 @@ _Context: operator asks for a non-disruptive status update on HEAD._
 _Context: operator asks when HEAD updates._
 
 > when does head update?
+
+
+---
+
+## Entry 158 — 2026-06-12
+_Context: operator corrects the held-center mechanic mid-build — changing w skews the curve, which CHANGES the 45°-tangent point; given the lens amplifies (not neutralises) the skew as seen, the center need not be held constant; the skew should change continuously as the trade happens._
+
+> chwanging w skews the curve, which changes the 45 degree tangent slope point .... after we clarified that the lens steepness amplifies the skew as seen, not neutralises it, we dont need to hold it constant but rather change skew as the trade happens continuously
