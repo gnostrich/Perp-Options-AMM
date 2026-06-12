@@ -1440,3 +1440,11 @@ _Context: operator extends the dig — if kurtosis is made steeper (lower number
 _Context: operator pins the separate-layer trade rule — option pricing factors in ONLY at the buy leg, where the actual premium proceeds determine how much you can buy._
 
 > the only place the option pricing thing factors in would be in the buy leg where the avtual proceeds determine how much you can buy
+
+
+---
+
+## Entry 187 — 2026-06-12 16:22 UTC
+_Context: operator confirms the asymmetry — relative option pricing squarely determines the BUY notional; in the sell leg pricing does not factor into the notional._
+
+> there the relative option pricing squarely determines the buy notional; but in sell; this doesnt factor into notionsl rigjht
