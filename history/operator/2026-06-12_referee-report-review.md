@@ -25,3 +25,11 @@ Manager error owned: true HEAD = v28-lens on exciting-archimedes (corrigendum co
 
 _Context note: answered with the split — one core hole (off-ATM trade spec, = live entry-117 question),
 rest framing/honesty/logistics; econ objections = open design levers, not curve-math refutations._
+
+## Entry 5
+> but on 1 didnt we express the trade formula as assuming the reserves are at the trade point, then goal seeking to warp the curve changing w so that the slope of the post trade point is brought to the pre trade point --- and then breaking this into infinitesimal pieces so we hae a clean integral ... i thought the paper described this ...
+
+_Context note: manager verified numerically (this turn) — the treat-trade-point-as-reserves reading
+works locally at T but breaks the paper's OWN global conservation law (α 5→5.097, β 5→5.137) and the
+w=α/x derived-field property (0.523 vs 0.533); answered that the mechanism IS described, the missing
+piece is which conservation the off-ATM trade obeys (the two halves are jointly incompatible as written)._
