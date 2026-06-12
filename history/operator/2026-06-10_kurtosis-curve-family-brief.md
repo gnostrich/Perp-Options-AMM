@@ -927,3 +927,11 @@ _Context: operator bans the manager's coined term/framing "spot swap slippage."_
 _Context: operator asks for a simple-English explanation of the one thing that differs from what they said._
 
 > simple english explanation of what differs from what i said
+
+
+---
+
+## Entry 124 — 2026-06-12
+_Context: operator notes they had also floated (entry 121) the possibility that warp required could be EQUAL irrespective of how OTM; asks if that is right or wrong._
+
+> i'd also said it could be equal w warp required irrespective of how OTM is a possibility remember — is that right or wrong
