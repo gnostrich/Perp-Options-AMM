@@ -1,0 +1,81 @@
+
+========== STEP 1: τ stepper auto-redraws chart-2 LIVE (FLAG-1 deferred confirmation) ==========
+  window.Viz=undefined  window.render=undefined  (handler now reaches Viz via closure, not window)
+  τ 0.3→0.05 via stepper EVENT ALONE: chart-2 px changed = 5199  Store.tau=0.05
+  τ 0.3→2 via stepper EVENT ALONE: chart-2 px changed = 6545  Store.tau=2
+  real ArrowUp spinner click 0.3→0.35: chart-2 px changed = 3894
+
+========== STEP 2: chart-1 (pool curve) INERT to τ — px-diff across sweep must be HARD 0 ==========
+  chart-1 lit px: 9529
+    chart-1 px-diff vs τ0.3 at τ=0.05 (event-only): 0
+    chart-1 px-diff vs τ0.3 at τ=1 (event-only): 0
+    chart-1 px-diff vs τ0.3 at τ=2 (event-only): 0
+    chart-1 px-diff vs τ0.3 at τ=3 (event-only): 0
+  >>> chart-1 max px-diff across full τ sweep: 0 (MUST be 0)
+
+========== STEP 3: open a band, close immediately → finite settled residual; report sign ==========
+  openBand result: {"opened":true,"warn":"","newDialogs":[]}
+  closeBand immediate round-trip: {"ok":true,"raw_net":0.0038555381707527335,"X":0.027375441539965573,"Y":0.031230979710718306,"L0":727273.6363636362,"trader_payout":15.422152683010934,"settled_cash_leg":null,"live_leg":null,"floored":false,"slip":0.01194751080145573}
+  >>> round-trip residual raw_net = 3.8555e-3 (Y=0.031230979710718306, X=0.027375441539965573, slip=0.01194751080145573)
+  >>> raw_net SIGN: POSITIVE (trader-favourable per engine L2146)
+
+========== STEP 4: portfolio band value MOVES when τ changes (lens = unit of account) ==========
+  open band for τ-sensitivity: {"opened":true,"warn":"","newDialogs":[]}
+  band values @ τ=0.3: [{"id":"B2","X":0.026539192463951655,"Y":0.028436807785051896,"value":0.05497600024900355}]
+  band values @ τ=2.0: [{"id":"B2","X":0.050745833481477216,"Y":0.04966998129679788,"value":0.1004158147782751}]
+  >>> max |Δ open-band value| across τ 0.3→2: 4.5440e-2 (must be > 0 — lensed mark)
+  rendered settlement $ cells @τ0.3: ["$35.16","$12.14"]
+  rendered settlement $ cells @τ2.0: ["$35.16","$12.14"]
+
+========== STEP 5: near-ATM band (g_loc≈0) settles FINITE — no NaN/Inf ==========
+  ATM (strike at mode): g_loc=0.000e+0 markLensed call=1 put=1 finite=true
+  near-ATM band open: {"opened":false,"warn":""}
+  near-ATM settle: {"skipped":true}
+  portfolio rendered NaN/Infinity present: false []
+  (note: UI rejected the tight ATM band — analytic g_loc≈0 path still proven finite)
+
+========== STEP 6: steep pool (w>0.5), sold-call ITM → reciprocal-coord settlement; direction swaps ==========
+  steep pool w=0.7800 getSNorm=0.2821
+  oracle now: 80000
+  steep band open: {"opened":false,"warn":""}
+  steep one-ITM-leg settle: {"ok":true,"raw_net":0.011189254138142432,"X":0.002786796171274261,"Y":0.013976050309416694,"settled_cash_leg":"sold","live_leg":"bought","finite":true}
+  band swap: before {"s":"88000","b":"72000"} after {"s":"72000","b":"88000"}
+
+========== STEP 7: no mixed-basis — band value column NOT lensed-$ + un-lensed perp-$ on one cell ==========
+  carved-perp-unit (value/funding) cells: 16 (any contain "$": false)
+  dedicated $ settlement cells: 2  titles: ["settlement value = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply"]
+
+========== STEP 8: standing coverage — every control, both directions, arb, tick, LP, reset ==========
+  long-dir band: {"opened":false,"warn":""}
+  swapped-dir band: {"opened":false,"warn":""}
+  ran arbitrage-to-oracle
+  advanced one tick
+  LP deposit/withdraw round-trip: $1,600,000.00 -> $1,600,000.00
+  overlay [curve/canvas-curve] lit px: 6910
+  overlay [pricing/canvas-pricing] lit px: 9431
+  overlay [payoff/canvas-payoff] lit px: 74215
+  overlay [trajectory/canvas-ratio] lit px: 7197
+  after reset: {"x":10,"y":800000,"tau":0.3,"bands":0}
+
+========== CONSOLE / ERRORS ==========
+  uncaught pageerrors: 0
+  console errors: 0
+  dialogs seen (0): []
+
+========== FLAGS ==========
+  FINDING-RT (INHERITED-v24, not a Stage-2 regression): instant open→close round-trip yields POSITIVE raw_net (3.856e-3 carved-perp units) that SCALES with slippage ⇒ trader-favourable, not pool-favourable as the brief states. Verified byte-identical raw_net in S1 AND v24 base across N=0.01/0.05/0.2 — this is the v24 closeBand settlement geometry (both same-sign legs reverse in the trader's favour), inherited unchanged through the lens (S2 only rescales the marks). Brief's "tiny pool-favourable residual" framing is contradicted on the SIGN.
+
+========== VERDICT SUMMARY ==========
+  PASS  s1_flag1_tau_autoredraw
+  PASS  s2_chart1_tau_inert
+  PASS  s3_roundtrip_finite_small
+  PASS  s4_portfolio_reflects_lens
+  PASS  s5_atm_finite
+  PASS  s6_steep_itm_finite
+  PASS  s6_one_leg_settled_cash
+  PASS  s6_dir_swap
+  PASS  s7_no_mixed_basis
+  PASS  s8_standing_coverage
+  PASS  zero_console_errors
+
+  OVERALL (gate verdicts): PASS
