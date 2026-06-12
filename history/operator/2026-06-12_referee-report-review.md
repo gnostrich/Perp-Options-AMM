@@ -98,3 +98,8 @@ _Context note: manager owned the gap — the entry-13 reply answered the bookkee
 dropped the operator's headline frame. Confirmed the response DOC carries the headline (§1
 "state transition system… per-trade generator… not a constant of motion"); summary bullet
 sharpened to lead with it (v4.2)._
+
+## Entry 15
+> ok inline give me the headline answer to the firat 3 points of the reviewer
+
+_Context note: the three reject-grade-finding headline answers (response v4.2 summary) printed inline._
