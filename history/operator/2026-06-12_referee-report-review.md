@@ -65,3 +65,10 @@ this turn._
 _Context note: author-response MD drafted this turn at
 `evidence/aft2026_review/RESPONSE_TO_REFEREES_2026-06-12.md`; delivered to operator with the caveat
 that the skeptic pass + in-flight research-lead/Lean results may upgrade or correct specific lines._
+
+## Entry 10
+> waiting
+
+_Context note: operator waiting on the skeptic-checked version; skeptic pass dispatched this turn
+over the response MD + manager review/corrigendum + ruling note (paper revision gets its own pass
+when the paper agent returns)._
