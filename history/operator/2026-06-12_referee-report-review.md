@@ -48,3 +48,13 @@ commissioning the formal spec + Lean obligations._
 > simple sngligh for me ple?
 
 _Context note: previous answer restated in plain English._
+
+## Entry 8 — RULING (off-ATM trade semantics)
+> apply conservation at the trade's own point; pool reserves change by what actually flowed; w gets stored -- yes; and what actually flowed would also be as per that trade point if  that makes sense --- round trip stuff can be done later because same problem as dynamic function AMMs like Curve which are mainstream accepted
+
+_Context note: operator CONFIRMS the transition rule (local conservation at the trade point; flows
+Δx,Δy computed at that trade point are the actual reserve changes; w stored as genuine state) and
+DEFERS the round-trip/path-residual question (operator's rationale: same problem class as
+dynamic-function AMMs e.g. Curve — recorded as operator rationale, not project-verified). Ruling
+note: `notes/operator_ruling_2026-06-12_offATM_trade_rule.md`; research-lead spec+Lean dispatch
+this turn._
