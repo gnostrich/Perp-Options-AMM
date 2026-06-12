@@ -257,26 +257,30 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` — **canonical HEAD** (md5 `928cde1c…`;
-  promotion `b245bfda` → UX-restore `9d22cffd` → display-fix `1eebfcd6` → entry-45/46 UI-lacunae
-  fixes `928cde1c` [stale-on-reject clear, audit-strip raw USD, anchor through live reserves point,
-  τ disclosure; engine script byte-identical].
-  **PROMOTED 2026-06-10 by operator ruling, entry 28** — "nothing useful since v24", overriding the
-  tester's visual-layer blocker). **(W) kurtosis curve off the v24 Balancer base** (NOT a GH
-  descendant): √-kernel weight-field invariant; static τ kurtosis knob (elbow rounds, wings frozen
-  exact power-laws); **strong-form trades-warp** (φ field-recenter, α=x·w/β=y·(1−w) conserved —
-  skeptic-verified the unique conservation-consistent trade; premise faithful to paper+v24, #14) +
-  wing-range guard; γ>1 via w_±>½ clamp; Reading-A settlement (S*=K·γ_loc/(γ_loc+1), exact by
-  construction); on (W) **price==slope** (the e^(−ghMu) gotcha is GH-only). Gate =
-  `engine/verify/wcurve_selfcheck.js` (22 PASS [HARD] — incl. WARP (g) anchoring/#16-gap gate added 2026-06-11, wired as run_all's (W) branch). Known-OPEN:
-  warp∘rebase-commute + φ-anchor/funding lemmas [needs-Aristotle]; warp is elbow-local (verified —
-  cannot match v24's global magnitude with frozen wings) AND bands are warp-neutral by construction
-  (net-premium cash; tester entry-45); τ per-click visual delta sub-pixel at default Δw (intrinsic;
-  disclosure sentence now in the UI). The entry-45 anchor-overlay (~104× low) + stale-on-reject +
-  ×oracle-inflation defects were FIXED 2026-06-11 (`928cde1c`); lp-y-delta + LIQ-PRICE were FIXED
-  in the UX-restore (no longer open). **Prior HEAD
-  demoted to `temporal_mvp_v26c.html`** (`6cc73563…`, GH-line endpoint, suite still green via
-  explicit path).
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `989752294…`;
+  **PROMOTED 2026-06-12 by operator ruling, entries 84/94/96/106**). **v24 plain-Balancer pool +
+  a static polar LENS in the query/write layer.** The AMM pool curve is **unchanged plain v24**
+  (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24; x,y,w move; ~6% / 285-line edit
+  off v24). A polar lens `h_τ(u)=√(τ²+u²)−τ`, centred on the live 45°-tangent point (mode = getSNorm
+  = (1−w)/w, manager-verified), reshapes the option-value view: lensed local exponent
+  `g_loc(K)=γ·h′(|u|)`, u = log-divergence in the sNorm coordinate, 0 at the tangent point → γ in the
+  frozen power-law wings (asymptotes preserved). **One static knob τ = kurtosis/vol.** Everything
+  **read** (pricing, option chart, settlement, funding, portfolio value) AND **written** (trades,
+  settle-at-lensed, entry 96) goes through the ONE shared helper (`gLoc`/`markLensed`) at the live
+  mode — single-basis, forward-read only (the lens is never inverted; pool stays plain Balancer).
+  Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` (the v24 ATM-jump gap fixed). Gate =
+  `engine/verify/lens_selfcheck.js` (**23 PASS [HARD]** — centred-on-tangent-point, symmetric,
+  frozen-wings, cap-free `|dG|≤γ`, settle==lensed, cross-layer single-basis, pool-byte-identical
+  regression; auto-routed in run_all by `function markLensed` && !`function wField`). Verified:
+  **no far-OTM blow-up / no strike cap** (multiplicative bound by γ, not the old hyperbolic 1/w′;
+  dust trade reshapes ~0.0001% at every strike incl. 4×); round-trip pool-favourable (skeptic #32);
+  warp legible on a trade (tester FINAL 27/27, ~10k px). Feature changelog: `engine/builds/CHANGELOG_v28_lens.md`.
+  Known-OPEN: warp∘rebase-commute / φ-anchor lemmas [needs-Aristotle]; FINDING-RT (two-leg round-trip
+  display shows raw_net>0 — skeptic #32 ruled NOT-A-LEAK, full P&L pool-favourable; display caveat only);
+  payoff chart + strike marker still drawn on the unbent curve (cosmetic, operator-excluded entry 101).
+  **Prior HEAD demoted to `temporal_mvp_v27_wkurtosis.html`** (`928cde1c…`, the (W) kurtosis line,
+  retained; `wcurve_selfcheck.js` 22 PASS via explicit path). **Earlier GH-line endpoint
+  `temporal_mvp_v26c.html`** (`6cc73563…`) also retained.
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
   tester-owned, gates HEAD promotion) in `engine/`. **Standing UI smoke-pass (skeptic-ruled
   2026-06-11, FLAG-OMISSION fix):** HEAD promotion AND any operator hand-back additionally require a

@@ -51,4 +51,4 @@ steepness) in the wings; one static knob τ sets its width.
 
 ## Build sequence (files retained for diff)
 - `temporal_mvp_v28_lens_S1.html` — read lens (md5 `1ed8fe2d`).
-- `temporal_mvp_v28_lens_S2.html` — + write/settle through lens (md5 `b53ace99`). **Not yet HEAD; HEAD stays v27 `928cde1c` until the cleanup batch + warp + final smoke-pass.**
+- `temporal_mvp_v28_lens_S2.html` — + write/settle through lens (md5 `b53ace99`). `temporal_mvp_v28_lens_FINAL.html` (+cleanup C1–C9, md5 `989752294`) — **PROMOTED TO HEAD 2026-06-12 as `HEAD_temporal_mvp_v28_lens.html`** (operator entries 84/94/96/106; tester FINAL 27/27; v27 demoted, retained).

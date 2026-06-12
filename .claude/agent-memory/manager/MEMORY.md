@@ -63,3 +63,13 @@ technical: is there a now-vs-proposed table, the core formula, AND the literal e
 stripped every jargon token / md5 / path / agent-id / PR-mechanic (replace the word, don't append a
 gloss)? Any "no" → DON'T SEND, rewrite. Canonical: notes/skeptic/STANDING_RESPONSE_TYPE_PROTOCOL_2026-06-12.md.
 Skeptic backstops with FLAG-PROCESS (style-class, halt-class) via post-hoc transcript audit.
+
+## ★★★ HEAD PROMOTED 2026-06-12 → v28-lens (operator entries 84/94/96/106)
+**CURRENT HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `989752294bfeff49d6c92e0ab7ca6ccd`.**
+v24 plain-Balancer pool (pool fns byte-identical to v24) + static polar lens (read+write+settle through
+one helper at the live 45°-tangent mode); one τ knob; lens_selfcheck 23/0; tester FINAL 27/27; warp
+legible; no blow-up/no cap; round-trip pool-favourable (skeptic #32). Pins updated: CLAUDE.md §8,
+INTEGRITY, BUILD_LINEAGE, run_all.sh default+md5, CHANGELOG_v28_lens. v27 (`928cde1c`) DEMOTED+retained
+as `temporal_mvp_v27_wkurtosis.html`; v26c GH endpoint retained. OPEN (non-blocking): FINDING-RT display
+caveat (not a leak); payoff chart+strike-marker still unbent (cosmetic, operator-excluded). Branch only —
+no PR to main (platform default; operator didn't ask).

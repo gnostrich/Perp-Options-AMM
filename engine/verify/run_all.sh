@@ -3,9 +3,9 @@
 # Run from the engine/ package root:  sh verify/run_all.sh [path-to-build.html]
 # With no arg it validates the canonical HEAD; the file-safety hook passes the edited file.
 set -e
-HEAD=${1:-builds/HEAD_temporal_mvp_v27_wkurtosis.html}
+HEAD=${1:-builds/HEAD_temporal_mvp_v28_lens.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 928cde1cccb0f35fdc9a23a7634414c8 for v27 HEAD; 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 989752294bfeff49d6c92e0ab7ca6ccd for v28-lens HEAD; 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 # Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
 # shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
 BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')
