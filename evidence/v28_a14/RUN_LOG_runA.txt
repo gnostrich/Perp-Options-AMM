@@ -33,8 +33,8 @@
   chart-1 τ pxdiff (expect ~0 inert): 0
   chart-2 τ 0.3→2.0 pxdiff (expect >0 reshape): 6545
   chart-2 τ 0.3→0.35 single-step pxdiff: 3893
-  sweep distinct chart-2 frames in 1.3s (rAF-sampled): 1 (of 80 frames)
-  sweep previewPool pre/post-retrigger: {"pp1":null,"pp2":null}
+  sweep distinct chart-2 frames in 1.3s (rAF-sampled): 47 (of 79 frames)
+  sweep previewPool pre/post-retrigger: {"pp1":{"x":9.460903649771609,"y":848339.6542542219},"pp2":{"x":9.071993713373853,"y":891159.8938454397},"warn":"","dir":"long","si":"120000","bi":"60000","bn":"0.6","oracle":80000,"clubsLong":10000}
 
 --- ERRORS ---
   console errors: 0

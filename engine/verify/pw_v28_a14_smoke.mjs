@@ -193,8 +193,11 @@ async function main() {
   // DIFFERENT notional so the key changes (blank+same-value short-circuits to
   // static via _cwKey). Sample frames with rAF (setTimeout-only starves rAF in
   // headless), hashing canvas-pricing each animation frame.
-  await page.evaluate(() => Store.reset());
-  await page.waitForTimeout(250);
+  // Fresh page reload so the boot-seeded perp club is intact (previewBand's
+  // club-guard rejects with no club ⇒ no previewPool ⇒ no sweep). Item 2's
+  // open + Item 4's reset leave the long club drained.
+  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(400);
   const sweep = await page.evaluate(async () => {
     const sel = document.getElementById('chart-select');
     sel.value='pricing'; sel.dispatchEvent(new Event('change',{bubbles:true}));

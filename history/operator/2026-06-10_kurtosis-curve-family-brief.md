@@ -1606,3 +1606,11 @@ _Context: operator corrects the slippage mechanic (A15) — it is NOT proceeds-n
 _Context: operator confirms the slippage sequence — buy quantity/notional sized at pre-trade prices, then at the END of the trade the total slippage is obtained and applied._
 
 > yes that seems right, because when we calculate the buy option quantity and thus the buy notional, we use pre trade prices, then at the end of the trade we get the total slippage and we apply that, make sense?
+
+
+---
+
+## Entry 207 — 2026-06-12 18:15 UTC
+_Context: operator requires the no-jump ATM (position-value) item to get a clean close on BOTH the theoretical and the implementation side._
+
+> and no w atm thing needs a clean theoretical and implementation close out
