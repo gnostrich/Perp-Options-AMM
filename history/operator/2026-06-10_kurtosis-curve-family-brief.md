@@ -1310,3 +1310,11 @@ _Context: operator asks for the update on the two-traces explanation._
 _Context: operator asks whether the continuous/integral mechanism ultimately just yields a post-trade graph 2._
 
 > ultimately isnt whatevrr happens via the continuous / integral thing going to give us a post trade graph 2?
+
+
+---
+
+## Entry 171 — 2026-06-12 15:32 UTC
+_Context: operator expects, given the closed form exists, that the post-trade proforma shown is the one resulting from the continuous trade-warp-update-lens._
+
+> andif you already have a closed form expression / integral done i'd expect to see the post trade proforma resulting from this one (continous trade-warp-updatelens)
