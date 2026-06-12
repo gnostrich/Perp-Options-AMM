@@ -509,3 +509,11 @@ exact Fraction instances + manager's float instance reproduced). NOT upgraded to
 (App D reachability/classification = spot-trade-scoped); the theorem certifies the numeric signature
 fact only. OUT OF SCOPE per operator: round-trip residual economics (deferred, entry 8); q↦Δy mapping
 (referee Q8) = open interface, nothing proposed.
+**DOMAIN VERSION: STRONG (manager urgent correction 2026-06-12 ACKNOWLEDGED — skeptic counterexample,
+manager-verified; research-lead re-derived exact: (10,10,½), θ=0.01, Δy=+10 passes the pole yet
+x′=−37.619, w′=21/22; mirror θ=100, Δy=−20 ⇒ y′=−10).** All 9 obligations were stated AND submitted
+with the strong domain (pole ∧ x+Δx>0 ∧ y+Δy>0): `next_state_valid` carries hx'/hy' explicitly,
+`pole_does_not_bound_state` proves the pole's insufficiency in-kernel. No weak-domain obligation was
+ever completed (the canceled unpinned attempt f3776478 never returned — superseded). Solution archive
+re-downloaded 2026-06-12 byte-identical (md5 046e9c02d29754b4285b1f2c946860c5); extracted copy folded
+at `OFFATM_trade/extracted/offatm_submit_aristotle/`.

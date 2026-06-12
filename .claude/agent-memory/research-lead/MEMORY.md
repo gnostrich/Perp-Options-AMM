@@ -1,6 +1,7 @@
 # MEMORY — research-lead
 _Last updated: 2026-06-12, OFF-ATM TRADE RULE (operator ruling formalized: spec + 9/9 Aristotle
-proved (trusted-from-prover) + v27 cross-check DIFFERENT; no engine edit / no git)._
+proved (trusted-from-prover) + v27 cross-check DIFFERENT; manager's in-flight domain correction
+ACKNOWLEDGED+CLOSED — all artifacts STRONG domain; no engine edit / no git)._
 
 ### OFF-ATM TRADE-AT-POINT RULE — 2026-06-12 (operator ruling, entries 5–8; referee fatal #1 / Q1)
 **Ruling** (`notes/operator_ruling_2026-06-12_offATM_trade_rule.md`): state (x,y,w), **w genuine
@@ -35,6 +36,21 @@ field family; ruling's local-pair-at-T rule NOT implemented there (coincide only
 "UNIQUE conservation-consistent trade" claim = uniqueness within v27's own global-pair requirement —
 no contradiction with the ruling (which drifts global α,β by design). Strong-form note mentions trade
 points only in a strike-registration row (line 277).
+**MANAGER URGENT CORRECTION (same day, in-flight) ACKNOWLEDGED + CLOSED:** skeptic broke the
+weak domain (pole only) from the brief/ruling note; I re-derived the counterexample exactly
+((10,10,½), θ=0.01, Δy=+10 passes pole y_T+Δy=11>β_T=½ yet x′=−37.619, w′=21/22; mirror θ=100,
+Δy=−20 ⇒ y′=−10). **Domain version of EVERY artifact = STRONG (pole ∧ x+Δx>0 ∧ y+Δy>0):** spec §5
+(incl. exact interval (Δy_min,Δy_max) + deep-wings trade-size-cap remark, added per manager),
+Lean submitted AND returned (`next_state_valid` carries hx'/hy'; `pole_does_not_bound_state`
+proves pole-insufficiency in-kernel), prompt, RESULTS.md, SUBMISSION_IDS.txt. NO weak-domain
+obligation was ever completed (f3776478 canceled pre-return, superseded). Re-downloaded the
+solution archive independently — byte-identical md5 046e9c02d29754b4285b1f2c946860c5; full audit
+re-run from scratch (statement diff = sorry bodies + one `:= by`→`:=` term-mode, token-scan zero,
+axioms standard three per summary, math re-derived incl. ℚ exhibits 1/42, −5/22, 11/21≠22/43,
+43/42≠44/42). Ruling-note corrigendum was added by the manager (lines 25–31) — verified accurate.
+Archive folded at `OFFATM_trade/extracted/offatm_submit_aristotle/` + `offatm_out.tar.gz`.
+Deep-wings cap is a REAL per-trade size constraint (θ=0.01: Δy_max=0.125 = 1.25% of pool y) —
+binds exactly on the strike continuum; flagged for paper §5 text + any engine build of the rule.
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
