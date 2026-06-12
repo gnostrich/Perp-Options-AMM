@@ -887,3 +887,11 @@ _Context: operator authorizes spec'ing the full lensed lifecycle + transact/goal
 _Context: operator correction flagged as a manager context-break (directed at the skeptic) — the lens has zero effect at the mode (unit tangent slope) and distorts only OUTWARD; so the lens shifts the effective trade point further OTM (sharper lens = further still); the mode does NOT re-center on the trade. Same for the goal-seek (more warp with a sharper lens)._
 
 > no. the lens as i clarified earlier, and skeptic, note this as a manager context break: the lens has zero effect at unit tangent slope ('mode') but only outwards from there does its distortion show up; so without lens i'd trade OTM, but through lens would trade OTM+, and sharper lens OTM++ ... does that make sense; same goes for the goal seek, it would goal seek for more warp with sharper lens
+
+
+---
+
+## Entry 119 — 2026-06-12
+_Context: operator requests a separate check — slippage per unit dollar TRADED from the AMM accounting layer (not premium): does further OTM give more slippage per AMM-dollar, and a steeper lens more._
+
+> another separate check to run is also per unit dollar traded from AMM accounting layer perspective (not premium) that further OTM gives more slippage per unit dollar, and more slippage for more steep lens....
