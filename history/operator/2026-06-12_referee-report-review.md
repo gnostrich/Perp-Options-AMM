@@ -90,3 +90,11 @@ _Context note: full RESPONSE_TO_REFEREES_2026-06-12.md (v4) printed inline._
 _Context note: clarified — "storing" refers to the paper §5.1's claim that w is recomputable from
 reserves (state = (x,y) only); under the ruling state = (x,y,w), one single w kept as its own
 variable, exactly the operator's description. No design change implied._
+
+## Entry 14
+> is your reply faithful to this…? it doesn’t even embody the headline explanation i gave that this thing is more about a state transition system following some local conservation laws updating global state than to be interpreted as a single invariant function as the paper’s wording may lead one to believe …
+
+_Context note: manager owned the gap — the entry-13 reply answered the bookkeeping detail and
+dropped the operator's headline frame. Confirmed the response DOC carries the headline (§1
+"state transition system… per-trade generator… not a constant of motion"); summary bullet
+sharpened to lead with it (v4.2)._
