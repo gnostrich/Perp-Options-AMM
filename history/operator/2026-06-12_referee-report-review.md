@@ -33,3 +33,13 @@ _Context note: manager verified numerically (this turn) — the treat-trade-poin
 works locally at T but breaks the paper's OWN global conservation law (α 5→5.097, β 5→5.137) and the
 w=α/x derived-field property (0.523 vs 0.533); answered that the mechanism IS described, the missing
 piece is which conservation the off-ATM trade obeys (the two halves are jointly incompatible as written)._
+
+## Entry 6
+> but the same conservation law the way i understand it is used to locally curve-warp, rather than as per spot -- the moment you think of it as a state transsiiton rule instead of an invariant you'd get it i think
+
+_Context note: manager formalized + numerically verified the transition-rule semantics (local pair at
+the trade point generates each step; spot case recovers the global law; off-ATM global α,β drift by
+design; w genuine state; round-trip leaves a pool-favourable path residual). Answered: agreed — this
+dissolves the referee's dichotomy and folds fatal #1 largely into the framing fix, with named spec
+consequences (w-storage claim, App D/F scope). Confirmation question put to operator before
+commissioning the formal spec + Lean obligations._
