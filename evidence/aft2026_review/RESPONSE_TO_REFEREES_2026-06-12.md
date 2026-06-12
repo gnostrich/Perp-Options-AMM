@@ -1,8 +1,10 @@
 # Author Response — "Singular Dynamic AMM Pricing Perpetual Options Across the Strike Continuum" (AFT 2026 submission)
 
-We thank the reviewers for an unusually rigorous report. We reproduced every checkable claim in it
-independently before writing this response; **all of them held**, including both numerics in §3.2(1)
-and all four localised errors in §3.4. We accept the report's findings of fact in full. What follows
+We thank the reviewers for an unusually rigorous report. Before writing this response we
+independently reproduced the report's central checkable claims — both numerics in §3.2(1), all four
+localised errors in §3.4, and the §3.2(2) reading of our verification artifact — and **all of them
+held**. (We have not re-run the report's Monte Carlo analyses, its settlement-ledger algebra, or its
+prior-art search; we accept those provisionally and respond to them below.) What follows
 is (i) the resolution of the central finding — which turns out to be a specification-language error
 in one paragraph of our paper, not an inconsistency in the mechanism — and (ii) point-by-point
 answers to the thirteen questions.
@@ -36,8 +38,10 @@ question asked for):
   2. Local conserved pair **at T**: α_T = x_T·w, β_T = y_T·(1−w).
   3. Flows evaluated at T — and these are the actual reserve changes:
      Δx = −α_T·β_T·Δy / [(y_T − β_T)(y_T + Δy − β_T)],  Δw = β_T·Δy / [y_T·(y_T + Δy)],
-     on the admissible domain y_T + Δy > β_T (the pole of the closed form), with the cash-leg sign
-     fixed by the wing/side rule of §5.2.
+     on the admissible domain y_T + Δy > β_T (the pole of the closed form) **and** x + Δx > 0,
+     y + Δy > 0 (global reserve feasibility: the flows are evaluated at T but are drawn from the
+     pool's actual reserves, so feasibility bounds trade size — and binds hardest in the deep
+     wings). The cash-leg sign is fixed by the wing/side rule of §5.2.
   4. Induced global update: (x, y, w) → (x + Δx, y + Δy, w + Δw).
 
 **Worked on your own instance** (x = y = 10, w = ½, θ = 2, Δy = 1): T = (7.0711, 14.1421),
@@ -45,9 +49,12 @@ question asked for):
 pair is conserved at machine precision: (x_T + Δx)(w + Δw) = 3.5355 = α_T.
 
 **Properties, stated plainly:**
-- **Well-definedness:** every (state, ray, Δy) in the admissible domain yields a unique next state.
-  There is no inconsistency; the integral is the path integral along the local hyperbola
-  (x − α_T)(y − β_T) = α_T·β_T through T, which T lies on by construction.
+- **Well-definedness:** every (state, ray, Δy) in the admissible domain — including the global
+  reserve-feasibility constraints above — yields a unique next state. There is no inconsistency;
+  the integral is the path integral along the local hyperbola (x − α_T)(y − β_T) = α_T·β_T through
+  T, which T lies on by construction. (Without the feasibility constraints the closed form can
+  output infeasible states for large deep-wing trades; the constraint set above is part of the
+  rule, not an afterthought.)
 - **Spot trades are the special case:** at the reserves point the local pair equals the global pair,
   so spot swaps conserve global (α, β) and reproduce §5 exactly. This is why your panel's 44/44
   reserves-point checks pass — that part of the paper was, and remains, correct.
@@ -58,7 +65,9 @@ pair is conserved at machine precision: (x_T + Δx)(w + Δw) = 3.5355 = α_T.
   from reserves and must be stored. §5.1's "no additional state storage" is withdrawn.
 
 **Revision commitments for this finding:** (a) §5.1 rewritten as the transition rule above, with the
-global-invariant phrasing corrected and the spot case identified as the special case; (b) Appendix D
+global-invariant phrasing corrected and the spot case identified as the special case — the same
+scoping applies to §3's description of the trajectory hyperbola as "the locus along which the
+reserves point actually moves", which is true of the spot-trade operator only; (b) Appendix D
 (three-operator (α,β)-signature classification) and Appendix F (single global trajectory hyperbola
 as the reachable set) explicitly **scoped to the spot-trade operator** — the off-ATM trade is a
 distinct operator and will be stated as such; (c) the well-definedness, spot-reduction, per-step
@@ -69,10 +78,10 @@ language — k is a dependent readout and is itself not conserved by trades (k: 
 w = ½, Δy = 2 instance), a fact the submission's own Appendix F notes and the opening contradicted.
 
 **On the round-trip residual** this rule implies (open-and-reverse at the same ray leaves the pool
-slightly ahead): acknowledged. We treat it as path-dependence of the same class accepted in
-production dynamic-function AMMs (e.g. Curve v2's dynamically re-pegged invariant, where repegging
-cost is likewise borne inside the pool); §12.3's round-trip wording will be weakened accordingly,
-and a quantitative treatment is deferred and flagged as such.
+slightly ahead, i.e. the trader bears a small round-trip cost): acknowledged. We position it as
+path-dependence of the class present in production dynamic-function AMMs (e.g. Curve v2's
+dynamically re-pegged invariant); §12.3's round-trip wording will be weakened accordingly, and a
+quantitative treatment is deferred and flagged as such.
 
 ## 2. collarSurplus and the no-arbitrage biconditional (your §3.2(2), Questions 2 and 3) — concession
 
@@ -96,9 +105,11 @@ a result actually formalises compositions.
 ## 3. Verification artifacts (your §6, Question 3)
 
 The artifacts exist (full Lean ledger with per-theorem axiom reports; standard axioms only). The
-"on request" availability under double-blind was a mistake; the revision will deposit an
-**anonymised artifact repository at submission** with exact theorem statements, definitions,
-version pins, and per-theorem `#print axioms` output. Direct answer to your question: of the listed
+"on request" availability under double-blind was a mistake, and we accept that for a paper whose
+abstract leads with verification it was close to disqualifying. Our intention for the revision is
+an **anonymised artifact deposit at submission** (anonymous.4open.science or anonymised Zenodo)
+with exact theorem statements, definitions, version pins, and per-theorem `#print axioms` output.
+Direct answer to your question: of the listed
 results, the state-space-geometry results genuinely model state transitions (the operator family,
 rebase group structure, commutation); the composite-ray identity is a static algebraic identity
 whose mechanism-level sequencing is *not* formalised; the collar result is as conceded in §2. The
@@ -129,16 +140,16 @@ revision will say so rather than imply otherwise.
   position's own ray), together with an analysis of what it does and does not charge — including
   the fact, which you identified, that it vanishes when the pool sits at its anchor; (ii) the mark
   family is being generalised with a single static, volatility-calibrated curvature parameter set
-  at pool creation (wings remain exact power-laws), which is the design's intended answer to
-  vol-free pricing; the revision will either include the calibrated mark or scope the γ = 1 mark's
-  limitations explicitly. We do not claim here that either track neutralises your Monte Carlo
+  at pool creation, which is the design's intended answer to vol-free pricing; the revision will
+  either include the calibrated mark or scope the γ = 1 mark's limitations explicitly. We do not claim here that either track neutralises your Monte Carlo
   result; that analysis will be in the revision or the limitation stays.
-- **Q5 (settlement conservation ledger):** accepted as open. The revision will state who funds the
-  L0-vs-(L0 − 1) wedge, guard the raw_net < 0 branch, replace the sign-only club floor with a
-  magnitude-aware one (capping payout by available club equity), and address the carved-equity
-  denomination at the liquidation boundary — or, where a design decision is still open, list it as
-  a limitation rather than implying it is solved. The worked example will be recomputed with leg
-  values derived from an actual pool state instead of stipulated inputs.
+- **Q5 (settlement conservation ledger):** accepted as open. For each of the four items — who funds
+  the L0-vs-(L0 − 1) wedge, the raw_net < 0 branch, a magnitude-aware (rather than sign-only) club
+  floor, and the carved-equity denomination at the liquidation boundary — the revision will either
+  specify the design or list the item explicitly as an open limitation; we do not claim here that
+  any of them is currently solved, and the design decisions are still open on our side. The worked
+  example will be recomputed with leg values derived from an actual pool state instead of
+  stipulated inputs.
 - **Q6 (momentum bands / unpriced convexity):** correct as posed against the submission; whether
   the bought wing must oppose the origin perp is a product-level decision currently unspecified.
   The revision will either restrict band orientation or price the transfer; until then it is a
@@ -156,9 +167,10 @@ rule). We do not improvise it here.
 
 ## 7. Questions 9, 10, 13 (prior art, citation integrity, naming)
 
-- **Reference [7] is corrected** to Guillaume Lambert and Jesper Kristensen (arXiv 2204.14232).
-  You are right about the cause: an LLM-drafted reference that escaped author verification. Every
-  reference in the revision is being re-verified by hand.
+- **Reference [7]:** the authorship error you identify is accepted, and the reference will be
+  corrected to the actual authors (Lambert and Kristensen, arXiv 2204.14232) as part of a hand
+  re-verification of every reference against primary sources. You are right about the cause: an
+  LLM-drafted reference that escaped author verification.
 - The revision adds and positions against: Evans 2020 (arXiv 2006.08806); Angeris, Evans, Chitra
   2021 (arXiv 2103.14769) and RMM-01; InfinityPools; Pusceddu & Bartoletti (FMBC 2024,
   arXiv 2402.06064) for the Lean-AMM line; and Milionis–Moallemi–Roughgarden–Zhang LVR

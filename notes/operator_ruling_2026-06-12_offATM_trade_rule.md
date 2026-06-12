@@ -22,9 +22,17 @@ A trade at strike ray θ with cash leg Δy:
 **Spot special case:** at the reserves point the local pair equals the global pair, so spot trades
 conserve global α, β — the paper's §5.1 wording is true exactly there.
 
+### ⚠ Corrigendum (2026-06-12, same day — skeptic FLAG-WRONG, manager-verified)
+The admissible domain as first stated (only y_T + Δy > β_T) is INSUFFICIENT: flows are evaluated at
+T but drawn from global reserves, so deep-wing trades can output negative reserves while satisfying
+it (verified instance: (10,10,½), θ=0.01, Δy=+10 → (−37.62, 20, 0.95); mirror θ=100, Δy=−20 →
+y′=−10). **The domain is y_T + Δy > β_T AND x + Δx > 0 AND y + Δy > 0 (global reserve
+feasibility)** — a real trade-size cap binding hardest in the deep wings. Step 3 above and every
+Lean obligation carry this corrected domain (research-lead notified in-flight).
+
 ## Verified this session (manager, numeric — `evidence/aft2026_review/` scripts + transcript notes)
-- Well-defined: every (state, ray, Δy) in domain → unique next state; local α_T conserved to
-  machine precision; spot case reduces to the global law.
+- Well-defined: every (state, ray, Δy) in the CORRECTED domain (see corrigendum) → unique next
+  state; local α_T conserved to machine precision; spot case reduces to the global law.
 - Off-ATM trades drift global α, β **by design** (5 → 5.097/5.137 in the worked instance) and make
   w non-recoverable from reserves (α₀/x′ = 0.523 vs w′ = 0.533) ⇒ the paper §5.1 sentence
   "pool state fully determined by (x,y) … no additional state storage" must be retracted/scoped.
