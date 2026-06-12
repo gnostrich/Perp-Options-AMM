@@ -980,3 +980,11 @@ _Context: operator restates the model in 4 crisp points and calls out the manage
 _Context: operator corrects the manager's "lens re-centers as w changes" argument — the warp goal-seek is read through the lens as it was PRE-warp (frozen reference); it lies in the proforma._
 
 > let me correct you there. "warp goal seeking as seen through the lens pre warp" make sense? it lies in the proforma …
+
+
+---
+
+## Entry 130 — 2026-06-12
+_Context: operator rejects the manager's "frozen stored reference / one stored number / wrong lens" re-framing of entry 129._
+
+> no fuck no
