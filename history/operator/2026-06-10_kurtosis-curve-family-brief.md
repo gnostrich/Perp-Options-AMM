@@ -1590,3 +1590,11 @@ _Context: operator asks for monolith status; and adds two loop-closure requireme
 > also hows the monolith thing coming along?
 >
 > in that context we have to close the actual slippage on options and the no jump atm position value thing too full loop closed
+
+
+---
+
+## Entry 205 — 2026-06-12 18:09 UTC
+_Context: operator corrects the slippage mechanic (A15) — it is NOT proceeds-netting; it is applying the slippage calculated in the AMM trade layer to reduce the bought-option output below what it would have been at pre-trade option prices._
+
+> slippage isn't about proceeds netting, its basically applying the slippage as calcukated in the AMM trade layer to reduce the bought option output as it woukd have been based on pre trade option prices
