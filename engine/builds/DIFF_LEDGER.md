@@ -67,6 +67,25 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
 
 ### OPEN (operator asked / objected; no recorded resolution)
 
+-A14b. **★ KURTOSIS-WARP-TEST (operator entry 203, NOT yet tested) — the warp-magnitude-vs-KURTOSIS
+   half of the operator's question is still owed.** Operator `[verbatim-transcript]`
+   `history/operator/2026-06-10_kurtosis-curve-family-brief.md:1582`: *"im not infront of laptop, so
+   did u test thr tiings is mentioned about curve warp magbitude otm kurtosis etc..?"*; entries 184/185
+   (`…:1434`): *"if i make kurtosis steeper (less value in the html), that would imply … even more warp
+   not less right"*. The A14 smoke ANSWERED the warp-magnitude-vs-OTM half (Item 1: warp rises with
+   strike, AS5) but did NOT test the warp-MAGNITUDE-vs-τ coupling the operator describes (steeper τ ⇒
+   a strike reads further-OTM ⇒ more warp). The A14 run confirmed τ RESHAPES chart-2 (read-side) but
+   not the magnitude coupling. **Status: OPEN — targeted vs-τ warp-magnitude test owed; flag to manager.**
+
+-A14a. **★ FLAGGED-LABEL (skeptic-flagged, tester-observed at A14 HEAD `de28c937`) — the band-preview
+   Audit strip MISLABELS the at-strike net pool move.** The header literally reads **"Pool Δ
+   (cash-conserving ⇒ Δy_net ≈ 0)"** and the field **"net trader cash @ open"**; with the at-strike
+   swap the field shows **"$16,623.290372"** for a valid long band (NOT ≈0, NOT trader cash — it is
+   `netPoolY = leg1.dy + leg2.dy`, the net pool cash move; the at-strike swap is no longer
+   cash-conserving). The header text is a pre-A14 premium-fraction-era assumption. Tester read-only:
+   observed + quoted, NOT fixed. **Status: OPEN — UX-clarity relabel for the intern (not an engine
+   change); flag to manager.**
+
 -6. **★ C16 goal-seek-warp (`abd46149`, tester finding — the gating nuance) — the DRAWN warp on the
    trade preview is largest at the ATM elbow and SHRINKS out-of-the-money; the slope/exponent warp
    dG(u)=(γ′−γ)·Φ_τ(|u|) grows OTM but the option-VALUE separation does not (mark ψ→0 OTM).** [#16]
@@ -91,9 +110,11 @@ audits this list against the raw transcripts to catch unresolved-presented-as-re
    *"that's probably because you're not doing the AMM tx right. buy call is buy asset for dollars at
    strike on AMM, buy put is sell asset for dollars at strike on AMM"* — the operator's most recent
    root-cause diagnosis of flat-warp. C16 adds a goal-seek READOUT + a held-lens warp VIEW; the trade
-   mechanic still moves w from the band's net cash (not an asset-at-strike swap). **Status: OPEN —
-   operator-tier scope question (is the entry-127 engine change part of C16 or a follow-on?); flag so
-   it is not assumed delivered by the warp VIEW.**
+   mechanic still moves w from the band's net cash (not an asset-at-strike swap). **Status:
+   RESOLVED(evidence), 2026-06-12 — A14 HEAD `de28c937` ships the at-strike swap: `executeLeg` pool
+   cash per leg `dy = (wingSign·legSign)·N·K_usd`, K_usd=θ·oracle (asset-for-dollars at the dollar
+   strike). Tester live ×2 (single sold call dy/Δw rise with strike) + gates AS1 (|dy|==N·K) / AS5
+   (warp-rises-OTM, Δsteepness==dy/β). The entry-127 mechanic is DELIVERED.**
 
 -4. **★ v28-S2 (tester finding, operator has not seen) — instant open->close round-trip on a TWO-OTM-LEG band
    is TRADER-FAVOURABLE (positive raw_net) and SCALES with slippage; the brief's "pool-favourable residual"
