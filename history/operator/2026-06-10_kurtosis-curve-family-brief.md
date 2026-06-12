@@ -799,3 +799,11 @@ _Context: operator authorizes the finishing work — cleanup batch + warp check 
 _Context: operator asks whether varying the lens steepness/intensity (τ) visibly affects the second (option-value) graph._
 
 > so i'll be able to vary the 'steepness' / 'intensity' of the lens and see impact on second graph right?
+
+
+---
+
+## Entry 108 — 2026-06-12
+_Context: operator (1) OK with the knob inversion IF it's from the natural math — asks to verify that once; (2) didn't understand the manager's point-2 and calls out the assure-then-undermine ("gaslight") pattern._
+
+> 1. as long as the knob does the right thing for the right reason and the inversion is from the natural math of it, i'm ok with that -- check that once, 2. didn't understand -- this sounds like 'gas,light gasloight it doesnt work gaslight"
