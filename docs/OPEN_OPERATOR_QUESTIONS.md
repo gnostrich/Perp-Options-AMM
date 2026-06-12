@@ -14,6 +14,8 @@ _One line per live question, fact-with-pointer only (skeptic succession plan, `n
 
 | 10 | **A15 slippage MEASURE — which one?** (morning decision; spec `SPEC_A15_slippage_haircut` HALTED here, not guessed.) The haircut form is multiplicative `N_buy·(1−s)`, sized at pre-trade prices — settled. But "the slippage as calculated in the AMM trade layer" has TWO defensible readings diverging ~3.6×: **(a)** the AMM layer's own displayed "Slippage %" (~29% @N=0.5; dominated by the SOLD-leg footprint) — fits "as calculated in the AMM layer"; **(b)** the bought-leg option-price drift pre→post (~7.76%) — fits "based on pre-trade option prices / the bought leg." Spec's labelled lean: (a) fits the wording's first half, (b) the second; NOT picked. | spec §step-2 FLAG; entries 205/206 |
 
+| 11 | **A16-CUSP (small, aesthetic) — accept or smooth?** The no-jump-ATM requirement is MET (position value continuous across ATM). But at exactly ATM the lensed mark peaks at 1.0 with a slope sign-flip — a continuous **cusp** (C⁰ not C¹), because the centred lens forces the local exponent →0 there. Accept the cusp (current, no-jump satisfied) OR smooth it (a curve-semantic change to the g_loc→0 collapse). Non-blocking. | spec `SPEC_A16_no_jump_atm` §4 |
+
 ### PARKED — demoted (W)/Path-A curve line (NOT live; reopen only on operator say-so; skeptic note, entry 152 sequence)
 | 3 | Path-A strike cap ≈1.4× spot — belongs to the demoted (W)/Path-A curve, not today's lens HEAD. | entries 39–41 |
 | 4 | A-vs-B weights fork — belongs to the demoted (W)/Path-A curve, not today's lens HEAD. | skeptic verdict #24 |
