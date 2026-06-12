@@ -1564,3 +1564,11 @@ _Context: operator asks what is pending._
 _Context: operator asks the manager to define "at strike" — a check on the manager's understanding before promotion._
 
 > what does at strike mean?
+
+
+---
+
+## Entry 202 — 2026-06-12 17:58 UTC
+_Context: operator confirms the manager's "at-strike" definition is correct._
+
+> got it
