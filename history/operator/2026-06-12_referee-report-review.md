@@ -43,3 +43,8 @@ design; w genuine state; round-trip leaves a pool-favourable path residual). Ans
 dissolves the referee's dichotomy and folds fatal #1 largely into the framing fix, with named spec
 consequences (w-storage claim, App D/F scope). Confirmation question put to operator before
 commissioning the formal spec + Lean obligations._
+
+## Entry 7
+> simple sngligh for me ple?
+
+_Context note: previous answer restated in plain English._
