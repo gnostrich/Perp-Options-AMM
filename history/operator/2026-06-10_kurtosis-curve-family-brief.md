@@ -1572,3 +1572,11 @@ _Context: operator asks the manager to define "at strike" — a check on the man
 _Context: operator confirms the manager's "at-strike" definition is correct._
 
 > got it
+
+
+---
+
+## Entry 203 — 2026-06-12 18:02 UTC
+_Context: operator (away from laptop) asks whether the warp-magnitude-vs-OTM and vs-kurtosis behavior was actually tested._
+
+> im not infront of laptop, so did u test thr tiings is mentioned about curve warp magbitude otm kurtosis etc..?
