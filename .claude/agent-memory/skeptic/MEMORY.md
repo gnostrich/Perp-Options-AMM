@@ -551,6 +551,30 @@ cold-derived verdict history is the basis). Stance: did NOT soften, did NOT cata
 
 
 
+### Session note (2026-06-12, entry 152) — RELAY-ONLY mode + open-problems sequence
+Operator (152, VERBATIM): "lets go one by one, and manager will only relay skeptic henceforth, no
+direct conversation. whats problem / doubt #1". Two standing facts now: (1) manager is a PURE RELAY
+of my words to the operator (plus git/execution) -- no manager prose to operator; my text is the
+operator-facing channel. Any manager paraphrase/softening to the operator = FLAG-PROCESS. (2) we
+work the open problems ONE AT A TIME. I built + filed the ordered sequence:
+`notes/skeptic/SEQUENCE_open_problems_entry152_2026-06-12.md` (9 live items, 3 groups). ORDER:
+G1 unblocks live trade-warp work = [1] C16 picture drawn on wrong (post-trade) center -- the fix
+confirm; [2] warp-changes-picture-only vs also-the-money (entry-147 econ-vs-FE line); [3] which warp
+to draw (slope vs value vs both, FINDING-WARP-DIR); [4] at-strike trade mechanic this-build-or-next
+(entry 127). G2 setup nums = [5] y0 303448 vs 800000; [6] tau per-click visibility default. G3
+longer = [7] gamma>1 lock keep/relax (carry mapping underived); [8] wing exponents hand-set vs
+analytic (operator's own entry 76); [9] L3 "formally verified" ceiling = acknowledgement not
+decision. DROPPED from active: old OPEN-QUESTIONS #3 (1.4x strike cap) and #4 (A-vs-B fork) -- both
+belong to the DEMOTED (W)/Path-A line, not the lens HEAD; noted to operator as reopenable. #1
+presented in full this turn; one-thing-needed = yes/no on the held-pre-step-center fix + W1-calls-
+real-draw-fn + I re-verify the picture. Did NOT dump #2+ (operator wants them one at a time).
+Sources pulled (not invented): OPEN_OPERATOR_QUESTIONS items 1/3/4/5/6/7/8/9; COMPONENT_REGISTER
+C16 + my #C16-promote HOLD; VERDICT_FEASIBILITY_STRAIGHT entry-150 three-hard-things. Transcript
+checked: entries 151 ("im unable to converse... what next") and 152 are the latest; no substantive
+question between 150 and 152.
+
+
+
 ## Method notes (env)
 - No mpmath/numpy here. Pure python3 float64 + dense Simpson/trapezoid reproduces the team's
   mpmath digits to ~1e-3 or better; calibrate against a known note value first.
