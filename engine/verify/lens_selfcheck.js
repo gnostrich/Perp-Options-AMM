@@ -205,5 +205,219 @@ const hp = (v) => v / Math.sqrt(tau * tau + v * v);
   chk('(7b) arbitrageToOracle stays lens-free (plain Balancer)', arbLensFree, arbLensFree ? '' : 'lens call inside arb');
 }
 
+// ═════════════════════════════════════════════════════════════════════════
+//  STAGE 2 — WRITE/SETTLE THROUGH LENS  (spec §11.6, skeptic verdict #30)
+//  8 asserts: settled==lensed·size; open==settle (one-helper witness); UI==engine
+//  cross-layer basis; intra-band single-basis; round-trip-zero close (catches the
+//  close-side coordinate slip); solvency ceiling; one-helper no-arb witness;
+//  tradeUpdate byte-identical regression. SKIP-as-pass if the build is Stage-1
+//  only (markEff still 3-arg, no state/tau lensing).
+//
+//  Stage-2 detector: legValueUnified takes (state, wing, leg, tau) and markEff
+//  routes through markLensed (W4). Read off the engine source.
+// ═════════════════════════════════════════════════════════════════════════
+{
+  const isStage2 = /function legValueUnified\(state, wing, leg, tau\)/.test(engineBody)
+                && /function markEff\(state, wing, theta, tau\)/.test(engineBody)
+                && /markLensed\(wing, theta, sNorm, gLoc\(state, theta, tau\)\)/.test(engineBody);
+  if (!isStage2) {
+    console.log('SKIP Stage-2 write/settle checks: build is Stage-1 read-layer only (markEff 3-arg) — pass.');
+  } else {
+    const tau2 = 0.3;
+    // a steep pool and an off-equilibrium steep pool (the coordinate-hazard state)
+    const sSteep = mkPool(10, 80000, 0.85);            // γ = 5.667
+    const gSteep = E.getW(sSteep) / (1 - E.getW(sSteep));
+    const mkBand = (soldK, boughtK, Ns, Nb, orc) => ({
+      sold_wing: 'call', bought_wing: 'put',
+      sold:   { inner: soldK / orc,  outer: NaN, N: Ns, K_inner: soldK,  K_outer: NaN },
+      bought: { inner: boughtK / orc, outer: NaN, N: Nb, K_inner: boughtK, K_outer: NaN },
+      entry: { L0: 1, oracle: orc }, carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orc },
+    });
+    const club = { equity: 1e12 };
+
+    // ── (8.1) settled == lensed·size : legValueUnified == N·markLensed at getSNorm ──
+    {
+      let maxerr = 0, worst = '';
+      for (const W2 of [0.6, 0.725, 0.85]) {
+        const sp = mkPool(10, 80000, W2);
+        const sNorm = E.getSNorm(sp);
+        for (const wing of ['call', 'put']) {
+          for (const mult of [0.3, 0.7, 1.5, 4.0]) {
+            const theta = sNorm * mult;
+            const leg = { inner: theta, outer: NaN, N: 2 };
+            const got = E.legValueUnified(sp, wing, leg, tau2);
+            const exp = leg.N * E.markLensed(wing, theta, sNorm, E.gLoc(sp, theta, tau2));
+            const e = Math.abs(got - exp);
+            if (e > maxerr) { maxerr = e; worst = 'W=' + W2 + ' ' + wing + ' mult=' + mult; }
+          }
+        }
+      }
+      chk('(8.1) settled == N·markLensed at getSNorm (W4)', maxerr < 1e-14, 'maxErr=' + maxerr.toExponential(2) + ' ' + worst);
+    }
+
+    // ── (8.2) open == settle, same state (one-helper witness, §11.4-B) ──
+    // barrier leg priced via lensed legPrice == settled via legValueUnified, same state.
+    {
+      let maxerr = 0, worst = '';
+      for (const W2 of [0.6, 0.725, 0.85]) {
+        const sp = mkPool(10, 80000, W2);
+        const oracle = E.getMP_raw(sp);
+        for (const wing of ['call', 'put']) {
+          for (const K of [50000, 84000, 150000, 400000]) {
+            const inner = K / oracle;
+            const vOpen = E.legPrice(sp, wing, inner, NaN, 3, tau2).V;
+            const vSettle = E.legValueUnified(sp, wing, { inner, outer: NaN, N: 3 }, tau2);
+            const e = Math.abs(vOpen - vSettle);
+            if (e > maxerr) { maxerr = e; worst = 'W=' + W2 + ' ' + wing + ' K=' + K; }
+          }
+        }
+      }
+      chk('(8.2) open(legPrice) == settle(legValueUnified) same state', maxerr < 1e-12, 'maxErr=' + maxerr.toExponential(2) + ' ' + worst);
+    }
+
+    // ── (8.3) cross-layer basis : UI pfComponents fraction == engine markEff ──
+    // pfComponents (W6) uses Engine.markLensed(wing, K/oracleLive, getSNorm(pool), gLoc(pool, K/oracleLive, tau)).
+    // markEff (W4) uses markLensed(wing, theta, getSNorm(state), gLoc(state, theta, tau)). Same coordinate ⇒ equal.
+    {
+      let maxerr = 0, worst = '';
+      for (const W2 of [0.6, 0.725, 0.85]) {
+        const sp = mkPool(10, 80000, W2);
+        const oracleLive = E.getMP_raw(sp);
+        const sNormPool = E.getSNorm(sp);
+        for (const wing of ['call', 'put']) {
+          for (const K of [50000, 84000, 250000]) {
+            const theta = K / oracleLive;
+            const uiFrac = E.markLensed(wing, theta, sNormPool, E.gLoc(sp, theta, tau2));   // W6 path
+            const engFrac = E.markEff(sp, wing, theta, tau2);                                // W4 path
+            const e = Math.abs(uiFrac - engFrac);
+            if (e > maxerr) { maxerr = e; worst = 'W=' + W2 + ' ' + wing + ' K=' + K; }
+          }
+        }
+      }
+      chk('(8.3) UI pfComponents basis == engine markEff (cross-layer)', maxerr < 1e-14, 'maxErr=' + maxerr.toExponential(2) + ' ' + worst);
+    }
+
+    // ── (8.4) intra-band single-basis : both legs route through markLensed (structural) ──
+    // closeBand settled leg uses legValueUnified/markEff (→markLensed); OTM leg uses legPrice (→markLensed).
+    {
+      const cbSrc = (function () { const i = engineBody.indexOf('function closeBand'); let d = 0, j = engineBody.indexOf('{', i); for (let k = j; k < engineBody.length; k++) { if (engineBody[k] === '{') d++; else if (engineBody[k] === '}') { d--; if (d === 0) return engineBody.slice(i, k + 1); } } return ''; })();
+      // settled leg must call legValueUnified(s, ...) and markEff(s, ...) (the lensed 4-arg form, state-first)
+      const settledLensed = /legValueUnified\(s, \w+_wing, band\.\w+, tau\)/.test(cbSrc)
+                         && /markEff\(s, \w+_wing, band\.\w+\.inner, tau\)/.test(cbSrc);
+      // reversal leg must call legPrice(s, ..., tau) (the lensed form with tau)
+      const reversalLensed = /legPrice\(s, \w+_wing, band\.\w+\.inner, band\.\w+\.outer, band\.\w+\.N, tau\)/.test(cbSrc);
+      // sNorm0 retained for the legacy regime test ONLY (legIsITM / wingMember), not in the lens calls
+      const sNorm0NotInLens = !/legValueUnified\([^)]*sNorm0|markEff\([^)]*sNorm0|markLensed\([^)]*sNorm0|gLoc\([^)]*sNorm0/.test(cbSrc);
+      chk('(8.4) intra-band both legs lensed, sNorm0 regime-only', settledLensed && reversalLensed && sNorm0NotInLens,
+          'settled=' + settledLensed + ' reversal=' + reversalLensed + ' sNorm0-out-of-lens=' + sNorm0NotInLens);
+    }
+
+    // ── (8.5) ROUND-TRIP ZERO + the COORDINATE HAZARD (skeptic-strengthened) ──
+    // (a) NEITHER-ITM: open via executeBand, close immediately; the per-leg open/settle
+    //     identity holds (the moved-pool residual is genuine slippage, not a leak — so we
+    //     assert the per-leg same-state identity, the meaningful no-arb check).
+    // (b) ONE-ITM at a STEEP OFF-EQUILIBRIUM oNow≠marginal pool: the settled leg (price-coord
+    //     sNorm0 natively) MUST land on the SAME reciprocal coordinate as the OTM reversal leg.
+    //     Compare the lensed settled fraction (correct, reciprocal getSNorm) against the WRONG
+    //     price-coord-spot fraction and assert they DIFFER materially (the hazard is real), AND
+    //     that closeBand's settled value matches the correct reciprocal one (the build took the
+    //     correct branch). This is the case that crosses the two coordinate conventions.
+    {
+      // (a) same-state per-leg identity at an off-eq steep pool
+      const oNowA = E.getMP_raw(sSteep) * 1.6;          // off-equilibrium
+      let maxId = 0;
+      for (const wing of ['call', 'put']) {
+        for (const K of [50000, 84000, 300000]) {
+          const inner = K / oNowA;
+          const vOpen = E.legPrice(sSteep, wing, inner, NaN, 2, tau2).V;
+          const vSettle = E.legValueUnified(sSteep, wing, { inner, outer: NaN, N: 2 }, tau2);
+          maxId = Math.max(maxId, Math.abs(vOpen - vSettle));
+        }
+      }
+      // (b) coordinate hazard: the ONE-ITM case (sold call ITM, settled-to-cash). At a steep
+      //     off-equilibrium oNow≠marginal pool, sNorm0 (price spot) and getSNorm (reciprocal
+      //     mode) diverge maximally. The settled leg MUST land on the reciprocal coordinate
+      //     (the SAME one the OTM reversal leg uses), NOT the price-coord sNorm0.
+      const oNow = E.getMP_raw(sSteep) * 1.6;                  // off-equilibrium
+      const oi2 = 80000;
+      const sNorm0 = E.poolMark(sSteep, oNow, oi2) / oNow;     // price-coord spot (the trap)
+      const mode = E.getSNorm(sSteep);                         // reciprocal mode (correct)
+      const theta = sNorm0 * 0.5;                              // sold-call ray, ITM (sNorm0 ≥ theta)
+      const Kitm = theta * oNow;
+      const gK = E.gLoc(sSteep, theta, tau2);                  // gLoc hardcodes reciprocal mode
+      const correct = E.markLensed('call', theta, mode, gK);   // RIGHT (reciprocal)
+      const wrong = E.markLensed('call', theta, sNorm0, gK);   // WRONG (price spot) — the basis leak
+      const hazardReal = Math.abs(correct - wrong) > 1e-3;     // the trap genuinely diverges (≈0.096)
+      // closeBand: sold call ITM → settled-to-cash; bought put OTM → reversed. The settled value
+      // X MUST equal N·markLensed(reciprocal) = 2·correct (NOT 2·wrong = the price-coord leak).
+      const Kput = sNorm0 * oNow * 0.3;                        // put OTM (theta_put < sNorm0)
+      const band = mkBand(Kitm, Kput, 2, 1, oNow);
+      band.entry.oracle = oNow;
+      const cl = E.closeBand(sSteep, band, club, oNow, oNow, oi2, tau2);
+      const builtCorrect = cl.ok && cl.settled_cash_leg === 'sold'
+        && Math.abs(cl.X - 2 * correct) < 1e-9                 // X == reciprocal value
+        && Math.abs(cl.X - 2 * wrong) > 1e-3;                  // X is NOT the price-coord leak
+      chk('(8.5a) per-leg open==settle at steep off-eq state', maxId < 1e-12, 'maxId=' + maxId.toExponential(2));
+      chk('(8.5b) ONE-ITM close-side uses reciprocal coord (hazard caught)', hazardReal && builtCorrect,
+          'hazardGap=' + Math.abs(correct - wrong).toFixed(4) + ' builtCorrect=' + builtCorrect + ' clX=' + (cl.ok ? cl.X.toFixed(6) : cl.reason) + ' settled=' + (cl.ok ? cl.settled_cash_leg : '-'));
+    }
+
+    // ── (8.6) solvency ceiling : markLensed ∈ [0, 1+1e-12] over a stress sweep ──
+    {
+      let mx = -Infinity, mn = Infinity, bad = 0;
+      for (const W2 of [0.52, 0.6, 0.725, 0.85, 0.9]) {
+        const sp = mkPool(10, 80000, W2);
+        for (const wing of ['call', 'put']) {
+          for (let lu = -6; lu <= 6; lu += 0.2) {
+            const theta = E.getSNorm(sp) * Math.exp(lu);
+            const g = E.gLoc(sp, theta, tau2);
+            for (let q = 1e-6; q < 8; q *= 1.6) {
+              const v = E.markLensed(wing, theta, q, g);
+              if (!isFinite(v)) { bad++; continue; }
+              if (v > mx) mx = v; if (v < mn) mn = v;
+            }
+          }
+        }
+      }
+      chk('(8.6) solvency ceiling markLensed ≤ 1 (no NaN)', mx <= 1 + 1e-12 && mn >= 0 && bad === 0,
+          'range=[' + mn.toExponential(2) + ',' + mx.toFixed(8) + '] nonFinite=' + bad);
+    }
+
+    // ── (8.7) one-helper no-arb witness : markLensed_open == markLensed_settle == 0 ──
+    // same-function-evaluated-twice (the consistency witness, NOT an independent no-arb proof;
+    // relabelled per skeptic). Confirms both layers call the SAME helper.
+    {
+      let maxgap = 0;
+      const sp = mkPool(10, 80000, 0.725);
+      const sNorm = E.getSNorm(sp);
+      for (const wing of ['call', 'put']) {
+        for (let lu = -5; lu <= 5; lu += 0.1) {
+          const theta = sNorm * Math.exp(lu);
+          const g = E.gLoc(sp, theta, tau2);
+          const open = E.markLensed(wing, theta, sNorm, g);
+          const settle = E.markEff(sp, wing, theta, tau2);   // markEff at the same coord
+          maxgap = Math.max(maxgap, Math.abs(open - settle));
+        }
+      }
+      chk('(8.7) one-helper witness: open==settle fraction (max|Δ|=0)', maxgap === 0, 'maxGap=' + maxgap);
+    }
+
+    // ── (8.8) L4 / pool regression : tradeUpdate byte-identical + no inverse-lens added ──
+    // (the existing (6)/(6b)/(7) carry the pool byte-identity; here we additionally confirm
+    //  W2 added NO inverse-lens helper by re-scanning the banned set against the Stage-2 body.)
+    {
+      const lower2 = engineBody.toLowerCase();
+      const banned2 = [/invertlens|lensinvert|inverselens|inverse_lens/, /warp\s*until/, /solve\w*for\w*dy/, /dyfromslope|dy_from_slope/, /targetslope|target_slope|slopetarget/];
+      let hit2 = '';
+      for (const re of banned2) if (re.test(lower2)) hit2 += re.source + ' ';
+      // executeBand/executeLeg size dy forward from V (lensed); confirm dy is still ±V·oracle in form
+      const elSrc = (function () { const i = engineBody.indexOf('function executeLeg'); let d = 0, j = engineBody.indexOf('{', i); for (let k = j; k < engineBody.length; k++) { if (engineBody[k] === '{') d++; else if (engineBody[k] === '}') { d--; if (d === 0) return engineBody.slice(i, k + 1); } } return ''; })();
+      const dyForward = /const dy = \(wingSign \* legSign\) \* V_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc);
+      chk('(8.8) L4: no inverse-lens added; dy=±V·oracle forward sizing', hit2 === '' && dyForward,
+          'banned=' + (hit2 || 'none') + ' dyForward=' + dyForward);
+    }
+  }
+}
+
 console.log('=== lens_selfcheck: ' + pass + ' PASS, ' + fail + ' FAIL ===');
 process.exit(fail === 0 ? 0 : 1);

@@ -1,6 +1,71 @@
 # MEMORY — intern
-_Last updated: 2026-06-11 (v28 lens Stage-1 FLAG-1 DEFECT FIX — τ stepper now auto-redraws
-chart 2; handed to manager). Rewrite changed bits at task end._
+_Last updated: 2026-06-12 (v28 lens STAGE-2 WRITE/SETTLE-THROUGH-LENS built — new file
+temporal_mvp_v28_lens_S2.html; handed to manager). Rewrite changed bits at task end._
+
+## Done — v28 lens STAGE-2 WRITE/SETTLE THROUGH LENS (NEW file, handed to manager 2026-06-12)
+Build **`engine/builds/temporal_mvp_v28_lens_S2.html`** (NEW, from S1 `1ed8fe2d…`; HEAD v27
+UNTOUCHED, not promoted, no git). md5 **`b53ace9996930249cad85fc1e37e6c61`**. Spec
+`specs/SPEC_v24_lens_BUILD_2026-06-11.md` §11; skeptic verdict #30
+`notes/skeptic/VERDICT_R6_WRITE_SETTLE_LENS_2026-06-12.md` (1 halt-class must-apply + gate-5 strengthen).
+Splices (all on copy `/tmp/work_s2.html`, count==1, blobs never through): `/tmp/splice_s2_engine.py`,
+`splice_s2_w4.py`, `splice_s2_tau.py`, `splice_s2_w3.py`, `splice_s2_uicallers.py`, `splice_s2_payoff.py`,
+`splice_s2_w6.py` + 1 Edit (payoff tau). Diff vs S1 = 136 changed lines, all W-site regions, no blob
+lines (74/1060), no pool-fn lines.
+- **5 W-sites routed to the lens** (one-helper rule §11.2: same gLoc/markLensed, getSNorm(state)
+  reciprocal coord, γ live):
+  - **W1 `legPrice`** (~L1716): +`tau` param; barrier V=N·markLensed(inner,getSNorm,gLoc); spread
+    **leg-by-leg** N·(markLensed(inner)−markLensed(outer)) — DROPPED the θ*=√(θ₁θ₂)/2sinh composite
+    (invalid under per-leg g_loc). theta_star/delta kept display-only.
+  - **W2 `executeLeg`** (~L1761): +`tau`; V now lensed via legPrice; **dy=±V·oracle form UNCHANGED**
+    (pool executes plain v24).
+  - **W3 `closeBand`** (~L1955): +`tau`; settled-to-cash leg (legValueUnified/markEff) AND OTM
+    reversal leg (legPrice) BOTH lensed, both at getSNorm(s) — move TOGETHER (§11.4-C).
+  - **W4 `markEff`/`legValueUnified`** (~L1906): sig → (state,wing,theta,tau)/(state,wing,leg,tau);
+    → markLensed(wing,θ,getSNorm(state),gLoc(state,θ,tau)).
+  - **W6 `pfComponents`** (~L4168): +`pool,tau` params; Engine.mark → Engine.markLensed at
+    getSNorm(s.pool). **W7 `raw_net`/`dollarFigure` (~L4259): basis only, formula UNCHANGED.**
+- **MUST-APPLY-A (THE hazard) honored:** the lensed markLensed VALUE is NOT coordinate-invariant
+  (only the exponent g is). `closeBand`/`markEff` natively had `sNorm0=poolMark/oNow` (PRICE coord);
+  `gLoc` HARDCODES the reciprocal `getSNorm`. Fix: **ALL settled-leg lens calls use `getSNorm(s)`
+  (reciprocal) as the spot** — NEVER `sNorm0` price spot/ray. `sNorm0` kept for `legIsITM`/`wingMember`
+  REGIME TEST ONLY. Verified: settled-leg X==N·markLensed(reciprocal) to 1e-9; a price-coord-spot call
+  diverges ~0.096 (the 6× leak the gate catches). Both legs land on ONE coordinate ⇒ settled==reversal.
+- **tau is on TOP-LEVEL state (`state.tau`), NOT on `state.pool`** — engine fns receive the pool.
+  Threaded `tau` explicitly through executeLeg/executeBand/closeBand/legPrice (+ executeFourStrikeSpread
+  alias) and the 3 UI callers (executeBand open L2471, previewBand L3017, closeBand L2553) pass
+  `state.tau`/`s.tau`. drawPayoff legPrice display call (L3874) gets `state.tau` (was already
+  falling back pre-S2: it passes the UI wrapper not the pool → getSNorm NaN → catch).
+- **W1-consistency completion (FLAGGED, not a 6th independent site):** `executeBand`'s inline N_buy
+  `denom` (raw `mark` at price-coord sNorm2) would mix bases against the now-lensed V_sell
+  (N_buy off by ~2×). Routed the denom through the SAME lensed `legPrice` (W1's "single pricing
+  entry" mandate). The dead `sNorm2`/`ts2`/`d2`/`m2`/`buyMode` consts remain (harmless, valid JS).
+  **Surface to skeptic/manager:** executeBand denom is NOT in the spec's enumerated 5 sites but
+  leaving it raw reintroduces the basis split W1 closes — judged the consistent in-scope reading.
+- **L4 preserved:** pool `tradeUpdate`/`arbitrageToOracle`/`rebase` SOURCE byte-identical to v24 +
+  OUTPUT delta 0 (verified); dy=±V·oracle forward sizing; no inverse-lens helper. No γ_min floor;
+  g_loc(ATM)=0 finite (markLensed→1 at mode); solvency markLensed∈[7.8e-10,1.0].
+- **GATE:** extended `engine/verify/lens_selfcheck.js` with §11's 8 Stage-2 checks (8.1 settled==
+  lensed·size; 8.2 open==settle one-helper; 8.3 UI==engine cross-layer; 8.4 intra-band both-lensed
+  +sNorm0-regime-only structural; **8.5b STRENGTHENED — steep off-eq ONE-ITM, hazard caught**;
+  8.5a per-leg same-state; 8.6 solvency ceiling; 8.7 one-helper witness [relabeled per skeptic, NOT
+  "the no-arb gate"]; 8.8 L4 dy-forward + no inverse-lens). Stage-2 block SKIPs-as-pass on Stage-1
+  builds (markEff 3-arg detector). **23 PASS 0 FAIL** on S2; S1 stays **14 PASS** (Stage-2 SKIPs);
+  v24 base SKIPs entirely; HEAD v27 unaffected.
+- **WIRED into run_all.sh:** NEW lens branch (detector: `function markLensed` AND NOT `function
+  wField`) BEFORE the (W) branch → `node verify/lens_selfcheck.js` [HARD GATE] → exit 0. Routes
+  v28 lens builds; v27 (has wField) still → wcurve (22 PASS); GH still → full suite.
+  `sh verify/run_all.sh builds/temporal_mvp_v28_lens_S2.html` GREEN exit 0.
+- **Safety:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (613/444/1748); IIFE
+  intact; longest non-blob line 535; diff vs S1 = 136 lines all W-sites, no blob/pool-fn lines.
+- **Open for tester (Stage-2 smoke):** band open→close round-trip (raw_net≈0 on immediate close —
+  tiny residual = genuine AMM slippage, pool-favourable per skeptic CLAIM-2); portfolio value
+  reflects lensed marks; ATM (g_loc=0) settles finite; steep-pool one-ITM-leg band settles at the
+  reciprocal-coord value. Confirm no additive lensed-option + un-lensed-perp $ in one column
+  (skeptic CLAIM-4 / §11.7 record flag). **Open for manager/skeptic:** the executeBand N_buy denom
+  routing decision above.
+
+---
+_(history below)_
 
 ## Done — v28 lens Stage-1 FLAG-1 FIX (τ-redraw wiring; handed to manager 2026-06-11)
 Build **`engine/builds/temporal_mvp_v28_lens_S1.html`** edited IN PLACE (splice on copy then

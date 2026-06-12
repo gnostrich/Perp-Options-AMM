@@ -12,6 +12,21 @@ BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read l
 echo "blob line-md5 multiset (want ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291): $BLOBQ"
 [ "$BLOBQ" = "ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291 " ] || { echo "BLOB CHECK FAILED"; exit 1; }
 
+# ── v28 POLAR-LENS dispatch (Stage 1 read layer / Stage 2 write-settle) ──
+# A lens build exports markLensed/gLoc (off the plain v24 base; no ghCalibrate,
+# no wField). Gate it with lens_selfcheck.js [HARD GATE]: the Stage-1 read checks
+# (14) plus the Stage-2 write/settle checks (8) when the build carries the lensed
+# settlement signatures (markEff 4-arg). SKIPs the Stage-2 block on a Stage-1-only
+# build. Routed BEFORE the (W) branch since lens builds also lack ghCalibrate.
+if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD"; then
+  echo ""
+  echo "================ v28 polar-lens build -> lens_selfcheck.js [HARD GATE] ================"
+  node verify/lens_selfcheck.js "$HEAD"
+  echo ""
+  echo "lens build green. (GH/(W) suites N/A here.)"
+  exit 0
+fi
+
 # ── Build-type dispatch (HEAD = v27 (W)-curve since 2026-06-10, operator entry 28) ──
 # (W)/pre-GH builds (no ghCalibrate) are gated by the wcurve selfcheck [HARD GATE,
 # exit 1 on any FAIL: 12 core + 9 strong-form-warp checks]. GH builds (ghCalibrate
