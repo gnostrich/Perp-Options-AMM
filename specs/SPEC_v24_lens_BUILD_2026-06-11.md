@@ -320,3 +320,230 @@ _Scripts: `/tmp/blocker1_carry.js`, `/tmp/blocker1b.js`, `/tmp/blocker1c.js`, `/
 `/tmp/inv_checks.js`, `/tmp/coord_robust.js` (this pass) + `/tmp/lensX_*.js`, `/tmp/lens_*.js` (prior
 derivation, skeptic-re-derived `/tmp/sk_*.js`). All float64. Self-adversarial: the coordinate-mixing trap
 and the inverse-lens hazard were hunted, not glossed._
+
+---
+
+# 11. WRITE/SETTLE THROUGH LENS — Stage 2 (lens becomes the unit of account everywhere)
+
+_Appended 2026-06-12 by research-lead. READ-ONLY derivation pass (no engine edit / no git / no Aristotle).
+Authorised by the operator's settlement-semantics ruling (entry 96, `history/operator/2026-06-10_kurtosis-curve-family-brief.md`,
+verbatim): "everything works the same, the lens just translates queries incl portfolio value etc. and writes
+(amm tx) — so yes settle at lenses prices … you'd be recording the lensed version to query." The lens is now
+the unit of account EVERYWHERE — not just the chart-2 view + funding (Stage-1, built, `temporal_mvp_v28_lens_S1.html`
+md5 `1ed8fe2d…`), but the **traded/settled dollar pipe and portfolio value**. The Stage-1 handback deliberately
+left these call sites untouched and flagged them as the locked, operator-tier boundary; the operator has now
+UNLOCKED them. This section specs the wiring. **Skeptic R6-gates this section before the intern builds it.**_
+
+## 11.0 Object recap (what changes, what does NOT)
+
+The polar lens `g_loc(K)=γ·h′_τ(|u(K)|)` and `markLensed(wing,θ,sNorm,g)` are the Stage-1 helpers, already in the
+engine (build lines 1639/1655) and already used by funding (P2, line 2153) and the curve-2 draw layer (line 3542).
+Stage 2 routes **pricing, execution, settlement, and portfolio/equity valuation** through the SAME helpers, so the
+lens becomes the single basis everywhere a price/value is computed. **The pool update (`tradeUpdate`) stays plain
+v24, lens-free** — the lens never inverts to size `dy` (L4 preserved, §11.3). What moves is the *fraction* every
+value reads: `mark`/`markEff` (kinked European `min(s/θ,θ/s)`) → `markLensed` (American smooth-paste at the
+strike-local exponent `g_loc(K)`).
+
+## 11.1 Call-site enumeration (raw v24 mark → lensed replacement)
+
+Read straight off `temporal_mvp_v28_lens_S1.html`. Every site that computes a traded price, a settled dollar
+value, or a portfolio/position value:
+
+| # | Call site (line) | Currently reads | Lensed replacement | Notes |
+|---|---|---|---|---|
+| W1 | `legPrice` (1716–1727) — barrier `m=mark(wing,θ_inner,sNorm)`; spread `m_star=mark(wing,θ*,sNorm)` | raw kinked `mark` | barrier: `markLensed(wing,θ_inner,sNorm,gLoc(state,θ_inner,τ))`; **spread: leg-by-leg, NO composite** (`vsValue`/`2sinh` shortcut DROPPED per §3-P1 / entry 93 #4 — `θ*=√(θ₁θ₂)` is invalid under per-leg `g_loc`). | `legPrice` becomes the single lensed pricing entry; takes `τ` (thread `state.tau`). Spread `V = N·(markLensed(inner) − markLensed(outer))` barrier-by-barrier, matching `legValueUnified`'s shape. |
+| W2 | `executeLeg` (1752–1763) — `V_usd = p.V·oracle`; `dy = ±V_usd` | `p.V` from raw `legPrice` | `p.V` from **lensed** `legPrice` (W1). **`dy` sizing unchanged in form** (`dy = wingSign·legSign·V·oracle`), only `V` is now lensed. | The cash leg is still sized by the (now-lensed) premium · oracle; `tradeUpdate(state,dy)` is byte-identical plain v24. **This is the "writes (amm tx)" the operator named — the warp is now driven by the lensed premium.** L4-safe: forward read (lensed V → dy), never inverse. |
+| W3 | `closeBand` settlement leg (1955–2072) — ITM leg `legValueUnified`→`markEff`→`mark` (2037/2049); OTM leg reversed via `legPrice`→`mark` (2041/2053/2061/2067) | raw kinked `mark` on BOTH the settled-to-cash leg AND the AMM-reversal leg | BOTH legs lensed: settled-to-cash leg `legValueUnified`→`markEff`→`markLensed`; OTM-reversal leg via the lensed `legPrice` (W1). | **Load-bearing — both legs MUST move together** (§11.4). `raw_net = Y − X` nets the two leg values; if only the settled leg is lensed and the reversal leg stays kinked, the band nets two different bases (the v27-class bug). |
+| W4 | `markEff` (1902–1905) → `legValueUnified` (1907–1911) | `mark(wing,θ,sNorm)` | `markLensed(wing,θ,sNorm,gLoc(state,θ,τ))` | `markEff` is the per-barrier settlement fraction. Its g_loc reads the SAME live `sNorm` mode the pricing path uses. The "saturates at 1 when ITM" comment becomes "American smooth-paste continuation→intrinsic"; intrinsic ceiling is still ≤1 (§11.4 solvency). |
+| W5 | `fundingPerStrike` (2153–2161) | **already lensed** (Stage-1 P2) — `g=gLoc(...)`, `m=markLensed(...)` | NO CHANGE | Already routes through the shared helper at the sNorm coordinate. This is the template the other sites copy. |
+| W6 | UI `pfComponents` (4168–4199) — `m=Engine.mark(wing,part.theta,sNormPool)`; `value = sign·N·m` | raw kinked `mark` | `m = Engine.markLensed(wing,part.theta,sNormPool, Engine.gLoc(s.pool,part.theta,s.tau))` | The portfolio component VALUE the UI shows. MUST match the engine `legValueUnified` (W4) basis exactly — they are the display companion of the same number (§11.5). The `effK`/ITM regime label is a *display* concept; under the lens there is no hard ITM saturation, so the regime tag becomes "continuation vs intrinsic side of S*(K)" or is retained purely as a coordinate label (operator-tier cosmetic, §11.7). |
+| W7 | UI `renderBands` aggregation (4253–4259) — `X,Y` = Σ component values; `raw_net = Y − X`; `dollarFigure = L0·raw_net·equityAtClose` | sums of raw-mark component values | sums of **lensed** component values (W6); `raw_net` and `dollarFigure` formulas UNCHANGED | The single stage-2→3 equity multiply (`equityAtClose`) and L0 amplification are NOT a pricing basis — they are unchanged. Only the `X,Y` that feed `raw_net` change basis. **No double-multiply**: `equityAtClose` (carved-slice perp P&L) is orthogonal to the option `raw_net` (§11.5). |
+| W8 | `pfComponents`/`renderBands` `attribPnL`, `equityAtClose`, `carvedNotional` path (4232–4244 / engine 2100–2113) | perp-mark fractional P&L — NO option mark involved | NO CHANGE | The carved-slice perp P&L is a **perp** quantity (perpMark feed), not an option-mark quantity. It is NOT lensed. Flagged here to prevent an over-eager intern from lensing it (would be a category error / double basis). |
+| W9 | curve-2 draw layer `drawState` (3542–3554) | **already lensed** (Stage-1 L3) | NO CHANGE | Already `Engine.markLensed`/`Engine.gLoc` at the live mode. Read-only display. |
+
+**Net: 5 sites change (W1, W2, W3, W4, W6→W7 aggregation), 4 sites already-lensed / explicitly-not-lensed (W5, W8, W9 + the carved perp slice).**
+
+## 11.2 Consistency invariant — the ONE-HELPER RULE (closes the v27 bug-class)
+
+> **For a given strike `K` at a given pool state, EVERY layer — pricing (W1), execution (W2), settlement
+> (W3/W4), funding (W5), and portfolio value (W6/W7) — MUST read the SAME `g_loc(K)` from the SAME shared
+> `Engine.gLoc(state, θ_K, τ)` and the SAME `Engine.markLensed`, evaluated at the SAME live `sNorm` mode
+> `getSNorm(state)` in the SAME (sNorm) coordinate (MUST-APPLY-1). No layer may recompute `g_loc` against a
+> different mode, a different coordinate, a frozen/entry γ, or its own inline kernel.**
+
+Mechanically: there is exactly ONE `gLoc` and ONE `markLensed` in `Engine` (already true). Stage 2's whole job is
+to make the four raw-`mark` consumers (W1/W3/W4/W6) call THOSE, never a local copy. **Float64 proof the rule kills
+the arb**: with both open-pricing and settlement on the lens at the same state, `markLensed_open(K) −
+markLensed_settle(K) = 0` exactly for every strike/wing tested (`/tmp/lens_band_arb.js`, max diff `0`). The basis
+mismatch is identically zero when the one-helper rule holds; it is large (4–8×, §11.4) when it is violated.
+
+## 11.3 Stage-1 lens invariants — PRESERVED
+
+- **L4 forward-read-only (entry 93 #2):** the lens is NEVER inverted to solve for `dy`. W2 reads forward
+  (lensed `V` → `dy = ±V·oracle`) exactly as Stage-1 sizing did; the pool update stays plain v24
+  `tradeUpdate`. NO "warp until lensed slope hits X" helper; `arbitrageToOracle` stays lens-free
+  (gate 7b, unchanged). **The lens changes the VALUE that sizes the cash leg, not the sizing MECHANISM.**
+- **sNorm coordinate everywhere (MUST-APPLY-1):** all new W1/W3/W4/W6 calls pass `getSNorm(state)` as the mode
+  and the strike's registered θ ray — never a price-coordinate spot. (W6's `sNormPool = Engine.getSNorm(s.pool)`
+  already; W3's `sNorm0` is the close-side reference — see §11.4 caveat.)
+- **No γ_min floor (MUST-APPLY-2):** `markLensed` is NaN-free at `g=0` (boundary inclusive, `→1` at the mode —
+  `/tmp/lens_modecont.js` confirms finite ATM). No floor is added at any new site.
+- **g_loc(ATM)=0 handled finitely:** verified continuous to the mode (markLensed →1 as θ→mode); the existing
+  inclusive-boundary handling carries.
+
+## 11.4 NO-ARB / SOLVENCY UNDER LENSED SETTLEMENT — the load-bearing verdict
+
+**Method: [analytic] + float64 (`/tmp/lens_settle_arb.js`, `/tmp/lens_band_arb.js`, `/tmp/lens_modecont.js`,
+steep pool w=0.725 ⇒ γ=2.636, τ=0.3).**
+
+**(A) Solvency — PASS (no hole).** `markLensed ∈ [0,1]` globally (float64 min/max over both wings, all g∈[0.01,5],
+all spots = `0.000007 … 1.000000`). The intrinsic ceiling is 1, identical to the kinked `mark`. A settled-to-cash
+leg pays `N·markLensed ≤ N` — the SAME per-leg payout ceiling the plain pool already carries. **Lensed settlement
+cannot settle a position for more than the plain pool could (no "more lensed-dollars than the pool holds" hole at
+the fraction level).** The v24 reserve-exhaustion bound (#13) is inherited unchanged; the lens adds no solvency
+surface.
+
+**(B) Same-state open-vs-settle arb — NO arb IF the one-helper rule holds; a REAL bug if it is violated.**
+- If pricing/open stays kinked while settlement is lensed, `settle_lensed − open_kinked < 0` at every strike
+  (float64: −0.44 to −0.79 across the band, `/tmp/lens_band_arb.js`). That is not a trader-favourable arb, but it
+  is a **systematic basis mismatch** — the trader is paid a lensed value for a position priced kinked. It is the
+  exact v27-class defect and is FORBIDDEN by §11.2.
+- With **both** open and settlement lensed at the same state, `open_lensed = settle_lensed` exactly (max diff `0`).
+  **No costless round-trip: open a band and immediately close it ⇒ raw_net = 0 to machine zero**, because every
+  leg is valued on one basis. This is why W1 (pricing) MUST move together with W3/W4 (settlement) — they are the
+  two halves of the same no-arb identity.
+
+**(C) The genuine hazard the intern MUST get right — the intra-band two-leg basis split (W3).** In `closeBand` a
+one-ITM-leg band settles the ITM leg to cash (`legValueUnified`→`markEff`) AND reverses the OTM leg on the AMM
+(`legPrice`). `raw_net = Y − X` subtracts them. **If `markEff` is lensed but `legPrice` is left kinked (or vice
+versa), the two legs net on different bases** — a within-band arb/leak whose size is the 4–8× fraction gap in
+§11.1's tables. **Mitigation (mandatory):** W1 and W4 both route through `markLensed`/`gLoc`; the gate asserts
+`legPrice`-basis == `legValueUnified`-basis at the same state (§11.6 gate 4). This is the single highest-risk
+wiring step.
+
+**(D) Pool-execution vs lensed-settled coherence.** The OTM-reversal leg executes a plain-Balancer `tradeUpdate`
+sized by the lensed premium (W2). Because the same lensed `V` both sizes the cash leg AND is the settled value,
+the reversal returns to the pool exactly the cash the lensed leg is worth — no gap between "what the pool paid out
+to unwind" and "what the leg settled for." (Verified structurally: `dy` in W2 and `V` in W3 are the same lensed
+`legPrice.V`.)
+
+**VERDICT: lensed settlement is no-arb and solvent IFF the one-helper rule (§11.2) holds — i.e. pricing,
+execution, and settlement all read the single shared lensed helper at the live sNorm mode. The only way to break
+it is to lens one leg/layer and not another; the gate (§11.6) closes that. NOT operator-tier — no new economic
+object, no settlement-semantics ambiguity beyond what entry 96 already ruled. One flag for the record (§11.7):
+the "ITM saturates at 1 / effective-strike" display semantics softens under the lens (continuation runs past S*),
+which is the already-accepted g<1 flat-top reading (entry 93 #5), now also touching the portfolio ITM/OTM label.**
+
+### 11.4-caveat — W3 close-side coordinate (`sNorm0`)
+`closeBand` computes `sNorm0 = poolMark(s,oNow,oracle_initial)/oNow` (a **price-coordinate** spot, line 1983) for
+the ITM regime test, NOT `getSNorm` (price-reciprocal). The Stage-1 funding swap deliberately used the sNorm mode
+to avoid the ln γ trap (MUST-APPLY-1). **For W3/W4 the lensed `g_loc` must be computed against the same coordinate
+its `markLensed` consumes.** Since `markEff`/`legValueUnified` currently pass `sNorm0` as the `sNorm` arg to
+`mark`, the lensed replacement must pass that SAME `sNorm0` as both the mode origin for `gLoc` and the spot for
+`markLensed` — i.e. wire `gLoc` to read the mode in the price coordinate `closeBand` already uses, OR convert
+`sNorm0` to the sNorm mode before the lens call. **This is a concrete wiring decision for the intern, flagged
+because it is the §1 ln γ trap in the settlement path.** Recommended: compute `g_loc` and `markLensed` both
+against `getSNorm(s)` (the sNorm mode) and keep the price-coord `sNorm0` for the legacy ITM *regime* test only,
+since `g_loc` is `|u|`-symmetric (coordinate-invariant, §1.1) — the lensed exponent is identical either way, so
+the safe rule is "one coordinate per lens call, sNorm preferred." The gate (§11.6 gate 5) asserts the close-side
+lensed value equals the open-side lensed value at the same strike/state (the round-trip-zero check), which fails
+loudly if the coordinate is mixed.
+
+## 11.5 Portfolio value flow — double-count / basis-mismatch audit
+
+The displayed P&L is `dollarFigure = L0 · raw_net · equityAtClose` (UI 4259; engine `trader_payout` 2121). Two
+orthogonal factors:
+- **`raw_net = Y − X`** (option leg values) — **THIS is what Stage 2 lenses** (W6/W7). Both `X` and `Y` move to the
+  lensed basis together; their difference stays a single-basis quantity.
+- **`equityAtClose = carvedEntryEquity + attributablePnL`** (carved perp-slice equity) — a **perp** quantity from
+  the perpMark feed (W8). **NOT lensed.** It is the stage-2→3 unit multiply (carved-perp units → dollars), applied
+  ONCE. Lensing it would be a category error (the lens is an *option-mark* basis; the carved slice is a perp-price
+  P&L).
+
+**Double-count check: NONE.** The lens enters `raw_net` only; `equityAtClose` and `L0` are pure multipliers applied
+once each in the tail (the "single stage-2→3 equity multiply" the existing three-stage unit chain already enforces,
+engine 2115–2122). The UI `pfComponents` value (W6) and the engine `legValueUnified` (W4) are the **display
+companion of the same number** — under the one-helper rule they read identical lensed fractions, so the table sum
+(UI `X,Y`) equals the engine `raw_net` to machine zero. **Basis-mismatch risk is exactly the UI-vs-engine
+divergence the gate's cross-layer equality check (§11.6 gate 3) pins.**
+
+## 11.6 Staging + gate additions
+
+**This is its OWN stage (Stage 2 — write/settle lens), with its own gate, NOT folded into Stage 1.** Rationale: a
+wiring error in the write/settle path must not silently corrupt the Stage-1 read layer that is already built and
+green; and the two-leg basis split (§11.4-C) is a new failure mode the Stage-1 gate does not cover. Stage 1 stays
+the read layer (lens query + funding + draw + leg-by-leg mark); Stage 2 turns execution, settlement, and portfolio
+value onto the lens.
+
+**Gate additions to `engine/verify/lens_selfcheck.js` (extend the existing 7-assert file; keep the SKIP-as-pass
+guard for non-lens builds):**
+
+1. **Settled-value == lensed-mark · size.** For a barrier leg at strike K, `legValueUnified(wing,leg,sNorm) ==
+   leg.N · markLensed(wing,θ_K,sNorm,gLoc(state,θ_K,τ))` to machine zero. (Asserts W4 routes through the lens.)
+2. **Open == settle, same state (no costless round-trip).** Open a leg via lensed `legPrice`, settle it via
+   `legValueUnified` at the same state ⇒ `|V_open − V_settle| < 1e-12`. (Asserts W1/W4 share the helper; the §11.4-B
+   identity.)
+3. **Cross-layer basis equality (UI == engine).** The UI `pfComponents` component value `sign·N·markLensed(...)`
+   equals the engine `legValueUnified` per-leg contribution to machine zero, at several strikes/τ. (Asserts W6
+   matches W4 — the v27 bug-class pin.)
+4. **Intra-band two-leg single-basis.** Build a one-ITM-leg band; assert the settled-leg fraction and the
+   OTM-reversal-leg fraction are BOTH `markLensed` (neither is bare `mark`) — structural source check that
+   `closeBand`'s settlement path and `legPrice` path both call the lens. (Closes §11.4-C.)
+5. **Round-trip zero under lensed close.** `closeBand` immediately after `openBand` at an unchanged state ⇒
+   `|raw_net| < 1e-10` for both the NEITHER-ITM and ONE-ITM cases. (Asserts the close-side coordinate (§11.4-caveat)
+   is not mixed — fails loudly on an ln γ slip.)
+6. **Solvency ceiling.** `markLensed ∈ [0,1]` over a stress sweep of g/spot/wing (already partly in (4c); extend to
+   assert the upper bound `≤ 1+1e-12` so no leg ever settles above N). (Asserts §11.4-A.)
+7. **No-arb bound.** Over a strike grid, `max_K |markLensed_open(K) − markLensed_settle(K)| == 0` (the one-helper
+   identity, §11.2). (The single scalar no-arb gate.)
+8. **L4 preserved (regression).** `tradeUpdate`/`arbitrageToOracle`/`rebase` still byte-identical to base v24 (the
+   existing gate 6/6b/7 carry; assert W2 added NO inverse-lens helper — extend the banned-pattern scan).
+
+**Tester smoke-pass (CLAUDE.md §8 standing UI gate):** open a band, close it both regimes (neither-ITM and
+one-ITM); confirm the displayed settlement dollar figure matches a hand-computed `L0·raw_net·equity` with lensed
+component values; exercise τ and confirm the portfolio value moves with the lens; confirm an immediate
+open-then-close nets ~0; direction swaps exercised.
+
+## 11.7 Operator-tier flags (relay for the record)
+
+1. **ITM/OTM display semantics soften under the lens.** With kinked `mark`, an ITM leg saturates at 1 and the
+   "effective-strike = oracle" parking label is crisp (W6 `effK`/regime tag). Under `markLensed` the continuation
+   runs PAST the strike to the free boundary S* before turning to intrinsic, so the hard ITM=1 saturation is gone;
+   the `effK`/ITM-vs-OTM label becomes a continuation-vs-intrinsic side-of-S* label. This is the **already-accepted
+   g<1 flat-top exercise reading (entry 93 #5)**, now also touching the portfolio table's regime column — flagged
+   because it changes a user-visible label, even though the value law is finite and the no-arb/solvency verdict is
+   clean. NOT a new decision; relay for the record.
+2. **The §11.4-caveat coordinate choice in `closeBand`** (price-coord `sNorm0` vs sNorm mode for the lensed
+   settlement call) is a build-mechanical decision (recommended: sNorm mode for the lens, price-coord retained for
+   the legacy ITM regime test). Not operator-tier, but skeptic-gate-worthy — gate 5 catches a slip.
+
+## 11.8 Intern-ready scope for "write/settle through lens"
+
+- **Touch:** `legPrice` (W1, lens + thread τ, drop composite to leg-by-leg), `executeLeg` (W2, V now lensed),
+  `markEff` (W4, → markLensed), `closeBand` settlement+reversal legs (W3, both lensed, coordinate per §11.4-caveat),
+  UI `pfComponents` (W6, → markLensed). Aggregation (`raw_net`, `dollarFigure`) formulas UNCHANGED (W7).
+- **Do NOT touch:** `tradeUpdate`/`arbitrageToOracle`/`rebase` (plain v24, L4); the carved perp-slice P&L
+  (`attribPnL`/`equityAtClose`, W8 — perp basis, not lensed); funding (W5, already lensed); draw layer (W9).
+- **One-helper rule (§11.2) is the build contract:** every changed site calls `Engine.gLoc`/`Engine.markLensed`
+  at `getSNorm(state)`; no inline kernels; no second basis.
+- **Gate:** extend `engine/verify/lens_selfcheck.js` with the 8 Stage-2 asserts (§11.6); wire it as the Stage-2
+  branch in `run_all.sh`. Tester smoke-pass per §11.6.
+- **Blob/file-safety gate (CLAUDE.md §3) applies** — engine HTML edit, on-disk splice, 2 blob md5s + 3 scripts
+  verified post-edit.
+
+## 11.9 Verdict (§11)
+
+**INTERN-READY for Stage 2 (write/settle through lens), gated on the skeptic R6 re-gate of THIS section.**
+Five call sites move to the lens (W1/W2/W3/W4/W6+W7), four stay (W5/W8/W9 + carved perp slice). The no-arb/solvency
+verdict is **CLEAN under the one-helper rule** and **broken only if a single leg/layer is lensed in isolation** —
+the gate (§11.6, esp. gates 2/4/5/7) closes that bug-class. Solvency ceiling `markLensed ∈ [0,1]` inherited from
+intrinsic; the v24 reserve bound unchanged. No new operator-tier economic decision — entry 96 ruled the semantics;
+the two flags (§11.7) are display-label record-relays of the already-accepted g<1 reading. **No Lean obligation
+ready** (the no-arb identity `markLensed_open = markLensed_settle` is an algebraic same-function equality, not a
+theorem; the solvency bound `markLensed ∈ [0,1]` and value+slope continuity at S* are candidate obligations only
+post-build-freeze, same as §9).
+
+_Scripts (this Stage-2 pass, all node float64): `/tmp/lens_settle_arb.js` (markLensed vs kinked gap, solvency
+range), `/tmp/lens_band_arb.js` (same-state open-vs-settle arb, one-helper identity = 0), `/tmp/lens_modecont.js`
+(ATM/g=0 finiteness). Self-adversarial: the intra-band two-leg basis split and the ln γ close-side coordinate trap
+were hunted as the two ways lensed settlement could leak; both are gated, neither papered over._
