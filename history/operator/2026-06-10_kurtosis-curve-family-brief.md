@@ -871,3 +871,11 @@ _Context: operator comprehension check on the trade mechanic — the sold-part c
 _Context: operator refines the comprehension point — it's not the cash but the sold-leg's AMM-tx PROCEEDS that aren't used to size the bought leg; the PREMIUM is._
 
 > not cash specifically but proceeds from sold leg as per AMM tx isnt used to calculate the bought leg, but the premium, does that make sense?
+
+
+---
+
+## Entry 117 — 2026-06-12
+_Context: operator authorizes spec'ing the full lensed lifecycle + transact/goal-seek at the lens-shifted trade point; asks if it's possible / what they might be missing, noting ~100 regressions fought since inception._
+
+> yes, look through the lens for every part of the lifecycle where the curve is seen / interacted with....; and transact / goal seek wrt the trade point ... is this possible? am i missing something? because i've fought almost 100 regressions in this project since inception
