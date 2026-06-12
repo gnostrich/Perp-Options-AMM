@@ -1524,3 +1524,11 @@ _Context: operator queues a to-do — the right way to apply slippage to the bou
 _Context: operator asks for the decision/question restated in simple English._
 
 > simple english on your Q,
+
+
+---
+
+## Entry 197 — 2026-06-12 16:59 UTC
+_Context: operator OVERRULES the round-trip/arb stop — don't engineer the un-bend, transact at whatever the curve is, forget arb for now; slippage is paid continuously via the continuous-integral formulas; reaffirms option pricing is a separate layer from AMM pricing._
+
+> no dont think round trip for now, transact at whatever the curve is; forget arb forntime being; short answer slippage is being paid continuously if you're using the continuous integral formulas, secondly, as my prev message highlighted option pricing is a separate layer from AMM pricing
