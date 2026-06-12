@@ -83,3 +83,10 @@ printed inline in-chat._
 > give the updated md file
 
 _Context note: full RESPONSE_TO_REFEREES_2026-06-12.md (v4) printed inline._
+
+## Entry 13
+> what does it mean w doesnt need storing. its a single w always, the weight just updates as per the trade point goal seek warp …
+
+_Context note: clarified — "storing" refers to the paper §5.1's claim that w is recomputable from
+reserves (state = (x,y) only); under the ruling state = (x,y,w), one single w kept as its own
+variable, exactly the operator's description. No design change implied._
