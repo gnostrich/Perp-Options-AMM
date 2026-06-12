@@ -2445,3 +2445,42 @@ Verified vs live HEAD v28_lens md5 7e1ae39b + lens_selfcheck.js, read code not s
   size editable, default free — registered as build req. (6) τ visible on chart-2 registered. (9) "live
   verifiability test" for HTML core = honest L3 bridge (runnable self-check harness, not Lean) confirmed.
 - Verbatim channel: entry 153 received raw from manager, no FLAG-PROCESS this turn.
+
+### Verdict #R6-heldcenter (2026-06-12) — HOLD on the held-center warp fix (CORRECTION APPENDIX C.0–C.6 of SPEC_v28_goalseek_warp_RECONCILED)
+→ `notes/skeptic/VERDICT_R6_heldcenter_warp_fix_2026-06-12.md`. Operator entry 153 #1/#2 (confirmed
+reading B = held-during-a-step) + entry 155 ("all this assuming head is fixed") authorized the fix.
+Pre-intern R6 + reading-B gate.
+- **TASK 1 (reading B): CONFIRMED.** Re-derived live (`/tmp/skeptic_r6_check.js`, `/tmp/skeptic_45deg.js`):
+  45°-tangent point (|dy/dx|=1 at y/x=(1−w)/w) = `getSNorm` mode at w=0.5/0.6/0.725/0.8 EXACTLY ⇒ the
+  appendix's held center `snap.sNorm` IS the operator's 45°-tangent center. Held across step (passed as
+  axis AND exponent override); moved γ from previewPool; warp `(γ′−γ)·Φ(ln θ/heldMode)` matches draw to
+  0.0, monotone-OTM single-signed, zero at center (center un-moved). The bug it kills = post-recenter
+  sign-flip at r=0.70 (−0.4329 vs +0.4058 held), reproduced again = my #C16 masking artifact. Held-center
+  math implements 153 #1/#2 exactly.
+- **COORDINATE CAVEAT (not blocking):** operator said "polar angle deviation"; the shipped lens measures
+  distance as LOG-RATIO ln(θ/mode), NOT atan-angle. Both zero-at-center+monotone so qualitative match
+  holds; they're different functions. NOT a drift from this fix (log-lens is the already-promoted kurtosis
+  lens HEAD entries 84/106; fix changes only WHICH center, not the coordinate). Surface it so nobody claims
+  the engine measures an atan angle. If op means literal polar atan ⇒ separate lens-coord change.
+- **TASK 2 (R6 scope): HOLD = one scope leak.** CLEAN axes: at-strike mechanic (entry 153 #4) NOT
+  smuggled/NOT blocked (pool/settlement/exec byte-identical, override forbidden from money path by
+  W-OVR); HEAD base clean (lens_selfcheck 23 PASS, zero wField/wingExp, pool plain v24 — my entry-153
+  action#1 discharged, no dormant (W) path); override draw-layer only. **THE LEAK:** operator authorized
+  ONLY the held-center DRAWING fix (153 #1/#2 + seq#1). The appendix's inherited gates 2 + 5 reference
+  `goalSeekW`; the spec body's goal-seek UI is labelled "target steepness G (wing exponent)" = the EXACT
+  dead phrase I told the operator (entry-153 reply) is PURGED, and he wipe-threatened over it (153 #8).
+  `goalSeekW` is NOT in HEAD (grep 0) — only in the HELD C16 build ⇒ the appendix implicitly patches the
+  C16 build (which ships the wing-exponent UI), not clean HEAD. Carrying it inside this fix = unrequested
+  scope + live wipe-risk.
+- **HOLD → R6-CLEAR fix (named, not designed):** scope to held-center DRAWING fix ONLY (C.1 changes
+  1/2/3 + gates W1/W6/W-OVR + 3/4/trimmed-5) off CLEAN HEAD; DROP gate 2 + goalSeekW clause of gate 5;
+  ZERO "wing exponent/steepness/target steepness" string anywhere. Goal-seek readout, if wanted, returns
+  as a SEPARATE re-authorized pass in operator-approved plain language, after the docs purge I ordered is
+  confirmed.
+- LESSON (new): a spec can be math-correct AND reading-B-faithful yet still HOLD on SCOPE — the held-center
+  fix is right, but it rides in a vehicle (the RECONCILED spec) whose gates+UI drag the purged "wing
+  exponent" object back in under a narrower authorization. Always separate "is the authorized change
+  correct?" from "is the build scoped to ONLY the authorized change?" — pattern #6 (checklist staleness)
+  twin: a purged term can re-enter through inherited GATES, not just notes.
+- Verbatim channel: entries 153/155 received raw in the task brief; cross-checked vs history/operator/
+  2026-06-10_kurtosis-curve-family-brief.md L1173–1192. No FLAG-PROCESS this turn.
