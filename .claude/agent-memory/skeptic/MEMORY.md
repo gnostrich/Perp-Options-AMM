@@ -1899,3 +1899,49 @@ g, verified vs literal tradeUpdate to 6 digits.
   strike. R1 GENUINELY BLOCKED without the field; research-lead conclusion right, BLOCKER-A reason a strawman.
 - BLOCKER-B (O5 gap 0.0826/0.0358/0.0151) is derivative (θ_eff≠θ_K), zero under single-basis. (`/tmp/sk_crux2.js`)
 - R2 is a display label, NOT inventory #16; shipping it as "the warp" = the named gaslighting (pattern #17).
+
+41. **2026-06-12 — ENTRY-126 lensed single-w goal-seek (verdict #41; URGENT operator 1-hr clock, gaslighting
+    grievance substantiated, READ-ONLY)** → `notes/skeptic/VERDICT_ENTRY126_lensed_goalseek_2026-06-12.md`.
+    Operator (entry 126) said the team keeps testing the WRONG construal. He's RIGHT. His mechanic, plain:
+    **a trade moves reserves; re-pick the single global Balancer w so the slope READ THROUGH THE LENS at the
+    trade ray is restored; write stays on plain Balancer.** A 1-D solve for w, NOT a strike-local curve-bend.
+    Re-derived cold `/tmp/sk126_*.js` from HEAD L1630-1687.
+    - **(1) My CRUX #40 answered a DIFFERENT question — I SELF-CORRECT.** CRUX R1 = "the curve actually BENDS
+      at the trade point" (strike-LOCAL bend ⇒ needs field). Entry-126 = single GLOBAL w peg ⇒ scalar ⇒ 1-D
+      solve. "Needs the field" is TRUE of R1, FALSE as a verdict on entry-126. Do NOT cite CRUX-BLOCKED
+      against entry-126. The team (me + research-lead) adjudicated the local-bend / move-the-pool construals,
+      not his single-w-lensed-peg ⇒ his gaslighting grievance is SUBSTANTIATED to that extent.
+    - **(2) BUILDABLE-bounded: YES.** Solve `gLoc(w';θ_T,τ)=g_pre`. w'∈(0.5,1), unique canonical root, solvent,
+      single-basis (price==slope on Balancer), NO 1/w' runaway (the runaway was the (W) FIELD inverse, not
+      this single-w). The L4 inverse is BOUNDED here = bannable-but-safe; L4 need not be amended. **FOLD
+      caveat (real):** gLoc symmetric in |u| ⇒ near-mode/ITM trade points (mult≈0.6-1.1) admit SPURIOUS extra
+      roots (τ=0.3,mult=0.8 → {0.5686,0.6667,0.7415}); build MUST pin the w0 branch, not blind Newton.
+    - **(3) BUT DELIVERS A FLAT WARP — collapses, reconciles #39.** Decisive: the w' that restores the lensed
+      slope at the trade point is **w'=w0 EXACTLY, every strike, every τ** (Δw strike-INDEPENDENT, const
+      -0.01754 vs natural post-trade w). STRUCTURAL reason: gLoc reads (x,y) ONLY through w=α/x (γ AND mode
+      both pure fns of w); the lens shape is a ONE-parameter (w) family at fixed τ ⇒ restoring any slope
+      restores the one parameter ⇒ whole lensed curve returns to pre-trade. So: reserves move, w resets to w0
+      ⇒ chart-2 UNCHANGED, reserve dot slid along an unchanged chart-1 curve = the "dot sliding" entry-1
+      acceptance test REJECTS. Strike-dependence the operator wants (entry-31 "more warp far-OTM same premium")
+      does NOT emerge as a curve reshape — it lives in the lensed-SLIPPAGE READ (dG/dy strike-dependent),
+      a bounded READ, not a write.
+    - **Also found:** engine tradeUpdate (α,β-conserving) does NOT conserve the raw slope (2.0→2.347 on dy=5)
+      ⇒ it is NOT the paper's slope-conserving warp; = the entry-120 "plain spot swap, no goal-seek" gap.
+    - **Verdicts: PASS (entry-126 buildable-bounded as posed, fold-caveat); FLAG-OMISSION→self-correction on
+      my own CRUX (wrong question; don't cite against entry-126); FLAG-WRONG on the EXPECTATION (strike-
+      dependent warp is broken — unique soln w'=w0 ∀strikes ⇒ FLAT, #39 re-derived from the lens).**
+      Disagreement with my own CRUX → operator unreconciled. Verbatim entry-126 verified vs
+      history/operator/...brief.md L950-953 (channel HELD).
+
+## Claims mine-to-defend (verdict #41 — entry-126 lensed goal-seek)
+- Entry-126's single-w lensed-slope peg is a BOUNDED 1-D solve (w'∈(0.5,1), unique canonical root, solvent,
+  no runaway) — BUILDABLE; the L4 inverse is bounded here, not banned-by-blow-up. (`/tmp/sk126_lenswarp.js`)
+- Restoring the lensed slope at the trade point ⇒ w'=w0 EXACTLY for every strike & τ (Δw strike-independent,
+  const -0.01754) because gLoc depends on (x,y) ONLY through w — the lens shape is a 1-param(w) family. ⇒
+  FLAT warp: chart-2 unchanged, dot slides along chart-1. Reconciles #39 against the operator's expectation.
+  (`/tmp/sk126_lenswarp.js`, `/tmp/sk126_identity.js`, `/tmp/sk126_deliver.js`)
+- FOLD: gLoc symmetric in |u| ⇒ near-mode/ITM targets have spurious extra w-roots ({0.5686,0.6667,0.7415} at
+  τ=0.3,mult=0.8); pin the w0 branch. (`/tmp/sk126_fold.js`)
+- engine tradeUpdate does NOT conserve raw slope (2.0→2.347, dy=5) ⇒ ≠ paper slope-warp = the entry-120 gap.
+- MY CRUX #40 "BLOCKED needs field" answered the strike-LOCAL bend (R1), NOT entry-126's single-w peg — do
+  not conflate the two construals; self-corrected.
