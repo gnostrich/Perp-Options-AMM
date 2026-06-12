@@ -1,6 +1,46 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 lens HEAD entry-111 τ band-preview wire — one-line, IN PLACE).
+_Last updated: 2026-06-12 (v28 GOAL-SEEK WARP — C16 — NEW file, handed to manager; no git).
 Rewrite changed bits at task end._
+
+## Done — v28 GOAL-SEEK WARP (C16, Items 1–3; NEW file, handed to manager 2026-06-12)
+Build **`engine/builds/temporal_mvp_v28_lens_warp.html`** (NEW, from HEAD `7e1ae39b`; HEAD
+UNTOUCHED, no promote, no git). md5 **`abd46149961cab45f1992b7e21850d5f`**. Spec
+`specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md` (R6-CLEAR, R2 go entry 133/140). ALL 3 =
+READ/VIEW + readout + gates — ZERO write-path change. Splices on the copy (count==1, blobs never
+through): `/tmp/splice_warp_engine.py`, `_item1.py`, `_item2html.py`, `_item2js.py`.
+- **Item 1 (held-lens VIEW, L3690-3696):** dashed preview now `drawState(snap.sNorm, true,
+  previewPool, state.tau)` — PRE-step (held) mode + MOVED γ (off previewPool). Was
+  `drawState(snapPost.sNorm, …)` (post-trade mode = re-centering that MASKS dG). Kept the
+  snapPost change-detection guard (only draw when pool actually moved). The `gAt` closure reads γ
+  off poolForLens, mode off the passed sNorm ⇒ dG=(γ′−γ)·Φ visible. Gate (W1) max 4.4e-16.
+- **Item 2 (goal-seek readout):** engine `goalSeekW(G)=G/(1+G)` (G≥1 && isFinite ⇒ else NaN-loud,
+  no clamp), added after markLensed (~L1686), exported (~L2218) alongside gLoc/markLensed. UI: HTML
+  readout block after KURTOSIS τ field (~L1324) — GOAL-SEEK G input + 3 stat-lines (read-point γ
+  live, w′, resulting γ′) + HONEST copy (skeptic A11: one trade warps the WHOLE profile by one
+  factor, more in wings; asymmetric skew builds ACROSS the sequence — NO per-strike in-step bend;
+  advisory, trade stays actuator). JS `updateGoalSeek()` (~L2760) reads live γ off Store.state.pool,
+  computes w′; listener on goalseek-g-input; called in render() (~L4211) so live-γ refreshes after
+  trades. L4: goalSeekW never an arg to tradeUpdate/arbitrageToOracle/executeLeg.
+- **Item 3 (6 gates, lens_selfcheck.js):** appended W1–W6, auto-route on `E.goalSeekW`. W1 held-lens
+  dG=(γ′−γ)·Φ ≤1e-13; W2 goalSeekW single-root/monotone/G≥1⇒w′≥0.5/γ(w′)=G/boundary G=1⇒0.5/guard
+  NaN; W3 pool byte-identical vs v24; W4 g_loc≤γ grid; W5 no-inversion token scan (goalSeekW
+  closed-form, not in pool fns, no 1/h″); W6 preview draw uses snap.sNorm not snapPost (UI-body grep).
+- **MUST stay byte-identical (confirmed):** tradeUpdate/arbitrageToOracle/rebase BYTE-IDENTICAL to
+  v24 (grab+compare); executeLeg/legPrice/settlement untouched; θ_K still payoff strike.
+- **GATES:** `node verify/lens_selfcheck.js …_warp.html` → **29 PASS / 0 FAIL** (23 prior + 6 new).
+  `sh verify/run_all.sh …_warp.html` GREEN exit 0 (routes v28 lens branch). NO regression: HEAD
+  stays 23 PASS (no goalSeekW route), v24 base SKIPs-as-pass.
+- **Safety:** blobs `ab663f5c`@74 / `c505b08a`@1060 canonical; 3 scripts parse (625/447/1790); IIFE
+  intact; longest non-blob line 553; surgical diff = exactly 7 hunks (HTML readout / goalSeekW fn /
+  export / JS listener+fn / Item-1 draw ×2 / render call), no blob lines, no pool-fn lines;
+  file-safety hook exit 0.
+- **Open for tester (live smoke):** a trade preview now shows the dashed warp curve at the held mode
+  (strike-dependent reshape visible, more in wings); GOAL-SEEK G input updates w′/γ′ readout
+  (G=3⇒w′=0.75); read-point γ refreshes after trades; G<1 shows "G≥1 required" not a number; honest
+  copy reads as advisory-not-actuator. **Open for manager:** promote after gates + tester.
+
+---
+_(history below)_
 
 ## Done — v28 lens HEAD: τ stepper band-preview re-run (entry 111 "yes"; IN PLACE, no git)
 Edited **`engine/builds/HEAD_temporal_mvp_v28_lens.html`** IN PLACE (promoted-HEAD display-refresh

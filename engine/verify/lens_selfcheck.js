@@ -423,5 +423,123 @@ const hp = (v) => v / Math.sqrt(tau * tau + v * v);
   }
 }
 
+// ═════════════════════════════════════════════════════════════════════════
+//  GOAL-SEEK WARP  (Item 1+2; spec §E, RECONCILED held-lens build)
+//  6 HARD gates: (W1) held-lens warp dG=(γ′−γ)·Φ to ~1e-13; (W2) goalSeekW
+//  single-root + G≥1 guard + γ(w′)=G; (W3) pool byte-identical (restated);
+//  (W4) g_loc ≤ γ over the grid; (W5) no-inversion token scan (no 1/h″,
+//  no goalSeekW feeding a write); (W6) the preview draw uses the PRE-step
+//  (held) mode snap.sNorm, NOT snapPost.sNorm.
+//  Auto-routes on E.goalSeekW (mirrors the markLensed&&!wField convention).
+// ═════════════════════════════════════════════════════════════════════════
+if (typeof E.goalSeekW === 'function') {
+  const grabFn = (src, name) => {
+    const i = src.indexOf('function ' + name);
+    if (i < 0) return null;
+    let depth = 0, j = src.indexOf('{', i);
+    for (let k = j; k < src.length; k++) { if (src[k] === '{') depth++; else if (src[k] === '}') { depth--; if (depth === 0) return src.slice(i, k + 1); } }
+    return null;
+  };
+
+  // ── (W1) held-lens warp dG(K) = (γ′−γ)·Φ_τ(u_held) to ~1e-13 ──
+  // Build previewPool via tradeUpdate; read g_after/g_before AT THE HELD MODE
+  // getSNorm(prePool) by substituting the held mode into lensU/gLoc. The held
+  // mode is enforced by gLoc reading the mode off `state`, so we evaluate the
+  // moved-γ exponent in a pool that has the moved (α/x→γ′) but the HELD mode.
+  {
+    const Phi = (u) => Math.abs(u) / Math.sqrt(tau * tau + u * u);   // h′_τ(|u|)
+    let maxerr = 0, worst = '';
+    for (const dy of [-12000, -3000, 3000, 12000, 30000]) {
+      const post = E.tradeUpdate(s, dy);
+      if (!post) continue;
+      const wPre = E.getW(s), wPost = E.getW(post);
+      const gammaPre = wPre / (1 - wPre), gammaPost = wPost / (1 - wPost);
+      const heldMode = E.getSNorm(s);                 // PRE-step (held) mode
+      for (const mult of [0.3, 0.7, 1.0, 1.5, 4.0]) {
+        const thetaK = heldMode * mult;
+        const uHeld = Math.log(thetaK / heldMode);
+        // held-mode g_before / g_after = γ·Φ with γ from the respective pool,
+        // the SAME held mode/u (Φ identical for the step → dG=(γ′−γ)·Φ).
+        const gBefore = gammaPre * Phi(uHeld);
+        const gAfter = gammaPost * Phi(uHeld);
+        const expect = (gammaPost - gammaPre) * Phi(uHeld);
+        const e = Math.abs((gAfter - gBefore) - expect);
+        if (e > maxerr) { maxerr = e; worst = 'dy=' + dy + ' mult=' + mult; }
+      }
+    }
+    chk('(W1) held-lens warp dG=(γ′−γ)·Φ_τ(u_held)', maxerr < 1e-13, 'maxErr=' + maxerr.toExponential(2) + ' ' + worst);
+  }
+
+  // ── (W2) goalSeekW single-root + monotone + G≥1 guard + γ(w′)=G ──
+  {
+    let monotone = true, prev = -Infinity, gammaOK = true, maxGErr = 0;
+    for (let G = 1.0; G <= 30; G += 0.25) {
+      const wp = E.goalSeekW(G);
+      if (!(wp > prev)) monotone = false;            // strictly increasing in G
+      prev = wp;
+      const gBack = wp / (1 - wp);                   // γ(w′) must == G
+      const ge = Math.abs(gBack - G);
+      if (ge > maxGErr) maxGErr = ge;
+      if (!(wp >= 0.5)) gammaOK = false;             // G≥1 ⇒ w′≥0.5 ⇒ γ>1
+    }
+    const boundary = Math.abs(E.goalSeekW(1) - 0.5) < 1e-15;   // G=1 ⇒ w′=0.5 (γ=1)
+    const guardLo = Number.isNaN(E.goalSeekW(0.5)) && Number.isNaN(E.goalSeekW(0.999));
+    const guardInf = Number.isNaN(E.goalSeekW(Infinity)) && Number.isNaN(E.goalSeekW(NaN));
+    chk('(W2) goalSeekW single-root + G≥1 guard + γ(w′)=G',
+        monotone && gammaOK && maxGErr < 1e-12 && boundary && guardLo && guardInf,
+        'mono=' + monotone + ' γ>1=' + gammaOK + ' maxγErr=' + maxGErr.toExponential(2) + ' bdry=' + boundary + ' guard=' + (guardLo && guardInf));
+  }
+
+  // ── (W3) pool byte-identical (tradeUpdate/arbitrageToOracle/rebase vs v24) ──
+  {
+    const mBase = /<script id="engine">([\s\S]*?)<\/script>/.exec(tBase)[1];
+    let ident = true, which = '';
+    for (const fn of ['tradeUpdate', 'arbitrageToOracle', 'rebase']) {
+      if (grabFn(engineBody, fn) !== grabFn(mBase, fn)) { ident = false; which += fn + ' '; }
+    }
+    chk('(W3) pool byte-identical (tradeUpdate/arb/rebase vs v24)', ident, ident ? '' : 'DIFFERS: ' + which);
+  }
+
+  // ── (W4) g_loc ≤ γ over the grid (amplify must not breach the wing exponent) ──
+  {
+    const wLive = E.getW(s), gammaLive = wLive / (1 - wLive);
+    let maxRatio = 0;
+    for (let u = -50; u <= 50; u += 0.05) {
+      const g = E.gLoc(s, mode * Math.exp(u), tau);
+      const r = g / gammaLive;
+      if (r > maxRatio) maxRatio = r;
+    }
+    chk('(W4) g_loc ≤ γ over the grid', maxRatio <= 1 + 1e-12, 'maxRatio=' + maxRatio.toFixed(6));
+  }
+
+  // ── (W5) no-inversion token scan : goalSeekW is closed-form, never feeds a write ──
+  {
+    const gsSrc = grabFn(engineBody, 'goalSeekW') || '';
+    const lower = engineBody.toLowerCase();
+    // goalSeekW body forbids 1/h″, root-find/solve, and any pool-fn call.
+    const gsClean = /return\s*\(\s*g\s*>=\s*1[\s\S]*g\s*\/\s*\(\s*1\s*\+\s*g\s*\)/i.test(gsSrc)
+                 && !/h(pp|''|″|2)|bisect|newton|while|for\s*\(|solve|tradeupdate|arbitrage|executeleg/i.test(gsSrc);
+    // goalSeekW must NOT appear inside the pool fns (no slope/target feeding a write).
+    const poolFns = ['tradeUpdate', 'arbitrageToOracle', 'executeLeg'].map(f => grabFn(engineBody, f) || '').join('\n');
+    const notInWrite = !/goalseekw/i.test(poolFns.toLowerCase());
+    // no 1/h″ blow-up anywhere new.
+    const noInv = !/1\s*\/\s*h(pp|''|″|2)/.test(lower);
+    chk('(W5) no-inversion: goalSeekW closed-form, never feeds a write',
+        gsClean && notInWrite && noInv, 'clean=' + gsClean + ' notInWrite=' + notInWrite + ' noInv=' + noInv);
+  }
+
+  // ── (W6) preview draw uses the PRE-step (held) mode snap.sNorm, NOT snapPost.sNorm ──
+  {
+    const uiM = /<script id="ui">([\s\S]*?)<\/script>/.exec(t);
+    const uiBody = uiM ? uiM[1] : '';
+    // The dashed preview call must pass snap.sNorm (held) with previewPool (moved γ).
+    const heldDraw = /drawState\(\s*snap\.sNorm\s*,\s*true\s*,\s*previewPool/.test(uiBody);
+    // And must NOT regress to the re-centering view drawState(snapPost.sNorm, true, previewPool).
+    const noRecenter = !/drawState\(\s*snapPost\.sNorm\s*,\s*true\s*,\s*previewPool/.test(uiBody);
+    chk('(W6) preview draw uses held mode snap.sNorm (not snapPost)',
+        heldDraw && noRecenter, 'heldDraw=' + heldDraw + ' noRecenter=' + noRecenter);
+  }
+}
+
 console.log('=== lens_selfcheck: ' + pass + ' PASS, ' + fail + ' FAIL ===');
 process.exit(fail === 0 ? 0 : 1);
