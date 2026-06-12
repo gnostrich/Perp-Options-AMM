@@ -1,5 +1,61 @@
 # Author Response — "Singular Dynamic AMM Pricing Perpetual Options Across the Strike Continuum" (AFT 2026 submission)
 
+## Plain-language summary — your questions, our answers
+
+**The three reject-grade findings:**
+
+- **Finding 1 (off-ATM trade undefined).** *Your Q: which conserved pair enters the trade formula
+  at a non-spot trade point, and what is the induced global update?* **Our A:** the conservation
+  law is a per-trade rule applied **at the trade's own point**: compute the conserved pair there,
+  compute the flows there, and those flows are what actually moves the reserves; the weight w is
+  stored as state. The mechanism is well-defined; what was wrong is one paragraph (§5.1) claiming
+  w never needs storing — we retract and rewrite it. The supporting lemmas are proved in Lean and
+  will be deposited. Your review also led us to a genuine catch we are adopting: the admissible
+  domain must additionally require the pool's actual reserves to stay positive, which caps
+  deep-wing trade size.
+- **Finding 2 (collar theorem).** *Your Q: what does the "no-arbitrage" Lean result actually
+  prove?* **Our A:** less than the paper said, and we concede it plainly: the artifact proves a
+  symmetry statement about a *posited* surplus formula, θ-independent, with no counterexample
+  exhibited. The revision derives the surplus from the mark formula, prints it with its domain and
+  a numeric counterexample, and states the result at whatever strength the honest derivation has.
+  The swap-composition prose claim is withdrawn until a result covers it.
+- **Finding 3 (artifacts withheld).** *Your Q: will you share the Lean development?* **Our A:**
+  yes — our intention is an anonymised public deposit at submission, with exact statements,
+  version pins, and per-theorem axiom prints. Of the existing results, the state-space ones model
+  transitions; the two headline results were static identities, and the revision says so.
+
+**The remaining questions:**
+
+- **Q4 (what charges the put-wing drift at equilibrium?):** open, and your finding is correct —
+  funding as designed vanishes at the anchor. The revision gives the funding functional form and
+  an analysis of what it does and does not charge; a volatility-calibrated mark parameter is in
+  development. We do not claim either neutralises your Monte Carlo until shown.
+- **Q5 (settlement ledger doesn't balance):** accepted as open design. Each item — who pays the
+  wedge, the raw_net < 0 branch, a magnitude-aware club floor, the carved-equity boundary — will
+  be either specified or explicitly listed as a limitation; the worked example will be recomputed
+  from a real pool state.
+- **Q6 (momentum bands extract convexity for free):** correct as posed; whether band orientation
+  is restricted is undecided and is a limitation until decided.
+- **Q7 (settle-sandwich cost floor):** with no fee model specified, no floor can be claimed;
+  accepted.
+- **Q8 (q ↦ Δy mapping):** missing, agreed; it will be specified as part of the trade-rule
+  rewrite.
+- **Q9 (missing prior art / shifted constant product):** accepted — Evans 2020,
+  Angeris–Evans–Chitra 2021, InfinityPools, the FMBC Lean-AMM line, and LVR are added; QuantAMM
+  is recharacterised as prior; and we agree each trade's arc is a constant product on shifted
+  reserves — the claimed novelty is the per-trade endogenous weight update and the semantic layer,
+  not the curve family.
+- **Q10 (fabricated reference [7]):** accepted — an LLM-drafted citation that escaped checking;
+  every reference is being re-verified by hand.
+- **Q11 (four localised math-text errors):** all four reproduced on our side and fixed.
+- **Q12 (reference implementation, L0, club backing):** the implementation is a research-prototype
+  simulator, not on-chain; no gas claims; L0 bounds and multi-winner club dynamics are open.
+- **Q13 (name collision with QuantAMM's TFMM):** acknowledged; we will rename or disambiguate.
+
+The detailed response follows.
+
+---
+
 We thank the reviewers for an unusually rigorous report. Before writing this response we
 independently reproduced the report's central checkable claims — both numerics in §3.2(1), all four
 localised errors in §3.4, and the §3.2(2) reading of our verification artifact — and **all of them

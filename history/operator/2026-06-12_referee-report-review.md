@@ -72,3 +72,9 @@ that the skeptic pass + in-flight research-lead/Lean results may upgrade or corr
 _Context note: operator waiting on the skeptic-checked version; skeptic pass dispatched this turn
 over the response MD + manager review/corrigendum + ruling note (paper revision gets its own pass
 when the paper agent returns)._
+
+## Entry 11
+> can you add simple english version summary section also at the top  and print the same for me to read here inline — basically the reviewer’s Q and our A
+
+_Context note: plain-language Q&A summary section added at the top of RESPONSE_TO_REFEREES (v4) and
+printed inline in-chat._
