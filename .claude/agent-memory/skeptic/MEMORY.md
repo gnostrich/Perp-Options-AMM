@@ -2484,3 +2484,45 @@ Pre-intern R6 + reading-B gate.
   twin: a purged term can re-enter through inherited GATES, not just notes.
 - Verbatim channel: entries 153/155 received raw in the task brief; cross-checked vs history/operator/
   2026-06-10_kurtosis-curve-family-brief.md L1173–1192. No FLAG-PROCESS this turn.
+
+### Verdict #entry158-continuous (2026-06-12) — held-center fix REDIRECTED; live read vindicated as the mechanic
+→ `notes/skeptic/VERDICT_CONTINUOUS_SKEW_entry158_2026-06-12.md`. Operator entries 158/159 verbatim
+(verified L1213–1224 of history/operator/2026-06-10_kurtosis-curve-family-brief.md): trades change w
+⇒ the 45°-tangent point MOVES; lens amplifies the skew as seen; "we dont need to hold it constant but
+rather change skew as the trade happens continuously." In-flight held-center build go was VOID (R2);
+my ruling decided it.
+- **Re-derived cold (`/tmp/sk_cont1.py`/`sk_cont2.py`):** (1) N-step held-per-step accumulation
+  converges (N=100≈N=1e5), all increments ≥0, no sign-flip — the held limit exists and is clean; the
+  one-shot hold (N=1) is a CRUDE approx of its own limit (off ~3× near the swept band). (2) TELESCOPING
+  IDENTITY, exact <1e-12 any N: per-step held warp + per-step lens update = live end−start ALWAYS ⇒ the
+  displayed end state is a STATE FUNCTION = the plain live gLoc read, independent of step count. (3) The
+  "scrambled/sign-flip" live numbers are NOT artifact: a strike crossed by the sliding 45°-point becomes
+  the new ATM and its lensed steepness genuinely dips→0 then re-steepens — that IS continuous skew
+  dynamics. (4) Closed form (entry-134 queue): the DISPLAY needs no integral (state function — sample
+  gLoc along the path); only the accumulated-held decomposition needs one, reduces via u=lnθ+lnγ to
+  (1/θ)∫e^u|u|/√(τ²+u²)du (verified 1e-7; no elementary antiderivative found — quadrature one-liner).
+- **RULING:** held-center exponent redirect SCRAPPED; live-centered after-trace (the pre-fix gLoc
+  (previewPool) behavior) IS the correct end state under 158; continuous = renderer-side sampling of
+  intermediate pools through existing live gLoc (NO new engine math); goal-seek stays held-PER-INSTANT
+  (entry-131's own procedure), iterated as the picture updates; R6 scope HOLD on goalSeekW/"wing
+  exponent" language unchanged; #C16 process findings STAND (gate must call the ACTUAL draw fn).
+- **CAUTIONS to operator undressed:** (a) during a trade, strikes near the moving 45°-point FLATTEN
+  (dip to zero steepness as it passes) while wings steepen — mechanic not bug, nobody "fixes" it later;
+  (b) goal-seek targets at such strikes fold (2 turning points in-band, 0 in wings) — reachable twice
+  or never; (c) carried R6 caveat: lens distance = log-ratio, not literal polar atan angle.
+- **Rebuke (159) owned:** derivable from 131 ("not literally frozen ... lens can update") + 134
+  ("discrete ... for now", continuous queued) + MY OWN #44 §4 (lens-updating sequence, center walking
+  0.667→0.429 = the continuous insight in discrete clothing). I R6-gated a held one-shot draw AFTER
+  publishing that table. Cover taken from the literal reading of 153 #2 — reconciliation: the LENS never
+  moves its own center (zero there by definition); the TRADE moves where the center sits.
+- 153#2-vs-158 reconciliation settled; don't re-litigate. Verbatim channel held, no FLAG-PROCESS.
+
+## Blind-spot pattern #14 (2026-06-12): literal-parse of operator mechanics over reasoned limit —
+the team (me included) treats the operator's latest discrete description as THE mechanic instead of
+asking "what is this the approximation OF?" Entry 131/134 said outright the hold was per-step/for-now
+with a continuous version queued; entry 153#2's "warp doesnt change the ATM point" was read as
+"center fixed" instead of "lens zero at its own center." When the operator describes a step procedure,
+ALWAYS derive the step-size→0 limit before gating a build on the step version — and check whether a
+quantity under dispute is a STATE FUNCTION (end-state independent of stepping), which dissolves
+frame fights (held-vs-live) by telescoping. Sibling of #10/#11 (frame errors) but temporal: the wrong
+frame here was "one big step."

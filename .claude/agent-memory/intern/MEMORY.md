@@ -1,8 +1,52 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (v28 GOAL-SEEK WARP — C16 — NEW file, handed to manager; no git).
+_Last updated: 2026-06-12 (v28 HELD-CENTER WARP drawing fix — NEW file, handed to manager; no git).
 Rewrite changed bits at task end._
 
-## Done — v28 GOAL-SEEK WARP (C16, Items 1–3; NEW file, handed to manager 2026-06-12)
+## Done — v28 HELD-CENTER WARP DRAWING FIX (NEW file, handed to manager 2026-06-12)
+Build **`engine/builds/temporal_mvp_v28_lens_heldwarp.html`** (NEW, from CLEAN HEAD `7e1ae39b`;
+HEAD UNTOUCHED, no promote, no git). md5 **`586e8c4ad8b97fe00be0dfd0131f3959`**. Authority:
+operator entry 153 #1/#2 + 155; skeptic `notes/skeptic/VERDICT_R6_heldcenter_warp_fix_2026-06-12.md`
+(HOLD→CLEAR conditions implemented exactly); spec = CORRECTION APPENDIX C.0–C.6 of
+`specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md`, changes 1/2/3 ONLY. The C16
+`_warp.html` build is DEAD for this line (skeptic-ruled scope leak — goalSeekW/"wing exponent").
+Splices: `/tmp/splice_heldwarp.py` (4 reps, count==1, blobs never through, copy-then-edit),
+`/tmp/splice_lenscheck_heldwarp.py` (gate file, line-range slice).
+- **Change 1 (gLoc, was L1639):** optional 4th param `modeOverride` — finite >0 ⇒ lens distance
+  `Math.log(theta_K/modeOverride)`; omitted/null/≤0 ⇒ `getSNorm(state)` (numerically identical to
+  old, W-OVR behavMax=0 vs HEAD). γ ALWAYS from the (possibly moved) pool — override touches MODE only.
+  `lensU` left as-is (gLoc inlines it in the omitted branch, same guards, NaN-loud).
+- **Change 2 (drawState L3581 + gAt L3586):** optional 5th param `modeOverride`, passed into
+  `Engine.gLoc(poolForLens, theta, tau_v, modeOverride)` in the pool branch ONLY; non-pool fallback,
+  tmDeg/psiAt/markLensed unchanged.
+- **Change 3 (preview call L3639-3647):** dashed after-trace =
+  `drawState(snap.sNorm, true, previewPool, state.tau, snap.sNorm)` — held pre-step 45°-tangent
+  center for BOTH axis and lens center; redraw keyed on `|previewPool.alpha/previewPool.x − snap.w|
+  > 1e-6` (w actually moved); `snapPost` local dropped (only used here). Live trace call UNCHANGED.
+- **Gates (lens_selfcheck.js):** REMOVED the dead goalSeekW-routed block (old lines 426–542 — it
+  carried skeptic-cut gate-2 + goalSeekW gate-5 clause + the banned "wing exponent" phrase; routed
+  only on the dead C16 build, which now gets plain 23 PASS). ADDED held-warp block routed on
+  **`E.gLoc.length >= 4`** (NOT goalSeekW): W1 real-path dG=(γ′−γ)·Φ via actual
+  `gLoc(previewPool,θ,τ,heldMode)`, single-signed + grows-OTM; **W1b LOCKED regression** (w=0.725,
+  dy inverted closed-form for γ′=35/11, θ=0.7×center: old no-override read −0.4586 sign-flip MUST
+  be red-the-old-way, held read +0.4174==formula); W6 behavioral exponent-array equality + UI call
+  wires the override; W-OVR leak guard (exactly 1 four-arg gLoc site + 1 five-arg drawState call,
+  money paths legPrice/markEff/legValueUnified/fundingPerStrike/closeBand/executeLeg/executeBand/
+  pfComponents token-clean AND numerically == clean HEAD, max|Δ|=0).
+- **Results:** new build **27 PASS 0 FAIL** (23+4); bare run still checks HEAD **23 PASS**;
+  `run_all.sh` GREEN exit 0 on both; blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts
+  parse (622/447/1760); IIFE intact; longest script line 509; surgical diff = exactly 4 hunks.
+  Banned-token grep (`goalSeekW|wing exponent|wing steepness|target steepness`) = **0 hits** in
+  build AND gates.
+- **Open for tester:** after a trade the dashed preview reshapes around the UN-moved pre-trade
+  center (φ_m marker of dashed == solid); at strikes below center the dashed curve must show the
+  SAME direction of steepness change as above (no sign-flip at ~0.7×center). **Open for manager:**
+  promote decision; note W-OVR compares money paths against the HEAD path (identity after
+  promotion, true cross-check before).
+
+---
+_(history below; the C16 build below is DEAD per skeptic R6 — superseded by the held-center fix above)_
+
+## Done — v28 GOAL-SEEK WARP (C16, Items 1–3; DEAD per skeptic R6 2026-06-12 — do not extend)
 Build **`engine/builds/temporal_mvp_v28_lens_warp.html`** (NEW, from HEAD `7e1ae39b`; HEAD
 UNTOUCHED, no promote, no git). md5 **`abd46149961cab45f1992b7e21850d5f`**. Spec
 `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md` (R6-CLEAR, R2 go entry 133/140). ALL 3 =
