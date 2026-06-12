@@ -1616,3 +1616,54 @@ reshape gearing, NOT the option-surface readout curvature — never let them be 
 - TRADE-POINT mechanic (un-built, #16-OPEN): operator's intuition IS right — g_loc rises 0→γ OTM and
   rises as τ falls — but bounded by γ (saturates). A forward-read swap is bounded/cap-free; only
   inverting the lens (1/h″ blows up in wings) re-introduces the cap.
+
+36. **2026-06-12 — LENS lifecycle / transact-goal-seek FEASIBILITY (verdict #36; operator entry 117,
+   READ-ONLY) — adjudicates research-lead's hard-NO feasibility spec** →
+   `notes/skeptic/VERDICT_LENS_lifecycle_feasibility_2026-06-12.md`. **VERDICT: REFUTE (partial) — the
+   headline impossibility is OVERSOLD.** Note says strike-dependent execution "genuinely requires the
+   weighted curve / a stored field" and the operator "IS missing this." **FALSE for the operator's
+   actual entry-113 ask.** Entry 113 verbatim: "goal seek sees a steeper slope far out → more slippage
+   per dollar, since the trade for AMM bookkeeping is a SIMPLE SWAP." Operator did NOT ask to move the
+   live mode to the far point; he asked whether a simple swap slips more per $ on a far-OTM option.
+   **THE CONSTRUCTION THE TEAM MISSED (IV): simple swap at spot, bought leg sized by PREMIUM (entries
+   115/116), settle same strike.** Far-OTM option has tiny premium-mark → $1 buys large notional
+   N=D/mark(K) → moves pool MORE. In smooth-paste continuation (markLensed=c·sNorm linear),
+   **slip-per-premium-$ = 1/(mode·mark(K)) → RISES monotonically OTM** (2.71 ATM→21 at 4×; τ=0.3,γ=1.5).
+   **Operator's entry-113 intuition is CORRECT** under the premium-% metric, on the lens ALREADY in
+   HEAD, no stored mode, no φ, no field. Single-basis HOLDS (one swap, one strike sizes+settles; O5
+   two-strike hazard never arises). **1× FLAG-WRONG:** note's construal-I "gives the OPPOSITE direction
+   (more ATM less OTM)" is the MARK-%-MOVE metric (verdict #35), NOT slip-per-premium-$; dy/premium-$ =
+   1/mark GROWS OTM = entry-113's direction. The note silently switched numerator and flipped the
+   operator-facing answer YES→NO. (Verdict-#35 metric confusion recurring, now answer-flipping.)
+   **Scalar-vs-field (the decisive #2):** note's "stored reference = (W) φ" is OVERSTATED — (W) φ
+   updates EVERY trade (history, per-position) = field; a FIXED deploy reference is set ONCE = one
+   global scalar, NOT φ, and DOES give arrival-surviving bounded strike-dependence (g_loc(K=4)=1.47
+   invariant to where live mode goes) — but it DE-CENTERS the lens (kurtosis elbow stops tracking ATM).
+   Pattern #4 (construction-slot conflation): per-position stored ≠ single global scalar. **#24
+   equivalence (the decisive #3): binds construal-II (restore PRE-TRADE slope = history, two-history
+   witness) but NOT entry-113** (static strike-dependent steepness on a simple swap = no history, no
+   restoration target = memoryless = #24 doesn't bind). Note inherited #24's "needs history" onto a
+   question with no history requirement. **Counterexample reproduced byte-level** (K=2×,τ=0.3,γ=1.5:
+   1.376597 from spot → 0.000000 on arrival; matches note + manager) — but it verifies the
+   LITERAL-ARRIVAL reading, not the simple-swap reading; "manager independently reproduced" does NOT
+   validate the headline. Part B forward θ_eff map reproduced (bounded |u_eff|≤|u_K|). **1×
+   FLAG-OMISSION (soft):** no inventory disposition section; #8 strike-reg, #12 gotcha, #4, #14 absent.
+   **RELAY-GATE to manager:** do NOT relay "impossible / you're missing this / requires weighted curve"
+   — answers the wrong reading. Relay YES for entry-113 (simple swap premium-sized slips more/$ OTM,
+   no field), with the one genuine NO scoped ONLY to the move-the-pool-to-the-far-point maneuver.
+   Convergence-alarm MODERATE-HIGH: manager + research-lead CONVERGED on a confident hard-NO that
+   answers the operator's literal words but not his intent — exactly the convergence-on-confident-wrong
+   pattern. Pattern #1 again (the confident headline was the defect). Scripts `/tmp/sk117*.js` (fresh).
+
+## Claims mine-to-defend (verdict #36 — lens feasibility)
+- Construal IV (simple swap, premium-sized bought leg, live-mode lens): slip-per-premium-$ =
+  1/(mode·mark(K)), RISES monotonically OTM. Memoryless, single-basis, field-free, forward, bounded.
+  This DELIVERS entry-113 and the note missed it. (`/tmp/sk117e.js`,`/tmp/sk117g.js`)
+- The note's "slippage" (mark %-move, peaks ATM) ≠ the operator's "slippage per dollar"
+  (premium-%, includes 1/mark leverage, rises OTM). Two different quantities; the note conflated them
+  and inverted the answer. (Sibling of verdict #35's mark-vs-premium distinction.)
+- A FIXED global deploy reference is ONE scalar, NOT the per-trade-updated (W) φ field. It gives
+  arrival-surviving strike-dependence but de-centers the lens. Scalar ≠ field; the note's equivalence
+  holds only for the per-position case. (`/tmp/sk117.js`,`/tmp/sk117b.js`)
+- #24 (restore-pre-trade-slope = history) binds construal-II/goal-seek-inverse, NOT the memoryless
+  simple-swap reading of entry-113. The reduction-to-#24 is asserted, not earned, for the operator's ask.
