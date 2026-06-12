@@ -11,6 +11,33 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 
 Mechanical state (fact-with-pointer): HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `928cde1cccb0f35fdc9a23a7634414c8`, gates 22/22 (CLAUDE.md §8, BUILD_LINEAGE, INTEGRITY). Tree clean at wipe. No dispatches in flight except the skeptic wipe-audit. First act after seed: await operator instruction — no self-assigned work.
 
+## ★★★ CURRENT STATE 2026-06-12 EVENING (supersedes the seed line above) — read `docs/COMPONENT_REGISTER.md` first
+**HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `de28c937…`** (at-strike A14): plain v24 Balancer
+pool + static polar lens + continuous warp animation + **at-strike AMM swap (dy = notional×strike; open+OTM-close
+at-strike; ITM = direct intrinsic+extrinsic formula payout, no AMM)**. Gates 34/34. VERIFIED: manager + skeptic
+economics (no single-option free money, `VERDICT_A14_atstrike_RECHECK`) + tester live 5/5 ×2. Lineage: v24 →
+v28-lens (7e1ae39b) → contwarp (4378bc11, continuous warp, entry 181) → at-strike (de28c937, ~entry 199). Each
+prior build RETAINED as revert. Operator entry-127 at-strike mechanic = DELIVERED.
+**OVERNIGHT AUTONOMOUS PIPELINE (operator entry 210 "dont stop for anything, see you morning"; entry 177 standing
+monolith order). STOP-ON-RED + skeptic-gate discipline STILL APPLIES — halt an item to an operator-tier decision
++ report in the morning, do NOT guess (the at-strike build took ~10 operator rulings; A15/A16 may surface seams):**
+1. **Monolith** (priority, entries 141/144/145/177/179/209): Aristotle proofs SUBMITTED (LENSKERNEL d7da8597,
+   WARPCALC 24e6497e), monitors armed (a34954bc sentinel re-invokes research-lead on return → audit + fold to
+   formal/INDEX + MONOLITH rows). **THEN manager-driven RE-BASE of `docs/MONOLITH_INDEX.md` on HEAD de28c937 (it
+   was written 16:08, PRE at-strike — at-strike ABSENT, HEAD-ptr/C16-state stale, A14/A15/A16 rows missing) →
+   skeptic audit "every component matches HEAD".** Single-pure-math-structure (entry 179) = research-lead aa8ce5e4.
+2. **A15 slippage** (spec-ready, entries 205/206): size buy at PRE-TRADE option prices → execute → realized TOTAL
+   AMM-layer slippage → HAIRCUT the bought output. Engine-touching → serialize. Pipeline: spec → skeptic R6 →
+   intern → 34/34+new gates → skeptic audit → tester → promote/halt.
+3. **A16 no-jump ATM position value** (entries 204/207): BOTH-sides close — theory (continuity lemma → Aristotle)
+   + impl (position-value path no ATM jump, gate+tester). Engine-touching → serialize after A15.
+4. **A14-label** (UX): preview "Pool Δ cash-conserving≈0 / net trader cash" mislabels the warp ($16,623). Honest
+   relabel (intern); operator to reword. **A14-kurtosis-test** owed (entry 203 vs-τ half untested; swap is
+   τ-free, τ shapes SEEN warp).
+SINGLE-WRITER: A15 then A16 (one engine writer). Monolith re-base is doc-only (parallel-safe). Every promote =
+manager-verify + skeptic + tester + STOP-ON-RED. Retain revert builds. Morning: concise honest summary, GAP-labels.
+
+
 ## v24+lens derivation run (research-lead aa0bc7bd) — DID NOT COMPLETE (2026-06-11)
 Hit session limit; 0 usable output, NO note written, tree clean. The six derivation questions
 (handoff spec §in-flight) remain OPEN/unverified — re-dispatch when sessions reset. The handoff
