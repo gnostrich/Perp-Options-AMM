@@ -1887,3 +1887,11 @@ _Context: operator directs adding a pending/open design choice — whether closi
 _Context: operator observes the constant-slope-multiplier knob also shifts the curve/trade right (the θ_tx trade-map relocation), which he didn't intend — says it should be a slope exponent instead. Questions the entries-229/231 coupling; manager to clarify before any build (no HEAD change)._
 
 > didnt realise multiplier would shift the curve right, would be slope exponent instead
+
+
+---
+
+## Entry 237 — 2026-06-13 15:44 UTC
+_Context: operator clarifies the entry-236 worry was conceptual (hasn't checked it); asks whether the multiplier multiplies the slope-1 point (former, moves center) or is a multiplier of the slope ratio/exponent that only flattens/steepens without changing centering (latter — what he'd want)._
+
+> ok no thats fine i haven't checked it just struck me when insaid multiplicative are you multiplying point with slope 1 with something or is it a multiplier of slope ratio to mode or something that only flattens steepens withoit changing centerinf (latter would be what i’d have wanted not former)
