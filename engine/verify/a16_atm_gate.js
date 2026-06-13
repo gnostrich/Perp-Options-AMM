@@ -19,8 +19,14 @@
 //           (sNorm through θ) on BOTH wings at decreasing step sizes; the max
 //           adjacent |Δ| must SCALE with the step (→0, no floor). A genuine jump
 //           would floor at a finite value; this scaling proves continuity.
-//   (A16.2) ATM peak = 1: the mark peaks at exactly 1.0 at ATM (g_loc=0), both
-//           one-sided limits → 1.
+//   (A16.2) CUSP RETIRED (constant slope multiplier): under g_loc = m·γ > 0 there
+//           is NO ATM cusp and NO peak=1 — the mode is an ordinary point of a clean
+//           power law. A16.2 now asserts the HONEST new fact: the curve is
+//           CONTINUOUS through ATM (call arm == put arm at the mode, C⁰ to machine
+//           zero) and the ATM value is the constant-g smooth-paste value
+//           1/((g+1)·((g+1)/g)^g) < 1 (NOT 1, NOT a cusp). The old "peak==1 /
+//           monotone-toward-ATM" assertion described the dead elbow-lens design and
+//           is REMOVED, not satisfied.
 //   (A16.3) NO-REGIME-BRANCH lock (structural): the value computation
 //           (sign·N·markLensed) is NOT gated by isOTM / legIsITM / a hard ITM=1
 //           branch — those gate only display/exec. markEff returns markLensed
@@ -53,6 +59,13 @@ if (typeof E.gLoc !== 'function' || typeof E.markLensed !== 'function') {
   console.log('SKIP a16_atm_gate: build has no lens export (gLoc/markLensed) — pass.');
   process.exit(0);
 }
+
+// Design detector: the constant-multiplier gLoc returns `m * gamma` (g_loc=m·γ>0 at
+// the mode ⇒ NO ATM cusp). The old √-lens build has g_loc(ATM)=0 ⇒ peak=1 cusp.
+// A16.2 branches on this; A16.1/A16.3/A16.4 hold for BOTH designs (continuity,
+// no-regime-branch, cross-layer linearity).
+const gLocSrc = (function () { const i = engineBody.indexOf('function gLoc'); let d = 0, j = engineBody.indexOf('{', i); for (let k = j; k < engineBody.length; k++) { if (engineBody[k] === '{') d++; else if (engineBody[k] === '}') { d--; if (d === 0) return engineBody.slice(i, k + 1); } } return ''; })();
+const isConstMult = /return\s+m\s*\*\s*gamma\s*;/.test(gLocSrc) && !/hpTau|Math\.sqrt\([^)]*tau/.test(gLocSrc);
 
 let pass = 0, fail = 0;
 const chk = (name, cond, detail) => {
@@ -94,7 +107,7 @@ const x0 = 10, y0 = 80000;
     const w = gam / (gam + 1);
     const sp = mkPool(x0, y0, w);
     const mode = E.getSNorm(sp);
-    for (const tau of [0.1, 0.3, 1.0]) {
+    for (const tau of [1, 2, 3]) {            // tau carries the slope multiplier m (≥1)
       for (const wing of ['call', 'put']) {
         // (i) sweep θ across the mode in a tight window; max adjacent |Δ markEff|
         //     at two step sizes a decade apart.
@@ -132,21 +145,53 @@ const x0 = 10, y0 = 80000;
         if (gapRatio < limRatioMin) limRatioMin = gapRatio;
         if (!(gapRatio >= 5)) { limBad = true; limWorst = 'γ=' + gam + ' τ=' + tau + ' ' + wing + ' gap(ε)=' + g1.toExponential(2) + ' gap(ε/10)=' + g2.toExponential(2) + ' ratio=' + (isFinite(gapRatio) ? gapRatio.toFixed(2) : gapRatio); }
 
-        if (gam === 2 && tau === 0.3) refLines.push(wing + ' j(dS=' + dS1.toExponential(1) + ')=' + j1.toExponential(2) + ' j(dS=' + dS2.toExponential(1) + ')=' + j2.toExponential(2) + ' ratio=' + ratio.toFixed(1) + ' | limGap(ε=' + eps1.toExponential(1) + ')=' + g1.toExponential(2) + '→(ε/10)=' + g2.toExponential(2) + ' ratio=' + gapRatio.toFixed(1));
+        if (gam === 2 && tau === 2) refLines.push(wing + ' j(dS=' + dS1.toExponential(1) + ')=' + j1.toExponential(2) + ' j(dS=' + dS2.toExponential(1) + ')=' + j2.toExponential(2) + ' ratio=' + ratio.toFixed(1) + ' | limGap(ε=' + eps1.toExponential(1) + ')=' + g1.toExponential(2) + '→(ε/10)=' + g2.toExponential(2) + ' ratio=' + gapRatio.toFixed(1));
       }
     }
   }
   chk('(A16.1) NO-JUMP: window max-|Δ| scales with step (no floor) AND one-sided limits agree (gap→0∝ε, ratio≥5)',
       !floorBad && !limBad,
       (floorBad ? 'STEP-FLOOR: ' + worstFloor + ' ' : '') + (limBad ? 'LIMIT-JUMP: ' + limWorst : '') +
-      (!floorBad && !limBad ? 'stepRatio[' + ratioMin.toFixed(2) + ',' + ratioMax.toFixed(2) + '] limGapRatioMin=' + limRatioMin.toFixed(2) + ' over γ∈{1.5,2,3,4}×τ∈{.1,.3,1}×{call,put}' : '') +
-      ' | ref(γ=2,τ=0.3): ' + refLines.join(' ; '));
+      (!floorBad && !limBad ? 'stepRatio[' + ratioMin.toFixed(2) + ',' + ratioMax.toFixed(2) + '] limGapRatioMin=' + limRatioMin.toFixed(2) + ' over γ∈{1.5,2,3,4}×m∈{1,2,3}×{call,put}' : '') +
+      ' | ref(γ=2,m=2): ' + refLines.join(' ; '));
 }
 
-// ── (A16.2) ATM peak = 1 (both one-sided limits → 1) ─────────────────────────
-// At ATM g_loc → 0 ⇒ markLensed → 1 exactly. Assert the exact ATM evaluation is
-// 1.0 and both one-sided limits approach 1 monotonically as off → 0.
-{
+// ── (A16.2) CUSP RETIRED: continuous power-law through ATM, NO peak=1 cusp ────
+// Constant slope multiplier ⇒ g_loc = m·γ > 0 at the mode (NOT 0). There is no
+// cusp and no peak=1: the mode is an ordinary point of a clean power law. We assert
+// the HONEST new facts: (i) the curve is CONTINUOUS through ATM — the call arm and
+// the put arm meet at the mode (markLensed equal, C⁰ to machine zero); (ii) the ATM
+// value is the constant-g smooth-paste value 1/((g+1)·((g+1)/g)^g) < 1 (NOT 1); and
+// (iii) markEff agrees with that value at the exact ATM strike. The old "peak==1 /
+// monotone-toward-ATM cusp" assertion (dead elbow-lens design) is REMOVED on the
+// constant-multiplier build (isConstMult) and RETAINED on the legacy √-lens build.
+if (isConstMult) {
+  let contBad = '', valBad = '', effBad = '';
+  for (const gam of [1.5, 2, 3, 4]) {
+    const w = gam / (gam + 1);
+    const sp = mkPool(x0, y0, w);
+    const mode = E.getSNorm(sp);
+    for (const m of [1, 2, 3]) {                 // m = slope multiplier (≥1)
+      const g = m * gam;                          // constant exponent
+      const atmVal = 1 / ((g + 1) * Math.pow((g + 1) / g, g));   // closed-form ATM smooth-paste value
+      // (i) call arm == put arm at the mode (C⁰ seam through ATM)
+      const cArm = E.markLensed('call', mode, mode, g);
+      const pArm = E.markLensed('put', mode, mode, g);
+      if (Math.abs(cArm - pArm) > 1e-12) contBad = 'γ=' + gam + ' m=' + m + ' arm-gap=' + Math.abs(cArm - pArm).toExponential(2);
+      // (ii) ATM value == the constant-g smooth-paste value, and < 1 (NO peak=1 cusp)
+      if (Math.abs(cArm - atmVal) > 1e-12) valBad = 'γ=' + gam + ' m=' + m + ' arm=' + cArm + ' exp=' + atmVal;
+      if (!(cArm < 1 - 1e-9)) valBad = 'γ=' + gam + ' m=' + m + ' ATM not <1 (=' + cArm + ') — cusp not retired';
+      // (iii) markEff at θ=mode agrees with the closed-form value (multiplier passed as the knob)
+      const atmEff = E.markEff(sp, 'call', mode, m);
+      if (Math.abs(atmEff - atmVal) > 1e-12) effBad = 'γ=' + gam + ' m=' + m + ' markEff(ATM)=' + atmEff + ' exp=' + atmVal;
+    }
+  }
+  chk('(A16.2) CUSP RETIRED (constant-multiplier): continuous through ATM (call arm==put arm, C⁰); ATM value = 1/((g+1)·((g+1)/g)^g) < 1 (NO peak=1)',
+      contBad === '' && valBad === '' && effBad === '',
+      (contBad || valBad || effBad) ? ('cont:' + (contBad || 'ok') + ' | val:' + (valBad || 'ok') + ' | eff:' + (effBad || 'ok')) :
+        'call arm==put arm at mode (C⁰), ATM value<1 = constant-g smooth-paste value, markEff agrees (≤1e-12)');
+} else {
+  // LEGACY √-lens build: g_loc(ATM)=0 ⇒ markLensed peaks at 1; one-sided limits → 1.
   let exactBad = '', limitBad = '';
   for (const gam of [1.5, 2, 3, 4]) {
     const w = gam / (gam + 1);
@@ -154,31 +199,26 @@ const x0 = 10, y0 = 80000;
     const mode = E.getSNorm(sp);
     for (const tau of [0.1, 0.3, 1.0]) {
       for (const wing of ['call', 'put']) {
-        // exact ATM: g=0 ⇒ markLensed peaks at 1
-        const atmExact = E.markLensed(wing, mode, mode, 0);     // g=0 directly
+        const atmExact = E.markLensed(wing, mode, mode, 0);
         if (atmExact !== 1) exactBad = 'γ=' + gam + ' τ=' + tau + ' ' + wing + ' markLensed(g=0)=' + atmExact;
-        // markEff at the exact ATM strike (θ=mode ⇒ g_loc=0) → 1
         const atmEff = E.markEff(sp, wing, mode, tau);
         if (Math.abs(atmEff - 1) > 1e-12) exactBad = 'γ=' + gam + ' τ=' + tau + ' ' + wing + ' markEff(ATM)=' + atmEff;
-        // one-sided limits: approach 1 as off→0 from each side, peak at ATM.
         const offs = [mode * 1e-2, mode * 1e-3, mode * 1e-4, mode * 1e-5];
         let prevL = 0, prevR = 0;
         for (const off of offs) {
-          const vL = E.markEff(sp, wing, mode - off, tau);   // OTM/ITM one side
-          const vR = E.markEff(sp, wing, mode + off, tau);   // the other side
-          // closer to ATM ⇒ closer to (≤) 1 ⇒ value increases toward 1
-          if (vL > 1 + 1e-12 || vR > 1 + 1e-12) limitBad = 'γ=' + gam + ' ' + wing + ' overshoot vL=' + vL + ' vR=' + vR;
+          const vL = E.markEff(sp, wing, mode - off, tau);
+          const vR = E.markEff(sp, wing, mode + off, tau);
+          if (vL > 1 + 1e-12 || vR > 1 + 1e-12) limitBad = 'γ=' + gam + ' ' + wing + ' overshoot';
           if (vL < prevL - 1e-12 || vR < prevR - 1e-12) limitBad = 'γ=' + gam + ' ' + wing + ' non-monotone toward ATM';
           prevL = vL; prevR = vR;
         }
-        // the closest off must be within a small distance of 1 (limit → 1)
         const near = mode * 1e-5;
         const nL = E.markEff(sp, wing, mode - near, tau), nR = E.markEff(sp, wing, mode + near, tau);
-        if (1 - nL > 1e-2 || 1 - nR > 1e-2) limitBad = 'γ=' + gam + ' ' + wing + ' limit not near 1: nL=' + nL.toFixed(6) + ' nR=' + nR.toFixed(6);
+        if (1 - nL > 1e-2 || 1 - nR > 1e-2) limitBad = 'γ=' + gam + ' ' + wing + ' limit not near 1';
       }
     }
   }
-  chk('(A16.2) ATM peak == 1 exactly (markLensed g=0 and markEff at ATM); both one-sided limits → 1',
+  chk('(A16.2 legacy √-lens) ATM peak == 1 (markLensed g=0 and markEff at ATM); both one-sided limits → 1',
       exactBad === '' && limitBad === '',
       (exactBad || limitBad) ? ('exact:' + (exactBad || 'ok') + ' | limits:' + (limitBad || 'ok')) :
         'markLensed(g=0)=1, markEff(ATM)=1 (≤1e-12), monotone ↑ to 1 on both wings');
@@ -240,7 +280,7 @@ const x0 = 10, y0 = 80000;
     const w = gam / (gam + 1);
     const sp = mkPool(x0, y0, w);
     const mode = E.getSNorm(sp);
-    const tau = 0.3;
+    const tau = 2;                   // slope multiplier m (≥1)
     // call wing ITM ⇔ sNorm (mode) deep above θ ⇒ small θ relative to mode.
     const thetaITM = mode * 0.3;     // strongly ITM for the call
     const vITM = E.markEff(sp, 'call', thetaITM, tau);
@@ -268,7 +308,7 @@ const x0 = 10, y0 = 80000;
     const sp = mkPool(x0, y0, w);
     const oracleLive = E.getMP_raw(sp);
     const sNormPool = E.getSNorm(sp);
-    const tau = 0.3;
+    const tau = 2;                   // slope multiplier m (≥1)
     for (const wing of ['call', 'put']) {
       // strikes straddling the ATM crossing (incl. just-OTM and just-ITM)
       for (const mult of [0.5, 0.9, 0.999, 1.0, 1.001, 1.1, 2.0]) {
@@ -288,7 +328,7 @@ const x0 = 10, y0 = 80000;
   // regime multiplier). markEff/legValueUnified are linear in markLensed by
   // construction (legValueUnified = N·(mIn−mOut)); witness the linearity.
   const sp = mkPool(x0, y0, 0.75);
-  const sNorm = E.getSNorm(sp), tau = 0.3, theta = sNorm * 1.2;
+  const sNorm = E.getSNorm(sp), tau = 2, theta = sNorm * 1.2;
   const m = E.markEff(sp, 'call', theta, tau);
   const v1 = E.legValueUnified(sp, 'call', { inner: theta, outer: NaN, N: 1 }, tau);
   const v3 = E.legValueUnified(sp, 'call', { inner: theta, outer: NaN, N: 3 }, tau);

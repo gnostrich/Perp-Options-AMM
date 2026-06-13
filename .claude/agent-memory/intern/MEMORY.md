@@ -1,6 +1,66 @@
 # MEMORY — intern
-_Last updated: 2026-06-13 (R-218 inverse-lens tx-strike, NEW file, handed to manager; no git).
-Rewrite changed bits at task end._
+_Last updated: 2026-06-13 (CONSTANT SLOPE-MULTIPLIER lens, NEW file + gate REWRITE, handed to
+manager; no git). Rewrite changed bits at task end._
+
+## Done — CONSTANT SLOPE-MULTIPLIER LENS (NEW file + gate rewrite, handed to manager 2026-06-13)
+Build **`engine/builds/temporal_mvp_v28_lens_constmult.html`** (NEW, from HEAD `5fea0e8d`; HEAD
+UNTOUCHED, no promote, no git). md5 **`8f897edcad49c73853096a05e7ec233d`**. Authority: operator
+entries 229/231; skeptic `notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`
+(the spec). REPLACES the position-dependent `√(τ²+u²)` elbow-lens with a **constant slope multiplier
+m**: `g_loc(K)=m·γ` at EVERY strike (γ=getW/(1−getW); NO u-dependence, NO elbow, NO flat-top, NO
+frozen-γ wing). m=1 = plain v24 curve. Splices on `/tmp/work_constmult.html` (count==1, blobs never
+through): `/tmp/splice_cm_helpers.py` (hTau/hpTau REMOVED, lensU kept, gLoc→m·γ), `_trademap.py`,
+`_chart.py`, `_state.py`, `_ui.py` + a few Edits.
+- **gLoc (was L1639):** `gLoc(state,θ,m){ γ=w/(1−w); if(!(γ>0)||!(m>0)||!(θ>0))return NaN; return
+  m*γ; }`. `hTau`/`hpTau` (√ kernel) DELETED from engine + exports; `lensU` kept (trade map only).
+- **Trade map (executeLeg, was L1799-1813):** `u_tx = tau*a_tx` (tau param carries m), `theta_tx =
+  mode·exp(u_tx) = mode·(chosen/mode)^m`. FROZEN as K_tx (close reuses it — round-trip exact). m=1 ⇒
+  θ_tx=chosen (reduces to at-strike). Bigger m ⇒ further out (2× pick: m=2⇒4×, m=3⇒8×).
+- **Chart-2 gAt (L3710):** fallback now `tau_v*gamma` (was √ form); flat-top psiAt branch is now a
+  defensive degenerate guard (g never 0). Comment rewritten (no elbow/flat-top).
+- **Knob relabel:** UI `id=tau-input`→`m-input`, label "KURTOSIS τ"→"SLOPE MULT m", min1/max6/step
+  0.25/value1; `state.tau`→`state.m` (default `1.0`), `setTau`→`setM`. Threading PARAM name kept as
+  `tau` in engine sigs (a neutral scalar carrier) — renaming it would COLLIDE with the existing
+  `const m = markLensed(...)` locals in legPrice/executeBand. DECISION flagged for skeptic: the
+  knob's NAME/meaning is m everywhere user-facing; the internal threaded scalar stays `tau` (no
+  contradiction, just a carrier). Comments at gLoc/funding/chart say "tau carries the multiplier m".
+- **Pool fns BYTE-IDENTICAL to v24** (tradeUpdate/arbitrageToOracle/rebase — gate-confirmed,
+  source+numeric). markLensed UNCHANGED (g-parametric; fed g=m·γ). Settlement smooth-paste survives
+  (C⁰ seam machine-zero with g=m·γ, both wings).
+- **WORKED TABLE (γ=2 pool, 2× pick) — matches skeptic exactly:** m=1 g_loc=2.0 θ_tx=2.00× | m=2
+  g_loc=4.0 θ_tx=4.00× | m=3 g_loc=6.0 θ_tx=8.00×. m=1 reduces to plain (g_loc=γ, θ_tx=chosen).
+- **GATE REWRITE (`engine/verify/lens_selfcheck.js`):** the old √-design asserts (g_loc(ATM)=0,
+  wings→γ, |g_loc|≤γ, funding→0-at-ATM) REMOVED (not satisfied — skeptic gate-problem). Routes on
+  detector `gLoc source returns m*gamma`. New: CM1 g_loc=m·γ constant + m=1⇒γ; CM2/A5 wings exact
+  power-law m·γ + monotone/bounded no-floor; CM3 monotone/no-arb; CM4 C⁰ seam machine-zero both
+  wings; CM5 θ_tx=mode·(chosen/mode)^m + m=1⇒chosen; CM6 frozen round-trip exact (0/0) + no-free-
+  money; **CM7 the three co-move SAME direction (g_loc↑ AND θ_tx↑) — polarity LOCKED, a future flip
+  FAILS**; CM8 pool byte-id v24; CM9 no dead √-kernel. On OLD √ builds the CM block SKIPs (generic
+  P/L4 checks still run → not a no-op). **13 PASS 0 FAIL** on new build; old HEAD 3 PASS (SKIP CM).
+- **A16 gate (`a16_atm_gate.js`) updated:** added `isConstMult` detector; A16.2 BRANCHES — new build
+  asserts **CUSP RETIRED** (continuous through ATM: call arm==put arm C⁰; ATM value =
+  1/((g+1)·((g+1)/g)^g) <1, NOT peak=1); legacy √ build keeps old peak==1. A16.1/3/4 hold for both
+  (continuity, no-regime-branch, cross-layer linear). Loop knob values changed 0.1/0.3/1.0 → 1/2/3
+  (valid m≥1). **5 PASS 0 FAIL** on new build AND on old HEAD.
+- **run_all.sh GREEN exit 0** on new build (lens 13 PASS + A16 5 PASS) AND on old HEAD (3+5).
+  Blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (709/450/1804; longest line 509);
+  IIFE intact; HEAD md5 `5fea0e8d` UNCHANGED; surgical diff vs HEAD = 34 regions, NO blob lines, NO
+  pool-fn lines.
+- **⚠ FILE-SAFETY HOOK FALSE-POSITIVE (pre-existing, NOT my build):** hook BLOCKS (exit 2) on the
+  new build AND on CLEAN UNMODIFIED HEAD identically — line 104 grep `grep -Eq 'FAIL|...'` matches
+  the literal "0 FAIL" in the success summary `=== lens_selfcheck: N PASS, 0 FAIL ===`. run_all.sh
+  itself exits RC=0 (green). Same standing over-broad-match bug I flagged in R-218 (out of scope,
+  manager's guardrail). NOT patched.
+- **Open for tester:** turn SLOPE MULT m up → chart-2 visibly steeper at EVERY strike (same exponent
+  m·γ, no rounded elbow, no flat top); m=1 = the plain curve; open a band → close → reserves round-
+  trip (frozen θ_tx); a 2× pick at m=2 swaps at 4× (further out → DEPTH_FRAC rejects earlier);
+  settlement still at the CHOSEN strike. **Open for manager:** promote decision; the threading-param-
+  name decision (kept `tau` as carrier, knob is `m` user-facing — skeptic will post-audit the gate
+  REWRITE for honesty); CLAUDE.md §0 + feature_inventory items 2/3/16 need the redefinition update
+  (skeptic FLAG-OMISSION) + the one-sentence operator confirm "this removes elbow-rounding + γ-frozen
+  wings; curve is a plain power law of steepness m·γ everywhere — yes?".
+
+---
 
 ## Done — R-218 INVERSE-LENS TRANSACTION STRIKE (NEW file, handed to manager 2026-06-13)
 Build **`engine/builds/temporal_mvp_v28_lens_invtx.html`** (NEW, from HEAD `de28c937`; HEAD
