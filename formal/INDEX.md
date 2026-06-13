@@ -100,12 +100,37 @@ pending per protocol). Caveats kept: Model-C anchoring is the trade point, NOT v
 - Pre-repo cluster (4–7 wk: Two-AMM/SU(1,1)/Minkowski/closed-form/geometric/policy) — retrieval
   candidates only, NOT audited.
 
-## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover)
+## ⟢ CONSTANT-m LENS REDEFINITION (operator entry 229/230, 2026-06-13) — what survives, what is superseded
+The operator redefined the kurtosis lens from the position-dependent polar kernel `Φ_τ(u)=u/√(τ²+u²)`
+to a **CONSTANT slope multiplier `m`** (`g_loc(K)=m·γ`, strike-independent; `m=1`=plain v24). Skeptic-
+confirmed form: `notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`. Simplified
+object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on the Lean layer:
+- **KEPT (trusted-from-prover, NOT touched by the lens redefinition):** all LENSKERNEL POOL +
+  g-parametric results — `tradeUpdate_*`, `gamma_linear_in_cash`, `rebase_*`, `gLoc_rebase_invariant`
+  (the rebase invariance holds for a constant exponent too), and the smooth-paste port
+  `valueMatch_g`/`slopeMatch_g`/`sStarCall_*`/`contCall/intrCall_at_sStar` (∀ g>0 — applies directly
+  to `g=m·γ`). These are the pool + settlement spine, independent of lens shape.
+- **SUPERSEDED (were trusted-from-prover for the √-kernel, no longer the object):** the polar-specific
+  lens facts `Phi_zero/nonneg/le_one/lt_one/strictMonoOn`, `gLoc_le_gamma` (the ≤γ cap is gone),
+  `gLoc_at_mode` (g=0 at the mode is gone — g=m·γ>0); and the ENTIRE WARPCALC polar-warp calculus
+  (`PhiA`, `warpDen`, `warpInt`, `warpPot`, `warpPot_hasDerivAt`, `warp_eq_pot_sub`, `warp_additive`,
+  `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos`, `glAt_hasDerivAt`, `recenterKer`,
+  `warp_decomposition`). Under constant-m the warp is the LINEAR `ΔG=m·Δγ` (one-line `integral_const`
+  corollary). Archives `aristotle_runs/{LENSKERNEL,WARPCALC}/` retained as history.
+- **NEW pending-submit:** the CONSTANT-m single structure `MonolithConstM.lean` (prompt
+  `formal/prompts/aristotle_prompt_monolith_constm.md`) — `g_eq_m_gamma`, `g_const_in_strike`,
+  `thetaTx_roundtrip` (closed-form invertible trade map), `warp_linear`, smooth-paste at g=m·γ,
+  `engineInstance` (m=1), `single_object`. WRITTEN + queued; Aristotle IS reachable this session
+  (CLI 200, no 403); NOT yet submitted/returned ⇒ **pending-submit, NOT trusted-from-prover.**
+
+## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
 Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
 no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide`; axioms ⊆
 {propext, Classical.choice, Quot.sound} on all named targets per the returned summaries; out-of-scope
 modules byte-identical to the working tree; toolchain Lean 4.28.0 / Mathlib v4.28.0; every statement
-re-derived by hand). Archives folded → `aristotle_runs/{LENSKERNEL,WARPCALC}/`.
+re-derived by hand). Archives folded → `aristotle_runs/{LENSKERNEL,WARPCALC}/`. **NOTE (2026-06-13):
+WARPCALC's polar-warp theorems are SUPERSEDED by the constant-m redefinition (see the section above);
+LENSKERNEL's pool + g-parametric smooth-paste rows below are KEPT.**
 
 | Result (headline thm) | Meaning | Depth | Archive | Run |
 |---|---|---|---|---|

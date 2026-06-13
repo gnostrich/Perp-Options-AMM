@@ -74,7 +74,7 @@ not yet returned; rows update on fold._
 
 | ID | Object / equation | Code · gate | Lean · provenance | Paper |
 |----|---|---|---|---|
-| A1 trades-warp-curve (w changes) | w=α/x moves on every trade; Δw=β·Δy/(y·y′). **At-strike de28c937: the SWAP itself is premium-free (dy=N·K); w still moves on the at-strike swap (faithful reserves), the warp is SEEN through the lens.** | `tradeUpdate`@1679 (w derived) · LS 6b (pool byte-identical at de28c937) | `gamma_linear_in_cash` (γ′=γ+dy/β) **GROUNDED, trusted-from-prover** (LENSKERNEL d7da8597, audited 2026-06-13); FW `hasDerivAt_wNew` w′=(1−w)/y (sweep, unfolded) | §Trade Formula (the Δw paragraph) |
+| A1 trades-warp-curve (w changes) | w=α/x moves on every trade; Δw=β·Δy/(y·y′). Premium-free at-strike swap (dy=N·K); w moves on the swap, the warp is SEEN through the lens. **Constant-m: the lens warp the trade displays is the LINEAR `ΔG=m·Δγ`; the effective trade-strike map is `θ_tx=mode·(θ/mode)^m`, closed-form invertible.** | `tradeUpdate`@1679 (w derived; pool byte-identical, UNCHANGED by the lens redefinition) · LS 6b | `gamma_linear_in_cash` (γ′=γ+dy/β) **GROUNDED, trusted-from-prover** (LENSKERNEL d7da8597 — KEPT, the pool flow is not touched by constant-m); constant-m `thetaTx_roundtrip`/`warp_eq_m_dgamma` **pending-submit** | §Trade Formula (the Δw paragraph) |
 | A2 kurtosis static, vol-set | τ a constant parameter of the read layer; no trade writes τ | `gLoc(state,θ,tau)`@1639 (τ passed, never assigned) · LS regression | structural in the defs (τ is a fixed parameter in `gLoc`/`warpInt`); no dynamics to prove — N/A | GAP (lens not drafted) |
 | A3 HEAD = v28 lens | register/process row | HEAD md5 `de28c937…` (v28 lens + at-strike A14 + continuous warp) | N/A | N/A |
 | A4 settle/record/value at lensed | one helper (`gLoc`/`markLensed`) at live mode, all 9 W-sites | W1–W7 sites (`legPrice`@1722, `closeBand`@1971, `markEff`@1915, `pfComponents`@4248) · LS settled==lensed, open==settle | **GAP** (same-fn equality is algebraic; no theorem-shaped content beyond C7's seam) | **GAP** |
@@ -134,14 +134,14 @@ retrieval candidates only.
 
 **Job-1 diagnosis (2026-06-13):** Aristotle IS reachable from this environment (aristotlelib CLI, no `403 host_not_allowed`; both project tasks show COMPLETE, started 11h 32m ago). The overnight stall was that the archives were never DOWNLOADED — not a network block. (`list` shows the projects as IDLE because the task finished and the project went idle; that is NOT "never ran".)
 
-### Still pending-submit to Aristotle (v28/at-strike-specific, prover-blocked = unwritten/unsent, NOT trusted-from-prover)
+### Still pending-submit to Aristotle (NOT trusted-from-prover; Aristotle IS reachable this session, but these are unsubmitted/unreturned)
 | Obligation | For | Status |
 |---|---|---|
-| A16-CONT (markLensed∘gLoc C0 at sNorm=θ, both one-sided limits=1) | A16 no-jump ATM theory leg | queued, NOT submitted |
+| **CONSTANT-m MONOLITH** (`MonolithConstM.lean`: single `TemporalAMM` with scalar `m`; `g_eq_m_gamma`, `g_const_in_strike`, `thetaTx_roundtrip`, `warp_linear`=∫m=m·Δγ, smooth-paste at g=m·γ, engineInstance, single_object) | the whole simplified object (C1/C3/C5/C7/C16 + A1/A5/A16) | **WRITTEN, queued, NOT submitted** — prompt `formal/prompts/aristotle_prompt_monolith_constm.md`, ready to fire |
+| A16-CONT under constant-m (continuity at ATM = corollary of constant-exponent smooth-paste; the polar g→0 version is SUPERSEDED) | A16 no-jump ATM | folds into the constant-m monolith submission |
 | A14 at-strike no-arb-on-close (reverse-dy reserve restoration + ITM direct-payout no-leak) | A14 close-semantics | NOT written |
 | A15 slippage-haircut composition lemma | A15 | NOT written (decision Q10 pending) |
-| A11 asymmetry-growth (call/put asym superlinear in D) | A11 | candidate, NOT pinned |
-| A5 wing limit Tendsto Φ→1 | A5 | candidate, NOT pinned |
+| A11 asymmetry-growth | A11 | candidate (constant-m makes asym GROW with m, not D-superlinear — re-derive before pinning) |
 
 ## Maintenance
 research-lead updates rows on every run fold; manager confirms against its audit before commit;

@@ -7,12 +7,10 @@ FLAG-OMISSION. Keep this file short and current — it is a lens, not an encyclo
 
 ## ⭐ The motive (one breath)
 **A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else
-stays the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the
-warp; the knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
-value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are **unchanged**. The
-curve/invariant decision is the operator's. (⚠ How the GH engine relates to the proposed
-τ-family is OPEN — the "GH = one setting, τ≡δ" identity is BROKEN, item 2 below; this paragraph
-previously carried it, corrected 2026-06-10 per skeptic stock-take §4.1.)
+stays the same.** Balancer `x^w·y^(1−w)=k` is the base; a trade warps the curve; the kurtosis/vol
+knob is a **constant slope multiplier m** (steepness `m·γ` at every strike; bigger m = steeper +
+trade further; see the REDEFINITION banner below) — carry/rebase, value∝S^(−γ), ITM smooth-pasting,
+funding, and the dollar pipe are **unchanged**. The curve/invariant decision is the operator's.
 
 ## Disposition rule
 Every in-scope note carries a line per item: **Considered** (analyzed in the note) / **Changed**
@@ -32,7 +30,7 @@ The kurtosis/vol knob is a **constant slope multiplier m**: option-value steepne
 |---|---------|------------------------------|
 | 1 | **Balancer base** `x^w·y^(1−w)=k` | The family's exact base; Gaussian/Merton slice; = δ→∞ limit (NOT δ→0 — that's Laplace). |
 | 2 | **The curve warp** (position-dependent weight) | The engine's defining move — GH realizes it via the latent SCORE. ⚠ CORRECTED 2026-06-10 (skeptic, manager-verified): a clean closed-form invariant DOES exist for the weight-profile family (`x^{w_mid}·y^{1−w_mid}·e^{−(Δw/2)√(τ²+ln²(y/x))}=k` — the old "none exists, proved structurally" is FALSE), and "GH = one (W) setting, τ≡δ" is FALSE at curve level (engine w_eff vs ln(y/x) non-monotone ⇒ not a (W) member). Kernel-in-SCORE ≠ kernel-in-WEIGHT. |
-| 3 | **Kurtosis knob = CONSTANT SLOPE MULTIPLIER m** (REDEFINED entry 231; old τ elbow-lens below SUPERSEDED) (GH kernel scale δ plays this role in-engine) | The project goal; ATM-elbow rounding, asymptote-respecting (survived attack); sign gotcha: latent leptokurtic vs pushforward platykurtic. ⚠ β=1 caveat (skeptic): published kurtosis numbers / the [0,3] range are the β=0 symmetric slice; the engine pin β=1 gives skew +0.92, excess kurt 3.285. |
+| 3 | **Kurtosis/vol knob = CONSTANT SLOPE MULTIPLIER m** (REDEFINED entries 229/231) | option-value steepness `m·γ` at every strike; m=1=plain v24; bigger m ⇒ steeper everywhere AND trade lands further out (`θ_tx=mode·(chosen/mode)^m`); wings = exact power-laws of exponent m·γ (A5 preserved, no floor). **SUPERSEDED:** the old "δ/τ rounds the ATM elbow, wings frozen at γ" and the position-dependent `√(τ²+u²)` lens — no elbow-rounding, no flat-top/cusp. (Historical δ/(W)/τ kurtosis notes retained in `notes/` as superseded.) |
 | 4 | **Carry** `P = Ny/Nx`, `u = log(price) − log P` | Load-bearing coordinate; raw-u breaks the gauge structure — the gauge coord s=u−μ is forced. |
 | 5 | **Rebase** (P→P/r, θ→θ/r, anchor w=½) | Degree-0 gauge; rebase covariance holds in sNorm, NOT raw (x,y); PH-6 proved legs. |
 | 6 | **Pricing law** value ∝ S^(−γ), γ∈(1,4) | The one accuracy gate (G4); β=1 GH carries ONLY the put eigenfunction (call root leaves the strip — two-root symmetry is Gaussian-limit, not GH). |
