@@ -1,5 +1,53 @@
 # MEMORY — research-lead
 
+### CONSTANT-m MONOLITH FIRED + RETURNED + AUDITED → trusted-from-prover (operator goal entries 144/146/177/179/231) — 2026-06-13
+**THE single Lean-verified pure-math object the operator asked for NOW EXISTS, trusted-from-prover.**
+Submitted `formal/prompts/aristotle_prompt_monolith_constm.md` to Aristotle (host reachable, CLI 200,
+no 403). **Run `6016ec57-504a-4b7c-8a12-bccc4eba6b32` / inner task `3f85462d-bee4-4e32-8613-e27f68906772`.**
+Ran ~1h15m (long but healthy; metriplectic `HasDerivAt`/`deriv(deriv)` + rpow lemmas over full
+`import Mathlib`). Returned COMPLETE; archive `/tmp/aristotle_monolith_constm.tar.gz` → folded
+`formal/aristotle_runs/MONOLITH_CONSTM/` (tar + extracted; MonolithConstM.lean md5 f3f4f809…, 295 lines).
+**FULL AUDIT GATE — PASS:**
+- **Out-of-scope byte-diff:** all 5 working-tree modules (AMMCurve/Audit/Main/Seam/Temporal) +
+  lean-toolchain + lakefile BYTE-IDENTICAL to working tree. Only `MonolithConstM.lean` is new. Toolchain
+  `leanprover/lean4:v4.28.0` matches.
+- **Token scan:** NO sorry/admit/native_decide/sorryAx/opaque/unsafe; NO `axiom` declarations; no `decide`.
+- **Structure block VERBATIM** as pinned: `alpha,beta,y,m` + `halpha,hbeta,hy:β<y,hm:0<m`. Every component
+  a def/theorem reading the one object P (entry 179 mapping-within).
+- **Math re-derived (intended-claim check):** `g θ = m·γ` constant (g_eq_m_gamma/g_const_in_strike);
+  thetaTx=center·(θ/center)^m with thetaTx_roundtrip the genuine inverse (m·(1/m)=1 via rpow_mul);
+  warp_linear=∫m=m·Δγ (intervalIntegral.integral_const); warp_eq_m_dgamma=m·D/β; paste_value arms=1/(g+1)
+  + paste_slope HasDerivAt ∀g>0 (⇒ at g=m·γ); price_is_grad/R_psd by real differentiation
+  (μ′=(t−β)²/αβ=price, μ″=2(t−β)/αβ≥0); engineInstance ⟨725,275,1000,1⟩ ⇒ x=1000,w=29/40,γ=29/11(>1),g=γ;
+  single_object. **DELETED polar facts (g=0-at-center, g≤γ) correctly ABSENT; no LensShape/polarLens/
+  √-kernel** — confirmed by file read + token scan (the reject condition did NOT trigger).
+- **#print axioms:** prover RAN it on the named theorems and reported ⊆ {propext,Classical.choice,
+  Quot.sound}; the raw per-theorem axiom listing was NOT in the streamed CLI logs (truncated). Corroborated
+  by token-clean + no-sorry ⇒ no sorryAx, and all proofs are standard-Mathlib tactic blocks
+  (linarith/nlinarith/ring/field_simp/norm_num/convert HasDerivAt/grind/aesop) which only pull the
+  standard three. **Canonical-env axiom confirmation deferred — env-blocked (no local kernel).**
+**VERDICT: `proved (trusted-from-prover)`** — NOT "verified" (label upgrade needs a local canonical
+build; env-blocked). FRAGILE TACTICS flagged (no-math): `grind` (center_eq_sNorm/price_eq_slope/
+goalSeek_root), `aesop` (trade_rebase_commute), heavy `nlinarith` (w_consistency/gamma_eq),
+`convert HasDerivAt…` (price_is_grad/paste_slope). SIGNATURE ADJUSTMENTS (benign, as-requested):
+`warpInt` def added; thetaTx_roundtrip keeps explicit 0<P.m hyp (spec asked). NO statement weakened,
+NO hypothesis-on-conclusion strengthened, NO forbidden change.
+**FOLDED INTO INDICES:** `formal/INDEX.md` (CONSTANT-m section row flipped pending→trusted-from-prover
++ V28-LENS pending list updated); `formal/MONOLITH_INDEX.md` (superseded-banner updated to returned);
+`docs/MONOLITH_INDEX.md` (header note + C3/C16/A1/A5/A10/A16 Lean cells flipped + dedicated table row
+moved pending→RETURNED). NO git (manager commits).
+**STILL PENDING-SUBMIT (unchanged, NOT trusted):** A14 at-strike no-arb-on-close (needs operator
+close-semantics certainty; NOT written); A15 haircut (Q10 pending); A11 asymmetry-growth (re-derive
+under constant-m: asym grows with m). C13 real solvency floor STILL-OPEN (operator ship-gate).
+**ESCALATIONS TO MANAGER (carry forward):** (1) skeptic FLAG-OMISSION — CLAUDE.md §0 + inventory
+items 2/3 still describe frozen-γ-wings/elbow-rounding (DELETED by constant-m; wings are exponent m·γ);
+operator one-sentence confirm requested. (2) The monolith Lean object is now trusted-from-prover but
+the constant-m ENGINE build (separate intern) + the `lens_selfcheck.js` gate-rewrite (encodes old elbow
+design, FAILS constant-m by design) are intern/manager territory.
+**SKEPTIC:** universal-gate audit of this fold expected before manager commit.
+
+---
+
 ### MONOLITH SYNC → CONSTANT-m LENS (operator entry 229/230) — 2026-06-13
 **TRIGGER:** operator entry 229 (verbatim transcript L1839-1841: "its literally just a constant slope
 multiplier") + entry 230 ("monilith math etc sync up now"). The kurtosis lens is REDEFINED from the

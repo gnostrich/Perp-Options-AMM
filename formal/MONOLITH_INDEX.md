@@ -6,7 +6,12 @@
 > field collapses to a single scalar `m : ℝ, 0<m`; `g (P) θ := m·γ` (no θ, no Φ); the warp lemmas
 > collapse to the linear `warp_linear : ΔG = m·Δγ`. The current single structure is
 > `RequestProject/MonolithConstM.lean` — prompt `formal/prompts/aristotle_prompt_monolith_constm.md`
-> (WRITTEN + queued, NOT yet submitted ⇒ pending-submit). Object write-up:
+> — **RETURNED + AUDITED 2026-06-13 → trusted-from-prover** (run `6016ec57`/task `3f85462d`, archive
+> `aristotle_runs/MONOLITH_CONSTM/`; the constant-m single object now exists: `g_eq_m_gamma`,
+> `g_const_in_strike`, `thetaTx_roundtrip`, `warp_linear`, smooth-paste at g=m·γ, `engineInstance`
+> (m=1), `single_object`, plus the unchanged pool/trade/rebase/metriplectic spine; polar facts
+> g=0-at-center / g≤γ correctly DELETED; audit PASS — see `formal/INDEX.md` for the full row).
+> Object write-up:
 > `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. The POOL + smooth-paste + rebase +
 > trade-flow + metriplectic rows below are UNCHANGED (constant-m does not touch them); only the
 > C3 lens / C16 warp / A5 / A10 rows and the `LensShape` field are superseded.

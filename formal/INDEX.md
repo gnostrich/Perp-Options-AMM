@@ -117,11 +117,27 @@ object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on th
   `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos`, `glAt_hasDerivAt`, `recenterKer`,
   `warp_decomposition`). Under constant-m the warp is the LINEAR `ΔG=m·Δγ` (one-line `integral_const`
   corollary). Archives `aristotle_runs/{LENSKERNEL,WARPCALC}/` retained as history.
-- **NEW pending-submit:** the CONSTANT-m single structure `MonolithConstM.lean` (prompt
-  `formal/prompts/aristotle_prompt_monolith_constm.md`) — `g_eq_m_gamma`, `g_const_in_strike`,
-  `thetaTx_roundtrip` (closed-form invertible trade map), `warp_linear`, smooth-paste at g=m·γ,
-  `engineInstance` (m=1), `single_object`. WRITTEN + queued; Aristotle IS reachable this session
-  (CLI 200, no 403); NOT yet submitted/returned ⇒ **pending-submit, NOT trusted-from-prover.**
+- **NEW — RETURNED + AUDITED 2026-06-13 → trusted-from-prover:** the CONSTANT-m single structure
+  `MonolithConstM.lean` (prompt `formal/prompts/aristotle_prompt_monolith_constm.md`; run
+  `6016ec57` / task `3f85462d`; archive `aristotle_runs/MONOLITH_CONSTM/`). ONE structure
+  `TemporalAMM` (fields `alpha,beta,y,m` + positivity, verbatim as pinned), every component a
+  def/theorem reading it. Proved: `g_eq_m_gamma`, `g_const_in_strike`, `g_pos`,
+  `g_eq_gamma_iff_m_one` (m=1⇔plain Balancer), `g_ge_gamma_of_m_ge_one`, `thetaTx_roundtrip`
+  (closed-form invertible rpow map, exponent 1/m), `thetaTx_strictMono`, `warp_linear` (∫m=m·Δg),
+  `warp_roundtrip_zero`, `warp_nonneg_of_buy`, `warp_eq_m_dgamma` (=m·D/β), `paste_value`/`paste_slope`
+  (∀g>0 ⇒ at g=m·γ), `price_is_grad`/`R_psd` (real differentiation), the pool/trade/rebase spine
+  (`invariant`,`gamma_affine`,`trade_dx`,`trade_rebase_commute`,…), `goalSeek_*`, `engineInstance`
+  (m=1: x=1000,w=29/40,γ=29/11,g=γ,γ>1), `single_object`. The DELETED polar facts (g=0 at center,
+  g≤γ) are correctly ABSENT; no LensShape/polarLens/√-kernel. Audit PASS: out-of-scope modules
+  byte-identical to working tree; toolchain v4.28.0 matches; token-clean (no sorry/admit/
+  native_decide/sorryAx/axiom-decl/opaque/unsafe/decide); statements re-derived by hand (g=m·γ,
+  thetaTx inverse, warp linear, engine rationals, smooth-paste arms = 1/(g+1)). Prover-reported
+  `#print axioms` ⊆ {propext,Classical.choice,Quot.sound} (the raw per-theorem axiom listing was NOT
+  in the streamed logs — corroborated by token-clean + no-sorry ⇒ no sorryAx; canonical-env axiom
+  confirmation deferred, env-blocked). FRAGILE TACTICS (no-math, flagged): `grind`
+  (`center_eq_sNorm`/`price_eq_slope`/`goalSeek_root`), `aesop` (`trade_rebase_commute`), heavy
+  `nlinarith` (`w_consistency`/`gamma_eq`); `paste_slope`/`price_is_grad` use `convert HasDerivAt…`.
+  **Verdict: `proved (trusted-from-prover)`** — NOT "verified" (no local canonical kernel; env-blocked).
 
 ## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
 Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
@@ -142,10 +158,13 @@ LENSKERNEL's pool + g-parametric smooth-paste rows below are KEPT.**
 | `warp_nonneg`, `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos` | polar 0≤ΔG≤Δγ buy / ≤0 sell | ⚠ **SUPERSEDED by constant-m** (`warp_linear`: ΔG=m·Δγ) | WarpCalc.lean | 24e6497e |
 | `glAt_hasDerivAt`, `warp_decomposition` (kink-inside) | polar live = warp + recentering split at the kink g=1/θ | ⚠ **SUPERSEDED by constant-m** (no kink; live=m·Δγ directly) | WarpCalc.lean | 24e6497e |
 
+**CONSTANT-m monolith** `MonolithConstM.lean` — **RETURNED + AUDITED 2026-06-13 → trusted-from-prover**
+(run `6016ec57`/task `3f85462d`, archive `aristotle_runs/MONOLITH_CONSTM/`; full row in the CONSTANT-m
+section above). The single-structure Lean object the operator asked for (entries 144/146/177/179) now
+exists trusted-from-prover.
+
 **Pending-submit (NOT trusted-from-prover; Aristotle reachable this session, but unsubmitted/unreturned):**
-**CONSTANT-m monolith** `MonolithConstM.lean` (`g_eq_m_gamma`, `g_const_in_strike`, `thetaTx_roundtrip`,
-`warp_linear`, smooth-paste at g=m·γ, engineInstance, single_object — WRITTEN + queued,
-`aristotle_prompt_monolith_constm.md`); A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
+A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
 ITM direct-payout no-leak; NOT written); A15 slippage-haircut composition (Q10 pending); A11
 asymmetry-growth (under constant-m: asym grows with m — re-derive before pinning). A16-CONT folds into
 the constant-m monolith (continuity = corollary of constant-exponent smooth-paste; polar g→0 version
