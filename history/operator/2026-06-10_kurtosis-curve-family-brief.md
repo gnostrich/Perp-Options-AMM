@@ -1871,3 +1871,11 @@ _Context: in reply to the manager's funding decision (A decouple / B keep m-coup
 _Context: in reply to the manager surfacing skeptic Q3 (under constant-m, funding no longer zeroes at ATM via a vanishing exponent; it zeroes only via the par/anchor-divergence factor). Operator clarifies funding never required ATM-zeroing — it is slope / ray-divergence from the anchor curve, through the lens._
 
 > oh funding never had to be zero atm, its totally dependent on slope / corresponding ray divergence from anchor curve (as seen thru lens here)
+
+
+---
+
+## Entry 235 — 2026-06-13 12:19 UTC
+_Context: operator directs adding a pending/open design choice — whether closing a position is an AMM transaction or not (the close-mechanic question carried in the A14 history)._
+
+> also add to the pending items a design choice about closing positions whether AMM tx or not
