@@ -1879,3 +1879,11 @@ _Context: in reply to the manager surfacing skeptic Q3 (under constant-m, fundin
 _Context: operator directs adding a pending/open design choice — whether closing a position is an AMM transaction or not (the close-mechanic question carried in the A14 history)._
 
 > also add to the pending items a design choice about closing positions whether AMM tx or not
+
+
+---
+
+## Entry 236 — 2026-06-13 15:24 UTC
+_Context: operator observes the constant-slope-multiplier knob also shifts the curve/trade right (the θ_tx trade-map relocation), which he didn't intend — says it should be a slope exponent instead. Questions the entries-229/231 coupling; manager to clarify before any build (no HEAD change)._
+
+> didnt realise multiplier would shift the curve right, would be slope exponent instead
