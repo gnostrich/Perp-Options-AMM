@@ -1717,3 +1717,11 @@ _Context: operator proposes the reasoning "if chart 2 is steeper, further OTMs l
 _Context: operator clarifies — through the warp you transact further OTM than it appears; he reads this as aligned with his original (entry-118) statement._
 
 > meaning when you see something thru warp your transacting further otm than it apperas which seeks aligned with what i was saying
+
+
+---
+
+## Entry 216 — 2026-06-13 05:57 UTC
+_Context: operator corrects the manager's Reading X — you transact at "what looks like the true strike" (not at the true point itself)._
+
+> no you transact at what looks like the true strike
