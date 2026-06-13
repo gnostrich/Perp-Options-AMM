@@ -1829,3 +1829,13 @@ _Context: operator, exasperated, insists the manager should understand the unifi
 _Context: operator demands the manager stop fragmenting and step back to grasp the unified intent._
 
 > how fucking hard is this. take a step back and think.
+
+
+---
+
+## Entry 229 — 2026-06-13 08:18 UTC
+_Context: operator gives the actual spec, exasperated at its simplicity — the lens is literally a CONSTANT slope multiplier._
+
+> its so straightforward idk what to even say
+>
+> fuck gang. its literally just a constant slope multiplier
