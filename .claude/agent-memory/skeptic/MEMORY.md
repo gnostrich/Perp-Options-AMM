@@ -2870,3 +2870,44 @@ actually SELECTS the branch the brief claims, not just that it's loud/decisive i
 (operator-vs-operator hidden behind operator-vs-math): here it's manager-inference hidden behind
 operator-emphasis. The convenience tell again — "he picked B" is exactly the answer that unblocks the
 build the manager wants to ship.
+
+## VERDICT #kurtosis-inversion-rootcause (entry 224/225, 2026-06-13) — operator RIGHT; partial self-correction
+`notes/skeptic/VERDICT_kurtosis_inversion_rootcause_entry224_2026-06-13.md`. Operator: "we probably have the
+inverse mapping for kurtosis on the second chart … which is confusing you" (entries 224/225 verbatim). HEAD
+v28_lens. Re-derived cold: /tmp/sk_kurt.js, sk_chart2.js, sk_elbow_vs_tail.js, sk_payoff.js, sk_compress.js, sk_label.js.
+- **Inverted? PARTLY YES — not a code sign-flip (that was already FALSE, #lens-dir-reconcile: tau passed raw to
+  state.tau). The WORD "kurtosis" is two-faced for this knob and the team used different faces on different days.**
+  Far-tail exponent is PINNED to gamma for every tau (asymptote-respecting "wings stay exact power-laws") — tau only
+  changes the WIDTH OF THE ROUNDED CORE, not the tail. So: PEAKEDNESS reading => more kurtosis = SMALLER tau (tighter
+  peak; the engine UI label L1321 + operator's OWN entries 841/1656 usage). TAIL/SHOULDER-FATNESS reading (the brief's,
+  and what his WANTS need) => more kurtosis = LARGER tau (more value held OTM). They point OPPOSITE tau-ends. That
+  undisclosed split IS the inversion he named.
+- **Does fixing it dissolve the conflict? YES, arithmetically, under ONE relabel ("more-kurtosis/sharper = LARGER
+  tau") with ZERO formula change.** Re-derived /tmp/sk_payoff.js: current HEAD tx-map u_tx=sqrt(a^2+2|a|tau) ALREADY
+  gives larger-tau => further out (2x pick: 2.10x@tau.05 -> 8.62x@tau3). So under the relabel: (1) transact-at-looks
+  holds, (2) sharper(=large tau)=>further holds, (3) chart-2 untouched. The three-way "impossibility" of my R-218/
+  Choice-B verdicts was LABEL-DEPENDENT (true only under sharper=small tau); it DISSOLVES under the relabel.
+- **Self-correction (FLAG-OVERSELL withdrawn-in-part):** my prior R-218 verdict oversold the conflict as a
+  label-INDEPENDENT geometric impossibility. It is not. Softened to: impossible under peakedness-label, consistent
+  under tail-fatness relabel. Operator's root-cause diagnosis substantively CORRECT.
+- **Fix = RELABEL only** (UI knob label/slider direction; optionally invert displayed value, state.tau stays raw).
+  Does NOT touch chart-2 / settlement / frozen wings / funding / tx-formula. The tx formula is ALREADY correct for the
+  relabelled reading (why earlier verdicts kept finding it "backwards" — right for tail-fatness, wrong for peakedness).
+- **I did NOT pick the direction (design-intent / curve-semantics = operator's).** Two reasons it's not auto-correct:
+  (a) relabel CONTRADICTS operator's own earlier signed usage (841/1656: less kurtosis=smaller tau) => operator-vs-
+  operator, an ASK not an inference (pattern #21); (b) finance doesn't pin it because the tail is frozen — "kurtosis"
+  is genuinely underdetermined for this knob. Routed ONE plain question: "does MORE kurtosis/sharper = LARGER tau
+  (reversing your earlier usage)?" If yes: relabel only, conflict gone, already built. If no: R-218 three-way stands.
+
+## Team blind-spot pattern (addition) — #23
+**A design knob can carry an AMBIGUOUS English word whose two faces point at OPPOSITE parameter-ends, and the whole
+team (operator included) oscillates between the faces without anyone naming the ambiguity.** Here "kurtosis" = either
+PEAKEDNESS (small tau) or TAIL/SHOULDER-FATNESS (large tau); because the curve's design FREEZES the far-tail exponent
+(asymptote-respecting), the two halves of the real-distribution intuition decouple and disagree. The 4x tau-direction
+flip-flop was not 4 separate errors — it was one un-named two-faced label. LESSON: when a direction keeps flipping,
+stop attacking the math and ask whether the WORD on the knob is single-valued in the geometry. If the controlled
+quantity (here the tail exponent) is INVARIANT under the knob, the everyday word for it (kurtosis) is almost
+certainly underdetermined — flag the ambiguity, force the operator to pin which face, never let a brief assert one
+face as "the financially correct direction" (that assertion is a CHOICE wearing a fact's clothes). Also: a long-
+standing "geometric impossibility" verdict can be an artifact of a mislabel — re-test impossibility claims against a
+relabel before treating them as load-bearing walls. (Self-caught here; softened my own R-218.)
