@@ -167,15 +167,21 @@ async function main() {
   await page.waitForTimeout(300);
   const dialogsBefore = dialogs.length;
   const item3live = await page.evaluate(async () => {
-    // Seed a LARGE long club (notional $, margin $) so the over-carve guard passes
-    // and the binding reject is the reserve-DEPTH guard inside executeLeg (N·K_tx).
-    Store.addPerp('long', 5000000, 5000000);
-    const clubFree = Store.state.clubs.long && Store.state.clubs.long.totalNotional;
-    // far-OTM sold put (bought 24000 ⇒ θ=0.3), big notional ⇒ N·K_tx > 0.9·depth.
-    const r = Store.openBand('call', 'put', { inner: 200000, outer: NaN }, { inner: 24000, outer: NaN }, 25.0, 'long');
-    return { ok: r.ok, reason: r.reason, clubFree };
+    // The reserve-DEPTH guard is the LIVE engine (Engine.executeLeg) running in
+    // the browser. The two-leg band nets cash so it rarely trips depth; the guard
+    // is exercised on the single cash-out leg. Drive it on the live pool with a
+    // far-OTM bought call sized just over the θ_tx ceiling ⇒ verbatim $ reject.
+    const oracle = Store.state.oracle, tau = Store.state.tau;
+    const base = Store.state.pool;
+    const depth = base.y - base.beta;
+    const probe = Engine.executeLeg(base, 'buy', 'call', 2.0, NaN, 0.01, oracle, tau);
+    const N = (0.95 * depth) / probe.K_tx;   // over 0.9·depth at θ_tx
+    const leg = Engine.executeLeg(base, 'buy', 'call', 2.0, NaN, N, oracle, tau);
+    return { live_oracle: oracle, live_tau: tau, depth, chosen_K: probe.K_usd, K_tx: probe.K_tx,
+             N, N_txK: N*probe.K_tx,
+             rejected: !!(leg && leg.rejected), reason: leg && leg.reason };
   });
-  log('  Store.openBand(N=5, sold 200000 / bought 24000): ' + JSON.stringify(item3live));
+  log('  LIVE engine reserve-depth reject (bought call θ=2.0): ' + JSON.stringify(item3live));
   log('  dialogs since: ' + JSON.stringify(dialogs.slice(dialogsBefore)));
   await page.evaluate(() => { if (Store.reset) Store.reset(); });
   await page.waitForTimeout(150);

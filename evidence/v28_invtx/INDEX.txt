@@ -1,0 +1,19 @@
+R-218 INVERSE-LENS TRANSACTION-STRIKE SMOKE — candidate temporal_mvp_v28_lens_invtx.html (md5 5fea0e8d82ea85270e97ede71cf8e9ae)
+Tester live Playwright (chromium), 2026-06-13. READ-ONLY on source (md5 UNCHANGED post-run).
+Harness: engine/verify/pw_v28_invtx_smoke.mjs  (single A/B arg)
+Ran ×2 byte-stable (RUN_LOG_runA == RUN_LOG_runB modulo header line). 0 console errors / 0 pageerrors / 0 dialogs both runs.
+File-safety GREEN: webp L74 ab663f5c…, svg L1060 c505b08a…, 3 scripts parse. lens_selfcheck 39/39 (manager-verified, re-run here).
+
+CHANGE vs HEAD de28c937: AMM swap sized at FROZEN inverse-lens tx-strike θ_tx (further out than the chosen/displayed strike);
+settlement pays at the CHOSEN strike. u_tx = sign(a)·√(a²+2|a|τ), a=ln(chosen/mode); θ_tx=mode·e^{u_tx}; K_tx=θ_tx·oracle frozen on the leg.
+
+FILES:
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt — full run logs (byte-stable pair)
+  A_item4_chart2.png / B_item4_chart2.png — chart-2 (canvas-pricing) after τ-reshape + sweep
+
+VERDICT (per item):
+  1 reserves restore exact (frozen θ_tx) — PASS: single-leg open+close restore_err_x=0 / err_y=0 (call & put); UI band err 0/0.
+  2 settlement at CHOSEN strike — PASS: sold leg settles at K_inner=$120000 (chosen θ=1.5) while pool swapped at K_tx=$151490.92 (θ_tx=1.894); raw_net=-4.51e-3 finite, trader_payout=-$9.18 finite.
+  3 capacity shrinks far-OTM — PASS: bought call θ=2.0 (K=$160k), θ_tx=2.577 (K_tx=$206186), maxN 2.25→1.746 (0.776×); N=1.998 rejects "$411959.48 exceeds 90% of pool cash depth $400000.00" though N·chosenK=$319680<0.9depth (at-strike build would accept); smaller N executes (no silent cap). LIVE-engine reject reproduced: N·K_tx=$380000 reject verbatim.
+  4 no regression — PASS: chart-1 τ pxdiff=0 (inert); chart-2 τ0.3→2.0=6545px, single-step 0.3→0.35=3893px; fundingTick ok; sweep 48 distinct frames/1.3s.
+  5 direction observation (report only): fixed chosen θ=1.5, θ_tx lands at: τ0.05→1.573× / τ0.3→1.894× / τ1.0→2.685× / τ3.0→5.011× — sharper τ ⇒ LESS far (build ships sharper⇒closer, operator-flagged side-effect, NOT judged).

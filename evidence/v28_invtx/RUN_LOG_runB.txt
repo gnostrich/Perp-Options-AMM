@@ -1,4 +1,4 @@
-=== R-218 INVTX SMOKE run A — /home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_invtx.html (md5 5fea0e8d) ===
+=== R-218 INVTX SMOKE run B — /home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_invtx.html (md5 5fea0e8d) ===
 
 --- ITEM 1: single-leg open-then-close reserves restore (frozen θ_tx) ---
   live mode (sNorm) = 1

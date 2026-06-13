@@ -1777,49 +1777,24 @@ const Engine = (function() {
     // so θ·oracle == K exactly, and at close θ=K_inner/oNow so θ·oNow ==
     // K_inner — the dollar strike is oracle-drift-invariant ⇒ reversal dy =
     // −open dy ⇒ pool reserves round-trip EXACT).
-    // ── R-218 INVERSE-LENS transaction strike (operator entries 214/215/216/218;
-    // skeptic VERDICT_lens_tx_strike / VERDICT_lens_R218_consistency 2026-06-13,
-    // Choice B). The chosen strike (theta_inner) is the strike the trader SEES on
-    // the lensed screen. The pool actually swaps at the TRUE strike whose lensed
-    // APPEARANCE equals the chosen one — the INVERSE of today's view lens
-    // h_τ(u)=√(τ²+u²)−τ. With apparent log-distance a = ln(chosen/mode), the true
-    // log-distance is u_tx = sign(a)·√(a² + 2|a|·τ) (exact inverse of h_τ; expands
-    // outward, |u_tx| ≥ |a|, single-valued, bounded). theta_tx = mode·e^{u_tx}.
-    //   τ-DIRECTION (DOCUMENTED, NOT a defect): under today's h_τ a SHARPER lens
-    //   (smaller τ) pushes theta_tx LESS far out, a FLATTER lens (larger τ) pushes
-    //   it FURTHER out — the operator-flagged side-effect. A future lens change
-    //   that wants "sharper ⇒ further" must flip this knowingly; do not let a
-    //   silent "fix" reverse it (skeptic Choice C is a curve change, operator-tier).
-    // mode = getSNorm(state) is read LIVE at open; theta_tx is then FROZEN on the
-    // leg (K_tx, dollars) and reused verbatim at close so the pool round-trips
-    // EXACT (a live-mode recompute at close leaks; see skeptic $1395). Settlement
-    // stays at the CHOSEN strike (theta_inner / K_inner) — the financing leg swaps
-    // at theta_tx (further out), the option settles at the strike the trader picked
-    // (the intended two-strike semantics, skeptic §4 / Choice B (ii)).
-    const mode_tx = getSNorm(state);
-    const a_tx = (mode_tx > 0 && theta_inner > 0) ? Math.log(theta_inner / mode_tx) : NaN;
-    const u_tx = Math.sign(a_tx) * Math.sqrt(a_tx * a_tx + 2 * Math.abs(a_tx) * tau);
-    const theta_tx = mode_tx * Math.exp(u_tx);          // FROZEN at open (stored as K_tx)
-    const K_tx = theta_tx * fx;                          // tx-strike in dollars (frozen, oracle-drift-invariant)
-    const K_usd = theta_inner * fx;                      // chosen strike in dollars (settlement/valuation basis, kept)
-    const dy = (wingSign * legSign) * N * K_tx;          // cash delta on the pool's y leg (AT inverse-lens tx-strike)
+    const K_usd = theta_inner * fx;
+    const dy = (wingSign * legSign) * N * K_usd;   // cash delta on the pool's y leg (AT-STRIKE)
     // ── Reserve guard (spec §2.3) — cash-OUT (dy<0) may not exceed the pool's
     // cash depth y−β. HONEST REJECT with the numbers; NEVER a silent cap,
-    // never a mutated N. Now fires on N·K_tx (the bigger swap — capacity at a
-    // chosen strike shrinks; skeptic §4 / g-tx4). DEPTH_FRAC < 1 keeps a margin
-    // off the y→β singularity.
+    // never a mutated N. (Cash-IN legs are always representable on the
+    // hyperbola.) DEPTH_FRAC < 1 keeps a margin off the y→β singularity.
     if (dy < 0) {
       const depth = state.y - state.beta;
-      if (N * K_tx >= DEPTH_FRAC * depth) {
+      if (N * K_usd >= DEPTH_FRAC * depth) {
         return { rejected: true,
-                 reason: `At-strike cash $${(N * K_tx).toFixed(2)} exceeds ${(DEPTH_FRAC * 100).toFixed(0)}% of pool cash depth $${depth.toFixed(2)} — trade rejected.` };
+                 reason: `At-strike cash $${(N * K_usd).toFixed(2)} exceeds ${(DEPTH_FRAC * 100).toFixed(0)}% of pool cash depth $${depth.toFixed(2)} — trade rejected.` };
       }
     }
     const post = tradeUpdate(state, dy);
     if (!post) return null;
     return { newState: post, V: p.V, theta_star: p.theta_star, delta: p.delta, dy,
              m_star: p.m_star, inner: theta_inner, outer: theta_outer, wing, N, legType, mode: p.mode,
-             K_usd, K_tx, theta_tx };
+             K_usd };
   }
 
   // Back-compat alias.
@@ -2067,17 +2042,9 @@ const Engine = (function() {
     // bend valuation netting is the A15 deferred item, NOT closed here.)
     //   open dy (sold,  legSign +1) =  wingSign·N·K   ⇒ reverse = −wingSign·N·K
     //   open dy (bought, legSign −1) = −wingSign·N·K   ⇒ reverse = +wingSign·N·K
-    // R-218: the OPEN pool swap was sized at the FROZEN inverse-lens tx-strike
-    // K_tx (executeLeg), NOT the chosen K_inner. The reversal MUST reuse the same
-    // frozen K_tx so dy_close = −dy_open and the pool reserves round-trip EXACT —
-    // recomputing theta_tx live here from a drifted mode would NOT cancel (skeptic
-    // $1395 leak). Fall back to K_inner only for legacy bands opened before this
-    // build carried K_tx (loud-ish: keeps old saved bands closable, no new leak).
     const oForK   = (oNow > 0) ? oNow : 1;
-    const Ksold   = (isFinite(band.sold.K_tx)   && band.sold.K_tx   > 0) ? band.sold.K_tx
-                  : (isFinite(band.sold.K_inner)   && band.sold.K_inner   > 0) ? band.sold.K_inner   : band.sold.inner   * oForK;
-    const Kbought = (isFinite(band.bought.K_tx) && band.bought.K_tx > 0) ? band.bought.K_tx
-                  : (isFinite(band.bought.K_inner) && band.bought.K_inner > 0) ? band.bought.K_inner : band.bought.inner * oForK;
+    const Ksold   = (isFinite(band.sold.K_inner)   && band.sold.K_inner   > 0) ? band.sold.K_inner   : band.sold.inner   * oForK;
+    const Kbought = (isFinite(band.bought.K_inner) && band.bought.K_inner > 0) ? band.bought.K_inner : band.bought.inner * oForK;
     const wsSold   = (sold_wing   === 'call') ? +1 : -1;
     const wsBought = (bought_wing === 'call') ? +1 : -1;
     // reversal dy = −(open dy): sold open legSign +1, bought open legSign −1.
@@ -2581,13 +2548,11 @@ const Store = (function() {
       id, sold_wing, bought_wing, status: 'open', t_open: state.t,
       sold:   { inner: sold.inner,   outer: sold.outer,
                 K_inner: sold.K_inner, K_outer: sold.K_outer,
-                K_tx: result.leg1.K_tx,                  // FROZEN inverse-lens tx-strike ($) — close reversal reuses this
                 mode: result.leg1.mode,
                 N: result.N_sell, V_at_open: result.V_sell,
                 funding_inner: 0, funding_outer: 0 },
       bought: { inner: bought.inner, outer: bought.outer,
                 K_inner: bought.K_inner, K_outer: bought.K_outer,
-                K_tx: result.leg2.K_tx,                  // FROZEN inverse-lens tx-strike ($) — close reversal reuses this
                 mode: result.leg2.mode,
                 N: result.N_buy, V_at_open: result.V_buy,
                 funding_inner: 0, funding_outer: 0 },
