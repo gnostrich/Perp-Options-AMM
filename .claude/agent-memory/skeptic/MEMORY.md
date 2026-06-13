@@ -3043,3 +3043,30 @@ a16_atm_gate 5/5, faith_rebase (SKIP pre-GH), and probed funding/carry in live e
   items. Funding is the ONE silently-dropped behavior CHANGE.
 - Pattern reinforced: #6 (stale-contract-as-unchanged) — "everything else stays the same" is a CLAIM that
   must be audited per-contract whenever the knob's mechanism changes; funding rode the exponent quietly.
+
+## VERDICT #funding-thru-lens-ruling (entry 232, 2026-06-13) — FLAG-OMISSION #1 DISCHARGED + FLAG-OVERSELL(label) + FLAG(stale comment)
+Manager relayed operator entry 232 VERBATIM ("funding slope deviation thing would be as seej thru
+the lens") — reply to a manager A/B/C/D menu (A decouple / B keep m-coupled / C v24 ±2 / D hold).
+- **Q1 DISCHARGE: CLEAR.** "Through the lens" = option B unambiguously (cannot mean decoupled/A or
+  frozen-±2/C). Operator now affirmatively chose that the knob re-scales funding, in his own framing.
+  My FLAG-OMISSION #1 (from #criteria-completeness) is DISCHARGED. **CAVEAT: discharge rests on the
+  A/B/C/D menu being a faithful relay** — I trusted the manager's context note, did not see the menu
+  text itself. If the menu differed, re-raise.
+- **Q2 FLAG-OVERSELL (narrow, on C9 label not ruling):** C9 marked "AGREED"+discharged reads greener
+  than reality. AGREED(intent) is right; but behavior is only manager-confirmed-at-CODE (L2272/L2274
+  gamma=±g, g=m·γ const — I independently confirm m scales funding by exactly ratio m for fixed
+  mark/S), NOT live-confirmed. C9 still in the C4/C5/C8/C9/C11 needs-verify queue (register L162).
+  Honest label = AGREED(intent)+needs-live-verify(behavior). Keep needs-verify until tester confirms
+  live m=1/2/4 scaling. (GROUNDED-vs-CARRIED.)
+- **Q3 FLAG (stale comment, ALREADY flagged #constmult-promote L2985, STILL unfixed):** engine
+  L2265-66 funding header says "f→0 at ATM (g_loc→0, flat top)…→γ wings" — FALSE under constant-m
+  (g_loc=m·γ const at every strike incl ATM; no u-dependence, L1649-54). The old C9 "ATM funding→0
+  CONTRACT ALTERED" warned about the DEAD √-lens exponent vanishing at ATM — that mechanism is GONE;
+  funding now zeroes only via the par factor (S→1)/mark, not a collapsing exponent. This is a THIRD
+  behavior vs v24(±2) and dead-lens(→0-exponent-ATM). Operator's entry-232 yes covers constant
+  ±m·γ-everywhere, NOT the "→0 at ATM" he may still picture. No θ-swap-sign leak (funding reads
+  g_loc directly, independent of θ_tx). No engine math bug — flag is the misleading comment + the
+  un-surfaced "ATM no longer zeroes via exponent" delta.
+- Verdict relayed to operator verbatim via manager. Pattern #6 again: "everything-else-unchanged"
+  needs per-contract audit on every mechanism change; AND stale comments outlive the design they
+  described (caught at promote, encode-time, still present — a comment-rot blind spot, #22).
