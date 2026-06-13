@@ -136,23 +136,26 @@ async function main() {
     const mode = Engine.getSNorm(base);
     const depth = base.y - base.beta;
     const out = { mode, depth, DEPTH_FRAC: 0.9 };
-    // sold PUT, far-OTM chosen θ=0.3 (deep below mode). Probe a leg, read K_tx vs chosen K.
-    const probe = Engine.executeLeg(base, 'sell', 'put', 0.3, NaN, 0.01, oracle, tau);
-    out.chosen_theta = 0.3; out.chosen_K = probe.K_usd; out.theta_tx = probe.theta_tx; out.K_tx = probe.K_tx;
-    // max N before reject at chosen-K (hypothetical at-strike) vs θ_tx-K (this build)
+    // CASH-OUT leg = bought CALL (wingSign+1 · legSign-1 = -1). Far-OTM chosen
+    // θ=2.0 (above mode). θ_tx pushes FURTHER out (θ_tx>chosen) ⇒ K_tx>chosen_K ⇒
+    // the swap cash N·K_tx is BIGGER ⇒ rejects at a SMALLER N than an at-strike
+    // (chosen-K) build ⇒ capacity shrinks.
+    const probe = Engine.executeLeg(base, 'buy', 'call', 2.0, NaN, 0.01, oracle, tau);
+    out.leg = 'bought CALL (cash-out)'; out.chosen_theta = 2.0; out.chosen_K = probe.K_usd;
+    out.theta_tx = probe.theta_tx; out.K_tx = probe.K_tx; out.dy_sign = Math.sign(probe.dy);
+    // max N before reject: at chosen-K (hypothetical at-strike) vs θ_tx-K (this build)
     out.maxN_chosenK = (0.9 * depth) / probe.K_usd;
     out.maxN_txK     = (0.9 * depth) / probe.K_tx;
-    out.capacity_shrink_factor = out.maxN_chosenK / out.maxN_txK;
-    // N just ABOVE the θ_tx ceiling ⇒ this build REJECTS (N·K_tx>=0.9depth)
-    // even though N·chosenK is still < 0.9depth (an at-strike build would accept).
-    const N = 1.02 * out.maxN_txK;
-    const leg = Engine.executeLeg(base, 'sell', 'put', 0.3, NaN, N, oracle, tau);
+    out.capacity_shrink_factor_txK_over_chosenK = out.maxN_txK / out.maxN_chosenK;  // <1 ⇒ smaller max size
+    // N between the two ceilings ⇒ this build REJECTS though an at-strike build accepts.
+    const N = 0.5 * (out.maxN_txK + out.maxN_chosenK);
+    const leg = Engine.executeLeg(base, 'buy', 'call', 2.0, NaN, N, oracle, tau);
     out.probeN = N; out.N_chosenK = N * probe.K_usd; out.N_chosenK_under_depth = (N*probe.K_usd) < 0.9*depth;
     out.N_txK = N * probe.K_tx; out.N_txK_over_depth = (N*probe.K_tx) >= 0.9*depth;
     out.reject = leg && leg.rejected ? leg.reason : ('EXECUTED dy=' + (leg && leg.dy));
-    // and a smaller N that this build accepts (N·K_tx<0.9depth)
+    // a smaller N (under the θ_tx ceiling) that this build accepts — no silent cap.
     const Nok = 0.8 * out.maxN_txK;
-    const legOk = Engine.executeLeg(base, 'sell', 'put', 0.3, NaN, Nok, oracle, tau);
+    const legOk = Engine.executeLeg(base, 'buy', 'call', 2.0, NaN, Nok, oracle, tau);
     out.NokN = Nok; out.Nok_txK = Nok * out.K_tx; out.Nok_result = legOk && legOk.rejected ? legOk.reason : ('EXECUTED dy=' + (legOk && legOk.dy));
     return out;
   });
