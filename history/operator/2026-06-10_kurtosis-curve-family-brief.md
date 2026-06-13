@@ -1763,3 +1763,21 @@ During the rapid 2026-06-13 exchange the manager DUPLICATED entry numbers: there
 _Context: operator, furious at the overcomplication, restates the mechanic flatly — the lens shows an OTM+ point as OTM-; you choose the OTM- (displayed) point and it transacts at the OTM+ (true, further-out) point; that's the whole thing._
 
 > fuck you. lens shows otm + is otm -; so when you choose otm - it transact at otm + thats fucking it
+
+
+---
+
+## Entry 221 — 2026-06-13 07:12 UTC
+_Context: operator asks to run the warp/slippage-vs-strike-and-kurtosis tests he's repeatedly requested, now on the inverse-lens HEAD._
+
+> now run the tests i keep asking for
+
+
+---
+
+## Entry 222 — 2026-06-13 07:13 UTC
+_Context: operator decisively orders the τ-direction flipped — OTM- should map to OTM+ through a SHARPER lens (sharper ⇒ trade further out); change it._
+
+> fucker liar
+>
+> otm - should go otm + through sharper lens, fucking chsnhe it you dog
