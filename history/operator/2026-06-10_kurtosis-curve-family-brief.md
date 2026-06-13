@@ -1755,3 +1755,11 @@ _Context: operator asks for the conflict explained in a table._
 
 ## CORRIGENDUM — 2026-06-13 (manager, entry-numbering defect)
 During the rapid 2026-06-13 exchange the manager DUPLICATED entry numbers: there are two "Entry 214" (03:41 UTC = operator "you fucking gaslighting fuck…"; 04:31 UTC = "if the second graph is steeper… further OTMs look closer") and two "Entry 215" (03:42; 04:32), and the subsequent numbers (216–219) continued off the duplicated base. **All operator messages are transcribed verbatim and in chronological order in this file; only the entry NUMBERS collide.** Canonical disambiguation = the UTC timestamps. (Skeptic flagged this 2026-06-13; its companion claim "no transcript file / latest 2026-06-10" was a misread of the filename — this IS the one append-only session file, named by its start date per §2.2.) No renumber (corrections are corrigenda, not edits).
+
+
+---
+
+## Entry 220 — 2026-06-13 06:39 UTC
+_Context: operator, furious at the overcomplication, restates the mechanic flatly — the lens shows an OTM+ point as OTM-; you choose the OTM- (displayed) point and it transacts at the OTM+ (true, further-out) point; that's the whole thing._
+
+> fuck you. lens shows otm + is otm -; so when you choose otm - it transact at otm + thats fucking it
