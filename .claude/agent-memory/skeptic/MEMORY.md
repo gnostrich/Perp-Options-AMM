@@ -627,6 +627,31 @@ C16 + my #C16-promote HOLD; VERDICT_FEASIBILITY_STRAIGHT entry-150 three-hard-th
 checked: entries 151 ("im unable to converse... what next") and 152 are the latest; no substantive
 question between 150 and 152.
 
+### Verdict #lens-tx (2026-06-13, entries 214/215/216) — PARSE-CONFIRMED, τ-DIRECTION FLAG-WRONG, build NOT well-defined
+→ `notes/skeptic/VERDICT_lens_tx_strike_2026-06-13.md`. Manager's "transact at the inverse-lens image"
+model. **PARSE half CONFIRMED:** entry 216 "transact at what looks like the true strike" = transact at
+the actual point whose lensed APPEARANCE = chosen strike (inverse-lens image, further out than raw);
+correctly SUPERSEDES the manager's rejected "transact at the true raw point" (Reading X). Map is clean:
+appearance a=h_τ(u)=√(τ²+u²)−τ (compression, 0 at mode), inverse u_tx=√(a²+2|a|τ)·sign(a) — expansion,
+bounded, forward, single-valued, round-trips 1e-12 (`/tmp/lens_tx.js`; algebra re-derived not trusted).
+**HEADLINE FLAG-WRONG on τ-direction:** under engine `h_τ` (L1630), SHARPER (τ↓, L1321) ⇒ θ_tx LESS far
+out (2x-mode strike: τ=0.05→2.10×, τ=3→8.62×), the OPPOSITE of operator entry-118 "sharper OTM++". Two
+senses of "the lens" point opposite in τ: steepness h′_τ (sharper⇒steeper, matches entry-214 + the
+engine draw) vs coord-compression h_τ (sharper⇒LESS compression⇒looks LESS close). Operator's chain
+assumes they co-move; on h_τ they don't. Cross-checks same direction: compression a−h_τ 0.048→0.614;
+premium at fixed strike 0.093→0.235 (`/tmp/lens_steep.js`,`/tmp/lens_premium.js`). To get sharper⇒further
+needs the τ-in-denominator/1-over-τ-fatness lens (MEMORY F6 "fatness=1/τ, never ship τ-up=fatter") =
+curve change, OPERATOR-tier, I name not pick. **2nd hole (FLAG, operator-tier): freeze-vs-live-mode.**
+θ_tx is mode-dependent (lensU reads getSNorm, moves on trade); current build round-trips EXACTLY only
+because reversal uses STORED K_inner (mode-indep). Brief's "live-mode read, no stored mode" BREAKS the
+round-trip — $529 leak on a single leg over mode drift 1.0→1.08 at τ=0.3 (`/tmp/seam.js`). θ_tx MUST be
+frozen at entry. Plus swap-basis(θ_tx)-vs-settlement-basis(chosen K, entry-198 direct payout) gap needs
+explicit operator OK. **Build NOT well-defined** until operator rules (1) τ-polarity and (2) freeze. THEN
+one intern pass: executeLeg L1780-1781 K_usd→frozen θ_tx·fx, +4 gates. **MINE-TO-DEFEND:** today's h_τ
+has the WRONG SIGN for "sharper⇒further OTM"; the inverse map is clean but points the wrong way; this
+would be the 3rd build to go backwards on τ-direction (patterns #10/#11, F6).
+
+
 
 
 ## Method notes (env)
