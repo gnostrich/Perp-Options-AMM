@@ -2,6 +2,11 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+⚠ **OVERNIGHT 2026-06-13 — TWO research-lead agents running concurrently (RECONCILE at completion, write-collision risk on RL MEMORY + conjecture note):**
+(1) `a36a09d100e742a34` — PH-unification whole-exchange conjecture (entry 238 brief, PH ASSUMED as scaffold).
+(2) `a790024277a0143ed` — structure-reconfirm-FIRST (entry 239: PH vs info-geometry/free-potential; check Aristotle history/aristotlelib) THEN unification on the reconfirmed structure. This one is more aligned with the operator's latest instruction.
+Cause: meant to SendMessage (continue) agent #1 with the entry-239 addition, but no SendMessage tool here → Agent spawned a fresh #2 (which lacks #1's full original-brief context but has the goal pointers). RECONCILE: take #2's structure-determination as canonical; if it re-bases off PH, #1's PH-built conjecture may be partly superseded. Audit BOTH, dedup notes/MEMORY, manager-audit + skeptic-gate before any commit/fold. Do NOT spawn a 3rd RL. Nothing committed until reconciled.
+
 1. Read `CLAUDE.md` (shared truth) and `.claude/agents/manager.md` (charter, now incl. rules R1–R7) in full before acting.
 2. The succession plan that defines this form: `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md` — R1 citation-or-no-build · R2 one-go-one-build · R3 control-inventory · R4 kill-means-silent · R5 verify-before-reassuring · R6 skeptic scope-gate on builds · R7 tables+simple-English to the operator.
 3. Live operator questions: `docs/OPEN_OPERATOR_QUESTIONS.md` — do not re-derive from the archive.
