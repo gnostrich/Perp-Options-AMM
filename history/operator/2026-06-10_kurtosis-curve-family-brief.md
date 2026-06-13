@@ -1646,3 +1646,28 @@ _Context: operator signs off — note the open items as TBD, work autonomously t
 _Context: operator returns in the morning._
 
 > its morning
+
+
+---
+
+## Entry 212 — 2026-06-13 03:35 UTC
+_Context: operator answers/extends the three morning decisions — (10) slippage = compounded (1+s1)(1+s2)−1 across both legs; (11) a previously-found solution was lost to poor note indexing, find it; (12) for sell long/calls, more OTM ⇒ more slippage per unit notional, and sharper lens (less kurtosis per the UX) ⇒ effectively more OTM ⇒ even more slippage._
+
+> 10. slippage would be (((1+s1)*(1+s2))-1) compounded across both parts right; 11. there was some solution we found but your poor note takin indexing seems to have lost it. find it. 12. for sell long / calls more OTM means more slippage per unit notional, and sharper lens (less kurtosis as per UX) means it goes OTM+ effectively so even more slippage… make sense?
+
+
+
+---
+
+## Entry 213 — 2026-06-13 03:38 UTC
+_Context: operator on item 12, the short/put side — selling puts further OTM has a conflicting effect (lesser dollar value vs steeper slope); sharper kurtosis pushes effectively OTM+; operator can't determine the net, defers to the long-side reply._
+
+> on 12. if you sell short / puts and go further OTM theres a conflicting effect of lesser dollar value and steeper slope, sharper kurtosis pushes effectively OTM + so this i cant say but yeah rsfed to the reply on long basically
+
+
+---
+
+## Entry 214 — 2026-06-13 03:41 UTC
+_Context: operator — furious — the manager's item-12 reply disregarded the core through-the-lens principle (the AMM tx is seen/transacted THROUGH the lens, so the effective trade point is lens-shifted and kurtosis-dependent); calls it gaslighting._
+
+> you fucking gaslighting fuck, you disregarded the fucking thing about seeing through the lens

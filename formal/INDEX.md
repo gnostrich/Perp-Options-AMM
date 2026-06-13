@@ -100,13 +100,27 @@ pending per protocol). Caveats kept: Model-C anchoring is the trade point, NOT v
 - Pre-repo cluster (4–7 wk: Two-AMM/SU(1,1)/Minkowski/closed-form/geometric/policy) — retrieval
   candidates only, NOT audited.
 
-## ⟢ SUBMITTED 2026-06-12 overnight (this session — rows added on fold)
-- **LENSKERNEL** d7da8597 (`prompts/aristotle_prompt_lenskernel_L2.md`): v28 engine-subset L2 defs
-  (Pool/tradeUpdate/rebase/lens, line-cited to HEAD) + flow law γ′=γ+dy/β + lens basics +
-  `gLoc_rebase_invariant` + smooth-paste port `valueMatch_g`/`slopeMatch_g` (g>0, incl. g<1).
-- **WARPCALC** 24e6497e (`prompts/aristotle_prompt_warpcalc_L1.md`): ΔG=∫Φ_τ(|ln θγ|)dγ —
-  potential/FTC exactness, path-independence, round-trip 0, 0≤ΔG≤Δγ, strict positivity,
-  single-signedness, decomposition live = ΔG + recentering (kink-split).
+## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover)
+Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
+no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide`; axioms ⊆
+{propext, Classical.choice, Quot.sound} on all named targets per the returned summaries; out-of-scope
+modules byte-identical to the working tree; toolchain Lean 4.28.0 / Mathlib v4.28.0; every statement
+re-derived by hand). Archives folded → `aristotle_runs/{LENSKERNEL,WARPCALC}/`.
+
+| Result (headline thm) | Meaning | Depth | Archive | Run |
+|---|---|---|---|---|
+| `tradeUpdate_alpha/beta/hyperbola/reg`, `w/gamma/center/mpRaw_closed_form`, `gamma_linear_in_cash` (γ′=γ+dy/β) | v28 plain-Balancer pool flow + the cash-linear γ law | ✅ GROUNDED | LENSKERNEL/extracted/.../LensKernel.lean | d7da8597 06-12 |
+| `rebase_w/gamma/center`, `gLoc_rebase_invariant` | v28 lens-read commutes with rebase (C5) | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `Phi_zero/nonneg/le_one/lt_one/strictMonoOn`, `gLoc_nonneg/le_gamma/at_mode` | polar-lens factor basics; g_loc∈[0,γ], =0 at mode | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `sStarCall_pos/ge_theta`, `contCall/intrCall_at_sStar`, `valueMatch_g`, `slopeMatch_g` | smooth-paste port to ANY g>0 (incl. g<1; no `1<g` hyp) — R1/T1a generalised | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `warpPot_hasDerivAt` (FTC-2), `warp_eq_pot_sub`, `warp_additive`, `warp_roundtrip_zero` | the continuous warp ΔG=∫Φ_τ(ln θg)dg is an EXACT differential (path-indep, round-trip 0) | ✅ GROUNDED | WARPCALC/extracted/.../WarpCalc.lean | 24e6497e 06-12 |
+| `warp_nonneg`, `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos` | 0≤ΔG≤Δγ on a buy; ≤0 on a sell; strict on non-degenerate buy | ✅ GROUNDED | WarpCalc.lean | 24e6497e |
+| `glAt_hasDerivAt`, `warp_decomposition` (kink-inside) | live = warp + recentering decomposition (FTC split at the kink g=1/θ) | ✅ GROUNDED | WarpCalc.lean | 24e6497e |
+
+**Pending-submit (NOT trusted-from-prover — unwritten/unsent v28/at-strike obligations):** A16-CONT
+(markLensed∘gLoc C0 at ATM, queued); A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
+ITM direct-payout no-leak; NOT written); A15 slippage-haircut composition (Q10 pending); A11
+asymmetry-growth, A5 wing-limit Tendsto Φ→1 (candidates, not pinned).
 
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.
