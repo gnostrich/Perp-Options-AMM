@@ -3020,3 +3020,26 @@ archive formal/aristotle_runs/MONOLITH_CONSTM/) reaching shared truth, and (2) t
   "falls out as a corollary" sentence + correct the INDEX A16 cell; rest of fold CLEAR to shared truth.
 - Item 2 every OTHER claim backed; no "verified" leak; solvency/at-strike/A15 correctly OPEN. CLEAR once the
   one sentence reworded (attribute ATM no-jump to constant-exponent+a16 gate; confine Lean credit to S* seam).
+
+## VERDICT #criteria-completeness (2026-06-13) — operator "does it meet all my criteria?" — MOSTLY-PASS + 2 FLAG-OMISSION
+Authoritative completeness audit of the manager's MET/PARTIAL/NOT-BUILT ledger vs feature_inventory +
+COMPONENT_REGISTER + verbatim transcript (entries 1–231). HEAD 8f897edc. I re-ran lens_selfcheck 13/13,
+a16_atm_gate 5/5, faith_rebase (SKIP pre-GH), and probed funding/carry in live engine.
+- **CONFIRMED (operator picture holds):** constant-m (CM1/CM7 g_loc=m·γ const, polarity-lock), transact-
+  where-it-looks θ_tx=mode·(chosen/mode)^m (CM5, =entry 220/216), chart-1 byte-identical/chart-2 affected
+  (CM8/P/L4, =entry 153#3), at-strike+ITM-payout+no-jump-ATM IMPL (a16 5/5). τ-direction war (212-231)
+  genuinely dissolved by redefinition. Entry 226's exact ask met.
+- **FLAG-OMISSION #1 (funding):** funding is in the "everything else stays the same" motive list, but
+  fundingPerStrike now uses ±g_loc=±m·γ (engine L2274) ⇒ knob CHANGES funding (probed −6.67e-3→−7.55e-3
+  m=1→4). Ledger lists funding NOWHERE. Only operator sign-off = entry-93 "idc, same geometric thing" —
+  LOOSE, under the DEAD √-lens, NOT a constant-m ratification. Register C9 already flags "LOCKED CONTRACT
+  ALTERED…flagged for explicit re-confirm." Operator never told in plain English his knob re-scales funding.
+- **FLAG-OMISSION #2 (needs-verify inherited):** C4 carry / C5 rebase (+warp∘rebase-commute lemma OPEN
+  needs-Aristotle) / C8 strike-reg / C11 dollar-pipe all BUILT(inherited)/needs-verify, never live-confirmed
+  on this HEAD; register's own "Queued confirmation pass" owes it. Ledger omits → overstates completeness.
+- **Correctly OPEN (no flag):** A15 haircut QUEUED, solvency C13/B1 OPEN, monolith trusted-from-prover-not-
+  verified + L3 gap. (Carries my standing monolith FLAG-OVERSELL: A16-ATM "corollary" over-attribution.)
+- **No operator RULING silently dropped** from the build itself — gaps are the 2 omissions + already-TBD'd
+  items. Funding is the ONE silently-dropped behavior CHANGE.
+- Pattern reinforced: #6 (stale-contract-as-unchanged) — "everything else stays the same" is a CLAIM that
+  must be audited per-contract whenever the knob's mechanism changes; funding rode the exponent quietly.
