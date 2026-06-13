@@ -1,5 +1,11 @@
 # A weight-free polar liquidity-depth distribution with native skew + kurtosis knobs — first-principles
 
+> **⚠ SUPERSEDED 2026-06-13 (operator entry 229/230).** The polar `√(τ²+u²)` density/kurtosis
+> construction is no longer the lens: kurtosis is now a CONSTANT slope multiplier `m` (skeptic-
+> pinned `g_loc = m·γ`). Kept for history. Current object:
+> `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`.
+
+
 _research-lead, 2026-06-11. Operator **entry 53/54** ("do the needful"). **READ-ONLY (operator-pinned):
 NO engine edit, NO git, NO build touch, NO Aristotle submission.** HEAD stays untouched (md5 `928cde1c`).
 Decision-support, not a build. Builds on `NATURALNESS_polar_kurtosis_map_2026-06-11.md`,

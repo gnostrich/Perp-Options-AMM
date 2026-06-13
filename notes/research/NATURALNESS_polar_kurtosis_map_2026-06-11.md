@@ -1,5 +1,11 @@
 # Is the polar/√-kernel kurtosis map the MOST NATURAL one? — design-space, naturalness, divergence
 
+> **⚠ SUPERSEDED 2026-06-13 (operator entry 229/230).** The √-kernel `h_τ=√(τ²+u²)−τ` is no
+> longer the lens: the operator redefined kurtosis to a CONSTANT slope multiplier `m` (no kernel
+> to justify; "kurtosis" = the scalar `m`). Kept for history. Current object:
+> `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`.
+
+
 _research-lead, 2026-06-11. Operator entry 41. **READ-ONLY (operator-pinned): NO engine edit, NO git,
 NO build touch, NO Aristotle submission.** Operator is live-playing HEAD `1eebfcd6`; build path = A
 (trade-point anchoring), PAUSED for this exploration. Notes-only. Scripts transcribed at the end

@@ -1,5 +1,14 @@
 # CONTINUOUS trade → warp → update-lens calculus
 
+> **⚠ SUPERSEDED 2026-06-13 (operator entry 229/230 — constant-m lens).** This entire calculus
+> derives the warp for the POSITION-DEPENDENT polar lens `Φ_τ(u)=u/√(τ²+u²)`. The operator
+> redefined the lens to a CONSTANT slope multiplier `m` (skeptic-pinned form: `g_loc = m·γ`,
+> `u_true = m·u`). Under constant-m the warp collapses to the linear `ΔG = m·Δγ` (strike-
+> independent), the non-elementary incomplete-Bessel class evaporates, and the warp-vs-recentering
+> decomposition is UNNEEDED (no kink). Kept for history. Current object:
+> `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`.
+
+
 _research-lead · 2026-06-12 · operator-ordered (entry 160: "might as well do the damn calculus now
 itself via research guy for the continuous trade-warp-updatelens"). READ-ONLY pass: no engine edit,
 no git, no build, no Aristotle submission. HEAD untouched (`engine/builds/HEAD_temporal_mvp_v28_lens.html`,

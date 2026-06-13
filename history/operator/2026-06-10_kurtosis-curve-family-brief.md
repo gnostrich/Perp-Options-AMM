@@ -1847,3 +1847,11 @@ _Context: operator gives the actual spec, exasperated at its simplicity — the 
 _Context: operator directs the monolith (math/object/Lean/index) to sync up to the current state now (i.e. to the constant-slope-multiplier lens just specified)._
 
 > monilith math etc sync up now
+
+
+---
+
+## Entry 231 — 2026-06-13 08:31 UTC
+_Context: operator confirms the curve redefinition — yes, the lens is the constant slope multiplier (replacing the elbow-rounding/frozen-γ design)._
+
+> yes

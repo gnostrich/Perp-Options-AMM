@@ -7,15 +7,15 @@ a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produ
 
 ## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
 **A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else stays
-the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the warp; the
-kurtosis knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
-value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are unchanged. The curve/invariant
-decision is always the operator's. ⚠ HOW the current GH engine relates to the proposed τ-family is
-**OPEN** — the "GH = one (W) setting, τ≡δ EXACTLY" identity was BROKEN by the skeptic 2026-06-10
-(manager-verified on the live engine: GH puts the kernel in the latent SCORE, (W) in the WEIGHT —
-different curves; see `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`). Full checklist:
-`docs/feature_inventory.md` — design/brainstorm notes must disposition every item there (the
-skeptic enforces this).
+the same.** Balancer `x^w·y^(1−w)=k` is the base; a trade warps the curve; the kurtosis/vol knob is a
+**CONSTANT SLOPE MULTIPLIER `m`** (operator-RULED 2026-06-13, entries 229/231): the option-value
+curve's power-law steepness is `m·γ` at every strike (`m=1` = plain v24 curve; bigger m = steeper
+EVERYWHERE and a trade lands further out — both rise with m, one direction). carry/rebase,
+value∝S^(−γ), ITM smooth-pasting, funding, the dollar pipe are unchanged. **⛔ SUPERSEDED 2026-06-13
+(entry 231):** the old "knob `τ` rounds the ATM elbow with wings frozen at γ" / position-dependent
+`√(τ²+u²)` lens is DEAD — no elbow-rounding, no flat-top/cusp, wings are exact power-laws of exponent
+`m·γ` (still power-laws; not pinned at γ). Trade map: `θ_tx = mode·(chosen/mode)^m`. The curve/invariant
+decision is always the operator's. Full checklist: `docs/feature_inventory.md`.
 
 **Operator rulings 2026-06-10 (transcript entry 14, verbatim source `history/operator/`):**
 1. **Engine-faithfulness pivot UN-HELD and ordered FIRST** — built and gated before any new
