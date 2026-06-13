@@ -1,0 +1,34 @@
+INHERITED-FROM-v24 CONTRACTS LIVE-CONFIRMATION — HEAD 8f897edc (constant-slope-multiplier lens)
+Closes skeptic completeness-audit FLAG-OMISSION #2 (carry/rebase/strike-reg/dollar-pipe never
+live-confirmed on THIS build this session) + funding-through-lens smoke (operator entry 232).
+Tester: live Playwright ×2 (A/B byte-stable) + Node-oracle decomposition. READ-ONLY: build md5
+8f897edc UNCHANGED post-run. 0 console / 0 pageerrors both runs.
+
+FILES:
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt  — live run logs (A==B byte-stable modulo run-label header)
+  RESULT_runA.json / RESULT_runB.json  — structured results (A==B byte-IDENTICAL)
+  ITM_FORCED_probe.json                — forced REAL ITM call exercise (poolMark/oracle=2.669 > sold-call
+                                          ray 1.5, no rebase) → settled_cash_leg='sold', trader_payout=$3.78
+                                          finite/sane; the v26b American smooth-paste settle-to-cash path
+                                          fires THROUGH the lens. (Item-4 oracle-bump ITM was rebase-
+                                          neutralized — a pure rebase is a frame rescale, not a moneyness
+                                          change — v24-faithful, so this probe forces the real ITM path.)
+  A_fullpage_end.png / B_fullpage_end.png — end-state screenshots
+Harness: engine/verify/pw_v28_inherited_smoke.mjs (single A/B arg).
+
+PER-ITEM MEASURED (run A==B):
+  1 CARRY P=Ny/Nx: w=0.5, mp_raw(=carry P)=80000=oracle, poolMark$=80000, sNorm=1, u=log(price)-log(P)=0.
+    finite, not NaN. == v24 contract.
+  2 REBASE (oracle 80k→100k r=1.25; →64k r=0.64): x×r, α×r, β invariant, y invariant, w Δ=0, sNorm Δ=0,
+    mp_raw ×(1/r) exactly (P→P/r), θ→θ/r. == v24 contract (x→r·x, α→r·α, β,y,w invariant).
+  3 STRIKE REG θ=K/oracle: K=120k→θ=1.5 call mark 0.1667; K=80k→θ=1.0 mark 0.25; K=48k→θ=0.6 put 0.15.
+    g_loc=m·γ=1 at m=1, all finite, consistent display-mark vs chart-ray. == registration contract.
+  4 DOLLAR/SETTLEMENT: OTM-expiry (oracle≈80k, both legs OTM): settled_cash_leg=null (both reversed on AMM),
+    raw_net=4.50e-5, trader_payout=$0.072 finite/sane. ITM-exercise (forced, sNorm0=2.669>ray): settled_cash_leg
+    ='sold', live_leg='bought', trader_payout=$3.78, raw_net=2.36e-3 finite/sane, reserves finite. Round-trip
+    reserve restore exact (Node-oracle: |dx|=|dy|=0 via tradeUpdate(-dy)). == v26b/v24 settlement contract.
+  5 FUNDING THROUGH LENS (entry 232 m-coupled = ±g_loc = ±m·γ): on a steepened pool (w=0.539, S=1.363),
+    call(θ=1.5) +3.68e-4 / +4.29e-4 / +5.06e-4 at m=1/2/4; put(θ=0.7) −5.69e-4 / −6.62e-4 / −7.24e-4.
+    SCALES with m (sub-linear: ratio 1.27 m=1→4 because g·markLensed grows sub-linearly — g∝m but
+    markLensed shrinks as g grows), finite/sane, SIGN FLIPS call(+)/put(−). Matches skeptic qualitative
+    (1.13×, different pool/N) and operator entry-232 ruling.

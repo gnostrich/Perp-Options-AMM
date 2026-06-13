@@ -1,0 +1,16 @@
+{
+  "note": "Forced real ITM: pushed poolMark/oracle (sNorm0=2.669) above the sold-call live ray (1.5) WITHOUT a rebase, so legIsITM('call')=true. Confirms the v26b American smooth-paste settle-to-cash path fires through the lens. The item-4 oracle-bump ITM was rebase-neutralized (a pure rebase is a frame rescale, not a moneyness change — v24-faithful).",
+  "sNorm0": 2.668850828995246,
+  "liveSoldRay": 1.5,
+  "soldITM": true,
+  "settled_cash_leg": "sold",
+  "live_leg": "bought",
+  "raw_net": 0.0023634312140056253,
+  "trader_payout": 3.781489942409,
+  "club_delta": 3.4033409481680996,
+  "X": 0.0014203606733341487,
+  "Y": 0.003783791887339774,
+  "L0": 9.999999999999998,
+  "finite": true,
+  "sane": true
+}
