@@ -2669,3 +2669,38 @@ of it. A "leak" can be over- OR under-stated by a close the engine doesn't run. 
 (gate-tests-the-formula-not-the-draw) and the price/slope gotcha: here it's measure-the-arb-on-a-
 close-the-engine-doesn't-do. Also: a spec that says "reversal inherits X automatically" must be
 checked against whether the reversal code path even CALLS the function X lives in (it didn't).
+
+## Verdict #HALT-lens-effective-swap (entry 215, 2026-06-13) — CONFIRM-MANAGER-WRONG + KEEP-not-demote
+`notes/skeptic/VERDICT_HALT_lens_effective_strike_swap_entry215_2026-06-13.md`. HEAD de28c937.
+- **Charge CONFIRMED at line level:** `executeLeg` L1780-1781 sizes swap `dy=(±)N·K_usd`,
+  `K_usd=theta_inner·oracle = raw K`. NO tau in dy; tau only in legPrice→V (settle + N_buy).
+  tradeUpdate is byte-v24, takes only dy ⇒ Δγ=|dy|/β identical ∀τ ⇒ lens has ZERO effect on swap.
+  Manager item-12 "kurtosis-free swap" is a TRUE description = exactly the bug (architecture says
+  AMM tx transacts THROUGH the lens). FLAG-WRONG (swap mechanic) + FLAG-PROCESS (manager re-asserted
+  as fine a gap he'd already OWNED in commit 60b5c45 + queued as Q12).
+- **The lens-effective-strike fix shape:** θ_eff=mode·exp(sign(u)·h_τ(|u|)) (feasibility note Part B).
+  Buildable forward. **DIRECTION TRAP (re-derived /tmp/adj.js):** Part-B θ_eff COMPRESSES toward mode
+  (ratio<1; sharper lens→bigger swap toward raw, softer lens→smaller). That is the OPPOSITE of operator
+  entry-118 words ("through lens trade OTM+, sharper OTM++"). Same split as Q12 / my C16 FINDING-WARP-DIR.
+  NOT settled — operator must rule direction in plain English before any build.
+- **Obstruction reconciled honestly:** feasibility note's mode-collapse + φ-resummon obstruction assumed
+  "execute there"="move mode there"; operator entry-118 explicitly says mode does NOT re-center. Under
+  entry-118 (live-mode θ_eff) + entry-197 (no round-trip) + entry-199 (individual options) the φ wall is
+  AVOIDED — construal (I) is forward/solvent/single-basis. The version that DOES hit φ is "stored far-OTM
+  steepness while mode stays at spot" — a DIFFERENT ask. Manager collapsed both into "kurtosis-free fine."
+- **Continuous derivation (entry 160):** its OWN scope lines 292-293 = "NOT claimed: any write-path change
+  (view-layer; pool stays plain v24)." So it was a CHART object, not a swap-sizer. Operator entry-215 reads
+  it as the swap mechanic; as written it isn't. Either reading still kills item-12.
+- **HEAD verdict: KEEP at de28c937 with standing FLAG-WRONG; do NOT demote to 4378bc11** — prior HEAD wrong
+  on SAME axis + stale (pre 197/198/199) = lateral thrash, the ~100-regression pattern. Fix forward.
+
+## Team blind-spot pattern (addition, verdict #HALT-lens-swap) — #20
+**"True label sold as 'no problem'" — the honest-description-as-exoneration move.** Manager's item-12
+"swap is kurtosis-free" was TRUE (code confirms) yet WRONG as a reassurance, because the architecture
+DEMANDS kurtosis-dependence. The tell: a correct factual statement deployed to close a question the
+operator opened, where the FACT is itself the defect. Distinct from pattern #4 (true-label-wrong-object):
+here the label is right AND about the right object — it's the *implication* ("therefore fine") that's
+the dodge. Cross-check: the manager had ALREADY logged the same fact as a Q (Q12) + owned his prior
+reply as imprecise (commit 60b5c45) — so item-12 re-asserted-as-settled a thing his own memory marked
+OPEN. ALWAYS diff a manager reassurance against his own committed open-questions/owned-errors before
+accepting it; a reassurance that contradicts the manager's own logged Q is FLAG-PROCESS.
