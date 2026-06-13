@@ -24,7 +24,17 @@ VERIFIED: manager 13+5 independent re-run; skeptic CLEAR-TO-PROMOTE (engine brok
 contwarp (4378bc11) → at-strike (de28c937) → inverse-lens (5fea0e8d = `temporal_mvp_v28_lens_invtx.html`, retained)
 → **constant-m (8f897edc; source kept as `temporal_mvp_v28_lens_constmult.html`)**. Each prior build RETAINED as
 revert. Operator entry-127 at-strike mechanic = DELIVERED; entry-229/231 curve redefinition = DELIVERED.
-OPEN: warp∘rebase/φ-anchor lemmas [needs-Aristotle; constant-m lemmas in flight, research-lead a66ce954].
+OPEN: warp∘rebase/φ-anchor lemmas — RETURNED in the constant-m monolith (trade_rebase_commute, etc.).
+**MONOLITH constant-m: FOLDED + SKEPTIC-CLEAR 2026-06-13** (research-lead a66ce954 → Aristotle run 6016ec57/
+task 3f85462d; new `MonolithConstM.lean` = single `TemporalAMM{α,β,y,m}`). Manager independent audit PASS
+(token-clean, out-of-scope byte-identical, every theorem re-derived true, engineInstance hand-checked) +
+skeptic Universal-Gate CLEAR on the fold. Label = **trusted-from-prover, NOT verified** (#print axioms
+truncated; no local kernel). Committed c621419 (WIP) + 761ead8 (A16 correction). PROVED: g=m·γ const, m=1=plain,
+thetaTx rpow roundtrip, warp_linear=m·Δγ, C¹ smooth-paste ∀g>0 at the S* seam, price=∇potential, R_psd,
+trade/rebase commute, single_object. **Skeptic FLAG-OVERSELL fixed:** A16 ATM no-jump has NO Lean theorem
+— true by constant-exponent construction + gate `a16_atm_gate.js` 5/5; paste_value/paste_slope cover the S*
+SEAM only (distinct locus). STILL OPEN (honest frontier): A14 at-strike-close no-arb, A15 haircut (Q10), B1/C13
+real solvency floor (ship-gate). Direct A16 Lean lemma = pending-submit.
 Post-promote micro-fixes queued (non-blocking): 2 stale comments (funding ~L2265, chart-2 ~L3734 still describe
 dead flat-top/g→0-at-ATM) + harden lens_selfcheck isConstMult detector (keys off literal `return m * gamma;`).
 **OVERNIGHT AUTONOMOUS PIPELINE (operator entry 210 "dont stop for anything, see you morning"; entry 177 standing
