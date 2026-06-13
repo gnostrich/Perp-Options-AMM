@@ -1855,3 +1855,11 @@ _Context: operator directs the monolith (math/object/Lean/index) to sync up to t
 _Context: operator confirms the curve redefinition — yes, the lens is the constant slope multiplier (replacing the elbow-rounding/frozen-γ design)._
 
 > yes
+
+
+---
+
+## Entry 232 — 2026-06-13 11:32 UTC
+_Context: in reply to the manager's funding decision (A decouple / B keep m-coupled / C back to v24 ±2 / D hold), raised by the skeptic's completeness-audit FLAG-OMISSION #1 (funding scales with the kurtosis knob). Operator rules funding is a through-the-lens quantity._
+
+> funding slope deviation thing would be as seej thru the lens

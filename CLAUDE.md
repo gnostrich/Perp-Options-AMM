@@ -169,7 +169,11 @@ inheritance); warp∘rebase-commute + φ-anchor/funding lemmas are OPEN [needs-A
 - **ITM → American smooth-pasting** (v26b): continuation `c·sNorm` runs PAST the strike to the free
   boundary `sNorm* = θ·((γ+1)/γ)^γ` (price `S* = K·γ/(γ+1)`, `c = 1/((γ+1)·sNorm*)`), then intrinsic.
   Closed form, no new params. Funding = slope-deviation ratio vs the w=½ anchor at the strike ray —
-  orthogonal to intrinsic, untouched by the ITM change.
+  orthogonal to intrinsic, untouched by the ITM change. **Operator-ruled entry 232 (2026-06-13):
+  funding is evaluated THROUGH THE LENS — the slope-deviation uses the lensed exponent ±g_loc = ±m·γ
+  (and a lens-aware mark), so the kurtosis knob `m` re-scales the funding rate BY DESIGN. The
+  *mechanism* (slope-deviation vs the w=½ anchor) is what's "unchanged" in the motive; it is a
+  through-the-lens read quantity like pricing/settlement/portfolio value, not a knob-independent one.**
 - **THE gotcha:** `getMP_raw` is a **price coordinate, not the slope** — `|dy/dx| = getMP_raw·e^(−ghMu)`
   (factor 11.7/44.5/749/13780 at γ=1.5/2/3/4). Gates are mostly **self-consistency**; the one
   accuracy gate is G4 (value∝S^(−γ)); ITM adds a seam gate. A price/slope conflation passes every
