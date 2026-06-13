@@ -2704,3 +2704,46 @@ the dodge. Cross-check: the manager had ALREADY logged the same fact as a Q (Q12
 reply as imprecise (commit 60b5c45) — so item-12 re-asserted-as-settled a thing his own memory marked
 OPEN. ALWAYS diff a manager reassurance against his own committed open-questions/owned-errors before
 accepting it; a reassurance that contradicts the manager's own logged Q is FLAG-PROCESS.
+
+## Verdict #lens-dir-reconcile (entry 212, 2026-06-13) — STILL-CONFLICTS; build NOT well-defined
+`notes/skeptic/VERDICT_lens_effective_strike_direction_RECONCILE_2026-06-13.md`. The brief hoped a
+knob↔τ inversion (sharper = LARGER τ) would dissolve the §2 effective-strike direction conflict. IT
+DOES NOT — there is NO inversion in the engine.
+- **Engine wiring (VERIFIED line-level, HEAD):** the UI number IS τ (L1320), passed RAW via L2778
+  `setTau(v)` → L2387 `state.tau=t` (no 1/t, no transform), into `h_τ`/`gLoc` (L1630,1639-1644). UI
+  label L1321 verbatim "Smaller τ ⇒ sharper elbow." Grepped whole file: NO τ-inversion (lone "invert"
+  L2430 = LP λ). So **sharper warp = SMALLER τ** — exactly what §2 used.
+- **Operator's "inverted" decoded:** NOT a sign flip his-knob-vs-engine-h_τ. It's kurtosis-the-STATISTIC
+  running opposite sharpness: sharper = LOWER number = SMALLER τ (his own words L841/857/1434/1656). Engine
+  and operator AGREE sharper=smaller τ. The brief's "sharper=larger τ" is the opposite of both.
+- **Direction (VERIFIED `/tmp/lens_dir.js`):** in h_τ=√(τ²+u²)−τ, SMALLER τ → less compression (θ_eff→raw);
+  LARGER τ → more compression (θ_eff→mode). 2× strike, mode=1: τ=0.05→θ_eff 1.906 (≈raw, looks OTM+);
+  τ=3→1.082 (≈mode, looks OTM-). Operator entry-212 "sharper makes OTM+ look OTM-" wants OTM- at the SHARP
+  end; engine delivers it at the SOFT end. **OPPOSITE. Conflict NOT dissolved.**
+- **DEEPER (the bit the brief missed): entry 212 ALSO contradicts the operator's OWN entry 118.** 118 verbatim
+  "through lens would trade OTM+, sharper lens OTM++" = push effective strike FURTHER OUT (expansion). 212
+  verbatim "sharper makes OTM+ look OTM-" = pull IN (compression). OPPOSITE operations. h_τ matches 212's
+  DIRECTION (compress) but wrong τ-slope, and flatly contradicts 118. **No single monotone map satisfies both
+  118 and 212.** Routed ONE plain question to operator: (A) sharper pushes out [118] or (B) sharper pulls in
+  [212]? — must not be inferred.
+- **Map that WOULD deliver 212 (§5, well-posed):** u_eff=sign(u)·|u|/(1+|u|/τ) (τ in denominator: smaller τ ⇒
+  more compression), OR feed τ_eng=c/τ_knob into existing h_τ (the literal "knob inverted" — but flips the
+  L1321 label + h_τ semantics, needs operator confirm). BOTH forward, bounded, φ-FREE (read live mode each
+  call via lensU L1633-1637; no stored non-live mode ⇒ entry-117 weight-field/φ obstruction does NOT bite —
+  carried from #HALT-lens-swap §3). So a well-posed map for 212 EXISTS; WHICH map is undetermined till operator
+  resolves 118-vs-212 + τ-polarity.
+- **Build (brief item 4): NOT reachable.** Shell is sound (dy=N·θ_eff·oracle, live-mode θ_eff, plain-v24 spot
+  swap, individual options, no φ) but the θ_eff FUNCTION inside is the disputed object. Wiring dy to today's
+  h_τ ships SOFT-is-OTM- = opposite of 212. HOLD build until §4+§5 operator-ruled.
+
+## Team blind-spot pattern (addition, verdict #lens-dir-reconcile) — #21
+**Operator self-contradiction across dated rulings, and the "knob is inverted" red herring.** (a) The operator
+ruled the effective-strike direction OPPOSITE ways on consecutive days (118 push-out vs 212 pull-in); a brief
+that quotes only the latest entry hides that the LATEST contradicts an EARLIER signed ruling. When reconciling
+"does the operator's direction match the math," ALWAYS pull every prior operator ruling on the SAME object and
+check they agree with EACH OTHER first — an operator ↔ math conflict can mask an operator ↔ operator conflict,
+and resolving the latter is strictly an ASK, never an inference. (b) "the knob is inverted" was floated as the
+key that dissolves a direction conflict; I verified at the wiring it is FALSE (number passed raw to state.tau,
+engine label confirms small=sharp). A proposed reconciliation that hinges on a claimed code property must be
+checked AT THE LINE, not accepted because it would be convenient — the convenience is the tell (sibling of #1
+confidence-anti-correlates, here "this hypothesis would resolve everything" anti-correlates with it being true).
