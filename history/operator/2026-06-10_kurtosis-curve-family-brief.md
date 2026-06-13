@@ -1725,3 +1725,11 @@ _Context: operator clarifies — through the warp you transact further OTM than 
 _Context: operator corrects the manager's Reading X — you transact at "what looks like the true strike" (not at the true point itself)._
 
 > no you transact at what looks like the true strike
+
+
+---
+
+## Entry 217 — 2026-06-13 06:14 UTC
+_Context: operator asks the manager to reduce the decision to a simple-English yes/no question._
+
+> simple english yes or no q
