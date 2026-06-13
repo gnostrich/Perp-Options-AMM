@@ -1863,3 +1863,11 @@ _Context: operator confirms the curve redefinition — yes, the lens is the cons
 _Context: in reply to the manager's funding decision (A decouple / B keep m-coupled / C back to v24 ±2 / D hold), raised by the skeptic's completeness-audit FLAG-OMISSION #1 (funding scales with the kurtosis knob). Operator rules funding is a through-the-lens quantity._
 
 > funding slope deviation thing would be as seej thru the lens
+
+
+---
+
+## Entry 233 — 2026-06-13 12:00 UTC
+_Context: in reply to the manager surfacing skeptic Q3 (under constant-m, funding no longer zeroes at ATM via a vanishing exponent; it zeroes only via the par/anchor-divergence factor). Operator clarifies funding never required ATM-zeroing — it is slope / ray-divergence from the anchor curve, through the lens._
+
+> oh funding never had to be zero atm, its totally dependent on slope / corresponding ray divergence from anchor curve (as seen thru lens here)
