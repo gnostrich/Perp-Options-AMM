@@ -1781,3 +1781,11 @@ _Context: operator decisively orders the τ-direction flipped — OTM- should ma
 > fucker liar
 >
 > otm - should go otm + through sharper lens, fucking chsnhe it you dog
+
+
+---
+
+## Entry 223 — 2026-06-13 07:29 UTC
+_Context: operator floats a possible resolution to the three-way — maybe just invert the (chart-2) graph._
+
+> oh then maybe we just have a graph inversion?
