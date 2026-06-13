@@ -1,7 +1,59 @@
 # MEMORY — research-lead
 
-### STEP-0 STRUCTURE RECONFIRM (operator entry 239) — DETERMINATION: info-geometric base + PH lift; "metriplectic" REJECTED — 2026-06-13
+### PH-UNIFICATION — WHOLE EXCHANGE AS ONE OBJECT, solvency = passivity-under-admissible-inputs (operator entries 237/238 "sure get done by morning") — 2026-06-13 OVERNIGHT
+**GOAL:** state precisely + prove-what's-provable that the whole exchange is ONE pure-math object,
+with solvency = the passivity-under-admissible-inputs predicate and B1/B3/B4 surfaced as explicit
+input-port conditions. The frame (operator entry, today): "if solvency is a rest-of-world/port thing
+doesn't it close out cleanly?" — ANSWER MADE RIGOROUS: the INTERNAL half (passivity/no-internal-
+free-money) closes structurally; the EXTERNAL half (solvency under adversarial price path) does NOT
+self-close — it localizes to ONE minimal named hypothesis = PH-4b "port/funding necessary-never-
+sufficient." VALUE = legibility, NOT making solvency vanish.
+**ITEM 1 — CONJECTURE STATEMENT (DELIVERED):** `notes/research/PH_UNIFICATION_whole_exchange_2026-06-13.md`.
+ONE structure `Exchange` wrapping `TemporalAMM` (amm) + ports: storage=poolPotential/price_is_grad;
+flow=trade+Casimir-conservation; gauge=rebase; resistive port=funding (R_psd μ″≥0); boundary output
+port=settlement (paste_value/paste_slope C¹ at S*); co-energy=dollar/USD pipe (member, no-Lean);
+slippage=dissipation functional on trade port (A15, UNBUILT — flagged); **close-mechanic=PARAMETRIZED
+`close` member (Q14, NOT assumed)**; solvency=passivity-under-admissible-inputs with the input-port
+admissibility predicate `admissible`/`hcov` = the explicit B1/B3/B4 condition. Welds 3 already-trusted
+pieces: MonolithConstM (R_psd/trade_conserves/price_is_grad/paste), CTPH.sampled_passivity (abstract
+no-free-money), B1.solvent_of_port_covers + port_necessity_note (the conditional reduction + ↔).
+**ITEM 2 — PREDICATES PINNED (entry-179 discipline, DONE before submit):** every field/hypothesis/
+component type/the passivity inequality `Hs N ≤ H0 + Σ supplied` and the coverage `→` form pinned in
+the note §3/§4 and in the prompt's full Lean skeleton.
+**ITEM 3 — INTERNAL HALF SUBMITTED TO ARISTOTLE:** prompt `formal/prompts/aristotle_prompt_PH_unification_internal.md`
+(self-contained `RequestProject/PHUnification.lean`: re-declared minimal TemporalAMM slice + Exchange
+wrap + internal_passivity/no_internal_free_money/sampled_* + exchange_Rcurv_nonneg + EXTERNAL
+solvency_of_coverage/coverage_iff_solvency stay `→`/`↔` premises + exchange_solvency_split headline).
+**SUBMITTED OK (no 403): project `ad21b66d-14eb-4565-af91-e8a8ee0028f0`, task `80cd7ba4-18aa-4976-adfc-2c55f056d815`, status QUEUED → --wait polling in background.** Aristotle reachable this session
+(`aristotle list` exit 0, projects listed). AWAITING RETURN → then FULL AUDIT GATE (extract over
+throwaway, byte-diff out-of-scope, token-scan sorry/admit/axiom/native_decide/sorryAx/opaque/unsafe,
+#print axioms ⊆ {propext,Classical.choice,Quot.sound}, re-derive math, CONFIRM solvency_of_coverage
+still carries hcov as a premise = the bounce check) before any verdict.
+**ITEM 4 — EXTERNAL HALF HONEST (DELIVERED, conjecture-with-hypothesis):** solvency ⟸ passivity ∧
+input-admissibility is PROVABLE (= B1.solvent_of_port_covers, already trusted); the minimal
+admissibility = B3 (funding sign+magnitude) ∧ B4 (price-path/oracle bound — the adversarial-path
+non-closure point) ∧ B1 (collateral/κ coverage). MINIMALITY: port_necessity_note proves hcov↔solvency
+⇒ the irreducible hypothesis IS solvency-restricted-to-admissible-inputs (cannot shrink below it).
+**PH-4b HONORED — NO note asserts solvency unconditionally; geometry does NOT close it.**
+**HARD HONESTY:** trusted-from-prover ≠ verified. Solvency NOT closed — LOCALIZED to a named
+hypothesis. HAND TO MANAGER for independent audit + skeptic gate BEFORE shared truth / fold-as-more-
+than-conjecture. NO git (manager sole git actor). If Aristotle stalls, items 1+2+4 stand (statement +
+pins + honest external framing); only item 3's verdict is in flight.
+
+---
+
+### STEP-0 STRUCTURE RECONFIRM (operator entry 239) — DETERMINATION: info-geometric base + PH lift; "metriplectic" REJECTED — RE-VERIFIED AT SOURCE 2026-06-13
 **The operator's question ("is it port-Hamiltonian or information geometry whatever") IS ALREADY ANSWERED in the project record — evidence-backed, not a guess. They are the SAME single object viewed two ways; the established headline is fixed.**
+**RE-VERIFICATION THIS PASS (entry 239) — checked at PRIMARY source, not re-asserted from memory:**
+- Spec addendum (`specs/port_hamiltonian_consistency.md` lines 52-67) READ: "information-geometric base + PH lift, NOT metriplectic"; μ=GH CGF; price=∇μ, R=∇²μ=Fisher, value-metric=1/μ″; PH=canonical cotangent LIFT; base ω≡0. ✔
+- T2 `AIRTIGHT_T2_singlecore/.../SingleCore.lean` READ: `omega c v w := v*w − w*v` ≡ 0 + `price_is_grad := rfl` — the trivial-base-ω fact that REJECTS "metriplectic" is in the RETURNED LEAN. ✔
+- Info-geo leg `CLOSEOUT_cgf/.../CgfClean.lean` READ: `cgf_deriv_mean_and_variance` + `cgf_convexOn` (cgf′=mean, cgf″=Var=Fisher) — dissipative/Fisher side IS the cgf results. ✔
+- Dropped forks `CLOSEOUT_kahler` (conjectural) + `CLOSEOUT_courant` (no-go) archives present, excised out-of-core. ✔
+- Aristotle store paged (3 pages): PH cluster (proj_t2/t1a/t1b, merton, ghmaps, proj_clean/probe) + recent monolith/lenskernel/warpcalc all IDLE/COMPLETE. ✔
+- Transcript entries 134/135/136 READ verbatim: entry 134 names "the singular mathematical object (port-Hamiltonian / free-potential system)" as ONE object; entry 135 "they did something after port hamiltonian like information geometry free potential" = operator's CORRECT memory (info-geo came AFTER PH = PH's generator-identification, not a rival). ✔
+- **RE-BASING FINDING:** `notes/research/PH_UNIFICATION_whole_exchange_2026-06-13.md` (original-brief work product) frames the `Exchange` wrap in PH-LIFT language (`Hs`/`R⪰0`/`J` skew). NOT WRONG (PH is the forced lift), but per entry 239 the HEADLINE must lead with μ-as-generator (info-geo base), PH as forced lift. §3 internal-passivity = "R=∇²μ=Fisher⪰0 on the base, lifted to CTPH," not "assume a PH system." Math unchanged; framing re-based. Conjecture note, NOT submitted → no audit-gate impact.
+
+**DETERMINATION STANDS (now source-verified, not memory-asserted).**
 - **THE RECONCILIATION (load-bearing source `specs/port_hamiltonian_consistency.md` §★ 2026-06-09 MANAGER ADDENDUM (c), lines 52-67, operator-approved):** the singular object is ONE convex potential **μ = the GH cumulant generating function (CGF)** + the exponential family it generates = an **information-geometric / Hessian (dually-flat)** object. One μ generates: **price = ∇μ; dissipation R = ∇²μ = Fisher metric; value-metric = 1/μ″ (Legendre dual)**; the two symmetries = trade (parameter translation) + rebase (degree-0 gauge). The **port-Hamiltonian / symplectic structure is the canonical cotangent LIFT of this info-geometric base, NOT a second axiom** (cotangent bundle of a Hessian object is forced, no extra data). One generator, one object: **μ → info-geometric base → canonical PH lift.**
 - **ESTABLISHED HEADLINE NOUN (spec line 64, verbatim): "information-geometric base + port-Hamiltonian lift," NOT "metriplectic."** Reason: SingleCore/T2 has 1-D base ⇒ `omega ≡ 0` (only skew form on ℝ¹) ⇒ symplectic reading is DEGENERATE on the base; nontrivial ω (det=1) lives on the 2-D lift. Calling the whole thing "metriplectic" overclaims a symplectic structure the base does not carry.
 - **CHRONOLOGY (transcript journal + operator entries 134/135/136):** PH was the FIRST framing (2026-06-06 `temporal-amm-energy-object` → `temporal-port-hamiltonian-aristotle`). Info-geometry/free-potential is what came "AFTER port hamiltonian" (operator entry 135 memory is CORRECT) — but it is NOT a successor that replaced PH and NOT a parallel rival. It is the **identification of PH's own generator**: the info-geometric μ is the BASE, PH is its forced LIFT. DUAL VIEWS of one structure, reconciled 2026-06-09. "free potential / free energy" = the operator's name for μ (the convex potential / CGF).
