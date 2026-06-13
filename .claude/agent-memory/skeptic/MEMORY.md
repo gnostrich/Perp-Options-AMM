@@ -3096,3 +3096,38 @@ consumer before ruling (not narrate). VERDICT: **PASS-SCOPE.**
   intern's impl moves any SCORED assertion's pool/state, that exceeds scope → re-gate.
 - Pattern #22 (comment-rot) finally being discharged — but only as comment edits, behavior already
   correct in code since promote. Good: manager routed a comment fix as comment-only, did NOT inflate it.
+
+## VERDICT #ph-unification-gate (entries 237/238/239, 2026-06-13) — Artifact1 CLEAR / Artifact2 CLEAR + 2 precision-notes
+Universal-gate on the overnight whole-exchange-unification deliverable (research-lead run a790024277 structure
+determination + note `notes/research/PH_UNIFICATION_whole_exchange_2026-06-13.md`) BEFORE fold-to-INDEX/relay.
+Re-derived EVERY cited archive cold; all 7 exist; theorems real (not rfl). Disclosure (afb9057 premature add):
+swept only note+prompt+2 MEMORY, honestly labelled, NO VERIFIED/AGREED solvency flip — nothing false committed.
+- **A1 (info-geo base + PH forced lift, dual views, NOT metriplectic) CLEAR.** "Not metriplectic" earned by
+  `AIRTIGHT_T2_singlecore/.../SingleCore.lean:43 def omega := v*w − w*v` ≡0 in 1-D (omega_skew = 0=−0) — manager
+  quote verbatim-accurate. Info-geo base Lean-backed: cgf_deriv_mean_and_variance = real HasDerivAt; cgf_convexOn
+  = 2nd-deriv-nonneg over genuine variance integral, EXTRACTED ver has BOTH sorries discharged (⚠ submit/ copy
+  still shows 2 sorries = the PROMPT not the result — don't let anyone cite submit as proof). 3 honesty caveats
+  complete: (i) reconciliation=manager-framing-not-theorem PRESENT (load-bearing), (ii) m-emergence-gap PRESENT,
+  (iii) re-cites my [motivation-layer] verdict #9 incl PH6/B1 straddle. No "PROVEN encompassing structure" leak.
+- **A2 (conjecture note) CLEAR.** No solvency overclaim, PH-4b honored. B1 NOT vacuous-circular: port_necessity_note
+  IS just `a−b≤c ↔ a≤b+c` (linarith both ways, zero econ content) BUT note SAYS so (§4 L179-183 "minimal hypothesis
+  IS solvency restricted to admissible inputs, irreducible by the ↔") — bills it as localization not closure. close:
+  ℝ→ℝ→ℝ genuinely free member, Q14 left open, no AMM-tx assumption. Completeness: items 13/9/10/11/2/16 all disposed.
+- **PRECISION-NOTE 1 (record, not halt): latent solvent_forever docstring trap.** MonolithConstM Temporal.solvent
+  (L84, proof `P.H_floor _`) + TemporalAMM.solvent_forever (L197, via `[OBLIGATION B1] solvent` field L175-176)
+  carry docstrings "SOLVENCY...for any input,any horizon"/"engine is solvent for all time" — read UNCONDITIONAL but
+  discharge SOLELY from carried structure FIELD, never geometry. Note does NOT cite these (routes via B1 separate
+  reduction) so note clean; but if this folds to shared truth those 2 docstrings = M=Fisher-rfl-class trap (proven-
+  sounding for a carried hyp). Watch on any future fold.
+- **PRECISION-NOTE 2 (record, not halt): passivity is a FREE RIDER in the solvency headline.** Headline L147
+  `solvency ⟸ internal_passivity ∧ input-admissibility` lists passivity as antecedent conjunct, but proved reduction
+  (solvent_of_port_covers / §5 wrap external impl L199-200) needs ONLY hcov. Passivity earns keep in INTERNAL half
+  (no-free-money), NOT external solvency. Not wrong (stronger antecedent still implies) but over-credits passivity's
+  role in solvency. One-word framing fix, not a halt.
+- NET: both honest to fold as CONJECTURE (not proven) + relay as morning answer. Internal half genuinely structurally
+  closing (CTPH+Monolith passivity real proofs); external honestly localizes to one never-discharged B1 hyp. No
+  "geometry closes solvency" leak = the failure I exist to catch here is ABSENT. Internal-passivity proof (task
+  80cd7ba4) OUT OF SCOPE — separate audit when it lands (check §3 welding: n=1 R.PosSemidef witnessed by R_psd, not re-stubbed).
+- Pattern reinforced: #6 (motivation-cluster ruled [motivation-layer] verdict #9 STILL HOLDS — note honors it).
+  New watch item: carried-OBLIGATION-field theorems with unconditional-sounding docstrings (solvent/solvent_forever)
+  — provenance label lives in the FIELD not the theorem statement; a reader of just the theorem sig sees no premise.
