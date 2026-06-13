@@ -2952,3 +2952,48 @@ under a simplification (#24) is twice-warned — impossibility verdicts in this 
 the team's own framing, not the geometry. (Also: brief still sold "one intern pass, blast radius named" while
 omitting that the HARD gate encodes the design being deleted — recurring #6 pattern: gate staleness presented
 as gate-intact.)
+
+## VERDICT #constmult-promote (2026-06-13) — CLEAR-TO-PROMOTE
+`notes/skeptic/VERDICT_constmult_promote_gate_2026-06-13.md`. Universal-gate audit of
+`temporal_mvp_v28_lens_constmult.html` (md5 8f897edc, confirmed) before promotion; HEAD 5fea0e8d
+retained as revert. The build that ACTUALLY implements the entry-229 constant multiplier my prior
+verdict (#const-slope-mult) flagged. Focus = honesty of the REWRITTEN lens_selfcheck.js.
+- **Gate rewrite is HONEST.** I attacked it as a false-green vector with 3 in-memory tampers:
+  broken trade map (u_tx=a vs tau·a) → CM5+CM7 FAIL; broken smooth-paste (c=1.2/…) → CM2+CM4 FAIL;
+  both CAUGHT. CM1 g_loc=m·γ exact, CM6 round-trip 0/0 + single-leg Σdy==0, CM9 dead √-kernel gone
+  (source-verified). Old asserts (g(ATM)=0, wings→γ, |g|≤γ, funding→0-ATM) correctly REMOVED.
+- **One real soft-spot, BACKSTOPPED:** isConstMult detector keys on literal `return m * gamma;`.
+  A u-dependent gLoc tamper (dead design returning) makes lens_selfcheck SKIP the CM block and
+  exit 0 (green) — so CM9, the dead-design lock, can't fire on a non-constMult build (it's INSIDE
+  the guard). BUT a16_atm_gate.js CATCHES that tamper (legacy-branch peak=1 FAIL → exit 1); run_all
+  runs both under set -e → chain aborts (verified exit 1). For THIS build isConstMult=true, all
+  13 CM + 5 A16 fire+pass. SKIP-on-old-build = legit router, not dodge. Note: lens_selfcheck in
+  ISOLATION loses the dead-design lock — promotion path is run_all, so OK; logged for future.
+- **No scope creep.** Engine diff = 12 hunks, all lens-scoped (hTau/hpTau deleted, gLoc→m·gamma,
+  trade map tau·a, knob relabel state.tau→state.m, exports, comments). Pool fns byte-identical;
+  markLensed/smooth-paste/executeBand/closeBand UNCHANGED. m=1⇒plain v24 (CM1/CM5/A16.2).
+- **A16 cusp retirement = honest dual-branch** (not skip): constmult branch asserts continuous-
+  through-ATM + ATM value<1 (NOT peak=1) + markEff agree; legacy branch keeps peak=1. Passes 5/5.
+- **tau/m naming RULED SAFE:** threaded param stays named `tau` (carries m) because value-locals
+  `const m = markLensed(...)` exist in fundingPerStrike (L2273) and legPrice (L1735); renaming the
+  param to `m` would SHADOW them → real bug. Inline disclaimers at each site. Readability cost only.
+- **§0/inventory updated, redefinition operator-confirmed:** CLAUDE.md §0 L15 + feature_inventory
+  items 2/3/16 = REDEFINED/SUPERSEDED. Entry 231 "yes" confirms the elbow/frozen-γ deletion
+  (verbatim 229/230/231 intact, append-only, neutral context notes; channel HELD). Closes the
+  exact §0-staleness FLAG-OMISSION from my entry-229 verdict.
+- **Two NON-BLOCKING stale comments** (code correct, prose stale — flagged for record, not a HOLD):
+  engine L2265-66 funding header still says "f→0 at ATM (g→0, flat top)…→γ wings" (FALSE under m);
+  chart-2 L3734 "ψ rises toward the flat top" (no flat top now). Recurring #6 (stale comment as
+  live truth) but in comments only this time, caught pre-promotion.
+
+## Team blind-spot pattern (addition) — #25 (gate-rewrite honesty)
+**When a SAFETY GATE is rewritten alongside the build it gates, the design-detector that ROUTES
+between old/new asserts is the single point where a false-green hides — and the dead-design LOCK
+must NOT live inside the new-design guard.** Here CM9 ("no dead √-kernel") sits inside
+`if (isConstMult)`, so it structurally cannot fire on a build that fails the constMult detector —
+the one case it's meant to forbid. It was saved only because a SECOND gate (A16) catches the same
+regression via a different route. LESSON when auditing a rewritten gate: (1) build a broken variant
+the new gate should reject and confirm RED, per assertion; (2) specifically test the build the
+detector ROUTES AWAY from — a SKIP-as-pass on the very pattern a lock forbids is the trap; (3)
+check whether a sibling gate in the same run chain backstops the gap before downgrading from HOLD.
+Don't trust "13/13 PASS" until you've made it FAIL on purpose.
