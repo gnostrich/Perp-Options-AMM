@@ -1741,3 +1741,11 @@ _Context: operator asks the manager to reduce the decision to a simple-English y
 _Context: operator answers the yes/no — YES, a sharper warp should make a trade land further out-of-the-money (authorizes the lens-shape change; today's lens does the opposite)._
 
 > yes
+
+
+---
+
+## Entry 219 — 2026-06-13 06:25 UTC
+_Context: operator asks for the conflict explained in a table._
+
+> explain the conflict tabularly
