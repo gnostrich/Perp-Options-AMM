@@ -1671,3 +1671,17 @@ _Context: operator on item 12, the short/put side — selling puts further OTM h
 _Context: operator — furious — the manager's item-12 reply disregarded the core through-the-lens principle (the AMM tx is seen/transacted THROUGH the lens, so the effective trade point is lens-shifted and kurtosis-dependent); calls it gaslighting._
 
 > you fucking gaslighting fuck, you disregarded the fucking thing about seeing through the lens
+
+
+---
+
+## Entry 215 — 2026-06-13 03:42 UTC
+_Context: operator drives the core inconsistency — the continuous trade-warp-update-lens derivation's whole point is that the lens changes the EFFECTIVE STRIKE of the AMM tx; if the lens isn't affecting the AMM trade (the build sizes the swap at the RAW strike), the build contradicts the architecture._
+
+> what was the continuous case trade-warp-updatelens shit you did
+>
+> if the lens isn't affecting the trade being done on the AMM
+>
+> its supposed to change the effective strike thats tje whole point
+>
+> from amm tx standpoint
