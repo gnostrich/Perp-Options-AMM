@@ -35,8 +35,19 @@ trade/rebase commute, single_object. **Skeptic FLAG-OVERSELL fixed:** A16 ATM no
 — true by constant-exponent construction + gate `a16_atm_gate.js` 5/5; paste_value/paste_slope cover the S*
 SEAM only (distinct locus). STILL OPEN (honest frontier): A14 at-strike-close no-arb, A15 haircut (Q10), B1/C13
 real solvency floor (ship-gate). Direct A16 Lean lemma = pending-submit.
-Post-promote micro-fixes queued (non-blocking): 2 stale comments (funding ~L2265, chart-2 ~L3734 still describe
+Post-promote micro-fixes queued (non-blocking): 2 stale comments (funding ~L2265-66, chart-2 ~L3734 still describe
 dead flat-top/g→0-at-ATM) + harden lens_selfcheck isConstMult detector (keys off literal `return m * gamma;`).
+**COMPLETENESS AUDIT 2026-06-13 (operator "does it meet all my criteria?"):** skeptic NET MOSTLY-PASS, 2 FLAG-OMISSIONs.
+**#1 funding silently m-coupled → RESOLVED-BY-RULING (operator entry 232 "funding slope deviation thing would be as
+seej thru the lens" = option B, through-the-lens, m-coupled by design).** Recorded C9/CLAUDE§4/inventory#9; no engine
+change (HEAD L2272-2276 already does it). Skeptic confirmed discharge (run a62722d3) w/ 2 narrow flags both actioned:
+Q2 C9 over-greened → now VERIFIED after tester live; Q3 ⚠ **ATM-zeroing GONE under constant-m** (g_loc=m·γ constant;
+funding zeroes ONLY via par S→1, not a vanishing exponent) — SURFACED to operator (awaiting his ack; if he wants
+funding quiet near ATM that's a funding-shape change). **#2 inherited contracts → CLOSED:** tester live ×2 on 8f897edc
+5/5 PASS (a00bd808): C4 carry/C5 rebase/C8 strike-reg/C11 dollar-pipe/C9 funding all → **VERIFIED**, evidence
+`evidence/v28_constmult_inherited/` + harness `pw_v28_inherited_smoke.mjs`. **Engine comment-cleanup pass now UNBLOCKED**
+(tester done on 8f897edc) but HOLDING for operator Q3 ack to avoid double-edit. Still open & operator-gated: A15 (Q10),
+solvency ship-gate (B1/C13).
 **OVERNIGHT AUTONOMOUS PIPELINE (operator entry 210 "dont stop for anything, see you morning"; entry 177 standing
 monolith order). STOP-ON-RED + skeptic-gate discipline STILL APPLIES — halt an item to an operator-tier decision
 + report in the morning, do NOT guess (the at-strike build took ~10 operator rulings; A15/A16 may surface seams):**
