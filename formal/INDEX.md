@@ -138,14 +138,18 @@ LENSKERNEL's pool + g-parametric smooth-paste rows below are KEPT.**
 | `rebase_w/gamma/center`, `gLoc_rebase_invariant` | v28 lens-read commutes with rebase (C5) | ✅ GROUNDED | LensKernel.lean | d7da8597 |
 | `Phi_zero/nonneg/le_one/lt_one/strictMonoOn`, `gLoc_nonneg/le_gamma/at_mode` | polar-lens factor basics; g_loc∈[0,γ], =0 at mode | ✅ GROUNDED | LensKernel.lean | d7da8597 |
 | `sStarCall_pos/ge_theta`, `contCall/intrCall_at_sStar`, `valueMatch_g`, `slopeMatch_g` | smooth-paste port to ANY g>0 (incl. g<1; no `1<g` hyp) — R1/T1a generalised | ✅ GROUNDED | LensKernel.lean | d7da8597 |
-| `warpPot_hasDerivAt` (FTC-2), `warp_eq_pot_sub`, `warp_additive`, `warp_roundtrip_zero` | the continuous warp ΔG=∫Φ_τ(ln θg)dg is an EXACT differential (path-indep, round-trip 0) | ✅ GROUNDED | WARPCALC/extracted/.../WarpCalc.lean | 24e6497e 06-12 |
-| `warp_nonneg`, `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos` | 0≤ΔG≤Δγ on a buy; ≤0 on a sell; strict on non-degenerate buy | ✅ GROUNDED | WarpCalc.lean | 24e6497e |
-| `glAt_hasDerivAt`, `warp_decomposition` (kink-inside) | live = warp + recentering decomposition (FTC split at the kink g=1/θ) | ✅ GROUNDED | WarpCalc.lean | 24e6497e |
+| `warpPot_hasDerivAt` (FTC-2), `warp_eq_pot_sub`, `warp_additive`, `warp_roundtrip_zero` | the POLAR continuous warp ΔG=∫Φ_τ(ln θg)dg is an EXACT differential | ⚠ **SUPERSEDED by constant-m** (was ✅ GROUNDED for the √-kernel) | WARPCALC/extracted/.../WarpCalc.lean | 24e6497e 06-12 |
+| `warp_nonneg`, `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos` | polar 0≤ΔG≤Δγ buy / ≤0 sell | ⚠ **SUPERSEDED by constant-m** (`warp_linear`: ΔG=m·Δγ) | WarpCalc.lean | 24e6497e |
+| `glAt_hasDerivAt`, `warp_decomposition` (kink-inside) | polar live = warp + recentering split at the kink g=1/θ | ⚠ **SUPERSEDED by constant-m** (no kink; live=m·Δγ directly) | WarpCalc.lean | 24e6497e |
 
-**Pending-submit (NOT trusted-from-prover — unwritten/unsent v28/at-strike obligations):** A16-CONT
-(markLensed∘gLoc C0 at ATM, queued); A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
+**Pending-submit (NOT trusted-from-prover; Aristotle reachable this session, but unsubmitted/unreturned):**
+**CONSTANT-m monolith** `MonolithConstM.lean` (`g_eq_m_gamma`, `g_const_in_strike`, `thetaTx_roundtrip`,
+`warp_linear`, smooth-paste at g=m·γ, engineInstance, single_object — WRITTEN + queued,
+`aristotle_prompt_monolith_constm.md`); A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
 ITM direct-payout no-leak; NOT written); A15 slippage-haircut composition (Q10 pending); A11
-asymmetry-growth, A5 wing-limit Tendsto Φ→1 (candidates, not pinned).
+asymmetry-growth (under constant-m: asym grows with m — re-derive before pinning). A16-CONT folds into
+the constant-m monolith (continuity = corollary of constant-exponent smooth-paste; polar g→0 version
+superseded). A5 wing-limit Tendsto Φ→1 SUPERSEDED (constant exponent, no limit needed).
 
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.

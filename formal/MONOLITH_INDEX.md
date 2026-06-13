@@ -1,5 +1,16 @@
 # MONOLITH_INDEX — components mapped INTO the single structure `TemporalAMM`
 
+> **⚠ LENS LAYER SUPERSEDED 2026-06-13 (operator entry 229/230 — constant-m).** This mapping is for
+> the POLAR-lens `TemporalAMM` (field `lens : LensShape`, 5 axioms, `polarLens τ`, `g=γ·Φ_τ(|u|)`).
+> The operator redefined the kurtosis lens to a CONSTANT slope multiplier `m`: the `lens : LensShape`
+> field collapses to a single scalar `m : ℝ, 0<m`; `g (P) θ := m·γ` (no θ, no Φ); the warp lemmas
+> collapse to the linear `warp_linear : ΔG = m·Δγ`. The current single structure is
+> `RequestProject/MonolithConstM.lean` — prompt `formal/prompts/aristotle_prompt_monolith_constm.md`
+> (WRITTEN + queued, NOT yet submitted ⇒ pending-submit). Object write-up:
+> `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. The POOL + smooth-paste + rebase +
+> trade-flow + metriplectic rows below are UNCHANGED (constant-m does not touch them); only the
+> C3 lens / C16 warp / A5 / A10 rows and the `LensShape` field are superseded.
+
 _research-lead (structure-reorder instance), 2026-06-12, operator entry 179 (verbatim): "and most
 importantly ensuring structural unification into a single pure math structure on the lean side,
 and then mapping the components within that...." This file IS that mapping: one row per component

@@ -1,5 +1,64 @@
 # MEMORY — research-lead
 
+### MONOLITH SYNC → CONSTANT-m LENS (operator entry 229/230) — 2026-06-13
+**TRIGGER:** operator entry 229 (verbatim transcript L1839-1841: "its literally just a constant slope
+multiplier") + entry 230 ("monilith math etc sync up now"). The kurtosis lens is REDEFINED from the
+position-dependent polar `Φ_τ=u/√(τ²+u²)` (elbow-rounding) to a CONSTANT slope multiplier `m`.
+**ANCHORED ON the skeptic's confirmed form** (`notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`,
+run ac79cabc), NOT the manager paraphrase. Confirmed: `g_loc(K)=m·γ` constant at every strike;
+`u_true=m·u`; `m=1`=plain v24; bigger m=steeper everywhere; conflict dissolves (steeper chart +
+trade-further + transact-at-look all move SAME way with m). m multiplies BOTH coordinate and exponent
+(same thing on this plain power-law base).
+**THE SIMPLIFIED OBJECT:** an affine rescaling of the log-moneyness coordinate. Warp LINEAR
+`ΔG=m·Δγ` (strike-independent; the √-kernel incomplete-Bessel integral + warp-vs-recentering
+decomposition EVAPORATE — constant integrand ⇒ ∫m dγ=m·Δγ, no kink). Trade map `θ_tx=mode·(θ/mode)^m`
+closed-form invertible `(θ_tx/mode)^(1/m)`. Kurtosis = the scalar `m`. The `LensShape` 5-axiom bundle
+collapses to one field `m:ℝ, 0<m`; the honest-GAP (lens not from free energy) shrinks from a function
+to ONE number.
+**BLAST RADIUS (skeptic-confirmed, carried into every doc):** A5 frozen-γ wings → exponent m·γ
+(frozen-γ-wing feature DELETED, still a power law; ⚠ CLAUDE.md §0/inventory items 2/3 need update —
+skeptic FLAG-OMISSION, escalate to manager); A16 ATM cusp (Q11) VANISHES (g=m·γ>0 at mode ⇒
+clean/continuous, Q11 MOOT); funding (C9) no longer →0 at ATM (shape change); A6 no-arb PRESERVED;
+smooth-paste C7 SURVIVES at constant g. HARD gate `lens_selfcheck.js` ENCODES the old elbow design and
+FAILS constant-m BY DESIGN — must be REWRITTEN not re-run (skeptic; intern/build concern, flag to mgr).
+**WHAT I SYNCED (files):** (1) object note `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`
+(the simplified object, §§1-4 + supersede table + reachability honesty). (2) SUPERSEDED banners on
+`CONTINUOUS_trade_warp_lens_calculus_2026-06-12.md`, `NATURALNESS_polar_kurtosis_map_2026-06-11.md`,
+`POLAR_density_first_principles_2026-06-11.md` (history kept, pointers added). (3) `docs/MONOLITH_INDEX.md`
+re-based on constant-m: header rewritten; C3/C9/C16/A1/A5/A10/A16 rows updated to constant-m with
+SUPERSEDED labels on the polar Lean facts + NOT-YET-BUILT code labels (HEAD de28c937 still has the
+POLAR lens) + pending-submit Lean. (4) `formal/INDEX.md`: new CONSTANT-m section (KEPT vs SUPERSEDED
+split — LENSKERNEL pool+smooth-paste KEPT, WARPCALC polar-warp + polar lens facts SUPERSEDED); WARPCALC
+table rows marked SUPERSEDED; pending-submit updated. (5) `formal/MONOLITH_INDEX.md`: superseded-lens-
+layer banner + pointer. (6) NEW Aristotle prompt `formal/prompts/aristotle_prompt_monolith_constm.md`
+(the simplified single structure `MonolithConstM.lean` — scalar `m`, g_eq_m_gamma, g_const_in_strike,
+thetaTx_roundtrip, warp_linear=∫m=m·Δγ, smooth-paste at g=m·γ, engineInstance m=1, single_object;
+HARD constraints forbid reintroducing LensShape/polarLens/√-kernel/θ-dep-g/the deleted polar facts).
+**THE SINGLE LEAN STRUCTURE (entry 179) gets CLEANER:** lens field 5-axiom-bundle→scalar; `g` loses
+its only nontrivial arg; the hardest old Lean content (FTC-2 on √-kernel, incomplete-Bessel-class
+integrand, warp_decomposition) EVAPORATES → one-line `integral_const` corollaries; polar facts
+`g_zero_at_center`/`g_le_gamma` DELETED (stated as the negated `g_eq_m_gamma`/`g_ge_gamma_of_m_ge_one`);
+trade map `thetaTx_roundtrip` a clean rpow lemma. Everything else (invariant, w/γ/center/price,
+trade_conserves, gamma_affine, trade_rebase_commute, smooth-paste, goalSeek, engineInstance) KEPT.
+**ARISTOTLE REACHABILITY (HONESTY):** Aristotle IS REACHABLE this session — `uvx --from aristotlelib
+aristotle list` returns exit 0 / 200, projects listed, NO 403 host_not_allowed. (Morning 403 concern
+does NOT reproduce now.) BUT the constant-m lemmas are NOT submitted yet — prompt written + queued,
+ready to fire. Per honesty rule the constant-m Lean layer is **stated, pending-submit, NOT
+trusted-from-prover.** Math/object/index sync (the bulk) needs no prover — done fully.
+**SUPERSEDED (history kept):** CONTINUOUS_trade_warp_lens_calculus, the inverse-lens θ_tx √-form
+(lens_tx/invtx work entries 215-224), √-kernel naturalness notes, WARPCALC polar-warp Lean (`PhiA`/
+`warp*`/`recenterKer`/`warp_decomposition`), the `LensShape` bundle + `polarLens`. LENSKERNEL pool +
+g-parametric smooth-paste + rebase = KEPT trusted-from-prover (untouched by the lens redefinition).
+**WHAT REMAINS:** (1) submit `MonolithConstM.lean` to Aristotle when ready (operator/manager go) →
+audit gate → verdict. (2) the gate-rewrite + constant-m engine build is INTERN/manager territory
+(I flagged the gate-FAILS-by-design blast). (3) manager: CLAUDE.md §0 + inventory 2/3 redefinition
+update + the one-sentence operator confirm the skeptic asked for (frozen-γ-wings + elbow-rounding are
+DELETED). (4) prior pending-submit (A14 at-strike no-arb-on-close, A15 haircut Q10, C13 solvency
+floor) UNCHANGED. Skeptic audits this sync next; manager folds + commits. NO git, NO engine edit
+(done by me here).
+
+---
+
 ### MORNING RECOVERY 2026-06-13 — overnight "stall" diagnosed + LENSKERNEL/WARPCALC FOLDED + MONOLITH re-based on HEAD de28c937
 **JOB-1 DIAGNOSIS (Aristotle reachability):** Aristotle IS REACHABLE from this env. aristotlelib CLI works (no `403 host_not_allowed`); `ARISTOTLE_API_KEY` set; host 200. `aristotle list` shows projects 24e6497e + d7da8597 (and twins 68440731/f05ecbc2) as STATUS=IDLE — but `aristotle show` reports **both COMPLETE, started 11h 32m ago**. So the overnight submissions DID submit + run + return; the "stall" was the pipeline **never DOWNLOADED the archives** (not a network block; IDLE = task finished, project idle ≠ never ran). NOT prover-blocked. No 403 regression to flag.
 **FOLDED + AUDITED → trusted-from-prover (both PASS the full zero-cost gate 2026-06-13):**
