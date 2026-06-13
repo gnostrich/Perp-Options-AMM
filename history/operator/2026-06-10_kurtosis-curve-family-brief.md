@@ -1797,3 +1797,11 @@ _Context: operator floats a possible resolution to the three-way — maybe just 
 _Context: operator clarifies "graph inversion" — he suspects the kurtosis mapping on chart-2 is the INVERSE of what it should be (a possible sign/mapping bug), and correcting it would reconcile the directions._
 
 > what i mean is that we probably have the inverse mapping for kurtosis on the second chart
+
+
+---
+
+## Entry 225 — 2026-06-13 07:46 UTC
+_Context: operator pinpoints the inverse kurtosis mapping on chart-2 as the ROOT CAUSE of the manager/team's confusion on the τ-direction._
+
+> which is confusing you
