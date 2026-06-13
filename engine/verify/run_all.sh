@@ -5,7 +5,7 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v28_lens.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 5fea0e8d82ea85270e97ede71cf8e9ae for v28-lens HEAD (R218 inverse-lens tx-strike, promoted 2026-06-13; at-strike de28c937 retained as revert); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 8f897edcad49c73853096a05e7ec233d for v28-lens HEAD (constant slope-multiplier m, entries 229/231, promoted 2026-06-13; inverse-lens 5fea0e8d retained as revert temporal_mvp_v28_lens_invtx.html); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 # Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
 # shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
 BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')

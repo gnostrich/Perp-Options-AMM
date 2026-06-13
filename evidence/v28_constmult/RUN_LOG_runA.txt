@@ -1,0 +1,51 @@
+=== CONSTMULT SMOKE  run A  build temporal_mvp_v28_lens_constmult.html ===
+md5(build)=8f897edcad49c73853096a05e7ec233d
+
+--- ITEM 1: crank m → chart-2 steepens everywhere, exponent = m·γ ---
+knob label literal: SLOPE MULT m
+m-input attrs: {"min":"1","max":"6","step":"0.25","value":"1"}
+aid label: "constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere (more vol)."
+canvas-pricing lit px: m=1 9620 (fa566c45) | m=2 9561 (fe8b4115) | m=3 9510 (1a2cc994)
+pool: w=0.500000 gamma=1.000000 mode=1.000000
+  m=1: m*gamma=1.000000  g_loc[min..max over 11 strikes]=[1.000000..1.000000]  spread=0.00e+0  renderedCallExp=0.041714
+  m=2: m*gamma=2.000000  g_loc[min..max over 11 strikes]=[2.000000..2.000000]  spread=0.00e+0  renderedCallExp=0.024306
+  m=3: m*gamma=3.000000  g_loc[min..max over 11 strikes]=[3.000000..3.000000]  spread=0.00e+0  renderedCallExp=0.017183
+m1->m2 px delta=59  m2->m3 px delta=51  distinctHashes=3
+
+--- ITEM 2: m=1 = plain curve (g_loc==gamma); theta_tx==chosen at m=1 ---
+gamma=1.00000000  g_loc(2x,m=1)=1.00000000  EQUAL? true
+m=1 trade: chosen_theta=2.000000 theta_tx=2.000000 lands@chosen? true
+m=1 K_usd=$160000.00 K_tx=$160000.00 dy=$8000.00
+
+--- ITEM 3: theta_tx further out with m; reject fires earlier (with $ depth) ---
+mode=1.000000 chosen=2x=2.000000 pool cash depth y-beta=$400000.00
+  m=1: theta_tx=2.000000 (=2.000x mode)  K_tx=$160000.00  dy=$8000.00
+  m=2: theta_tx=4.000000 (=4.000x mode)  K_tx=$320000.00  dy=$16000.00
+  m=3: theta_tx=8.000000 (=8.000x mode)  K_tx=$640000.00  dy=$32000.00
+reserve-depth reject sweep (BUY-CALL cash-OUT, N=0.7, chosen=2x mode; threshold=90%·depth=$360000.00):
+  m=1: exec theta_tx=2.0000 K_tx=$160000.00 N*K_tx(cash-out)=$112000.00 dy=$-112000.00
+  m=1.5: exec theta_tx=2.8284 K_tx=$226274.17 N*K_tx(cash-out)=$158391.92 dy=$-158391.92
+  m=2: exec theta_tx=4.0000 K_tx=$320000.00 N*K_tx(cash-out)=$224000.00 dy=$-224000.00
+  m=2.5: exec theta_tx=5.6569 K_tx=$452548.34 N*K_tx(cash-out)=$316783.84 dy=$-316783.84
+  m=3: REJECT — "At-strike cash $448000.00 exceeds 90% of pool cash depth $400000.00 — trade rejected."
+
+--- ITEM 4: open->close reserves restore exact; settle at CHOSEN strike ---
+open m=2: chosen=2.000000 K_usd(chosen)=$160000.00 K_tx(further)=$320000.00 dy=$16000.00
+reserves: x0=10.00000000 -> reverse x=10.00000000 |dx|=0.000e+0
+reserves: y0=800000.00000000 -> reverse y=800000.00000000 |dy|=0.000e+0
+SETTLE basis K_usd(chosen)=$160000.00 vs swap basis K_tx(further)=$320000.00 => DISTINCT (settle@chosen, swap@further)
+UI band round-trip (m=2): opened id=B1 sold_inner=$120000 bought_inner=$48000
+  reserves x: 10.00000000 -> close 10.00000000 |dx|=1.776e-15
+  reserves y: 800000.00000000 -> close 800000.00000000 |dy|=0.000e+0
+  close raw_net=0.00007752151730421302 settled_cash_leg=null
+
+--- ITEM 5: no regression (sweep animates; chart-1 inert to m; funding/settle; errors) ---
+chart-1 (canvas-curve) vs m (band cleared): m1=6965(235c1434) m3=6965(235c1434) m6=6965(235c1434)
+chart-1 INERT to m? YES (identical hash all m)
+continuous warp sweep on chart-2: 49 distinct frames over ~1s (animates if >1)
+funding per-strike (m=2): call=0 put=0
+settlement ITM path (m=2): {"openId":"B1","settled_cash_leg":"sold","raw_net":-0.003195321702665589,"finite":true}
+
+=== ERRORS: console+pageerror count = 0 ===
+=== DIALOGS captured = 0 ===
+md5(build, post-run)=8f897edcad49c73853096a05e7ec233d

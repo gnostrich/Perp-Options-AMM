@@ -12,12 +12,21 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 Mechanical state (fact-with-pointer): HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `928cde1cccb0f35fdc9a23a7634414c8`, gates 22/22 (CLAUDE.md §8, BUILD_LINEAGE, INTEGRITY). Tree clean at wipe. No dispatches in flight except the skeptic wipe-audit. First act after seed: await operator instruction — no self-assigned work.
 
 ## ★★★ CURRENT STATE 2026-06-12 EVENING (supersedes the seed line above) — read `docs/COMPONENT_REGISTER.md` first
-**HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `de28c937…`** (at-strike A14): plain v24 Balancer
-pool + static polar lens + continuous warp animation + **at-strike AMM swap (dy = notional×strike; open+OTM-close
-at-strike; ITM = direct intrinsic+extrinsic formula payout, no AMM)**. Gates 34/34. VERIFIED: manager + skeptic
-economics (no single-option free money, `VERDICT_A14_atstrike_RECHECK`) + tester live 5/5 ×2. Lineage: v24 →
-v28-lens (7e1ae39b) → contwarp (4378bc11, continuous warp, entry 181) → at-strike (de28c937, ~entry 199). Each
-prior build RETAINED as revert. Operator entry-127 at-strike mechanic = DELIVERED.
+**HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `8f897edc…`** (**CONSTANT SLOPE-MULTIPLIER lens,
+promoted 2026-06-13, operator entries 229/231**): plain v24 Balancer pool (byte-identical) + a single scalar knob
+`m` — lensed option-value exponent `g_loc(K)=m·γ` CONSTANT at every strike (m=1=plain v24; bigger m = steeper
+everywhere AND trade further out via frozen `θ_tx=mode·(chosen/mode)^m`); settle at the CHOSEN strike. REPLACES the
+position-dependent √(τ²+u²) elbow-rounding/inverse-lens family — the root of the multi-day τ-direction conflict
+(it coupled steepness + outward-push with OPPOSITE signs; a constant multiplier couples them the SAME direction).
+Gates `lens_selfcheck` 13 PASS [HARD] (CM1–CM9) + `a16_atm_gate` 5 PASS [HARD]; run_all pin updated to 8f897edc.
+VERIFIED: manager 13+5 independent re-run; skeptic CLEAR-TO-PROMOTE (engine broken 3 ways → gate goes red,
+`VERDICT_constmult_promote_gate`); tester live PASS 5/5 ×2 byte-stable. Lineage: v24 → v28-lens (7e1ae39b) →
+contwarp (4378bc11) → at-strike (de28c937) → inverse-lens (5fea0e8d = `temporal_mvp_v28_lens_invtx.html`, retained)
+→ **constant-m (8f897edc; source kept as `temporal_mvp_v28_lens_constmult.html`)**. Each prior build RETAINED as
+revert. Operator entry-127 at-strike mechanic = DELIVERED; entry-229/231 curve redefinition = DELIVERED.
+OPEN: warp∘rebase/φ-anchor lemmas [needs-Aristotle; constant-m lemmas in flight, research-lead a66ce954].
+Post-promote micro-fixes queued (non-blocking): 2 stale comments (funding ~L2265, chart-2 ~L3734 still describe
+dead flat-top/g→0-at-ATM) + harden lens_selfcheck isConstMult detector (keys off literal `return m * gamma;`).
 **OVERNIGHT AUTONOMOUS PIPELINE (operator entry 210 "dont stop for anything, see you morning"; entry 177 standing
 monolith order). STOP-ON-RED + skeptic-gate discipline STILL APPLIES — halt an item to an operator-tier decision
 + report in the morning, do NOT guess (the at-strike build took ~10 operator rulings; A15/A16 may surface seams):**

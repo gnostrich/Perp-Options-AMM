@@ -1315,10 +1315,10 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             </div>
           </div>
           <div class="field-row two-col" style="margin-bottom: 6px;">
-            <div class="field-label">KURTOSIS τ</div>
+            <div class="field-label">SLOPE MULT m</div>
             <div class="field-input-wrap">
-              <input type="number" id="tau-input" min="0.05" max="3" step="0.05" value="0.3">
-              <div class="sim-aid-label">polar-lens kurtosis knob · STATIC (vol-set at deploy) · rounds the ATM elbow of the option/value curve; wings stay exact power-laws. Smaller τ ⇒ sharper elbow.</div>
+              <input type="number" id="m-input" min="1" max="6" step="0.25" value="1">
+              <div class="sim-aid-label">constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere (more vol).</div>
             </div>
           </div>
         </div>
@@ -1611,37 +1611,47 @@ const Engine = (function() {
   }
 
   // ─────────────────────────────────────────────────────────────────────
-  // POLAR LENS (v28 Stage 1 — READ LAYER ONLY; never touches the pool).
-  // Static kurtosis knob τ rounds the ATM elbow; wings stay exact power-laws.
-  //   h_τ(u)  = √(τ²+u²) − τ   (0 at the mode → linear in the wings)
-  //   h′_τ(u) = u/√(τ²+u²)     (0 at the mode → 1 in the wings)
-  // Strike-local pricing exponent  g_loc(K) = γ·h′_τ(|u(K)|),  γ = w/(1−w) LIVE.
+  // CONSTANT SLOPE-MULTIPLIER LENS (READ LAYER ONLY; never touches the pool).
+  // Static slope-multiplier knob m gives the option/value curve the SAME
+  // power-law steepness m·γ at every strike (no elbow-rounding, no flat-top).
+  // Constant slope-multiplier lens (operator entries 229/231; skeptic
+  // VERDICT_constant_slope_multiplier_entry229_2026-06-13). The displayed
+  // option-value curve has the SAME power-law steepness at EVERY strike:
+  //   g_loc(K) = m · γ   (constant, NO u-dependence),  γ = w/(1−w) LIVE.
+  // m is the static slope multiplier (the knob formerly called τ): m = 1 is
+  // exactly the plain v24 curve (steepness γ); larger m ⇒ steeper everywhere
+  // (more vol / sharper). This REPLACES the old position-dependent elbow lens
+  // h_τ(u)=√(τ²+u²)−τ — there is NO elbow-rounding, NO flat-top, NO frozen-γ
+  // wing: the wings are exact power-laws of exponent m·γ (asymptote-respecting
+  // in the weak sense — still power-laws, but at m·γ, not γ). The ATM cusp of
+  // the old design VANISHES (constant g>0 has no special behaviour at the mode;
+  // call and put arms meet at the strike with the same exponent — clean,
+  // continuous power-law through ATM, NOT a peak=1 cusp).
   //
   // MUST-APPLY-1 (binding): the moneyness coordinate is ONE coordinate — sNorm —
-  // in ALL three consuming layers (mark/funding/settlement). u(K) is the
-  // log-distance of the strike's REGISTERED ray (θ_K, the same arg `mark` takes)
-  // from the LIVE sNorm mode getSNorm(state)=(1−w)/w. NEVER pair an sNorm strike
-  // with a price-coordinate mode (the ln γ trap). γ is read LIVE (w=α/x moves on
-  // trade; arbitrageToOracle re-equilibrates w).
+  // in ALL three consuming layers (mark/funding/settlement). γ is read LIVE
+  // (w=α/x moves on trade; arbitrageToOracle re-equilibrates w).
   //
   // L4 (binding): the lens is READ FORWARD ONLY. No helper takes an observed /
   // lensed slope as INPUT and solves for dy/mode/state. arbitrageToOracle stays
   // plain-Balancer, lens-free.
-  const hTau  = (u, tau) => Math.sqrt(tau*tau + u*u) - tau;     // h_τ (exposed for the draw layer)
-  const hpTau = (u, tau) => u / Math.sqrt(tau*tau + u*u);       // h′_τ
   // u(K) in the single sNorm coordinate (MUST-APPLY-1). NaN-loud if mode/θ bad.
+  // (kept for the trade map: a = ln(chosen/mode); g_loc no longer uses it.)
   function lensU(state, theta_K) {
     const mode = getSNorm(state);
     if (!(mode > 0) || !(theta_K > 0)) return NaN;
     return Math.log(theta_K / mode);
   }
-  // Strike-local lensed exponent g_loc(K) = γ·h′_τ(|u|), γ = w/(1−w) LIVE.
-  function gLoc(state, theta_K, tau) {
+  // Constant slope-multiplier exponent g_loc(K) = m·γ, γ = w/(1−w) LIVE. The
+  // third arg `m` is the slope multiplier (the static knob, m ≥ 1; m=1 ⇒ γ =
+  // plain curve). NaN-loud on a bad pool. NO u-dependence — same exponent at
+  // every strike (the defining property of the constant-multiplier lens).
+  function gLoc(state, theta_K, m) {
     const w = getW(state);
     const gamma = w / (1 - w);                  // LIVE steepness, NOT a deploy constant
-    const u = lensU(state, theta_K);            // sNorm coordinate (MUST-APPLY-1)
-    if (!isFinite(u)) return NaN;               // loud, never e^0
-    return gamma * hpTau(Math.abs(u), tau);     // ≥ 0, |u|-symmetric, ≤ γ everywhere (cap-free)
+    if (!(gamma > 0) || !(m > 0)) return NaN;    // loud, never e^0 / silent γ
+    if (!(theta_K > 0)) return NaN;              // strike ray must be positive
+    return m * gamma;                            // constant: m·γ at EVERY strike
   }
   // Lensed mark — v26b Reading-A American smooth-paste with the strike-LOCAL
   // exponent g (constant per strike, lens static). Free boundary sNorm*, price
@@ -1718,7 +1728,7 @@ const Engine = (function() {
   // g_loc — §3-P1 / entry 93 #4). MUST-APPLY-1: g_loc + markLensed read
   // the SINGLE sNorm coordinate against the LIVE mode getSNorm(state);
   // the registered θ ray is passed as-is (same coord the reversal &
-  // settled legs share). tau threaded (default state.tau, NaN-loud).
+  // settled legs share). tau threaded (default state.m, NaN-loud).
   function legPrice(state, wing, theta_inner, theta_outer, N, tau) {
     const sNorm = getSNorm(state);
     if (isBarrier(theta_outer)) {
@@ -1777,19 +1787,19 @@ const Engine = (function() {
     // so θ·oracle == K exactly, and at close θ=K_inner/oNow so θ·oNow ==
     // K_inner — the dollar strike is oracle-drift-invariant ⇒ reversal dy =
     // −open dy ⇒ pool reserves round-trip EXACT).
-    // ── R-218 INVERSE-LENS transaction strike (operator entries 214/215/216/218;
-    // skeptic VERDICT_lens_tx_strike / VERDICT_lens_R218_consistency 2026-06-13,
-    // Choice B). The chosen strike (theta_inner) is the strike the trader SEES on
-    // the lensed screen. The pool actually swaps at the TRUE strike whose lensed
-    // APPEARANCE equals the chosen one — the INVERSE of today's view lens
-    // h_τ(u)=√(τ²+u²)−τ. With apparent log-distance a = ln(chosen/mode), the true
-    // log-distance is u_tx = sign(a)·√(a² + 2|a|·τ) (exact inverse of h_τ; expands
-    // outward, |u_tx| ≥ |a|, single-valued, bounded). theta_tx = mode·e^{u_tx}.
-    //   τ-DIRECTION (DOCUMENTED, NOT a defect): under today's h_τ a SHARPER lens
-    //   (smaller τ) pushes theta_tx LESS far out, a FLATTER lens (larger τ) pushes
-    //   it FURTHER out — the operator-flagged side-effect. A future lens change
-    //   that wants "sharper ⇒ further" must flip this knowingly; do not let a
-    //   silent "fix" reverse it (skeptic Choice C is a curve change, operator-tier).
+    // ── CONSTANT SLOPE-MULTIPLIER transaction strike (operator entries 229/231;
+    // skeptic VERDICT_constant_slope_multiplier_entry229_2026-06-13). The chosen
+    // strike (theta_inner) is the strike the trader SEES on the lensed screen.
+    // The pool actually swaps at the TRUE strike whose lensed APPEARANCE equals
+    // the chosen one — the INVERSE of the constant-multiplier view (g_loc=m·γ).
+    // With apparent log-distance a = ln(chosen/mode), the true log-distance scales
+    // by the SAME multiplier: u_tx = m·a, so theta_tx = mode·(chosen/mode)^m
+    //   • m = 1 ⇒ theta_tx = chosen           (reduces to today's at-strike swap)
+    //   • larger m ⇒ theta_tx FURTHER out: a 2× pick at m=2 ⇒ 4×, at m=3 ⇒ 8×.
+    // The three behaviours co-move with m in the SAME direction (steeper g_loc,
+    // further theta_tx, transact-where-it-looks) — the constant multiplier has no
+    // opposite-sign coupling, so the old √(τ²+u²) flip-flop is gone (a future
+    // polarity flip would be a curve change, operator-tier).
     // mode = getSNorm(state) is read LIVE at open; theta_tx is then FROZEN on the
     // leg (K_tx, dollars) and reused verbatim at close so the pool round-trips
     // EXACT (a live-mode recompute at close leaks; see skeptic $1395). Settlement
@@ -1798,8 +1808,8 @@ const Engine = (function() {
     // (the intended two-strike semantics, skeptic §4 / Choice B (ii)).
     const mode_tx = getSNorm(state);
     const a_tx = (mode_tx > 0 && theta_inner > 0) ? Math.log(theta_inner / mode_tx) : NaN;
-    const u_tx = Math.sign(a_tx) * Math.sqrt(a_tx * a_tx + 2 * Math.abs(a_tx) * tau);
-    const theta_tx = mode_tx * Math.exp(u_tx);          // FROZEN at open (stored as K_tx)
+    const u_tx = tau * a_tx;                              // constant multiplier m: u_tx = m·a (tau param carries the knob value m)
+    const theta_tx = mode_tx * Math.exp(u_tx);          // = mode·(chosen/mode)^m, FROZEN at open (stored as K_tx)
     const K_tx = theta_tx * fx;                          // tx-strike in dollars (frozen, oracle-drift-invariant)
     const K_usd = theta_inner * fx;                      // chosen strike in dollars (settlement/valuation basis, kept)
     const dy = (wingSign * legSign) * N * K_tx;          // cash delta on the pool's y leg (AT inverse-lens tx-strike)
@@ -1896,7 +1906,7 @@ const Engine = (function() {
     // priced in — so N_buy = V_sell/denom is a single-basis ratio (the inline
     // price-coord mark denom would re-mix bases against the now-lensed
     // V_sell). Pool execution stays plain v24 (L4); only the SIZING value is
-    // lensed. tau threaded from state.tau.
+    // lensed. tau threaded from state.m.
     const pxBuyUnit = legPrice(leg1.newState, bought_wing, bought.inner, bought.outer, 1, tau);
     const ts2 = pxBuyUnit.theta_star, d2 = pxBuyUnit.delta, m2 = pxBuyUnit.m_star;
     const buyMode = pxBuyUnit.mode;
@@ -2259,7 +2269,7 @@ const Engine = (function() {
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial, tau) {
     const S = (oracle > 0 && oracle_initial > 0) ? poolMark(state, oracle, oracle_initial) / oracle : getSNorm(state);
     const mode = getSNorm(state);                       // single sNorm mode (MUST-APPLY-1)
-    const g = gLoc(state, strike_theta, tau);           // = γ·h′_τ(|ln(θ/mode)|), γ LIVE
+    const g = gLoc(state, strike_theta, tau);           // = m·γ (constant), γ LIVE; tau carries the multiplier m
     const m = markLensed(wing, strike_theta, mode, g);  // lens-aware mark, sNorm coord
     const gamma = (wing === 'call') ? +g : -g;          // ±g_loc replaces ±2
     if (S <= 0) return 0;
@@ -2269,7 +2279,7 @@ const Engine = (function() {
   return {
     getW, getSNorm, getDepth, getMP_raw, poolMark,
     mark, compositeRay, vsValue, bsValue,
-    hTau, hpTau, lensU, gLoc, markLensed,        // v28 polar lens (Stage 1, read layer)
+    lensU, gLoc, markLensed,        // constant slope-multiplier lens (g_loc=m·γ)
     tradeUpdate, rebase, arbitrageToOracle,
     legPrice, executeLeg, executeBand,
     executeCompositeLeg, executeFourStrikeSpread,    // aliases for back-compat
@@ -2315,10 +2325,11 @@ const Store = (function() {
       t: 0,
       kappa: 0.02,
       tick_hours: 1,
-      // v28 polar-lens kurtosis knob τ — STATIC (vol-set at deploy; never moved
-      // by trades). The single NEW user control this build adds. Steepness γ is
-      // v24's derived w/(1−w) (no slider). Legacy imports without τ → setTau guards.
-      tau: 0.3,
+      // Constant slope-multiplier knob m — STATIC (vol-set at deploy; never moved
+      // by trades). The single NEW user control this build adds. m ≥ 1; m=1 is the
+      // plain v24 curve (steepness γ); larger m ⇒ steeper everywhere (g_loc=m·γ).
+      // Steepness γ is v24's derived w/(1−w). Legacy imports without m → setM guards.
+      m: 1.0,
 
       perps: [], bands: [],
       nextPerpId: 1, nextBandId: 1,
@@ -2414,10 +2425,10 @@ const Store = (function() {
   }
 
   function setKappa(k) { if (k > 0) state.kappa = k; }
-  // v28 polar-lens kurtosis knob τ (static; rounds the ATM elbow of the lensed
-  // read layer — mark/funding/settlement). READ-LAYER only: never touches the
-  // pool / tradeUpdate / arbitrageToOracle (L4 forward-read-only).
-  function setTau(t) { if (t > 0 && isFinite(t)) state.tau = t; }
+  // Constant slope-multiplier knob m (static; sets the steepness m·γ of the
+  // lensed read layer — mark/funding/settlement). READ-LAYER only: never touches
+  // the pool / tradeUpdate / arbitrageToOracle (L4 forward-read-only).
+  function setM(t) { if (t > 0 && isFinite(t)) state.m = t; }
   function setTickHours(h) { if (h > 0) state.tick_hours = h; }
   // Perp mark setter — MVP-collapsed to oracle; survives in code only
   // for the carved-slice P&L (a perp, not an option). No UI hook in
@@ -2561,7 +2572,7 @@ const Store = (function() {
                      outer: isFinite(bought_K.outer) && bought_K.outer > 0 ? bought_K.outer / s_oracle : NaN };
 
     // OTM check delegated to Engine.executeBand (per-leg, per-wing).
-    const result = Engine.executeBand(state.pool, sold_wing, bought_wing, sold, bought, N_sell_asset, s_oracle, state.oracle_initial, state.tau);
+    const result = Engine.executeBand(state.pool, sold_wing, bought_wing, sold, bought, N_sell_asset, s_oracle, state.oracle_initial, state.m);
     if (!result.ok) return result;
 
     // Attribution snapshot frozen at open (f_N/f_E/L0 computed above,
@@ -2645,7 +2656,7 @@ const Store = (function() {
     // Option B: the live perp mark is its own price (state.perpMark) — the
     // engine closeBand uses it both for the OTM/ITM regime test and to
     // derive attributablePnL on the carved slice.
-    const r = Engine.closeBand(state.pool, b, club, state.perpMark, state.oracle, state.oracle_initial, state.tau);
+    const r = Engine.closeBand(state.pool, b, club, state.perpMark, state.oracle, state.oracle_initial, state.m);
     if (!r.ok) return r;
     state.pool = r.finalState;
     // ── Bundle return (layer 1) ──────────────────────────────────────
@@ -2693,7 +2704,7 @@ const Store = (function() {
         const wing = (legKey === 'sold' ? b.sold_wing : b.bought_wing) || b.wing;
         for (const sk of ['inner', 'outer']) {
           if (!isFinite(leg[sk])) continue;
-          const f = Engine.fundingPerStrike(state.pool, leg[sk], wing, leg.N, dt, state.kappa, state.oracle, state.oracle_initial, state.tau);
+          const f = Engine.fundingPerStrike(state.pool, leg[sk], wing, leg.N, dt, state.kappa, state.oracle, state.oracle_initial, state.m);
           const trader_pays = side_sign * f;
           leg['funding_' + sk] += trader_pays;
           pool_inflow += trader_pays;
@@ -2721,7 +2732,7 @@ const Store = (function() {
   return {
     get state() { return state; },
     log, poolInvariants,
-    setOracle, setPerpMark, setKappa, setTau, setTickHours, runArbitrage,
+    setOracle, setPerpMark, setKappa, setM, setTickHours, runArbitrage,
     addPerp, removePerp,
     perpPnl, perpEquity, perpMarkNow,
     liquidity, liquidityPreview,
@@ -2803,14 +2814,14 @@ kpiOracle.addEventListener('change', () => {
 document.getElementById('kappa-input').addEventListener('change', (e) => {
   Store.setKappa(parseFloat(e.target.value));
 });
-// v28 polar-lens kurtosis knob τ (static; stepper, NOT a slider). Redraws the
+// Constant slope-multiplier knob m (static; stepper, NOT a slider). Redraws the
 // lensed option/value curve (chart 2) — chart 1 (the plain-v24 pool curve) is
 // unaffected. Fires on both spinner and typed change.
 ['change','input'].forEach(ev => {
-  const el = document.getElementById('tau-input');
+  const el = document.getElementById('m-input');
   if (el) el.addEventListener(ev, (e) => {
     const v = parseFloat(e.target.value);
-    if (v > 0 && isFinite(v)) { Store.setTau(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
+    if (v > 0 && isFinite(v)) { Store.setM(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
   });
 });
 document.getElementById('tick-hours').addEventListener('change', (e) => {
@@ -3113,7 +3124,7 @@ function previewBand() {
     outer: isFinite(inp.bought_K.outer) && inp.bought_K.outer > 0 ? inp.bought_K.outer / s.oracle : NaN
   };
   const N_und = inp.N_sell;   // already in BTC (underlying)
-  const sim = Engine.executeBand(s.pool, inp.sold_wing, inp.bought_wing, sold, bought, N_und, s.oracle, s.oracle_initial, s.tau);
+  const sim = Engine.executeBand(s.pool, inp.sold_wing, inp.bought_wing, sold, bought, N_und, s.oracle, s.oracle_initial, s.m);
   if (!sim.ok) { clearBandPreviewOut(); setWarn(sim.reason); if (Viz) Viz.drawAll(s, null); return; }
 
   // Fee preview + equity guard
@@ -3695,25 +3706,26 @@ const Viz = (function() {
     ctx.textAlign = 'center';
     ctx.fillText('strike polar angle φ (°)  /  $K via lens', pad.left + plotW / 2, pad.top + plotH + 48);
 
-    // Lensed mark curves (v28 Stage 1, L3 + P1): the option/value view drawn
-    // THROUGH the static polar lens, so kurtosis/steepness is visible and the
-    // ATM elbow rounds with τ while the wings stay exact power-laws. ψ is the
-    // strike-by-strike lensed mark Engine.markLensed(wing, θ, sNorm, g_loc),
-    // g_loc = γ·h′_τ(|ln(θ/sNorm)|), γ = w/(1−w) read LIVE off poolForLens.
+    // Lensed mark curves (constant slope multiplier m): the option/value view
+    // drawn THROUGH the static lens, so steepness is visible — the curve has the
+    // SAME power-law exponent m·γ at EVERY strike (no elbow, no flat-top). ψ is
+    // the strike-by-strike lensed mark Engine.markLensed(wing, θ, sNorm, g_loc),
+    // g_loc = m·γ (constant), γ = w/(1−w) read LIVE off poolForLens. The third
+    // arg below (`tau`/`tau_v`) is the slope multiplier m (knob formerly called τ).
     // x-axis is φ with tan(φ)=θ; the mode φ_m = atan(sNorm). poolForLens is the
     // live pool (or the preview pool for the dashed trace) — READ-ONLY (L4);
-    // drawing never feeds a slope back into sizing. τ defaults to 0.3 if absent.
+    // drawing never feeds a slope back into sizing. m defaults to 1 if absent.
     function drawState(sNorm, dashed, poolForLens, tau) {
       const tmDeg = Math.atan(sNorm) * 180 / Math.PI;
-      const tau_v = (isFinite(tau) && tau > 0) ? tau : 0.3;
-      // strike-local lensed exponent at a ray θ, γ live off poolForLens, mode=sNorm.
+      const tau_v = (isFinite(tau) && tau > 0) ? tau : 1;
+      // strike-local exponent g_loc = m·γ (constant), γ live off poolForLens.
       const gAt = (theta) => poolForLens
         ? Engine.gLoc(poolForLens, theta, tau_v)
         : (function(){ const w = sNorm > 0 ? 1/(1+sNorm) : 0.5; const gamma = w/(1-w);
-                       const u = Math.log(theta/sNorm); return gamma * (Math.abs(u)/Math.sqrt(tau_v*tau_v+u*u)); })();
+                       return tau_v * gamma; })();
       const psiAt = (theta, wing) => {
         const g = gAt(theta);
-        if (!isFinite(g) || g <= 0) return Math.min(1, wing === 'call' ? sNorm/theta : theta/sNorm); // ATM/flat-top center
+        if (!isFinite(g) || g <= 0) return Math.min(1, wing === 'call' ? sNorm/theta : theta/sNorm); // degenerate guard
         const v = Engine.markLensed(wing, theta, sNorm, g);
         return (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0;   // clamp display to [0,1]
       };
@@ -3760,10 +3772,10 @@ const Viz = (function() {
     }
 
     const snap = snapshot(state);
-    drawState(snap.sNorm, false, state.pool, state.tau);
+    drawState(snap.sNorm, false, state.pool, state.m);
     if (previewPool) {
       const snapPost = snapshot(state, previewPool);
-      if (Math.abs(snapPost.sNorm - snap.sNorm) > 1e-6) drawState(snapPost.sNorm, true, previewPool, state.tau);
+      if (Math.abs(snapPost.sNorm - snap.sNorm) > 1e-6) drawState(snapPost.sNorm, true, previewPool, state.m);
     }
 
     // Strike markers — band strikes plotted at φ = atan(θ)
@@ -4016,12 +4028,12 @@ const Viz = (function() {
         // C4 (D14): price the sold leg on state.pool (NOT the Store wrapper) —
         // legPrice → getSNorm reads x/alpha, undefined on the wrapper → NaN →
         // caught → silent N_buy=N_sell. With the pool it actually derives.
-        const px_s = Engine.legPrice(state.pool, band.sold_wing, thSoldIn, thSoldOut, band.N_sell, state.tau);
+        const px_s = Engine.legPrice(state.pool, band.sold_wing, thSoldIn, thSoldOut, band.N_sell, state.m);
         const V_sell = px_s.V;
         // C7: route the bought-leg denom through the SAME lensed legPrice the
         // execution path books N_buy with (W1), not a raw price-coord Engine.mark
         // — so this display preview shares one basis with the booked N_buy.
-        const pxBuyUnit = Engine.legPrice(state.pool, band.bought_wing, thBuyIn, thBuyOut, 1, state.tau);
+        const pxBuyUnit = Engine.legPrice(state.pool, band.bought_wing, thBuyIn, thBuyOut, 1, state.m);
         const denom = pxBuyUnit.V;
         if (Math.abs(denom) > 1e-9 && isFinite(V_sell)) N_buy = V_sell / denom;
       } catch (e) { /* keep fallback */ }
@@ -4415,8 +4427,8 @@ function renderBands() {
 
     // ── Components (carved-perp units, stage 2) ───────────────────────
     const comps = [
-      ...pfComponents(b.sold,   sold_w,   'SOLD',   sNormPool, oracleLive, s.pool, s.tau),
-      ...pfComponents(b.bought, bought_w, 'BOUGHT', sNormPool, oracleLive, s.pool, s.tau),
+      ...pfComponents(b.sold,   sold_w,   'SOLD',   sNormPool, oracleLive, s.pool, s.m),
+      ...pfComponents(b.bought, bought_w, 'BOUGHT', sNormPool, oracleLive, s.pool, s.m),
     ];
     // Band value = Σ component values. raw_net = Y − X where
     // X = sold-leg value, Y = bought-leg value (matches closeBand).

@@ -262,27 +262,30 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `7e1ae39b…`, +live-slippage-refresh wire;
-  **PROMOTED 2026-06-12 by operator ruling, entries 84/94/96/106**). **v24 plain-Balancer pool +
-  a static polar LENS in the query/write layer.** The AMM pool curve is **unchanged plain v24**
-  (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24; x,y,w move; ~6% / 285-line edit
-  off v24). A polar lens `h_τ(u)=√(τ²+u²)−τ`, centred on the live 45°-tangent point (mode = getSNorm
-  = (1−w)/w, manager-verified), reshapes the option-value view: lensed local exponent
-  `g_loc(K)=γ·h′(|u|)`, u = log-divergence in the sNorm coordinate, 0 at the tangent point → γ in the
-  frozen power-law wings (asymptotes preserved). **One static knob τ = kurtosis/vol.** Everything
-  **read** (pricing, option chart, settlement, funding, portfolio value) AND **written** (trades,
-  settle-at-lensed, entry 96) goes through the ONE shared helper (`gLoc`/`markLensed`) at the live
-  mode — single-basis, forward-read only (the lens is never inverted; pool stays plain Balancer).
-  Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` (the v24 ATM-jump gap fixed). Gate =
-  `engine/verify/lens_selfcheck.js` (**23 PASS [HARD]** — centred-on-tangent-point, symmetric,
-  frozen-wings, cap-free `|dG|≤γ`, settle==lensed, cross-layer single-basis, pool-byte-identical
-  regression; auto-routed in run_all by `function markLensed` && !`function wField`). Verified:
-  **no far-OTM blow-up / no strike cap** (multiplicative bound by γ, not the old hyperbolic 1/w′;
-  dust trade reshapes ~0.0001% at every strike incl. 4×); round-trip pool-favourable (skeptic #32);
-  warp legible on a trade (tester FINAL 27/27, ~10k px). Feature changelog: `engine/builds/CHANGELOG_v28_lens.md`.
-  Known-OPEN: warp∘rebase-commute / φ-anchor lemmas [needs-Aristotle]; FINDING-RT (two-leg round-trip
-  display shows raw_net>0 — skeptic #32 ruled NOT-A-LEAK, full P&L pool-favourable; display caveat only);
-  payoff chart + strike marker still drawn on the unbent curve (cosmetic, operator-excluded entry 101).
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `8f897edc…`;
+  **PROMOTED 2026-06-13 by operator ruling, entries 229/231 — CONSTANT SLOPE-MULTIPLIER lens**).
+  The kurtosis/vol knob is now a single scalar `m`: the lensed option-value exponent
+  `g_loc(K)=m·γ` is **constant at every strike** (m=1 ⇒ g_loc=γ = plain v24 curve; bigger m =
+  steeper everywhere AND the trade lands further out via the frozen tx-map `θ_tx=mode·(chosen/mode)^m`).
+  This **REPLACES the position-dependent `√(τ²+u²)` elbow-rounding lens** (which coupled steepness
+  and outward-trade-push with OPPOSITE signs — the root of the multi-day τ-direction conflict; a
+  constant multiplier couples them the SAME direction, dissolving it). **The AMM pool curve is
+  still unchanged plain v24** (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24;
+  x,y,w move). Everything **read** (pricing, option chart, settlement, funding, portfolio value)
+  AND **written** (trades, settle-at-chosen-strike) goes through the ONE shared helper
+  (`gLoc`/`markLensed`) — single-basis, forward-read only (the lens is never inverted; pool stays
+  plain Balancer). Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` at the chosen strike. Gates =
+  `engine/verify/lens_selfcheck.js` (**13 PASS [HARD]** — rewritten CM1–CM9: g_loc=m·γ constant,
+  m=1=plain, wings power-law m·γ no-floor, frozen tx round-trip + no-free-money, polarity-lock
+  steeper⇒further, pool byte-identical, no dead √-kernel) + `engine/verify/a16_atm_gate.js`
+  (**5 PASS [HARD]** — no-jump ATM, ATM-cusp RETIRED under constant-m). Manager-verified 13+5;
+  skeptic CLEAR-TO-PROMOTE (engine broken 3 ways → gate goes red); tester live PASS 5/5 ×2
+  byte-stable (chart-2 steepens every strike, m=1=plain, trade further with m, settle at chosen,
+  chart-1 inert). Known-OPEN: warp∘rebase-commute / φ-anchor lemmas [needs-Aristotle, constant-m
+  lemmas in flight at Aristotle]. **Revert chain (retained):** inverse-lens `5fea0e8d` =
+  `temporal_mvp_v28_lens_invtx.html`; at-strike `de28c937`; continuous-warp `4378bc11`; polar-lens
+  `7e1ae39b`. Constant-m source kept as `temporal_mvp_v28_lens_constmult.html`. Feature changelog:
+  `engine/builds/CHANGELOG_v28_lens.md`.
   **Prior HEAD demoted to `temporal_mvp_v27_wkurtosis.html`** (`928cde1c…`, the (W) kurtosis line,
   retained; `wcurve_selfcheck.js` 22 PASS via explicit path). **Earlier GH-line endpoint
   `temporal_mvp_v26c.html`** (`6cc73563…`) also retained.
