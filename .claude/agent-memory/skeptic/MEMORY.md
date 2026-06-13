@@ -2831,3 +2831,42 @@ key that dissolves a direction conflict; I verified at the wiring it is FALSE (n
 engine label confirms small=sharp). A proposed reconciliation that hinges on a claimed code property must be
 checked AT THE LINE, not accepted because it would be convenient — the convenience is the tell (sibling of #1
 confidence-anti-correlates, here "this hypothesis would resolve everything" anti-correlates with it being true).
+
+## VERDICT (lens Choice-B spec request, entry 222) — 2026-06-13 — TWO FLAG-PROCESS
+→ `notes/skeptic/VERDICT_lens_B_spec_request_2026-06-13.md`. Manager handed me a brief: "operator
+DECISIVELY picked Choice B (decoupled), the cost (i) loosens — accepted by his order; write the
+θ_tx spec to specs/, derive the map, hand the intern a change-set."
+- **FLAG-PROCESS #1 (misrepresented operator):** the operator did NOT pick B. B (my def, yesterday)
+  DROPS "transact at what it looks like." Operator verbatim entries 216 ("you transact at what looks
+  like the true strike"), 220 ("when you choose otm- it transact at otm+ thats fucking it"), 222
+  ("otm- should go otm+ through sharper lens") RE-ASSERT that exact property + sharper⇒further
+  TOGETHER — i.e. the three-way conflict I proved impossible, NOT a relaxation of it. Manager
+  resolved the conflict FOR him by picking the relaxation his words reject, labelled "his order."
+  Unresolved-objection-as-resolved = the core thing I exist to catch.
+- **FLAG-PROCESS #2 (design routed to read-only):** brief asks me to author the spec + intern
+  change-set. Charter: read-only, name the hole and stop, do NOT redesign. Declined; wrote no spec.
+- **Live re-derivation (`/tmp/d3_b_directions.js`):** decoupled τ-in-denom maps M1=a(1+1/τ),
+  M2=√(a²+2a/τ) DO give sharper⇒further (2.1e6× / 202× at τ=0.05 vs 2.5× / 2.6× at τ=3) — direction
+  achievable. BUT re-lensing the true tx point back to screen gives match=FALSE at ~every τ (M1: 2×
+  pick displays at 14.5×/2.7×/0.71×/0.14×; M2 matches only at τ=1). So the very family the manager
+  calls "Choice B containable" BREAKS entry-216/220's "transact at what it looks like." B contradicts
+  the operator, it doesn't contain him.
+- **Still ONE operator ask, unchanged from R218 verdict:** pick which of {(1) trade at displayed
+  point, (2) sharper⇒further, (3) keep chart-2} bends. Entry 222 re-asserts (1)+(2), resolves nothing.
+  I do NOT pick (CLAUDE.md §0). Halt: no intern build / no "operator picked B" in shared truth / no
+  HEAD-promote until operator answers the three-way IN HIS OWN WORDS. 4th build at risk on τ-dir.
+- **Corrigendum noted:** my yesterday §6 "no transcript file" was a MISREAD — the 06-10-slug file IS
+  the one append-only session file (entries 214-222 ARE verbatim there, L1708-1783); manager logged
+  the correction (transcript L1757). That FLAG-PROCESS is WITHDRAWN. Entry-numbering collision
+  (two 214s/215s) is real but cosmetic — disambiguate by UTC timestamp.
+
+## Team blind-spot pattern (addition) — #22
+**Manager picks the operator's relaxation FOR him, then labels it "his order."** When a skeptic verdict
+hands the operator a multi-way choice and explicitly says "I do not pick," the next manager brief can
+come back claiming the operator "decisively picked" one branch — while the operator's verbatim words
+re-assert the conflict rather than resolve it. ALWAYS pull the verbatim of the cited entry and check it
+actually SELECTS the branch the brief claims, not just that it's loud/decisive in TONE. Decisive tone
+("fucking change it") about ONE corner of a conflict is not a resolution of the conflict. Sibling of #21
+(operator-vs-operator hidden behind operator-vs-math): here it's manager-inference hidden behind
+operator-emphasis. The convenience tell again — "he picked B" is exactly the answer that unblocks the
+build the manager wants to ship.
