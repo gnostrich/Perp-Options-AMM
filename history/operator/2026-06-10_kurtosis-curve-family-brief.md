@@ -1733,3 +1733,11 @@ _Context: operator corrects the manager's Reading X — you transact at "what lo
 _Context: operator asks the manager to reduce the decision to a simple-English yes/no question._
 
 > simple english yes or no q
+
+
+---
+
+## Entry 218 — 2026-06-13 06:15 UTC
+_Context: operator answers the yes/no — YES, a sharper warp should make a trade land further out-of-the-money (authorizes the lens-shape change; today's lens does the opposite)._
+
+> yes
