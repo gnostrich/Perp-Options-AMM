@@ -1805,3 +1805,11 @@ _Context: operator clarifies "graph inversion" — he suspects the kurtosis mapp
 _Context: operator pinpoints the inverse kurtosis mapping on chart-2 as the ROOT CAUSE of the manager/team's confusion on the τ-direction._
 
 > which is confusing you
+
+
+---
+
+## Entry 226 — 2026-06-13 08:07 UTC
+_Context: operator states what he wants to SEE and asks directly whether the chart is inverted — steeper chart-2 when he sets for higher vol, WITH the trade mapping OTM→OTM+ (further out)._
+
+> yeah butbis the motherfucking chart inverted or not — i want to see steeper when i set for higher vol, with otm —> otm + — do you get the fuck im saying?
