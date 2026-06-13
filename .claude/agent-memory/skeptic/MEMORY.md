@@ -651,6 +651,40 @@ one intern pass: executeLeg L1780-1781 K_usd→frozen θ_tx·fx, +4 gates. **MIN
 has the WRONG SIGN for "sharper⇒further OTM"; the inverse map is clean but points the wrong way; this
 would be the 3rd build to go backwards on τ-direction (patterns #10/#11, F6).
 
+### Verdict #R218-consistency (2026-06-13, entry 218 "yes" authorizing sharper⇒further) — CONSISTENT:NO, blast NOT contained for view-lens route
+→ `notes/skeptic/VERDICT_lens_R218_consistency_2026-06-13.md`. Operator entry-218 ruled "yes" sharper warp ⇒
+trade further OTM (authorizes the τ-direction change). **THE CRUX, PROVEN (not asserted): R-216 (transact at
+inverse of VIEW lens) + R-218 (sharper⇒further) + keep-today's-chart-2 are MUTUALLY EXCLUSIVE — operator must
+relax exactly ONE.** Under R-216 tx-map = inverse of today's h_τ definitionally; u_tx=√(a²+2|a|τ) has
+du_tx/dτ>0 everywhere (`/tmp/d2_consistency.js`) ⇒ sharper⇒CLOSER, opposite of R-218. Root cause: τ is the
+ROUNDING SCALE — small τ ⇒ rounding concentrated at mode ⇒ little compression away ⇒ inverse barely pushes out.
+**Two buildable options:** (a) change WHOLE view lens (R-216 exact kept) ⇒ blast §3; (b) change ONLY tx-map
+(keep liked chart-2) ⇒ R-216's exact "looks like" reading BREAKS (tx point no longer appears where picked:
+`/tmp/d2_optionb.js` 2× pick lands at apparent 5.3× at τ=0.05), only looser "further-out monotone" survives.
+**BLAST RADIUS (view-lens route a) — A5 BREAKS ⇒ STOP:** all saturating sharper⇒further forms (S1/S2/S3) drive
+h′→0 in wings ⇒ g_loc→0 not γ ⇒ power-law wings COLLAPSE, live gate (5c) FAILS (`/tmp/d2_flip.js`,`/tmp/d2_a5_check.js`).
+The ONE form keeping frozen wings (T1=√((1/τ)²+u²)−1/τ, τ-in-denom as elbow SCALE) delivers R-218 (2× strike
+inverse: τ0.05→202×, τ3→2.6×) AND h′→1 asymptotically — BUT (i) power-law wing onset pushed to 9e60× mode at
+τ=0.05 vs today's sane 1.4–8× (`/tmp/d2_wing_onset.js`) ⇒ "exact power-law wings" only at unreachable strikes,
+gate (5c) FAILS at its u≈4 test strike (g=0.77γ); (ii) INVERTS chart-2 — sharper⇒FLATTER near mode (h′(0.1)
+τ0.05=0.005 vs T1; today τ0.05=0.89 STEEPER), L1321 "smaller τ=sharper elbow" backwards (`/tmp/d2_chart2.js`).
+A16 no-jump survives T1; C7 local survives; A5+R-standing(chart-2)+item#3 role-split BREAK. Curve change that
+breaks A5 = different operator decision (§0) ⇒ STOP. **D2 finalize:** freeze θ_tx at entry REQUIRED — live-mode
+θ_tx leaks $1395/leg at mode drift 1.0→1.08 τ=0.3 (`/tmp/d2_freeze.js`; prior $529 = smaller drift), frozen=$0
+(same mechanism as stored K_inner L2046). Swap-basis(θ_tx)-vs-settle-basis(chosen K): NO free round-trip for
+single option with frozen θ_tx (open prem==close, pool nets 0, `/tmp/d2_basis.js`, entry-199 OK) but financing-
+strike≠valuation-strike is explicit semantics operator must OK. **VERDICT: NO buildable spec honors all three;
+operator picks A(no-build)/B(loosen R-216, least blast, 1 intern pass: executeLeg L1780-1781 K_usd→frozen
+τ-in-denom θ_tx·fx, view byte-untouched, +4 gates)/C(re-open curve, breaks A5+chart-2). I do NOT pick.**
+**FLAG-PROCESS vs manager:** entries 214/215/216/218 + everything above ~entry30 have NO verbatim transcript in
+history/operator/ (latest file 2026-06-10); DIFF_LEDGER [verbatim-transcript] cites point at LINE numbers in
+the 06-10 file. entry-218 "yes" handed to me as paraphrase. §2.2 ⇒ FLAG-PROCESS; manager back-fill 06-11/12/13.
+**MINE-TO-DEFEND:** R-216∧R-218∧keep-chart-2 mutually exclusive (proven); T1 is the ONLY frozen-wing sharper⇒further
+lens and it inverts chart-2 + pushes wing onset to ~1e60× + fails gate(5c) at u≈4; option(b) breaks R-216-exact;
+freeze θ_tx required ($1395 leak live-mode). Pattern reinforced: a single knob τ playing BOTH the rounding-scale
+(chart-2 feel) AND the compression-amount (tx-distance) couples them with OPPOSITE τ-sign ⇒ can't independently
+set both. (Sibling of F6 fatness=1/τ + patterns #10/#11 — the lens means two things that move opposite in τ.)
+
 
 
 
