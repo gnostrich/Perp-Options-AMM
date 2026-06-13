@@ -1709,3 +1709,11 @@ _Context: operator unsure on the direction, reasons via "what makes chart 2 stee
 _Context: operator proposes the reasoning "if chart 2 is steeper, further OTMs look closer through the warp."_
 
 > basically if the second graph is steeper, then it means further OTMs look closer through the warp … make sense?
+
+
+---
+
+## Entry 215 — 2026-06-13 04:32 UTC
+_Context: operator clarifies — through the warp you transact further OTM than it appears; he reads this as aligned with his original (entry-118) statement._
+
+> meaning when you see something thru warp your transacting further otm than it apperas which seeks aligned with what i was saying
