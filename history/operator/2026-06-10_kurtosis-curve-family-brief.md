@@ -1903,3 +1903,11 @@ _Context: operator clarifies the entry-236 worry was conceptual (hasn't checked 
 _Context: operator authorizes commissioning research-lead to state the whole-exchange-as-one-port-Hamiltonian-object conjecture (solvency as the passivity-under-admissible-inputs predicate, B1/B3/B4 as explicit input-port conditions); overnight, by morning. Theory/Lean scoping, not a HEAD build._
 
 > sure get done by morning
+
+
+---
+
+## Entry 239 — 2026-06-13 18:47 UTC
+_Context: operator directs reconfirming WHICH encompassing structure is correct (port-Hamiltonian vs information geometry vs whatever — several were explored), and to check the Aristotle history (aristotlelib store) as part of that determination, before building the unification on an assumed scaffold._
+
+> and reconfirm is port hamiltonian or information geometry whatever, since we went through some possible encompassing structures, check aristotle history also
