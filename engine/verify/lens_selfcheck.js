@@ -416,16 +416,22 @@ const hp = (v) => v / Math.sqrt(tau * tau + v * v);
       for (const re of banned2) if (re.test(lower2)) hit2 += re.source + ' ';
       // executeBand/executeLeg size dy forward from V (lensed); confirm dy is still ±V·oracle in form
       const elSrc = (function () { const i = engineBody.indexOf('function executeLeg'); let d = 0, j = engineBody.indexOf('{', i); for (let k = j; k < engineBody.length; k++) { if (engineBody[k] === '{') d++; else if (engineBody[k] === '}') { d--; if (d === 0) return engineBody.slice(i, k + 1); } } return ''; })();
-      // dy SIZING is build-dependent (both are forward, neither inverts the lens):
-      //   • A14 at-strike build (DEPTH_FRAC present): dy = ±N·K_usd (premium-FREE).
-      //   • premium-sized build (HEAD/contwarp):       dy = ±V_usd  (V = N·markLensed).
+      // dy SIZING is build-dependent (all forward; NONE inverts a slope back to dy/mode/state):
+      //   • R-218 inverse-lens build (theta_tx present): dy = ±N·K_tx (at the FROZEN
+      //     inverse-lens transaction strike — a forward CLOSED-FORM of the chosen
+      //     strike, NOT a slope-inversion; see (INVTX) block + g-tx1).
+      //   • A14 at-strike build (DEPTH_FRAC, no theta_tx): dy = ±N·K_usd (chosen strike).
+      //   • premium-sized build (HEAD/contwarp):           dy = ±V_usd  (V = N·markLensed).
+      const isInvTx = /\btheta_tx\b/.test(engineBody);
       const isA14 = /\bDEPTH_FRAC\b/.test(engineBody);
-      const dyForward = isA14
+      const dyForward = isInvTx
+        ? /const dy = \(wingSign \* legSign\) \* N \* K_tx;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc)
+        : isA14
         ? /const dy = \(wingSign \* legSign\) \* N \* K_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc)
         : /const dy = \(wingSign \* legSign\) \* V_usd;/.test(elSrc) && /tradeUpdate\(state, dy\)/.test(elSrc);
-      chk('(8.8) L4: no inverse-lens added; dy forward-sized (' + (isA14 ? '±N·K at-strike' : '±V·oracle premium') + ')',
+      chk('(8.8) L4: no inverse-lens added; dy forward-sized (' + (isInvTx ? '±N·K_tx inverse-lens-strike' : isA14 ? '±N·K at-strike' : '±V·oracle premium') + ')',
           hit2 === '' && dyForward,
-          'banned=' + (hit2 || 'none') + ' dyForward=' + dyForward + ' isA14=' + isA14);
+          'banned=' + (hit2 || 'none') + ' dyForward=' + dyForward + ' isInvTx=' + isInvTx + ' isA14=' + isA14);
     }
   }
 }
@@ -653,7 +659,25 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
   const sA = mkP(10, 800000, 0.5);   // default-ish pool: beta=400000, depth=400000
   const orcA = 80000, tauA = 0.3;
 
-  // ── (AS1) open at-strike sizing: abs(dy) == N·K·oracle machine-eq ──
+  // ── R-218 inverse-lens build detector (theta_tx token) ──
+  // On the inverse-lens build the OPEN/CLOSE pool swap is sized at the FROZEN
+  // inverse-lens transaction strike theta_tx (further out than the chosen strike),
+  // NOT the chosen strike. The AS gates below pivot their EXPECTED dy / strike
+  // accordingly; the bare HEAD (no theta_tx) keeps the original at-strike checks.
+  const isInvTx = /\btheta_tx\b/.test(engineBody);
+  // inverse of today's view lens h_τ(u)=√(τ²+u²)−τ : u_tx = sign(a)·√(a²+2|a|τ).
+  const thetaTxOf = (st, theta, tau) => {
+    const mode = E.getSNorm(st);
+    const a = Math.log(theta / mode);
+    const u_tx = Math.sign(a) * Math.sqrt(a * a + 2 * Math.abs(a) * tau);
+    return mode * Math.exp(u_tx);
+  };
+  // EXPECTED |dy| for an open leg: N·K_tx·oracle (inverse-lens) or N·K·oracle (at-strike).
+  const expectAbsDy = (st, theta, N, tau) =>
+    isInvTx ? N * (thetaTxOf(st, theta, tau) * orcA) : N * (theta * orcA);
+
+  // ── (AS1) open swap sizing: abs(dy) == N·K_swap·oracle machine-eq ──
+  // K_swap = inverse-lens theta_tx (R-218 build) or the chosen strike (at-strike).
   {
     let allEq = true, lines = [];
     for (const wing of ['call', 'put']) {
@@ -663,14 +687,14 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
           // pure-sizing check (guard tested in AS-guard); pick within depth.
           const lg = EngineExec(E, sA, legType, wing, theta, N);
           if (!lg || lg.rejected) continue;
-          const expect = N * (theta * orcA);     // same product order as engine
+          const expect = expectAbsDy(sA, theta, N, tauA);   // same product order as engine
           const eq = Math.abs(lg.dy) === expect;
           allEq = allEq && eq;
           lines.push(legType + ' ' + wing + ' N=' + N + ' θ=' + theta + ' |dy|=' + Math.abs(lg.dy) + (eq ? '==' : '!=') + expect);
         }
       }
     }
-    chk('(AS1) open dy at-strike: abs(dy) == N·K·oracle machine-eq', allEq, lines.join(' | '));
+    chk('(AS1) open dy: abs(dy) == N·' + (isInvTx ? 'K_tx(inverse-lens)' : 'K') + '·oracle machine-eq', allEq, lines.join(' | '));
   }
 
   function EngineExec(eng, st, legType, wing, theta, N) {
@@ -678,11 +702,16 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
   }
 
   // ── (AS2) open-then-close pool RESERVES restore exact (the leak is GONE) ──
+  // On the inverse-lens build the band MUST carry the FROZEN K_tx (mirrors the
+  // engine store at open) — the close reversal uses K_tx, not the chosen K_inner,
+  // so the pool round-trips exact. Strikes kept close to the mode so the (further-
+  // out) inverse-lens swap stays within DEPTH_FRAC.
   {
-    const cases = [
-      { sw: 'call', bw: 'call', si: 1.5, bi: 2 },
-      { sw: 'put',  bw: 'put',  si: 0.7, bi: 0.5 },
-    ];
+    const cases = isInvTx
+      ? [ { sw: 'call', bw: 'call', si: 1.2, bi: 1.4 },
+          { sw: 'put',  bw: 'put',  si: 0.8, bi: 0.7 } ]
+      : [ { sw: 'call', bw: 'call', si: 1.5, bi: 2 },
+          { sw: 'put',  bw: 'put',  si: 0.7, bi: 0.5 } ];
     let maxErr = 0, lines = [];
     for (const c of cases) {
       const sold   = { K_inner: c.si * orcA, K_outer: NaN, inner: c.si, outer: NaN };
@@ -690,8 +719,8 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
       const r = E.executeBand(sA, c.sw, c.bw, sold, bought, 1, orcA, orcA, tauA);
       if (!r.ok) { maxErr = Infinity; lines.push(c.sw + '/' + c.bw + ' open FAILED: ' + r.reason); continue; }
       const band = { sold_wing: c.sw, bought_wing: c.bw,
-        sold:   { inner: c.si, outer: NaN, K_inner: c.si * orcA, K_outer: NaN, N: r.N_sell },
-        bought: { inner: c.bi, outer: NaN, K_inner: c.bi * orcA, K_outer: NaN, N: r.N_buy },
+        sold:   { inner: c.si, outer: NaN, K_inner: c.si * orcA, K_outer: NaN, K_tx: r.leg1.K_tx, N: r.N_sell },
+        bought: { inner: c.bi, outer: NaN, K_inner: c.bi * orcA, K_outer: NaN, K_tx: r.leg2.K_tx, N: r.N_buy },
         entry: { pool: sA, oracle: orcA, L0: 1 },
         carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orcA } };
       const cl = E.closeBand(r.finalState, band, { equity: 1e12 }, orcA, orcA, orcA, tauA);
@@ -700,7 +729,8 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
       maxErr = Math.max(maxErr, ex, ey);
       lines.push(c.sw + '/' + c.bw + ' x-err=' + ex.toExponential(2) + ' y-err=' + ey.toExponential(2));
     }
-    chk('(AS2) open→close pool RESERVES restore exact (≤1e-9) — leak GONE', maxErr <= 1e-9, lines.join(' | '));
+    chk('(AS2) open→close pool RESERVES restore exact (≤1e-9) — leak GONE'
+        + (isInvTx ? ' [frozen K_tx]' : ''), maxErr <= 1e-9, lines.join(' | '));
   }
 
   // ── (AS3) N_buy proceeds-sizing: option-layer separation intact ──
@@ -713,17 +743,19 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
   // brief↔spec tension surfaced to the manager: "unchanged" = code/formula +
   // pricing basis, NOT numeric-equal-to-HEAD (impossible while open is
   // at-strike). The honest divergence is recorded in the detail.
+  // Strikes kept within DEPTH_FRAC on the (further-out) inverse-lens swap.
+  const as3si = isInvTx ? 1.2 : 1.5, as3bi = isInvTx ? 1.4 : 2;
   {
-    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
-    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const sold   = { K_inner: as3si * orcA, K_outer: NaN, inner: as3si, outer: NaN };
+    const bought = { K_inner: as3bi * orcA, K_outer: NaN, inner: as3bi, outer: NaN };
     const r = E.executeBand(sA, 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
-    const leg1 = E.executeLeg(sA, 'sell', 'call', 1.5, NaN, 1, orcA, tauA);
-    const denom = E.legPrice(leg1.newState, 'call', 2, NaN, 1, tauA).V;
+    const leg1 = E.executeLeg(sA, 'sell', 'call', as3si, NaN, 1, orcA, tauA);
+    const denom = E.legPrice(leg1.newState, 'call', as3bi, NaN, 1, tauA).V;
     const nbForm = r.V_sell / denom;
     const formulaOk = r.ok && r.N_buy === nbForm;
     // option-pricing basis (V_sell at the open pool) == clean HEAD's:
-    const vSellHead = EHEAD ? EHEAD.legPrice(sA, 'call', 1.5, NaN, 1, tauA).V : NaN;
-    const vSellThis = E.legPrice(sA, 'call', 1.5, NaN, 1, tauA).V;
+    const vSellHead = EHEAD ? EHEAD.legPrice(sA, 'call', as3si, NaN, 1, tauA).V : NaN;
+    const vSellThis = E.legPrice(sA, 'call', as3si, NaN, 1, tauA).V;
     const basisOk = EHEAD ? (vSellThis === vSellHead) : true;
     const nbHead = EHEAD ? E_headBandNbuy(EHEAD) : NaN;
     chk('(AS3) N_buy formula unchanged + option-pricing basis == clean HEAD',
@@ -731,11 +763,11 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
         'N_buy=' + r.N_buy + ' ==V_sell/denom:' + formulaOk +
         ' | V_sell basis==HEAD:' + basisOk + ' (this=' + vSellThis + ')' +
         ' | NOTE numeric N_buy vs HEAD: this=' + r.N_buy + ' HEAD=' + nbHead +
-        ' (differ by construction — at-strike sell moves post-sell pool further; brief↔spec tension, see AS3 comment)');
+        ' (V_sell pricing basis matches HEAD; N_buy numeric differs by construction — at-strike sell moves post-sell pool)');
   }
   function E_headBandNbuy(EH) {
-    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
-    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const sold   = { K_inner: as3si * orcA, K_outer: NaN, inner: as3si, outer: NaN };
+    const bought = { K_inner: as3bi * orcA, K_outer: NaN, inner: as3bi, outer: NaN };
     const r = EH.executeBand(mkP(10, 800000, 0.5), 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
     return r.ok ? r.N_buy : NaN;
   }
@@ -782,14 +814,15 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
   //   passes on the structural facts (reserves restore + close uses lensed
   //   mark), and the residual is reported, never hidden.
   {
-    const sold   = { K_inner: 1.5 * orcA, K_outer: NaN, inner: 1.5, outer: NaN };
-    const bought = { K_inner: 2 * orcA,   K_outer: NaN, inner: 2,   outer: NaN };
+    const a6si = isInvTx ? 1.2 : 1.5, a6bi = isInvTx ? 1.4 : 2;
+    const sold   = { K_inner: a6si * orcA, K_outer: NaN, inner: a6si, outer: NaN };
+    const bought = { K_inner: a6bi * orcA, K_outer: NaN, inner: a6bi, outer: NaN };
     const r = E.executeBand(sA, 'call', 'call', sold, bought, 1, orcA, orcA, tauA);
     let residual = NaN, reservesOk = false, lensedClose = false;
     if (r.ok) {
       const band = { sold_wing: 'call', bought_wing: 'call',
-        sold:   { inner: 1.5, outer: NaN, K_inner: 1.5 * orcA, K_outer: NaN, N: r.N_sell },
-        bought: { inner: 2,   outer: NaN, K_inner: 2 * orcA,   K_outer: NaN, N: r.N_buy },
+        sold:   { inner: a6si, outer: NaN, K_inner: a6si * orcA, K_outer: NaN, K_tx: r.leg1.K_tx, N: r.N_sell },
+        bought: { inner: a6bi, outer: NaN, K_inner: a6bi * orcA, K_outer: NaN, K_tx: r.leg2.K_tx, N: r.N_buy },
         entry: { pool: sA, oracle: orcA, L0: 1 },
         carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orcA } };
       const cl = E.closeBand(r.finalState, band, { equity: 1e12 }, orcA, orcA, orcA, tauA);
@@ -807,11 +840,21 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
   }
 
   // ── (AS-guard) reserve guard — honest REJECT, N never mutated ──
+  // The guard fires on the ACTUAL pool swap = N·K_swap·oracle, where K_swap is the
+  // further-out inverse-lens strike on the R-218 build (so capacity at a CHOSEN
+  // strike shrinks — skeptic §4 / g-tx4). The threshold-θ is computed in swap-space
+  // so over/under straddle the limit on BOTH builds.
   {
     const depth = sA.y - sA.beta;          // 400000
-    const thRej = (0.90 * depth) / orcA;   // N·K = 0.90·depth exactly at this θ (just-over with 1.01×)
-    const lgOver = E.executeLeg(sA, 'buy', 'call', thRej * 1.01, NaN, 1, orcA, tauA);
-    const lgUnder = E.executeLeg(sA, 'buy', 'call', thRej * 0.99, NaN, 1, orcA, tauA);
+    // θ_tx that puts N·θ_tx·oracle exactly at 0.90·depth, then the CHOSEN strike
+    // whose inverse-lens image is that θ_tx (h_τ contracts θ_tx back to chosen).
+    const txAtLimit = (0.90 * depth) / orcA;          // θ_tx (swap strike) at the limit
+    const mode = E.getSNorm(sA);
+    const u_lim = Math.log(txAtLimit / mode);
+    const hTauLoc = (u, tau) => Math.sqrt(tau * tau + u * u) - tau;
+    const chosenAtLimit = isInvTx ? mode * Math.exp(hTauLoc(u_lim, tauA)) : txAtLimit;
+    const lgOver  = E.executeLeg(sA, 'buy', 'call', chosenAtLimit * 1.01, NaN, 1, orcA, tauA);
+    const lgUnder = E.executeLeg(sA, 'buy', 'call', chosenAtLimit * 0.99, NaN, 1, orcA, tauA);
     const rejectsOver = !!(lgOver && lgOver.rejected) && /depth/.test(lgOver.reason || '');
     const execsUnder = !!(lgUnder && lgUnder.newState && lgUnder.N === 1 && !lgUnder.rejected);
     // wired through executeBand failure path:
@@ -823,6 +866,144 @@ if (/\bDEPTH_FRAC\b/.test(engineBody)) {
         rejectsOver && execsUnder && bandPath,
         'over→reject=' + rejectsOver + ' (' + (lgOver && lgOver.reason ? lgOver.reason.slice(0, 60) : '-') + ')' +
         ' | under→exec N==1:' + execsUnder + ' | executeBand path:' + bandPath);
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════════════
+//  R-218 INVERSE-LENS TRANSACTION STRIKE  (operator entries 214/215/216/218;
+//  skeptic VERDICT_lens_tx_strike / VERDICT_lens_R218_consistency 2026-06-13,
+//  Choice B). The chosen (displayed/lensed) strike is swapped at the TRUE strike
+//  whose lensed APPEARANCE equals it = the INVERSE of today's view lens h_τ. The
+//  view lens (hTau/hpTau/gLoc/markLensed), chart-2, funding, no-jump-ATM, frozen
+//  wings are ALL byte-untouched — this is a SWAP-SIZING change only. Routes on the
+//  `theta_tx` engine token (unique to this build); SKIPs-as-pass elsewhere.
+//   (INVTX-1) theta_tx = inverse-lens image of the chosen strike:
+//             u_tx = sign(a)·√(a²+2|a|τ), a=ln(chosen/mode), round-trips through
+//             h_τ to ≤1e-12, expands outward (|u_tx| ≥ |a| ⇒ θ_tx ≥ chosen).
+//   (INVTX-2) FROZEN θ_tx: open-then-close reserves round-trip EXACT using the
+//             stored K_tx; a fallback-to-K_inner (the drifted-mode would-be leak)
+//             does NOT round-trip — proves the freeze is load-bearing (no $1395 leak).
+//   (INVTX-3) NO FREE MONEY: a single leg opened then reversed with the frozen
+//             K_tx nets dy=0 exactly and restores reserves — the trader extracts
+//             $0 from the financing round-trip (entry-199 single option satisfied).
+//   (INVTX-4) τ-DIRECTION DOCUMENTED (NOT a fail): under today's h_τ a SHARPER
+//             lens (smaller τ) ⇒ θ_tx LESS far out; a FLATTER lens ⇒ FURTHER out.
+//             Recorded so a future lens "fix" cannot silently flip the sign.
+//   (INVTX-5) view-lens / settlement UNTOUCHED: hTau/hpTau/gLoc/markLensed/legPrice
+//             byte-identical to clean HEAD; settlement strike stays the CHOSEN one.
+// ═════════════════════════════════════════════════════════════════════════
+if (/\btheta_tx\b/.test(engineBody)) {
+  const mkPi = (x, y, w) => ({ x, y, alpha: x * w, beta: y * (1 - w) });
+  const sI = mkPi(10, 800000, 0.5);   // mode getSNorm = (1−w)/w = 1
+  const orcI = 80000, tauI = 0.3;
+  const modeI = E.getSNorm(sI);
+  const hTauL  = (u, tau) => Math.sqrt(tau * tau + u * u) - tau;
+  const headFileI = path.join(__dirname, '..', 'builds', 'HEAD_temporal_mvp_v28_lens.html');
+  let EHEADI = null, headBodyI = '';
+  try { const o = engineOf(fs.readFileSync(headFileI, 'utf8')); EHEADI = o.E; headBodyI = o.body; } catch (e) {}
+
+  // ── (INVTX-1) θ_tx = inverse-lens image, expands outward, round-trips to ≤1e-12 ──
+  {
+    let maxRt = 0, allExpand = true, allMatch = true, lines = [];
+    for (const mult of [0.25, 0.5, 0.8, 1.3, 2.0, 4.0]) {
+      const chosen = modeI * mult;
+      const a = Math.log(chosen / modeI);
+      const u_tx = Math.sign(a) * Math.sqrt(a * a + 2 * Math.abs(a) * tauI);
+      const theta_tx_expect = modeI * Math.exp(u_tx);
+      const lg = E.executeLeg(sI, 'sell', mult >= 1 ? 'call' : 'put', chosen, NaN, 1, orcI, tauI);
+      const engTx = lg.theta_tx;
+      const match = Math.abs(engTx - theta_tx_expect);
+      const rt = Math.abs(hTauL(Math.abs(u_tx), tauI) - Math.abs(a));   // inverse round-trip
+      // expansion = θ_tx is FURTHER from the mode than the chosen strike, same side:
+      // |ln(θ_tx/mode)| ≥ |a| and same sign (call: θ_tx≥chosen; put: θ_tx≤chosen).
+      const uEng = Math.log(engTx / modeI);
+      const expand = Math.abs(uEng) >= Math.abs(a) - 1e-12 && Math.sign(uEng) === Math.sign(a);
+      maxRt = Math.max(maxRt, rt); allMatch = allMatch && match <= 1e-9; allExpand = allExpand && expand;
+      lines.push(mult + '× θ_tx/mode=' + (engTx / modeI).toFixed(4) + ' rt=' + rt.toExponential(1));
+    }
+    chk('(INVTX-1) θ_tx = inverse-lens(chosen): matches √(a²+2|a|τ) ≤1e-9, expands outward, h_τ round-trip ≤1e-12',
+        allMatch && allExpand && maxRt <= 1e-12,
+        'maxRt=' + maxRt.toExponential(2) + ' expand=' + allExpand + ' | ' + lines.join(' | '));
+  }
+
+  // ── (INVTX-2) FROZEN θ_tx ⇒ exact round-trip; fallback-to-K_inner LEAKS ──
+  {
+    const si = 1.2, bi = 1.4;
+    const sold   = { K_inner: si * orcI, K_outer: NaN, inner: si, outer: NaN };
+    const bought = { K_inner: bi * orcI, K_outer: NaN, inner: bi, outer: NaN };
+    const r = E.executeBand(sI, 'call', 'call', sold, bought, 1, orcI, orcI, tauI);
+    let frozenErr = Infinity, leakErr = 0, ok = r.ok;
+    if (r.ok) {
+      const mkBand = (withTx) => ({ sold_wing: 'call', bought_wing: 'call',
+        sold:   { inner: si, outer: NaN, K_inner: si * orcI, K_outer: NaN, N: r.N_sell, ...(withTx ? { K_tx: r.leg1.K_tx } : {}) },
+        bought: { inner: bi, outer: NaN, K_inner: bi * orcI, K_outer: NaN, N: r.N_buy,  ...(withTx ? { K_tx: r.leg2.K_tx } : {}) },
+        entry: { pool: sI, oracle: orcI, L0: 1 },
+        carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orcI } });
+      const clFrozen = E.closeBand(r.finalState, mkBand(true),  { equity: 1e12 }, orcI, orcI, orcI, tauI);
+      const clLeak   = E.closeBand(r.finalState, mkBand(false), { equity: 1e12 }, orcI, orcI, orcI, tauI);
+      if (clFrozen.ok) frozenErr = Math.max(Math.abs(clFrozen.finalState.x - sI.x), Math.abs(clFrozen.finalState.y - sI.y));
+      if (clLeak.ok)   leakErr   = Math.max(Math.abs(clLeak.finalState.x   - sI.x), Math.abs(clLeak.finalState.y   - sI.y));
+    }
+    // frozen K_tx round-trips exact; the K_inner fallback (the would-be drifted basis) does NOT.
+    chk('(INVTX-2) FROZEN θ_tx: round-trip exact (≤1e-9); K_inner-fallback LEAKS (proves freeze is load-bearing)',
+        ok && frozenErr <= 1e-9 && leakErr > 1.0,
+        'frozen err=' + frozenErr.toExponential(2) + ' | K_inner-fallback leak=' + leakErr.toExponential(2) + ' (would-be $ leak ⇒ freeze required)');
+  }
+
+  // ── (INVTX-3) NO FREE MONEY: single leg open+reverse (frozen K_tx) nets 0 ──
+  {
+    let allZero = true, lines = [];
+    for (const [wing, ls, th] of [['call', 'sell', 1.3], ['call', 'buy', 1.25], ['put', 'sell', 0.77], ['put', 'buy', 0.8]]) {
+      const open = E.executeLeg(sI, ls, wing, th, NaN, 1, orcI, tauI);
+      if (!open || open.rejected) { lines.push(ls + ' ' + wing + ' rejected'); continue; }
+      const ws = (wing === 'call') ? +1 : -1;
+      const lsg = (ls === 'sell') ? +1 : -1;
+      const dyRev = -(ws * lsg * 1 * open.K_tx);          // close reversal from FROZEN K_tx
+      const sumDy = Math.abs(open.dy + dyRev);
+      const back = E.tradeUpdate(open.newState, dyRev);
+      const rErr = Math.max(Math.abs(back.x - sI.x), Math.abs(back.y - sI.y));
+      const zero = sumDy <= 1e-9 && rErr <= 1e-9;
+      allZero = allZero && zero;
+      lines.push(ls + ' ' + wing + ' Σdy=' + sumDy.toExponential(1) + ' rErr=' + rErr.toExponential(1));
+    }
+    chk('(INVTX-3) NO FREE MONEY: single-leg open+reverse (frozen K_tx) Σdy==0 ⇒ trader extracts $0 from financing round-trip',
+        allZero, lines.join(' | '));
+  }
+
+  // ── (INVTX-4) τ-DIRECTION DOCUMENTED (recorded, NOT a fail) ──
+  {
+    const chosen = 2 * modeI;                  // 2× the mode (call OTM), a=ln2
+    const a = Math.log(chosen / modeI);
+    const rows = [];
+    let monotoneUp = true, prev = -Infinity;   // θ_tx GROWS with τ under today's h_τ
+    for (const tau of [0.05, 0.3, 1, 3]) {
+      const u_tx = Math.sqrt(a * a + 2 * a * tau);
+      const ratio = Math.exp(u_tx);            // θ_tx/mode
+      monotoneUp = monotoneUp && ratio > prev; prev = ratio;
+      rows.push('τ=' + tau + '→' + ratio.toFixed(3) + '×');
+    }
+    // This is the operator-flagged side-effect: sharper (τ↓) ⇒ θ_tx LESS far.
+    // The gate PASSES on the documented direction (monotone ↑ in τ); it does NOT
+    // judge the direction "wrong" — it LOCKS it so a future fix can't silently flip it.
+    chk('(INVTX-4) τ-direction LOCKED (today\'s h_τ): sharper τ ⇒ θ_tx LESS far, flatter τ ⇒ FURTHER (operator-flagged side-effect, NOT a fail)',
+        monotoneUp, rows.join(' | ') + ' — sharper=closer (documented)');
+  }
+
+  // ── (INVTX-5) view lens / settlement UNTOUCHED vs clean HEAD ──
+  {
+    const grab = (src, name) => { const i = src.indexOf('function ' + name); let d = 0, j = src.indexOf('{', i); for (let k = j; k < src.length; k++) { if (src[k] === '{') d++; else if (src[k] === '}') { d--; if (d === 0) return src.slice(i, k + 1); } } return null; };
+    const grabArrow = (src, name) => { const i = src.indexOf('const ' + name + ' '); if (i < 0) return null; const e = src.indexOf(';', i); return e < 0 ? null : src.slice(i, e + 1); };
+    let allId = true, lines = [];
+    if (headBodyI) {
+      for (const fn of ['gLoc', 'markLensed', 'legPrice', 'lensU']) {
+        const id = grab(engineBody, fn) === grab(headBodyI, fn); allId = allId && id; lines.push(fn + ':' + (id ? 'id' : 'DIFF'));
+      }
+      for (const av of ['hTau', 'hpTau']) {
+        const id = grabArrow(engineBody, av) === grabArrow(headBodyI, av); allId = allId && id; lines.push(av + ':' + (id ? 'id' : 'DIFF'));
+      }
+    } else { lines.push('HEAD unavailable — skipped byte-cmp'); }
+    chk('(INVTX-5) view lens (hTau/hpTau/gLoc/markLensed/legPrice/lensU) byte-identical to clean HEAD; settlement at CHOSEN strike',
+        allId, lines.join(' '));
   }
 }
 

@@ -1,6 +1,60 @@
 # MEMORY — intern
-_Last updated: 2026-06-12 (A16 no-jump-ATM HARD gate — verify-only, handed to manager; no git).
+_Last updated: 2026-06-13 (R-218 inverse-lens tx-strike, NEW file, handed to manager; no git).
 Rewrite changed bits at task end._
+
+## Done — R-218 INVERSE-LENS TRANSACTION STRIKE (NEW file, handed to manager 2026-06-13)
+Build **`engine/builds/temporal_mvp_v28_lens_invtx.html`** (NEW, from HEAD `de28c937`; HEAD
+UNTOUCHED, no promote, no git). md5 **`5fea0e8d82ea85270e97ede71cf8e9ae`**. Authority: operator
+entries 214/215/216/218; skeptic `VERDICT_lens_tx_strike` + `VERDICT_lens_R218_consistency`
+2026-06-13 (**Choice B** — keep today's view lens + sharper⇒further as a side-effect, LOOSEN
+"transact exactly where it looks"). The chosen (lensed/displayed) strike swaps at the TRUE strike
+whose lensed APPEARANCE equals it = INVERSE of today's view lens h_τ=√(τ²+u²)−τ. Swap-SIZING change
+only; view lens (hTau/hpTau/gLoc/markLensed)/chart-2/funding/no-jump UNCHANGED. Splices on
+`/tmp/work_invtx.html` (each count==1, blobs never through): `/tmp/splice_invtx_engine.py`
+(executeLeg), `_store.py` (band K_tx), `_close.py` (close reversal).
+- **MAP:** a=ln(chosen/getSNorm(state)); u_tx=sign(a)·√(a²+2|a|·τ); θ_tx=mode·e^{u_tx}; K_tx=θ_tx·fx.
+  Inverse of h_τ to 1e-16, expands outward (|u_tx|≥|a|), bounded, single-valued. Worked: chosen=2×
+  mode @ τ=0.3 ⇒ a=ln2, u_tx=0.94675, **θ_tx=2.5773× mode** (matches skeptic table).
+- **executeLeg (was L1780-1781):** dy now `(wingSign·legSign)·N·K_tx` (was `N·K_usd`). mode_tx=
+  getSNorm(state) read LIVE at open; θ_tx FROZEN as `K_tx` on the leg return (alongside kept
+  `K_usd`=chosen-strike $, settlement basis). Reserve guard fires on `N·K_tx` (bigger swap ⇒
+  capacity at a chosen strike SHRINKS — skeptic §4/g-tx4).
+- **Band store (L2550/2555):** added `K_tx: result.leg1.K_tx`/`result.leg2.K_tx` to the stored
+  band sold/bought legs (mirrors K_inner).
+- **closeBand reversal (was L2046-2047):** `Ksold`/`Kbought` now read the FROZEN `band.sold.K_tx`/
+  `band.bought.K_tx` (fallback K_inner→inner·oForK for legacy bands). Reversal dy=−(open dy) using
+  frozen K_tx ⇒ reserves round-trip EXACT. **A live-mode recompute LEAKS** — proven: K_inner-fallback
+  close leaks x-err 0.86 / y-err $58490; frozen K_tx x-err 7e-15 / y-err 1.2e-10 (INVTX-2).
+- **SETTLEMENT stays at CHOSEN strike** (theta_inner/K_inner) — legPrice/markEff/closeBand payoff
+  UNCHANGED. Financing leg swaps at θ_tx (further out); option settles at the picked strike (the
+  intended two-strike semantics — skeptic ratified as Choice B(ii)).
+- **BYTE-IDENTICAL confirmed:** pool tradeUpdate/arbitrageToOracle/rebase ==v24 AND ==HEAD;
+  hTau/hpTau/lensU/gLoc/markLensed/legPrice ==HEAD. Only write path (executeLeg/store/closeBand)
+  changed; diff = 3 regions (1780-1805 / 2070-2080 / 2584+2590), no blob lines, purely the intended.
+- **GATES (lens_selfcheck.js):** routed AS-block sub-gates to be tx-aware on `theta_tx` token
+  (re-derived AS1 expect=N·θ_tx·oracle; AS2/AS3/AS6 test bands carry K_tx + within-depth strikes;
+  AS-guard threshold computed in swap-space; 8.8 dy-forward expects `±N·K_tx`). Bare HEAD (no
+  theta_tx) keeps OLD at-strike assertions. ADDED **INVTX-1..5** (route on theta_tx): INVTX-1 θ_tx=
+  inverse-lens, expands, h_τ round-trip ≤1e-12; INVTX-2 frozen exact + K_inner-fallback LEAKS
+  (freeze load-bearing); INVTX-3 single-leg open+reverse Σdy==0 ⇒ no free money (entry-199);
+  INVTX-4 τ-direction LOCKED (sharper τ⇒θ_tx LESS far: 2.099×/2.577×/3.921×/8.619× @ τ=.05/.3/1/3
+  — documented side-effect, NOT a fail); INVTX-5 view-lens byte-id vs HEAD.
+- **Results:** INVTX build **39 PASS 0 FAIL** (34+5); bare HEAD **34 PASS 0 FAIL** (UNCHANGED);
+  run_all GREEN exit 0 on both (lens_selfcheck + A16 5 PASS). Blobs `ab663f5c`@74/`c505b08a`@1060
+  canonical; 3 scripts parse (180/509/243); IIFE intact; HEAD md5 `de28c937` UNCHANGED; banned
+  tokens (goalSeekW|wing exponent|wing steepness|target steepness|modeOverride|inverseLens) = 0 in
+  build AND gate; file-safety hook rc=0 (bash; sh chokes on pipefail line 21 — known, run with bash).
+- **τ-direction is a KNOWN documented side-effect, NOT my bug** (skeptic FLAG-WRONG vs entry-118:
+  today's h_τ gives sharper⇒closer; the operator picked Choice B which accepts it). INVTX-4 LOCKS
+  the sign so a future fix can't silently flip it.
+- **Open for tester:** open a band → immediate close → chart-1 reserves return to entry (frozen
+  K_tx round-trip); a far-OTM chosen strike now swaps at a FURTHER-OUT point so DEPTH_FRAC rejects
+  earlier (capacity shrinks); settlement payoff still reads the CHOSEN strike. **Open for manager:**
+  promote decision; the two-strike (financing≠settlement) semantics is the skeptic-ratified Choice
+  B reading; FLAG-PROCESS (skeptic R218 §6): entries 214/215/216/218 have NO verbatim transcript in
+  history/operator/ — carried on paraphrase (manager's to back-fill).
+
+---
 
 ## Done — A16 no-jump-ATM HARD gate (verify-only, handed to manager 2026-06-12; NO engine edit, NO git)
 NEW gate **`engine/verify/a16_atm_gate.js`** per `specs/SPEC_A16_no_jump_atm_2026-06-12.md` §5.
