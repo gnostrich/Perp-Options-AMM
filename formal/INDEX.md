@@ -166,9 +166,12 @@ exists trusted-from-prover.
 **Pending-submit (NOT trusted-from-prover; Aristotle reachable this session, but unsubmitted/unreturned):**
 A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
 ITM direct-payout no-leak; NOT written); A15 slippage-haircut composition (Q10 pending); A11
-asymmetry-growth (under constant-m: asym grows with m — re-derive before pinning). A16-CONT folds into
-the constant-m monolith (continuity = corollary of constant-exponent smooth-paste; polar g→0 version
-superseded). A5 wing-limit Tendsto Φ→1 SUPERSEDED (constant exponent, no limit needed).
+asymmetry-growth (under constant-m: asym grows with m — re-derive before pinning). **A16-CONT has NO
+Lean theorem** (skeptic FLAG-OVERSELL corrected 2026-06-13): ATM no-jump is true by constant-exponent
+construction (g=m·γ>0) and gate-verified (`a16_atm_gate.js` 5/5), NOT a Lean result; the monolith's
+`paste_value`/`paste_slope` prove C¹ ONLY at the S\* settlement seam (a DISTINCT locus from the ATM
+crossing). A direct A16 Lean lemma is pending-submit; the polar g→0 version is superseded. A5 wing-limit
+Tendsto Φ→1 SUPERSEDED (constant exponent, no limit needed).
 
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.

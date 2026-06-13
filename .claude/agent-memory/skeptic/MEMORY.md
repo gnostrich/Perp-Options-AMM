@@ -2997,3 +2997,26 @@ the new gate should reject and confirm RED, per assertion; (2) specifically test
 detector ROUTES AWAY from — a SKIP-as-pass on the very pattern a lock forbids is the trap; (3)
 check whether a sibling gate in the same run chain backstops the gap before downgrading from HOLD.
 Don't trust "13/13 PASS" until you've made it FAIL on purpose.
+
+## VERDICT #monolith-constm-fold + relay (2026-06-13) — Item1 CLEAR / Item2 FLAG-OVERSELL(1 line)
+Universal-gate pass on (1) the constant-m Lean fold MonolithConstM.lean (run 6016ec57/task 3f85462d,
+archive formal/aristotle_runs/MONOLITH_CONSTM/) reaching shared truth, and (2) the manager's operator relay.
+- **Item 1 re-derived cold** (/tmp/sk_monolith.py, sk_paste.py, sk_a16.py): engine instance exact (x=1000,
+  w=29/40, γ=29/11>1, g@m=1=γ, invariant 199375=199375); g=m·γ const; g≥γ⟺m≥1; thetaTx round-trip exact to
+  1e-40 (genuine rpow inverse); gamma_affine γ′=γ+D/β exact; smooth-paste C¹ value+slope at g∈{0.4,1,2.64,4}
+  incl g<1 (~1e-41). price_is_grad/R_psd are REAL HasDerivAt proofs (not rfl) — no tautology-sold-as-theorem.
+- **Manager audit CONFIRMED**: out-of-scope modules (Temporal/AMMCurve/Audit/Seam/Main + lean-toolchain)
+  byte-IDENTICAL to formal/temporal_lean_verified/; token-clean (only sorry=prose docstring); #print axioms
+  is SERVER-SUMMARY-ASSERTED not local-kernel ⇒ "trusted-from-prover NOT verified" is the CORRECT label.
+- **Completeness OK**: C13/B1 solvency floor correctly OUTSIDE proved set (no solvency theorem in monolith;
+  B1 stays CARRIED[coverage], INDEX says STILL-OPEN ship-gate); deleted polar facts (g=0-at-center, g≤γ,
+  √-kernel) correctly ABSENT+labelled SUPERSEDED; A14/A15 correctly pending-submit/NOT-written.
+- **FLAG-OVERSELL (binds INDEX A16 cell AND the relay)**: "A16 no-jump ATM is a COROLLARY of constant-
+  exponent smooth-paste paste_value/paste_slope" is an over-attribution. paste_value/paste_slope prove C¹ at
+  the S* SEAM; a16_atm_gate.js (L12-13) says A16 is DISTINCT — it's continuity at the ATM/MODE crossing.
+  Under constant g>0 ATM no-jump is true BY CONSTRUCTION (no g→0 degeneracy; gate-verified a16 5/5), NOT a
+  consequence of the smooth-paste theorems, and NO monolith Lean theorem states ATM-crossing continuity.
+  Same class as the charter "M=Fisher rfl" precedent (true fact, wrong proved object). HOLD the relay's
+  "falls out as a corollary" sentence + correct the INDEX A16 cell; rest of fold CLEAR to shared truth.
+- Item 2 every OTHER claim backed; no "verified" leak; solvency/at-strike/A15 correctly OPEN. CLEAR once the
+  one sentence reworded (attribute ATM no-jump to constant-exponent+a16 gate; confine Lean credit to S* seam).
