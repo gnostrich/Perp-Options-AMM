@@ -2911,3 +2911,44 @@ certainly underdetermined — flag the ambiguity, force the operator to pin whic
 face as "the financially correct direction" (that assertion is a CHOICE wearing a fact's clothes). Also: a long-
 standing "geometric impossibility" verdict can be an artifact of a mislabel — re-test impossibility claims against a
 relabel before treating them as load-bearing walls. (Self-caught here; softened my own R-218.)
+
+## VERDICT #const-slope-mult (entry 229, 2026-06-13) — PASS (manager reading correct) + FLAG-OMISSION
+`notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`. Operator entry 229 (verbatim
+L1836-1842): "its literally just a constant slope multiplier." This ENDS the τ-direction saga (#20/#21/#23):
+the lens is NOT the position-dependent √(τ²+u²) elbow-rounder — it's a CONSTANT multiplier m on the
+displayed power-law exponent: g_loc(K)=m·γ at EVERY strike. m=1 = plain v24. Larger m = steeper = more vol.
+- **Manager reading CORRECT.** "u_true=m·u_disp" (coordinate scale) ≡ "g_loc=m·γ constant" on the plain
+  power-law base (/tmp/sk_equiv.js: both give wing exponent m·γ; differ only if a flat top exists to squeeze,
+  plain v24 has none). Tell intern the constant-exponent form.
+- **Three-way conflict DISSOLVED (Y, numbers /tmp/sk_threeway.js).** 2× pick: m=1 steep 2.0/trade 2×; m=2
+  steep 4.0/trade 4×; m=3 steep 6.0/trade 8×. All three (steeper chart-2, trade-further, transact-at-looks)
+  co-move UP with m, same direction — linear coupling, no opposite-sign. The old √-lens coupled them with
+  OPPOSITE signs (that WAS the conflict). Gone.
+- **BLAST RADIUS = real curve redefinition (operator-authorized 229, but DELETES §0 design):** constant
+  multiplier has NO elbow-rounding and NO frozen-γ wings (wings = m·γ). ATM cusp (Q11) VANISHES (no g→0 at
+  mode). Smooth-paste SURVIVES (g-parametric, C⁰ seam 1e-8, /tmp/sk_settle_atm.js). Monotone/no-arb preserved
+  (= plain v24 power-law exp m·γ). Trade map TRIVIAL: theta_tx=mode·(chosen/mode)^m, closed-form invertible,
+  round-trip still exact. Funding shape changes (no longer →0 at ATM).
+- **⚠ GATE PROBLEM (the FLAG-OMISSION; brief understated "one intern pass"):** current HARD gate
+  lens_selfcheck.js ASSERTS the OLD design and FAILS the new curve BY DESIGN — (2a) g_loc(ATM)=0, (2b)
+  g_loc→γ wings, (3) |g_loc|≤γ, (5a) funding→0 ATM, (5c) wing→γ-scale ALL violated for m≠1. Gate must be
+  REWRITTEN, not re-run; a naive helper-swap goes RED (STOP-ON-RED = finding). Routing key still matches
+  (markLensed && !wField, run_all L21) — only gate CONTENTS change.
+- **Operator-tier:** 229 sufficient to BUILD, but CLAUDE.md §0 + inventory items 2/3/16 ("ATM elbow rounded,
+  wings frozen at γ") are DELETED — must update + one-sentence operator confirm of the redefinition so the §0
+  motive line doesn't live on as stale truth.
+
+## Team blind-spot pattern (addition) — #24
+**The simplest possible object was sitting under N days of invented vocabulary.** The whole τ-direction saga
+(#20/#21/#23, ~4 verdicts, a "geometric impossibility" wall) was the team modelling a CONSTANT slope multiplier
+as a position-dependent √(τ²+u²) kernel because the word "kurtosis" dragged elbow-rounding/frozen-wings along.
+The operator's entry 229 ("its literally just a constant slope multiplier", exasperated) collapsed it instantly.
+LESSON: when a direction conflict survives multiple careful re-derivations, the live hypothesis should include
+"the object under discussion is SIMPLER than every model on the table" — strip every agent-coined elaboration
+(elbow-rounding, asymptote-respecting wings, inverse-lens √-map) back to the operator's plainest sentence and
+re-derive from THAT. The convenience tell inverts here: the simplest reading was the one nobody was defending
+because it threw away the elegant design. A "geometric impossibility" that dissolves under a relabel (#23) AND
+under a simplification (#24) is twice-warned — impossibility verdicts in this project are usually artifacts of
+the team's own framing, not the geometry. (Also: brief still sold "one intern pass, blast radius named" while
+omitting that the HARD gate encodes the design being deleted — recurring #6 pattern: gate staleness presented
+as gate-intact.)
