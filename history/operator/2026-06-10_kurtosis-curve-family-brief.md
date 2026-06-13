@@ -1685,3 +1685,11 @@ _Context: operator drives the core inconsistency — the continuous trade-warp-u
 > its supposed to change the effective strike thats tje whole point
 >
 > from amm tx standpoint
+
+
+---
+
+## Entry 212 — 2026-06-13 04:13 UTC
+_Context: operator rules the lens-effective-strike direction — a sharper warp makes an OTM+ strike look OTM- (compress the apparent moneyness toward the money)._
+
+> sharper warp makes OTM + look OTM -
