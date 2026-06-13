@@ -1895,3 +1895,11 @@ _Context: operator observes the constant-slope-multiplier knob also shifts the c
 _Context: operator clarifies the entry-236 worry was conceptual (hasn't checked it); asks whether the multiplier multiplies the slope-1 point (former, moves center) or is a multiplier of the slope ratio/exponent that only flattens/steepens without changing centering (latter — what he'd want)._
 
 > ok no thats fine i haven't checked it just struck me when insaid multiplicative are you multiplying point with slope 1 with something or is it a multiplier of slope ratio to mode or something that only flattens steepens withoit changing centerinf (latter would be what i’d have wanted not former)
+
+
+---
+
+## Entry 238 — 2026-06-13 18:45 UTC
+_Context: operator authorizes commissioning research-lead to state the whole-exchange-as-one-port-Hamiltonian-object conjecture (solvency as the passivity-under-admissible-inputs predicate, B1/B3/B4 as explicit input-port conditions); overnight, by morning. Theory/Lean scoping, not a HEAD build._
+
+> sure get done by morning
