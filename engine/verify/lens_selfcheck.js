@@ -64,9 +64,19 @@ console.log('=== constant slope-multiplier lens self-check :: ' + path.basename(
 const mkPool = (x, y, w) => ({ x, y, alpha: x * w, beta: y * (1 - w) });
 
 // Design detector: the constant-multiplier gLoc returns `m * gamma` (no u-dependence).
-// Read off the gLoc source so a stale build can't masquerade as the new design.
+// Read off the gLoc source so a stale build can't masquerade as the new design AND
+// confirm it NUMERICALLY (not a sole literal-text match): a constant-multiplier gLoc
+// must return the SAME exponent at two distinct strikes (no u/strike dependence).
 const gLocSrc = grabFn(engineBody, 'gLoc') || '';
-const isConstMult = /return\s+m\s*\*\s*gamma\s*;/.test(gLocSrc) && !/hpTau|h′_τ|Math\.sqrt\([^)]*tau/.test(gLocSrc);
+const sourceClean = /return\s+m\s*\*\s*gamma\s*;/.test(gLocSrc) && !/hpTau|h′_τ|Math\.sqrt\([^)]*tau/.test(gLocSrc);
+let numericConstInStrike = false;
+try {
+  const _p = mkPool(10, 80000, 0.725);     // γ = 2.6363…; mkPool defined just above
+  const _g1 = E.gLoc(_p, 0.5, 2);          // m=2, θ = 0.5
+  const _g2 = E.gLoc(_p, 3.0, 2);          // m=2, θ = 3.0 (distinct strike)
+  numericConstInStrike = Number.isFinite(_g1) && Number.isFinite(_g2) && _g1 === _g2;
+} catch (e) { numericConstInStrike = false; }
+const isConstMult = sourceClean && numericConstInStrike;
 const hasTradeMap = /\btheta_tx\b/.test(engineBody);
 
 // ── pool byte-identity (runs on ALL lens builds) ──────────────────────────────

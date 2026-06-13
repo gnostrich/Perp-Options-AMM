@@ -2262,10 +2262,10 @@ const Engine = (function() {
   //   MUST-APPLY-1: g_loc and the lensed mark are read in the SINGLE sNorm
   //   coordinate against the LIVE sNorm mode (strike_theta vs getSNorm(state)) —
   //   NOT against the price-coord spot S (that would re-open the ln γ trap).
-  // Behaviour: f → 0 at ATM (g_loc→0, flat top exerts no slope-deviation
-  // pressure) and → γ_live in the wings (g_loc→γ). Sign from wing as before.
-  //   (Expected behavioural change vs the constant-±2 base — operator-accepted
-  //    entry 93 #5; flag for the record only.)
+  // Behaviour (constant-m, operator entries 232/233): g_loc = m·γ is CONSTANT at
+  // every strike — NO ATM flat-top, NO wing-ramp. Funding = slope/ray-divergence
+  // from the w=½ anchor THROUGH THE LENS; it zeroes at the anchor (S→1, ray
+  // coincides), NOT at ATM. The kurtosis knob m re-scales the rate by design.
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial, tau) {
     const S = (oracle > 0 && oracle_initial > 0) ? poolMark(state, oracle, oracle_initial) / oracle : getSNorm(state);
     const mode = getSNorm(state);                       // single sNorm mode (MUST-APPLY-1)
@@ -3731,7 +3731,7 @@ const Viz = (function() {
       };
       ctx.lineWidth = 2;
       if (dashed) ctx.setLineDash([2, 5]); else ctx.setLineDash([]);
-      // Put wing: φ ∈ [0°, φ_m], lensed ψ rises toward the flat top at the mode
+      // Put wing: φ ∈ [0°, φ_m], lensed ψ (constant exponent g=m·γ) rises toward the mode (no flat top)
       ctx.strokeStyle = dashed ? colPreview : colPut;
       ctx.beginPath();
       const Np = 120;

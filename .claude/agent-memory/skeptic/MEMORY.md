@@ -3070,3 +3070,29 @@ the lens") — reply to a manager A/B/C/D menu (A decouple / B keep m-coupled / 
 - Verdict relayed to operator verbatim via manager. Pattern #6 again: "everything-else-unchanged"
   needs per-contract audit on every mechanism change; AND stale comments outlive the design they
   described (caught at promote, encode-time, still present — a comment-rot blind spot, #22).
+
+## VERDICT #R6-cleanup-scopegate (entry 234, 2026-06-13) — PASS-SCOPE
+Manager R6 narrow scope-gate on a HEAD-touching cleanup dispatch BEFORE intern. Operator entry 234
+VERBATIM "yes pls cleanup" (12:04:58 UTC) in reply to manager proposal: fix 2 stale comments +
+harden gate detector. ALL 3 items are MY standing flags. Read all 3 cited locations + the isConstMult
+consumer before ruling (not narrate). VERDICT: **PASS-SCOPE.**
+- **(1) Citation-backed:** Item1 HEAD L2265-66 funding comment "f→0 at ATM (g_loc→0, flat top)…→γ wings"
+  = MY flag #funding-thru-lens-ruling Q3 + #constmult-promote, contradicts locked §0/§4 entry231/232.
+  Item2 L3734 "flat top at the mode" = same dead √-lens language, my promote flag. Item3 detector L69
+  keys off literal regex `return\s+m\s*\*\s*gamma\s*;` = my detector-fragility flag. All traceable.
+- **(2) Zero unrequested:** exactly the 3 named locations. Code adjacent to both comments (funding fn
+  L2269-77; drawState L3718-41) untouched. L2272 already says `// = m·γ (constant)` — comment fix only
+  aligns prose to already-correct code. No 4th edit, no behavior smuggled in.
+- **(3) Control inventory (R3): NO new/altered knob.** Items1-2 = comment text; item3 = verify-harness
+  heuristic. Confirmed manager's NO assertion.
+- **Behavior/gate-semantics check (conversion-to-build trap): CLEARS.** `isConstMult` (L69) is a ROUTER
+  not a scored check — L98 `if(!isConstMult){SKIP+exit}`. Hardening adds a numeric constant-in-strike
+  conjunct (AND). On the CURRENT GOOD build gLoc returns m*gamma (regex true) AND CM1 L114-125 already
+  numerically proves gLoc=m·γ constant across 10 strike-mults ×5 m — so new conjunct also true, router
+  still true, suite still runs, still 13 PASS. No pass/fail flip on current good build. Hardening only
+  re-routes a broken/stale build (intended). Stays comment/heuristic-only; NOT a separate-build go.
+- **SCOPE-BOUNDARY NOTE to intern (not a flag):** the numeric probe must build its own sample pool
+  inline at ~L69; must NOT reorder/relocate the CM-suite pool setup (L108-112, below the router). If the
+  intern's impl moves any SCORED assertion's pool/state, that exceeds scope → re-gate.
+- Pattern #22 (comment-rot) finally being discharged — but only as comment edits, behavior already
+  correct in code since promote. Good: manager routed a comment fix as comment-only, did NOT inflate it.

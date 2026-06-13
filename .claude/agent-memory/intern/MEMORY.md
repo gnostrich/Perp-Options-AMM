@@ -1,6 +1,39 @@
 # MEMORY — intern
-_Last updated: 2026-06-13 (CONSTANT SLOPE-MULTIPLIER lens, NEW file + gate REWRITE, handed to
+_Last updated: 2026-06-13 (cleanup pass on PROMOTED HEAD + gate detector harden; handed to
 manager; no git). Rewrite changed bits at task end._
+
+## Done — CLEANUP PASS (3 edits, IN-PLACE on PROMOTED HEAD + gate, handed to manager 2026-06-13)
+Authority: operator entry 234 "yes pls cleanup" + skeptic R6 scope-gated PASS. ZERO behavior change
+(comments + a detector heuristic only). HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html`,
+md5 `8f897edc…` → **`80f050e26332d21c68bd7b064467470a`** (md5 WILL change — comment text; manager
+re-pins run_all integrity string).
+- **EDIT 1 (HTML funding comment, splice `/tmp/splice_cleanup_html.py`, 1-based lines 2265–2268 /
+  0-based slice [2264:2268]):** replaced DEAD √-kernel "f → 0 at ATM (flat top) … → γ in wings …
+  entry 93 #5" text with constant-m language (g_loc=m·γ CONSTANT, NO ATM flat-top/wing-ramp,
+  funding zeroes at the w=½ anchor S→1 NOT at ATM, m re-scales by design; entries 232/233). L2258–
+  2264 (the "v24 ±2 … MUST-APPLY-1" lines) and the fn body L2269+ UNTOUCHED.
+- **EDIT 2 (HTML chart-2 put-wing comment, same splice, 1-based line 3734 / 0-based [3733]):**
+  one line `// Put wing: φ ∈ [0°, φ_m], lensed ψ rises toward the flat top at the mode` →
+  `// Put wing: φ ∈ [0°, φ_m], lensed ψ (constant exponent g=m·γ) rises toward the mode (no flat top)`.
+- **EDIT 3 (`engine/verify/lens_selfcheck.js` detector, NOT HTML, plain Edit ~L66–69):** hardened
+  `isConstMult` so it is NOT a sole literal-text match. Now `isConstMult = sourceClean &&
+  numericConstInStrike`: `sourceClean` = the old regex (return m*gamma AND no √-kernel);
+  `numericConstInStrike` = INLINE pool `mkPool(10,80000,0.725)` + `E.gLoc(_p,0.5,2)===E.gLoc(_p,3.0,2)`
+  finite-and-equal (try/catch → false on throw). Probe pool built INLINE near L69; did NOT touch the
+  CM-suite pool/state setup at L108-112 or any scored assertion (skeptic R6 scope boundary). The
+  detector is a router (`if(!isConstMult){SKIP;exit}`), not a scored check — on this good build it
+  resolves TRUE so the CM suite runs (13 PASS confirmed).
+- **FILE-SAFETY:** splice on copy `/tmp/work_cleanup.html` (each anchor count==1, trailing \n
+  preserved, blobs never through), then promoted. Blobs `ab663f5c`@74 / `c505b08a`@1060 canonical
+  before AND after; 3 scripts parse (707/450/1804 lines, longest 509); IIFE intact.
+- **GATES:** `cd engine && sh verify/run_all.sh` GREEN exit 0 — lens_selfcheck **13 PASS 0 FAIL**,
+  a16_atm_gate **5 PASS 0 FAIL**. (run_all integrity prints the OLD expected `8f897edc` md5 but does
+  NOT gate on it — exit 0; manager re-pins.)
+- **Open for manager:** re-pin run_all.sh integrity md5 to `80f050e2…`; git (sole actor). **Open for
+  tester:** UI smoke — comments are non-functional, but confirm chart-2 put wing + funding readout
+  behavior UNCHANGED (no flat top at ATM under constant-m).
+
+---
 
 ## Done — CONSTANT SLOPE-MULTIPLIER LENS (NEW file + gate rewrite, handed to manager 2026-06-13)
 Build **`engine/builds/temporal_mvp_v28_lens_constmult.html`** (NEW, from HEAD `5fea0e8d`; HEAD

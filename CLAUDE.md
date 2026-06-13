@@ -266,7 +266,9 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `8f897edc…`;
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `80f050e2…` = comment-cleanup
+  of `8f897edc` per operator entry 234, behaviorally identical: dead √-kernel comments→constant-m + gate-detector
+  hardened, gates 13+5 green; `8f897edc` constmult source retained as `temporal_mvp_v28_lens_constmult.html`;
   **PROMOTED 2026-06-13 by operator ruling, entries 229/231 — CONSTANT SLOPE-MULTIPLIER lens**).
   The kurtosis/vol knob is now a single scalar `m`: the lensed option-value exponent
   `g_loc(K)=m·γ` is **constant at every strike** (m=1 ⇒ g_loc=γ = plain v24 curve; bigger m =
