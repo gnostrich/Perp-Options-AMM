@@ -1,0 +1,56 @@
+=== R-218 INVTX SMOKE run A — /home/user/Perp-Options-AMM/engine/builds/temporal_mvp_v28_lens_invtx.html (md5 5fea0e8d) ===
+
+--- ITEM 1: single-leg open-then-close reserves restore (frozen θ_tx) ---
+  live mode (sNorm) = 1
+  {"wing":"call","legSide":"sell","chosen_mult":1.5,"chosen_K":120000,"theta_tx":1.8936364646755608,"tx_mult":1.8936364646755608,"K_tx":151490.91717404485,"swap_dy":15149.091717404486,"tx_further":"yes(call)","entry_x":10,"entry_y":800000,"opened_x":9.8175463704529,"opened_y":815149.0917174044,"closed_x":10,"closed_y":800000,"restore_err_x":0,"restore_err_y":0}
+  {"wing":"put","legSide":"sell","chosen_mult":0.5,"chosen_K":40000,"theta_tx":0.38799879623490874,"tx_mult":0.38799879623490874,"K_tx":31039.9036987927,"swap_dy":-3103.99036987927,"tx_further":"yes(put,closer-to-0)","entry_x":10,"entry_y":800000,"opened_x":10.03910332044875,"opened_y":796896.0096301207,"closed_x":10,"closed_y":800000,"restore_err_x":0,"restore_err_y":0}
+
+--- ITEM 1 LIVE: UI band open→close, chart-1 reserves restore ---
+  {"before":{"x":10,"y":800000,"w":0.5},"afterOpen":{"x":9.8843083919249,"y":809474.5539218098,"w":0.5058522864467491},"afterClose":{"x":10,"y":800000,"w":0.5},"close":{"ok":true,"settled_cash_leg":null},"restore_err_x":0,"restore_err_y":0,"moved_on_open":9474.669613417844}
+
+--- ITEM 2: settlement at CHOSEN strike (not θ_tx) ---
+  {"frozen":{"sold_K_tx":151490.91717404485,"sold_K_inner":120000,"bought_K_tx":48324.30789988402,"bought_K_inner":60000},"close":{"ok":true,"raw_net":-0.004508845303364228,"X":0.00548680374955151,"Y":0.000977958446187282,"settled_cash_leg":"sold","live_leg":"bought","trader_payout":-9.179384049191675,"finite":true},"chosen_eq_settle_basis":"sold settles at K_inner=$120000 (chosen θ=1.5), pool swapped at K_tx=$151490.91717404485 (θ_tx>chosen)"}
+
+--- ITEM 3: capacity shrinks far-OTM (reject earlier, $ depth, no silent cap) ---
+  mode = 1
+  depth = 400000
+  DEPTH_FRAC = 0.9
+  chosen_theta = 0.3
+  chosen_K = 24000
+  theta_tx = 0.22906525745052486
+  K_tx = 18325.22059604199
+  maxN_chosenK = 15
+  maxN_txK = 19.645056828279348
+  capacity_shrink_factor = 0.7635508581684162
+  probeN = 20.037957964844935
+  N_chosenK = 480910.99115627847
+  N_chosenK_under_depth = false
+  N_txK = 367200
+  N_txK_over_depth = true
+  reject = "At-strike cash $367200.00 exceeds 90% of pool cash depth $400000.00 — trade rejected."
+  NokN = 15.716045462623478
+  Nok_txK = 288000
+  Nok_result = "EXECUTED dy=-288000"
+
+--- ITEM 3 LIVE: UI over-capacity reject (dialog/warn captured) ---
+  Store.openBand(N=5, sold 200000 / bought 24000): {"ok":true,"clubFree":5010000}
+  dialogs since: []
+
+--- ITEM 5: direction observation (fixed chosen strike, vary τ) ---
+  mode=1  chosen θ=1.5 (K=$120000)
+  {"tau":0.05,"theta_tx":1.5725717587802244,"tx_mult_vs_mode":1.5725717587802244,"K_tx":125805.74070241796,"swap_dy":6290.2870351208985}
+  {"tau":0.3,"theta_tx":1.8936364646755608,"tx_mult_vs_mode":1.8936364646755608,"K_tx":151490.91717404485,"swap_dy":7574.545858702243}
+  {"tau":1,"theta_tx":2.6847539081936276,"tx_mult_vs_mode":2.6847539081936276,"K_tx":214780.3126554902,"swap_dy":10739.015632774512}
+  {"tau":3,"theta_tx":5.010725813419742,"tx_mult_vs_mode":5.010725813419742,"K_tx":400858.0650735794,"swap_dy":20042.90325367897}
+
+--- ITEM 4: no regression (sweep, τ chart-2, chart-1 inert, funding) ---
+  chart-1 τ pxdiff (expect ~0 inert): 0
+  chart-2 τ 0.3→2.0 pxdiff (expect >0 reshape): 6545
+  chart-2 τ 0.3→0.35 single-step pxdiff: 3893
+  funding/tick: {"fundingTick":"ok","funding_sample":"via fundingTick"}
+  sweep distinct chart-2 frames in 1.3s (rAF): 48 of 80
+
+--- ERRORS ---
+  console errors: 0
+  page errors   : 0
+  dialogs total : 0

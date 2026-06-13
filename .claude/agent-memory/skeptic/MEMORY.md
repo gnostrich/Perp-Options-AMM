@@ -685,6 +685,31 @@ freeze θ_tx required ($1395 leak live-mode). Pattern reinforced: a single knob 
 (chart-2 feel) AND the compression-amount (tx-distance) couples them with OPPOSITE τ-sign ⇒ can't independently
 set both. (Sibling of F6 fatness=1/τ + patterns #10/#11 — the lens means two things that move opposite in τ.)
 
+### Verdict #invtx-promote (2026-06-13, promote-audit of the inverse-lens tx build) — CLEAR-TO-PROMOTE + 1 disclosure caveat
+→ `notes/skeptic/VERDICT_invtx_promote_audit_2026-06-13.md`. Build `temporal_mvp_v28_lens_invtx.html`
+(md5 5fea0e8d), from HEAD de28c937. This is the BUILD of R218-Choice-B (operator entry-220 restated the core
+inverse-lens mechanic; manager built B = change ONLY tx-map, view byte-untouched). **AUDIT RESULT: faithful to the
+vetted map, nothing more.** Diff = 53 lines / 3 regions only (executeLeg θ_tx L1799-1805, close reversal L2076-2085
+reuses stored frozen K_tx, band-store L2584/2590). θ_tx = mode·exp(sign(a)·√(a²+2|a|τ)) off LIVE getSNorm at open,
+frozen as K_tx; re-derived independently (`/tmp/invtx_audit.js`): inverse of view lens (appearance==chosen to 1e-6),
+expands outward both sides. INVTX-5 byte-confirms hTau/hpTau/gLoc/markLensed/legPrice/lensU == clean HEAD (Choice B
+view-untouched HELD). Gates: 39/39 on build, bare HEAD still 34/34, blobs canonical (ab66.../c505...), 3 scripts parse.
+**Seam HELD on THIS build:** INVTX-2 frozen err 1.16e-10 vs K_inner-fallback leak $58.5k (freeze load-bearing, proven);
+INVTX-3 single-leg open+reverse Σdy=0 + reserves restore 0 all 4 combos (entry-199 no-free-trade HELD); DEPTH_FRAC
+fires on bigger N·K_tx (capacity shrinks far-OTM). AS5 warp 0.22→0.2587 at θ=1.1 = intended (swap on bigger K_tx),
+warp identity Δγ==dy/β still exact — in-scope not creep. **INVTX-4 is a REAL sign-lock** (asserts θ_tx/mode monotone↑
+in τ; a silent polarity flip FAILS it) — NOT cosmetic; INVTX-1 separately pins the ENGINE ships that formula to 1e-9.
+**THE ONE CAVEAT (not a code hold):** build ships sharper⇒θ_tx-LESS-far, which CONTRADICTS entry-218 "yes" to
+sharper⇒further — and entry-218 was NEVER withdrawn (entry-220 restated only the inverse-lens mechanic, no τ-direction).
+Build is faithful to 220 + honestly labels the side-effect (code header + INVTX-4) ⇒ shipping is honest IF the manager
+DISCLOSES the §5 plain-English τ-direction sentence to the operator at the flip rather than presenting 218 as satisfied.
+**MINE-TO-DEFEND:** the build implements EXACTLY Choice-B map (verified byte/diff/gate); freeze+two-strike seam opens no
+free trade on this build; INVTX-4 is a genuine sign-lock; the only open item is operator-disclosure of the 218-contradiction,
+not a defect. **PRIOR FLAG-PROCESS (R218 "no transcript") RESOLVED:** manager back-filled; the 06-10-named file IS the
+append-only session file (entries 214-220 present, verbatim); my "no transcript" was a filename misread (manager corrigendum,
+accepted). Transcript now verifies entry-220 verbatim ("lens shows otm + is otm -; so when you choose otm - it transact at
+otm + thats fucking it") and entry-218 verbatim ("yes").
+
 
 
 
