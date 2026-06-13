@@ -1,5 +1,32 @@
 # PH UNIFICATION — the whole exchange as ONE pure-math object, solvency = passivity-under-admissible-inputs
 
+> **═══ GATE RESULT (manager audit + skeptic af6b17ad, 2026-06-13) — CLEAR-AS-CONJECTURE ═══**
+> Skeptic gate: **CLEAR** to fold as a CONJECTURE (not proven) and relay as the morning answer; no
+> "geometry closes solvency" leak. Manager independently spot-verified the structure determination's
+> anchors (7 Aristotle archives exist; `SingleCore.lean:43 omega:=v*w−w*v ≡0` in 1-D; CgfClean
+> `cgf_deriv_mean_and_variance`+`cgf_convexOn` present). Two binding corrections from the gate:
+> 1. **ENCOMPASSING-STRUCTURE FRAMING (operator entry 239): lead with the INFORMATION-GEOMETRIC BASE**
+>    — ONE convex potential μ = the GH cumulant-generating function (price=∇μ, dissipation R=∇²μ=Fisher
+>    metric); **port-Hamiltonian is its FORCED cotangent LIFT, not a second axiom; NOT "metriplectic"**
+>    (the 1-D base's symplectic form ω≡0). PH and info-geo are DUAL VIEWS of one object, not rivals.
+>    The §3 internal-passivity below should read "R=∇²μ=Fisher⪰0 on the base, lifted to CTPH," not
+>    "assume a PH system." (Math/predicates/conjecture below UNCHANGED — this is headline emphasis.)
+> 2. **The reduction over-credits passivity.** The proved reduction `solvency ⟸ input-admissibility`
+>    needs ONLY the admissibility hypothesis; **passivity earns its keep in the INTERNAL no-free-money
+>    half, not in the external solvency implication.** Do not write `solvency ⟸ passivity ∧ admissibility`
+>    as if passivity is load-bearing for the external implication.
+> ⚠ **WATCH-FLAG (skeptic, for any fold to shared truth):** `MonolithConstM` `Temporal.solvent` /
+> `TemporalAMM.solvent_forever` have unconditional-*sounding* docstrings but discharge SOLELY from a
+> carried `[OBLIGATION B1]` structure field — NEVER from geometry. This note correctly does not cite
+> them; they remain a latent "solvent_forever sounds proven" trap. The internal-passivity Aristotle
+> proof (task 80cd7ba4) is NOT yet returned — separate audit when it lands (esp. that n=1 `R.PosSemidef`
+> is genuinely witnessed by `R_psd`, not re-stubbed).
+> _(Below is research-lead's original conjecture note, gate-CLEARED as-is; the two corrections above
+> are binding on any subsequent fold/relay. Manager edit, post-gate — research-lead's prose unaltered.)_
+
+# (original note follows)
+## PH UNIFICATION — the whole exchange as ONE pure-math object, solvency = passivity-under-admissible-inputs
+
 _Owner: research-lead. 2026-06-13. Operator entries 237/238 ("the whole exchange comprehensively
 can be a single pure mathematical object"; "if solvency is a rest-of-world / port related thing
 doesn't it close out cleanly?"). Sharpens the entry-179 single-structure unification onto the FULL
