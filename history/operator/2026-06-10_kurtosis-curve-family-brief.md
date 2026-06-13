@@ -1813,3 +1813,11 @@ _Context: operator pinpoints the inverse kurtosis mapping on chart-2 as the ROOT
 _Context: operator states what he wants to SEE and asks directly whether the chart is inverted — steeper chart-2 when he sets for higher vol, WITH the trade mapping OTM→OTM+ (further out)._
 
 > yeah butbis the motherfucking chart inverted or not — i want to see steeper when i set for higher vol, with otm —> otm + — do you get the fuck im saying?
+
+
+---
+
+## Entry 227 — 2026-06-13 08:11 UTC
+_Context: operator, exasperated, insists the manager should understand the unified thing he wants by now._
+
+> motherfucker, don't you understand what im looking for by now
