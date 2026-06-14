@@ -3383,3 +3383,52 @@ The FOLD = +310/-98 lines folding RESPONSE_TO_REFEREES_2026-06-12.md.
   carried-sold-as-grounded and trusted-sold-as-verified. Test: every "machine-checked/tfp" cite in a paper
   must resolve to a FOLDED, manager-audited archive, not to an INDEX "manager-to-route" line or to a
   referee's word.
+
+---
+## VERDICT (2026-06-14): PAPER POSITIONING BRAINSTORM — 6 drafting reframes (pre-vet, no .tex edit)
+Operator-relayed brainstorm reframing positioning/limitations for `paper/temporal_paper_american_2026.tex`,
+incl. a reframe of MY T1b/Snell flag. NET: 2 FLAG-OVERSELL (#1, half #5), 1 FLAG-PROCESS (#2 sim), rest
+CLEAR-with-guards. No edit made — re-audit the real diff (abstract/intro qualifier survival, Limitations
+for vanished items) when produced.
+
+- **T1b state PINNED COLD (re-read the genuine returned archive):** `AIRTIGHT_T1b_optimality_clean/
+  extracted/proj_clean_aristotle/RequestProject/Optimality.lean` is **sorry-FREE**; only placeholder =
+  `boundary_is_snell_optimum : True` (line 51). The 2 sorries (lines 92/145) I first saw live ONLY in the
+  LOCAL working copy `proj_clean/.../Optimality.lean` — NOT the returned artifact. Don't cite proj_clean
+  as proof state. Headline `opt_boundary_is_max_A/B`, `critical_iff_smoothfit_A/B` genuinely proved
+  (variational, over deterministic boundaries). `AIRTIGHT_probe_optstop` SUMMARY = Mathlib v4.28.0 has
+  NO Snell superstructure; the smooth-fit=Snell link is a from-scratch math obligation, not clerical-Lean.
+
+- **#1 (critical, reframes my flag) FLAG-OVERSELL.** "Closed mathematically for perpetuals; Lean pending;
+  open only for expirables" LAUNDERS. Smuggle: T1b optimizes the value-matched COEFFICIENT
+  `(1−B/K)·B^γ` over deterministic boundaries — NOT proof it equals the holder's optimal-stopping value.
+  Time-homogeneity ⇒ boundary is a price-constant (standard, real) but does NOT supply the verification
+  lemma (smooth-fit critical pt = sup over stopping times) = exactly what `:True` stubs. Math-open, not
+  Lean-clerical. PLUS: brainstorm silently drops FUNDING (#9) from the stopping frame — funding is a
+  through-the-lens cashflow on the position (entry 232); whether holder's problem stays time-homogeneous
+  with funding is untreated. Lens m = static, no time-dep (OK). Rebase = gauge, not time (OK). Foldable
+  narrower sentence: const-boundary by time-homog (standard) + S*=Merton boundary on Gaussian slice (tfp,
+  CARRIED distributional layer) + Snell ID still open + funding role untreated. CURRENT §5.3 wording is
+  MORE honest than the reframe — do not regress.
+
+- **#2 FLAG-PROCESS + caveat.** Per-wing |Γ|≤1 logic sound (§5.6 already says single-wing bound). But
+  "sim 1.55" is UNVERIFIED/unsourced in repo — don't fold the number w/o tester source. And demoting
+  |Γ|>1 to "scope" UNDERSELLS: single-leg leverage / same-wing stacking are legit uncovered uses — must
+  disclose as "scope AND limitation," not buried.
+- **#3 CLEAR w/ guard:** scope-vs-conditional split honest IF no current limitation vanishes by relabel.
+- **#4 CLEAR w/ watch:** lead-with-strength OK IF "any asset"⇒GH/Bessel & "American"⇒Snell qualifiers
+  survive into ABSTRACT/INTRO, not quarantined in limitations.
+- **#5 SPLIT.** 2-knob/no-smile-curvature = CORRECT and correctly = single-pool-rigidity (one exponent
+  per wing fits level+skew not curvature). BUT "GH/Bessel = empirical backtest" OVERSELLS by conflating
+  3 gaps: (i) Bessel-K = non-load-bearing Mathlib coverage (INDEX-stated, not empirical); (ii) single-
+  exponent tail adequacy = genuinely empirical (OK to reframe); (iii) MERTON carried hyps
+  (GHIsLaplaceExponent/GaussianLimitOfGH) STAY carried — a backtest does NOT dissolve them. Don't let
+  "empirical" replace "carried."
+- **#6 CLEAR:** consistent w/ conditional-solvency posture (item #13, B1 CARRIED, reserves_no_floor).
+
+- **Pattern reinforced (TWO this session):** (a) "open math obligation sold as Lean-formalization-chore"
+  — new sibling of carried-sold-as-grounded; test: is the gap in Lean's LIBRARY or in the MATH? probe_
+  optstop says math. (b) "empirical reframe dissolving carried-hypothesis status" — calling a carried
+  premise "we'll backtest it" downgrades provenance. Both are the same root: relabeling a gap's KIND to
+  make it sound smaller. Also: ALWAYS check extracted/ (returned) vs proj_*/ (local working copy) — they
+  diverged on T1b sorries; the returned one is the proof of record.

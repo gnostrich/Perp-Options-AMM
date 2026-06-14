@@ -40,6 +40,22 @@ Esscher #14 amended; consistency layer report-only-landed. OPEN frontier unchang
 Q10 A15 slippage. ⚠ MANAGER PATTERN (owned, operator-visible): 3 scope-overreaches today (GH conflation, un-composed weld, lens
 headlines) all caught by skeptic — tightening boundary-claims up front.
 
+📄 **PAPER (American-style, entries 244/245) — draft DONE + referee-folded + 3 skeptic honesty passes cleared; committed
+929711d on branch.** `paper/temporal_paper_american_2026.tex` (old barrier draft + AfT docx UNTOUCHED). Honest posture locked:
+Balancer-not-GH, solvency conditional (B1/B3/B4), Lean=trusted-from-prover-not-verified, |Γ|>1 approx, unification=conjecture,
+lens-Gibbs wing-scoped, T1b Snell=named-not-formalised(True placeholder). PDF: CANNOT compile here (no LaTeX engine; Debian/
+tectonic mirrors 403-blocked; CI-workflow route auto-DENIED as untrusted-3rd-party-code/persistence — needs operator auth
+to add). Operator compiled a 17pp PDF in a separate paper-chat (its own toolchain). ⚠ **.tex DIVERGENCE:** that chat made
+compile-fixes (App-B table lll→tabularx, +microtype) on its uploaded copy NOT on my branch — reconcile both on any pass.
+**POSITIONING BRAINSTORM (entry, 2026-06-14) — brainstorm-only, NOT edited; skeptic pre-vet a6d4a609 disposition for the
+eventual "do a pass":** #1 Snell-near-closed = **FLAG-OVERSELL, DO NOT FOLD** (launders an open MATH obligation as a Lean
+chore; T1b≠Snell; funding-time-homogeneity untreated; current §5.3 is more honest — keep). #2 |Γ|per-wing/band = fold only
+w/ tester source for the "1.55" sim + keep |Γ|>1 disclosed as limitation not just scope. #3 scope-vs-conditional split = CLEAR
+(no listed limitation may vanish by relabel). #4 lead-with-strength = CLEAR (qualifiers must survive into abstract/intro). #5
+2-knob/no-smile = CLEAR but "GH/Bessel=empirical backtest" OVERSELLS (carried MERTON hypotheses stay carried; empirical applies
+to tail-adequacy only). #6 solvency=headline binary = CLEAR. Two laundering patterns logged (math-gap→Lean-chore; carried-hyp→
+empirical). On "do a pass": fold #3/#4/#6 clean, #2/#5 w/ caveats, leave #1; reconcile the compile-fixes; skeptic re-audits the diff.
+
 1. Read `CLAUDE.md` (shared truth) and `.claude/agents/manager.md` (charter, now incl. rules R1–R7) in full before acting.
 2. The succession plan that defines this form: `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md` — R1 citation-or-no-build · R2 one-go-one-build · R3 control-inventory · R4 kill-means-silent · R5 verify-before-reassuring · R6 skeptic scope-gate on builds · R7 tables+simple-English to the operator.
 3. Live operator questions: `docs/OPEN_OPERATOR_QUESTIONS.md` — do not re-derive from the archive.
