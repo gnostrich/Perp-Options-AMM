@@ -139,6 +139,31 @@ object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on th
   `nlinarith` (`w_consistency`/`gamma_eq`); `paste_slope`/`price_is_grad` use `convert HasDerivAt…`.
   **Verdict: `proved (trusted-from-prover)`** — NOT "verified" (no local canonical kernel; env-blocked).
 
+- **NEW — RETURNED + AUDITED + SKEPTIC-REGATED 2026-06-14 → trusted-from-prover:** the WHOLE-EXCHANGE
+  unification **INTERNAL HALF** `PHUnification.lean` (prompt `formal/prompts/aristotle_prompt_PH_unification_composed.md`;
+  run `8ee75026`/task `5c2bccf2`; archive `aristotle_runs/PH_UNIFICATION_COMPOSED/`; md5 `65e7bc31`).
+  The conjecture = the whole exchange as ONE `Exchange` object (storage/flow/gauge/funding-port/
+  settlement-port/dollar-pipe/slippage[unbuilt]/close-mechanic-PARAMETRIZED=Q14), solvency =
+  passivity-under-admissible-inputs. **PROVED (internal half): `exchange_internal_passivity`** — the
+  concrete exchange is passive with **NO open PSD hypothesis**: the `Hs` resistive curvature is fixed to
+  `deriv(deriv poolPotential)(st k)` and its nonnegativity is **discharged BY the geometry**
+  (`exchange_Rcurv_nonneg` = the proven `R_psd`), i.e. passive *because* the geometry is PSD — the weld
+  itself (this was FLAGGED 2026-06-14 as un-composed in the first `PH_UNIFICATION_INTERNAL` run
+  `80cd7ba4`; that archive retained with `CORRECTION_2026-06-14.md`). Also `trade_no_spontaneous_storage`
+  (composes `trade_conserves`), `internal_passivity`/`no_internal_free_money` (telescoping), the pool
+  spine. **EXTERNAL/solvency half stays OPEN/conditional** — `solvency_of_coverage`/`coverage_iff_solvency`/
+  `exchange_solvency_split` keep `hcov` (B1/B3/B4 admissibility) as a `→` premise, **never discharged**
+  (PH-4b honored; geometry does NOT close solvency). Audit PASS ×3 (research-lead `aa40e1c1`-redo +
+  manager + skeptic re-gate `adbc7377` CLEAR): token-clean; weld genuinely composed (no open hR, real
+  curvature, not circular/vacuous; strict gap 4.367); no statement drift; `#print axioms` summary ⊆
+  {propext,Classical.choice,Quot.sound} (canonical-env deferred). **Self-contained** (`namespace
+  PHUnification`, re-declares minimal `TemporalAMM`, NOT lake-globbed, NOT integrated into the canonical
+  build — MonolithConstM status; an in-canonical-dir copy was written then **removed by the manager**,
+  skeptic concurred). ⚠ The object's μ is the **Balancer constant-product** potential, NOT the GH CGF
+  (see `notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md` — the info-geo/Fisher
+  framing is under re-examination). **Verdict: `proved (trusted-from-prover)`, INTERNAL half only** —
+  NOT "verified", NOT integrated; external solvency remains the open frontier.
+
 ## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
 Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
 no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide`; axioms ⊆

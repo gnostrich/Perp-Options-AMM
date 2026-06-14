@@ -3159,3 +3159,20 @@ VERDICT FILE: notes/skeptic/VERDICT_PH_UNIFICATION_INTERNAL_2026-06-14.md.
 - Pattern #NN (new): "both halves present in one file, composition left to reader" sold as "X-witnessed."
   When a gate's whole purpose is to verify a WELD, presence-of-both-pieces ≠ weld-made. Check for the actual
   composing theorem with NO open hypothesis, not just that the discharge lemma exists nearby.
+
+## VERDICT #ph-unification-composed (2026-06-14) — CLEAR (re-gate; my #ph-unification-internal FLAG resolved)
+Re-gate on resubmission after my FLAG-OVERSELL. Artifact: PH_UNIFICATION_COMPOSED/.../PHUnification.lean
+(md5 65e7bc31, 183 lines, UNTRACKED `??`, Aristotle project 8ee75026 / task 5c2bccf2). Manager
+independently audited PASS; I re-checked the COMPOSITION cold, did NOT rubber-stamp.
+VERDICT FILE: notes/skeptic/VERDICT_PH_UNIFICATION_COMPOSED_2026-06-14.md.
+- The weld I prescribed (prior verdict L82-86) now EXISTS and is correct. `exchange_internal_passivity`
+  (L125-130): NO hR premise (only hst domain = object data); Rcurv slot = genuine `deriv(deriv poolPotential)(st k)`,
+  char-identical at L113/127/129/176; body `exact internal_passivity ... (exchange_Rcurv_nonneg E st hst) N`
+  discharges hR via R_psd (real, re-derived μ''=2(t−β)/αβ≥0 last round). Typechecks ONLY because the
+  Hs-curvature and the proven-nonneg curvature are the SAME function — they are, byte-identically. Genuine, not free-var/sorry/circular.
+- Non-vacuity re-probed with GEOMETRIC curvature: gap=Σdiss=4.367 STRICT>0. Closing hR SPECIALIZED (harder/more-specific), not weakened.
+- trade_no_spontaneous_storage (L138-145) NOW PRESENT (was absent) — genuinely composes trade_conserves(.2 beta-eq) into exchange_internal_passivity. Both missing welds landed.
+- External half still conditional (hcov `→` premise everywhere, PH-4b honored, no solvency leak in rewire). Token scan CLEAN (comments-stripped). No drift-to-easier.
+- Placement: CONCUR. Only 2 copies (COMPOSED + prior INTERNAL archives); NONE in temporal_lean_verified/RequestProject/ (manager's in-tree removal real). Self-contained+namespaced, not lake-globbed, no clash = MonolithConstM status. No FLAG.
+- Honest label for fold (all correct/required): trusted-from-prover (NOT verified, no local kernel) + self-contained (re-declared minimal types, NOT integrated) + INTERNAL half only (external open/conditional).
+- COHERENCE: resolution not reversal — resubmission composed it exactly as I specified. Pattern #NN ("presence-of-both ≠ weld-made") confirmed as the right check: I demanded the actual composing theorem with NO open hypothesis, and that is what arrived. Good template for future weld gates.
