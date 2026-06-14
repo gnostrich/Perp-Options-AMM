@@ -3324,3 +3324,62 @@ the manager-audit MISSED.
   PROP with content you could fail to satisfy, or is it `: True`? A `True` field is not a carried
   hypothesis, it is an UNformalized claim wearing a hypothesis costume. Always read the structure's field
   TYPES, not just its name, before accepting "carried."
+
+---
+## VERDICT — paper referee-fold honesty pass #2 (2026-06-14, artifact `paper/temporal_paper_american_2026.tex` working-tree, vs cleared draft e4d089c)
+Cleared the first draft as e4d089c (manager mis-cited it "a5e2a038" — that hash is NOT a valid object on
+this branch; minor process note, not flagged as the commit message confirms e4d089c = the 2-fix cleared draft).
+The FOLD = +310/-98 lines folding RESPONSE_TO_REFEREES_2026-06-12.md.
+- **FLAG-OVERSELL #1 (halt-class for "honest"): off-ATM transition lemmas sold as machine-checked tfp,
+  not backed by archives.** Paper L352-356 (§sec:amm) claims "The state-transition rule ... is
+  machine-checked: see Section~\ref{sec:formal} (... the off-ATM trade-point existence/uniqueness and
+  $w$-storage lemmas; \tfp{})". TWO defects: (a) the off-ATM result `offatm_submit` 90056417 exists ONLY
+  as a single INDEX line under the entry-142 "proven-but-UNFOLDED store results ... manager to route"
+  sweep — NO folded archive in formal/aristotle_runs/ (only WARPAMM_external/WARPCALC there), NO
+  MANAGER_VERIFICATION entry, NO manager audit. It therefore does NOT meet the paper's OWN tfp provenance
+  bar (L644-658: "passed a zero-cost artifact audit ... and a hand re-derivation"). It's "COMPLETE;
+  token-clean" per a parallel-session note — that is NOT the audited-and-folded tfp the warp-amm cluster
+  got. (b) "$w$-storage lemmas" has NO Lean theorem AT ALL — w-storage is an ARITHMETIC exhibit (11/21 ≠
+  22/43), and INDEX's offatm content is "existence/uniqueness, w′∈(0,1)", no storage theorem. CONFIRMING
+  the mismatch: §sec:formal's own "What is machine-checked (tfp)" list (L660-694) does NOT contain offatm
+  or any w-storage lemma — the reader is pointed to sec:formal "for" lemmas that aren't there. This is the
+  exact pattern the manager asked me to check: the referee response (L134 "the lemmas behind this rule are
+  already proved in Lean 4") adopted as OUR tfp claim without our own folded/audited proof behind it.
+  Abstract is SAFE (lists settlement/boundary/biconditional/curve-lens spine only, NOT the transition
+  lemmas) — overclaim localized to the body.
+- **FLAG #2 (fix-now): new arXiv IDs printed confidently, no "unverified against primary source" flag.**
+  The 5 new IDs (2006.08806/2103.14769/2402.06064/2208.06046/2204.14232) come from the referee response;
+  no web here to check arxiv.org. The original draft hedged Singh ("details to be confirmed before
+  submission") — that hedge was REMOVED with Singh and NOT replaced. Paper now prints all cites
+  confidently (e.g. Panoptic→Lambert&Kristensen 2204.14232 rests purely on the referee's word, L240 of
+  response). No sentence flags that we have not independently verified. Softer than #1 (IDs from a referee
+  = checkable source, not an LLM; commit-for-review ≠ submission) — fix-now, not halt.
+- **FLAG #3 (fix-now, minor): q↦Δy map improvised.** L347 states `Δy=q·K(θ)` as the notional-to-cash-leg
+  map; NO backing in specs/formal/notes, and the referee response Q8 (L234) explicitly said "We do not
+  improvise it here." Mitigated: limitations L861-864 carries it as "remains partly open" and it's a
+  plausible bookkeeping identity. Minor.
+- **CLEAR (re-checked cold):** Singh genuinely gone (only in a comment, no orphan \cite; every \cite
+  resolves to a \bibitem). State-transition reframe FAITHFUL to response (w stored, k readout not
+  conserved L215-219, global α/β not conserved off-ATM L211-214, spot=special case L207-210, reserve-
+  feasibility domain L196-200, trajectory hyperbola scoped to spot operator L114-133); retracted
+  invariant/w=α/x/no-storage framing genuinely GONE not hedged (L356-359 explicit withdrawal). Collar at
+  true strength, swap-composition prose WITHDRAWN everywhere (L307-316 noarb, L329-339 prop, L469-473
+  conclusion). Q4 lens-as-vol-calibration honest, NO claim it neutralises Monte Carlo (L290-298, L274-282
+  "We do not claim ... neutralises any specific equilibrium-drift quantification"). Novelty disowned:
+  curve family = translated CFMM/Evans (L70-74, L135-143, L360-369), novelty relocated to weight-update +
+  semantic layer + American smooth-paste + const-m lens. QuantAMM=prior, no TFMM (L391-396). Solvency
+  conditional (23 hits), B1/B3/B4 undischarged structure fields. GH disowned (only "it is NOT GH" +
+  carried[GH/Bessel-K] distributional layer + "Balancer potential not GH CGF"). |Γ|≤1 exact/>1 approx.
+  Unification=conjecture, internal half tfp / external open. Gibbs wing-scoped non-load-bearing. T1b Snell
+  named-not-formalised (preserved from pass #1). No "verified" leaks.
+- **NET: ONE halt-class honesty overclaim (#1) — NOT honest to commit as-is.** Fix = either downgrade the
+  L352-356 claim from machine-checked/tfp to its true status (off-ATM existence/uniqueness = proven-but-
+  UNFOLDED/unaudited, NOT tfp; w-storage = arithmetic exhibit, NOT a lemma) and remove it from the
+  "see sec:formal" pointer, OR fold+audit offatm_submit to the tfp bar first. Plus 2 fix-now (#2 cite
+  hedge, #3 q-map). The substance of the reframe is sound; the LABEL on its proof status outruns the
+  archives.
+- **Pattern reinforced (referee-claim laundering):** a referee/external statement ("already proved in
+  Lean") adopted verbatim as OUR tfp claim WITHOUT our own folded+audited archive — same family as
+  carried-sold-as-grounded and trusted-sold-as-verified. Test: every "machine-checked/tfp" cite in a paper
+  must resolve to a FOLDED, manager-audited archive, not to an INDEX "manager-to-route" line or to a
+  referee's word.
