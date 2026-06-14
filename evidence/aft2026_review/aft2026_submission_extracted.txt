@@ -1,0 +1,876 @@
+
+===== PAGE 1 =====
+Singular Dynamic AMM Pricing Perpetual1
+Options Across the Strike Continuum2
+Anonymous author3
+Anonymous affiliation4
+Abstract5
+Existing on-chain perpetual-option venues fragment liquidity across discrete strikes and rely on6
+complex multi-pool mechanisms; pricing is rarely closed form, and the entire out-of-the-money7
+continuum is never served from a single pool.8
+We present a market mechanism in which one liquidity pool, governed by the weighted constant-9
+product invariant (𝑥𝑤)· (𝑦1−𝑤) = 𝑘 with a dynamic weight 𝑤, prices the entire out-of-the-money10
+strike continuum — both calls and puts — in closed form. Positions are barrier instruments. A11
+position composed with the perpetual future it is opened against caps the trader’s drawdown without12
+forcing position closure, and settlement is denominated in units of that perpetual future. Two of13
+the core results are formally verified in Lean 4 [6, 10]: (i) a composite-ray closed-form valuation14
+identity that extends across the OTM-to-ITM boundary under an effective-strike substitution, and15
+(ii) a no-internal-arbitrage characterisation as a biconditional — a costless collar yields zero capital-16
+efficiency surplus if and only if the pool is symmetric — established by direct derivation with an17
+explicit skew counterexample.18
+2012 ACM Subject Classification Theory of computation → Algorithmic mechanism design; Applied19
+computing → Economics; Theory of computation → Program verification20
+Keywords and phrases automated market maker, perpetual options, barrier options, constant func-21
+tion market maker, decentralized finance, formal verification22
+Digital Object Identifier 10.4230/LIPIcs.AFT.2026.23
+1 Introduction24
+Perpetual futures markets have become the dominant venue for leveraged speculation on25
+cryptocurrency prices, but a leveraged perpetual position carries the discontinuous risk of26
+liquidation: when collateral runs out, the position is involuntarily closed at a loss. A natural27
+hedge against this risk is an out-of-the-money (OTM) option on the same underlying, which28
+caps the trader’s drawdown past the strike. Existing on-chain venues that offer such options,29
+however, fragment liquidity across discrete strikes and use complex multi-pool mechanisms;30
+pricing is rarely closed form, and the entire OTM strike continuum is never served from a31
+single pool.32
+This paper presents a market mechanism in which a single liquidity pool, governed by the33
+weighted constant-product invariant (𝑥𝑤)· (𝑦1−𝑤) = 𝑘 with a dynamic weight 𝑤, prices the34
+entire OTM strike continuum — for both calls and puts — in closed form. The instruments35
+are barrier options, and a position composed with the perpetual future it is opened against36
+(its origin perp ) caps the trader’s drawdown without forcing position closure; the option37
+does not expire, so the hedge persists for as long as the underlying perp is held. Settlement38
+is denominated in units of the carved-perp slice that the band escrows against, with a single39
+dollar-conversion at close.40
+Contributions.41
+A closed-form pricing mechanism for the entire OTM perpetual-option continuum (both42
+calls and puts) from a single dynamic-weight CFMM pool, with the weight updating on43
+© Anonymous author(s);
+licensed under Creative Commons License CC-BY 4.0
+8th Conference on Advances in Financial Technologies (AFT 2026).
+Leibniz International Proceedings in Informatics
+Schloss Dagstuhl – Leibniz-Zentrum für Informatik, Dagstuhl Publishing, Germany
+===== PAGE 2 =====
+XX:2 Singular Dynamic AMM Pricing Perpetual Options
+every trade according to a conservation law on 𝛼 = 𝑥𝑤 and 𝛽 = 𝑦(1− 𝑤).44
+A geometric framing in which strikes are identified with rays in the (𝑥, 𝑦) plane, valuation45
+and funding are read off intersections of those rays with two distinct curves (a live pool46
+curve and a fixed anchor curve), and the close-equals-exercise mechanism is realised as47
+a ray-parking property at the pool’s at-the-money line.48
+A two-jobs settlement protocol that values each leg of a band in carved-perp units and49
+converts to dollars with a single equity multiplication, with a dimensional-check argument50
+confirming the conversion is balanced at the level of the formula.51
+A no-internal-arbitrage characterisation as a genuine biconditional: a costless collar yields52
+zero capital-efficiency surplus if and only if the pool is symmetric ( 𝑤 = 1
+2 ). The skew53
+direction is established by an explicit counterexample.54
+Two of the core results — the composite-ray closed form across the OTM-to-ITM bound-55
+ary, and the no-arbitrage biconditional — are formally verified in Lean 4 [6, 10], with no56
+domain-specific axioms.57
+Organization.58
+Section 2 defines the instruments and their pricing. Section 3 gives the curve-skewing intu-59
+ition behind the AMM construction. Section 4 sets up the strike-as-ray translation. Section 560
+states the conservation law and trade formula. Sections 6 and 7 cover strike normalisation61
+and funding. Section 8 introduces the origin perp; Sections 9 and 10 cover the position life-62
+cycle and settlement, including the explicit closed-form payout formula with its dimensional63
+check. Section 11 discusses liquidity provision, Section 12 the no-arbitrage and round-trip64
+properties, Section 13 limitations, Section 15 related work, and Section 14 concludes. Ap-65
+pendices contain the notation table, derivations, identity statements, the three-operator66
+structural lemma, the unit-chain discipline, the state-space geometry results, the Lean veri-67
+fication ledger, and a worked numerical example.68
+2 Perpetual Options69
+2.1 Definition70
+Perpetual options are non-expiring contracts-for-difference, representing the payout from71
+favourable price action — upward for calls, downward for puts — of an underlying asset72
+relative to a denominating asset (here, USD) beyond a given strike price. The instruments73
+priced here are barrier options: a position’s value is bounded, topping out at one unit of74
+the underlying perpetual future when the position is in-the-money, and remaining at that75
+ceiling as the position moves further in-the-money. A position is terminated when its holder76
+closes it.77
+2.2 Utility78
+Liquidation in a perpetual future is the involuntary termination of a leveraged position when79
+collateral is exhausted. Composing a perpetual future with an OTM perpetual option on80
+the same underlying — a call to hedge a short, a put to hedge a long — caps realised loss81
+past the strike, bounding the trader’s drawdown without forcing position closure. Because82
+the option position does not expire, the hedge persists for as long as the underlying perp is83
+held.84
+===== PAGE 3 =====
+Anonymous author(s) XX:3
+2.3 Pricing85
+For an OTM strike, the value of a position is given by its mark : the ratio of the strike ray’s86
+slope to the pool’s at-the-money mark, taken as the lesser of that ratio and its reciprocal,87
+mark = min(slope , 1/slope)88
+so that the mark is a dimensionless quantity bounded in (0, 1]. (Appendix A provides a89
+notation table the reader may consult on first symbol use.) Intuitively, the mark is the90
+fraction of a full perpetual future that the position is worth: it approaches 1 as the position91
+nears the money and decays toward 0 deep out-of-the-money. The value of a position of size92
+𝑞 at a strike is 𝑞· mark.93
+This pricing carries no separate premium object. The mark is the complete description of94
+what a position is worth; there is no extrinsic-versus-intrinsic decomposition and no premium95
+term layered on top. Throughout this paper, “the value of a position” means 𝑞· mark, and96
+nothing else.97
+3 AMM Intuition98
+We make two generalisations to the constant-function AMM (𝑥𝑤)· (𝑦1−𝑤) = 𝑘, giving it the99
+expressivity to price perpetual options across the strike continuum.100
+“Trades skew the AMM curve instead of moving the reserves point along it.”101
+A two-asset constant-function AMM (CFMM) [1, 4] can be visualised as a curve in the (𝑥, 𝑦)102
+plane, along which the reserves (𝑥, 𝑦) are a single point. Price is the slope at that point, and103
+a trade moves the reserves point along the curve.104
+Two curves are in play, and it is worth naming both at the outset. The first is the pool105
+curve (𝑥𝑤)· (𝑦1−𝑤) = 𝑘, whose shape is set by the weight 𝑤; this is the curve that skews106
+under trades, and the curve against which strikes are priced. The second is the trajectory107
+hyperbola (𝑥− 𝛼)· (𝑦− 𝛽) = 𝛼𝛽, the locus along which the reserves point actually moves108
+(derived in Section 5). The two are tangent at the reserves point — they share a slope there109
+— which is why pricing read off the pool curve is faithful, and why “reshaping the curve” and110
+“moving along the trajectory” describe the same event from two angles.111
+The pool curve gives a family of shapes indexed by 𝑤. Rather than updating the pool’s112
+quoted prices by moving the reserves point along a fixed curve, we obtain the same effect by113
+changing the shape of the pool curve via 𝑤. For a small trade, if the reserves point were to114
+move along the curve, we note the slope at the post-trade point; then, instead of moving the115
+reserves point, we reshape the curve — by updating 𝑥, 𝑦, and 𝑤 — so that the slope of that116
+post-trade point is brought to the pre-trade reserves point. Section 5 makes this precise.117
+“Trades happen anywhere on the curve, not just at a single point.”118
+In traditional CFMMs, trades are spot swaps, always occurring at the reserves point on the119
+curve. We treat spot swaps as a special case of perpetual-option swaps, which may occur at120
+any point on the curve, subject to that point being out-of-the-money. A transaction at any121
+trade point on the curve is treated as if that trade point were the reserves point.122
+AFT 2026
+===== PAGE 4 =====
+XX:4 Singular Dynamic AMM Pricing Perpetual Options
+𝑥
+𝑦
+reserves point
+original
+reshaped
+curve pivots through
+the same point
+Figure 1 The pool curve reshapes around the reserves point via the weight 𝑤. The reserves point
+itself does not move; the pre- (dashed) and post-trade (solid) curves both pass through it, and the
+post-trade slope at the reserves point is the trade’s marginal price.
+𝑥
+𝑦
+reserves point (spot)
+trade points along the curve
+Figure 2 The reserves point (hollow circle) is the special case of a spot swap. Other trade points
+along the curve (filled) correspond to OTM transactions at different strike rays. Each ray from the
+origin intersects the curve once; that intersection is the trade point for the strike identified with the
+ray.
+4 Translating Perpetual Options Into AMM Swap Transactions123
+Here we establish the conventions that let us translate perpetual-option transactions into124
+the language of the AMM.125
+4.1 Mapping Strikes to Ray Angles126
+Each ray from the origin in the (𝑥, 𝑦) plane is parameterised by its angle — equivalently, by127
+the constant ratio 𝑦/𝑥 along the ray. We identify each ray with a unique perpetual-option128
+strike. A ray intersects the pool curve at exactly one point; that intersection is the trade129
+point for the strike.130
+4.2 The Anchor Curve and the Strike-to-Ray Map131
+The protocol uses a fixed reference object — the anchor curve — alongside the live pool132
+curve. The anchor curve is the symmetric 𝑤 = 1
+2 constant-product curve, whose at-the-133
+money point coincides with the current oracle. As the oracle moves, the anchor moves with134
+===== PAGE 5 =====
+Anonymous author(s) XX:5
+it, but the anchor never skews; its shape is fixed.135
+A strike has a fixed dollar identity, set at the moment it is opened. Its ray, however, is136
+a live quantity, derived from the current oracle frame:137
+𝜃(𝐾, 𝑡) = 𝐾 /oracle(𝑡)138
+normalised against the live oracle, not against an entry-frozen oracle. The ray re-derives139
+from live state at every read; no ray is stored. Stability is at the dollar level — the strike’s140
+𝐾 is locked — not at the ray level. The ray moves to express where the frozen dollar strike141
+sits, geometrically, right now.142
+The regime test for the strike — whether it is in- or out-of-the-money — is then a143
+comparison between this ratio and the pool’s live normalised marginal price 𝑠Norm, both144
+evaluated in the same frame. The pool’s role enters through 𝑠Norm in the regime test, not145
+through the ratio itself; the ratio is what tells the regime test where to look.146
+Both trades and rebases shift strike rays. Trades shift them by moving the reserves point147
+along the pool curve. Rebases shift them by rescaling the oracle frame ( oracle→ 𝑟· oracle).148
+Either way, the dollar strike 𝐾 stays locked; only the live ratio moves. There is no caching149
+of strike rays across operations.150
+4.3 The 45 ° Ray Represents Spot151
+By convention, the 45 ° ray ( 𝑦 = 𝑥) corresponds to the at-the-money strike. The anchor152
+curve is normalised so that its 45 ° intersection sits at unity (see Section 6). Rays on either153
+side of 45 ° parametrise the OTM continuum.154
+4.4 Calls and Puts on Opposite Wings155
+Rays steeper than 45 ° and rays shallower than 45 ° partition the OTM continuum into two156
+wings — one carrying calls (above-spot), the other puts (below-spot). The pool prices both157
+wings from the same (𝑥, 𝑦, 𝑤) state; no liquidity is partitioned between them.158
+4.5 Barrier as the Trade Primitive159
+The primitive transaction is a barrier : a position at a single strike ray, valued at 𝑞· mark. A160
+spread — a position bounded between an inner and an outer strike on the same wing — is a161
+composition of barrier primitives, valued as 𝑞· (markinner− markouter). A band — sold and162
+bought legs on opposite wings — is a further composition. Because the legs sit on opposite163
+wings, a band cannot be reduced to a single-ray transaction, and is always treated as two164
+legs (see Appendix C).165
+The same composition admits a closed-form shortcut for the execution of a spread,166
+expressing it as a single AMM swap at a composite ray 𝜃* = √𝜃inner· 𝜃outer with half-167
+spread 𝛿 = 1
+2 log(𝜃outer/𝜃inner). The shortcut and the barrier-by-barrier expression are prov-168
+ably equal; we use the barrier-by-barrier form for valuation throughout the body, and the169
+composite-ray shortcut for execution. Both are stated in Appendix C.170
+5 AMM Mechanics171
+The AMM accounts for every transaction as a swap of cash against the underlying at a trade172
+point.173
+AFT 2026
+===== PAGE 6 =====
+XX:6 Singular Dynamic AMM Pricing Perpetual Options
+5.1 Conservation Law174
+For each trade, the quantities 𝑥·𝑤 and 𝑦·(1−𝑤) are individually conserved. Denote 𝛼 = 𝑥·𝑤175
+and 𝛽 = 𝑦· (1− 𝑤). The pool state is therefore fully determined by (𝑥, 𝑦); the weight 𝑤 is a176
+derived field, 𝑤 = 𝛼/𝑥 (equivalently 1− 𝑤 = 𝛽/𝑦), recovered from the conserved quantities177
+at any time. No additional state storage is required.178
+Together with the constraint 𝑤 + (1− 𝑤) = 1, the conservation law confines all reachable179
+states to the hyperbola (𝑥− 𝛼)·(𝑦− 𝛽) = 𝛼𝛽 (see Appendix B). The invariant 𝑘 = 𝑥𝑤· 𝑦1−𝑤180
+is a label on the pool curve’s level set — a dependent readout, not a primitive of pool state181
+and not, on its own, a measure of liquidity depth.182
+5.2 Trade Formula183
+Parametrising a swap by its cash leg Δ𝑦 — the cash into the pool, signed — the global state184
+updates along the conservation hyperbola:185
+𝑦′ = 𝑦 + Δ𝑦186
+Δ𝑥 =− 𝛼𝛽· Δ𝑦 /[(𝑦− 𝛽)(𝑦′− 𝛽)]187
+Δ𝑤 = 𝛽· Δ𝑦 /[𝑦· 𝑦′]188
+The post-trade state is (𝑥′, 𝑦′, 𝑤′) = ( 𝑥 + Δ𝑥, 𝑦+ Δ𝑦, 𝑤+ Δ𝑤), with 𝛼 = 𝑥′· 𝑤′ and189
+𝛽 = 𝑦′· (1− 𝑤′) preserved by construction.190
+The third update, Δ𝑤, is not an independent equation. Since 𝑤 = 𝛼/𝑥 and 𝛼 is conserved,191
+Δ𝑤 is fully determined by Δ𝑥; the expression above is the algebraic simplification of Δ𝑤 =192
+𝛼/𝑥′− 𝛼/𝑥. It is written out because the weight 𝑤 is the quantity the pool’s pricing actually193
+moves, and the reader is owed an explicit sight of its update.194
+The direction of the cash leg is not free. For a transaction at a given strike, whether195
+cash flows into or out of the pool is fixed jointly by the wing and the side: buying a call and196
+selling a put draw cash out of the pool; selling a call and buying a put pay cash in. Writing197
+the wing factor as +1 for a call and −1 for a put, and the side factor as +1 for a sell and198
+−1 for a buy, the sign of the cash leg is their product,199
+sign(Δ𝑦) = ( call ? + 1 : −1)· (sell ? + 1 : −1).200
+This is what makes the two legs of a band — a sold leg on one wing, a bought leg on the other201
+— transact in the same direction against the curve rather than cancelling, a fact Section 12.1202
+relies on.203
+Notional is range-invariant.204
+The size 𝑞 of a leg is a fixed property of the leg. Adjusting a position’s strike range —205
+moving its inner or outer bound — reshapes the leg’s value and its position on the curve,206
+but does not change 𝑞. The range-sensitive quantities are the value and the cash leg of the207
+swap; the notional is not among them.208
+5.3 Pool Depth Evolution209
+Pool depth at any ray is determined by (𝑥, 𝑦, 𝑤) at that ray’s trade point. As 𝑤 updates210
+with trades, depth redistributes smoothly across the continuum.211
+The invariant 𝑘 is not, on its own, a measure of pool depth. Under strike normalisation212
+(Section 6) a rebase multiplies 𝑘 by a factor 𝑟𝑤, so 𝑘 is not invariant across rebases and213
+===== PAGE 7 =====
+Anonymous author(s) XX:7
+two pool states cannot be compared by their bare 𝑘 values. Depth is expressed by the214
+rebase-aware relation in which 𝑘 sits, not by 𝑘 in isolation.215
+6 Strike Normalisation216
+6.1 Rationale217
+Sustained directional drift in spot causes cumulative reserve imbalance — one wing depletes218
+faster than the other. Without normalisation, the strike-to-ray map drifts away from its219
+anchor, and the live pool decouples from the oracle. Strike normalisation keeps the pool’s220
+pricing frame anchored as spot moves, so that the strike-to-ray identification remains stable221
+under arbitrary spot trajectories.222
+6.2 Approach223
+We index the oracle spot price to unity and define the anchor curve in this normalised frame.224
+As oracle spot moves, the frame is periodically rebased : the reserves and conserved quantities225
+are rescaled by a factor 𝑟,226
+𝑥→ 𝑟· 𝑥, 𝛼 → 𝑟· 𝛼, 𝑘 → 𝑟𝑤· 𝑘227
+with the rebase carrying the pool’s frame along with the traveling spot. The pool’s at-the-228
+money mark floats around the unity reference.229
+Two points are worth making explicit. First, a rebase bounds drift; it does not230
+nullify the pool’s deviation from the anchor curve . A rebase prevents directional231
+drift from accumulating without limit, but the pool may legitimately sit at a deviation232
+from the anchor at any given time — that standing deviation is precisely what the funding233
+mechanism responds to (Section 7). Second, trades and rebases commute on final234
+state : applying a trade and then a rebase yields the same (𝑥, 𝑦, 𝑤) as applying the rebase235
+and then the trade. They do not, however, commute on slippage — a rebase moves the236
+reserves point along the curve, so a subsequent trade sweeps a different arc than it would237
+have absent the rebase, and the slippage paid is different. Round-trip neutrality therefore238
+holds only in a fixed frame.239
+7 Funding240
+7.1 Intuition241
+Funding anchors the pool’s pricing to the oracle. By analogy with a perpetual future —242
+where funding flows according to the sign of the mark-to-index basis — a perpetual-option243
+position accrues funding according to how the pool prices it relative to its anchor reference.244
+As a structural consequence, funding is countercyclical: traders on the crowded, consensus245
+side of the market pay traders on the contrarian side, dampening the variance of LP exposure.246
+7.2 Funding for a Given Position247
+Funding for a position is determined by the deviation of the live pool curve from the anchor248
+curve, evaluated at that position’s own strike ray .249
+The magnitude of funding is the size of this pool-versus-anchor deviation at the position’s250
+ray. The direction follows the perpetual-future analogy: if the pool prices the option above251
+its anchor-curve value — its mark exceeds the value the anchor curve assigns at that ray252
+AFT 2026
+===== PAGE 8 =====
+XX:8 Singular Dynamic AMM Pricing Perpetual Options
+— then the long side pays funding; if below, the long side receives it. Because deviation is253
+evaluated per ray, funding is naturally a per-position quantity, and the signed funding of254
+each leg of a multi-leg position follows directly from the deviation at each leg’s ray.255
+A small but important note: the anchor curve, not just the oracle, is what enables per-256
+strike funding. The oracle supplies a single number — one value at one ray (the ATM257
+ray). The anchor curve supplies a deviation at every ray, which is what a per-strike funding258
+quantity requires.259
+The frame for funding is the pool-versus-anchor deviation at the position’s own260
+ray — not pool spot, and not the pool’s shape considered globally. A rebase does not261
+change this quantity directly; it bounds the rate at which directional drift accumulates into262
+it. Funding prices the standing deviation; rebasing caps how large that deviation can grow.263
+Stated this way the two mechanisms are consistent: each acts on the same per-ray deviation,264
+funding by responding to its level and rebasing by limiting its accumulation.265
+8 The Origin Perp266
+A perpetual-option position in this protocol is never opened in isolation. It is opened as a267
+band — a composition of option legs — against a specific perpetual future the trader already268
+holds. The band exists to protect that perp from liquidation, and everything about how the269
+band is valued and settled refers back to it. We call it the origin perp .270
+A trader’s perpetual-future exposure is held as a single aggregated position, not as a271
+stack of discrete lots. Adding size in the same direction grows the one position; reducing it272
+shrinks it. There is one perp, with one notional and one equity, moving continuously as the273
+trader trades and as the mark moves.274
+When a band is opened, it is minted against a carved slice of that aggregated perp — a275
+defined portion, not the whole. At the moment of opening, three quantities are recorded and276
+thereafter held immutable for the life of the band: the slice’s absolute notional, its equity,277
+and the perp’s mark at the moment of entry. Later activity on the aggregated perp — more278
+size added, the mark moving, equity changing for unrelated reasons — does not touch the279
+slice. The band carries its own origin slice as a fixed reference.280
+This freezing is what keeps settlement well-posed. Because the slice is fixed in absolute281
+terms, the band’s settlement arithmetic cannot be contaminated by perp activity unrelated282
+to the band. The perp P&L attributable to a band is simply the P&L of its frozen slice,283
+tracked forward from entry — not a re-derived share of a live, moving aggregate. The slice284
+is the band’s immutable record of what it was opened against.285
+9 Position Lifecycle286
+A perpetual-option position has three phases: open, hold, close.287
+9.1 Open288
+A position is opened as a band, carved against an origin perp (see The Origin Perp). The289
+trader selects strikes on the OTM continuum — subject to the OTM restriction — and the290
+band’s legs are recorded against their trade points, with the AMM reshaping via 𝑤 and291
+preserving the conservation law at each leg.292
+Positions are opened as premium-neutral structures . A band’s legs are arranged so293
+that their cash legs offset: the cash raised by the sold leg funds the cash spent on the bought294
+===== PAGE 9 =====
+Anonymous author(s) XX:9
+leg, and no net cash crosses the boundary between trader and pool on opening. There is no295
+bare cash-for-option trade exposed to the trader.296
+It is worth distinguishing two layers here. At the level of AMM accounting, each leg is297
+still a swap of cash against the underlying at a trade point — this is how the pool records the298
+transaction, and the Trade Formula applies leg by leg. But that cash leg is an accounting299
+quantity internal to the pool’s bookkeeping. At the trader-facing level, a position is a300
+premium-neutral structure.301
+Three quantities are frozen at the moment a band is opened, and together they form a302
+recurring design pattern across the protocol: the dollar strikes of the legs, the carved origin303
+slice (its notional, its equity, and the perp’s mark at entry), and the leverage 𝐿0. Every304
+quantity that matters at close is either derived live from current state or read off one of305
+these three frozen records. This is what makes settlement attribution well-posed across the306
+band’s entire life.307
+9.2 Hold308
+An open position accrues funding continuously, as a function of the deviation between the309
+live pool curve and the anchor curve at the position’s ray (Section 7). The position carries310
+no expiry.311
+9.3 Close312
+The holder closes a position by reversing it on the AMM at its strike rays. The closing313
+transaction is not subject to the OTM restriction — that restriction governs opening only314
+— so a position whose strike has been crossed by the pool’s at-the-money mark, and is now315
+in-the-money, is closed through the same mechanism.316
+Closing and exercising are economically equivalent for the holder, and the lookup geome-317
+try is what makes this so. A strike’s ray expresses where its frozen dollar 𝐾 sits geometrically318
+in the live frame: the ratio 𝜃(𝐾, 𝑡) = 𝐾/oracle(𝑡) moves as both trades and rebases move the319
+pool curve. While the leg is OTM, the ray sits on the OTM side of the pool’s at-the-money320
+line and moves with the live frame. When the pool’s marginal price crosses the strike —321
+that is, when 𝑠Norm crosses 𝜃 — the leg goes in-the-money, and its ray parks at the pool’s322
+at-the-money line : it does not cross. Mathematically, the parking is realised by the leg’s323
+mark saturating to 1; the ray clamped at ATM and the mark capped at unity are the same324
+condition viewed two ways. While the leg is ITM, its effective strike is the pool’s at-the-325
+money mark itself, and the ray holds parked there however far the pool pushes. If the pool326
+later reverses, the ray un-parks and slides back out onto its own wing.327
+This geometric picture is the close-equals-exercise mechanism. When a leg is closed328
+in-the-money, the closing swap is valued at its effective strike — the pool’s at-the-money329
+mark — and that valuation returns the leg’s full intrinsic value naturally, with no separate330
+exercise path. The composite-ray closed form for settlement is verified to hold across the331
+OTM-to-ITM boundary under this effective-strike substitution (result C1; see Appendix G).332
+The parking mechanism handles the ordinary trajectory case: a strike’s ray that would333
+otherwise cross to the other wing instead parks at the at-the-money line. An additional live334
+wing-lock guard runs at each AMM-reversal swap as a check against adversarial cases —335
+a mis-tagged leg, or a swap-direction error that would put the transaction on the wrong336
+wing relative to the pool’s live mode ray. The two mechanisms are complementary: parking337
+handles ordinary state evolution, wing-lock catches manipulation.338
+AFT 2026
+===== PAGE 10 =====
+XX:10 Singular Dynamic AMM Pricing Perpetual Options
+A band is closed in a single composite-ray operation at the AMM execution level. Its legs339
+are clubbed and the band is settled as one transaction rather than unwound piece by piece;340
+the composite-ray construction used to open a spread extends to closing a whole band.341
+10 Settlement342
+10.1 The Escrow Frame343
+It is useful to approach settlement through a familiar idea first. A leveraged perpetual future344
+escrows margin : the trader posts collateral, and the position settles against that posted345
+margin — gains and losses are reckoned against it, and what remains is returned on close.346
+This is the standard picture.347
+This protocol adds one further layer of the same idea. Opening a band escrows a slice348
+of the perp itself — the carved origin slice of the previous section — and the band settles349
+in terms of that escrowed perp, just as the perp settles in terms of escrowed margin. The350
+band is a claim that resolves against escrowed perp the way a perp is a claim that resolves351
+against escrowed margin. Settlement is therefore perp-denominated : a band’s leg values352
+are carried in units of the carved perp, not as standalone cash amounts.353
+One consequence follows immediately. What is escrowed is a live slice of a perp, not a354
+frozen sum of cash. Settling in terms of it therefore means settling against its equity — its355
+entry margin adjusted by the P&L attributable to it — at the time of close. The leg values,356
+expressed in carved-perp units, are converted to cash at the carved slice’s closing equity .357
+This conversion is not an adjustment bolted onto settlement; it is the honest exchange rate358
+between carved-perp units and cash at the moment of close. It deflates the result when the359
+slice has lost value and inflates it when the slice has gained, symmetrically, because that is360
+what the slice is worth.361
+10.2 Closing a Band362
+A band has two legs on opposite wings — one above spot, one below. Because spot cannot363
+be in-the-money on both wings at once, at most one leg of a band is in-the-money at364
+any time . Settlement therefore has a clean two-case structure.365
+When no leg is in-the-money, both legs are live positions on the pool curve, and both366
+are closed by reversing them on the AMM in the usual way.367
+When one leg is in-the-money, that leg has value but no live curve position to reverse —368
+it is settled to cash directly , its value given by the composite-ray closed form under the369
+effective-strike substitution (result C1; see Appendix G). The remaining out-of-the-money370
+leg is live and is reversed on the AMM normally. In this case, sequencing matters: value the371
+settled-to-cash leg before any AMM swap perturbs the pool, so that the in-the-money leg is372
+priced against the pool state as it was at the moment of close.373
+10.3 The Settlement Formula374
+Let 𝑋 denote the sold leg’s settled value and 𝑌 the bought leg’s, both in carved-perp units,375
+with raw_ net = 𝑌− 𝑋. The carved slice’s closing equity is computed from its frozen origin376
+record and the perp’s mark at close:377
+attributablePnL = carvedNotional· perpMarknow− entryPerpMark
+entryPerpMark
+378
+carvedEquityAtClosure = carvedEntryEquity + attributablePnL379
+===== PAGE 11 =====
+Anonymous author(s) XX:11
+Settlement then performs the unit conversion to dollars and the leverage amplification in a380
+single tail multiplication:381
+trader_ payout = 𝐿0· raw_ net· carvedEquityAtClosure382
+club_ delta = (𝐿0− 1)· raw_ net· carvedEquityAtClosure383
+with a counterparty-equity floor as final guard: if raw_ net > 0 and the counterparty club’s384
+equity is non-positive, both trader_ payout and club_ delta are zero.385
+The / entryPerpMark normalisation in attributablePnL is dimensionally required. The386
+carved notional is in dollars, the difference of perp-marks is in dollars-per-asset, and the di-387
+vision turns that difference into a dimensionless fractional move. Without the division,388
+the product would have units of [USD2/asset] — a unit that does not exist. With it,389
+attributablePnL is in dollars, and adds cleanly to carvedEntryEquity (also in dollars). The390
+perp’s mark is sourced from the perp-DEX feed in production; in the simplified single-venue391
+setting we collapse it numerically to the oracle, which does not change the formula’s shape.392
+10.4 Two Scalars393
+Two distinct quantities act at settlement, and they must not be conflated. The first is the394
+carved slice’s closing equity , which performs the unit conversion from carved-perp units395
+to cash. The second is 𝐿0, the leverage frozen at band-open, which amplifies the settled net.396
+One sets the exchange rate; the other sets the magnification. They apply at different points:397
+the net is computed in carved-perp units, converted to cash at the closing equity, and then398
+amplified by 𝐿0, with the counterparty equity floor applying as a final guard.399
+11 Liquidity Provision400
+Liquidity providers deposit proportional contributions of cash and underlying into the pool401
+reserves (𝑥, 𝑦), in the manner of a weighted constant-product pool [8], and receive pool-402
+share tokens representing a claim on (𝑥, 𝑦) at any future state. Standard CFMM-LP con-403
+structions [1, 2] apply; we do not elaborate them here. Liquidity provision may be levered404
+synthetically — the LP takes on more pool exposure than they deposit, using the same405
+leverage architecture that powers perps and bands — though the implementation specifics406
+are out of scope for this paper.407
+LPs are collectively the counterparty to every open option position in the pool. Net LP408
+exposure at any moment is the position-weighted aggregate of option deltas across all open409
+positions on both wings.410
+LP P&L from internal protocol accounting equals fees earned. Reserve value changes are411
+an impermanent-loss / HODL-benchmark concern — an external analysis frame — and are412
+not part of protocol accounting; including them would double-count against fee P&L.413
+11.1 Hedging Note414
+LPs can hedge net delta externally via spot or perpetual futures on the same underlying.415
+The countercyclical funding mechanism partially offsets directional drift in LP exposure —416
+funding inflows are systematically aligned with the wing under stress — but does not fully417
+neutralise it. The residual is the LP’s structural option-writer position.418
+AFT 2026
+===== PAGE 12 =====
+XX:12 Singular Dynamic AMM Pricing Perpetual Options
+12 Properties419
+12.1 No Internal Arbitrage420
+Within a single pool state (𝑥, 𝑦, 𝑤), no composition of swaps across rays yields a riskless421
+capital-efficiency edge. The sharp statement concerns the costless collar : a band whose422
+sold and bought legs are arranged to be cash-neutral by construction.423
+The collar yields zero capital-efficiency surplus if and only if the pool is symmet-424
+ric — that is, if and only if the weight 𝑤 = 1
+2 . Under skew, 𝑤̸= 1
+2 , the surplus is non-zero,425
+with an explicit counterexample. The “if and only if” is the substance of the claim: the426
+result discriminates between symmetric and skewed pools, which is the evidence that it is427
+structural rather than an artifact of the definitions. The capital-efficiency edge of a costless428
+collar is thus a skew phenomenon — it exists only when the pool is directionally skewed,429
+and vanishes exactly at symmetry. This result is verified in Lean 4 (see Appendix G).430
+A distinction must be drawn carefully. The no-arbitrage result is a statement about431
+pricing — it says that at symmetry there is no per-unit pricing edge to extract. It does432
+not say the pool is left unchanged by a costless collar. A costless collar costs zero net cash,433
+but its two legs transact in the same direction against the curve, so the pool does move434
+— the weight 𝑤 shifts. The trader pays for that displacement: the proceeds of a swap are435
+the path integral of the marginal price along the curve [3], so any displacement of the pool436
+is internalised, by construction, by the trader who causes it. The legs therefore transact437
+at fair, sequenced prices, and that price path is the cost of moving the pool. A collar can438
+therefore cost zero cash and still do real work on the pool, with no contradiction — because439
+the displacement was paid for, the question “who pays for the arbitrage?” has no answer,440
+and hence there is no arbitrage. In particular, a collar opened at symmetry may leave the441
+pool skewed; that induced skew is simply pool state, bought and paid for at fair prices, and442
+the next trader transacts fairly against it.443
+The argument given here is intuition; the formal proof of the biconditional is the Lean re-444
+sult C4 in Appendix G, which derives the surplus identity from the concrete min(slope, 1/slope)445
+mark formula and produces an explicit skew counterexample for the negative direction.446
+The slippage point sharpens further. Because slippage is the path integral of marginal447
+price along the swept arc, and the arc depends on where the reserves point starts, a rebase448
+that moves the reserves point changes the slippage a subsequent trade would pay. Round-trip449
+neutrality therefore holds only within a fixed frame.450
+This is a statement about free cash . Liquidation protection retains genuine risk-management451
+value even at zero skew: a leveraged perp faces a discontinuous, ruinous liquidation, and452
+capping smooth upside is not symmetric in utility with preventing a wipeout. Zero skew453
+removes the free capital-efficiency edge, not the worth of the protection.454
+Finally, the collar’s capital-efficiency edge and the protocol’s funding flow are the same455
+underlying quantity — directional imbalance — observed twice: no skew means no edge and456
+no funding flow, and the two move together.457
+12.2 External Arbitrage458
+The pool’s at-the-money mark can diverge from the oracle between blocks; arbitrageurs459
+restore convergence by trading against the pool. This is the price-discovery mechanism,460
+incentivised by the funding-elastic restoring force (Section 6).461
+===== PAGE 13 =====
+Anonymous author(s) XX:13
+12.3 Round Trip462
+Opening and immediately closing a position at the same rays, in the same frame, returns463
+the original position to within fees. Cross-frame round trips are not neutral, for the slippage-464
+along-the-arc reason given in Section 12.1.465
+13 Limitations466
+The design is presented for a single liquidity pool. A single pool exposes one directional467
+weight 𝑤 and one rebasing frame; it is a deliberately rigid pricing system, with no per-468
+strike liquidity-provider discretion. This rigidity is the source of the closed-form tractability469
+and the structural no-arbitrage property, but it also fixes the shape of the pool’s liquid-470
+ity distribution: the protocol prices coherently within one fixed family of pricing surfaces.471
+The calibration of funding elasticity and related parameters is protocol-specific and left to472
+implementation.473
+Several further limitations are worth flagging explicitly.474
+Oracle dependence.475
+The strike-to-ray map is normalised against a live oracle, and in the present MVP-level476
+treatment the perpetual-future’s mark is collapsed numerically to the same oracle. Produc-477
+tion deployment requires a robust oracle architecture (e.g. multi-source aggregation with478
+manipulation-resistant medians), and the perp-mark feed in the settlement formula must479
+be sourced from the actual perp-DEX feed rather than the oracle, to handle DEX-vs-oracle480
+basis correctly. Adversarial oracle manipulation is not analysed in this paper and would481
+interact non-trivially with the funding and rebasing mechanisms.482
+Single-asset, single-pool scope.483
+Multi-asset extensions of the weighted constant-product family are well-known [8], but the484
+strike-to-ray translation and the settlement protocol developed here are presented for a single485
+underlying. Adapting the closed-form valuations to a multi-asset basket would require, at486
+minimum, a careful generalisation of the wing-and-ray structure and is left for future work.487
+No empirical or simulation validation.488
+The results in this paper are theoretical (closed-form derivations) and formal (Lean-verified489
+identities). The paper does not include simulation studies of pool behaviour under realistic490
+price trajectories, sensitivity analyses on funding-elasticity parameter choices, or empirical491
+comparisons against existing perpetual-option venues. Such studies are natural next steps492
+and would strengthen claims about practical deployability.493
+Extreme-trajectory behaviour.494
+The pool curve’s depth distribution is fixed by the constant-product form; behaviour under495
+sustained directional spot trajectories (where rebasing happens frequently) and under sharp496
+discontinuous moves (where many positions cross from OTM to ITM in close succession) is497
+bounded by the rebase-aware framework of Section 6 but not characterised quantitatively.498
+Implementations should perform stress-testing against historical extreme-move scenarios499
+before production deployment.500
+AFT 2026
+===== PAGE 14 =====
+XX:14 Singular Dynamic AMM Pricing Perpetual Options
+Security audit and deployment.501
+The mechanism described in this paper has not been independently security-audited as a502
+smart-contract implementation. Any deployment to a live blockchain environment would503
+require independent code review, formal verification of the on-chain implementation against504
+the specification here, and standard DeFi-protocol security practices (re-entrancy guards,505
+integer-overflow handling, upgrade paths, time-locked governance). The formal-verification506
+results presented in this paper concern the mathematical mechanism, not any specific im-507
+plementation.508
+14 Conclusion509
+A single liquidity pool governed by a weighted constant-product invariant with one dynamic510
+weight prices the entire OTM perpetual-option continuum in closed form. Positions are511
+barrier instruments, priced by a bounded mark function and carrying no separate premium512
+object. Composition of a position with the perpetual future it is opened against — its513
+origin perp — delivers the liquidation protection that motivates the design, and settlement is514
+denominated in units of that perp, with the carved origin slice keeping settlement attribution515
+well-posed.516
+Three quantities are frozen at the moment a band is opened — the dollar strikes, the517
+carved origin slice, and the leverage — and together they make settlement attribution well-518
+posed across the band’s life. The pool’s no-internal-arbitrage property is structural: a519
+costless collar yields zero capital-efficiency surplus if and only if the pool is symmetric, a520
+biconditional verified in Lean 4.521
+15 Related Work and Acknowledgements522
+The weighted constant-product invariant (𝑥𝑤)·(𝑦1−𝑤) = 𝑘 that underlies the present pricing523
+surface was introduced by Balancer [8] as a generalisation of the constant-product invariant524
+of Uniswap, with the weight 𝑤 static — fixed at pool creation and never updated. The525
+present design takes the same invariant and makes the weight dynamic — 𝑤 updates on526
+every trade according to the conservation law of Section 5, with 𝛼 = 𝑥𝑤 and 𝛽 = 𝑦(1− 𝑤)527
+preserved through each trade. The use of dynamic weights on the weighted constant-product528
+invariant has been independently explored by QuantAMM [9] as a mechanism for time-529
+varying portfolio rebalancing; we acknowledge their concurrent work on dynamic-weight530
+CFMM mechanics. The application here — pricing perpetual options across the strike531
+continuum via per-trade weight updates — is, to our knowledge, novel.532
+The continuous-function market maker framework of Angeris and colleagues [3, 4] pro-533
+vides the foundational analytical lens (curve as pricing surface, swap as marginal-price path534
+integral) used throughout this paper.535
+The barrier-instrument framing for non-expiring options on automated market makers536
+was developed concurrently in several venues. The concept of non-expiring options with537
+continuous funding payments was introduced by White and Bankman-Fried [11] (“everlasting538
+options”); a closely related construction is Panoptic [7], which prices non-expiring options539
+on Uniswap v3 LP positions. The present construction differs in unifying the entire OTM540
+continuum — both wings, all strikes — within a single dynamic-weight pool, rather than541
+distributing positions across a tick-grid or constructing payoffs from concentrated-liquidity542
+primitives.543
+===== PAGE 15 =====
+Anonymous author(s) XX:15
+A note on drafting.544
+Large language models were used as drafting and editing assistants in the preparation of545
+this paper. The technical content — the protocol design, the formulas, the Lean 4 verifica-546
+tion, and all design decisions — is the authors’ own. The models served as a writing and547
+structuring aid; every claim in this paper has been verified by the authors against the un-548
+derlying formal specification and reference implementation. We mention this in the interest549
+of transparency.550
+References551
+1 Hayden Adams, Noah Zinsmeister, and Dan Robinson. Uniswap v2 core. Whitepaper, 2020.552
+2 Hayden Adams, Noah Zinsmeister, Moody Salem, River Keefer, and Dan Robinson. Uniswap553
+v3 core. Whitepaper, 2021.554
+3 Guillermo Angeris and Tarun Chitra. Improved price oracles: Constant function market555
+makers. In Proceedings of the 2nd ACM Conference on Advances in Financial Technologies556
+(AFT ’20) , 2020.557
+4 Guillermo Angeris, Hsien-Tang Kao, Rei Chiang, Charlie Noyes, and Tarun Chitra. An558
+analysis of Uniswap markets. Cryptoeconomic Systems, 2019.559
+5 Anonymous. Formal verification artifacts for the present paper (Lean 4). A vailable from the560
+authors on request; will be deposited in a public repository upon publication, 2026.561
+6 Leonardo de Moura and Sebastian Ullrich. The Lean 4 theorem prover and programming562
+language. In Automated Deduction – CADE 28 , 2021.563
+7 Guillaume Lambert, Jesper White, Dan Robinson, and Jean-Marc Bordignon. Panoptic: A564
+perpetual, oracle-free options protocol. Whitepaper, 2023.565
+8 Fernando Martinelli and Nikolai Mushegian. Balancer: A non-custodial portfolio manager,566
+liquidity provider, and price sensor. Whitepaper, 2019.567
+9 QuantAMM. Temporal-function market making and dynamic-weight constant-function mar-568
+ket making. Project documentation, 2024.569
+10 The mathlib Community. The Lean mathematical library. In Proceedings of the 9th ACM570
+SIGPLAN International Conference on Certified Programs and Proofs (CPP ’20) , 2020.571
+11 Dave White and Sam Bankman-Fried. Everlasting options. Paradigm Research, 2021.572
+AFT 2026
+===== PAGE 16 =====
+XX:16 Singular Dynamic AMM Pricing Perpetual Options
+A Notation Table573
+Symbol Meaning
+𝑥, 𝑦 Pool reserves of the two assets (underlying, cash)
+𝑤 Dynamic weight; 𝑤∈ (0, 1)
+𝑘 Pool curve label; 𝑘 = 𝑥𝑤· 𝑦1−𝑤 (not a depth measure)
+𝛼 Conserved quantity; 𝛼 = 𝑥· 𝑤
+𝛽 Conserved quantity; 𝛽 = 𝑦· (1− 𝑤)
+(𝑥𝑇 , 𝑦𝑇 ) Trade point on the pool curve
+𝜃 Ray angle from origin; identified with a strike
+𝐾 Strike price (dollar, frozen at open)
+oracle(𝑡) Live oracle price; defines anchor curve’s ATM
+𝑠Norm Pool’s normalised marginal price; 𝑠Norm = (1− 𝑤)/𝑤
+𝑞 Position size (notional) of a leg; range-invariant
+mark Position value fraction; min(slope, 1/slope)∈ (0, 1]
+𝜃* Composite ray of a spread; 𝜃* =√𝜃inner· 𝜃outer
+𝛿 Composite-ray half-spread; 𝛿 = 1
+2 log(𝜃outer/𝜃inner)
+𝑟 Rebase factor
+𝐿0 Position leverage, frozen at band-open
+carvedNotional Frozen carved-slice notional [USD]
+carvedEntryEquity Frozen carved-slice equity at open [USD]
+entryPerpMark Perp’s mark at band-open [USD/asset]; MVP-collapsed to oracle
+574
+B Derivation of the Continuous Case575
+We sketch the derivation of the small-trade limit of the trade formula, which underlies the576
+marginal-price expression used in Section 12.1.577
+A trade with cash leg Δ𝑦 moves the reserves point along the trajectory hyperbola (𝑥−578
+𝛼)(𝑦− 𝛽) = 𝛼𝛽. Differentiating the conservation relation with respect to a path parameter,579
+and using 𝛼 = 𝑥𝑤, 𝛽 = 𝑦(1− 𝑤), the marginal exchange rate at the reserves point is580
+mp = − 𝑑𝑦
+𝑑𝑥 = 𝛼· 𝑦2
+𝛽· 𝑥2 .581
+This is the local price of underlying in terms of cash at the reserves point. For a finite trade582
+Δ𝑦, the proceeds are the path integral of mp along the swept arc of the trajectory hyperbola;583
+integrating against 𝑦 from 𝑦 to 𝑦′ = 𝑦 + Δ𝑦 yields584
+Δ𝑥 = − 𝛼𝛽· Δ𝑦
+(𝑦− 𝛽) (𝑦′− 𝛽) ,585
+which is the closed form given in the Trade Formula of Section 5. In the small- Δ𝑦 limit this586
+reduces to Δ𝑥≈− mp· Δ𝑦/[ 1− (Δ𝑦)/(𝑦− 𝛽) ], recovering mp as the limiting marginal rate.587
+Three derived facts follow directly. First, slippage — the gap between the proceeds of a588
+finite trade and what they would have been at the constant pre-trade marginal price — is by589
+construction the integrated curvature of mp along the swept arc. Second, the displacement590
+of the reserves point along the trajectory hyperbola is bounded in 𝑦 by the asymptote 𝑦 = 𝛽,591
+where the marginal price diverges; trades that would carry the reserves point past 𝑦 = 𝛽592
+are forbidden by the closed-form expression’s pole. Third, the same closed form applies for593
+a trade at any trade point on the curve (Section 5); the integration is local to the arc swept594
+===== PAGE 17 =====
+Anonymous author(s) XX:17
+by that specific transaction, and the per-strike trade-point view of Section 12.1 reduces to595
+the same expression evaluated at the appropriate (𝑥𝑇 , 𝑦𝑇 ).596
+C Composite-Ray Identities597
+C.1 The within-wing identity598
+A spread between an inner strike 𝜃inner and an outer strike 𝜃outer (same wing) reduces to a599
+single transaction at the composite ray600
+𝜃* =
+√︀
+𝜃inner· 𝜃outer, 𝛿 = 1
+2 log(𝜃outer/𝜃inner).601
+The shortcut form 𝑁·mark(𝜃*)·2 sinh|𝛿| and the barrier-by-barrier form 𝑁·(mark(𝜃inner)−602
+mark(𝜃outer)) are provably equal , an identity rather than an approximation. The identity603
+holds at all reachable pool states (𝑥, 𝑦, 𝑤), on either wing.604
+Proof sketch.605
+For a call leg with 𝜃 < 𝑠Norm on both endpoints, mark(𝜃) = 𝑠Norm/𝜃. The barrier-by-barrier606
+form expands to 𝑁·𝑠Norm·(1/𝜃inner−1/𝜃outer). The shortcut form expands to 𝑁·(𝑠Norm/𝜃*)·607
+2 sinh𝛿. Using 𝜃* =√𝜃inner𝜃outer and 2 sinh𝛿 = 𝑒𝛿− 𝑒−𝛿 =
+√︀
+𝜃outer/𝜃inner−
+√︀
+𝜃inner/𝜃outer,608
+the second form simplifies to 𝑁· 𝑠Norm· (1/𝜃inner− 1/𝜃outer). The two forms coincide. The609
+put-wing case is symmetric.610
+C.2 Extension across the OTM-to-ITM boundary611
+The identity extends across the OTM-to-ITM boundary under the effective-strike substitu-612
+tion: at any moment, replace the original strike by the pool’s live 𝑠Norm if the leg is ITM,613
+leaving it unchanged if OTM. Geometrically, this corresponds to the ray-parking mechanism614
+of Section 12.1: the leg’s effective ray clamps at ATM when the strike has been crossed. The615
+substitution preserves the form of the identity and gives the leg’s full closed-form value616
+across all regimes. This boundary-extending identity is the content of verified result C1.617
+C.3 Cross-wing obstruction618
+A band — sold leg on one wing, bought leg on the other — does not compose to a single619
+composite ray. A fully-OTM band has value of the form 𝐴· 𝑠Norm + 𝐵/𝑠Norm, and no single620
+ray yields both monomials. The composite-ray shortcut is therefore valid per leg within621
+a wing, but not across wings; a band is always two legs. The cross-wing obstruction is a622
+separately verified result; the same wing-based distinction (rather than a transact-vs-value623
+distinction) holds in both the transactional and the valuational use of the shortcut.624
+D The Three-Operator Family625
+The pool’s state (𝑥, 𝑦, 𝛼, 𝛽) admits exactly three primitive operators that move it. They626
+are distinguished by their scaling signatures on the conserved quantities 𝛼 = 𝑥𝑤 and 𝛽 =627
+𝑦(1− 𝑤):628
+Operator Effect on 𝛼 Effect on 𝛽
+trade 𝛼→ 𝛼 𝛽 → 𝛽
+rebase 𝛼→ 𝑟· 𝛼 𝛽 → 𝛽
+liquidity 𝛼→ 𝜆· 𝛼 𝛽 → 𝜆· 𝛽
+629
+AFT 2026
+===== PAGE 18 =====
+XX:18 Singular Dynamic AMM Pricing Perpetual Options
+A trade keeps both conserved quantities fixed (within-conservation move on the trajectory630
+hyperbola). A rebase scales 𝛼 by an anisotropic factor 𝑟 (oracle-frame move; 𝑥→ 𝑟𝑥, 𝑦631
+unchanged). A liquidity event scales 𝛼 and 𝛽 together by an isotropic factor 𝜆 (proportional632
+reserve scaling; 𝑥→ 𝜆𝑥, 𝑦→ 𝜆𝑦).633
+Generating-set property.634
+These three operators together generate the entire reachable pool-state space from any initial635
+state. Any modification of (𝑥, 𝑦, 𝛼, 𝛽) that arises in the protocol’s execution is a finite636
+composition of trade, rebase, and liquidity. The distinguishing (𝛼, 𝛽)-signatures provide a637
+uniqueness witness: any pool-state transformation can be uniquely decomposed into these638
+three primitive moves by its action on 𝛼 and 𝛽.639
+Commutation.640
+Trades and rebases commute on final state (Strike Normalisation, Section 6); they do not641
+commute on slippage, as a rebase changes the swept arc of a subsequent trade. Trade-and-642
+liquidity commutation is more subtle: a liquidity event applied before a trade re-scales the643
+pool, changing the marginal price the trade sees; the order matters for proceeds, though the644
+post-liquidity-then-trade and post-trade-then-liquidity states are related by a scaling.645
+E The Three-Stage Unit Chain646
+Settlement values are kept in three distinguishable stages, with exactly one conversion be-647
+tween the last two. The discipline is what makes the dimensional-check argument of the648
+Settlement Formula section airtight at the level of the formula.649
+Stages.650
+Stage 1 — bare fraction. The mark function returns a number in (0, 1], dimensionless.651
+Leg-level evaluations mark(𝜃) live here.652
+Stage 2 — carved-perp units. A leg value 𝑞· mark is a fraction of the band’s carved653
+origin slice; arithmetic over these quantities (including raw_ net = 𝑌− 𝑋) stays in stage654
+2.655
+Stage 3 — dollars. Reached by a single multiplication of raw_ net (stage 2) by carvedEquityAtClosure656
+(in dollars), followed by leverage amplification.657
+The single-multiply discipline.658
+Exactly one stage-2-to-stage-3 conversion occurs per band, and it occurs in the tail multi-659
+plication on raw_ net. Per-leg quantities do not individually cross stages 2-3; if they did,660
+raw_ net would be dimensionally inconsistent (subtraction across mixed-unit quantities).661
+The single-multiply discipline is the implementation-level expression of this constraint.662
+Dimensional reading of the settlement formula.663
+With this stage discipline, the settlement formula of Section 12.1 — with its explicit / entryPerpMark664
+normalisation in attributablePnL — balances dimensionally at every step. The attributablePnL665
+formula’s middle factor is a dimensionless fractional move ( [USD/asset]/[USD/asset] = 1 ),666
+so the formula’s output is [USD]· 1 = [USD], consistent with carvedEntryEquity. Without667
+===== PAGE 19 =====
+Anonymous author(s) XX:19
+the normalisation, the same formula would yield [USD2/asset], an inconsistent unit. The668
+dimensional check is, in effect, what enforces the single-multiply discipline.669
+F State-Space Geometry670
+The pool’s reachable state space carries a clean geometric structure that has been charac-671
+terised in supplementary verification work.672
+Trajectory hyperbola.673
+At fixed conserved (𝛼, 𝛽), the set of reachable states under trading alone is one branch of a674
+rectangular hyperbola with centre (𝛼, 𝛽): the admissible arc is the open region {(𝑥, 𝑦) : 𝑥 >675
+𝛼, 𝑦 > 𝛽,(𝑥− 𝛼)(𝑦− 𝛽) = 𝛼𝛽}. The arc has asymptotes 𝑥 = 𝛼 and 𝑦 = 𝛽; as 𝑥→ 𝛼+,676
+𝑦→∞ (and 𝑤→ 1−), and as 𝑥→∞ , 𝑦→ 𝛽+ (and 𝑤→ 0+).677
+Tangency with the pool curve.678
+At every reachable reserves point, the trajectory hyperbola and the pool curve 𝑥𝑤· 𝑦1−𝑤 = 𝑘679
+are tangent — they share the same slope at that point. This tangency is why pricing read680
+off the pool curve is faithful as a description of trade-induced motion, even though the681
+trajectory and the pool curve are distinct objects: the pool curve provides the shape the682
+protocol skews, the trajectory hyperbola is the path trades trace within that shape, and at683
+the reserves point the two coincide tangentially.684
+Rebases as a one-parameter group.685
+The rebase operator with factor 𝑟 forms a multiplicative one-parameter group acting on the686
+positive quadrant of (𝑥, 𝑦) space. Composition: rebase(𝑟1)∘ rebase(𝑟2) = rebase( 𝑟1· 𝑟2).687
+Identity: rebase(1) = id. Inverse: rebase(𝑟)−1 = rebase(1/𝑟). The orbits are horizontal rays688
+of constant (𝑦, 𝑤); a rebase moves the reserves point along the 𝑥-axis while preserving the689
+other coordinates.690
+Joint invariant.691
+Under the combined action of trade and rebase, the conserved quantity 𝛽 = 𝑦· (1− 𝑤) is692
+preserved by both operations. It is the joint invariant: the orbit space of the combined693
+action is foliated by level sets {𝛽 = const}, with the two operations acting within each leaf.694
+(The other conserved quantity 𝛼 is preserved by trade but scaled by rebase; the invariant 𝑘695
+is scaled by 𝑟𝑤 under rebase, so neither 𝛼 nor 𝑘 is jointly invariant.) The reachable state696
+space modulo trade-and-rebase action is therefore 1-dimensional, parametrised by 𝛽.697
+The trajectory hyperbola characterisation, the tangency property, the rebase group698
+structure, and the joint-invariant identification are all formally verified in Lean 4 (see Ap-699
+pendix G). The deeper question of whether the state space admits a metric structure under700
+which trades and rebases act as isometries is an open direction for which preliminary work701
+shows rebases are isometries of a log-coordinate metric while trades are not (trades change 𝑘,702
+which any rebase-invariant isometry would preserve); a complete characterisation is deferred.703
+AFT 2026
+===== PAGE 20 =====
+XX:20 Singular Dynamic AMM Pricing Perpetual Options
+G Formal Verification (Lean 4)704
+Selected core claims have been verified in Lean 4 [6] against the Mathlib standard library [10].705
+All results listed below are checked sorry-free and depend only on standard Mathlib axioms706
+( propext, Classical.choice, Quot.sound); no domain-specific axioms or stubbed lemmas are707
+used.708
+C1 — composite-ray boundary identity . The composite-ray closed form for set-709
+tlement holds across the OTM-to-ITM boundary, under the effective-strike substitution710
+(original strike if OTM, pool’s live 𝑠Norm if ITM). The identity is proved as an equality711
+of closed forms in all regime combinations; the substitution preserves the form’s value712
+across the OTM-to-ITM transition. This establishes the close-equals-exercise equivalence713
+as a proven property.714
+C4 — no-internal-arbitrage biconditional. The costless-collar capital-efficiency sur-715
+plus collarSurplus(𝜃, 𝑤) = 0 for all admissible strikes 𝜃 if and only if the pool is symmetric,716
+𝑤 = 1
+2 . A genuine biconditional, derived from the concrete min(slope, 1/slope) mark for-717
+mula with no domain-specific axioms; the proof includes an explicit skew counterexample718
+establishing the negative direction.719
+CompositeRayBand — cross-wing obstruction. A band’s two-leg opposite-wing720
+structure does not reduce to a single composite ray. The proof exhibits the 𝐴· 𝑠Norm +721
+𝐵/𝑠Norm form of a fully-OTM band’s value and verifies that no choice of single (𝜃, 𝑞)722
+reproduces it. Confirms that the within-wing composite-ray shortcut is the correct scope,723
+not the cross-wing case.724
+T angency and rebase composition. The trajectory hyperbola (𝑥− 𝛼)(𝑦− 𝛽) = 𝛼𝛽725
+is tangent to the pool curve 𝑥𝑤· 𝑦1−𝑤 = 𝑘 at every reachable reserves point. Trades and726
+rebases commute on final state. A rebase multiplies 𝑘 by 𝑟𝑤. Each statement is proved727
+as a clean identity via real-analytic algebra.728
+State-space geometry . The trajectory hyperbola is fully characterised as a rectangular729
+hyperbola with centre (𝛼, 𝛽) and admissible arc {𝑥 > 𝛼, 𝑦 > 𝛽}; both endpoint limits730
+( 𝑦→∞ as 𝑥→ 𝛼+, and 𝑦→ 𝛽+ as 𝑥→∞ ) are formally verified as Filter.Tendsto731
+statements. Rebases form a one-parameter multiplicative group (composition, identity,732
+inverse all proved). The conserved quantity 𝛽 is the joint invariant under combined trade-733
+and-rebase action. The geometric grid structure (trajectory curves × rebase orbits) at734
+the reserves point is established formally.735
+Verification artifacts are available from the authors on request, and will be deposited in736
+a public repository upon publication [5].737
+H Worked Settlement Example738
+A small numerical example may help anchor the Settlement formulas. Consider a trader739
+holding a long perpetual future on an underlying with mark $100 at the moment they open740
+a band. The band is carved against a slice of size $10,000 notional and $1,000 entry equity741
+(perp leverage 10×), with band leverage 𝐿0 = 2.742
+A short while later, the perp’s mark has moved to $110, and the trader closes the band.743
+The OTM leg reverses on the AMM and produces a stage-2 value of 0.30 (carved-perp units);744
+===== PAGE 21 =====
+Anonymous author(s) XX:21
+the ITM leg settles to cash with stage-2 value 0.05. Then:745
+raw_ net = 0.30− 0.05 = 0.25 (carved-perp units)746
+attributablePnL = $10,000· (110− 100)/100 = $1 ,000747
+carvedEquityAtClosure = $1,000 + $1,000 = $2 ,000748
+trader_ payout = 2· 0.25· $2,000 = $1 ,000749
+club_ delta = 1· 0.25· $2,000 = $500750
+The trader receives $1,000 from the band and the counterparty club balance changes by $500.751
+Note the asymmetry between the two: 𝐿0 = 2 means the trader keeps twice the per-band752
+net while the counterparty bears the unleveraged difference, with the equity floor ensuring753
+the protocol does not pay out beyond what the counterparty club can absorb.754
+This worked example also illustrates the dimensional discipline of Appendix E: raw_ net755
+is dimensionless ( 0.25 has no unit); carvedEquityAtClosure is in dollars; the product 0.25·756
+$2,000 converts stage-2 to stage-3 in a single multiplication; 𝐿0 is dimensionless and amplifies.757
+No formula step crosses dimensions illegitimately.758
+AFT 2026

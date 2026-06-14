@@ -30,8 +30,9 @@ inline._
 
 Grounded in: `paper/temporal_paper_draft.md` (Conservation Law, Limitations, Future Directions `(w,τ)`
 conjecture), `engine/knowledge/GH_MATH.md`, and prior notes
-`HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`, `REPARAM_balancer_kurtosis_dropin_2026-06-09.md`,
-`CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`. Hard constraints (manager-verified) honored:
+`curves/balancer_w/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`,
+`curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`,
+`curves/gh/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`. Hard constraints (manager-verified) honored:
 asymptote-respecting (wings stay exact Balancer power-laws); `√(δ²+v²)`-elbow rounding mechanism (NOT a
 tail-exponent `|v|^d` deformation); plain Balancer = the base; GH engine = one setting of `τ`.
 

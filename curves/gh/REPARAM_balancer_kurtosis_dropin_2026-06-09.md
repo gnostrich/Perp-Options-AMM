@@ -24,7 +24,7 @@ _2026-06-09, research-lead. SPEC/ANALYSIS deliverable for a SEPARATE operator im
 session. No engine edits, no Aristotle submits, no git in this pass. Grounded in
 `engine/knowledge/GH_MATH.md`, `formal/temporal_lean_verified/RequestProject/AMMCurve.lean`,
 research-lead MEMORY (MERTON-TIE/CLOSEOUT/RUN findings), and the prior analysis
-`notes/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`._
+`curves/gh/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`._
 
 _Confident vs conjectural marked inline. All §2.5/§3.5/§7 numerics computed this pass at 35–40 digit
 precision (mpmath); the curves are constructed by direct integration, not asserted from closed forms._

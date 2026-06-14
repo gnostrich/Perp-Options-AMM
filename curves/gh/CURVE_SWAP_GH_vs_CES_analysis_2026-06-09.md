@@ -3,7 +3,7 @@
 > ## ⚠ CORRECTION HEADER (2026-06-09 reconcile pass) — read before §1/§2
 > This note's δ-direction claims are **SUPERSEDED**. It says "symmetric Balancer base needs βh=0 AND
 > **δ→0**" (§1 Correction 2, §2 route (b)). That δ→0 is **WRONG**. Resolved by building the curves
-> numerically (`notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` v2, §2.5/CHECK 10):
+> numerically (`curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` v2, §2.5/CHECK 10):
 > - The **two-root SYMMETRY** is βh=0 at **any δ** — this part is correct.
 > - The **exact Cobb-Douglas/Balancer RESERVE CURVE is the δ→∞ (Gaussian) limit, NOT δ→0.**
 >   Cobb-Douglas = log-normal = Gaussian = δ→∞. δ→0 is the *Laplace* (fat-tailed) symmetric member,
@@ -16,7 +16,7 @@
 _2026-06-09. DISCUSSION/ANALYSIS ONLY. No Aristotle submits, no engine edits, no git.
 The curve/invariant choice is the OPERATOR'S call (CLAUDE §4 locked architecture); this note
 ANALYZES and RECOMMENDS. Confident vs conjectural is marked inline. Grounded in:
-specs/temporal_formal_spec.md, specs/port_hamiltonian_consistency.md,
+specs/temporal_formal_spec.md, framework/port_hamiltonian_consistency.md (at writing: specs/),
 formal/temporal_lean_verified/RequestProject/AMMCurve.lean, engine/knowledge/GH_MATH.md,
 and the MERTON-TIE / CLOSEOUT / UNIFY2 run findings in research-lead MEMORY.md._
 

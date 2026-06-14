@@ -476,3 +476,44 @@ Operator-approved SMALL HARDEN of `AIRTIGHT_T1b_optimality/.../Optimality.lean`:
 - line 92 `grind +qlia` → `right; field_simp; ring` (`opt_boundary_is_critical_A`: pick right disjunct, smooth-pasting factor `γ − (γ+1)·(Kγ/(γ+1))/K = 0` by field arithmetic).
 - line 145 `grind` → `exact ⟨(Sstar_A_pos hK (by linarith)).le, le_rfl⟩` (`opt_boundary_is_max_A`: membership `S*_A ∈ Icc 0 S*_A`).
 **AUDIT (all PASS):** token-scan `grep -rnE '(grind|aesop|exact?|apply?|rw?|simp?|native_decide|sorry|admit|sorryAx|opaque|unsafe)'` → ZERO live search/forbidden tokens (0 `grind|aesop` even in comments); ZERO `axiom` decls; ZERO `sorry`. All 6 theorem signature lines + the `AmericanOptimalityPrinciple` structure (`: Prop`, `True` field — NOT axiom, NOT proved) character-identical to original (full diff = the 3 tactic lines above only). All 5 sibling modules (AMMCurve/Audit/Main/Seam/Temporal) byte-identical vs submitted AND vs the original-T1b run. Toolchain pin `leanprover/lean4:v4.28.0` + mathlib `rev=v4.28.0` UNCHANGED. `#print axioms` block (6 targets) present; Aristotle reports ⊆ {propext,Classical.choice,Quot.sound}, no sorryAx — and the 3 concrete replacements (`exact`/`field_simp;ring`/term) cannot introduce non-standard axioms, so the original's clean axiom set cannot have regressed. Math re-derived independently (all 3 goals correct). **NOTE:** summary's "removed `hK : K ≠ 0` hypothesis" line is STALE carried text from a prior run — the actual diff shows NO signature change (original helper never had that hyp). NOT upgraded to "verified" (canonical-env build = the `#print axioms` reproduction + label upgrade).
+
+## OFFATM RUN — 2026-06-12 (operator ruling: off-ATM trade-at-point transition rule; SCRATCH-ONLY)
+Formalizes the 2026-06-12 operator ruling (`notes/operator_ruling_2026-06-12_offATM_trade_rule.md`)
+answering the AFT2026 referee's fatal #1 / Q1. Spec: `specs/SPEC_trade_at_point_transition_rule.md`.
+Standalone `import Mathlib` file (no canonical module imported); throwaway submit dir; pin v4.28.0
+included in the submission this time (first attempt f3776478 canceled for missing pin).
+
+### OFFATM_trade (90056417) — 9/9 theorems, proved (trusted-from-prover). GROUNDED, token-CLEAN.
+`formal/aristotle_runs/OFFATM_trade/` (submitted scaffold + `extracted/offatm_submit_aristotle/`).
+Defs `deltaX`, `deltaW` = the ruling's transition formulas verbatim (α_T, β_T inlined). Theorems:
+- `tradePoint_exists_unique` (L1a) — ray∩curve unique positive x_T; curve equation linear on the ray
+  (rpow algebra; witness x^w·y^(1−w)/θ^(1−w)).
+- `wNext_eq`, `wNext_mem_Ioo` (L1b) — w′=(w·yT+Δy)/(yT+Δy); pole condition Δy>−w·yT alone forces
+  w′∈(0,1).
+- `next_state_valid` (L1b) — pole + global positivity ⇒ valid next state.
+- `pole_does_not_bound_state` (L1c) — exact exhibit (θ=100, Δy=−20 passes pole, y′=−10<0): the pole
+  does NOT imply next-state positivity; the admissible domain needs x′>0, y′>0 as separate constraints.
+- `local_conservation` (L3) — (x_T+Δx)·w′=α_T ∧ (y_T+Δy)·(1−w′)=β_T identically on the pole domain.
+- `spot_reduction_global_conservation` (L2) — at θ=y/x the rule IS the paper's §5.1/§5.2 law: global
+  α,β conserved + next state on the trajectory hyperbola.
+- `w_storage_necessary` (L4) — exact rational exhibit (x=y=10,w=½,θ=4⇒(x_T,y_T)=(5,20),Δy=1):
+  w′=11/21 ≠ 22/43=α₀/x′ ⇒ w is genuine state (paper §5.1 "no additional state storage" false off-ATM).
+- `offATM_distinct_operator_signature` (L5 numeric core) — same exhibit: α′/α=43/42, β′/β=44/42 ⇒
+  matches none of App D's trade/rebase/liquidity signatures; the off-ATM trade is a 4th operator.
+**Audit PASS:** statements/defs character-identical submit-vs-return (only sorry bodies filled);
+token-scan ZERO (no sorry/admit/axiom/native_decide/opaque/unsafe/grind/exact?/aesop); concrete
+tactics only; pins v4.28.0 unchanged; Aristotle reports `#print axioms` = exactly
+{propext, Classical.choice, Quot.sound} for all 9; math pre-verified (sympy all-values identities +
+exact Fraction instances + manager's float instance reproduced). NOT upgraded to "verified"
+(canonical-env build = manager's label upgrade). L5 normatively remains a SCOPE REMARK in the spec
+(App D reachability/classification = spot-trade-scoped); the theorem certifies the numeric signature
+fact only. OUT OF SCOPE per operator: round-trip residual economics (deferred, entry 8); q↦Δy mapping
+(referee Q8) = open interface, nothing proposed.
+**DOMAIN VERSION: STRONG (manager urgent correction 2026-06-12 ACKNOWLEDGED — skeptic counterexample,
+manager-verified; research-lead re-derived exact: (10,10,½), θ=0.01, Δy=+10 passes the pole yet
+x′=−37.619, w′=21/22; mirror θ=100, Δy=−20 ⇒ y′=−10).** All 9 obligations were stated AND submitted
+with the strong domain (pole ∧ x+Δx>0 ∧ y+Δy>0): `next_state_valid` carries hx'/hy' explicitly,
+`pole_does_not_bound_state` proves the pole's insufficiency in-kernel. No weak-domain obligation was
+ever completed (the canceled unpinned attempt f3776478 never returned — superseded). Solution archive
+re-downloaded 2026-06-12 byte-identical (md5 046e9c02d29754b4285b1f2c946860c5); extracted copy folded
+at `OFFATM_trade/extracted/offatm_submit_aristotle/`.
