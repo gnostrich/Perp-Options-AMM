@@ -2,6 +2,15 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+✅ **MAIN MADE CURRENT 2026-06-14 (operator entry 248):** squash-merged PR #26 (branch→main, `bca93f0`).
+main HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `80f050e2` (constant-m), byte-identical to the
+branch; gates 13+5 green in-branch; main's #25 (referee response + off-ATM Lean) reconciled IN first (non-engine
+conflicts in 4 agent-MEMORYs + DIFF_LEDGER resolved to OURS = current branch truth — branch is the 434-ahead live
+side, so deviation from literal "main wins" is intentional: main was the STALE side). Branch
+`claude/exciting-archimedes-txs2wx` RETAINED as backup (§6.2.7). Squash ⇒ main has one consolidation commit, not
+the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
+work this session still lands on the working branch; re-merge to main on request.
+
 ⚠ **OVERNIGHT 2026-06-13 — TWO research-lead agents running concurrently (RECONCILE at completion, write-collision risk on RL MEMORY + conjecture note):**
 (1) `a36a09d100e742a34` — PH-unification whole-exchange conjecture (entry 238 brief, PH ASSUMED as scaffold).
 (2) `a790024277a0143ed` — structure-reconfirm-FIRST (entry 239: PH vs info-geometry/free-potential; check Aristotle history/aristotlelib) THEN unification on the reconfirmed structure. This one is more aligned with the operator's latest instruction.
