@@ -1,5 +1,19 @@
 # MEMORY — research-lead
 
+### LENS NATURAL HOME + LIVE-CURVE INFO-GEO RE-EXAM (operator entry 242) — 2026-06-14
+**TWO tasks, both delivered as a note `notes/research/LENS_NATURAL_HOME_2026-06-14.md`. NOT a HEAD build; read-only on engine. Hand to manager for audit + skeptic gate. NO git.**
+**TASK A — live-curve structure, HONEST (corrects GH-line baggage per `DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md`):**
+- SOLID/trusted-from-prover (pre-existing): live object = **convex-/Hessian-potential PH object** on Balancer constant-product: `price=∇μ` (price_is_grad), `R=∇²μ⪰0` on t≥β (R_psd). PH=forced cotangent lift, base ω≡0, NOT metriplectic. STANDS.
+- **NEGATIVE RESULT (re-derived, robust): NO CGF / exponential-family / information-geometric reading for the live Balancer pool.** 3 independent reasons: (1) μ″<0 for t<β ⇒ not globally convex ⇒ not a CGF; (2) only zero of cubic is t=β where μ=μ′=μ″=0 (fully degenerate origin, on the boundary); (3) **Marcinkiewicz** — cumulants κ₃=2/(αβ)=const≠0, κ₄=κ₅=…=0 is NOT a valid cumulant sequence of any measure (polynomial CGF must be degree≤2=Gaussian). The info-geo reading was **GH-line only** (GH used `ProbabilityTheory.cgf X μ` of a genuine GH MEASURE, CgfClean/GHmeasure — a DIFFERENT μ; demoting GH removed the measure). "Information-geometric base" must be DROPPED from the live-curve headline.
+**TASK B — where m fits naturally (POOL CURVE STAYS LOCKED, m=1⇒plain):**
+- **NATURAL HOME FOUND (POSITIVE):** m = the **inverse-temperature of the option-value Gibbs weight.** `value(S)=S^(−g)=e^(−(m·γ)·q)` on q=log S = the live object's own `carry` coord (MonolithConstM L28). β_T=g=m·γ; baseline β_T,0=γ (m=1); bigger m=colder=steeper everywhere. `value_m=(value_1)^m` exactly ⇒ m is a canonical thermal POWER, not a bolt-on. RESURRECTS operator entry-135 "free energy" thread for the RIGHT layer (option-value, not pool). Intrinsic to the option-value/settlement layer; ZERO pool change.
+- **Esscher tilt — NEGATIVE (corrects feature-inventory #14 for live curve):** tilt = translation (γ→γ−h); m = dilation (γ→m·γ). m is a SCALING of the natural parameter, not a tilt.
+- **Legendre/Hessian — intrinsic only via a SEPARATE option-value potential** Ψ_m(S)=S^(1−mγ)/(1−mγ); pool Hessian 1/μ″ is m-free by lock. Same conclusion as the thermal home in dual language.
+- **FLAG (operator-tier, NOT done):** making m intrinsic to the POOL itself needs a curve reopen (deform μ→μ_m so pool exponent=m·γ) — violates entry-229/231 lock. Operator call via manager.
+**ARISTOTLE SUBMIT (Task B.1 thermal identities, pin-complete):** prompt `formal/prompts/aristotle_prompt_lens_thermal_home.md` → self-contained `RequestProject/LensThermal.lean` (re-declared minimal `LensAMM`, does NOT touch pool/canonical modules). Targets: value_is_gibbs, value_pow_m, m_one_recovers_base, invtemp_eq_m_gamma, invtemp_mono, gamma_pos, g_eq_m_gamma. **Project `ca042134-24b2-44f5-9b98-bf82a13cd336`** (RUNNING at write-time; `--wait` bg task `bvso4qtti`). STATUS: **submitted, pending return + full audit — NOT trusted-from-prover yet.** The conceptual finding (m=inverse-temperature) stands on hand math regardless. Aristotle REACHABLE this session (list=200, no host_not_allowed).
+
+---
+
 ### PH-UNIFICATION-COMPOSED — THE WELD LANDED (resolution of skeptic FLAG-OVERSELL) — 2026-06-14
 **TRIGGER:** skeptic `notes/skeptic/VERDICT_PH_UNIFICATION_INTERNAL_2026-06-14.md` = FLAG-OVERSELL + manager
 `formal/aristotle_runs/PH_UNIFICATION_INTERNAL/CORRECTION_2026-06-14.md`. The prior `PHUnification.lean`
