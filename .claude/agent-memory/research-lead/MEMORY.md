@@ -24,11 +24,26 @@ the note §3/§4 and in the prompt's full Lean skeleton.
 (self-contained `RequestProject/PHUnification.lean`: re-declared minimal TemporalAMM slice + Exchange
 wrap + internal_passivity/no_internal_free_money/sampled_* + exchange_Rcurv_nonneg + EXTERNAL
 solvency_of_coverage/coverage_iff_solvency stay `→`/`↔` premises + exchange_solvency_split headline).
-**SUBMITTED OK (no 403): project `ad21b66d-14eb-4565-af91-e8a8ee0028f0`, task `80cd7ba4-18aa-4976-adfc-2c55f056d815`, status QUEUED → --wait polling in background.** Aristotle reachable this session
-(`aristotle list` exit 0, projects listed). AWAITING RETURN → then FULL AUDIT GATE (extract over
-throwaway, byte-diff out-of-scope, token-scan sorry/admit/axiom/native_decide/sorryAx/opaque/unsafe,
-#print axioms ⊆ {propext,Classical.choice,Quot.sound}, re-derive math, CONFIRM solvency_of_coverage
-still carries hcov as a premise = the bounce check) before any verdict.
+**SUBMITTED OK: project `ad21b66d-14eb-4565-af91-e8a8ee0028f0`, task `80cd7ba4-18aa-4976-adfc-2c55f056d815`.**
+**RETURNED + AUDITED 2026-06-14 (morning) → `proved (trusted-from-prover)`.** `aristotle show <PROJECT id>`
+= COMPLETE (~10h). (`show` on the TASK id 403s — wrong endpoint, NOT host_not_allowed; host edge has
+no x-deny-reason, reachable.) Archive `/tmp/ph_unif_internal.tar.gz` → folded
+`formal/aristotle_runs/PH_UNIFICATION_INTERNAL/` (tar + extracted PHUnification.lean md5 `d6bef416…`,
+141 lines + ARISTOTLE_SUMMARY.md). NO git (manager folds/commits).
+**FULL AUDIT GATE — PASS (zero-cost; canonical-kernel confirm env-blocked):**
+- Out-of-scope byte-diff: all 5 WT modules (AMMCurve/Audit/Main/Seam/Temporal) + lakefile + lean-toolchain
+  BYTE-IDENTICAL to working tree; only PHUnification.lean new. Toolchain v4.28.0 matches.
+- Token scan CLEAN: no sorry/admit/native_decide/sorryAx/unsafe/opaque; NO `axiom` token at all; no decide.
+- #print axioms: SUMMARY reports all 10 named theorems = exactly {propext,Classical.choice,Quot.sound}.
+- Math re-derived: poolPotential=(t−β)³/3αβ, μ'=(t−β)²/αβ=price, μ''=2(t−β)/αβ≥0 t≥β; internal_passivity
+  telescopes Hs(N)≤H0+Σsupplied from Σdissipated≥0; sampled_increment fwd-Euler.
+- SKEPTIC WELD (a) R⪰0 genuinely witnessed: `exchange_Rcurv_nonneg` discharges nonneg curvature by
+  CALLING `E.amm.R_psd` (not re-stubbed); R_psd itself proven. PASS.
+- SKEPTIC WELD (b) NO solvency-closed leak: `solvency_of_coverage` carries `hcov` as explicit `→`
+  premise (linarith [hcov s]); `exchange_solvency_split` keeps external half as inner (coverage)→(solvency)
+  implication; `coverage_iff_solvency` ↔ confirms minimality. Reduction did NOT become unconditional. PASS.
+NO emendation needed (clean as returned). NO statement weakened / hyp dropped / conclusion strengthened.
+**VERDICT: `proved (trusted-from-prover)` — NOT verified (env-blocked). Handed to manager.**
 **ITEM 4 — EXTERNAL HALF HONEST (DELIVERED, conjecture-with-hypothesis):** solvency ⟸ passivity ∧
 input-admissibility is PROVABLE (= B1.solvent_of_port_covers, already trusted); the minimal
 admissibility = B3 (funding sign+magnitude) ∧ B4 (price-path/oracle bound — the adversarial-path
