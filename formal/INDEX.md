@@ -160,9 +160,24 @@ object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on th
   PHUnification`, re-declares minimal `TemporalAMM`, NOT lake-globbed, NOT integrated into the canonical
   build — MonolithConstM status; an in-canonical-dir copy was written then **removed by the manager**,
   skeptic concurred). ⚠ The object's μ is the **Balancer constant-product** potential, NOT the GH CGF
-  (see `notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md` — the info-geo/Fisher
-  framing is under re-examination). **Verdict: `proved (trusted-from-prover)`, INTERNAL half only** —
+  (`notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md`). **Verdict: `proved (trusted-from-prover)`, INTERNAL half only** —
   NOT "verified", NOT integrated; external solvency remains the open frontier.
+
+- **LENS NATURAL HOME + structure re-examination RESOLVED** (operator entry 242; note
+  `notes/research/LENS_NATURAL_HOME_2026-06-14.md`; skeptic gate `a00a14ea` — 2 scope-qualifiers binding):
+  (A) **Measure-backed info-geometry is DEAD for the Balancer curve** — no CGF / exponential-family /
+  Fisher-of-a-measure reading (μ not globally convex; degenerate boundary zero; Marcinkiewicz forbids a
+  cubic CGF). BUT a **Hessian / dually-flat information geometry SURVIVES without a measure** (μ convex on
+  t≥β; Legendre dual `μ*(η)=⅔√(αβ)·η^{3/2}+β·η` exists). So: NOT "no info-geometry" — only the measure-backed
+  reading is killed. (B) **The steepness lens m's natural home = the inverse-temperature of the option-value
+  WING law:** `value(S)=S^(−mγ)=e^(−(m·γ)·q)` (q=log S) is a Gibbs weight, β_T=m·γ, `value_m=(value_1)^m`;
+  colder=steeper. **Lean-backed `proved (trusted-from-prover)`** — `aristotle_runs/LENS_THERMAL/LensThermal.lean`
+  (run `ca042134`/task `50d34e3c`; md5 `87f5ac86`; 7 thms incl. `value_is_gibbs`/`value_pow_m`/`invtemp_eq_m_gamma`/
+  `m_one_recovers_base`/`invtemp_mono`; token-clean; axioms⊆{propext,Classical.choice,Quot.sound}; self-contained
+  `LensAMM`, NOT integrated). **WING-SCOPED** — `value=S^(−g)` is the power-law tail, NOT the engine's bounded
+  smooth-pasted mark near ATM (measured mark/S^(−g) ratio 0.0012–9000). m is a **DILATION** (γ→m·γ), NOT an
+  Esscher tilt. Pool lock (entries 229/231) intact. **Making m intrinsic to the POOL would need a curve reopen
+  = operator-tier, NOT done.** Manager + research-lead audits both PASS; honest labels per a00a14ea.
 
 ## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
 Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
