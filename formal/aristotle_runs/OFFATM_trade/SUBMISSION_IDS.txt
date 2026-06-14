@@ -1,0 +1,15 @@
+OFFATM_trade (off-ATM trade-at-point transition rule, operator ruling 2026-06-12)
+submitted 2026-06-12 (research-lead)
+project_id: 90056417-e84a-44a1-b9fb-6c2642fc92ea
+(canceled unpinned first attempt: f3776478-497d-4234-8f80-2bb1e1d2bf7b)
+file: OffATMTrade.lean (9 sorries: L1a/L1b/L1c/L2/L3/L4/L5-signature)
+prompt: formal/prompts/aristotle_prompt_offatm_trade.md
+STATUS: COMPLETE 2026-06-12 — 9/9 proved (trusted-from-prover); audit PASS
+  (archive offatm_out.tar.gz, md5 046e9c02d29754b4285b1f2c946860c5; re-download
+  2026-06-12 byte-identical; extracted/offatm_submit_aristotle/).
+DOMAIN VERSION: STRONG — admissible domain = pole (Δy > −w·y_T, i.e. y_T+Δy > β_T)
+  AND x+Δx > 0 AND y+Δy > 0. `next_state_valid` carries hx'/hy' explicitly;
+  `pole_does_not_bound_state` proves in-kernel that the pole alone is insufficient
+  (skeptic counterexample 2026-06-12, manager-verified, research-lead re-derived).
+  No weak-domain obligation was ever completed: the canceled f3776478 attempt
+  never returned and is SUPERSEDED.

@@ -1,5 +1,56 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-11, CURVE-AGNOSTIC FRAMEWORK BUILD (deliverable A; derivations+numerics; NO submit / NO engine edit / NO git)._
+_Last updated: 2026-06-12, OFF-ATM TRADE RULE (operator ruling formalized: spec + 9/9 Aristotle
+proved (trusted-from-prover) + v27 cross-check DIFFERENT; manager's in-flight domain correction
+ACKNOWLEDGED+CLOSED — all artifacts STRONG domain; no engine edit / no git)._
+
+### OFF-ATM TRADE-AT-POINT RULE — 2026-06-12 (operator ruling, entries 5–8; referee fatal #1 / Q1)
+**Ruling** (`notes/operator_ruling_2026-06-12_offATM_trade_rule.md`): state (x,y,w), **w genuine
+state**; trade at ray θ executes at T = ray∩curve; local pair α_T=x_T·w, β_T=y_T(1−w) is the
+per-trade generator AT T (not a global invariant); flows Δx,Δy computed at T ARE the reserve
+changes; Δw stored. Round-trip residual + q↦Δy mapping (referee Q8) OPERATOR-DEFERRED / OPEN
+INTERFACE — nothing proposed.
+**Spec (mine): `specs/SPEC_trade_at_point_transition_rule.md`** — closed-form trade point
+x_T=k·θ^(w−1) (curve eq is LINEAR on the ray); simplified flows Δx=−x_T(1−w)Δy/(w·y_T+Δy),
+w′=(w·y_T+Δy)/(y_T+Δy); pole Δy>−w·y_T gives w′∈(0,1) FREE but does NOT bound the global state —
+admissible domain needs x′>0, y′>0 separately (exact counterexamples; domain = open interval
+(max(−w·y_T,−y), x·w·y_T/(x_T(1−w)−x) or ∞)); small-trade execution price = mp_T = [w/(1−w)]θ
+(matches "flows as per that trade point"). L1–L5 stated precisely; all identities sympy-verified
+all-values + exact Fraction instances; manager's numerics (w′=0.533 vs 0.523; α 5→5.097) reproduce.
+**Aristotle OFFATM_trade (90056417) — 9/9 proved (trusted-from-prover), audit PASS, GROUNDED**
+(`formal/aristotle_runs/OFFATM_trade/`; RESULTS.md OFFATM section; prompt
+`formal/prompts/aristotle_prompt_offatm_trade.md`): L1a ray∩curve ∃!; L1b pole⇒w′∈(0,1) +
+next_state_valid; L1c pole-does-not-bound exhibit; L3 local conservation (x_T+Δx)w′=α_T identically;
+L2 spot reduction = paper §5.1 EXACTLY (global α,β + hyperbola); L4 w-storage necessity RATIONAL
+exhibit (x=y=10,w=½,θ=4⇒T=(5,20),Δy=1: w′=11/21≠22/43=α₀/x′) ⇒ paper §5.1 "no additional state
+storage" FALSE off-ATM, must be scoped to spot; L5 numeric core: α′/α=43/42, β′/β=44/42 ⇒ off-ATM
+trade matches NONE of App D's 3 operator signatures = a DISTINCT 4th operator (App D classification
++ hyperbola reachability = spot-trade-scoped; L5 normatively a scope remark in spec §6). Token-clean,
+concrete tactics only (no grind/exact?/aesop), pins v4.28.0, axioms = standard three (Aristotle
+report). First submit attempt f3776478 canceled (missing toolchain pin) — always copy
+`lean-toolchain` into standalone submit dirs.
+**v27 cross-check: DIFFERENT (high confidence).** v27 `tradeUpdate(s,dy)` (branch
+`claude/exciting-archimedes-txs2wx`, lines 1723–1746) takes NO ray θ; evaluates the (W) weight FIELD
+at the RESERVES point (u=ln(y/x)−φ), conserves the GLOBAL pair α=x·w(u;φ), β=y(1−w(u;φ))
+(w*=1−β/y′, x′=α/w*), then re-centers the field φ′=u′−z. = the SPOT-trade operator lifted to the (W)
+field family; ruling's local-pair-at-T rule NOT implemented there (coincide only on the spot ray).
+"UNIQUE conservation-consistent trade" claim = uniqueness within v27's own global-pair requirement —
+no contradiction with the ruling (which drifts global α,β by design). Strong-form note mentions trade
+points only in a strike-registration row (line 277).
+**MANAGER URGENT CORRECTION (same day, in-flight) ACKNOWLEDGED + CLOSED:** skeptic broke the
+weak domain (pole only) from the brief/ruling note; I re-derived the counterexample exactly
+((10,10,½), θ=0.01, Δy=+10 passes pole y_T+Δy=11>β_T=½ yet x′=−37.619, w′=21/22; mirror θ=100,
+Δy=−20 ⇒ y′=−10). **Domain version of EVERY artifact = STRONG (pole ∧ x+Δx>0 ∧ y+Δy>0):** spec §5
+(incl. exact interval (Δy_min,Δy_max) + deep-wings trade-size-cap remark, added per manager),
+Lean submitted AND returned (`next_state_valid` carries hx'/hy'; `pole_does_not_bound_state`
+proves pole-insufficiency in-kernel), prompt, RESULTS.md, SUBMISSION_IDS.txt. NO weak-domain
+obligation was ever completed (f3776478 canceled pre-return, superseded). Re-downloaded the
+solution archive independently — byte-identical md5 046e9c02d29754b4285b1f2c946860c5; full audit
+re-run from scratch (statement diff = sorry bodies + one `:= by`→`:=` term-mode, token-scan zero,
+axioms standard three per summary, math re-derived incl. ℚ exhibits 1/42, −5/22, 11/21≠22/43,
+43/42≠44/42). Ruling-note corrigendum was added by the manager (lines 25–31) — verified accurate.
+Archive folded at `OFFATM_trade/extracted/offatm_submit_aristotle/` + `offatm_out.tar.gz`.
+Deep-wings cap is a REAL per-trade size constraint (θ=0.01: Δy_max=0.125 = 1.25% of pool y) —
+binds exactly on the strike continuum; flagged for paper §5 text + any engine build of the rule.
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -799,7 +850,11 @@ Typed interface stack: a change at any seam must type-check at every other seam 
 type-checker, not inspection). The "self-sandwich bug" was an interface violation (settlement
 reaching past its contract into the raw displaced pool) — caught by type under this discipline.
 
-## Live proof queue (UPDATED post-big-run 2026-06-08)
+## Live proof queue (UPDATED post-big-run 2026-06-08; OFFATM added 2026-06-12)
+- **OFFATM** — off-ATM trade-at-point transition rule (operator ruling 2026-06-12). **9/9 proved
+  (trusted-from-prover)**, audit PASS (formal/aristotle_runs/OFFATM_trade/; spec
+  specs/SPEC_trade_at_point_transition_rule.md). OPEN remainder (deliberately NOT submitted):
+  round-trip residual economics (operator-deferred), q↦Δy mapping (open interface, referee Q8).
 - **C1** — composite-ray → ITM via effective-strike substitution. **proved (trusted-from-prover)** (run
   2026-06-08; formal/aristotle_runs/C1/). sinh_log identity + universal-over-effective-strikes.
 - **C2** — no costless-collar arb at w=½. **proved (trusted-from-prover)** (formal/aristotle_runs/C2/).
