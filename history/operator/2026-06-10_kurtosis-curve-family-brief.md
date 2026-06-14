@@ -1955,3 +1955,13 @@ _Context: operator directs an autonomous full paper draft (arXiv format) — lea
 > refer to the reviewer comments and response also on previous paper to fold in that feedback its somewhere in the project
 >
 > dont ask em anything, draft it fully arxiv format, will review later
+
+
+---
+
+## Entry 245 — 2026-06-14 10:32 UTC
+_Context: operator supplies the referee-response file location on `main` (evidence/aft2026_review/RESPONSE_TO_REFEREES_2026-06-12.md); notes the comments are for the OLD paper but directs folding in whatever matters for the new American-style paper — positioning especially._
+
+> this comments for old paper but do the needful in context of whatever matters (positioning etc.)
+>
+> https://github.com/gnostrich/Perp-Options-AMM/blob/main/evidence/aft2026_review/RESPONSE_TO_REFEREES_2026-06-12.md
