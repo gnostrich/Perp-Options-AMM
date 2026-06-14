@@ -103,3 +103,15 @@ sharpened to lead with it (v4.2)._
 > ok inline give me the headline answer to the firat 3 points of the reviewer
 
 _Context note: the three reject-grade-finding headline answers (response v4.2 summary) printed inline._
+
+## Entry 16
+> put the damn file onto the repo so other chat can use it
+
+_(message sent twice, 2026-06-14 10:29:32Z and 10:29:45Z; the second identical after a /model switch.)
+Context note: branch PR #25 squash-merged to main d9f9d8e (non-engine: memories/evidence/formal/
+notes/specs; no engine or hook paths). RESPONSE file now on main for other sessions._
+
+## Entry 17
+> then give link
+
+_Context note: main GitHub link to the response file returned inline._
