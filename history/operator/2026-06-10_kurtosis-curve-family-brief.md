@@ -1965,3 +1965,11 @@ _Context: operator supplies the referee-response file location on `main` (eviden
 > this comments for old paper but do the needful in context of whatever matters (positioning etc.)
 >
 > https://github.com/gnostrich/Perp-Options-AMM/blob/main/evidence/aft2026_review/RESPONSE_TO_REFEREES_2026-06-12.md
+
+
+---
+
+## Entry 246 — 2026-06-14 13:49 UTC
+_Context: operator authorizes the paper-level positioning pass (fold the brainstorm per the skeptic's dispositions) and any research-level edits; explicitly no HTML/engine changes._
+
+> ok do whatever research / paper level edits you need; nothing to html
