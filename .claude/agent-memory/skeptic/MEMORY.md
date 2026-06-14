@@ -3276,3 +3276,51 @@ exit 0) then 8 independent mutations.
   invariant case is the SHARPEST instance — the quantity isn't coincidentally equal, it's DEFINITIONALLY
   equal by the harness's own construction of the inputs. Honest-label test for a "Lean⟺engine" line:
   does mutating the engine red it? If no engine mutation can, the line tests the harness, not the engine.
+
+## VERDICT #paper-american-2026 (2026-06-14) — NET HONEST-ENOUGH-FOR-OPERATOR-REVIEW; 2 fix-now FLAG-OVERSELL
+Artifact: paper/temporal_paper_american_2026.tex (820 lines, NEW arXiv draft, operator entry 244,
+barrier→American lift). Old papers (temporal_paper_draft.md, AfT v6 .docx) untouched (Jun 8, confirmed).
+Cold re-check, did NOT rubber-stamp manager claim-audit. Verified every cited theorem name resolves to
+a real archive (R1/R2/C1/C2/C3/T1a/T1b/T2/MERTON/LENSKERNEL/MONOLITH_CONSTM/LENS_THERMAL/Seam/
+PH_UNIFICATION_COMPOSED — ALL exist). Read actual Lean bodies for the load-bearing pieces. Found 2 things
+the manager-audit MISSED.
+- **FLAG-OVERSELL #1 (fix-now, wording): reserved word "verified" leaks into prose 4×** against the
+  paper's OWN discipline (L149/L521 "we never write 'verified'"). L411 SECTION TITLE "The C¹ seam,
+  verified two ways" (two ways = Lean tfp + engine gate, neither is local-kernel); L594 "the package
+  verifies"; L659 "the verified interface stack"; L699 "the verified interface". Substance is correctly
+  hedged everywhere else; only the word leaks. NOT halt-class.
+- **FLAG-OVERSELL #2 (fix-now, borderline — manager MISSED this): T1b "optimal exercise boundary /
+  carried on a Snell hypothesis" (L401-403, L536) dignifies a `True` placeholder.** Read Optimality.lean:
+  `AmericanOptimalityPrinciple` structure's ONLY field = `boundary_is_snell_optimum : True` (vacuous,
+  trivially inhabited, NOT used inside opt_boundary_is_max_A). What is GENUINELY proved (real nlinarith/
+  monotonicity) = S* maximizes coeffOfBoundary_A over DETERMINISTIC boundaries B∈(0,K). The bridge to the
+  stochastic Snell/optimal-stopping boundary is named-but-not-formalized. "Carried as a named hypothesis"
+  is technically true but dresses a True-stub as a substantive premise. INDEX labels identically
+  (GROUNDED variational; CARRIED[Snell]) so paper ⊄ INDEX, but this is THE M=Fisher rfl-tautology failure
+  class. Fix: say "deterministic value-maximizing boundary (variational); Snell identification named but
+  not formalized." Abstract is safe (lists "free boundary" not "optimality").
+- **CLEAR areas:** solvency conditional EVERYWHERE (Seam.lean: CurvePool fields solvent/arb_nonneg/ledger
+  = B1/B3/B4 undischarged structure fields, EXACTLY as paper L584-590; reserves_have_no_floor genuine
+  nlinarith proof, O=p²; demoPool port=0/trivial-O honestly covered by "representative not exhaustive").
+  GH disowned (only in "it is NOT GH" note + MERTON carried[GH/Bessel-K] + L616 "Balancer potential not
+  GH CGF"). Lens=Balancer+const-m load-bearing. Gibbs/inverse-temp reading wing-scoped + non-load-bearing
+  (LENS_THERMAL, L322-341). Unification = labelled conjecture, internal half tfp (exchange_internal_
+  passivity, curvature discharged by geometry, no open hR), external/solvency open (solvency_of_coverage
+  keeps hcov). |Γ|≤1 exact / >1 approx honest. tfp-vs-verified consistent except the 4 leaks. Singh et al.
+  double-flagged placeholder. No fabricated theorem names. Seam numbers (0.04%/0.1%/0.15%) back by
+  seam_gate.js TOL=0.15. L566 "guarantees as a typed stack" CLEAR (scoped by "conditional solvency: given
+  a port"). Completeness vs feature_inventory: curve-warp/carry/seam/solvency/lens/funding/rebase all
+  honest; paper makes NO engine-implementation claim for per-strike trade-point anchoring (inventory #16
+  OPEN) so no overclaim — design/math framing.
+- **MINOR (note, not flag):** L484-486 "evidence it is structural rather than an artifact of the
+  definitions" is in tension with C2's own carried-form caveat (collarSurplus := θ·((1−w)/w−1) is a
+  POSITED form, archive NOTE: "engine's exact closed form not in accessible specs"); vanishing-iff-w=½ is
+  near-definitional in that coordinate. Paper carries the hedge (L498-499) so not an overclaim; soften the
+  "not an artifact" sentence.
+- **NET:** HONEST ENOUGH TO HAND TO OPERATOR FOR REVIEW with the 2 fix-now items called out. No claim
+  outruns INDEX/register/archives on SUBSTANCE. Not halt-class.
+- **Pattern reinforced (#NN True-placeholder / rfl-tautology sold as carried-hypothesis):** the T1b Snell
+  stub is the same class as M=Fisher. Honest-label test for "carried hypothesis": is the hypothesis a
+  PROP with content you could fail to satisfy, or is it `: True`? A `True` field is not a carried
+  hypothesis, it is an UNformalized claim wearing a hypothesis costume. Always read the structure's field
+  TYPES, not just its name, before accepting "carried."

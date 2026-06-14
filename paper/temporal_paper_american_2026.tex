@@ -396,11 +396,12 @@ arbitrary $C^{1}$ join. It is the \emph{unique} solution of the value-match plus
 slope-match system, and it coincides with the optimal early-exercise boundary in
 the variational sense. Both facts are machine-checked: the boundary is
 \emph{generated} as the unique smooth-pasting solution (T1a
-\texttt{Sstar\_A\_forced}, \texttt{coeffA\_forced}; \tfp{}), and $S^{\ast}$ is the
-optimal exercise boundary by an American optimality principle (T1b
-\texttt{opt\_boundary\_is\_max\_A}, \texttt{AmericanOptimalityPrinciple};
-\tfp{}, with the optimal-stopping / Snell envelope step carried as a named
-hypothesis rather than discharged). The closed-form boundary also sits inside a
+\texttt{Sstar\_A\_forced}, \texttt{coeffA\_forced}; \tfp{}), and $S^{\ast}$
+maximises the holder's value over \emph{deterministic} exercise boundaries (T1b
+\texttt{opt\_boundary\_is\_max\_A}, a genuine variational result, \tfp{}). The
+identification with the stochastic optimal-stopping (Snell) boundary is
+\emph{named but not formalised}---the \texttt{AmericanOptimalityPrinciple} field
+is a placeholder obligation (\texttt{True}), not a discharged premise. The closed-form boundary also sits inside a
 deeper tie to the classical perpetual-American (Merton) problem: $\gamma$ is the
 characteristic root of the underlying Laplace exponent, the relation
 $\gamma(\gamma+1)=2r/\sigma^{2}$ recovers the Gaussian (Merton) slice, and
@@ -408,7 +409,7 @@ $S^{\ast}$ is the Merton boundary on that slice (MERTON tie
 \texttt{Sstar\_is\_merton\_boundary}, \texttt{gaussian\_limit\_quadratic};
 \tfp{}, with the GH/Bessel-K distributional layer carried as named hypotheses).
 
-\subsection{The $C^{1}$ seam, verified two ways}
+\subsection{The $C^{1}$ seam, machine-checked two ways}
 At $s_{N}^{\ast}$ the continuation and intrinsic must agree in value \emph{and}
 slope. This is checked two ways.
 \emph{Formally:} the value-match and slope-match conditions are
@@ -483,8 +484,9 @@ non-zero, with an explicit counterexample.
 \end{proposition}
 
 The biconditional is the substance: the result discriminates between symmetric and
-skewed pools, which is the evidence that it is structural rather than an artifact
-of the definitions. The edge is a \emph{skew phenomenon}---it exists only when the
+skewed pools, which is suggestive that it reflects structure rather than being purely
+an artifact of the chosen coordinates (the Lean \texttt{collarSurplus} is a posited
+coordinate; see the carried-form caveat below). The edge is a \emph{skew phenomenon}---it exists only when the
 pool is directionally skewed and vanishes exactly at symmetry. The statement is a
 claim about \emph{pricing}, not about the pool being left unchanged: a costless
 collar's two legs transact in the same direction against the curve, so the pool
@@ -532,8 +534,8 @@ declarations).
         \texttt{valueMatch\_A}/\texttt{slopeMatch\_A}, grounded), generated as the
         \emph{unique} solution (T1a \texttt{Sstar\_A\_forced},
         \texttt{coeffA\_forced}, grounded), and as the \emph{optimal} exercise
-        boundary (T1b \texttt{opt\_boundary\_is\_max\_A}, variational; carried on
-        a Snell hypothesis). The crossover lands at the dollar strike for all
+        boundary over \emph{deterministic} boundaries (T1b \texttt{opt\_boundary\_is\_max\_A}, variational; the
+        stochastic Snell identification is named but not formalised). The crossover lands at the dollar strike for all
         $\gamma$ (R2 \texttt{crossover\_sNorm\_at\_K}, grounded). The seam holds
         for arbitrary steepness $g>0$, hence at $g=m\gamma$ (LENSKERNEL
         \texttt{valueMatch\_g}/\texttt{slopeMatch\_g}; constant-$m$
@@ -591,7 +593,7 @@ solvency. We do not claim solvency is closed by the construction.
 
 \paragraph{What the stack does not establish.}
 The typed contracts (\texttt{price/tick/ledger/portFlow/arbLeak}) are \emph{not}
-wired to the production HTML engine's numeric formulas; the package verifies the
+wired to the production HTML engine's numeric formulas; the package machine-checks the
 interface and its propagation, not that the engine instantiates the fields. That
 instantiation (engine formulas $\vdash$ B1/B3/B4) is the next body of work. The
 instances are representative, not exhaustive: weighted Balancer and the power-sum
@@ -656,7 +658,7 @@ the honest-claims posture above.
         Geometry is necessary (\texttt{reserves\_have\_no\_floor}) but never
         sufficient. The port is not discharged here; that it pays in practice is an
         external assumption.
-  \item \textbf{Engine instantiation is not proven.} The verified interface stack
+  \item \textbf{Engine instantiation is not proven.} The trusted-from-prover interface stack
         is not wired to the production engine's numeric formulas; the bridge from
         the live HTML kernel to the Lean definitions is currently an oracle
         (testing) bridge, not a verified extraction. No claim that ``the HTML is
@@ -696,7 +698,7 @@ property is structural---a costless collar yields zero surplus iff the pool is
 symmetric. The honest frontier is solvency: geometry is necessary
 (\texttt{reserves\_have\_no\_floor}) but never sufficient, and the solvency
 guarantee remains \emph{conditional} on a funding port that is shown necessary but
-not discharged. Closing that port hypothesis---and wiring the verified interface
+not discharged. Closing that port hypothesis---and wiring the trusted-from-prover interface
 to the production engine---are the principal directions for future work.
 
 % ---------------------------------------------------------------------------
