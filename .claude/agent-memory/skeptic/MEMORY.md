@@ -3432,3 +3432,24 @@ for vanished items) when produced.
   premise "we'll backtest it" downgrades provenance. Both are the same root: relabeling a gap's KIND to
   make it sound smaller. Also: ALWAYS check extracted/ (returned) vs proj_*/ (local working copy) — they
   diverged on T1b sorries; the returned one is the proof of record.
+
+## Verdict (2026-06-14): COMBINED paper diff re-audit (3 stacked edits) — NET CLEAR-TO-COMMIT
+Artifact: paper/temporal_paper_american_2026.tex working-tree vs 363d43f. 3 edits: positioning
+fold (entry 246), symbol/term intro (entry 247), §5.3 σ/r gloss. ALL presentation, no engine.
+Verified independently:
+- Abstract: 200 words (rough), 0 bare $ symbols, ALL 8 qualifiers present (not-GH/tfp/cond-
+  solvency/Snell-named/any-asset-carried/|Γ|/American-determ/vol-cal). NOTE: new abstract is MORE
+  honest than committed — qualifiers not-GH/Snell/any-asset-carried were ADDED, not present before.
+- Limitations: 14 items (3 Scope + 11 Conditional). All 13 manager-listed prior items survive +
+  "Arbitrary-asset GH/Bessel-K" PROMOTED from prose to own bullet (strengthening). NONE vanished.
+- β_T (trade-point offset, 10 uses in §3, real) vs β_th (Gibbs thermal, 2 uses) disambiguation
+  CORRECT — two genuinely distinct quantities; rename consistent; "distinct from offset β" right.
+- §5.3 Snell sentence BYTE-IDENTICAL (named-not-formalised, True placeholder). #1 NOT folded. ✓
+- §5.3 r/σ gloss = claim-neutral parenthetical (Merton tie wording untouched).
+- structural: braces 773/773, begin/end 20/20, $ even (620).
+ONE thing flagged-and-cleared: §5.5 NEW affirmative "for the shipped product replication is exact"
+— not in committed §sec:gamma. Ruled DEDUCTIVE re-expression (per-wing |Γ|≤1 [already claimed] +
+band's at-most-one-ITM design definition + geometric fact opposite wings can't both be ITM), NOT a
+new proof/empirical claim; |Γ|>1-is-approximation guard PRESERVED in same passage + Limitations.
+No overclaim. 201-with-all-qualifiers is the honest FLOOR — would FLAG dropping a qualifier to hit
+190. Pattern: repositioning here IMPROVED honesty (rare; usually positioning erodes qualifiers).
