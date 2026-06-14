@@ -1973,3 +1973,13 @@ _Context: operator supplies the referee-response file location on `main` (eviden
 _Context: operator authorizes the paper-level positioning pass (fold the brainstorm per the skeptic's dispositions) and any research-level edits; explicitly no HTML/engine changes._
 
 > ok do whatever research / paper level edits you need; nothing to html
+
+
+---
+
+## Entry 247 — 2026-06-14 13:53 UTC
+_Context: standing paper requirement — every symbol must be explained nearby (simple-English gloss or a nearby table), NO unintroduced symbols anywhere, least of all abstract/intro; same for every new term (operator notes he has never used the term "carry" — internal jargon must be introduced, not assumed)._
+
+> remember in the paper and everything in it inwant that a symbol is either explained withba simple englosh thijg nearby of a table nearby — no unintroduced symbol stuff least of all in abstract intro etc.
+>
+> also the same for new terms — i've never used the term carry with you once …
