@@ -1,0 +1,120 @@
+{
+  "engineReachable": true,
+  "defaultPool": {
+    "x": 10,
+    "y": 800000,
+    "tau": 0.3,
+    "wMinus": 0.7,
+    "wPlus": 0.7,
+    "phi": 0,
+    "alpha": 7,
+    "beta": 240000
+  },
+  "asymPool": {
+    "x": 10,
+    "y": 800000,
+    "tau": 0.3,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 0,
+    "alpha": 8.499558915799685,
+    "beta": 120035.28673602517
+  },
+  "asymStatus": "γ_loc(ATM)=5.66 · wings γ₋=1.50, γ₊=5.67",
+  "tauLow": {
+    "x": 10,
+    "y": 800000,
+    "tau": 0.1,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 0,
+    "alpha": 8.499950967576662,
+    "beta": 120003.92259386707
+  },
+  "tauHigh": {
+    "x": 10,
+    "y": 800000,
+    "tau": 2.5,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 0,
+    "alpha": 8.470435860063164,
+    "beta": 122365.13119494684
+  },
+  "elbowDiff": 17.656,
+  "leftWingDiff": 2.8,
+  "rightWingDiff": 50.527,
+  "litLow": 4191,
+  "litHigh": 4196,
+  "engineElbowWing": {
+    "atm": {
+      "lo": 2.6363636363636362,
+      "hi": 2.6363636363636362
+    },
+    "elbow": {
+      "lo": 5.393265579797998,
+      "hi": 2.8445739122542717
+    },
+    "wingR": {
+      "lo": 5.666388921292342,
+      "hi": 5.504818648457527
+    },
+    "wingL": {
+      "lo": 1.5000390601808258,
+      "hi": 1.5235458657247265
+    }
+  },
+  "wingClamp": {
+    "wminusInput": "0.501",
+    "poolWMinus": 0.501,
+    "status": "γ_loc(ATM)=5.66 · wings γ₋=1.00, γ₊=5.67"
+  },
+  "preTrade": {
+    "x": 10,
+    "y": 800000,
+    "tau": 0.3,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 0,
+    "alpha": 8.499558915799685,
+    "beta": 120035.28673602517
+  },
+  "warpDirect": {
+    "dy": -319858.8530558993,
+    "before": {
+      "x": 10,
+      "y": 800000,
+      "phi": 0,
+      "w": 0.8499558915799685
+    },
+    "after": {
+      "x": 11.332745221066247,
+      "y": 480141.1469441007,
+      "phi": 10.592901809879265,
+      "w": 0.7499999999999998
+    },
+    "phiMoved": 10.592901809879265,
+    "wMoved": 0.09995589157996876,
+    "onTrajectory": 0
+  },
+  "warpElbowDiff": 0,
+  "warpFullDiff": 0,
+  "guardReject": {
+    "rejected": true,
+    "reason": "wing-range",
+    "wStar": 0.9950980392156863
+  },
+  "guardMsg": "trade exceeds frozen-wing range — split or widen Δw",
+  "guardInBand": {
+    "executed": true,
+    "phi": 10.511997985156968,
+    "newW": 0.7200000000000001
+  },
+  "pricingLit": 8547,
+  "payoffLit": 91094,
+  "labels": {
+    "hasFullyProven": false,
+    "tradeMechanicText": "Trade mechanic (#16): reserves move on a FIXED curve — the reserves point slides along a fixed warp (τ, wing weights frozen; per-trade α=x·w, β=y·(1−w) conserved). This is NOT the full trades-reshape-the-curve warp (weight-field re-centering u→u−φ) — that strong form is OPEN."
+  },
+  "consoleErrors": []
+}

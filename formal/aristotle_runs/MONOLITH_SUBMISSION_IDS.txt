@@ -1,0 +1,7 @@
+# MONOLITH submissions — 2026-06-12 overnight (research-lead, structure-reorder instance; operator entry 179)
+# project-dir formal/temporal_lean_verified ; prompts formal/prompts/aristotle_prompt_monolith_{core,warp}.md
+monolith_core  project=f05ecbc2-cb03-4edc-97fb-0ca79e96c361  task=1ade22e3-12b6-4df3-9266-1a4f1dbbecde  file=RequestProject/Monolith.lean
+monolith_warp  project=68440731-e1cb-4521-825a-fbac108fdd75  task=a825d0fc-ce54-4d14-ad57-d1cc8ccb8b90  file=RequestProject/MonolithWarp.lean
+# NOT mine (concurrent base-program research-lead instance, same night — do not cancel; reconcile at fold):
+# WARPCALC   project=24e6497e-3c60-4ec1-b626-0e0f2929a39d (free-floating continuous-warp calculus)
+# LENSKERNEL project=d7da8597-f234-4b41-9976-eff587799a8b (L2 engine-subset defs)

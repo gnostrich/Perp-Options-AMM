@@ -1,0 +1,58 @@
+{
+  "build": "1eebfcd6",
+  "when": "2026-06-10T16:52:51.759Z",
+  "load": {
+    "kpiSpot": "1.0000",
+    "kpiSpotUsd": "$80,000.00",
+    "hdrPoolSpot": "spot $80,000.00",
+    "oracle": 80000,
+    "mpRaw": 80000.00000000001
+  },
+  "tauBox": {
+    "x": 190,
+    "y": 462.71875,
+    "width": 274,
+    "height": 15
+  },
+  "tau": {
+    "before": "0.3",
+    "afterUpClick": "0.35",
+    "afterDownClick": "0.3",
+    "storeTauAfterUp": null,
+    "statusBefore": "γ_loc(ATM)=2.64 · wings γ₋=1.50, γ₊=5.67",
+    "statusAfterUp": "γ_loc(ATM)=2.64 · wings γ₋=1.50, γ₊=5.67",
+    "curveChangedOnUp": true
+  },
+  "spinnerStyle": {
+    "tau-input": "auto / opacity 1",
+    "wminus-input": "auto / opacity 1",
+    "wplus-input": "auto / opacity 1",
+    "perp-margin": "auto / opacity 1",
+    "kappa-input": "auto / opacity 1",
+    "tick-hours": "auto / opacity 1",
+    "_numberInputIds": [
+      "perp-notional",
+      "perp-margin",
+      "perp-entrymark",
+      "lp-amount",
+      "kappa-input",
+      "tick-hours",
+      "tau-input",
+      "wminus-input",
+      "wplus-input"
+    ]
+  },
+  "numberFields": [
+    "perp-notional",
+    "perp-margin",
+    "perp-entrymark",
+    "lp-amount",
+    "kappa-input",
+    "tick-hours",
+    "tau-input",
+    "wminus-input",
+    "wplus-input"
+  ],
+  "otherFieldShot": "kappa-input",
+  "consoleErrors": []
+}

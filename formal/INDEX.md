@@ -21,6 +21,25 @@ remains the append-style run ledger (narrative detail); THIS file is the navigab
 
 ## Status legend: ✅ grounded · ⚠ carried · ❓ conjectural · ⛔ obstruction/no-go
 
+## ⟢ MOTIVATION-LAYER tag (skeptic ruling 2026-06-10, `notes/skeptic/VERDICT_DELEGATED_DECISIONS_2026-06-10.md`; truth-to-objective audit `VERDICT_FORMAL_TRUTH_TO_OBJECTIVE_2026-06-10.md`)
+Two ORTHOGONAL axes — do not conflate: **provenance** (every row is trusted-from-prover) vs
+**truth-to-objective** (relevance to what we are building: the curve-warp / kurtosis-knob AMM and its
+locked contracts). The operator delegated the keep-vs-store call to the skeptic; ruling = **KEEP in
+place, annotate (do NOT move)**.
+- **`[motivation-layer]`** — trusted-from-prover but **OFF the curve/kurtosis objective**: the
+  port-Hamiltonian / metriplectic / Kähler / Courant **framing** = rows **T2** (single-μ metriplectic
+  core), **CTPH** (continuous-time PH), **PH3** (LVR leak ≥0), **PH4b** (no-floor), **kahler**
+  (conjectural), **courant** (obstruction). Kept as the paper's conservation-law motivation;
+  **not load-bearing for the build**. (PH6 rebase = contract #5 and B1 solvency = ship-gate #13 are
+  NOT motivation-layer — they straddle locked contracts and stay load-bearing KEEP.)
+- **On-objective / load-bearing (KEEP, untagged):** the settlement spine R1 / T1a / T1b / MERTON_tie;
+  the curve/slippage/Esscher results R2–R5, GHJ, GHmeasure, frontier, GHMaps, C3; PH6, B1.
+- **Superseded run-twins** (bare `UNIFY/`, `UNIFY_stage0/`, non-grounded `GHJ/GHcoercive/PH3/PH4b/CTPH`,
+  pre-harden `T1b_optimality/`, RUN-4 `Courant/Kahler/`, `probe_optstop/`) are **retained in place,
+  annotate-not-move** — this INDEX already cites the superseding (`_grounded`/`_clean`/CLOSEOUT)
+  versions in each row; physically moving them buys only tidiness against the cgf/MERTON discharge-chain
+  hazard, so annotation dominates.
+
 | Result (headline thm) | Meaning | Depth | Archive (returned .lean) | Run |
 |---|---|---|---|---|
 | `valueMatch_A` / `slopeMatch_A` (R1) | PH-5 C¹ smooth-pasting at S*=Kγ/(γ+1), both wings | ✅ GROUNDED | R1/extracted/.../R1.lean | big 06-08 |
@@ -51,6 +70,148 @@ remains the append-style run ledger (narrative detail); THIS file is the navigab
 
 All rows: provenance = **trusted-from-prover** (manager-audited; see `MANAGER_VERIFICATION.md`
 and the per-run audits in `evidence/manager_audit_*.md` + in-commit audit notes).
+
+## ⟢ EXTERNAL — the warp-amm Aristotle cluster (added 2026-06-11, entry 33; **UPGRADED 2026-06-12 → trusted-from-prover**)
+The **continuous trade-point warp** derivation: **`warp-amm` / `warp-amm-handoff`** — project IDs
+`d20dda3a` (base, Model A/pivot — superseded), `7f933065` + `4e92e3cb` (Model-C twins,
+statement-identical, proof scripts differ; `7f933065` newest = canonical); Lean
+`RequestProject/Warp.lean`; formalizes `warp-amm.tex`. Content: the warp is **trade-point-anchored**
+(tangent at the trade point `(x_B,y_B)`, NOT spot/45°/reserves), with `mode_shift` =
+`ln(y_s/x_s)−ln(y_B/x_B)`, closed call form `(1/w₀)·log(y_s/y_B)` (pre-curve constraint), and rapidity
+slope integrals `2σ·sinhΔξ` / `2σ²(coshΔξ−1)`; 22–23 theorems per archive.
+**PROVENANCE UPGRADE (research-lead audit 2026-06-12, entry-142 sweep; archives folded to
+`aristotle_runs/WARPAMM_external/`):** token scan CLEAN (all three; `Main.lean` = set_options only);
+summaries assert axioms ⊆ {propext, Classical.choice, Quot.sound}; statements re-derived by hand,
+all intended (incl. mode_shift via σ_B substitution and the closed-call log algebra); twins diff =
+proof-scripts/comments only. FRAGILE-TACTICS flags: `grind` (`mode_shift_closed_call`), heavy
+`nlinarith` (`mode_shift`) — no-math. **Now trusted-from-prover** (manager fold-confirmation
+pending per protocol). Caveats kept: Model-C anchoring is the trade point, NOT v28's live-mode lens;
+`mode_shift_closed_call` is the frozen-w first approximation of the exact
+`Δln center = −ln((y₁−β)/(y₀−β))` (CONTINUOUS note §2); engine link NOT claimed.
+
+## ⟢ SWEEP 2026-06-12 (entry 142) — proven-but-UNFOLDED store results (parallel-session submissions; manager to route)
+- `fw_proj_warp_core` 56b4f0fa (FW-1/2/3/13: w′=(1−w)/y, α/β conserved, transport uniqueness,
+  round-trip, semigroup) — COMPLETE; token-clean; unchanged modules byte-identical to working tree.
+- `fw_proj_gate_leak` 727fc83e (FW-7/8: validity=convexity gate, leak≥0, leak=Bregman) —
+  **COMPLETE_WITH_ERRORS server status vs clean-compile summary: reconcile before fold.**
+- `fw_proj_germ` 6d6ba6e6 (FW-5/6 germ: ε′=−1/2, A=1/2, validity strip) — COMPLETE; token-clean.
+- `offatm_submit` 90056417 (+twin f3776478) (off-ATM trade point existence/uniqueness, w′∈(0,1)) —
+  COMPLETE; token-clean.
+- Pre-repo cluster (4–7 wk: Two-AMM/SU(1,1)/Minkowski/closed-form/geometric/policy) — retrieval
+  candidates only, NOT audited.
+
+## ⟢ CONSTANT-m LENS REDEFINITION (operator entry 229/230, 2026-06-13) — what survives, what is superseded
+The operator redefined the kurtosis lens from the position-dependent polar kernel `Φ_τ(u)=u/√(τ²+u²)`
+to a **CONSTANT slope multiplier `m`** (`g_loc(K)=m·γ`, strike-independent; `m=1`=plain v24). Skeptic-
+confirmed form: `notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`. Simplified
+object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on the Lean layer:
+- **KEPT (trusted-from-prover, NOT touched by the lens redefinition):** all LENSKERNEL POOL +
+  g-parametric results — `tradeUpdate_*`, `gamma_linear_in_cash`, `rebase_*`, `gLoc_rebase_invariant`
+  (the rebase invariance holds for a constant exponent too), and the smooth-paste port
+  `valueMatch_g`/`slopeMatch_g`/`sStarCall_*`/`contCall/intrCall_at_sStar` (∀ g>0 — applies directly
+  to `g=m·γ`). These are the pool + settlement spine, independent of lens shape.
+- **SUPERSEDED (were trusted-from-prover for the √-kernel, no longer the object):** the polar-specific
+  lens facts `Phi_zero/nonneg/le_one/lt_one/strictMonoOn`, `gLoc_le_gamma` (the ≤γ cap is gone),
+  `gLoc_at_mode` (g=0 at the mode is gone — g=m·γ>0); and the ENTIRE WARPCALC polar-warp calculus
+  (`PhiA`, `warpDen`, `warpInt`, `warpPot`, `warpPot_hasDerivAt`, `warp_eq_pot_sub`, `warp_additive`,
+  `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos`, `glAt_hasDerivAt`, `recenterKer`,
+  `warp_decomposition`). Under constant-m the warp is the LINEAR `ΔG=m·Δγ` (one-line `integral_const`
+  corollary). Archives `aristotle_runs/{LENSKERNEL,WARPCALC}/` retained as history.
+- **NEW — RETURNED + AUDITED 2026-06-13 → trusted-from-prover:** the CONSTANT-m single structure
+  `MonolithConstM.lean` (prompt `formal/prompts/aristotle_prompt_monolith_constm.md`; run
+  `6016ec57` / task `3f85462d`; archive `aristotle_runs/MONOLITH_CONSTM/`). ONE structure
+  `TemporalAMM` (fields `alpha,beta,y,m` + positivity, verbatim as pinned), every component a
+  def/theorem reading it. Proved: `g_eq_m_gamma`, `g_const_in_strike`, `g_pos`,
+  `g_eq_gamma_iff_m_one` (m=1⇔plain Balancer), `g_ge_gamma_of_m_ge_one`, `thetaTx_roundtrip`
+  (closed-form invertible rpow map, exponent 1/m), `thetaTx_strictMono`, `warp_linear` (∫m=m·Δg),
+  `warp_roundtrip_zero`, `warp_nonneg_of_buy`, `warp_eq_m_dgamma` (=m·D/β), `paste_value`/`paste_slope`
+  (∀g>0 ⇒ at g=m·γ), `price_is_grad`/`R_psd` (real differentiation), the pool/trade/rebase spine
+  (`invariant`,`gamma_affine`,`trade_dx`,`trade_rebase_commute`,…), `goalSeek_*`, `engineInstance`
+  (m=1: x=1000,w=29/40,γ=29/11,g=γ,γ>1), `single_object`. The DELETED polar facts (g=0 at center,
+  g≤γ) are correctly ABSENT; no LensShape/polarLens/√-kernel. Audit PASS: out-of-scope modules
+  byte-identical to working tree; toolchain v4.28.0 matches; token-clean (no sorry/admit/
+  native_decide/sorryAx/axiom-decl/opaque/unsafe/decide); statements re-derived by hand (g=m·γ,
+  thetaTx inverse, warp linear, engine rationals, smooth-paste arms = 1/(g+1)). Prover-reported
+  `#print axioms` ⊆ {propext,Classical.choice,Quot.sound} (the raw per-theorem axiom listing was NOT
+  in the streamed logs — corroborated by token-clean + no-sorry ⇒ no sorryAx; canonical-env axiom
+  confirmation deferred, env-blocked). FRAGILE TACTICS (no-math, flagged): `grind`
+  (`center_eq_sNorm`/`price_eq_slope`/`goalSeek_root`), `aesop` (`trade_rebase_commute`), heavy
+  `nlinarith` (`w_consistency`/`gamma_eq`); `paste_slope`/`price_is_grad` use `convert HasDerivAt…`.
+  **Verdict: `proved (trusted-from-prover)`** — NOT "verified" (no local canonical kernel; env-blocked).
+
+- **NEW — RETURNED + AUDITED + SKEPTIC-REGATED 2026-06-14 → trusted-from-prover:** the WHOLE-EXCHANGE
+  unification **INTERNAL HALF** `PHUnification.lean` (prompt `formal/prompts/aristotle_prompt_PH_unification_composed.md`;
+  run `8ee75026`/task `5c2bccf2`; archive `aristotle_runs/PH_UNIFICATION_COMPOSED/`; md5 `65e7bc31`).
+  The conjecture = the whole exchange as ONE `Exchange` object (storage/flow/gauge/funding-port/
+  settlement-port/dollar-pipe/slippage[unbuilt]/close-mechanic-PARAMETRIZED=Q14), solvency =
+  passivity-under-admissible-inputs. **PROVED (internal half): `exchange_internal_passivity`** — the
+  concrete exchange is passive with **NO open PSD hypothesis**: the `Hs` resistive curvature is fixed to
+  `deriv(deriv poolPotential)(st k)` and its nonnegativity is **discharged BY the geometry**
+  (`exchange_Rcurv_nonneg` = the proven `R_psd`), i.e. passive *because* the geometry is PSD — the weld
+  itself (this was FLAGGED 2026-06-14 as un-composed in the first `PH_UNIFICATION_INTERNAL` run
+  `80cd7ba4`; that archive retained with `CORRECTION_2026-06-14.md`). Also `trade_no_spontaneous_storage`
+  (composes `trade_conserves`), `internal_passivity`/`no_internal_free_money` (telescoping), the pool
+  spine. **EXTERNAL/solvency half stays OPEN/conditional** — `solvency_of_coverage`/`coverage_iff_solvency`/
+  `exchange_solvency_split` keep `hcov` (B1/B3/B4 admissibility) as a `→` premise, **never discharged**
+  (PH-4b honored; geometry does NOT close solvency). Audit PASS ×3 (research-lead `aa40e1c1`-redo +
+  manager + skeptic re-gate `adbc7377` CLEAR): token-clean; weld genuinely composed (no open hR, real
+  curvature, not circular/vacuous; strict gap 4.367); no statement drift; `#print axioms` summary ⊆
+  {propext,Classical.choice,Quot.sound} (canonical-env deferred). **Self-contained** (`namespace
+  PHUnification`, re-declares minimal `TemporalAMM`, NOT lake-globbed, NOT integrated into the canonical
+  build — MonolithConstM status; an in-canonical-dir copy was written then **removed by the manager**,
+  skeptic concurred). ⚠ The object's μ is the **Balancer constant-product** potential, NOT the GH CGF
+  (`notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md`). **Verdict: `proved (trusted-from-prover)`, INTERNAL half only** —
+  NOT "verified", NOT integrated; external solvency remains the open frontier.
+
+- **LENS NATURAL HOME + structure re-examination RESOLVED** (operator entry 242; note
+  `notes/research/LENS_NATURAL_HOME_2026-06-14.md`; skeptic gate `a00a14ea` — 2 scope-qualifiers binding):
+  (A) **Measure-backed info-geometry is DEAD for the Balancer curve** — no CGF / exponential-family /
+  Fisher-of-a-measure reading (μ not globally convex; degenerate boundary zero; Marcinkiewicz forbids a
+  cubic CGF). BUT a **Hessian / dually-flat information geometry SURVIVES without a measure** (μ convex on
+  t≥β; Legendre dual `μ*(η)=⅔√(αβ)·η^{3/2}+β·η` exists). So: NOT "no info-geometry" — only the measure-backed
+  reading is killed. (B) **The steepness lens m's natural home = the inverse-temperature of the option-value
+  WING law:** `value(S)=S^(−mγ)=e^(−(m·γ)·q)` (q=log S) is a Gibbs weight, β_T=m·γ, `value_m=(value_1)^m`;
+  colder=steeper. **Lean-backed `proved (trusted-from-prover)`** — `aristotle_runs/LENS_THERMAL/LensThermal.lean`
+  (run `ca042134`/task `50d34e3c`; md5 `87f5ac86`; 7 thms incl. `value_is_gibbs`/`value_pow_m`/`invtemp_eq_m_gamma`/
+  `m_one_recovers_base`/`invtemp_mono`; token-clean; axioms⊆{propext,Classical.choice,Quot.sound}; self-contained
+  `LensAMM`, NOT integrated). **WING-SCOPED** — `value=S^(−g)` is the power-law tail, NOT the engine's bounded
+  smooth-pasted mark near ATM (measured mark/S^(−g) ratio 0.0012–9000). m is a **DILATION** (γ→m·γ), NOT an
+  Esscher tilt. Pool lock (entries 229/231) intact. **Making m intrinsic to the POOL would need a curve reopen
+  = operator-tier, NOT done.** Manager + research-lead audits both PASS; honest labels per a00a14ea.
+
+## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
+Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
+no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide`; axioms ⊆
+{propext, Classical.choice, Quot.sound} on all named targets per the returned summaries; out-of-scope
+modules byte-identical to the working tree; toolchain Lean 4.28.0 / Mathlib v4.28.0; every statement
+re-derived by hand). Archives folded → `aristotle_runs/{LENSKERNEL,WARPCALC}/`. **NOTE (2026-06-13):
+WARPCALC's polar-warp theorems are SUPERSEDED by the constant-m redefinition (see the section above);
+LENSKERNEL's pool + g-parametric smooth-paste rows below are KEPT.**
+
+| Result (headline thm) | Meaning | Depth | Archive | Run |
+|---|---|---|---|---|
+| `tradeUpdate_alpha/beta/hyperbola/reg`, `w/gamma/center/mpRaw_closed_form`, `gamma_linear_in_cash` (γ′=γ+dy/β) | v28 plain-Balancer pool flow + the cash-linear γ law | ✅ GROUNDED | LENSKERNEL/extracted/.../LensKernel.lean | d7da8597 06-12 |
+| `rebase_w/gamma/center`, `gLoc_rebase_invariant` | v28 lens-read commutes with rebase (C5) | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `Phi_zero/nonneg/le_one/lt_one/strictMonoOn`, `gLoc_nonneg/le_gamma/at_mode` | polar-lens factor basics; g_loc∈[0,γ], =0 at mode | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `sStarCall_pos/ge_theta`, `contCall/intrCall_at_sStar`, `valueMatch_g`, `slopeMatch_g` | smooth-paste port to ANY g>0 (incl. g<1; no `1<g` hyp) — R1/T1a generalised | ✅ GROUNDED | LensKernel.lean | d7da8597 |
+| `warpPot_hasDerivAt` (FTC-2), `warp_eq_pot_sub`, `warp_additive`, `warp_roundtrip_zero` | the POLAR continuous warp ΔG=∫Φ_τ(ln θg)dg is an EXACT differential | ⚠ **SUPERSEDED by constant-m** (was ✅ GROUNDED for the √-kernel) | WARPCALC/extracted/.../WarpCalc.lean | 24e6497e 06-12 |
+| `warp_nonneg`, `warp_le_dgamma`, `warp_nonpos_sell`, `warp_pos` | polar 0≤ΔG≤Δγ buy / ≤0 sell | ⚠ **SUPERSEDED by constant-m** (`warp_linear`: ΔG=m·Δγ) | WarpCalc.lean | 24e6497e |
+| `glAt_hasDerivAt`, `warp_decomposition` (kink-inside) | polar live = warp + recentering split at the kink g=1/θ | ⚠ **SUPERSEDED by constant-m** (no kink; live=m·Δγ directly) | WarpCalc.lean | 24e6497e |
+
+**CONSTANT-m monolith** `MonolithConstM.lean` — **RETURNED + AUDITED 2026-06-13 → trusted-from-prover**
+(run `6016ec57`/task `3f85462d`, archive `aristotle_runs/MONOLITH_CONSTM/`; full row in the CONSTANT-m
+section above). The single-structure Lean object the operator asked for (entries 144/146/177/179) now
+exists trusted-from-prover.
+
+**Pending-submit (NOT trusted-from-prover; Aristotle reachable this session, but unsubmitted/unreturned):**
+A14 at-strike no-arb-on-close (reverse-dy reserve restoration +
+ITM direct-payout no-leak; NOT written); A15 slippage-haircut composition (Q10 pending); A11
+asymmetry-growth (under constant-m: asym grows with m — re-derive before pinning). **A16-CONT has NO
+Lean theorem** (skeptic FLAG-OVERSELL corrected 2026-06-13): ATM no-jump is true by constant-exponent
+construction (g=m·γ>0) and gate-verified (`a16_atm_gate.js` 5/5), NOT a Lean result; the monolith's
+`paste_value`/`paste_slope` prove C¹ ONLY at the S\* settlement seam (a DISTINCT locus from the ATM
+crossing). A direct A16 Lean lemma is pending-submit; the polar g→0 version is superseded. A5 wing-limit
+Tendsto Φ→1 SUPERSEDED (constant exponent, no limit needed).
 
 ## What stays genuinely open / carried (the TRUE floor, post-GHMaps)
 - **Bessel-K closed-form normalizer VALUE** (M = K_ν ratio) — Mathlib v4.28.0 has zero Bessel-K.

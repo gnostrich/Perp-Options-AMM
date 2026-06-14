@@ -1,0 +1,247 @@
+{
+  "pool": {
+    "x": 9.999174223760846,
+    "y": 303514.394256322,
+    "tau": 0.3,
+    "wMinus": 0.6,
+    "wPlus": 0.85,
+    "phi": 10.320825577774972,
+    "alpha": 7.248802304076011,
+    "beta": 83484.64068153493
+  },
+  "oracle": 90000,
+  "oracle_initial": 80000,
+  "perpMark": 90000,
+  "t": 8,
+  "kappa": 0.5,
+  "tick_hours": 8,
+  "perps": [
+    {
+      "id": "P1",
+      "side": "long",
+      "notional": 10000,
+      "margin": 1000,
+      "entryMark": 80000
+    },
+    {
+      "id": "P2",
+      "side": "short",
+      "notional": 5000,
+      "margin": 500,
+      "entryMark": 80000
+    },
+    {
+      "id": "P3",
+      "side": "long",
+      "notional": 8000,
+      "margin": 1000,
+      "entryMark": 80000
+    },
+    {
+      "id": "P4",
+      "side": "short",
+      "notional": 4000,
+      "margin": 500,
+      "entryMark": 80000
+    }
+  ],
+  "bands": [
+    {
+      "id": "B1",
+      "sold_wing": "call",
+      "bought_wing": "put",
+      "status": "open",
+      "t_open": 0,
+      "sold": {
+        "inner": 1.25,
+        "outer": null,
+        "K_inner": 100000,
+        "K_outer": null,
+        "mode": "barrier",
+        "N": 0.05,
+        "V_at_open": 0.001787259324546826,
+        "funding_inner": -5.516308648025387e-17,
+        "funding_outer": 0
+      },
+      "bought": {
+        "inner": 0.65,
+        "outer": null,
+        "K_inner": 52000,
+        "K_outer": null,
+        "mode": "barrier",
+        "N": 0.002753204928840788,
+        "V_at_open": 0.0005558185427765128,
+        "funding_inner": -2.4679733257969608e-18,
+        "funding_outer": 0
+      },
+      "entry": {
+        "pool": {
+          "x": 10,
+          "y": 303448.27586206904,
+          "tau": 0.3,
+          "wMinus": 0.6,
+          "wPlus": 0.85,
+          "phi": 10.320381356467916,
+          "alpha": 7.25,
+          "beta": 83448.275862069
+        },
+        "oracle": 80000,
+        "perp_club_id": "long-btc",
+        "perp_club_side": "long",
+        "f_N": 0.22222222222222224,
+        "f_E": 2,
+        "L0": 9,
+        "club_notional_at_open": 18000,
+        "club_equity_at_open": 2000,
+        "fee_usd": 0.4,
+        "fee_btc": 0.000005,
+        "slippage": {
+          "s1": 0.0006499124816548019,
+          "s2": 0.0002019845614480431,
+          "s_band": 0.0008520283153903296,
+          "slipUsd": 0.10184414511450512
+        }
+      },
+      "carved": {
+        "carvedNotional": 4000.0000000000005,
+        "carvedEntryEquity": 444.44444444444446,
+        "entryPerpMark": 80000
+      }
+    }
+  ],
+  "nextPerpId": 5,
+  "nextBandId": 2,
+  "fees_accrued": 0.4,
+  "clubs": {
+    "long": {
+      "id": "long-btc",
+      "side": "long",
+      "equity": 1555.1555555555556,
+      "totalNotional": 14000,
+      "perpIds": [
+        "P1",
+        "P3"
+      ],
+      "carvedNotional": 4000.0000000000005,
+      "carvedEquity": 444.44444444444446
+    },
+    "short": {
+      "id": "short-btc",
+      "side": "short",
+      "equity": 1000,
+      "totalNotional": 9000,
+      "perpIds": [
+        "P2",
+        "P4"
+      ],
+      "carvedNotional": 0,
+      "carvedEquity": 0
+    }
+  },
+  "eventLog": [
+    {
+      "t": 8,
+      "kind": "fund",
+      "msg": "+8h: net trader → pool = -0.00000000 asset (-0.0000 $)."
+    },
+    {
+      "t": 0,
+      "kind": "arb",
+      "msg": "Arb executed: mp restored to oracle $90000; w shifted from 0.7249 (placeholder) to 0.7249."
+    },
+    {
+      "t": 0,
+      "kind": "rebase",
+      "msg": "Oracle → $90000 (r=1.1250); (W) carry-shift P→P/r, curve shape invariant."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.600 (γ₋=1.50), w₊=0.850 (γ₊=5.67)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.600 (γ₋=1.50), w₊=0.850 (γ₊=5.67)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.600 (γ₋=1.50), w₊=0.950 (γ₊=19.00)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.600 (γ₋=1.50), w₊=0.950 (γ₊=19.00)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.501 (γ₋=1.00), w₊=0.950 (γ₊=19.00)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.501 (γ₋=1.00), w₊=0.950 (γ₊=19.00) [CLAMPED to keep γ>1 — locked]"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.501 (γ₋=1.00), w₊=0.850 (γ₊=5.67)"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Wing weights → w₋=0.501 (γ₋=1.00), w₊=0.850 (γ₊=5.67) [CLAMPED to keep γ>1 — locked]"
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "LP Withdraw $10000: pool ×0.9838 (λ=-0.0162); w, price unchanged. Pool value $617271 → $607271."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "LP Deposit $10000: pool ×1.0165 (λ=0.0165); w, price unchanged. Pool value $607271 → $617271."
+    },
+    {
+      "t": 0,
+      "kind": "trade",
+      "msg": "Open B1: sold BAR on call N=0.050000 @ θ*=1.2500 → V=142.98; bought BAR on put N=0.002753 @ θ*=0.6500 → V=44.47. L₀=9.00, slip=0.0852%, fee=$0.4000, club=long-btc."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Perp P4: SHORT $4000 (margin $500, entryMark $80000). Free equity → $1000."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Perp P3: LONG $8000 (margin $1000, entryMark $80000). Free equity → $2000."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Hint: drag oracle on the KPI strip, click \"Run Arbitrage\" to restore pool equilibrium, then advance time to accrue funding."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Initialised. Pool: x=10 BTC, y=$800k, w=0.5. Oracle=$80k. Two demo perps added."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Perp P2: SHORT $5000 (margin $500, entryMark $80000). Free equity → $500."
+    },
+    {
+      "t": 0,
+      "kind": "info",
+      "msg": "Perp P1: LONG $10000 (margin $1000, entryMark $80000). Free equity → $1000."
+    }
+  ],
+  "_baseline_alpha": 7.167972778928937,
+  "_baseline_beta": 85892.37799831819,
+  "_baseline_k": 201.14361361318825,
+  "_initial_y": 303448.27586206904
+}

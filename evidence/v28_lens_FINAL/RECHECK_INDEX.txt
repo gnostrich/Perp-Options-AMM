@@ -1,0 +1,31 @@
+v28 polar-lens — TARGETED RE-CHECK of the one-line slippage-refresh wire
+Build: engine/builds/HEAD_temporal_mvp_v28_lens.html  md5 7e1ae39baa00fda087033174cfc652b8
+Only changed line vs FINAL (989752294): L2727 τ-input handler now also calls
+  previewBand() so the band preview + slippage recompute when τ changes.
+Harness: engine/verify/pw_v28_lens_slipfresh_recheck.mjs (live Playwright, READ-ONLY)
+Runs: RECHECK_RUN_A.txt == RECHECK_RUN_B.txt (byte-stable; 0 console / 0 page errors)
+File-safety post-run: build md5 UNCHANGED; webp L74 ab663f5c…; svg L1060 c505b08a…; 3 scripts.
+
+VERDICT: PASS ×2 (all 6 confirm items).
+
+SHOTS (R_A_* and R_B_* are byte-equal):
+  R_{A,B}_S1_band_open_slip.png   STEP1 — band open, slippage showing (0.5569 % · ≈$6.18 @ τ=0.3)
+  R_{A,B}_S2_tau1.0_slip.png      STEP2 — slippage @ τ=1.0 = 0.9031 % · ≈$16.20 (moved from τ alone)
+  R_{A,B}_S2_tau0.1_slip.png      STEP2 — slippage @ τ=0.1 = 0.4258 % · ≈$3.62
+  R_{A,B}_S3_chart2_tau2.png      STEP3 — chart-2 reshaped on τ (6,545 px)
+  R_{A,B}_S6_after_trade.png      STEP6 — band executed; both charts re-rendered
+
+KEY MEASUREMENTS (identical A==B):
+  STEP1  band open ⇒ #band-slippage = "0.5569 % · ≈ $6.18", btn-execute enabled.
+  STEP2  τ stepper alone (no trade-input touch) → slippage:
+           τ=0.3 → 0.5569%   τ=1.0 → 0.9031%   τ=0.1 → 0.4258%   τ=0.3 → 0.5569% (returns)
+           real keyboard ArrowUp 0.3→0.35 → 0.5915%.  4 distinct values; non-stale; recomputes.
+           (matches manager-derived monotone trend ~0.25→0.76% across the τ range for a fixed option)
+  STEP3  chart-2 (canvas-pricing) px diff τ0.3→2 = 6,545 — redraw still fires.
+  STEP4  chart-1 (canvas-curve, plain-v24 pool curve) px diff τ0.3→{0.1,1,2,3} = 0 EVERY τ
+           — measured with the band CLEARED (no active preview overlay). Pool curve byte-inert.
+  STEP4b chart-1 with an ACTIVE band preview: ghost px diff τ0.3→1.5 = 1,902 — DESIRED side-effect
+           (the band-preview ghost = sim.finalState, which depends on τ via the lensed N_buy;
+           the new wire re-runs previewBand on τ → ghost moves). NOT a pool-curve regression.
+  STEP5  console errors = 0, pageerrors = 0 across all τ interactions.
+  STEP6  band 0→1 executed; chart-1 Δpx=4,742; chart-2 Δpx=5,646; no dialogs. Trade path intact.

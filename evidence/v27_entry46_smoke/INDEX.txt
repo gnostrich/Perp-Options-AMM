@@ -1,0 +1,67 @@
+EVIDENCE INDEX — entry-46 STANDING UI SMOKE-PASS on fixed HEAD v27
+Build: engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html  md5 928cde1cccb0f35fdc9a23a7634414c8
+Date: 2026-06-11 · tester · live Playwright Chromium ×2 runs (all verdict numbers byte-identical)
+Harness: engine/verify/pw_v27_entry46_smoke.mjs · trace: trace_entry46.json
+READ-ONLY on the build. 0 uncaught exceptions; 0 console errors (2 benign Canvas2D
+willReadFrequently advisories are HARNESS-induced getImageData readbacks, not app errors).
+Regression oracle: engine/verify/run_all.sh GREEN (22/22 wcurve_selfcheck [HARD], integrity md5s OK).
+
+FIX ACCEPTANCE (intern's 4 — ALL PASS)
+  I3_anchor_curve_default.png   (c) anchor w=1/2 through live dot — re-shoot of the entry-45 frame.
+                                k=sqrt(x*y)=1,741.98 (old wrong depth 170.83); anchor passes 1.15px
+                                from the live reserves dot (sampling granularity); in-frame bbox
+                                px (133,21)->(673,371) — no longer an origin-corner L.
+  A3_full_default.png           full page at boot (overlay identification frame).
+  A4_tau_disclosure_settings.png (d) tau disclosure sentence visible on Settings subtab, 41px from
+                                tau-input: "...Visible effect scales with the wing gap (w+-w-) and
+                                is subtle per 0.05 step - sweep tau widely or widen the wing gap..."
+  A2_audit_strip_valid_9p95.png (b) valid long band N=9.95 sold@100000/bought@52000, audit expanded:
+                                dy-sold 28453.1684 $ · dy-bought 11470.0908 $ · net-cash
+                                $39,923.259202 — EXACT match to entry-45 engine truth (raw pool Δy);
+                                the $3.19B inflation is gone. slippage 18.1469% unchanged.
+  A2b_audit_strip_1btc.png      (b) 1 BTC band: dy 2859.61/913.09, net $3,772.70 — engine-scale.
+  A1_path1_after_swap.png       (a) STALE-CHECK swap path: valid preview -> ⇅ -> warn "Sell leg:
+                                trade exceeds frozen-wing range" + EVERY output '—' (DOM ×2 runs).
+  A1_path2_after_pill.png       (a) pill-toggle reject ("not OTM") — all cleared.
+  A1_path3_oversize_banner.png  (a) 100 BTC !sim.ok reject — all cleared, Transact disabled.
+  crop_A1_swap.png / crop_A2_audit.png / crop_A4_tau.png  legibility crops.
+
+FULL SMOKE
+  B1_perps_added.png            long 0.1 BTC/$1000 (8.0x, liq $70,000) + short 0.05/$500 (liq $90,000);
+                                clubs long $18k/short $9k, 4 perps (2 boot-seeded).
+  B2_dir1_preview.png           dir=long 0.05 BTC valid preview 0.0852%.
+  B2_stepper_after_sold_leg.png preview-step-1 active; canvas diff 2312px vs step-2; w-readout
+  B2_stepper_after_bought_leg.png  w: 0.725000 -> 0.725130 -> 0.725170 (Δw adaptive precision).
+  B2_after_execute.png          execute: pool.y +187.44, phi 10.32038->10.32083, bands 0->1, no dialog.
+  B2_overcarve.png              1 BTC band -> Transact -> native alert CAPTURED via dialog listener:
+                                "Open failed: Over-carve: band needs $80000 notional but club free
+                                is $14000."  Pool untouched.
+  B2_dir2_preview.png           post-swap dir=short valid preview 0.3834% (both directions exercised).
+  B3_earn.png                   deposit $10k: pool value 607,271.44->617,271.44 (y +5,000 isotropic),
+                                withdraw restores exactly.
+  B4_wing_clamp.png             gamma>1 clamp reflect-back: wminus 0.45 -> input shows 0.501
+                                (gamma- = 1.00 floor); wplus 0.99 -> 0.950 cap; restore 0.60/0.85 OK.
+  B4_oracle_90000.png           oracle 80000->90000 rebase: canvas 10,954px moved; Spot($) 80,136.38
+                                -> 71,232.34 (pool-frame getMP_raw — see FINDING-R below).
+  B4_arb_tick.png               arb restores pool-frame mp to 80,000.00 (= poolMark $90,000 current-$
+                                = oracle, engine-consistent); tick: t 0->8h, funding logged.
+  B5_portfolio.png              Portfolio page renders: 10 table rows, no NaN, no undefined.
+  B6_after_import.png + export_state.json   export/import round-trip: state identical excluding
+                                eventLog (keyDiffs=[]; log gains "Imported." entry — expected).
+  B7_after_reset.png            reset restores boot defaults (oracle 80000, x=10, y=303,448.28,
+                                tau 0.3, 2 seeded perps, Spot $80,000.00).
+  C_tau_baseline_0.30.png / C_tau_oneclick.png / C_tau_3.00.png / C_tau_0.05.png
+                                tau per-click delta: one ArrowUp 0.30->0.35 canvas 3,744px diff,
+                                analytic max 3.39px — BYTE-MATCHES entry-45 baseline; full sweep
+                                0.05<->3.00 analytic 153.73px (entry-45: 153.7). Engine unchanged,
+                                confirmed behaviorally.
+
+FINDING-R (NEW, display-only, NOT an entry-46 regression — first time this path was smoke-tested):
+  kpi-spot-usd and hdr-pool-spot display Engine.getMP_raw(p) = POOL-FRAME dollars. After a rebase
+  (r = oracle/oracle_initial != 1) the honest current-dollar mark is poolMark = getMP_raw * r
+  (engine's own L1660 "honest $ (Layer 2)", used by arb/OTM/funding). Operator-visible symptom:
+  raise oracle to $90,000 -> Spot($) DROPS to $71,232.34; run arb -> Spot($) reads $80,000.00
+  while the oracle box reads 90000. Engine self-consistent throughout; KPI basis honest only at
+  r=1 (the only state tested before). OPEN — keyed #1/#5 in DIFF_LEDGER.
+
+Boot-log stale line ("y=$800k, w=0.5", L4586) still present — separate entry-45 minor, stays OPEN.

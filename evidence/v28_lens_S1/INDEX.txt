@@ -1,0 +1,37 @@
+v28 polar-lens Stage-1 STANDING UI SMOKE-PASS — evidence index
+Build: engine/builds/temporal_mvp_v28_lens_S1.html  md5 5e1ff278dbfea889d49b48224ba931d3
+HEAD unchanged: v27 928cde1c (this is a NEW candidate line off PLAIN v24, READ-ONLY tested)
+Harness: engine/verify/pw_v28_lens_S1_smoke.mjs   (run from engine/, PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers)
+Runs: clean ×2, IDENTICAL verdicts (RUN_LOG_runA.txt / RUN_LOG_runB.txt), 0 console errors / 0 pageerrors.
+File-safety: GREEN — webp L74 ab663f5c…, svg L1060 c505b08a…, 3 scripts parse. lens_selfcheck.js 14/0.
+
+OVERALL: HOLD on the Stage-1 hand-back gate — all 6 script steps + standing smoke PASS EXCEPT
+FLAG-1 (τ stepper does not auto-redraw chart 2; window.Viz undefined ⇒ L2702 guard dead). Intern one-liner.
+
+Screenshots:
+  S1_01_settings_tau.png        Settings → KURTOSIS τ number stepper, value 0.3, NO slider (0 input[type=range])
+  S1_02_chart2_pricing_default.png  Chart 2 (Mark Across Strikes), lensed mark + φ_m mode marker, default τ0.3
+  S2_01_chart2_tau005.png       Chart 2 at τ=0.05 — SHARP spike (elbow sharpened); wings frozen
+  S3_01_chart2_tau2_defaultpool.png  Chart 2 at τ=2, default pool — elbow rounds
+  S3_02_chart2_steep_tau03.png  Chart 2 at τ=0.3, STEEP pool w=0.78 (sharp)
+  S3_03_chart2_steep_tau2.png   Chart 2 at τ=2, STEEP pool — visibly ROUNDED/broad peak (clearest contrast)
+  S4_01_chart1_curve_tau03.png  Chart 1 (Pool Curve) plain-v24 Balancer, live dot on curve, anchor overlay
+  S4_02_chart1_curve_tau3.png   Chart 1 at τ=3 — PIXEL-IDENTICAL to S4_01 (τ does NOT touch chart 1, 0 px)
+  S5_01_perp_added.png          Long perp added
+  S5_02_bands_form.png          Bands form (seeded demo band)
+  S6_01_chart1_post_trade.png   Post in-range trade — reserves moved on the FIXED v24 curve
+  S6_02_chart2_post_trade.png   Post-trade chart 2 lensed mark re-rendered
+  SM_01_band_after_swap.png     Band direction swap (stale-on-reject probe)
+  SM_02_payoff.png              Payoff Simulator view
+  SM_03_trajectory.png          (Δφ_C, Δφ_P) Trajectory view
+  SM_04_after_reset.png         After Reset — pool x10/y800k/τ0.3, perps cleared
+
+Key numbers (run A == run B):
+  τ0.3→0.05 chart-2 elbow: analytic max Δψ=0.328 (~98px); rendered 6,645 px (forced redraw)
+  τ0.3→2 default pool: 8,103 px ; steep pool w=0.78: 6,276 px ; far-wing Δψ ≈5e-5 / 8.5e-5 (frozen)
+  chart-1 px-diff across τ sweep {0.05,1,2,3}: 0 at every τ (CONTAMINATION PROBE PASS HARD)
+  funding (steep pool, S=2.333): ATM=0 (g_atm=0); OTM call=+2.230e-3, put=−2.230e-3; all finite
+  markLensed g=0 exact: call=1, put=1, finite (S*=0 path safe)
+  trade invariant (x−α)(y−β)=αβ rel resid 1.16e-16; reserves 10→9.905 BTC, α/β conserved
+  FLAG-1: τ event-only redraw of chart 2 = 0 px (window.Viz undefined; L2702 guard dead)
+  INHERITED-v24: pv-net-cash $618,314,484.19 (×oracle double-multiply, byte-identical to v24 base)

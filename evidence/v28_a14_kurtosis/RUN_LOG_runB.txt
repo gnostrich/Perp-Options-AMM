@@ -1,0 +1,45 @@
+=== -A14b KURTOSIS-vs-WARP run B — /home/user/Perp-Options-AMM/engine/builds/HEAD_temporal_mvp_v28_lens.html ===
+
+--- ITEM 1: UNDERLYING swap-warp vs kurtosis (sold call N=0.1, K=120000, oracle 80000) ---
+  w0=0.5  beta=400000
+  τ=1 : {"tau":1,"K_usd":120000,"dy":12000,"dw":0.007389162561576401,"dSteepness_dyOverBeta":0.03,"dxReserve":-0.14563106796116543,"dyReserve":12000,"V_lensed":0.029756360341196022}
+  τ=0.3 : {"tau":0.3,"K_usd":120000,"dy":12000,"dw":0.007389162561576401,"dSteepness_dyOverBeta":0.03,"dxReserve":-0.14563106796116543,"dyReserve":12000,"V_lensed":0.01929855051861218}
+  τ=0.05 : {"tau":0.05,"K_usd":120000,"dy":12000,"dw":0.007389162561576401,"dSteepness_dyOverBeta":0.03,"dxReserve":-0.14563106796116543,"dyReserve":12000,"V_lensed":0.016753978643450327}
+  >> spread across τ:  max|Δdy|=0.000e+0   max|Δw spread|=0.000e+0
+  >> (V_lensed shown for contrast — the LENSED leg value DOES move with τ; the SWAP dy does not.)
+
+--- ITEM 2: SEEN warp (chart-2 lensed reshape) vs kurtosis ---
+  fixed trade: sold call N=0.5 K=$120k → dy=60000.00  mode sNorm 1.000000 → 0.869565 (τ-free shift)
+  τ=1 : max option-value reshape = 0.453114  | near-money(θ=1.25) reshape = 0.147578
+        ATM θ=1.0  ($80k) : ψ 1.00000 → 0.54689  Δ=0.453114
+        near θ=1.25 ($100k) : ψ 0.45156 → 0.30398  Δ=0.147578
+        at   θ=1.5  ($120k) : ψ 0.29756 → 0.21143  Δ=0.086132
+        OTM  θ=2.0  ($160k) : ψ 0.17881 → 0.13318  Δ=0.045633
+        far  θ=4.0  ($320k) : ψ 0.07195 → 0.05582  Δ=0.016131
+  τ=0.3 : max option-value reshape = 0.659934  | near-money(θ=1.25) reshape = 0.089637
+        ATM θ=1.0  ($80k) : ψ 1.00000 → 0.34007  Δ=0.659934
+        near θ=1.25 ($100k) : ψ 0.27845 → 0.18881  Δ=0.089637
+        at   θ=1.5  ($120k) : ψ 0.19299 → 0.14417  Δ=0.048812
+        OTM  θ=2.0  ($160k) : ψ 0.13257 → 0.10286  Δ=0.029710
+        far  θ=4.0  ($320k) : ψ 0.06350 → 0.04991  Δ=0.013583
+  τ=0.05 : max option-value reshape = 0.794395  | near-money(θ=1.25) reshape = 0.044782
+        ATM θ=1.0  ($80k) : ψ 1.00000 → 0.20560  Δ=0.794395
+        near θ=1.25 ($100k) : ψ 0.20341 → 0.15863  Δ=0.044782
+        at   θ=1.5  ($120k) : ψ 0.16754 → 0.13170  Δ=0.035842
+        OTM  θ=2.0  ($160k) : ψ 0.12522 → 0.09860  Δ=0.026621
+        far  θ=4.0  ($320k) : ψ 0.06253 → 0.04926  Δ=0.013271
+
+--- ITEM 2 (rendered px): chart-2 pre vs post dashed-curve separation per τ ---
+  τ=1 : rendered chart-2 pre→post pxdiff = 2635  litPre=9267  litPost=11438
+  τ=0.3 : rendered chart-2 pre→post pxdiff = 2651  litPre=9368  litPost=11539
+  τ=0.05 : rendered chart-2 pre→post pxdiff = 2689  litPre=9449  litPost=11633
+
+--- on-screen band slippage readout vs τ (quoted) ---
+  τ=1 : band-slippage on screen = "11.8895 %  ·  ≈ $3270.96"
+  τ=0.3 : band-slippage on screen = "12.0849 %  ·  ≈ $3312.10"
+  τ=0.05 : band-slippage on screen = "12.8369 %  ·  ≈ $3494.36"
+
+--- ERRORS ---
+  console errors: 0
+  page errors   : 0
+  dialogs       : 0

@@ -1,0 +1,13 @@
+{
+  "pricingPeakDiff": 37,
+  "pricingWingDiff": 7.02,
+  "warp": {
+    "phi": -0.18564296625583168,
+    "w": 0.72,
+    "x": 10.971093777672772,
+    "y": 9.003482057466876
+  },
+  "warpPricingDiff": 0,
+  "warpPeakDiff": 0,
+  "errs": []
+}

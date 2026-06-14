@@ -1,0 +1,25 @@
+=== INHERITED-CONTRACTS SMOKE  run A  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=8f897edcad49c73853096a05e7ec233d
+
+--- ITEM 1: CARRY P=Ny/Nx, u=log(price)-log(P) ---
+{"w":0.5,"mp_raw":80000,"pm":80000,"sNorm":1,"oracle":80000,"u":0,"finite":true,"nan":false}
+
+--- ITEM 2: REBASE (oracle change → x→r·x, α→r·α, β,y,w invariant; θ→θ/r; P→P/r) ---
+{"newO":100000,"r":1.25,"x_ratio":1.25,"alpha_ratio":1.25,"beta_inv":true,"y_inv":true,"dw":0,"dsNorm":0,"mp_ratio":0.8,"expect_1_over_r":0.8,"theta_after":1.2}
+{"newO":64000,"r":0.64,"x_ratio":0.64,"alpha_ratio":0.64,"beta_inv":true,"y_inv":true,"dw":0,"dsNorm":0,"mp_ratio":1.5625,"expect_1_over_r":1.5625,"theta_after":2.34375}
+
+--- ITEM 3: STRIKE REGISTRATION θ=K/oracle; mark consistent display vs chart ---
+{"oracle":80000,"sNorm":1,"m":1,"rows":[{"K":120000,"theta":1.5,"wing":"call","g":1,"mark":0.16666666666666666,"Sstar_mult":0.5,"finite":true},{"K":80000,"theta":1,"wing":"call","g":1,"mark":0.25,"Sstar_mult":0.5,"finite":true},{"K":48000,"theta":0.6,"wing":"put","g":1,"mark":0.15,"Sstar_mult":0.5,"finite":true}]}
+
+--- ITEM 4: DOLLAR/SETTLEMENT PIPE (UI band open → closeBand; OTM-expiry & ITM-exercise) ---
+OTM open: {"x":9.957062984338375,"y":803464.714150075,"bandIds":["0"],"nBands":1}
+OTM settle (closeBand, oracle≈80k): {"raw_net":0.000044956213933073155,"trader_payout":0.07192994229291703,"club_delta":0.06473694806362533,"L0":9.999999999999998,"X":0.0032849883341602632,"Y":0.0033299445480933364,"settled_cash_leg":null,"floored":false,"finite":true,"fx":true}
+OTM reserves after Store.closeBand: {"dx":-0.04293701566162511,"dy":3464.714150074986}
+ITM settle (closeBand, oracle=160k, sold-call ITM): {"raw_net":-0.004806566582131398,"trader_payout":-84.59557184551258,"club_delta":-76.13601466096132,"L0":9.999999999999998,"X":0.006475897138257307,"Y":0.0016693305561259093,"settled_cash_leg":null,"live_leg":null,"floored":false,"finite":true,"sane":true}
+ITM reserves after Store.closeBand: {"x":19.83015344731421,"y":806911.247259612,"finite":true}
+
+--- ITEM 5: FUNDING THROUGH LENS (entry 232: funding = ±m·γ quantity) ---
+{"w":0.538591751734174,"S":1.362538205109541,"rows":[{"m":1,"fCall":0.0003974701444111121,"fPut":-0.0005686466700080741,"signflip":true,"finite":true},{"m":2,"fCall":0.0004628473569261381,"fPut":-0.0006621795672931269,"signflip":true,"finite":true},{"m":4,"fCall":0.0005057577044112886,"fPut":-0.0007235699045283232,"signflip":true,"finite":true}],"ratioCall_1to4":1.2724419972740704}
+
+console/pageerrors: []
+dialogs: []

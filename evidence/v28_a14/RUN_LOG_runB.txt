@@ -1,0 +1,42 @@
+=== A14 SMOKE run B — /home/user/Perp-Options-AMM/engine/builds/HEAD_temporal_mvp_v28_lens.html ===
+
+--- ITEM 1: at-strike warp rises with strike (single sold call) ---
+  {"mult":1.1,"K_usd":88000,"dy":8800,"w0":0.5,"wPost":0.5054401582591493,"dw":0.005440158259149341,"dxReserve":-0.10763209393346429,"dyReserve":8800}
+  {"mult":1.5,"K_usd":120000,"dy":12000,"w0":0.5,"wPost":0.5073891625615764,"dw":0.007389162561576401,"dxReserve":-0.14563106796116543,"dyReserve":12000}
+  {"mult":2,"K_usd":160000,"dy":16000,"w0":0.5,"wPost":0.5098039215686274,"dw":0.009803921568627416,"dxReserve":-0.19230769230769162,"dyReserve":16000}
+  {"mult":4,"K_usd":320000,"dy":32000,"w0":0.5,"wPost":0.5192307692307693,"dw":0.019230769230769273,"dxReserve":-0.37037037037037024,"dyReserve":32000}
+
+--- ITEM 1 (visual): rendered chart-2 warp magnitude grows with strike ---
+  strike 88000 (1.1x): chart-2 |centroidΔ|=7.18px  litΔ=2526px  pxdiff=2819
+  strike 120000 (1.5x): chart-2 |centroidΔ|=7.74px  litΔ=2171px  pxdiff=2651
+  strike 160000 (2x): chart-2 |centroidΔ|=7.79px  litΔ=2051px  pxdiff=2586
+  strike 320000 (4x): chart-2 |centroidΔ|=6.57px  litΔ=2216px  pxdiff=2423
+
+--- ITEM 5: flagged UI label (quote literally) ---
+  HEADER literal : "Pool Δ (cash-conserving ⇒ Δy_net ≈ 0)"
+  FIELD label    : "net trader cash @ open"
+  FIELD value    : "$16,623.290372"
+  Δy(sold) shown : "12000.0000 $"
+  Δy(bought)shown: "4623.2904 $"
+  slippage shown : "4.1558 %  ·  ≈ $400.82"
+
+--- ITEM 3: reserve guard rejects cash-out > depth (with $) ---
+  depth (y-β)    : $400000.00
+  cash-out N·K   : $380000.00  (frac of depth=0.9500)
+  REJECT result  : {"rejected":true,"reason":"At-strike cash $380000.00 exceeds 90% of pool cash depth $400000.00 — trade rejected."}
+  representable leg (0.80·depth, N·K=$320000.00): rejected=false executed=true dy=-320000
+
+--- ITEM 2: trade executes; ITM settles by payout (full Store path) ---
+  {"openOk":true,"bandStatus":"closed","spotSNorm":0.5163977794943222,"close":{"ok":true,"X":0.00548680374955151,"Y":0.0009803377157810308,"raw_net":-0.004506466033770478,"settled_cash_leg":"sold","live_leg":"bought","trader_payout":-205.49485113993376,"L0":9.999999999999998,"finite":true},"closeLog":"logged"}
+
+--- ITEM 4: regression (τ-reshape chart-2, chart-1 inert) ---
+  chart-1 τ pxdiff (expect ~0 inert): 0
+  chart-2 τ 0.3→2.0 pxdiff (expect >0 reshape): 6545
+  chart-2 τ 0.3→0.35 single-step pxdiff: 3893
+  sweep distinct chart-2 frames in 1.3s (rAF-sampled): 47 (of 79 frames)
+  sweep previewPool pre/post-retrigger: {"pp1":{"x":9.460903649771609,"y":848339.6542542219},"pp2":{"x":9.071993713373853,"y":891159.8938454397},"warn":"","dir":"long","si":"120000","bi":"60000","bn":"0.6","oracle":80000,"clubsLong":10000}
+
+--- ERRORS ---
+  console errors: 0
+  page errors   : 0
+  dialogs       : 0

@@ -3,11 +3,63 @@
 # Run from the engine/ package root:  sh verify/run_all.sh [path-to-build.html]
 # With no arg it validates the canonical HEAD; the file-safety hook passes the edited file.
 set -e
-HEAD=${1:-builds/HEAD_temporal_mvp_v26c.html}
+HEAD=${1:-builds/HEAD_temporal_mvp_v28_lens.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 6cc73563779a3e030774b7597d0ae187): "; md5sum "$HEAD" | awk '{print $1}'
-echo -n "blob 74  (want ab663f5c26f2a461c5b0ef1421d0ad74): "; sed -n '74p'   "$HEAD" | md5sum | awk '{print $1}'
-echo -n "blob 1060 (want c505b08ad0e4c6b0fb9e64e9679fe291): "; sed -n '1060p' "$HEAD" | md5sum | awk '{print $1}'
+echo -n "whole-file md5 (want 80f050e26332d21c68bd7b064467470a for v28-lens HEAD (constant slope-multiplier m, entries 229/231; comment-cleanup of 8f897edc 2026-06-13 — behaviorally identical, comments+gate-detector only; constmult source 8f897edc retained as temporal_mvp_v28_lens_constmult.html; inverse-lens 5fea0e8d as temporal_mvp_v28_lens_invtx.html); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+# Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
+# shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
+BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')
+echo "blob line-md5 multiset (want ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291): $BLOBQ"
+[ "$BLOBQ" = "ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4c6b0fb9e64e9679fe291 " ] || { echo "BLOB CHECK FAILED"; exit 1; }
+
+# ── v28 POLAR-LENS dispatch (Stage 1 read layer / Stage 2 write-settle) ──
+# A lens build exports markLensed/gLoc (off the plain v24 base; no ghCalibrate,
+# no wField). Gate it with lens_selfcheck.js [HARD GATE]: the Stage-1 read checks
+# (14) plus the Stage-2 write/settle checks (8) when the build carries the lensed
+# settlement signatures (markEff 4-arg). SKIPs the Stage-2 block on a Stage-1-only
+# build. Routed BEFORE the (W) branch since lens builds also lack ghCalibrate.
+if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD"; then
+  echo ""
+  echo "================ v28 polar-lens build -> lens_selfcheck.js [HARD GATE] ================"
+  node verify/lens_selfcheck.js "$HEAD"
+  echo ""
+  echo "================ A16 no-jump ATM position-value gate -> a16_atm_gate.js [HARD GATE] ================"
+  # Locks the live held-position value path (markEff/legValueUnified/pfComponents
+  # via markLensed) continuous across the OTM↔ITM (ATM g_loc→0) crossing — no jump,
+  # no regime branch in the value. Distinct from lens_selfcheck (4) (the S* seam).
+  # SKIPs-as-pass on a non-lens build. set -e => any FAIL aborts run_all.
+  node verify/a16_atm_gate.js "$HEAD"
+  echo ""
+  # ════════════════ REPORT-ONLY (NOT GATING) ════════════════
+  # monolith_consistency.js — ACTIVE theory↔impl consistency layer (operator
+  # entries 243/153#9; skeptic R6 scope-gate a04465ae WITH RIDERS). Cross-checks
+  # the engine's NUMBERS against the monolith Lean formulas (MonolithConstM.lean)
+  # and prints a `Lean thm ⟺ engine — PASS/FAIL` table tagged per line.
+  # ⚠ THIS IS NOT A HARD GATE. It EXITS 0 ALWAYS (the `|| true` belt-and-braces
+  # ensures it can NEVER abort run_all's `set -e`). The HARD gates above
+  # (lens_selfcheck 13 + a16_atm_gate 5) are the bar; a green report line here
+  # is NOT the gate (#5/#6/#8 are table-marked already-HARD-via-CM# cross-refs).
+  # Honest ceiling: cross-checks NUMBERS (engine ⟺ Lean formula); does NOT make
+  # Lean "verified" and does NOT prove the engine IS the Lean object.
+  echo "================ REPORT-ONLY (NOT GATING) — monolith_consistency.js (engine ⟺ Lean numbers) ================"
+  node verify/monolith_consistency.js "$HEAD" || true
+  echo ""
+  echo "lens build green. (GH/(W) suites N/A here. Monolith table above is REPORT-ONLY, not a gate.)"
+  exit 0
+fi
+
+# ── Build-type dispatch (HEAD = v27 (W)-curve since 2026-06-10, operator entry 28) ──
+# (W)/pre-GH builds (no ghCalibrate) are gated by the wcurve selfcheck [HARD GATE,
+# exit 1 on any FAIL: 12 core + 9 strong-form-warp checks]. GH builds (ghCalibrate
+# present, e.g. builds/temporal_mvp_v26c.html) fall through to the full GH suite.
+if ! grep -q "ghCalibrate" "$HEAD"; then
+  echo ""
+  echo "================ (W)-curve build -> wcurve_selfcheck.js [HARD GATE] ================"
+  node verify/wcurve_selfcheck.js "$HEAD"
+  echo ""
+  echo "(W) build green. (GH suite N/A here; pass a GH build path explicitly to exercise it.)"
+  exit 0
+fi
 
 # verifiers read fixed filenames in cwd -> stage HEAD under the names they expect
 SCRATCH=$(mktemp -d)

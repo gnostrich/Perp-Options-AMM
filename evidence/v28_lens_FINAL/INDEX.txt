@@ -1,0 +1,43 @@
+v28 polar-lens FINAL — STANDING UI SMOKE-PASS (PROMOTION GATE) evidence index
+Build: builds/temporal_mvp_v28_lens_FINAL.html  md5 989752294bfeff49d6c92e0ab7ca6ccd
+Harness: engine/verify/pw_v28_lens_FINAL_smoke.mjs   (live Playwright, READ-ONLY)
+Runs: A and B, byte-stable (RUN_LOG_runA.txt == RUN_LOG_runB.txt modulo run header)
+Node lens_selfcheck.js: 23 PASS / 0 FAIL
+File-safety: webp L74 ab663f5c…  svg L1060 c505b08a…  3 scripts parse  build md5 unchanged post-run
+OVERALL gate verdict: PASS (27/27)  0 console errors / 0 pageerrors
+
+SHOTS (A_*/B_* — both runs identical):
+  *_00_charts_tau.png       STEP 0: τ chart-2 live redraw + chart-1 inert
+  *_C1_audit_netcash.png    C1: band audit "net trader cash @ open" = $2,928.84 (order-$10k, NOT billions)
+  *_C2_anchor_curve.png     C2: anchor (w=½) curve passes through the live reserves dot (k=√(xy))
+  *_C3_reject_paths.png     C3: preview-time reject paths (zero-notional / not-OTM / crossed / no-club) all warn+clear+disable
+  *_C4_payoff_Nbuy.png      C4/C7: payoff sim with N_buy(0.041)≠N_sell(0.040), V_buy==V_sell basis
+  *_C5_lp_liq.png           C5: LP Pool y delta $0.00 @load; LIQ long $70,000 / short $90,000 @8×
+  *_C6_close_pnl.png        C6: close-log reads "band P&L vs entry (trader)=$3.36" (not walk-away); portfolio P&L tooltips
+  *_C8_payoff_frame.png     C8: payoff frame −90%…+200% with x-ticks (-50/0/+50/+100/+150/+200)
+  *_WARP_chart2_aftertrade.png  WARP (skeptic #33): a trade reshapes chart-2 by 9,953 px (w 0.5018→0.5187)
+  *_STD_perps.png           perps long+short add; invalid (zero-notional) rejected by alert
+  *_STD_bands.png           bands both dirs, swap control flips dir+inputs, preview steppers + w-readout
+  *_STD_oracle_arb.png      oracle change→90000 (rebase), arb-to-oracle, tick
+  *_STD_portfolio.png       PORTFOLIO tab: 15 rows, 0 NaN/Inf
+  *_STD_overlays.png        all 4 chart overlays lit (curve 13627 / pricing 12159 / payoff 104766 / trajectory 7140 px)
+  *_STD_settle.png          settle-at-lensed: round-trip finite; near-ATM finite; steep one-ITM-leg pool-favourable
+  *_STD_reset.png           reset to x=10/y=800000/τ=0.3/0 bands
+
+KEY MEASURED VALUES (byte-stable A==B):
+  C1 pv-net-cash = $2,928.837797
+  C5 LIQ long $70000.00 / short $90000.00 @8×; LP y-delta $0.00 @load
+  C6 close-log: "Close B1: … band P&L vs entry (trader)=$3.36, Δclub equity=$2.95 [both legs reversed on AMM]"
+  C9 deep-ITM naked=0.8031 > spread(tent)=0.1871
+  WARP trade Δchart-2 = 9953 px
+  steep one-ITM-leg raw_net = -4.797e-3 (POOL-favourable, sold leg settled-to-cash) — correct
+  two-OTM-leg round-trip raw_net = +8.347e-3 (TRADER-favourable) = FINDING-RT (INHERITED-v24, OPEN)
+
+FINDING-RT (carried, OPEN, escalate): instant net-cash-zero open→close on a TWO-OTM-LEG band yields
+POSITIVE raw_net = trader-favourable, scales with slippage; byte-identical in S1/S2/v24 base ⇒ inherited,
+not a regression; sign convention NOT operator-ruled (entry 96 ruled "settle at lensed", not round-trip dir).
+
+NOTE on coverage: this v28 line is OFF PLAIN v24 — there are NO wminus/wplus wing-range inputs
+(those were v27-(W) controls). The kurtosis control here is τ only; κ (kappa-input) is the funding-decay
+knob present. Perps are NOT notional-capped (over-leverage shows in liq-price, not a reject); the
+trade-size rejection is the BAND over-carve guard (tested C3, execute-time alert).

@@ -1,0 +1,644 @@
+{
+  "runA": {
+    "tag": "A",
+    "item1": {
+      "kpis": {
+        "oracle": "80000",
+        "spot": "0.3793",
+        "spotUsd": "$30,344.83",
+        "w": "0.7250"
+      },
+      "engine": {
+        "x": 10,
+        "y": 303448.28,
+        "tau": 0.3,
+        "wMinus": 0.6,
+        "wPlus": 0.85,
+        "marginal": 80000,
+        "oracle": 80000
+      },
+      "lpYdelta": "$0.00",
+      "perpForm": {
+        "notional": "0.1",
+        "margin": "1000",
+        "leverage": "8.0×",
+        "liqLong": "$70000.00",
+        "notionalUsd": "≈ $8,000.00",
+        "liqShort": "$90000.00"
+      },
+      "curve": {
+        "lit": 8195,
+        "fracW": 0.981,
+        "fracH": 0.93
+      },
+      "nan": []
+    },
+    "item2": {
+      "controls": {
+        "input[file]": 1,
+        "input[number]": 16,
+        "select": 2,
+        "input[checkbox]": 1,
+        "rangeCount": 0,
+        "steps": [
+          {
+            "id": "band-notional",
+            "step": "0.01",
+            "value": "0.05"
+          },
+          {
+            "id": "sold-inner",
+            "step": "500",
+            "value": "84000"
+          },
+          {
+            "id": "sold-outer",
+            "step": "500",
+            "value": ""
+          },
+          {
+            "id": "bought-inner",
+            "step": "500",
+            "value": "68000"
+          },
+          {
+            "id": "bought-outer",
+            "step": "500",
+            "value": ""
+          },
+          {
+            "id": "perp-notional",
+            "step": "0.01",
+            "value": "0.1"
+          },
+          {
+            "id": "perp-margin",
+            "step": "10",
+            "value": "1000"
+          },
+          {
+            "id": "perp-entrymark",
+            "step": "100",
+            "value": ""
+          },
+          {
+            "id": "lp-amount",
+            "step": "1000",
+            "value": "50000"
+          },
+          {
+            "id": "kappa-input",
+            "step": "0.001",
+            "value": "0.02"
+          },
+          {
+            "id": "tick-hours",
+            "step": "1",
+            "value": "1"
+          },
+          {
+            "id": "tau-input",
+            "step": "0.05",
+            "value": "0.3"
+          },
+          {
+            "id": "wminus-input",
+            "step": "0.01",
+            "value": "0.60"
+          },
+          {
+            "id": "wplus-input",
+            "step": "0.01",
+            "value": "0.85"
+          },
+          {
+            "id": "payoff-cmp-lev",
+            "step": "1",
+            "value": "5"
+          },
+          {
+            "id": "kpi-oracle",
+            "step": "100",
+            "value": "80000"
+          }
+        ]
+      },
+      "tauStepper": {
+        "start": "0.3",
+        "afterClickUp": "0.3",
+        "readoutAfterUp": "0.30",
+        "afterClickDown1": "0.3",
+        "afterClickDown2": "0.3",
+        "readoutAfterDown": "0.30",
+        "afterKeyUp": "0.35",
+        "curveRedrewOnStep": {
+          "mean": 0,
+          "max": 0,
+          "n": 623
+        }
+      }
+    },
+    "item3": {
+      "tauLow": "0.3",
+      "tauHigh": "1.75",
+      "elbow": {
+        "mean": 5.1,
+        "max": 125,
+        "n": 210
+      },
+      "leftWing": {
+        "mean": 0,
+        "max": 0,
+        "n": 84
+      },
+      "rightWing": {
+        "mean": 1.09,
+        "max": 8,
+        "n": 91
+      }
+    },
+    "item4": {
+      "warnPre": "",
+      "executeEnabled": true,
+      "slippage": "0.0710 %  ·  ≈ $0.07",
+      "boughtNotional": "0.001754 BTC",
+      "preY": 303448.27586206904,
+      "postY": 303604.4724214168,
+      "lpYdeltaPost": "$156.20",
+      "phiPost": 10.320751535955766,
+      "curveMoved": {
+        "mean": 1.25,
+        "max": 318,
+        "n": 623
+      },
+      "nan": [],
+      "bandsCount": 1
+    },
+    "item5": {
+      "sizes": [
+        {
+          "n": 50,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 20,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 5,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 1,
+          "warn": "",
+          "executeDisabled": false
+        }
+      ]
+    },
+    "consoleErrors": []
+  },
+  "runB": {
+    "tag": "B",
+    "item1": {
+      "kpis": {
+        "oracle": "80000",
+        "spot": "0.3793",
+        "spotUsd": "$30,344.83",
+        "w": "0.7250"
+      },
+      "engine": {
+        "x": 10,
+        "y": 303448.28,
+        "tau": 0.3,
+        "wMinus": 0.6,
+        "wPlus": 0.85,
+        "marginal": 80000,
+        "oracle": 80000
+      },
+      "lpYdelta": "$0.00",
+      "perpForm": {
+        "notional": "0.1",
+        "margin": "1000",
+        "leverage": "8.0×",
+        "liqLong": "$70000.00",
+        "notionalUsd": "≈ $8,000.00",
+        "liqShort": "$90000.00"
+      },
+      "curve": {
+        "lit": 8195,
+        "fracW": 0.981,
+        "fracH": 0.93
+      },
+      "nan": []
+    },
+    "item2": {
+      "controls": {
+        "input[file]": 1,
+        "input[number]": 16,
+        "select": 2,
+        "input[checkbox]": 1,
+        "rangeCount": 0,
+        "steps": [
+          {
+            "id": "band-notional",
+            "step": "0.01",
+            "value": "0.05"
+          },
+          {
+            "id": "sold-inner",
+            "step": "500",
+            "value": "84000"
+          },
+          {
+            "id": "sold-outer",
+            "step": "500",
+            "value": ""
+          },
+          {
+            "id": "bought-inner",
+            "step": "500",
+            "value": "68000"
+          },
+          {
+            "id": "bought-outer",
+            "step": "500",
+            "value": ""
+          },
+          {
+            "id": "perp-notional",
+            "step": "0.01",
+            "value": "0.1"
+          },
+          {
+            "id": "perp-margin",
+            "step": "10",
+            "value": "1000"
+          },
+          {
+            "id": "perp-entrymark",
+            "step": "100",
+            "value": ""
+          },
+          {
+            "id": "lp-amount",
+            "step": "1000",
+            "value": "50000"
+          },
+          {
+            "id": "kappa-input",
+            "step": "0.001",
+            "value": "0.02"
+          },
+          {
+            "id": "tick-hours",
+            "step": "1",
+            "value": "1"
+          },
+          {
+            "id": "tau-input",
+            "step": "0.05",
+            "value": "0.3"
+          },
+          {
+            "id": "wminus-input",
+            "step": "0.01",
+            "value": "0.60"
+          },
+          {
+            "id": "wplus-input",
+            "step": "0.01",
+            "value": "0.85"
+          },
+          {
+            "id": "payoff-cmp-lev",
+            "step": "1",
+            "value": "5"
+          },
+          {
+            "id": "kpi-oracle",
+            "step": "100",
+            "value": "80000"
+          }
+        ]
+      },
+      "tauStepper": {
+        "start": "0.3",
+        "afterClickUp": "0.3",
+        "readoutAfterUp": "0.30",
+        "afterClickDown1": "0.3",
+        "afterClickDown2": "0.3",
+        "readoutAfterDown": "0.30",
+        "afterKeyUp": "0.35",
+        "curveRedrewOnStep": {
+          "mean": 0,
+          "max": 0,
+          "n": 623
+        }
+      }
+    },
+    "item3": {
+      "tauLow": "0.3",
+      "tauHigh": "1.75",
+      "elbow": {
+        "mean": 5.1,
+        "max": 125,
+        "n": 210
+      },
+      "leftWing": {
+        "mean": 0,
+        "max": 0,
+        "n": 84
+      },
+      "rightWing": {
+        "mean": 1.09,
+        "max": 8,
+        "n": 91
+      }
+    },
+    "item4": {
+      "warnPre": "",
+      "executeEnabled": true,
+      "slippage": "0.0710 %  ·  ≈ $0.07",
+      "boughtNotional": "0.001754 BTC",
+      "preY": 303448.27586206904,
+      "postY": 303604.4724214168,
+      "lpYdeltaPost": "$156.20",
+      "phiPost": 10.320751535955766,
+      "curveMoved": {
+        "mean": 1.25,
+        "max": 318,
+        "n": 623
+      },
+      "nan": [],
+      "bandsCount": 1
+    },
+    "item5": {
+      "sizes": [
+        {
+          "n": 50,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 20,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 5,
+          "warn": "",
+          "executeDisabled": false
+        },
+        {
+          "n": 1,
+          "warn": "",
+          "executeDisabled": false
+        }
+      ]
+    },
+    "consoleErrors": []
+  },
+  "v24compare": {
+    "v24": {
+      "inv": {
+        "input[file]": 1,
+        "input[number]": 13,
+        "select": 2,
+        "input[checkbox]": 1
+      },
+      "oracle": "80000",
+      "tabs": [
+        "Create Perp",
+        "Trade Bands",
+        "Earn",
+        "Settings"
+      ],
+      "kpiLabels": [
+        "Spot",
+        "Spot ($)",
+        "w (derived)",
+        "Depth k",
+        "t (hours)",
+        "Oracle ($)"
+      ],
+      "chartOpts": [
+        "Pool Curve (x, y)",
+        "Mark Across Strikes",
+        "(Δφ_C, Δφ_P) Trajectory",
+        "Payoff Simulator"
+      ],
+      "perpDefaults": {
+        "notional": "0.1",
+        "margin": "1000"
+      },
+      "numberSteps": [
+        {
+          "id": "band-notional",
+          "step": "0.01",
+          "value": "0.05"
+        },
+        {
+          "id": "sold-inner",
+          "step": "500",
+          "value": "84000"
+        },
+        {
+          "id": "sold-outer",
+          "step": "500",
+          "value": ""
+        },
+        {
+          "id": "bought-inner",
+          "step": "500",
+          "value": "68000"
+        },
+        {
+          "id": "bought-outer",
+          "step": "500",
+          "value": ""
+        },
+        {
+          "id": "perp-notional",
+          "step": "0.01",
+          "value": "0.1"
+        },
+        {
+          "id": "perp-margin",
+          "step": "10",
+          "value": "1000"
+        },
+        {
+          "id": "perp-entrymark",
+          "step": "100",
+          "value": ""
+        },
+        {
+          "id": "lp-amount",
+          "step": "1000",
+          "value": "50000"
+        },
+        {
+          "id": "kappa-input",
+          "step": "0.001",
+          "value": "0.02"
+        },
+        {
+          "id": "tick-hours",
+          "step": "1",
+          "value": "1"
+        },
+        {
+          "id": "payoff-cmp-lev",
+          "step": "1",
+          "value": "5"
+        },
+        {
+          "id": "kpi-oracle",
+          "step": "100",
+          "value": "80000"
+        }
+      ],
+      "settingsSections": [
+        "Add Perp · routes margin into the side-club's equity",
+        "Club Equity",
+        "LP-Side · Pool Liquidity",
+        "Deposit / Withdraw",
+        "Protocol Parameters",
+        "Loop Controls",
+        "Invariant Watch · within current frame",
+        "Math Reference (Lean-validated)",
+        "Reset"
+      ]
+    },
+    "v27": {
+      "inv": {
+        "input[file]": 1,
+        "input[number]": 16,
+        "select": 2,
+        "input[checkbox]": 1
+      },
+      "oracle": "80000",
+      "tabs": [
+        "Create Perp",
+        "Trade Bands",
+        "Earn",
+        "Settings"
+      ],
+      "kpiLabels": [
+        "Spot",
+        "Spot ($)",
+        "w (derived)",
+        "Depth k",
+        "t (hours)",
+        "Oracle ($)"
+      ],
+      "chartOpts": [
+        "Pool Curve (x, y)",
+        "Mark Across Strikes",
+        "(Δφ_C, Δφ_P) Trajectory",
+        "Payoff Simulator"
+      ],
+      "perpDefaults": {
+        "notional": "0.1",
+        "margin": "1000"
+      },
+      "numberSteps": [
+        {
+          "id": "band-notional",
+          "step": "0.01",
+          "value": "0.05"
+        },
+        {
+          "id": "sold-inner",
+          "step": "500",
+          "value": "84000"
+        },
+        {
+          "id": "sold-outer",
+          "step": "500",
+          "value": ""
+        },
+        {
+          "id": "bought-inner",
+          "step": "500",
+          "value": "68000"
+        },
+        {
+          "id": "bought-outer",
+          "step": "500",
+          "value": ""
+        },
+        {
+          "id": "perp-notional",
+          "step": "0.01",
+          "value": "0.1"
+        },
+        {
+          "id": "perp-margin",
+          "step": "10",
+          "value": "1000"
+        },
+        {
+          "id": "perp-entrymark",
+          "step": "100",
+          "value": ""
+        },
+        {
+          "id": "lp-amount",
+          "step": "1000",
+          "value": "50000"
+        },
+        {
+          "id": "kappa-input",
+          "step": "0.001",
+          "value": "0.02"
+        },
+        {
+          "id": "tick-hours",
+          "step": "1",
+          "value": "1"
+        },
+        {
+          "id": "tau-input",
+          "step": "0.05",
+          "value": "0.3"
+        },
+        {
+          "id": "wminus-input",
+          "step": "0.01",
+          "value": "0.60"
+        },
+        {
+          "id": "wplus-input",
+          "step": "0.01",
+          "value": "0.85"
+        },
+        {
+          "id": "payoff-cmp-lev",
+          "step": "1",
+          "value": "5"
+        },
+        {
+          "id": "kpi-oracle",
+          "step": "100",
+          "value": "80000"
+        }
+      ],
+      "settingsSections": [
+        "Add Perp · routes margin into the side-club's equity",
+        "Club Equity",
+        "LP-Side · Pool Liquidity",
+        "Deposit / Withdraw",
+        "Protocol Parameters",
+        "(W) Curve Shape · kurtosis",
+        "Loop Controls",
+        "Invariant Watch · within current frame",
+        "Math Reference (Lean-validated)",
+        "Reset"
+      ]
+    }
+  }
+}

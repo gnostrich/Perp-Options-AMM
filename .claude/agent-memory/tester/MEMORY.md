@@ -1,188 +1,102 @@
 # MEMORY — tester
-_Last updated: 2026-06-11, after the org-review sign-off + ledger stale-fact fixes._
+_Last updated: 2026-06-14, after BUILDING the **monolith_consistency.js report-only harness** (engine⟺Lean numeric cross-check, operator entries 243/153#9; skeptic R6 gate a04465ae WITH RIDERS). 8/8 PASS, exit-0-ALWAYS, wired into run_all.sh as a clearly-labeled REPORT-ONLY (NOT GATING) section; HARD gates lens 13 + a16 5 UNCHANGED green; HEAD HTML md5 `80f050e2…` UNCHANGED (READ-ONLY on engine). Red-confirmed: breaking getMP_raw/gLoc/tradeUpdate flips the right lines to FAIL. Prior: INHERITED-CONTRACTS pass on `8f897edc` 5/5 PASS ×2 (FLAG-OMISSION #2 CLOSED); CONSTMULT smoke 5/5._
 
-## ★ 2026-06-11 — ORG-REVIEW SIGN-OFF (skeptic run-8 cond 4i) + ledger stale-fact fixes
-**I SIGNED OFF YES** on the organiser handover as conditioned (`docs/org_review_2026-06-11.md`,
-443f756; skeptic verdict #7 PASS-WITH-CONDITIONS, 6 binding — see skeptic MEMORY ~L238-263).
-What moves: DIFF_LEDGER rolling feature-state TABLE curation + backfills, OPERATOR-VOICE
-distillation + rolling OQ list, staleness sweeps. What I KEEP: all verification (browser+oracle),
-evidence files, FLAG verdicts, authorship of every verification entry (the facts).
-**My 3 sign-off conditions (recorded in my reply to the manager):**
-- **T1 (verbatim-lift):** any state/verdict wording the organiser puts in a table cell must be a
-  VERBATIM LIFT from my verification entry (or a verbatim transcript), never a restatement — the
-  origin-rule leak is COMPRESSION (the org review's own row-12 "pivot landed" oversell, caught by
-  skeptic cond 6, is the existence proof). My side of the deal: **every verification entry I
-  write now carries an explicit per-feature row-verdict line** for each feature # listed, so the
-  organiser always has a liftable source and any non-matching wording is detectable=FLAG.
-- **T2 (clean baseline):** handover starts from the stale-fact-clean ledger I produced today (so
-  the skeptic's audit of the organiser's FIRST distillation isn't confounded by my-era staleness).
-  DONE — see below.
-- **T3 (frozen pre-handover blocks):** everything distilled before handover stays tester-authored
-  and frozen; organiser changes to those blocks = dated, labelled addenda, never in-place rewrites.
-**YOURS-only declaration:** the 2026-06-10 backfill — all 3 entry OPERATOR-VOICE blocks, the
-rolling OQ list (8 OPEN + 4 RESOLVED), and the transcript-gap honesty note — tester-authored.
-**Handover NOT yet effective:** still pending = skeptic cond-5 sweep (DIFF_LEDGER header, my
-charter L31-54, CLAUDE.md §2, skeptic charter, §2.2) by the manager, skeptic audit of organiser's
-first distillation, operator one-line notification (veto room open). **Until that completes the
-ledger duties remain MINE.**
+## ★★★★★ MOST RECENT — BUILT monolith_consistency.js (REPORT-ONLY theory↔impl numeric bridge) 2026-06-14
+NEW harness `engine/verify/monolith_consistency.js` (operator entries 243/153#9 monolith program; skeptic R6 scope-gate a04465ae WITH MANDATORY RIDERS — all obeyed). Cross-checks engine NUMBERS vs the monolith Lean formulas (`formal/aristotle_runs/MONOLITH_CONSTM/extracted/RequestProject/MonolithConstM.lean`, run 6016ec57). REPORT-ONLY: exits 0 ALWAYS (+ `|| true` belt in run_all), never aborts set -e, never the gate. HARD gates lens_selfcheck 13 + a16_atm_gate 5 UNCHANGED green. HEAD HTML md5 `80f050e26332d21c68bd7b064467470a` UNCHANGED (I am READ-ONLY on engine; only Wrote harness + edited run_all.sh).
+- **8/8 PASS.** Lines: (1)price=∇μ getMP_raw==(y−β)²/αβ [NEW, RIDER value-only not slope, e^μ≡1]; (2)invariant (x−α)(y−β)=αβ [NEW]; (3)R_psd μ″=2(t−β)/αβ≥0 via FIRST-difference of marginal [NEW, RIDER not 2nd-diff=58000× false-red]; (4)g=m·γ gLoc [NEW, extends CM1]; (5)θ_tx=mode·(chosen/mode)^m executeLeg [XREF already-HARD via CM5]; (6)smooth-paste seam markLensed [XREF already-HARD via CM4]; (7)warp_linear ΔG=m·Δγ from tradeUpdate Δγ==D/β [NEW, RIDER: rewrote brief, warp=gamma_affine not draw-layer]; (8)internal_passivity Hs telescoping w/ Rcurv=μ″ Simpson ∫engine-marginal==ΔHs (FTC) [NEW, OPTION (a), not a CM6 re-run].
+- **KEY MAPPING (verified ~1e-15, not assumed):** engine s.alpha==Lean alpha & s.beta==Lean beta (since Lean x=alpha·y/(y−beta) ⇒ Lean alpha=x·w=s.alpha, Lean beta=y·(1−w)=s.beta).
+- **RED-CONFIRM done:** getMP_raw×1.3 ⇒ FAIL 1,3,8 (others correctly PASS); gLoc×1.5 ⇒ FAIL 4; tradeUpdate dx×1.05 ⇒ FAIL 3,7. Detects drift in every load-bearing engine fn.
+- **Honest ceiling stated in header verbatim-in-spirit:** "cross-checks NUMBERS; stays red on drift; does NOT make Lean 'verified' and does NOT prove the engine IS the Lean object — only that they AGREE numerically."
+- Handed to manager for independent audit + skeptic red-confirm. Did NOT git.
 
-### Ledger fixes I applied 2026-06-11 (my file, my facts; markdown only, no engine source)
-Splice with count==1 asserts: `engine/splices/splice_ledger_stalefix_2026-06-11.py` (9 reps):
-- **Row #12** — skeptic cond-6 wording character-exact ("5 faith gates landed green (a8998cf);
-  completeness of the faithfulness program unaudited"), + my own evidence tail; last-changed
-  2026-06-10 (a8998cf); verdict GUARDED — completeness unaudited.
-- **OQ item 4** — re-scoped: hold RULED-lifted (operator "1 yes", entry 14 ruling 1,
-  `history/operator/2026-06-10_project-status-review.md` [verbatim-transcript]); what stays OPEN
-  = the completeness audit (live engine reproduces EVERY proven construct).
-- **4 stale paths** (skeptic slice-1 count, dc254ad): CURVE_SWAP → `curves/gh/...:93` (line holds);
-  KURTOSIS_KNOB → `curves/balancer_w/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md` — I
-  re-verified the quote anchors in the moved file: **two line refs had DRIFTED**
-  (:282-284→:284-285, :175-176→:177); fixed with re-checked quotes. Lesson: a path swap without
-  re-anchoring the quote plants a fresh stale fact.
-- **Provenance upgrades** (my OPERATOR-VOICE duty): header mandate cite + pain-points item now
-  cite the verbatim transcript (entries 5/2/4); the backfill honesty note kept VERBATIM with a
-  dated UPDATE appended (corrigenda style, not in-place rewrite).
-**My evidence for "green":** I re-ran `engine/verify/run_all.sh` myself 2026-06-11 vs HEAD —
-integrity md5s exact (6cc73563 / ab663f5c / c505b08a), 7 GH gates, slope identity, seam, dir,
-FAITH 1–5 all PASS (FAITH-FISHER final PASS; set -e chain). Not borrowed from the skeptic's run-7.
+## ★★★★★ Prior — INHERITED-FROM-v24 CONTRACTS on HEAD `8f897edc` (READ-ONLY) = 5/5 PASS ×2; FLAG-OMISSION #2 CLOSED
+Verified the contracts inherited from v24 that the constmult promotion smoke did NOT live-confirm. Build md5 `8f897edc` UNCHANGED pre/post (I edited only DIFF_LEDGER.md, never engine). run_all GREEN (lens_selfcheck 13/0 + a16_atm_gate 5/0). 0 console / 0 pageerrors ×2. Harness `engine/verify/pw_v28_inherited_smoke.mjs` (A/B); evidence `evidence/v28_constmult_inherited/` (RUN_LOG_run{A,B} byte-stable; RESULT_run{A,B}.json byte-IDENTICAL; ITM_FORCED_probe.json; A/B fullpage PNG byte-identical 291703b; INDEX.txt). Ledger entry appended above the reconciliation list + table rows #4/#5/#7/#8/#9/#11 amended + RESOLVED/RULED got the entry-232 funding ruling.
+- **ITEM 1 [#4] CARRY P=Ny/Nx PASS:** default w=0.5, carry P (=getMP_raw=w·y/((1−w)·x)) = $80,000 == oracle, poolMark$=$80,000, sNorm=1, u=log(80000)−log(80000)=0 finite/not-NaN. == v24.
+- **ITEM 2 [#5] REBASE PASS:** via Store.setOracle→Engine.rebase. oracle 80k→100k (r=1.25): x×1.25/α×1.25, β,y,w invariant, mp_raw×0.8=1/r EXACT (P→P/r), θ→θ/r. 100k→64k (r=0.64): symmetric, mp_raw×1.5625 EXACT. == v24 (x→r·x,α→r·α,β,y,w inv).
+- **ITEM 3 [#8] STRIKE REG PASS:** θ=K/oracle. K=$120k→θ1.5 call mk 0.1667; $80k→θ1.0 mk 0.25; $48k→θ0.6 put mk 0.15; g_loc=m·γ=1@m1, S*=g/(g+1)=0.5; display-mark+chart-ray share single sNorm coord.
+- **ITEM 4 [#11/#7] DOLLAR/SETTLEMENT PASS both regimes:** OTM-expiry (oracle≈80k both OTM): settled_cash_leg=null (both reverse on AMM), trader_payout $0.072 finite. ITM-exercise (FORCED real ITM: poolMark/oracle=2.669>sold-call ray 1.5, no rebase): settled_cash_leg='sold'/live_leg='bought', trader_payout $3.78, raw_net finite, reserves finite. Round-trip restore EXACT (Node-oracle |dx|=|dy|=0). NO NaN, NO absurd mag.
+  ★ GOTCHA: an oracle-bump does NOT create ITM — Store.setOracle REBASES (frame rescale, poolMark/oracle stays ~1, band strikes re-ray live). To force a real ITM exercise, move poolMark above the strike ray WITHOUT a rebase (a w-shifting tradeUpdate). v24-faithful.
+- **ITEM 5 [#9] FUNDING THROUGH LENS PASS (operator entry 232 RULED m-coupled):** funding=κ·(±g_loc)·N·markLensed·(S−1)/S·dt, g_loc=m·γ (tau arg carries m). steepened pool (w=0.539,S=1.363): call(θ1.5) +3.68e-4/+4.29e-4/+5.06e-4 @ m1/2/4; put(θ0.7) −5.69e-4/−6.62e-4/−7.24e-4. SCALES with m, SIGN FLIPS call(+)/put(−), finite. SUB-LINEAR (ratio 1.27 m1→4) because g∝m but markLensed SHRINKS as g grows (g·mark 0.151→0.176→0.193). Matches skeptic's 1.13× qualitative (diff pool/N). FLAG-OMISSION #1 RESOLVED-BY-RULING (entry 232 [verbatim L1865] "funding slope deviation thing would be as seej thru the lens" = option B kept).
 
-### ★ TRANSCRIPT-GAP STATUS (updated 2026-06-11 — supersedes the 06-10 note below in part)
-`history/operator/2026-06-10_project-status-review.md` EXISTS (verbatim, 20 entries; 1–6
-pre-policy backfill, labelled). 2026-06-11 sessions transcribe live
-(`2026-06-11_curve-agnostic-framework-brainstorm.md`, 9 entries at my read). **Remaining gap:
-2026-06-08/09 only** (v25-GH/v26a/v26b/v26c + governance/AIRTIGHT sessions) — export request
-stands. Key 06-10 verbatim anchors: entry 5 = my duty origin ("full responsibility… scan the
-chats transcripts…"); entry 14 = rulings 1-3 (pivot un-hold "1 yes"; trades-bend-curve "2. yes";
-kurtosis = static steepness); entry 16 = "its w that the trade changes"; entry 10 = the prize.
+## ★★★★★ MOST RECENT — CONSTMULT candidate `8f897edc` (constant slope-multiplier lens, operator entries 229/231) = 5/5 PASS ×2, GATE = PASS
+Build `engine/builds/temporal_mvp_v28_lens_constmult.html` md5 `8f897edcad49c73853096a05e7ec233d` (UNCHANGED post-run, READ-ONLY).
+THE CURVE REDEFINITION: kurtosis/vol knob is now a **CONSTANT SLOPE MULTIPLIER m** — replaces BOTH the old elbow-rounding
+√-lens AND the invtx √ tx-strike map. g_loc = m·γ at EVERY strike (no elbow/cusp/flat-top). Knob value flows through the
+existing `tau` param slot (`state.m`); UI relabel "SLOPE MULT m" (#m-input, min 1 / max 6 / step 0.25 / default 1).
+tx-strike map θ_tx = mode·(chosen/mode)^m. Pool fns (tradeUpdate/arbitrageToOracle/rebase) byte-identical to v24.
+Harness `engine/verify/pw_v28_constmult_smoke.mjs` (single A/B arg); evidence `evidence/v28_constmult/` (INDEX + RUN_LOG_run{A,B}
+byte-stable modulo header + rAF sweep frame-count 49/48 jitter + A_item1_m{1,2,3}.png + VIS_chart2_m{1,2,3}.png + VIS_fullpage_m3.png).
+0 console / 0 pageerrors. run_all GREEN: lens_selfcheck **13 PASS** (CM1-CM9) + a16_atm_gate **5 PASS**, exit 0 (GH/(W) suites N/A on v24-base lens line).
+File-safety GREEN (webp L74 `ab663f5c…`, svg L1060 `c505b08a…`, 3 scripts parse). Ledger entry appended (feature-keyed
+#3/#16/#2/#6/#7/#10/#1+regression/#15 + none-beyond; OPERATOR-VOICE 229/231 RULED + 226/218/222 RESOLVED + 215/216/220 CONTEXT + 230 monolith-sync-not-this-smoke;
+table header + rows #3/#16/#2/#6/#7/#10/#15 amended; rolling -R218τ → RESOLVED(evidence); reconciliation R-218 τ-DIR → RECONCILED-in-`8f897edc`).
+- **ITEM 1 PASS (steeper everywhere, m·γ, no elbow/cusp/flat-top):** default pool w=0.5/γ=1. g_loc CONSTANT across an 11-strike
+  ladder (0.25×–4× mode), spread 0.00e+0 at each of m=1(g1)/m=2(g2)/m=3(g3); chart-2 3 distinct hashes (lit 9620/9561/9510).
+  Rendered shape: ATM value <1 (0.250/0.148/0.105 @ m1/2/3), call arm==put arm at mode (C⁰, no cusp/peak=1/flat-top), whole curve
+  pulls down/steepens with m (2× call 0.1667→0.0741→0.0527). VISUAL VIS_chart2_m1.png (apex 0.25) vs _m3.png (apex 0.105). run_all CM1/CM2/CM3.
+- **ITEM 2 PASS (m=1 = plain v24 curve):** g_loc(2×,m=1)=1.0 == γ=1.0 exact; m=1 trade lands at chosen (theta_tx==chosen=2.0,
+  K_usd==K_tx=$160k). run_all CM1 (m1⇒g_loc=γ)/CM5 (m1⇒θ_tx=chosen)/CM8 (pool byte-id v24).
+- **ITEM 3 PASS (further out + reject earlier):** 2× chosen call → θ_tx 2×/4×/8× of mode @ m1/2/3 (K_tx $160k/$320k/$640k).
+  Reserve reject (BUY-CALL cash-OUT, N=0.7, chosen=2× mode, depth $400k): m1 $112k / m1.5 $158k / m2 $224k / m2.5 $317k EXECUTE;
+  **m3 REJECTS** verbatim "At-strike cash $448000.00 exceeds 90% of pool cash depth $400000.00 — trade rejected." N un-mutated, no silent cap. run_all CM7.
+  ★ GOTCHA: the cash-OUT leg that GROWS with m is BUY-CALL (or sell-put inverts: a put chosen<mode shrinks K_tx as m rises — wrong
+  direction). Use buy-call (chosen>mode) with N big enough (~0.7) to trip 90% of the default $400k depth by m=3.
+- **ITEM 4 PASS (round-trip + settle@chosen):** analytic single-leg m=2 open dy=$16k@K_tx=$320k → reverse restores x/y exact (|dx|=|dy|=0).
+  UI band (#btn-execute → Store.closeBand, m=2, sold-call $120k/bought-put $48k, N=0.03): |dx|=1.78e-15/|dy|=0, raw_net=7.75e-5 finite.
+  SETTLE basis K_usd(chosen)=$160k DISTINCT from swap K_tx(further)=$320k. run_all CM6.
+- **ITEM 5 PASS (no regression):** continuous warp sweep ANIMATES (48-49 rAF frames/1s on a 0.4-BTC band preview — CONTWARP rAF wrapper retained);
+  chart-1 (canvas-curve, plain-v24 pool) INERT to m (band CLEARED ⇒ identical hash m1/m3/m6); funding alive on STEEPENED pool (w=0.6429/γ=1.8:
+  call +1.00e-4/+1.12e-4/+1.17e-4, put equal-opp, finite, m-dependent — 0/0 on default pool is the S≡1 positive-control artifact, NOT a defect);
+  settlement ITM path finite (m=2, sold-call ITM via oracle×2.5+arb → settled_cash_leg='sold', raw_net=−3.20e-3).
+- **R-218 τ-DIRECTION RECONCILED:** the standing OPEN -R218τ (invtx landed sharper⇒CLOSER, inverting operator entry-218/222) is RESOLVED
+  by this redefinition — θ_tx=mode·(chosen/mode)^m is monotone increasing in m ⇒ bigger knob lands STRICTLY FURTHER OUT (operator-ruled). No flip.
+- **OPERATOR-VOICE highlights:** entry 229 [verbatim L1841] "fuck gang. its literally just a constant slope multiplier" (RULED, delivered);
+  entry 231 [L1857] "yes" (replaces elbow/frozen-γ design); entry 226 [L1815] "i want to see steeper when i set for higher vol, with otm —> otm +"
+  (RESOLVED both halves SEEN); entries 218/222 (sharper⇒further) RESOLVED. entry 230 "monilith math etc sync up now" = SEPARATE monolith/spec-sync
+  deliverable, NOT this engine smoke (flagged for manager so it's not assumed done).
+- **GOTCHAS (this build):**
+  - Knob value lives in `state.m`, threaded through the `tau` PARAMETER NAME in engine fn signatures (gLoc/markLensed/executeLeg/fundingPerStrike
+    3rd-or-last arg). Don't be fooled by the name `tau` in code — it carries m. UI input id `#m-input`, Store.setM(v).
+  - chart-1 inertness test: MUST clear BOTH band-notional AND sold-inner/bought-inner (boot suggestStrikes leaves 84000/68000 + a live
+    __previewPool whose ghost on chart-1 depends on m via lensed N_buy — the documented slipfresh-wire side-effect). Clear all 3 → byte-identical chart-1 across m.
+  - funding 0/0 on default pool is EXPECTED (w=0.5 ⇒ S=mp/oracle=1 ⇒ (S−1)/S=0); steepen the pool (execute a real call leg to move w) to see it alive.
+  - UI band open: fill sold-inner/bought-inner (USD) + band-notional (BTC), dir pill #band-dir-sell to 'long' (sold-CALL K>oracle / bought-PUT K<oracle),
+    click #btn-execute. Store.closeBand(id) returns {raw_net, settled_cash_leg, ...}. page.on('dialog') MANDATORY (over-carve alerts).
+  - Engine.executeLeg(state,'sell'|'buy','call'|'put',θ_inner,θ_outer(NaN ok),N,oracle,m) → {newState,dy,K_usd,K_tx,theta_tx,...} or {rejected,reason}.
 
-## ★ STANDING DUTY (operator-directed 2026-06-10, entry 5) — OPERATOR-VOICE layer of DIFF_LEDGER
-**Being transferred to the organiser per operator entry-8 authorization (2026-06-11) — mine until
-the transition protocol completes (see sign-off section).** Mandate verbatim: "if the tester is
-responsible for version control then apart from just taking screenshots and checking the UX, he
-has to take full responsibility to even scan the chats transcripts to distill my objections to
-each version, open questions etc." Scan order: `history/operator/` FIRST, then legacy
-transcript_journal + session_tree_note. RESOLVED only with evidence. Never paraphrase an
-objection into something easier. Labels: [verbatim-transcript] / [manager-recorded paraphrase] /
-[summary-stub]. Skeptic audits my distillation and outranks everyone but the operator.
+## ★★★★★ Prior — R-218 INVERSE-LENS TX-STRIKE candidate `5fea0e8d` (SUPERSEDED by constmult) = 4/5+OBSERVED PASS ×2
+Build `temporal_mvp_v28_lens_invtx.html` md5 `5fea0e8d82ea85270e97ede71cf8e9ae`. tx-strike map u_tx=sign(a)√(a²+2|a|τ) (the √ inverse-lens).
+Was the promoted HEAD per run_all integrity header. SUPERSEDED by constmult: the √ map's τ-direction INVERTED entry-218 (sharper⇒closer);
+constmult's m-power map fixes it (sharper⇒further). evidence `evidence/v28_invtx/`. lens_selfcheck was 39/39 (now the constmult selfcheck is 13/0).
 
-### Backfill DONE (2026-06-10) — what I wrote and where it came from (FROZEN as tester-authored)
-- Read end-to-end: `history/transcript_journal.txt` (105 ln, summaries, ends 2026-06-06) and
-  `history/session_tree_note.md` (4100 ln, pre-GH canonical, ends at curve-shape pivot). Swept
-  `notes/`, `docs/` (incl. context/chats stubs), manager MEMORY, feature inventory.
-- Wrote: OPERATOR-VOICE blocks on all 3 backfilled entries + rolling list (8 OPEN + 4 RESOLVED
-  with evidence) + provenance/honesty note + header mandate quote.
-- Key verbatim recoveries (session_tree_note unless noted): "hid and aggregated away information"
-  (:353); "I buy a discount IOU to receive 1 BTC after 12 months, on dollar margin" (:921-923,
-  Fork-C); "same carved slice everything…" (:3206-3207, pass-3 settlement gap); "looked the same
-  instead of steeper (american-style implies steeper)" (:3460-3461); "initial not closing,
-  escrowed not appropriated" (:3754). Fragments since UPGRADED to verbatim (2026-06-11 fix):
-  "yes to all" (entry 2), "Id especially want the version control agent to be diligent…"
-  (entry 4). Still manager-recorded: "I trust Aristotle" (MEMORY:360, 06-09 session — gap).
-- Finding-2 chain fully evidenced: origin :3444-3458 → og-manager-clone-1.md:18-20 → operator
-  ruling 2026-06-08 (manager MEMORY paraphrase) → v26c absorption (my live confirmation).
+## ★★★★★ Prior — A14 AT-STRIKE §8 live, HEAD `de28c937` = 5/5 PASS ×2, 34/34 ORACLE
+AMM swap AT-STRIKE: executeLeg dy=(wingSign·legSign)·N·K_usd, K_usd=θ·oracle. DEPTH_FRAC=0.90. Harness pw_v28_a14_smoke.mjs;
+evidence evidence/v28_a14/. Buy-leg N_buy=V_sell/denom unchanged. -A14b: UNDERLYING swap-warp kurtosis-FREE; SEEN chart-2 reshape kurtosis-DEPENDENT.
+(Full detail in git history of this MEMORY if needed.)
 
-### Watch-items I carry
-- Rolling-list item 5: "|Γ|≤1 exact; |Γ|>1 = labelled approximation" rider vs engine locked γ>1 —
-  nobody has verified an approximation LABEL ships in UI/paper. Keep against paper/UI passes.
-- Kurtosis era-reversal recorded (old "Rohan does not want kurtosis" :1056-1057 superseded by
-  motive). Slippage-collar item PARKED not resolved — re-surface if collar UX ships.
-- NEW: organiser-era watch — T1 verbatim-lift compliance on its first table updates; my row-12
-  evidence-tail style (mandated-wording-prefix + my cite) is the template for liftable cells.
+## ★★★★ Prior — CONTWARP `4378bc11` (continuous trade-preview sweep) = 4/4 PASS, promoted
+drawPricing = rAF wrapper, ~0.8s sweep pre→post on chart-2, each frame live-lensed at its own sliding 45°-tangent point.
+The CONSTMULT build RETAINS this rAF wrapper (item 5 sweep still animates). Skeptic VERDICT_CONTINUOUS_SKEW: dip = mechanic, do-not-fix.
 
-## DONE — live v26c_full2 browser confirmation (build 6cc73563…)
-Ran **live Playwright Chromium** against `builds/temporal_mvp_v26c_full2.html`. Build md5
-`6cc73563779a3e030774b7597d0ae187` unchanged (no engine edit); blobs `ab663f5c…`/`c505b08a…`
-intact; 3 scripts parse. Oracle `run_all.sh builds/temporal_mvp_v26c_full2.html` GREEN incl. SEAM
-GATE + **DIR GATE PASS** (γ∈{1.5,2,3,4}, mutation-detected). Note: run_all.sh COPIES the passed
-build into a scratch file literally named `temporal_mvp_v26b_itm.html` (line 16) and the seam/dir
-gates read that scratch copy — so the "v26b_itm" filename in gate headers is the scratch name, the
-CONTENT is v26c_full2. Harness: `engine/verify/pw_v26c_visual.mjs`. Reproduced clean across 2 runs
-(chart-vs-table diff identical to the bit; not flaky).
+## ★ STANDING DUTY — OPERATOR-VOICE layer of DIFF_LEDGER (operator-directed 2026-06-10)
+Every ledger entry: scan `history/operator/` FIRST (verbatim per §2.2; 3 files; kurtosis-curve-family-brief.md now at 231 entries),
+then legacy transcript_journal.txt + session_tree_note.md. Distill objections VERBATIM + source ref; RESOLVED only with evidence;
+skeptic audits me against raw transcripts. Labels: [verbatim-transcript] / [manager-recorded paraphrase] / [summary-stub].
+- HONESTY GAP (standing): GH-era sessions have NO raw transcript (operator voice secondhand). Standing ask: export into history/.
+- 2026-06-13 entry-numbering corrigendum (manager): two "Entry 214"/"215" (UTC timestamps disambiguate); transcribed verbatim+chronological.
 
-### KEY ENABLER (new): `Engine` AND `Store` ARE reachable inside `page.evaluate`
-Classic-script top-level `const`s (Engine line 1590, Store line 2255) live in the page global and
-ARE visible to `page.evaluate` (unlike Node import, which can't see them). So the live oracle of
-record here is the page's OWN engine called against the live `Store.state.pool` + the rendered DOM
-mark cells — strongest possible evidence. (Prior v26b memory said "NOT on window"; that's true for
-`window.Engine`, but `typeof Engine !== 'undefined'` inside evaluate is TRUE. Probe-confirmed.)
-
-### Verdicts (FLAG per item)
-1. **Bands table crossover at K — PASS (tester-confirmed, live engine + rendered DOM).** The
-   OTM→ITM **regime** crossover (`legIsITM`) requires a pool-SPOT move, not a rebase: set oracle then
-   click **#btn-arb (Run Arbitrage to Oracle)** to push poolMark to the oracle. Then `soldITM` flips
-   **false→true EXACTLY at oracle=poolMark=120000=K** (119900 OTM, 120000 ITM) for the SOLD call
-   K=$120k, γ=2 build. `legIsITM` uses price-measure `sNorm0=poolMark/oNow` vs live ray `K/oNow` ⟺
-   poolMark≥K. All-γ crossover-at-K is the Node DIR_GATE's job (PASS, manager-verified); browser
-   confirms γ=2 live. Registration identity verified: `getMP_raw(arbitrageToOracle(pool,K))=K`
-   exactly (120000.0000000003), `getSNorm(that)=thetaReg`. `11_bands_table_crop.png` (ITM, oracle
-   $130k, SOLD mark 0.3333) + `12_bands_table_OTM_crop.png` (OTM, oracle $100k).
-   - GOTCHA: a pure oracle REBASE (kpi-oracle alone, no arb) does NOT cross the strike — it carries
-     the position with the frame (poolMark stays fixed, soldITM never flips). That's correct
-     (absorbed Finding-2). Must arb to move spot through K.
-2. **Chart strike-ray live on the position — PASS (tester-confirmed, rendered).** Curve view: white
-   eq-marker on the GH curve; green (put) / red (call) strike rays from origin with trade-dots ON
-   them. Rebasing oracle 80k→160k (`08b`→`08c`) **rescales the frame and repositions the rays**
-   (live K/oracle), marker stays on curve — no stale entry-θ drift (the absorbed Finding-2). Curve
-   is GH continuation, not Balancer weight-form. Drift table (item2_drift in trace): leg.inner
-   (entry-frozen θ, sold 1.5 const) vs sNormStrike(pool,K) (live, sold 0.4446→0.0494 across sweep) —
-   they diverge post-rebase, confirming the live path is used, not the stale entry value.
-3. **Re-based payoff matches the table — PASS (tester-confirmed, exact numeric).** At the live spot
-   (r=0) the chart's legFraction == bands-table markEff == rendered DOM mark cell, **|diff|=0.0
-   exactly** both legs: SOLD 0.24169229297386294 (DOM 0.2417), BOUGHT 0.2826730030550262 (DOM
-   0.2827). Same registered carry basis. Payoff frame is **−90%..+200%** asymmetric (`09_payoff`),
-   renders cleanly across the full range, downside floors at $0, free-boundary kink visible at left,
-   no NaN/blank/clip. Rebased-160k (`09b`) rescales Y-axis to $375k, still clean. (Payoff chart is
-   canvas-only — no DOM data table — so the numeric compare is the page's own legFraction closed
-   form vs the rendered table cell; both evaluated live against Store.state.pool.)
-4. **No v26b regression — PASS (tester-confirmed, rendered).** Polar mark "Mark Across Strikes"
-   (`canvas-pricing`, `07_polar_mark_pricing.png`): green dot (~$80k) and red dot (sold call ~$138k)
-   both sit exactly ON their ψ-curves (pink put-wing / teal call-wing), peak 1.0 at the mode —
-   continuity through strike, no drift. Bands §5 columns all present & correctly labelled (9 cells/
-   comp row, OPEN/CLOSE, headers verbatim in trace.item1_headers). Matches v26b.
-
-### Provenance summary
-- tester-confirmed (rendered pixels): items 1 (table crops), 2 (curve rays), 3 (payoff frame), 4
-  (polar mark). Numeric cross-checks: page's OWN Engine/Store live (NOT a Node re-derivation).
-- Node oracle incl. seam + dir gate: PASS against v26c_full2 (scratch-named v26b_itm).
-- VERDICT: all 4 PASS, clean ×2, no regression. Recommend HEAD promotion clear from the visual layer.
-
-### Repro
-`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v26c_visual.mjs`
-Crossover-at-K (arb-driven): set #kpi-oracle then click #btn-arb, read Engine.legIsITM live.
-Oracle gate: `cd engine; sh verify/run_all.sh` (defaults to HEAD; seam+dir+FAITH 1–5 PASS — my
-2026-06-11 re-run). Chromium binary at BOTH `/opt/pw-browsers/chromium-1194` and
-`~/.cache/ms-playwright/chromium-1194`; `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` is the one
-that resolved here. tmp harnesses must live under `engine/` so `import 'playwright'` resolves
-`engine/node_modules/`.
-
-### Gotchas learned (v26c)
-- chart-select option values: `curve` (canvas-curve, GH pool curve + strike rays), `pricing`
-  (canvas-pricing, polar Mark-Across-Strikes — item-4), `trajectory` (canvas-ratio), `payoff`
-  (canvas-payoff, the −90%..+200% sim).
-- Band validation (#btn-execute disabled): bought PUT K must be < oracle (OTM put); sold CALL K >
-  oracle (OTM call). With oracle=$80k: sold 120000 / bought 68000 works; bought 90000 fails
-  ("not OTM on put wing"). Needs a perp added first (club.totalNotional>0).
-- carry sNorm is INVERSE to price (sNorm ∝ S^−γ): higher K → lower thetaReg. `isOTM`/`wingMember`
-  use the PRICE-RATIO leg.inner (K/oracle, ∝S^+1), NOT the carry theta — feeding carry theta to
-  isOTM gives wrong answers. The v26c design deliberately keeps entry-checks on price-ratio,
-  value/mark on carry (sNorm(K)). Don't conflate.
-
-## Prior runs (still-valid context)
-- v26b (8df9f8a3…): items 1/2/4 tester-confirmed, item-3 uncapped-vs-capped logic-only (chart window
-  too narrow then; v26c's −90..+200 frame now clears the free boundary so legs render past it).
-  Seam gate PASS. `evidence/v26b_pw/`.
-- v26a: Finding-2 was open (curve/ratio chart ratio-pegged, table dollar-anchored) — **now ABSORBED
-  in v26c**: chart rays are live K/oracle, table+chart+settlement all carry-registered at sNorm(K).
-  Slippage display PASS, frame re-fit PASS (don't revert), curve = GH continuation.
+## ⚠ METHODOLOGY GOTCHA (permanent)
+In `page.evaluate`, **`Engine` and `Store` are reachable; `Viz` and `render` are NOT** (silent no-op) — drive visuals through REAL UI
+handlers (input events on #m-input/#sold-inner/etc., #btn-execute, chart-select change, tab clicks). Canvas pixel-COUNT saturates on a
+thin curve micro-shift — use distinct-HASH for "redraw happened" and ANALYTIC Engine.gLoc/markLensed for per-strike truth.
+TWO canvases: canvas-curve (chart-1 pool) / canvas-pricing (chart-2 option/value) — read by ID, document.querySelector('canvas') grabs the wrong one.
 
 ## File-safety canon
-Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060); 3 `<script>` parse.
-v26c HEAD build md5 `6cc73563779a3e030774b7597d0ae187` (re-verified 2026-06-11). v26b `8df9f8a3…`.
+Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060 on the v28 lens line); 3 `<script>` parse. Key off line-md5, not line number.
+Latest CANDIDATE constmult `8f897edcad49c73853096a05e7ec233d` (svg L1060). Prior: invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
+lens HEAD `7e1ae39b…`, FINAL `989752294…`; v27 `928cde1c…`; v26c `6cc73563…`.
 
-## Evidence
-`evidence/v26c_pw/` — 01_inputs, 02_after_execute, 05_bands_table_spot, 06_bands_table_ITM,
-07_polar_mark_pricing, 08/08b/08c_curve_strikeray*, 09/09b_payoff_rebased*, **11_bands_table_crop**
-(ITM legible), **12_bands_table_OTM_crop** (OTM legible), trace.json (all DOM + live-engine numbers,
-sweeps, drift table, chart-vs-table diffs). Harness `engine/verify/pw_v26c_visual.mjs`.
-`engine/builds/DIFF_LEDGER.md` — my ledger incl. OPERATOR-VOICE layer (backfilled 2026-06-10;
-stale-fact-clean baseline 2026-06-11 via `engine/splices/splice_ledger_stalefix_2026-06-11.py`).
+## Environment quick-ref
+`cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/<harness>.mjs [A|B]` — playwright global at /opt/node22, symlinked into
+engine/node_modules; chromium at /opt/pw-browsers/chromium-1194. Harnesses must live under engine/. file:// load works.
+run_all: `bash verify/run_all.sh builds/<file>.html` (lens line auto-routes to lens_selfcheck + a16_atm_gate).

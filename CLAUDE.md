@@ -7,15 +7,15 @@ a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produ
 
 ## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
 **A curve-warp AMM grown out of Balancer, whose purpose is a kurtosis knob — everything else stays
-the same.** Balancer `x^w·y^(1−w)=k` is the base; the position-dependent weight is the warp; the
-kurtosis knob `τ` rounds the ATM elbow with wings staying exact power-laws; carry/rebase,
-value∝S^(−γ), ITM smooth-pasting, funding, and the dollar pipe are unchanged. The curve/invariant
-decision is always the operator's. ⚠ HOW the current GH engine relates to the proposed τ-family is
-**OPEN** — the "GH = one (W) setting, τ≡δ EXACTLY" identity was BROKEN by the skeptic 2026-06-10
-(manager-verified on the live engine: GH puts the kernel in the latent SCORE, (W) in the WEIGHT —
-different curves; see `notes/skeptic/VERDICT_KURTOSIS_KNOB_2026-06-10.md`). Full checklist:
-`docs/feature_inventory.md` — design/brainstorm notes must disposition every item there (the
-skeptic enforces this).
+the same.** Balancer `x^w·y^(1−w)=k` is the base; a trade warps the curve; the kurtosis/vol knob is a
+**CONSTANT SLOPE MULTIPLIER `m`** (operator-RULED 2026-06-13, entries 229/231): the option-value
+curve's power-law steepness is `m·γ` at every strike (`m=1` = plain v24 curve; bigger m = steeper
+EVERYWHERE and a trade lands further out — both rise with m, one direction). carry/rebase,
+value∝S^(−γ), ITM smooth-pasting, funding, the dollar pipe are unchanged. **⛔ SUPERSEDED 2026-06-13
+(entry 231):** the old "knob `τ` rounds the ATM elbow with wings frozen at γ" / position-dependent
+`√(τ²+u²)` lens is DEAD — no elbow-rounding, no flat-top/cusp, wings are exact power-laws of exponent
+`m·γ` (still power-laws; not pinned at γ). Trade map: `θ_tx = mode·(chosen/mode)^m`. The curve/invariant
+decision is always the operator's. Full checklist: `docs/feature_inventory.md`.
 
 **Operator rulings 2026-06-10 (transcript entry 14, verbatim source `history/operator/`):**
 1. **Engine-faithfulness pivot UN-HELD and ordered FIRST** — built and gated before any new
@@ -83,6 +83,11 @@ skeptic's seniority means in practice, and the manager is BOUND by it:
   provide it and relay verdicts to the operator verbatim.
 - When skeptic and manager disagree, BOTH positions go to the operator, skeptic's stated first
   and unedited.
+- **Universal Skeptic Gate (operator entry 139, 2026-06-12): `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`**
+  — no agent work reaches merge/promote/state-flip unchecked by the skeptic, and no claim-bearing
+  operator reply ships unfiltered. Halt-class; the manager cannot route around it. The binding
+  take-stock board is `docs/COMPONENT_REGISTER.md` (regression gate: AGREED|VERIFIED→REGRESSED needs
+  an explicit operator reopen).
 
 ### 2.2 Operator transcription policy (operator-directed 2026-06-10 — full text: `docs/transcription_policy.md`)
 The operator's messages are transcribed **VERBATIM** (exact text — case, typos, ellipses; no
@@ -147,7 +152,14 @@ splice silently corrupts the build while gates stay green.
   toward green, do **not** merge. (Re-derive against geometry; comments lie.)
 
 ## 4. Locked architecture (don't reopen unless the operator does)
-- Curve-baked **GH only, γ>1, no barrier** (barrier's exponent is outside the GH family; δ won't
+**⚠ THE OPERATOR REOPENED THE CURVE 2026-06-10 (entry 28): HEAD is now the (W) kurtosis curve
+(v27), NOT GH.** The GH-specific lines below describe the demoted GH line (v25→v26c, retained,
+suite still green) and stay as its record; v27's architecture = `specs/SPEC_kurtosis_curve_family_TARGET.md`
+(√-kernel weight field, static τ knob, strong-form φ trades-warp, Reading-A settlement, γ>1 via
+w_±>½, wing-range guard; on (W) price==slope — the e^(−ghMu) gotcha is GH-only). Carry/rebase/
+funding/dollar-pipe contracts remain binding on v27 (carry = the price leg `q=ln p`, skeptic-ruled
+inheritance); warp∘rebase-commute + φ-anchor/funding lemmas are OPEN [needs-Aristotle].
+- _(GH line, demoted)_ Curve-baked **GH only, γ>1, no barrier** (barrier's exponent is outside the GH family; δ won't
   recover it). 4 curve-dependent fns: `getMP_raw`, `tradeUpdate`, `arbitrageToOracle`, `rebase`.
 - **Carry P = Ny/Nx** load-bearing: `u = log(price) − log P`; rebase recomputes P→P/r. Anchor w=½;
   strike ray θ→θ/r on rebase; convexity knob γ∈(1,4).
@@ -157,7 +169,11 @@ splice silently corrupts the build while gates stay green.
 - **ITM → American smooth-pasting** (v26b): continuation `c·sNorm` runs PAST the strike to the free
   boundary `sNorm* = θ·((γ+1)/γ)^γ` (price `S* = K·γ/(γ+1)`, `c = 1/((γ+1)·sNorm*)`), then intrinsic.
   Closed form, no new params. Funding = slope-deviation ratio vs the w=½ anchor at the strike ray —
-  orthogonal to intrinsic, untouched by the ITM change.
+  orthogonal to intrinsic, untouched by the ITM change. **Operator-ruled entry 232 (2026-06-13):
+  funding is evaluated THROUGH THE LENS — the slope-deviation uses the lensed exponent ±g_loc = ±m·γ
+  (and a lens-aware mark), so the kurtosis knob `m` re-scales the funding rate BY DESIGN. The
+  *mechanism* (slope-deviation vs the w=½ anchor) is what's "unchanged" in the motive; it is a
+  through-the-lens read quantity like pricing/settlement/portfolio value, not a knob-independent one.**
 - **THE gotcha:** `getMP_raw` is a **price coordinate, not the slope** — `|dy/dx| = getMP_raw·e^(−ghMu)`
   (factor 11.7/44.5/749/13780 at γ=1.5/2/3/4). Gates are mostly **self-consistency**; the one
   accuracy gate is G4 (value∝S^(−γ)); ITM adds a seam gate. A price/slope conflation passes every
@@ -250,18 +266,41 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v26c.html` — **canonical HEAD** (md5 `6cc73563…`); v26c lands the
-  **uniform strike registration** in the curve's carry coordinate (`θ=sNorm(K)` via `sNormStrike`=
-  getSNorm∘arbitrageToOracle) across the display mark, execution/settlement value, and the payoff
-  chart — the OTM→ITM crossover now lands at the dollar strike K for all γ (was drifting to
-  oracle₀²/K for γ>1). The chart strike-RAY stays live `K/oracle` (a price-space object); funding/
-  isOTM/wingMember stay price-measure (already at K). Permanent `dir_gate.js` (crossover@K +
-  directional-consistency + mixed-basis control). **Finding-2 is absorbed** (live chart ray). Builds
-  on v26b's ITM/American smooth-pasting. Node-verified (7 GH + seam + dir_gate PASS, dollar-pipe
-  byte-identical, premium delta re-derived, chart-mark==table 8.6e-11) + UI tester-confirmed (bands
-  cross@K, live ray, payoff==table). Prior HEAD demoted to `temporal_mvp_v26b.html` (`8df9f8a3…`).
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `80f050e2…` = comment-cleanup
+  of `8f897edc` per operator entry 234, behaviorally identical: dead √-kernel comments→constant-m + gate-detector
+  hardened, gates 13+5 green; `8f897edc` constmult source retained as `temporal_mvp_v28_lens_constmult.html`;
+  **PROMOTED 2026-06-13 by operator ruling, entries 229/231 — CONSTANT SLOPE-MULTIPLIER lens**).
+  The kurtosis/vol knob is now a single scalar `m`: the lensed option-value exponent
+  `g_loc(K)=m·γ` is **constant at every strike** (m=1 ⇒ g_loc=γ = plain v24 curve; bigger m =
+  steeper everywhere AND the trade lands further out via the frozen tx-map `θ_tx=mode·(chosen/mode)^m`).
+  This **REPLACES the position-dependent `√(τ²+u²)` elbow-rounding lens** (which coupled steepness
+  and outward-trade-push with OPPOSITE signs — the root of the multi-day τ-direction conflict; a
+  constant multiplier couples them the SAME direction, dissolving it). **The AMM pool curve is
+  still unchanged plain v24** (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24;
+  x,y,w move). Everything **read** (pricing, option chart, settlement, funding, portfolio value)
+  AND **written** (trades, settle-at-chosen-strike) goes through the ONE shared helper
+  (`gLoc`/`markLensed`) — single-basis, forward-read only (the lens is never inverted; pool stays
+  plain Balancer). Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` at the chosen strike. Gates =
+  `engine/verify/lens_selfcheck.js` (**13 PASS [HARD]** — rewritten CM1–CM9: g_loc=m·γ constant,
+  m=1=plain, wings power-law m·γ no-floor, frozen tx round-trip + no-free-money, polarity-lock
+  steeper⇒further, pool byte-identical, no dead √-kernel) + `engine/verify/a16_atm_gate.js`
+  (**5 PASS [HARD]** — no-jump ATM, ATM-cusp RETIRED under constant-m). Manager-verified 13+5;
+  skeptic CLEAR-TO-PROMOTE (engine broken 3 ways → gate goes red); tester live PASS 5/5 ×2
+  byte-stable (chart-2 steepens every strike, m=1=plain, trade further with m, settle at chosen,
+  chart-1 inert). Known-OPEN: warp∘rebase-commute / φ-anchor lemmas [needs-Aristotle, constant-m
+  lemmas in flight at Aristotle]. **Revert chain (retained):** inverse-lens `5fea0e8d` =
+  `temporal_mvp_v28_lens_invtx.html`; at-strike `de28c937`; continuous-warp `4378bc11`; polar-lens
+  `7e1ae39b`. Constant-m source kept as `temporal_mvp_v28_lens_constmult.html`. Feature changelog:
+  `engine/builds/CHANGELOG_v28_lens.md`.
+  **Prior HEAD demoted to `temporal_mvp_v27_wkurtosis.html`** (`928cde1c…`, the (W) kurtosis line,
+  retained; `wcurve_selfcheck.js` 22 PASS via explicit path). **Earlier GH-line endpoint
+  `temporal_mvp_v26c.html`** (`6cc73563…`) also retained.
   Lineage + `BUILD_LINEAGE.md`/`INTEGRITY.md` + `DIFF_LEDGER.md` (behavioral deltas per version;
-  tester-owned, gates HEAD promotion) in `engine/`. `engine/verify/` harnesses,
+  tester-owned, gates HEAD promotion) in `engine/`. **Standing UI smoke-pass (skeptic-ruled
+  2026-06-11, FLAG-OMISSION fix):** HEAD promotion AND any operator hand-back additionally require a
+  live tester pass — every control exercised in each state (incl. direction swaps), every drawn
+  overlay identified + sanity-located, per-click visible delta measured for any knob the operator is
+  told to turn. Episodic happy-path passes don't satisfy this. `engine/verify/` harnesses,
   `engine/splices/` recipe+scripts, `engine/knowledge/` GH math + source-of-truth, `engine/GOTCHAS.md`.
 - **`framework/`** — the curve-AGNOSTIC framework, first-class (operator-directed restructure
   2026-06-11): README = warp principle (verbatim) + admission contracts; LDF check note; PH

@@ -1,0 +1,25 @@
+A14 AT-STRIKE smoke — HEAD_temporal_mvp_v28_lens.html (md5 de28c93712ffb1a7fcafc66b36a0ea83)
+Live Playwright ×2 (run A, run B), READ-ONLY on engine source. 2026-06-12.
+Harness: engine/verify/pw_v28_a14_smoke.mjs
+Regression oracle: engine/verify/run_all.sh = 34 PASS / 0 FAIL (incl. A14 gates AS1–AS6, AS-guard).
+File-safety GREEN: build md5 unchanged post-run; webp L74 ab663f5c…, svg L1060 c505b08a…; 3 scripts parse.
+
+VERDICT: 5/5 items PASS ×2 byte-stable ⇒ §8 LIVE CONFIRMATION = PASS.
+
+  RUN_LOG_runA.txt == RUN_LOG_runB.txt (modulo header timestamp) — byte-stable.
+  0 console errors / 0 pageerrors both runs.
+
+Items:
+  1 At-strike warp rises OTM (single sold call): dy=N·K_usd $8,800→$32,000 (1.1×→4×),
+    Δw 0.00544→0.01923 monotone; AS5 Δsteepness==dy/β. PASS. (A/B_item1_warp4x.png = 4× dashed warp on chart-2)
+  2 ITM settles by direct payout (full Store path): sold-leg settled-to-cash / bought-leg AMM-reversed,
+    raw_net & trader_payout (-$205.49) finite, no error, logged. PASS.
+  3 Reserve guard: cash-out N·K=$380k vs depth $400k (95%) ⇒ REJECT with both $ figures, not executed;
+    80%·depth leg executes. PASS.
+  4 No regression: sweep animates (46–47 frames/1.3s), τ reshapes chart-2 (6,545px), chart-1 inert (0px). PASS.
+  5 FLAGGED-LABEL observed+quoted: header "Pool Δ (cash-conserving ⇒ Δy_net ≈ 0)" / field
+    "net trader cash @ open" shows "$16,623.290372" (= net pool Δ, NOT ≈0/trader-cash). Reported, not fixed.
+
+Screenshots:
+  {A,B}_item1_warp4x.png  — chart-2 with 4× sold-call dashed post-trade warp diverging from live curve
+  {A,B}_item5_label.png   — UI state at the flagged-label read

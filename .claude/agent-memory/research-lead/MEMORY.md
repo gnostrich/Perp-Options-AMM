@@ -1,56 +1,1081 @@
 # MEMORY — research-lead
-_Last updated: 2026-06-12, OFF-ATM TRADE RULE (operator ruling formalized: spec + 9/9 Aristotle
-proved (trusted-from-prover) + v27 cross-check DIFFERENT; manager's in-flight domain correction
-ACKNOWLEDGED+CLOSED — all artifacts STRONG domain; no engine edit / no git)._
 
-### OFF-ATM TRADE-AT-POINT RULE — 2026-06-12 (operator ruling, entries 5–8; referee fatal #1 / Q1)
-**Ruling** (`notes/operator_ruling_2026-06-12_offATM_trade_rule.md`): state (x,y,w), **w genuine
-state**; trade at ray θ executes at T = ray∩curve; local pair α_T=x_T·w, β_T=y_T(1−w) is the
-per-trade generator AT T (not a global invariant); flows Δx,Δy computed at T ARE the reserve
-changes; Δw stored. Round-trip residual + q↦Δy mapping (referee Q8) OPERATOR-DEFERRED / OPEN
-INTERFACE — nothing proposed.
-**Spec (mine): `specs/SPEC_trade_at_point_transition_rule.md`** — closed-form trade point
-x_T=k·θ^(w−1) (curve eq is LINEAR on the ray); simplified flows Δx=−x_T(1−w)Δy/(w·y_T+Δy),
-w′=(w·y_T+Δy)/(y_T+Δy); pole Δy>−w·y_T gives w′∈(0,1) FREE but does NOT bound the global state —
-admissible domain needs x′>0, y′>0 separately (exact counterexamples; domain = open interval
-(max(−w·y_T,−y), x·w·y_T/(x_T(1−w)−x) or ∞)); small-trade execution price = mp_T = [w/(1−w)]θ
-(matches "flows as per that trade point"). L1–L5 stated precisely; all identities sympy-verified
-all-values + exact Fraction instances; manager's numerics (w′=0.533 vs 0.523; α 5→5.097) reproduce.
-**Aristotle OFFATM_trade (90056417) — 9/9 proved (trusted-from-prover), audit PASS, GROUNDED**
-(`formal/aristotle_runs/OFFATM_trade/`; RESULTS.md OFFATM section; prompt
-`formal/prompts/aristotle_prompt_offatm_trade.md`): L1a ray∩curve ∃!; L1b pole⇒w′∈(0,1) +
-next_state_valid; L1c pole-does-not-bound exhibit; L3 local conservation (x_T+Δx)w′=α_T identically;
-L2 spot reduction = paper §5.1 EXACTLY (global α,β + hyperbola); L4 w-storage necessity RATIONAL
-exhibit (x=y=10,w=½,θ=4⇒T=(5,20),Δy=1: w′=11/21≠22/43=α₀/x′) ⇒ paper §5.1 "no additional state
-storage" FALSE off-ATM, must be scoped to spot; L5 numeric core: α′/α=43/42, β′/β=44/42 ⇒ off-ATM
-trade matches NONE of App D's 3 operator signatures = a DISTINCT 4th operator (App D classification
-+ hyperbola reachability = spot-trade-scoped; L5 normatively a scope remark in spec §6). Token-clean,
-concrete tactics only (no grind/exact?/aesop), pins v4.28.0, axioms = standard three (Aristotle
-report). First submit attempt f3776478 canceled (missing toolchain pin) — always copy
-`lean-toolchain` into standalone submit dirs.
-**v27 cross-check: DIFFERENT (high confidence).** v27 `tradeUpdate(s,dy)` (branch
-`claude/exciting-archimedes-txs2wx`, lines 1723–1746) takes NO ray θ; evaluates the (W) weight FIELD
-at the RESERVES point (u=ln(y/x)−φ), conserves the GLOBAL pair α=x·w(u;φ), β=y(1−w(u;φ))
-(w*=1−β/y′, x′=α/w*), then re-centers the field φ′=u′−z. = the SPOT-trade operator lifted to the (W)
-field family; ruling's local-pair-at-T rule NOT implemented there (coincide only on the spot ray).
-"UNIQUE conservation-consistent trade" claim = uniqueness within v27's own global-pair requirement —
-no contradiction with the ruling (which drifts global α,β by design). Strong-form note mentions trade
-points only in a strike-registration row (line 277).
-**MANAGER URGENT CORRECTION (same day, in-flight) ACKNOWLEDGED + CLOSED:** skeptic broke the
-weak domain (pole only) from the brief/ruling note; I re-derived the counterexample exactly
-((10,10,½), θ=0.01, Δy=+10 passes pole y_T+Δy=11>β_T=½ yet x′=−37.619, w′=21/22; mirror θ=100,
-Δy=−20 ⇒ y′=−10). **Domain version of EVERY artifact = STRONG (pole ∧ x+Δx>0 ∧ y+Δy>0):** spec §5
-(incl. exact interval (Δy_min,Δy_max) + deep-wings trade-size-cap remark, added per manager),
-Lean submitted AND returned (`next_state_valid` carries hx'/hy'; `pole_does_not_bound_state`
-proves pole-insufficiency in-kernel), prompt, RESULTS.md, SUBMISSION_IDS.txt. NO weak-domain
-obligation was ever completed (f3776478 canceled pre-return, superseded). Re-downloaded the
-solution archive independently — byte-identical md5 046e9c02d29754b4285b1f2c946860c5; full audit
-re-run from scratch (statement diff = sorry bodies + one `:= by`→`:=` term-mode, token-scan zero,
-axioms standard three per summary, math re-derived incl. ℚ exhibits 1/42, −5/22, 11/21≠22/43,
-43/42≠44/42). Ruling-note corrigendum was added by the manager (lines 25–31) — verified accurate.
-Archive folded at `OFFATM_trade/extracted/offatm_submit_aristotle/` + `offatm_out.tar.gz`.
-Deep-wings cap is a REAL per-trade size constraint (θ=0.01: Δy_max=0.125 = 1.25% of pool y) —
-binds exactly on the strike continuum; flagged for paper §5 text + any engine build of the rule.
+### LENS NATURAL HOME + LIVE-CURVE INFO-GEO RE-EXAM (operator entry 242) — 2026-06-14
+**TWO tasks, both delivered as a note `notes/research/LENS_NATURAL_HOME_2026-06-14.md`. NOT a HEAD build; read-only on engine. Hand to manager for audit + skeptic gate. NO git.**
+**TASK A — live-curve structure, HONEST (corrects GH-line baggage per `DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md`):**
+- SOLID/trusted-from-prover (pre-existing): live object = **convex-/Hessian-potential PH object** on Balancer constant-product: `price=∇μ` (price_is_grad), `R=∇²μ⪰0` on t≥β (R_psd). PH=forced cotangent lift, base ω≡0, NOT metriplectic. STANDS.
+- **NEGATIVE RESULT (re-derived, robust): NO CGF / exponential-family / information-geometric reading for the live Balancer pool.** 3 independent reasons: (1) μ″<0 for t<β ⇒ not globally convex ⇒ not a CGF; (2) only zero of cubic is t=β where μ=μ′=μ″=0 (fully degenerate origin, on the boundary); (3) **Marcinkiewicz** — cumulants κ₃=2/(αβ)=const≠0, κ₄=κ₅=…=0 is NOT a valid cumulant sequence of any measure (polynomial CGF must be degree≤2=Gaussian). The info-geo reading was **GH-line only** (GH used `ProbabilityTheory.cgf X μ` of a genuine GH MEASURE, CgfClean/GHmeasure — a DIFFERENT μ; demoting GH removed the measure). "Information-geometric base" must be DROPPED from the live-curve headline.
+**TASK B — where m fits naturally (POOL CURVE STAYS LOCKED, m=1⇒plain):**
+- **NATURAL HOME FOUND (POSITIVE):** m = the **inverse-temperature of the option-value Gibbs weight.** `value(S)=S^(−g)=e^(−(m·γ)·q)` on q=log S = the live object's own `carry` coord (MonolithConstM L28). β_T=g=m·γ; baseline β_T,0=γ (m=1); bigger m=colder=steeper everywhere. `value_m=(value_1)^m` exactly ⇒ m is a canonical thermal POWER, not a bolt-on. RESURRECTS operator entry-135 "free energy" thread for the RIGHT layer (option-value, not pool). Intrinsic to the option-value/settlement layer; ZERO pool change.
+- **Esscher tilt — NEGATIVE (corrects feature-inventory #14 for live curve):** tilt = translation (γ→γ−h); m = dilation (γ→m·γ). m is a SCALING of the natural parameter, not a tilt.
+- **Legendre/Hessian — intrinsic only via a SEPARATE option-value potential** Ψ_m(S)=S^(1−mγ)/(1−mγ); pool Hessian 1/μ″ is m-free by lock. Same conclusion as the thermal home in dual language.
+- **FLAG (operator-tier, NOT done):** making m intrinsic to the POOL itself needs a curve reopen (deform μ→μ_m so pool exponent=m·γ) — violates entry-229/231 lock. Operator call via manager.
+**ARISTOTLE SUBMIT (Task B.1 thermal identities, pin-complete):** prompt `formal/prompts/aristotle_prompt_lens_thermal_home.md` → self-contained `RequestProject/LensThermal.lean` (re-declared minimal `LensAMM`, does NOT touch pool/canonical modules). Targets: value_is_gibbs, value_pow_m, m_one_recovers_base, invtemp_eq_m_gamma, invtemp_mono, gamma_pos, g_eq_m_gamma. **Project `ca042134-24b2-44f5-9b98-bf82a13cd336`, task `50d34e3c-1615-4fdb-be19-40f099ce6c43`.**
+**RETURNED + AUDITED 2026-06-14 → `proved (trusted-from-prover)`.** `aristotle show` = COMPLETE (~3h). Archive `/tmp/thermal_out.tar.gz` → folded `formal/aristotle_runs/LENS_THERMAL/` (tar + LensThermal.lean md5 `87f5ac86…`, 67 lines + ARISTOTLE_SUMMARY.md). Kept in aristotle_runs/ ONLY — NOT placed in temporal_lean_verified/RequestProject/ (placement lesson honored; confirmed absent from canonical project). NO git (manager folds/commits).
+**FULL AUDIT GATE — PASS (zero-cost; canonical-kernel confirm env-blocked):**
+- Out-of-scope byte-diff: all 5 canonical WT modules (AMMCurve/Audit/Main/Seam/Temporal) + lakefile.toml + lean-toolchain + lake-manifest.json + .gitkeep BYTE-IDENTICAL to WT. Only LensThermal.lean new. Toolchain v4.28.0 matches.
+- Token scan CLEAN: no sorry/admit/native_decide/sorryAx/opaque/unsafe; no `axiom` decl; no `decide`.
+- #print axioms: SUMMARY reports all 7 named theorems = exactly {propext,Classical.choice,Quot.sound}.
+- Returned file = pinned prompt byte-for-byte: 6-field LensAMM, defs gamma/g/valuePow/valuePowBase/gibbs, all 7 statements unchanged. ZERO statement drift, no hyp weakened. m_one_recovers_base keeps unused hS (pinned exactly) — benign.
+- Math re-derived (all 7): gamma_pos (γ=(y−β)/β>0 from β<y, β>0); g_eq_m_gamma=rfl; value_is_gibbs (S^(−g)=exp(−g·logS)=gibbs g (logS) via rpow_def_of_pos); value_pow_m (S^(−mγ)=(S^(−γ))^m via rpow_mul, base≥0); invtemp_eq_m_gamma=g_eq_m_gamma; m_one_recovers_base (m=1⇒g=γ); invtemp_mono (1≤m,γ>0⇒γ≤mγ via nlinarith). All correct.
+**SKEPTIC FLAG a00a14ea — WING-SCOPE CHECK: PASS.** Docstrings explicitly scope to the WING/asymptote, NOT the whole option mark: L21 `valuePow` = "option-value **wing law** as a power of spot S: value(S)=S^(−g)"; L23 `valuePowBase` = "baseline (m=1) **wing law**"; L34 `value_is_gibbs` = "the option-value power law equals the Gibbs weight"; prompt §Context L11 = "whose **wing law** is the power law". The theorems are about S^(−g) = the power-law WING/asymptote ONLY — they do NOT claim S^(−g) is the engine's smooth-pasted option mark (which past the strike runs intrinsic, not the power law). NO statement reads as if S^(−g) is the whole mark. FLAG a00a14ea SATISFIED for this file. (Caveat to carry: this is the wing identity, not a settlement-mark identity; "intrinsic to the option-value layer" = the WING/read-exponent claim.)
+**VERDICT: `proved (trusted-from-prover)` — NOT verified (env-blocked, no local canonical kernel).**
+**HONEST LABELS (for INDEX/relay):** trusted-from-prover ≠ verified. Self-contained (re-declares minimal LensAMM, NOT canonical types) + NOT integrated into canonical project build (lives in aristotle_runs/ only). WING-scoped (power-law asymptote, not the smooth-pasted mark). The conceptual finding (m = inverse-temperature of the option-value Gibbs WING) stands on hand math + now trusted-from-prover. Aristotle REACHABLE this session (show=COMPLETE, no host_not_allowed).
+**HAND TO MANAGER for independent audit + skeptic RE-GATE before fold to shared truth / formal/INDEX.** NO git. Did NOT re-submit/wait-spin (returned COMPLETE).
+
+---
+
+### PH-UNIFICATION-COMPOSED — THE WELD LANDED (resolution of skeptic FLAG-OVERSELL) — 2026-06-14
+**TRIGGER:** skeptic `notes/skeptic/VERDICT_PH_UNIFICATION_INTERNAL_2026-06-14.md` = FLAG-OVERSELL + manager
+`formal/aristotle_runs/PH_UNIFICATION_INTERNAL/CORRECTION_2026-06-14.md`. The prior `PHUnification.lean`
+proved the PIECES but not the WELD: `internal_passivity` carried `hR` (port PSD) as a FREE OPEN hyp;
+`exchange_Rcurv_nonneg` (geometric PSD witness) composed NOWHERE; no `exchange_internal_passivity`;
+`trade_no_spontaneous_storage` ABSENT; `trade_conserves` dangling. So: abstract-passivity (open hR) +
+separately curvature-PSD, but NOT "this exchange is passive BECAUSE its geometry is PSD."
+**DELIVERED — composed file submitted + returned + AUDITED → `proved (trusted-from-prover)`.**
+Prompt `formal/prompts/aristotle_prompt_PH_unification_composed.md`. **Project `8ee75026-4340-4ccc-88e6-a50e99d87c3b`,
+task `5c2bccf2-9ec8-4f02-a066-80e06aeb49e3`.** `--wait` COMPLETE (~7m). Archive `/tmp/ph_unif_composed.tar.gz`
+→ folded `formal/aristotle_runs/PH_UNIFICATION_COMPOSED/` (tar + extracted PHUnification.lean md5
+`65e7bc31…`, 183 lines + ARISTOTLE_SUMMARY.md). Working-tree `formal/temporal_lean_verified/RequestProject/
+PHUnification.lean` updated to the proven version (same md5). NO git (manager folds/commits).
+**THE TWO NEW COMPOSED THEOREMS (the welds the skeptic named):**
+- `exchange_internal_passivity` (L125-130) — concrete `Exchange`, **NO open hR**. Signature premises =
+  only `E,H0,sup,eff,st,hst(domain ∀k E.amm.beta≤st k),N`. Body: `internal_passivity H0 sup
+  (fun k => deriv (deriv E.amm.poolPotential)(st k)) eff (exchange_Rcurv_nonneg E st hst) N` — the hR
+  slot is FILLED by the geometric witness; `Rcurv` IS the explicit geometry term (type-matches). The weld.
+- `trade_no_spontaneous_storage` (L138-145) — uses `(E.amm.trade_conserves D hD).2` to get
+  `hbeta:(E.trade D hD).amm.beta=E.amm.beta`, lifts `hst` to post-trade beta, applies
+  `exchange_internal_passivity` on `E.trade D hD`. `trade_conserves` is LOAD-BEARING (`rw [hbeta]`).
+- Also added `trade_poolPotential` (rfl) + `Exchange.trade` (the post-trade exchange). `exchange_solvency_split`
+  REWIRED: internal component now routes through `exchange_internal_passivity` (welded), external half
+  STILL a `→` arrow (PH-4b intact).
+**FULL AUDIT GATE — PASS (zero-cost; canonical-kernel confirm env-blocked):**
+- Out-of-scope byte-diff: 5 WT modules + lakefile + lean-toolchain + lake-manifest + .gitkeep BYTE-IDENTICAL.
+  Only PHUnification.lean changed. Toolchain v4.28.0 matches.
+- Submitted(sorry)→returned diff = ONLY the 4 sorry placeholders filled; ZERO statement drift.
+- Token scan CLEAN: no sorry/admit/native_decide/sorryAx/unsafe/opaque; no `axiom` decl; no decide. ("extern"
+  hits = the word "external" in comments only.)
+- COMPOSITION grep CONFIRMED: `exchange_internal_passivity` body calls `exchange_Rcurv_nonneg` (L130) +
+  signature has NO hR/PSD premise; `trade_no_spontaneous_storage` body calls `trade_conserves` (L142). The
+  exact thing the skeptic re-checks — genuinely composed, not two adjacent lemmas.
+- #print axioms: SUMMARY lists ALL 13 named theorems (incl. the 2 new) = {propext,Classical.choice,Quot.sound}.
+  (Streamed CLI echo truncated the 2 new ones; archive summary has them explicit.)
+- Math re-derived: bound `Hs N ≤ H0+Σsupplied` is `internal_passivity` instantiated ⇒ non-vacuous (skeptic
+  already confirmed strict on non-degenerate data); geometry term is the genuine μ″ curvature; domain hyp
+  exactly `∀k E.amm.beta≤st k`. Intended claim = Lean claim.
+NO emendation needed (clean as returned). NO statement weakened / hyp dropped / conclusion strengthened.
+**VERDICT: `proved (trusted-from-prover)` — NOT verified (env-blocked, no local canonical kernel).**
+**HONEST LABELS (for INDEX/relay):** trusted-from-prover ≠ verified. Self-contained (re-declares minimal
+TemporalAMM/Exchange, NOT canonical types) + NOT wired into canonical project build (MonolithConstM status).
+EXTERNAL solvency half STAYS OPEN/conditional (PH-4b) — `solvency_of_coverage`/`coverage_iff_solvency`/
+`exchange_solvency_split` keep `hcov` as `→` premise, never discharged. The weld is INTERNAL-half only.
+**HAND TO MANAGER for independent audit + skeptic RE-GATE before fold to formal/INDEX.** NO git.
+
+---
+
+### PH-UNIFICATION — WHOLE EXCHANGE AS ONE OBJECT, solvency = passivity-under-admissible-inputs (operator entries 237/238 "sure get done by morning") — 2026-06-13 OVERNIGHT
+**GOAL:** state precisely + prove-what's-provable that the whole exchange is ONE pure-math object,
+with solvency = the passivity-under-admissible-inputs predicate and B1/B3/B4 surfaced as explicit
+input-port conditions. The frame (operator entry, today): "if solvency is a rest-of-world/port thing
+doesn't it close out cleanly?" — ANSWER MADE RIGOROUS: the INTERNAL half (passivity/no-internal-
+free-money) closes structurally; the EXTERNAL half (solvency under adversarial price path) does NOT
+self-close — it localizes to ONE minimal named hypothesis = PH-4b "port/funding necessary-never-
+sufficient." VALUE = legibility, NOT making solvency vanish.
+**ITEM 1 — CONJECTURE STATEMENT (DELIVERED):** `notes/research/PH_UNIFICATION_whole_exchange_2026-06-13.md`.
+ONE structure `Exchange` wrapping `TemporalAMM` (amm) + ports: storage=poolPotential/price_is_grad;
+flow=trade+Casimir-conservation; gauge=rebase; resistive port=funding (R_psd μ″≥0); boundary output
+port=settlement (paste_value/paste_slope C¹ at S*); co-energy=dollar/USD pipe (member, no-Lean);
+slippage=dissipation functional on trade port (A15, UNBUILT — flagged); **close-mechanic=PARAMETRIZED
+`close` member (Q14, NOT assumed)**; solvency=passivity-under-admissible-inputs with the input-port
+admissibility predicate `admissible`/`hcov` = the explicit B1/B3/B4 condition. Welds 3 already-trusted
+pieces: MonolithConstM (R_psd/trade_conserves/price_is_grad/paste), CTPH.sampled_passivity (abstract
+no-free-money), B1.solvent_of_port_covers + port_necessity_note (the conditional reduction + ↔).
+**ITEM 2 — PREDICATES PINNED (entry-179 discipline, DONE before submit):** every field/hypothesis/
+component type/the passivity inequality `Hs N ≤ H0 + Σ supplied` and the coverage `→` form pinned in
+the note §3/§4 and in the prompt's full Lean skeleton.
+**ITEM 3 — INTERNAL HALF SUBMITTED TO ARISTOTLE:** prompt `formal/prompts/aristotle_prompt_PH_unification_internal.md`
+(self-contained `RequestProject/PHUnification.lean`: re-declared minimal TemporalAMM slice + Exchange
+wrap + internal_passivity/no_internal_free_money/sampled_* + exchange_Rcurv_nonneg + EXTERNAL
+solvency_of_coverage/coverage_iff_solvency stay `→`/`↔` premises + exchange_solvency_split headline).
+**SUBMITTED OK: project `ad21b66d-14eb-4565-af91-e8a8ee0028f0`, task `80cd7ba4-18aa-4976-adfc-2c55f056d815`.**
+**RETURNED + AUDITED 2026-06-14 (morning) → `proved (trusted-from-prover)`.** `aristotle show <PROJECT id>`
+= COMPLETE (~10h). (`show` on the TASK id 403s — wrong endpoint, NOT host_not_allowed; host edge has
+no x-deny-reason, reachable.) Archive `/tmp/ph_unif_internal.tar.gz` → folded
+`formal/aristotle_runs/PH_UNIFICATION_INTERNAL/` (tar + extracted PHUnification.lean md5 `d6bef416…`,
+141 lines + ARISTOTLE_SUMMARY.md). NO git (manager folds/commits).
+**FULL AUDIT GATE — PASS (zero-cost; canonical-kernel confirm env-blocked):**
+- Out-of-scope byte-diff: all 5 WT modules (AMMCurve/Audit/Main/Seam/Temporal) + lakefile + lean-toolchain
+  BYTE-IDENTICAL to working tree; only PHUnification.lean new. Toolchain v4.28.0 matches.
+- Token scan CLEAN: no sorry/admit/native_decide/sorryAx/unsafe/opaque; NO `axiom` token at all; no decide.
+- #print axioms: SUMMARY reports all 10 named theorems = exactly {propext,Classical.choice,Quot.sound}.
+- Math re-derived: poolPotential=(t−β)³/3αβ, μ'=(t−β)²/αβ=price, μ''=2(t−β)/αβ≥0 t≥β; internal_passivity
+  telescopes Hs(N)≤H0+Σsupplied from Σdissipated≥0; sampled_increment fwd-Euler.
+- SKEPTIC WELD (a) R⪰0 genuinely witnessed: `exchange_Rcurv_nonneg` discharges nonneg curvature by
+  CALLING `E.amm.R_psd` (not re-stubbed); R_psd itself proven. PASS.
+- SKEPTIC WELD (b) NO solvency-closed leak: `solvency_of_coverage` carries `hcov` as explicit `→`
+  premise (linarith [hcov s]); `exchange_solvency_split` keeps external half as inner (coverage)→(solvency)
+  implication; `coverage_iff_solvency` ↔ confirms minimality. Reduction did NOT become unconditional. PASS.
+NO emendation needed (clean as returned). NO statement weakened / hyp dropped / conclusion strengthened.
+**VERDICT: `proved (trusted-from-prover)` — NOT verified (env-blocked). Handed to manager.**
+**ITEM 4 — EXTERNAL HALF HONEST (DELIVERED, conjecture-with-hypothesis):** solvency ⟸ passivity ∧
+input-admissibility is PROVABLE (= B1.solvent_of_port_covers, already trusted); the minimal
+admissibility = B3 (funding sign+magnitude) ∧ B4 (price-path/oracle bound — the adversarial-path
+non-closure point) ∧ B1 (collateral/κ coverage). MINIMALITY: port_necessity_note proves hcov↔solvency
+⇒ the irreducible hypothesis IS solvency-restricted-to-admissible-inputs (cannot shrink below it).
+**PH-4b HONORED — NO note asserts solvency unconditionally; geometry does NOT close it.**
+**HARD HONESTY:** trusted-from-prover ≠ verified. Solvency NOT closed — LOCALIZED to a named
+hypothesis. HAND TO MANAGER for independent audit + skeptic gate BEFORE shared truth / fold-as-more-
+than-conjecture. NO git (manager sole git actor). If Aristotle stalls, items 1+2+4 stand (statement +
+pins + honest external framing); only item 3's verdict is in flight.
+
+---
+
+### STEP-0 STRUCTURE RECONFIRM (operator entry 239) — DETERMINATION: info-geometric base + PH lift; "metriplectic" REJECTED — RE-VERIFIED AT SOURCE 2026-06-13
+**The operator's question ("is it port-Hamiltonian or information geometry whatever") IS ALREADY ANSWERED in the project record — evidence-backed, not a guess. They are the SAME single object viewed two ways; the established headline is fixed.**
+**RE-VERIFICATION THIS PASS (entry 239) — checked at PRIMARY source, not re-asserted from memory:**
+- Spec addendum (`specs/port_hamiltonian_consistency.md` lines 52-67) READ: "information-geometric base + PH lift, NOT metriplectic"; μ=GH CGF; price=∇μ, R=∇²μ=Fisher, value-metric=1/μ″; PH=canonical cotangent LIFT; base ω≡0. ✔
+- T2 `AIRTIGHT_T2_singlecore/.../SingleCore.lean` READ: `omega c v w := v*w − w*v` ≡ 0 + `price_is_grad := rfl` — the trivial-base-ω fact that REJECTS "metriplectic" is in the RETURNED LEAN. ✔
+- Info-geo leg `CLOSEOUT_cgf/.../CgfClean.lean` READ: `cgf_deriv_mean_and_variance` + `cgf_convexOn` (cgf′=mean, cgf″=Var=Fisher) — dissipative/Fisher side IS the cgf results. ✔
+- Dropped forks `CLOSEOUT_kahler` (conjectural) + `CLOSEOUT_courant` (no-go) archives present, excised out-of-core. ✔
+- Aristotle store paged (3 pages): PH cluster (proj_t2/t1a/t1b, merton, ghmaps, proj_clean/probe) + recent monolith/lenskernel/warpcalc all IDLE/COMPLETE. ✔
+- Transcript entries 134/135/136 READ verbatim: entry 134 names "the singular mathematical object (port-Hamiltonian / free-potential system)" as ONE object; entry 135 "they did something after port hamiltonian like information geometry free potential" = operator's CORRECT memory (info-geo came AFTER PH = PH's generator-identification, not a rival). ✔
+- **RE-BASING FINDING:** `notes/research/PH_UNIFICATION_whole_exchange_2026-06-13.md` (original-brief work product) frames the `Exchange` wrap in PH-LIFT language (`Hs`/`R⪰0`/`J` skew). NOT WRONG (PH is the forced lift), but per entry 239 the HEADLINE must lead with μ-as-generator (info-geo base), PH as forced lift. §3 internal-passivity = "R=∇²μ=Fisher⪰0 on the base, lifted to CTPH," not "assume a PH system." Math unchanged; framing re-based. Conjecture note, NOT submitted → no audit-gate impact.
+
+**DETERMINATION STANDS (now source-verified, not memory-asserted).**
+- **THE RECONCILIATION (load-bearing source `specs/port_hamiltonian_consistency.md` §★ 2026-06-09 MANAGER ADDENDUM (c), lines 52-67, operator-approved):** the singular object is ONE convex potential **μ = the GH cumulant generating function (CGF)** + the exponential family it generates = an **information-geometric / Hessian (dually-flat)** object. One μ generates: **price = ∇μ; dissipation R = ∇²μ = Fisher metric; value-metric = 1/μ″ (Legendre dual)**; the two symmetries = trade (parameter translation) + rebase (degree-0 gauge). The **port-Hamiltonian / symplectic structure is the canonical cotangent LIFT of this info-geometric base, NOT a second axiom** (cotangent bundle of a Hessian object is forced, no extra data). One generator, one object: **μ → info-geometric base → canonical PH lift.**
+- **ESTABLISHED HEADLINE NOUN (spec line 64, verbatim): "information-geometric base + port-Hamiltonian lift," NOT "metriplectic."** Reason: SingleCore/T2 has 1-D base ⇒ `omega ≡ 0` (only skew form on ℝ¹) ⇒ symplectic reading is DEGENERATE on the base; nontrivial ω (det=1) lives on the 2-D lift. Calling the whole thing "metriplectic" overclaims a symplectic structure the base does not carry.
+- **CHRONOLOGY (transcript journal + operator entries 134/135/136):** PH was the FIRST framing (2026-06-06 `temporal-amm-energy-object` → `temporal-port-hamiltonian-aristotle`). Info-geometry/free-potential is what came "AFTER port hamiltonian" (operator entry 135 memory is CORRECT) — but it is NOT a successor that replaced PH and NOT a parallel rival. It is the **identification of PH's own generator**: the info-geometric μ is the BASE, PH is its forced LIFT. DUAL VIEWS of one structure, reconciled 2026-06-09. "free potential / free energy" = the operator's name for μ (the convex potential / CGF).
+- **WHAT THE PROVEN RESULTS ACTUALLY LIVE IN (Aristotle history, all trusted-from-prover):** PH-framing cluster = **T2** `single_source`/`price_is_grad`/`R_psd` (AIRTIGHT_T2_singlecore, ω trivial in 1-D gauge), **CTPH_clean**, **PH3_grounded** (R⪰0), **PH4b_grounded** (no-floor), **PH6** (rebase preserves J,R). The **info-geometric leg is the SAME results**: cgf'=mean / cgf''=Fisher (UNIFY2/CLOSEOUT_cgf, "standard exp-family identity"), GHmeasure (μ a genuine prob-measure CGF, finite MGF, no Bessel-K), GHJ_grounded (trade = latent one-param group + Esscher tilt). The CGF/Fisher results ARE the dissipative/info-geometric side; price_is_grad/R_psd ARE the metriplectic statement μ′=price, μ″=R⪰0. The constant-m monolith `MonolithConstM.lean` re-states it concretely in-object (`price_is_grad`/`R_psd` over `poolPotential μ`). **Kähler (CONJECTURAL, unstatable in Mathlib) + Courant (proved NO-GO) are EXCISED out-of-core** — abandoned framing forks.
+- **SKEPTIC + OPERATOR DISPOSITION (already ruled):** `VERDICT_FORMAL_TRUTH_TO_OBJECTIVE_2026-06-10` + `VERDICT_DELEGATED_DECISIONS_2026-06-10` ruling A1 = the PH/metriplectic/info-geometry cluster is **`[motivation-layer]`: the paper's conservation-law / passivity MOTIVATION story, KEPT in place, NOT a §4 curve contract, NOT load-bearing for the build** (PH6 rebase #5 + B1 solvency #13 straddle locked contracts).
+- **HONESTY CAVEATS:** (1) the info-geo↔PH reconciliation is a MANAGER-AUTHORED framing addendum (operator-approved 2026-06-09), grounded by trusted-from-prover T2/cgf/GHmeasure results — NOT itself a single Aristotle theorem named "this is the encompassing structure." (2) Φ/lens-shape (and constant-m's `m`) is a calibration FIELD, NOT derived from μ's free energy — emergence of the kurtosis knob from the potential is an HONEST GAP (stated in `MonolithConstM`/`CONSTANT_M_lens_object_sync`). (3) "metriplectic" as a noun is REJECTED (base ω trivial); use "info-geometric base + PH lift."
+- **VERDICT FOR THE UNIFICATION CONJECTURE: BUILD IT IN THE INFO-GEOMETRIC FRAME — μ (the GH CGF / convex free-potential) as the single generator, with PH as its forced cotangent lift.** Do NOT base it on "port-Hamiltonian" as a standalone assumed scaffold (operator was right to question), do NOT call it "metriplectic." Evidence-backed (spec addendum + 8 trusted-from-prover results + 2 skeptic rulings + transcript chronology), not preference. Items 1-4 of the original brief proceed on μ-as-generator. NO git, NO submit this step (reconfirm only). Hand to manager for audit + skeptic gate.
+
+---
+
+### CONSTANT-m MONOLITH FIRED + RETURNED + AUDITED → trusted-from-prover (operator goal entries 144/146/177/179/231) — 2026-06-13
+**THE single Lean-verified pure-math object the operator asked for NOW EXISTS, trusted-from-prover.**
+Submitted `formal/prompts/aristotle_prompt_monolith_constm.md` to Aristotle (host reachable, CLI 200,
+no 403). **Run `6016ec57-504a-4b7c-8a12-bccc4eba6b32` / inner task `3f85462d-bee4-4e32-8613-e27f68906772`.**
+Ran ~1h15m (long but healthy; metriplectic `HasDerivAt`/`deriv(deriv)` + rpow lemmas over full
+`import Mathlib`). Returned COMPLETE; archive `/tmp/aristotle_monolith_constm.tar.gz` → folded
+`formal/aristotle_runs/MONOLITH_CONSTM/` (tar + extracted; MonolithConstM.lean md5 f3f4f809…, 295 lines).
+**FULL AUDIT GATE — PASS:**
+- **Out-of-scope byte-diff:** all 5 working-tree modules (AMMCurve/Audit/Main/Seam/Temporal) +
+  lean-toolchain + lakefile BYTE-IDENTICAL to working tree. Only `MonolithConstM.lean` is new. Toolchain
+  `leanprover/lean4:v4.28.0` matches.
+- **Token scan:** NO sorry/admit/native_decide/sorryAx/opaque/unsafe; NO `axiom` declarations; no `decide`.
+- **Structure block VERBATIM** as pinned: `alpha,beta,y,m` + `halpha,hbeta,hy:β<y,hm:0<m`. Every component
+  a def/theorem reading the one object P (entry 179 mapping-within).
+- **Math re-derived (intended-claim check):** `g θ = m·γ` constant (g_eq_m_gamma/g_const_in_strike);
+  thetaTx=center·(θ/center)^m with thetaTx_roundtrip the genuine inverse (m·(1/m)=1 via rpow_mul);
+  warp_linear=∫m=m·Δγ (intervalIntegral.integral_const); warp_eq_m_dgamma=m·D/β; paste_value arms=1/(g+1)
+  + paste_slope HasDerivAt ∀g>0 (⇒ at g=m·γ); price_is_grad/R_psd by real differentiation
+  (μ′=(t−β)²/αβ=price, μ″=2(t−β)/αβ≥0); engineInstance ⟨725,275,1000,1⟩ ⇒ x=1000,w=29/40,γ=29/11(>1),g=γ;
+  single_object. **DELETED polar facts (g=0-at-center, g≤γ) correctly ABSENT; no LensShape/polarLens/
+  √-kernel** — confirmed by file read + token scan (the reject condition did NOT trigger).
+- **#print axioms:** prover RAN it on the named theorems and reported ⊆ {propext,Classical.choice,
+  Quot.sound}; the raw per-theorem axiom listing was NOT in the streamed CLI logs (truncated). Corroborated
+  by token-clean + no-sorry ⇒ no sorryAx, and all proofs are standard-Mathlib tactic blocks
+  (linarith/nlinarith/ring/field_simp/norm_num/convert HasDerivAt/grind/aesop) which only pull the
+  standard three. **Canonical-env axiom confirmation deferred — env-blocked (no local kernel).**
+**VERDICT: `proved (trusted-from-prover)`** — NOT "verified" (label upgrade needs a local canonical
+build; env-blocked). FRAGILE TACTICS flagged (no-math): `grind` (center_eq_sNorm/price_eq_slope/
+goalSeek_root), `aesop` (trade_rebase_commute), heavy `nlinarith` (w_consistency/gamma_eq),
+`convert HasDerivAt…` (price_is_grad/paste_slope). SIGNATURE ADJUSTMENTS (benign, as-requested):
+`warpInt` def added; thetaTx_roundtrip keeps explicit 0<P.m hyp (spec asked). NO statement weakened,
+NO hypothesis-on-conclusion strengthened, NO forbidden change.
+**FOLDED INTO INDICES:** `formal/INDEX.md` (CONSTANT-m section row flipped pending→trusted-from-prover
++ V28-LENS pending list updated); `formal/MONOLITH_INDEX.md` (superseded-banner updated to returned);
+`docs/MONOLITH_INDEX.md` (header note + C3/C16/A1/A5/A10/A16 Lean cells flipped + dedicated table row
+moved pending→RETURNED). NO git (manager commits).
+**STILL PENDING-SUBMIT (unchanged, NOT trusted):** A14 at-strike no-arb-on-close (needs operator
+close-semantics certainty; NOT written); A15 haircut (Q10 pending); A11 asymmetry-growth (re-derive
+under constant-m: asym grows with m). C13 real solvency floor STILL-OPEN (operator ship-gate).
+**ESCALATIONS TO MANAGER (carry forward):** (1) skeptic FLAG-OMISSION — CLAUDE.md §0 + inventory
+items 2/3 still describe frozen-γ-wings/elbow-rounding (DELETED by constant-m; wings are exponent m·γ);
+operator one-sentence confirm requested. (2) The monolith Lean object is now trusted-from-prover but
+the constant-m ENGINE build (separate intern) + the `lens_selfcheck.js` gate-rewrite (encodes old elbow
+design, FAILS constant-m by design) are intern/manager territory.
+**SKEPTIC:** universal-gate audit of this fold expected before manager commit.
+
+---
+
+### MONOLITH SYNC → CONSTANT-m LENS (operator entry 229/230) — 2026-06-13
+**TRIGGER:** operator entry 229 (verbatim transcript L1839-1841: "its literally just a constant slope
+multiplier") + entry 230 ("monilith math etc sync up now"). The kurtosis lens is REDEFINED from the
+position-dependent polar `Φ_τ=u/√(τ²+u²)` (elbow-rounding) to a CONSTANT slope multiplier `m`.
+**ANCHORED ON the skeptic's confirmed form** (`notes/skeptic/VERDICT_constant_slope_multiplier_entry229_2026-06-13.md`,
+run ac79cabc), NOT the manager paraphrase. Confirmed: `g_loc(K)=m·γ` constant at every strike;
+`u_true=m·u`; `m=1`=plain v24; bigger m=steeper everywhere; conflict dissolves (steeper chart +
+trade-further + transact-at-look all move SAME way with m). m multiplies BOTH coordinate and exponent
+(same thing on this plain power-law base).
+**THE SIMPLIFIED OBJECT:** an affine rescaling of the log-moneyness coordinate. Warp LINEAR
+`ΔG=m·Δγ` (strike-independent; the √-kernel incomplete-Bessel integral + warp-vs-recentering
+decomposition EVAPORATE — constant integrand ⇒ ∫m dγ=m·Δγ, no kink). Trade map `θ_tx=mode·(θ/mode)^m`
+closed-form invertible `(θ_tx/mode)^(1/m)`. Kurtosis = the scalar `m`. The `LensShape` 5-axiom bundle
+collapses to one field `m:ℝ, 0<m`; the honest-GAP (lens not from free energy) shrinks from a function
+to ONE number.
+**BLAST RADIUS (skeptic-confirmed, carried into every doc):** A5 frozen-γ wings → exponent m·γ
+(frozen-γ-wing feature DELETED, still a power law; ⚠ CLAUDE.md §0/inventory items 2/3 need update —
+skeptic FLAG-OMISSION, escalate to manager); A16 ATM cusp (Q11) VANISHES (g=m·γ>0 at mode ⇒
+clean/continuous, Q11 MOOT); funding (C9) no longer →0 at ATM (shape change); A6 no-arb PRESERVED;
+smooth-paste C7 SURVIVES at constant g. HARD gate `lens_selfcheck.js` ENCODES the old elbow design and
+FAILS constant-m BY DESIGN — must be REWRITTEN not re-run (skeptic; intern/build concern, flag to mgr).
+**WHAT I SYNCED (files):** (1) object note `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`
+(the simplified object, §§1-4 + supersede table + reachability honesty). (2) SUPERSEDED banners on
+`CONTINUOUS_trade_warp_lens_calculus_2026-06-12.md`, `NATURALNESS_polar_kurtosis_map_2026-06-11.md`,
+`POLAR_density_first_principles_2026-06-11.md` (history kept, pointers added). (3) `docs/MONOLITH_INDEX.md`
+re-based on constant-m: header rewritten; C3/C9/C16/A1/A5/A10/A16 rows updated to constant-m with
+SUPERSEDED labels on the polar Lean facts + NOT-YET-BUILT code labels (HEAD de28c937 still has the
+POLAR lens) + pending-submit Lean. (4) `formal/INDEX.md`: new CONSTANT-m section (KEPT vs SUPERSEDED
+split — LENSKERNEL pool+smooth-paste KEPT, WARPCALC polar-warp + polar lens facts SUPERSEDED); WARPCALC
+table rows marked SUPERSEDED; pending-submit updated. (5) `formal/MONOLITH_INDEX.md`: superseded-lens-
+layer banner + pointer. (6) NEW Aristotle prompt `formal/prompts/aristotle_prompt_monolith_constm.md`
+(the simplified single structure `MonolithConstM.lean` — scalar `m`, g_eq_m_gamma, g_const_in_strike,
+thetaTx_roundtrip, warp_linear=∫m=m·Δγ, smooth-paste at g=m·γ, engineInstance m=1, single_object;
+HARD constraints forbid reintroducing LensShape/polarLens/√-kernel/θ-dep-g/the deleted polar facts).
+**THE SINGLE LEAN STRUCTURE (entry 179) gets CLEANER:** lens field 5-axiom-bundle→scalar; `g` loses
+its only nontrivial arg; the hardest old Lean content (FTC-2 on √-kernel, incomplete-Bessel-class
+integrand, warp_decomposition) EVAPORATES → one-line `integral_const` corollaries; polar facts
+`g_zero_at_center`/`g_le_gamma` DELETED (stated as the negated `g_eq_m_gamma`/`g_ge_gamma_of_m_ge_one`);
+trade map `thetaTx_roundtrip` a clean rpow lemma. Everything else (invariant, w/γ/center/price,
+trade_conserves, gamma_affine, trade_rebase_commute, smooth-paste, goalSeek, engineInstance) KEPT.
+**ARISTOTLE REACHABILITY (HONESTY):** Aristotle IS REACHABLE this session — `uvx --from aristotlelib
+aristotle list` returns exit 0 / 200, projects listed, NO 403 host_not_allowed. (Morning 403 concern
+does NOT reproduce now.) BUT the constant-m lemmas are NOT submitted yet — prompt written + queued,
+ready to fire. Per honesty rule the constant-m Lean layer is **stated, pending-submit, NOT
+trusted-from-prover.** Math/object/index sync (the bulk) needs no prover — done fully.
+**SUPERSEDED (history kept):** CONTINUOUS_trade_warp_lens_calculus, the inverse-lens θ_tx √-form
+(lens_tx/invtx work entries 215-224), √-kernel naturalness notes, WARPCALC polar-warp Lean (`PhiA`/
+`warp*`/`recenterKer`/`warp_decomposition`), the `LensShape` bundle + `polarLens`. LENSKERNEL pool +
+g-parametric smooth-paste + rebase = KEPT trusted-from-prover (untouched by the lens redefinition).
+**WHAT REMAINS:** (1) submit `MonolithConstM.lean` to Aristotle when ready (operator/manager go) →
+audit gate → verdict. (2) the gate-rewrite + constant-m engine build is INTERN/manager territory
+(I flagged the gate-FAILS-by-design blast). (3) manager: CLAUDE.md §0 + inventory 2/3 redefinition
+update + the one-sentence operator confirm the skeptic asked for (frozen-γ-wings + elbow-rounding are
+DELETED). (4) prior pending-submit (A14 at-strike no-arb-on-close, A15 haircut Q10, C13 solvency
+floor) UNCHANGED. Skeptic audits this sync next; manager folds + commits. NO git, NO engine edit
+(done by me here).
+
+---
+
+### MORNING RECOVERY 2026-06-13 — overnight "stall" diagnosed + LENSKERNEL/WARPCALC FOLDED + MONOLITH re-based on HEAD de28c937
+**JOB-1 DIAGNOSIS (Aristotle reachability):** Aristotle IS REACHABLE from this env. aristotlelib CLI works (no `403 host_not_allowed`); `ARISTOTLE_API_KEY` set; host 200. `aristotle list` shows projects 24e6497e + d7da8597 (and twins 68440731/f05ecbc2) as STATUS=IDLE — but `aristotle show` reports **both COMPLETE, started 11h 32m ago**. So the overnight submissions DID submit + run + return; the "stall" was the pipeline **never DOWNLOADED the archives** (not a network block; IDLE = task finished, project idle ≠ never ran). NOT prover-blocked. No 403 regression to flag.
+**FOLDED + AUDITED → trusted-from-prover (both PASS the full zero-cost gate 2026-06-13):**
+- **LENSKERNEL d7da8597** → `RequestProject/LensKernel.lean` (231 lines, `import Mathlib`). Audit: out-of-scope modules (Temporal/AMMCurve/Audit/Seam/Main) BYTE-IDENTICAL to working tree; toolchain v4.28.0 matches; token-clean (no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide` at L130/155/183, ALLOWED); summary asserts axioms ⊆ {propext,Classical.choice,Quot.sound} for tradeUpdate_hyperbola/gamma_linear_in_cash/gLoc_rebase_invariant/gLoc_le_gamma/valueMatch_g/slopeMatch_g. Statements re-derived: tradeUpdate Identity-IV (dx=−αβdy/((y−β)(y+dy−β))), γ′=γ+dy/β flow law, gLoc=γ·Φ(|log(θ/center)|), gLoc_rebase_invariant (C5), gLoc∈[0,γ]+=0 at mode, smooth-paste port valueMatch_g/slopeMatch_g ∀g>0 incl g<1 (no 1<g hyp). Signature note: contCall_hasDerivAt dropped 2 positivity hyps (unconditionally linear ⇒ STRENGTHENS, not weakens; targets keep hyps) — ALLOWED. Folded `formal/aristotle_runs/LENSKERNEL/`.
+- **WARPCALC 24e6497e** → `RequestProject/WarpCalc.lean` (297 lines, `import Mathlib`). Same gate PASS (byte-identical out-of-scope, token-clean, axioms ⊆ standard set on warpPot_hasDerivAt/warp_roundtrip_zero/warp_le_dgamma/warp_pos/warp_decomposition). Statements re-derived: warpInt=∫Φ_τ(ln θg)dg exact-differential (FTC-2 warpPot_hasDerivAt), path-indep/round-trip 0, 0≤ΔG≤Δγ (warp_nonneg/le_dgamma), sell≤0, warp_pos, warp_decomposition live=ΔG+recenterKer (kink-inside split at g=1/θ). Aux warp_decomposition_ioo adds no hyps to targets. Folded `formal/aristotle_runs/WARPCALC/`.
+- **VERDICT: both `proved (trusted-from-prover)`.** NOT "verified" (no local canonical kernel; env-blocked). Manager fold-confirmation + commit pending (mine to fold, manager commits).
+**JOB-2 RE-BASE (`docs/MONOLITH_INDEX.md` → HEAD de28c937, at-strike A14):** DONE. Header re-based note added; HEAD pointer 7e1ae39b→de28c937; build desc = at-strike swap (dy=N·K open+OTM-close, ITM direct-formula payout no-AMM, continuous warp animation); gate count 23→34. Rows: C1/C3/C5/C7/A1/A5 Lean layer flipped pending→GROUNDED trusted-from-prover (LENSKERNEL); C16 NOT-promoted→**VERIFIED+promoted** + WARPCALC GROUNDED; A10 WARPCALC grounded. C11/A1/C7/A12 code+object reflect the at-strike premium-free swap (notional×strike, buy-leg-only option pricing). ADDED A14 (VERIFIED — built+promoted+tester 5/5×2, 34/34 gates), A15 (spec'd/queued, Q10 pending), A16 (IMPL gate-locked a16_atm_gate.js 5/5, theory A16-CONT pending-submit, CUSP=Q11). **Honest Lean labels:** GROUNDED only where the returned+audited archive backs it; A14-close/A15/A16-CONT/A11/A5-limit = **pending-submit (prover-blocked = unwritten/unsent), NOT trusted-from-prover.** `formal/INDEX.md` V28-LENS LINE section rewritten with the 7 grounded rows + pending-submit list.
+**WHAT REMAINS for full monolith close:** (1) submit A16-CONT (companion to valueMatch_g — ready to pin); (2) write+submit A14 at-strike no-arb-on-close lemma — needs operator close-semantics certainty (entry 197 trade-at-live/no-round-trip-thinking may tension a close-reverse; FLAG); (3) A15 haircut lemma blocked on decision Q10; (4) A11 asym-growth + A5 wing-limit Tendsto = candidate pins; (5) C13 solvency real floor STILL-OPEN (operator ship-gate); (6) reconcile fw_proj_gate_leak 727fc83e COMPLETE_WITH_ERRORS vs clean summary (owning session); (7) manager fold-confirm + commit the two folded archives. NO row says "verified" (env-blocked). Skeptic audits this re-base next.
+
+---
+
+_Last updated: 2026-06-12 (overnight), MONOLITH STRUCTURE REORDER (operator entry 179) — structure-reorder instance. ⚠ TWO research-lead instances concurrent this night (manager note, commit 66075a7): THIS section = the structure-reorder instance; the base-program instance (L2 defs / Aristotle-store sweep / L3 oracle spec) writes separately — reconcile at fold._
+
+### MONOLITH — SINGLE PURE-MATH STRUCTURE (operator entry 179 VERBATIM: "ensuring structural unification into a single pure math structure on the lean side, and then mapping the components within that") — 2026-06-12 overnight
+**REORDER IN FORCE: the TOP deliverable is ONE Lean structure; standalone-theorem route explicitly NOT wanted. Everything else (L2 defs, store sweep, L3 oracle spec) subordinated — owned by the base-program instance.**
+**THE STRUCTURE (designed + submitted): `TemporalAMM`** — carried data = conserved charges `alpha,beta` (Casimirs), ONE state coord `y` (x DERIVED via the invariant), `lens : LensShape` (Φ + 5 axioms: Φ(0)=0, 0≤Φ≤1 on u≥0, monotone, continuous). Everything else a def/thm IN-object: `x,w,gamma,center,price,carry,poolPotential,trade,rebase,lensU,g,warp` + `gammaOfW/goalSeekW/sStar/pasteC/markCont/markInt`. Canonical lens instance `polarLens τ` (axioms discharged concretely); engine instance `engineInstance = ⟨725,275,1000,polarLens 0.3⟩` = the calibrated worked pool EXACTLY (x=1000, w=29/40, γ=29/11, center=11/29). Metriplectic leg now CONCRETE in-object: `poolPotential μ(t)=(t−β)³/(3αβ)` with `price_is_grad` (μ′(y)=price) + `R_psd` (μ″=2(t−β)/αβ≥0) + `single_object` (= T2 single_source shape, no carried potential). **HONEST GAP stated in the structure docs: Φ is a calibration FIELD with axioms, NOT derived from the object's free energy — emergence NOT claimed.**
+**SUBMITTED to Aristotle (2 runs, prompts `formal/prompts/aristotle_prompt_monolith_{core,warp}.md`, project-dir formal/temporal_lean_verified):** (A) monolith_core → `RequestProject/Monolith.lean`: structure + invariant/w_consistency/gamma_eq/center_eq/price_eq_slope/price_is_grad/R_psd/trade_conserves/trade_flow_group/trade_dx (Identity IV)/gamma_affine/rebase_*_invariant/**trade_rebase_commute (the OPEN C5 register lemma, in-object)**/g bounds/g_zero_at_center/goalSeek thms/paste_value/paste_slope/polarLens/engineInstance/single_object. (B) monolith_warp → `RequestProject/MonolithWarp.lean`: tonight's L1–L4 RESTATED IN-OBJECT (per entry-179 "mapping components within"): warp := ∫γ₀..γ₀+D/β Φ(|ln(θt)|)dt with endpoints from the object's own flow; L1 warp_eq_potential_diff + warp_roundtrip_zero (in-object via (P.trade D).warp θ (−D)); L2 warp_nonneg/warp_le_dgamma + polar wing saturation; L4 warp_nonpos_of_sell (single-signedness); L3 live_diff_decomposition (live = warp + recentering, polar, sign-definite wing; P2 priority). NO free-floating versions were ever submitted (nothing to kill) — the in-object forms ARE the first submissions. Structure blocks byte-identical across both prompts.
+**Pre-submission re-derivation (mine, node float64):** paste seam 1.1e-16 value / 5.5e-12 slope-FD; polar_phi_lower 0 violations (4 τ × 1500 u grid); phi-deriv formula 6e-11 vs FD; decomposition identity 4.5e-14; ΔG(2×)=0.5095316 == research-note table. All core algebra (invariant, w_consistency, price_eq_slope, trade_dx, gamma_affine, goalSeek_root, engineInstance rationals) re-derived by hand in-session.
+**MAPPING deliverable: `formal/MONOLITH_INDEX.md`** (created) — C1–C16 + A-constraint rows each → field/def/thm IN TemporalAMM, with honest N/A (C2 weight field absent by design; C15 process) and OPEN (C13 solvency NOT closed; lens-shape origin GAP; register-L3 JS-bridge NOT closed by this). Reconcile with base-instance output at fold.
+**Verdict state: submissions in flight, awaiting candidates → full audit gate (extract over throwaway, byte-diff out-of-scope modules, token-scan, axiom check, math re-derive) before any verdict. Nothing is trusted-from-prover yet. No git (manager-only).**
+
+---
+
+### OVERNIGHT MONOLITH — BASE-PROGRAM instance (operator entry 177; Aristotle LIVE; 2 runs submitted; sweep done; L3 spec written) — 2026-06-12
+_⚠ Reconcile with the structure-reorder section above (entry 179): its in-object `Monolith.lean`/`MonolithWarp.lean` runs take PRECEDENCE on the warp theorems (standalone route "explicitly NOT wanted"); my WARPCALC overlaps monolith_warp = downgrade to CROSS-CHECK at fold; my LENSKERNEL stays the L2 line-cited engine-mirror layer (deliverable #2 of entry 177, feeds the L3 oracle-bridge generator). TWO monolith index files exist: `docs/MONOLITH_INDEX.md` (mine, four-layer obj|code@line|Lean|paper per C1–C16+A1–A12, per the program order) and `formal/MONOLITH_INDEX.md` (reorder instance, in-object mapping) — manager merges; both honest._
+**SUBMITTED (mine, in flight):** (1) **LENSKERNEL** `d7da8597-f234-4b41-9976-eff587799a8b` (`formal/prompts/aristotle_prompt_lenskernel_L2.md`): L2 defs line-cited to HEAD (Pool{x,y,α,β}+Reg, tradeUpdate@1679, rebase@1691, hTau@1630/hpTau@1631/lensU@1633/gLoc@1639, markLensed-call@1655) + α/β conservation, hyperbola preservation, w=1−β/y, γ=(y−β)/β, center=1/γ, mpRaw=βγ²/α, **flow law γ′=γ+dy/β**, `gLoc_rebase_invariant` (C5 lens∘rebase, v28 scope), Φ basics, gLoc∈[0,γ] + =0 at mode, **valueMatch_g/slopeMatch_g ∀g>0 incl. g<1** (R1/T1a port, no γ>1 hyp). (2) **WARPCALC** `24e6497e-3c60-4ec1-b626-0e0f2929a39d` (`formal/prompts/aristotle_prompt_warpcalc_L1.md`): warpInt=∫Φ_τ(|ln θγ|)dγ — FTC potential/exactness, additivity/path-indep, round-trip 0, 0≤ΔG≤Δγ, warp_pos (split-at-kink), sell≤0, decomposition live=ΔG+∫recenterKer (off-kink + kink-inside headline).
+**ENTRY-142 SWEEP DONE (mine):** store listed (~90 projects). **warp-amm cluster UPGRADED retrieval-only → trusted-from-prover**: token-scan CLEAN ×3, twins statement-identical (proof scripts differ; 7f933065 canonical), summaries assert standard axioms, ALL statements re-derived by hand (mode_shift σ_B algebra, closed-call (1/w₀)ln(y_s/y_B), duality, 2σsinhΔξ); FRAGILE flags `grind`/`nlinarith`; caveat: Model-C TRADE-POINT anchoring ≠ v28 live-mode lens; engine link not claimed. Archives folded → `formal/aristotle_runs/WARPAMM_external/{base_d20dda3a,modelC_7f933065,modelC_twin_4e92e3cb}`; `formal/INDEX.md` EXTERNAL section rewritten + SWEEP + SUBMITTED sections added. **FOUND UNFOLDED (parallel sessions; manager routes):** fw_proj_warp_core 56b4f0fa (COMPLETE, token-clean, unchanged modules byte-identical), fw_proj_gate_leak 727fc83e (**COMPLETE_WITH_ERRORS vs clean summary — reconcile before fold**), fw_proj_germ 6d6ba6e6 (COMPLETE, clean), offatm_submit 90056417/f3776478 (COMPLETE, clean). Pre-repo 4–7wk cluster = retrieval candidates, unaudited.
+**WRITTEN (mine):** `docs/MONOLITH_INDEX.md` (honest GAPs: lens not in paper; dollar-pipe no-Lean; A5 wing-limit Tendsto unpinned; A11 asym-growth unpinned; A12 no-go candidate); `specs/SPEC_L3_live_verifiability_oracle_bridge_2026-06-12.md` (blocks B1–B8, live-fn-only rule, hand-mirrored generator → entry-146 Lean-regen upgrade, deliberate-fault self-check, §0 honesty paragraph mandatory).
+**PENDING:** poll d7da8597 + 24e6497e (+ reorder instance's two) → download → audit gate → verdicts → INDEX/MONOLITH rows. NO "verified" label anywhere (env-blocked, entry 146).
+
+---
+
+_Earlier: 2026-06-12, CONTINUOUS trade→warp→update-lens CALCULUS (operator entry 160; READ-ONLY; notes-only; no submit/edit/git/build/Aristotle)._
+
+### CONTINUOUS TRADE-WARP-LENS CALCULUS — entry 160 ("do the damn calculus… continuous trade-warp-updatelens") — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Note: `notes/research/CONTINUOUS_trade_warp_lens_calculus_2026-06-12.md`. Scripts `/tmp/rl_cont_{1_flow,2_warp,3_props,4_limits,5_decomp}.js` (node float64; primitives transcribed VERBATIM HEAD L1600–1709; closed forms checked against LIVE tradeUpdate marched in steps, not self-checked).
+**CLOSED FORMS (exact, not continuum-idealized — tradeUpdate already lives on them; verified ≤3e-13):** along a trade (α,β conserved, hyperbola (x−α)(y−β)=αβ): `w(y)=1−β/y`; **`γ(y)=(y−β)/β` LINEAR in cash** ⇒ dγ/dy=1/β pool-constant (= the old "warp/$ exactly flat" finding in closed form); `center=1/γ=β/(y−β)`, d(center)/dy=−1/(βγ²) (slide slows as curve steepens); p=(y−β)²/(αβ). Exact mode shift Δln center=−ln((y₁−β)/(y₀−β)); identity d ln center=−(1/w)d ln y ⇒ frozen-w approx = retrieval-only warp-amm `mode_shift=(1/w₀)log(y_s/y_B)` (structural connection, labeled).
+**THE WARP (riding lens, = N→∞ of skeptic #43/#44 held-then-update per-step mechanic):** `ΔG(K)=∫_{γ₀}^{γ₁}Φ_τ(|ln(θ_K·γ)|)dγ = F_K(γ₁)−F_K(γ₀)` — **EXACT DIFFERENTIAL in γ (per-strike potential, path-indep, round-trip 0)** = the operator's "set of closed form integrals". Elementary limits: τ=0 ⇒ ΔG=Δγ=D/β exact; wings ΔG/Δγ≥1−τ²/2v²; small-trade 1st order = held-center fix Δγ·Φ(|u₀|); general: NON-elementary (incomplete-Bessel class, by-parts+rapidity reductions verified 4e-16; classification LABELED not proven) but convergent series of elementary terms (40 terms ⇒ 4e-16) + 1-line quadrature.
+**PROPERTIES (all float64-verified):** (i) SINGLE-SIGNED — 401-pt scan 0 negatives; the 0.7×-center sign-flip CURED in the right observable: exact decomposition `liveDiff = ΔG_accum + recentering ∫sign(v)Φ′dγ` verified 5e-15 vs live engine (0.7×: live −0.4586 = warp +0.3513 + slide −0.8099). (ii) V-shaped in log-strike: monotone-more-warp-OTM per side, min in the swept center band, SATURATES at Δγ (not unbounded). (iii) bounded |ΔG|≤|Δγ|=|D|/β; preview trace g_pre+ΔG≤γ₁; no blow-up any τ. (iv) N-step discrete (live engine) → integral at clean O(1/N) (err ratio 10.12/10.01 per decade; N=1,10,100,1000 tables). (v) call/put asym GROWS superlinearly (asym/Δγ 0.0071→0.1338 for D $25→$400) = continuous twin of #44 §4.
+**CHART VERDICT (#5, build-determining):** standing post-trade chart = LIVE final state through final lens (v28 live drawing RATIFIED; no stored center survives). PREVIEW after-trace = `g_pre(K)+ΔG(K)` (riding integral); only reference = γ₀ = the pre-trade state itself (not a stored φ; expires with preview). **In-flight held-center fix = the N=1 left-endpoint approximation — MODIFIED not void/not ratified-as-is:** direction right (live endpoint diff masks+flips), kernel superseded for finite trades (calib $150: +91% overshoot at 0.829×, exact-0 vs 0.161 at 1×, wings agree; small trades 1st-order exact). Build = keep modeOverride plumbing, swap held product → fixed quadrature (~64-pt Gauss or N≈100 substeps, err≤1.5e-3), forward-only, L4 intact. FLAG (display semantics, to manager): preview warp-trace ≠ post-trade pricing curve g₁ (differ by recentering term) — chart must not label warp trace as "curve after your trade" without the live curve; which overlay(s) shown = display-semantics call.
+**SINGLE OBJECT (#6, honest):** natural — trade = level-set flow of H=(x−α)(y−β) (α,β Casimirs, T2 metriplectic conservative leg); γ affine in port variable y; warp admits per-strike potentials (conservative). NOT-yet-shown: Φ_τ/τ not derived from H or any free-energy functional (view-layer, calibration); funding/R-leg untouched.
+**Lean candidates (NOT submitted, pin on call):** L1 exactness/path-indep of ΔG; L2 bound 0≤ΔG≤Δγ + wing saturation; L3 decomposition identity (chain rule on γΦ); L4 single-signedness. Ready once chart semantics ruled. Nothing submitted/built/edited/git. Skeptic cold-audit expected.
+
+---
+
+_Earlier: 2026-06-12, GOAL-SEEK WARP #16 — CORRECTION APPENDIX (held-mode exponent fix) after skeptic HOLD/FLAG-WRONG on the build (READ-ONLY; spec-only; no submit/edit/git/build/Aristotle)._
+
+### GOAL-SEEK WARP #16 — CORRECTION APPENDIX (held-mode EXPONENT fix) — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Trigger: skeptic `notes/skeptic/VERDICT_C16_goalseek_warp_PROMOTE_2026-06-12.md` = **HOLD / FLAG-WRONG** on the built `temporal_mvp_v28_lens_warp.html` — the held-lens after-trace draws its EXPONENT at the POST-trade mode, the masked frame the operator corrected (entries 129/131/132). Goal-seek readout half is honest+correct; the warp-view half (the build's reason to exist) was green-over-defect.
+**ROOT CAUSE (mine, confirmed on live engine):** my RECONCILED spec §B-L79 said "call `drawState(snap.sNorm, true, previewPool, τ)`" — but `Engine.gLoc(state,θ,τ)` (HEAD L1639) reads its mode INTERNALLY via `lensU→getSNorm(state)` (L1633-1637). On one Balancer pool mode=(1−w)/w is LOCKED to γ, so passing `previewPool` moves BOTH γ AND mode ⇒ re-centered = masked. The `snap.sNorm` arg only set the x-axis (`tmDeg`, L3573) + `psiAt` ATM-center (L3582) + `markLensed` smooth-paste center (L3583); it NEVER reached the exponent. Gate W1 hand-rolled `Phi(uHeld)` and checked the trivial `(γ′−γ)Φ=γ′Φ−γΦ` identity — tested a quantity nobody plots; W6 was a regex.
+**THE FIX (CORRECTION appendix appended to `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md`, dated):** add optional 4th param `modeOverride` to `Engine.gLoc` (mode = override if >0 else `getSNorm(state)`; γ ALWAYS from pool); thread an optional 5th param into `Viz.drawState` (passed to gLoc in the `poolForLens` branch only); the dashed after-trace call (HEAD L3630-3632) becomes `drawState(snap.sNorm, true, previewPool, state.tau, snap.sNorm)` ⇒ moved γ read through the HELD pre-step mode. **AFTER-TRACE ONLY (hard guard, gate W-OVR):** override passed at EXACTLY ONE site; `legPrice`/`markEff`/`fundingPerStrike`/portfolio/live-trace pass NO 4th arg ⇒ byte-identical, stay at live mode (no basis break / A12 / single-basis violation).
+**RE-DERIVED (mine, live engine via vm, `/tmp/rl_heldmode_warp_check.js`):** calibrated skeptic case (Balancer w=0.725, dy=150 ⇒ γ 2.636→3.182, heldMode=0.3793, postMode=0.3143, τ=0.3): (A) CURRENT after-trace sign-FLIPS at θ=0.7×mode (−0.4589 vs promised +0.4176) = the bug reproduced exactly (skeptic table −0.4586). (B) held-override identity `gLoc(post,θ,τ,held)−gLoc(pre,θ,τ,held)==(γ′−γ)·Φ_τ(u_held)` to max **7.1e-15**, monotone-OTM both wings, NO sign-flip. (C) override-OMITTED `gLoc(pool,θ,τ)`==current `Engine.gLoc` to max **0.0** over 100-pt grid ⇒ omitted path byte-identical.
+**CORRECTED GATES:** W1 now CALLS `Engine.gLoc(previewPool,θ,τ,heldMode)` (the real draw path) and asserts ==`(γ′−γ)Φ` + monotone-OTM + NO sign-flip, with the skeptic's 0.7×mode point as a LOCKED regression that FAILS the old (no-override) draw and PASSES the fixed one. W-OVR (new) = override-after-trace-only structural/spy guard. W6 corrected to a behavioral exponent-array equality (not a regex). Gates 2/3/4/5 unchanged.
+**BYTE-IDENTICAL:** `tradeUpdate`/`arbitrageToOracle`/`rebase`/`executeLeg`/`legPrice`/settlement (`markEff`/`closeBand`/`fundingPerStrike`) — only diffs = gLoc +optional 4th param (default=today), drawState +optional 5th param (pool branch only), 1 after-trace call swap.
+**BOTTOM LINE: buildable as ONE intern pass = YES.** No NEW operator-tier flag (mechanic = already-approved frozen-pre-warp lens, entries 129/131/132 + skeptic #43/#44 + inventory #16); §H body flags (R1 BLOCKED/out-of-scope; single-step symmetric-rescale honesty caveat) STILL STAND. NO Lean obligation ready (closed-form readout of transcribed primitives). Skeptic R6-gates the correction before intern rebuild; manager re-derives float64 + byte-identical before build. Nothing submitted/built/edited/git.
+
+---
+
+_Earlier: 2026-06-12, GOAL-SEEK WARP (item #16) RECONCILED BUILD SPEC on v28 lens — BUILDABLE ONE PASS, held-lens amplify model (READ-ONLY; spec-only; no submit/edit/git/build/Aristotle)._
+
+### GOAL-SEEK WARP #16 — RECONCILED BUILD SPEC (held-lens amplify model) — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Spec: `specs/SPEC_v28_goalseek_warp_RECONCILED_2026-06-12.md` — **SUPERSEDES the stale `SPEC_v28_goalseek_warp_BUILD_2026-06-12.md`** (which called the warp BLOCKED under the LIVE RE-CENTERING lens; operator entries 129/131/132 corrected exactly that — lens HELD during the warp step, updates BETWEEN steps, NOT live re-centering ⇒ the old 1/h″→∞ inversion blocker dissolves). Built ON skeptic verdicts #44 (`VERDICT_AMPLIFYING_LENS_warp`) + #43 (`VERDICT_FROZEN_PREWARP_LENS_goalseek`); operator entries 128–133 verbatim.
+**VERDICT: BUILDABLE as ONE intern pass. Two changes, BOTH READ/VIEW, ZERO write-path change.** (i) draw the warp through the lens HELD for the step — `Viz.drawState` preview call (HEAD L3632) currently draws at the POST-trade mode `snapPost.sNorm` (re-centering = MASKS the warp); change to draw the moved-γ `previewPool` at the PRE-step mode `snap.sNorm` ⇒ strike-dep reshape dG=(γ′−γ)·Φ becomes VISIBLE. (ii) goal-seek readout `Engine.goalSeekW(G)=G/(1+G)` (closed-form, G≥1 guard ⇒ w′≥0.5 ⇒ γ>1) + UI display. POOL BYTE-IDENTICAL: tradeUpdate L1679 / arbitrageToOracle L1702 / rebase L1691 unchanged plain v24. One premium per leg @ θ_K (executeLeg/legPrice unchanged). NO second strike, NO two-strike write (= the BLOCKED R1, kept OUT — §F STOP guard).
+**FLOAT64 RE-DERIVED (mine, fresh path `/tmp/rl_reconciled_check.js` + `/tmp/rl_goalseek_target.js`):** CHECK1 dG=(γ′−γ)·Φ_τ(u) matches direct held-mode gLoc diff to max 1.4e-16; CHECK2 monotone-OTM, τ-amplified, max(g_loc/γ)=0.998≤1; CHECK3 w′=G/(1+G) unique root of γ(w′)=G, monotone, NO inversion (no 1/h″, no bisection); CHECK4 G≥1⟺w′≥0.5⟺γ>1, boundary G=1⟺w′=0.5 exact. GOAL-SEEK TARGET is on γ (γ(w′)=G) — Φ NEVER divided out (dividing Φ out = the REJECTED neutralise op giving w′=w₀ flat, verdict #44 §2).
+**L4 PRESERVED:** no 1/h″, no root-find feeding a write, no slope-as-pool-input; goalSeekW converts G→w BEFORE any pool action, never an arg to tradeUpdate. 6 lens_selfcheck gates (held-lens-warp-formula / goalSeekW-single-root+G≥1-guard / pool-byte-identical-md5 / bounded-g≤γ / no-inversion-token-scan / held-mode-draw-assertion). R3 control inventory: w=warp DOF (kept, trade is actuator), trade-size=walk amount (kept), τ=lens shape amplifier (kept static), recentered dashed trace=REPLACED by held-mode trace, goalSeekW=NEW advisory readout (drives nothing auto; optional apply via existing weight path).
+**OPERATOR-TIER (flag, not decided):** settlement/payoff strike θ_K UNTOUCHED (must stay so; true write-relocation = R1 BLOCKED + settlement-semantics change = A-vs-B trade-point object, entries 31/33/38/88/91/117/118/121); single-step honest caveat (within ONE frozen step warp is symmetric vertical rescale; real strike-differentiated skew emerges ACROSS the sequence as mode updates — verdict #44 STANDING CAUTION, UI copy must not over-claim per-strike in-step bend); payoff chart on unbent curve (cosmetic, entry 101, out of scope). NO Lean obligation ready (closed-form readouts; R1 no-go lemma out of scope). Nothing submitted/built/edited/git. Skeptic R6-gates spec; manager re-derives float64 + md5 byte-identical claims before build.
+
+---
+
+_Earlier [SUPERSEDED by the RECONCILED spec above — its BLOCKED verdict was computed under the LIVE re-centering lens; operator corrected to held-lens]: GOAL-SEEK WARP #16 — BUILD SPEC on v28 lens (operator wants HTML within the hour) — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Spec: `specs/SPEC_v28_goalseek_warp_BUILD_2026-06-12.md`. Float64 checks `/tmp/gsw_spec_check.js`, `/tmp/gsw_spec_check2.js` (engine primitives transcribed VERBATIM from HEAD L1600–1772).
+**SPLIT VERDICT (two readings of "trade lands at θ_eff"):**
+- **R1 = relocate the WRITE to θ_eff: BLOCKED.** Two OPEN obstructions, neither closeable forward/bounded, both = #101 regression class. **BLOCKER-A (mode-collapse):** g_loc is MODE-RELATIVE; moving the live mode to θ_K ⇒ u→0 ⇒ slope COLLAPSES to 0 (float64: g_loc(2× strike)=1.376597 from spot → 0.000000 when mode moved there). Holding far-out steepness WHILE executing far out needs a STORED reference mode = (W) φ = the demoted weight field. **BLOCKER-B (two-strike basis leak):** write@θ_eff + settle@θ_K ⇒ open-then-close ≠ 0 (gap m(θ_K)−m(θ_eff) = 0.0826/0.0358/0.0151 at K=1.5/2/4×) = a same-state arb. No forward single-basis construal relocates the write AND keeps slope≠0 AND keeps the payoff strike — pick any two, third breaks. Self-adversarial: construals (I) opposite-slippage+O5, (II) inverse-solve 1/h″→∞ banned, (III)=HEAD — none whole for R1. **DO NOT BUILD R1.**
+- **R2 = forward θ_eff ATTRIBUTION layer (label on the existing plain-v24 spot swap): INTERN-READY.** New `Engine.thetaEff(state,θ_K,τ)=mode·exp(sign(u)·h_τ(|u|))` — pure forward, bounded |u_eff|≤|u| (CHECK1 all strikes), NO 1/h″, NO inversion. **POOL BYTE-IDENTICAL** (tradeUpdate L1679 unchanged; executeLeg/legPrice one-premium-@-θ_K unchanged) — answer to gate (e): pool fn does NOT change. Change-set = one helper + one display read (~minimal). All 5 obstruction gates CLOSED: (a) round-trip x/y err 0; (b) no inversion (L4); (c) solvency markLensed∈[0,1] min 0.00298647 max 1.0; (d) well-posed single-valued forward; (e) pool unchanged. Bounded: gearing 1/(∂g/∂w) SATURATES 0.106→0.160 (≤0.17), never runaway. 6 lens_selfcheck gates (θ_eff-bounded / no-inverse-helper / round-trip-zero / no-θ_eff-in-write / bounded-gearing / pool-byte-identical). **ONE intern pass.**
+**THE HONEST LINE:** R2 gives the operator the "look through the lens at the trade point" VIEW airtight; it does NOT relocate the write. A true write-relocating warp is the mode-relativity category error (re-summons φ), NOT a tuning gap — that's the A-vs-B / trade-point-object decision, OPERATOR-TIER (entries 31/33/38/88/91/117/118/121), flagged not decided. Settlement keeps θ_K as payoff strike (moving it = BLOCKER-B arb + undisclosed semantics change = operator-tier). NO Lean obligation ready (thetaEff = closed-form readout; blocker = algebraic mode-relativity⇒φ identity; no-go lemma pin ONLY if operator wants it formalised). Nothing submitted/built/edited/git. Skeptic R6-gates the spec; manager re-derives float64 + byte-identical claims before build.
+
+---
+
+_Earlier: 2026-06-12, GOAL-SEEK WARP MAGNITUDE far-OTM per dollar — entry-121 physics argument (READ-ONLY; notes-only; no submit/edit/git/build/Aristotle)._
+
+### GOAL-SEEK WARP MAGNITUDE far-OTM/$ — entry-121 ("more warp far otm per unit dollar… slope steeper far out… trade moves the point more") — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Note: `notes/research/GOALSEEK_WARP_magnitude_far_otm_2026-06-12.md`. Scripts `/tmp/gsw_{setup,derive2,slope_defn,lensview,net,why_const,steelman,AB_robust,adversarial}.js` (node float64; engine primitives `getW/getSNorm/getMP_raw/tradeUpdate/hpTau/gLoc` transcribed VERBATIM from HEAD L1600–1709).
+**FRAMING (load-bearing, stated up front): TWO quantities, prior work conflated.** (A) spot-swap EXECUTION slippage = BUILT+MEASURED (v28 tradeUpdate at live point; skeptic #119 FLAT per fixed cash $). (B) goal-seek WARP MAGNITUDE = UNBUILT+DERIVED (inventory #16, skeptic #38). Entry-121 is about (B). Re-derived on the LENS architecture (plain Balancer pool + mode-relative lens), NOT assumed from the demoted (W) curve.
+**HEADLINE: operator's "more warp far OTM per unit dollar" = FALSE on the lens; warp/$ is FLAT (float64), NOT rising.** M1 Δw_warp/$ EXACTLY constant across K={1.5,2,4,8,20×} × τ={.05,.3,1} × 4 pools (spread ≤1.5e-5 = FD noise; −2.50e-2@γ1.5, −1.20e-3@γ2.33, −9.0e-2@γ1.22). M2 visible Δσ_K/$ flat-to-FALLING OTM; warp curvature decays OTM. Monotone-NON-increasing, not his monotone-increasing.
+**WHY EXACTLY FLAT (analytic identity, `/tmp/gsw_why_const.js`):** on plain Balancer the curve param enters g_loc(K) THROUGH γ ALONE (mode=1/γ ⇒ u_K=ln θ_K+ln γ) ⇒ restoring the slope at ANY strike restores it at EVERY strike (single global γ knob; NO per-strike warp DOF). Δw_warp/$ = −(swap w-drift/$) = a POOL CONSTANT, strike+τ-degenerate.
+**OPERATOR PARTLY RIGHT (steelmanned):** premise Effect-1 ("slope steeper far out" = g_loc 0→γ; raw Balancer is FLAT, steepness is PURE lens) TRUE; "trade moves the (lensed) point more far out" |du_eff|/$ rises+saturates OTM TRUE. His ERROR = the inference "moves more ⇒ more warp": restoration is GLOBAL via γ, so Effect-1 cancels the SATURATING Effect-2 (∂σ_K/∂w saturates ~6.25 far out, does NOT keep growing). Missing piece = no per-strike warp DOF (that DOF = the w(u) weight field = the (W) curve = where the runaway lives).
+**BOUNDED vs RUNAWAY = THE crux, CONFIRMED for lens specifically:** (ln K)³ runaway does NOT carry. (W) gearing 1/w′~u³→∞ (9.5→7281 @1.5x→100x); LENS gearing 1/(∂σ/∂w) SATURATES (0.106→0.160). Even the L4-banned INVERSE goal-seek is BOUNDED here (∂σ/∂w saturates, not →0). τ→0 at fixed strike: warp/$ stays −2.50e-2 (NO blow-up). Runaway needs a frozen-wing WEIGHT FIELD; plain Balancer has none. So operator's correct geometric intuition does NOT bring the runaway — lens absorbs it — but ALSO does NOT yield more-warp-far-out; yields FLAT warp.
+**(B)→(A) RECONCILE (operator vindicated HERE):** under the goal-seek, execution moves to the strike ray ⇒ per-$ price-impact = g_loc(K) RISES OTM (0→γ, sat). So SLIPPAGE-felt rises OTM (B) while build's spot-swap feels flat spot slope (A, skeptic #119 correct). Operator conflated slippage-rising (TRUE,B) with warp-magnitude-rising (FALSE,B).
+**OPERATOR-TIER (flag to manager, not decided):** A-vs-B / move build to trade-point goal-seek (entries 31/33/38/88/91/118). New datum: on lens, B = flat per-$ warp + rising per-$ slippage, BOUNDED (no runaway) — unlike (W)-curve B. Trade-mechanics/curve-object call. **NO Lean obligation ready** (closed-form/float64 readouts of transcribed primitives, not theorems; candidate no-go lemma "slope-restoring reweight is strike-independent = warp DOF is global not per-strike" = algebraic restatement of GLOBAL-SKEW impossibility, pin ONLY if operator wants the no-go formalised). Self-adversarial: 3 attacks (visible-bend curvature / banned inverse / τ→0) all leave warp flat/bounded; operator's premise CONFIRMED not dismissed; failure isolated to absent per-strike warp DOF. Nothing submitted/built/edited/git. Skeptic adversarial pass follows; manager re-derives.
+
+---
+
+_Earlier: 2026-06-12, LENS LIFECYCLE + TRANSACT/GOAL-SEEK-AT-SHIFTED-TRADE-POINT — FEASIBILITY (entry 117; READ-ONLY; notes-only; no submit/edit/git/build/Aristotle)._
+
+### LENS LIFECYCLE + SHIFTED-WRITE FEASIBILITY — entry-117 "look through the lens for every lifecycle touchpoint; transact/goal-seek wrt the trade point — is this possible?" — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Note: `notes/research/LENS_lifecycle_transact_goalseek_FEASIBILITY_2026-06-12.md`. Scripts `/tmp/lens117_{engine,partB,obstruction,baseline,obs23,obs4567,obs5_divergence,construal,reconciled_rt,steelman}.js` (node float64; engine primitives transcribed VERBATIM from HEAD lines 1600–1709/1722–1772/1900–2094/2164–2183).
+**HEADLINE = NOT constructible end-to-end as pictured; OBSTRUCTION FOUND (the regression root): `g_loc(K)=γ·h′_τ(|ln(K/mode)|)` is MODE-RELATIVE (=0 at the live mode, grows to γ in the wings).** The operator's two asks are mutually exclusive on a single-point pool + mode-relative lens: "goal-seek SEES a steeper slope far out" (113) reads g_loc with the mode AT SPOT — the steepness exists ONLY because the mode is elsewhere; "transact/goal-seek WRT the trade point far out" (117) wants to EXECUTE there, but arriving moves the mode TO the point ⇒ g_loc=0 (flat top). **Smallest counterexample (float64): K=2×, τ=.3, γ=1.5 — read from spot g_loc=1.377; move reserves to the ray ⇒ new mode==θ_K ⇒ u=0 ⇒ g_loc=0.000000.** The ONLY way to hold both (read far-out steepness WHILE executing far out) = measure |u| from a STORED reference mode, NOT the live mode = (W)'s φ = the weight field = the demoted v27 object. Same structural impossibility as the GLOBAL-SKEW run ("memoryless reserve→σ CANNOT restore a pre-trade slope target; σ must store history = φ"), reached from the lens side. THE ~100-regression pattern: strike-dependent EXECUTION keeps re-summoning a stored-history scalar = the weighted curve.
+**PART A (11 touchpoints):** whole obstruction lives in rows 4 (the swap) + 5 (goal-seek). Rows 1–3,6–11 (load/quote/chart/settle/funding/portfolio/liq/rebase/LP) are forward, already in HEAD, clean, single-basis, solvent, rebase-commuting.
+**PART B (θ_eff exists, forward):** lensed accumulated coord `q_lens(u)=γ·sign(u)·h_τ(|u|)` (∫h′=h_τ, closed form); effective-strike `u_eff=sign(u)·h_τ(|u|)`, θ_eff=mode·exp(u_eff) — PURE FORWARD (no root-find, no 1/h″), BOUNDED |u_eff|≤|u| (shrinks toward mode). θ_eff DOES exist (skeptic #35 pt-4 confirmed); the problem is what "execute there" means.
+**PART C obstruction verdicts:** O1 round-trip CLOSED (not new — HEAD already drifts identically on premium re-read; dy_R=−dy_F law preserved, tradeUpdate unchanged α,β flow invariants exact 0.0); O2 fold CLOSED forward/OPEN if inverted (G(dy) non-monotone, 1 fold at mode-cross; forward single-valued); O3 inversion CLOSED forward (1/h″ blows up 5701@u=8; only an INVERSE target-slope goal-seek inverts = L4-banned; all touchpoints forward); O4 solvency CLOSED (markLensed∈[0,1], min 1.9e-2 max 1.0; m(θ_eff)≥m(θ_K) ratio 2.04→1.32 but ≤1); O5 single-basis OPEN/two-strike-per-leg hazard (leg gets θ_K=payoff + θ_eff=sizing; gap 0.083@1.5× ⇒ basis leak unless ONE premium per leg ⇒ reduces to HEAD); O6 rebase CLOSED (sNorm ratio coord invariant, g_loc pre==post); O7 pool-invariant CLOSED-if-premium-sized-spot-swap / BROKEN-if-execute-at-ray (=Fork A, different swap).
+**3 construals, none whole:** (I) size dy from m(θ_eff) spot swap — forward+solvent but gives OPPOSITE slippage (dy=prem$·m_eff/m_K, ratio GROWS toward ATM ⇒ more slippage near ATM not OTM) + O5 split; (II) goal-seek pool marginal to lensed slope at θ_K — INVERSE (O2 fold+O3 blow-up) = regression hazard; (III) HEAD as-is — forward+clean but spot swap strike-blind (entry-113 flat 8.33%) so write NOT shifted. The strike-dependent EXECUTION operator wants needs a non-live (stored) mode = weight field = headline obstruction.
+**WHAT IS CONSTRUCTIBLE (honest whole subset):** full lifecycle READ through lens (already HEAD); forward θ_eff as a VIEW/display/attribution LABEL on the existing spot swap (does NOT change the write). NOT constructible without re-introducing φ: strike-dependent execution / trade-point-anchored swap with OTM-rising slippage + non-live-mode slope read.
+**OPERATOR-TIER (flag to manager, not decided):** A-vs-B / trade-point-object (spot-swap vs trade-point-warp) — entries 31/33/38/88, MEMORY entry-113. **NO Lean obligation ready** (impossibility is algebraic = restatement of GLOBAL-SKEW structural-impossibility; θ_eff is a closed-form readout not a theorem; candidate no-go lemma "any far-out lensed-slope-while-executing-far-out map needs a state-independent stored mode" worth pinning ONLY if operator wants the no-go formalised). Self-adversarial: steelmanned the two-layer model (114) + forward θ_eff re-size (I) — both fail entry-113's slippage direction; confirmed θ_eff exists (not "can't be done"); isolated obstruction to mode-relativity, not lens construction. Nothing submitted/built/edited/git. Skeptic adversarial pass follows; manager re-derives.
+
+---
+
+_Earlier: 2026-06-12, SLIPPAGE-PER-DOLLAR vs strike/τ — settled entry-113 operator claim (READ-ONLY; notes-only; no submit/edit/git/build/Aristotle)._
+
+### SLIPPAGE PER DOLLAR vs STRIKE & KURTOSIS — entry-113 settlement (operator claim "goal-seek sees steeper slope far out ⇒ more slippage per dollar") — 2026-06-12 (READ-ONLY; HEAD untouched 7e1ae39b; NO edit/git/build/submit)
+Note: `notes/research/SLIPPAGE_per_dollar_strike_tau_2026-06-12.md`. Scripts `/tmp/q113_setup.js`, `/tmp/q1_table.js`, `/tmp/q2_strikeblind.js`, `/tmp/q3_tradepoint.js`, `/tmp/q4_blowup.js`, `/tmp/q_adversarial.js` (node float64; build primitives transcribed VERBATIM lines 1600–1772 of HEAD_temporal_mvp_v28_lens.html).
+**CODE FACT CONFIRMED (manager-read, verified):** `executeLeg` (L1761) → `dy=±N·markLensed·oracle; post=tradeUpdate(state,dy)`. `tradeUpdate(s,dy)` (L1679) takes ONLY {s,dy}; strike θ_K and τ enter ONLY via the lensed premium that SIZES dy. The swap runs at the LIVE pool point (SPOT), never the strike ray; no per-trade goal-seek visits the strike's slope. Numeric: at fixed dy, tradeUpdate output byte-identical ∀strike/τ/wing; exec px 1.625 = spot-driven regardless of strike g_loc (0/1.21/1.38/1.45 ATM/1.5x/2x/3x).
+**Q1 (4 metrics, w=0.6 γ=1.5, |dy|=$5 fixed across all cells):** (i) pool-slip% = 8.3333 EVERYWHERE (16/16 cells, float64-exact); (ii) cost$/premium$ = 0.07692 EVERYWHERE — both FLAT (forced: pure fn of (pool,dy), strike/τ absent from tradeUpdate). (iii) cost/notional FALLS OTM (7.7e-2→4.8e-3) + rises with τ; (iv) optpx% FALLS OTM (61→13.5) + falls with sharper τ. "Per dollar" = (ii) ⇒ FLAT. NO build metric rises OTM at fixed premium-$.
+**Q3 INTENDED (trade-point) mechanic:** g_loc(K)=γ·h′_τ(|u|) = the "steeper slope far out" — RISES monotone 0(ATM)→γ(wings) ∀τ; RISES as τ falls at fixed OTM strike (2x: 0.49→1.50 as τ 2→.05). So operator's (a)+(b) intuition CORRECT for trade-point mechanic. CAVEAT: g_loc SATURATES at γ (h′≤1), does NOT diverge — bounded, not runaway.
+**Q4 blow-up:** FORWARD g_loc≤γ, dG/du=γ·h″ bounded→0 wings = NO blow-up/NO cap (no w(u)⇒no 1/w′ channel). INVERSE 1/h″→∞ wings (12.6/91.9/717/5701 @u=1/2/4/8, τ=.3) ⇒ a trade-point mechanic that SOLVES for a target slope re-introduces blow-up; a forward-read one stays bounded. Bounded path = execute at strike ray, engage g_loc forward only, never invert (= L4 discipline already in spec).
+**VERDICT — (a)/(b): FALSE in build-as-is (flat at fixed premium-$), TRUE under trade-point mechanic (bounded by γ).** "Simple swap sees steeper slope far out" = FALSE for build (swap at spot), TRUE for trade-point mechanic (swap at strike ray). **MANAGER'S "FLAT" FINDING IS CORRECT** + necessarily so; operator RIGHT about the mechanic they picture but build does the SPOT swap. Gap = build-vs-paper trade mechanic (spot-swap vs trade-point warp) = the A-vs-B / trade-point object (entries 31/33/88), OPERATOR-TIER — flagged not decided. NO Lean obligation (algebraic readout; tradeUpdate strike-blindness is a code fact not a theorem). Nothing submitted/built/edited/git. Skeptic pass follows; manager re-derives.
+
+---
+
+_Earlier: 2026-06-12, WRITE/SETTLE THROUGH LENS spec (Stage 2; operator entry 96; READ-ONLY; spec-only; no submit/edit/git/build/Aristotle)._
+
+### WRITE/SETTLE THROUGH LENS — Stage 2 spec (lens = unit of account EVERYWHERE) — 2026-06-12 (operator entry 96 verbatim; READ-ONLY; HEAD untouched 928cde1c; v28 build untouched 1ed8fe2d; NO edit/git/build/submit)
+Appended **§11 "WRITE/SETTLE THROUGH LENS"** to `specs/SPEC_v24_lens_BUILD_2026-06-11.md`. Operator (entry 96, `history/operator/2026-06-10_kurtosis-curve-family-brief.md`) UNLOCKED the traded/settled dollar pipe + portfolio value: settle at lensed prices, record the lensed version. Build = `engine/builds/temporal_mvp_v28_lens_S1.html` (md5 1ed8fe2d, Stage-1 read layer on plain-v24). Scripts `/tmp/lens_settle_arb.js`, `/tmp/lens_band_arb.js`, `/tmp/lens_modecont.js` (node float64; engine primitives transcribed from build lines 1608/1655/1716/1902/1955/2153/4168/4259).
+**CALL-SITE TABLE (raw v24 mark → lensed, 9 sites enumerated off the build):** 5 CHANGE — W1 `legPrice` (1716, lens+thread τ, DROP composite→leg-by-leg), W2 `executeLeg` (1752, V now lensed, dy-sizing form unchanged = the "writes amm tx"), W3 `closeBand` settlement+reversal legs (1955, BOTH lensed), W4 `markEff`/`legValueUnified` (1902, →markLensed), W6 UI `pfComponents` (4168, →markLensed) + W7 `raw_net`/`dollarFigure` aggregation (4259, formula UNCHANGED, basis only). 4 DON'T — W5 funding (2153, ALREADY lensed Stage-1), W8 carved perp-slice P&L `attribPnL`/`equityAtClose` (perp basis, NOT lensed — category error if touched), W9 draw layer (3542, already lensed).
+**ONE-HELPER RULE = the consistency invariant** (closes the v27 bug-class): every layer reads the SAME `Engine.gLoc`/`Engine.markLensed` at the SAME live `getSNorm(state)` mode, sNorm coord (MUST-APPLY-1), γ LIVE. One gLoc, one markLensed in Engine already.
+**NO-ARB / SOLVENCY VERDICT = CLEAN under the one-helper rule, broken only if a leg/layer is lensed in isolation:** (A) SOLVENCY PASS — `markLensed ∈ [0,1]` global (float64 0.000007…1.0), per-leg payout ≤N, same intrinsic ceiling as kinked mark, v24 reserve bound inherited. (B) NO same-state arb IF both open+settle lensed — `markLensed_open − markLensed_settle = 0` exactly (max diff 0); open-then-immediate-close raw_net=0; if mixed (open kinked, settle lensed) the gap is 0.44–0.79 (REAL basis-mismatch bug, forbidden). (C) THE HAZARD = intra-band two-leg basis split (closeBand settles ITM leg via markEff, reverses OTM leg via legPrice — `raw_net=Y−X` mixes bases if only one lensed; gap 4–8×); BOTH must move together. (D) pool-exec vs lensed-settle coherent (same lensed V sizes dy and is the settled value). **NOT operator-tier** — entry 96 ruled semantics; no new economic object.
+**STAGING:** OWN stage (Stage 2), NOT folded into Stage 1 (write/settle wiring error must not corrupt the green read layer; two-leg basis split is a new failure mode). 8 gate additions to `engine/verify/lens_selfcheck.js` (settled==lensed·size; open==settle; UI==engine cross-layer; intra-band single-basis; round-trip-zero close [catches ln γ close-side coord slip §11.4-caveat]; solvency ceiling ≤1; no-arb identity =0; L4/tradeUpdate-byte-identical regression).
+**FLAGS (operator-tier, record-relay only):** (1) ITM/OTM display label softens under lens (markLensed continuation runs past S* — no hard ITM=1 saturation; = already-accepted g<1 flat-top reading entry 93 #5, now touches portfolio regime column); (2) §11.4-caveat: closeBand uses price-coord `sNorm0` not sNorm mode — lensed call must not mix coords (recommend sNorm mode for lens, gLoc is |u|-symmetric so invariant; gate 5 catches a slip). **L4 PRESERVED** — lens never inverted to size dy; pool stays plain v24 tradeUpdate; lens changes the VALUE that sizes the cash leg, not the MECHANISM. **NO Lean obligation ready** (markLensed_open=markLensed_settle is algebraic same-fn equality not a theorem; solvency ∈[0,1] + smooth-paste continuity candidates only post-build-freeze, same as §9). Nothing submitted/built/edited/git. **Skeptic R6-gates §11 before intern builds.** Manager re-derives + skeptic before operator.
+
+---
+
+_Earlier: 2026-06-11, V24+POLAR-LENS BUILD SPEC — skeptic blockers closed (entry-95 mandate; READ-ONLY; spec-only; no submit/edit/git/build)._
+
+### V24+POLAR-LENS BUILD SPEC — closed the 2 skeptic FLAG-HALT blockers + completed the spec — 2026-06-11 (entry-95 mandate; operator ASLEEP; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
+NEW buildable spec: `specs/SPEC_v24_lens_BUILD_2026-06-11.md` (supersedes C.9 scope for build). Base = `temporal_mvp_v24_rebase_fixed_2.html`.
+Scripts `/tmp/blocker1_carry.js`, `/tmp/blocker1b.js`, `/tmp/blocker1c.js`, `/tmp/blocker2_funding.js`, `/tmp/inv_checks.js`, `/tmp/coord_robust.js` (node float64; v24 fns transcribed from base build).
+**BLOCKER 1 (carry #4 / lens origin) — RESOLVED, mechanical (NO operator decision forced):** lens moneyness origin = the **LIVE MODE in the consuming layer's own coordinate**, NOT ln(marginal). v24 mark surface peaks at ray `theta=sNorm=getSNorm=(1−w)/w`; strikes registered in that same theta coord ⇒ lens centres on `mode_sNorm`, `u(K)=ln(theta_K/mode_sNorm)`. Carry P=y/x and marginal mp=γ·P differ by EXACTLY ln γ (float64: 0/0.405/0.969/1.735 nats at w=.5/.6/.725/.85 = ln γ exact). **The ln-γ trap closes two ways:** (1) g_loc=γ·h′(|u|) is `|u|`-SYMMETRIC ⇒ coordinate-INVARIANT (price vs reciprocal give identical exponent, verified); (2) build rule: never mix ln(marginal) with sNorm-strikes. u(mode strike)=0 confirmed. Strike-reg #8 consistent; side-of-mode `|·|` branch handles trade-moved-mode crossings.
+**BLOCKER 2 (funding #9) — RESOLVED on the v24 BASE (NOT HEAD):** v24 funding hardcoded `γ=±2` (base L2086), `mark` NOT lens-aware. SWAP: ±2 → ±g_loc(K) (γ LIVE = w/(1−w); note arbToOracle re-equilibrates w); make consumed mark lens-aware (shared helper w/ P1/P3); S/(S−1)/S/κ/sign UNCHANGED. Behavior (float64): f→0 at ATM (g_loc→0), →γ_live in wings; sign preserved. Accepted entry 93 #5. Three call sites (mark/funding/settlement) consume ONE shared g_loc + lens-aware mark — not isolated.
+**COMPLETED (skeptic R6 fixes):** inventory table for EVERY touched item (#4/#5/#8/#9/#11/#13 + pool/lens/settlement, no silent omissions); #5 rebase COMMUTES (w/sNorm/γ invariant under rebase, translation-covariant, float64); #11 dollar-pipe inherited v24; #13 solvency = v24 reserve bound + flat-top g≥0 finite value law. R3 control row: steepness=derived-w (v24, NO slider, moves on trade), kurtosis=τ (the ONLY new control, static). L4 STRENGTHENED to hard ban on lensed-slope-as-INPUT (no "warp until viewed slope hits X"; arbToOracle targets marginal/mode, lens-free). STAGED: Stage1=read layer (L1-4/P1-3) + own gate + smoke-pass; Stage2=warp/observable + gate + smoke-pass; each acceptance defined.
+**VERDICT: INTERN-READY** (gated on skeptic R6 re-gate of THIS spec before intern dispatch). No operator-tier decision triggered by either blocker (BLOCKER 1 does NOT change settlement semantics — coordinate-invariance keeps mode/marginal/carry out of the priced exponent). Operator-tier flags (g<1 exercise meaning, ATM-funding→0, τ calibration) all already accepted entry 93 #5, relay-for-record only. NO Lean obligation ready (candidates g_loc(|u|)+g_loc′>0 + smooth-paste continuity post-build-freeze). Nothing submitted/built/edited/git.
+
+---
+
+_Earlier: 2026-06-11, V24+POLAR-LENS CORRECTED RE-RUN (entries 88/91/93; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### V24 + POLAR-LENS — CORRECTED RE-RUN (prior pass was a GROSS TRUNCATION, operator entry 91) — 2026-06-11 (entries 88/91/93 verbatim; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
+CORRECTION section appended to `notes/research/V24_LENS_derivation_2026-06-11.md` (after the prior body).
+Scripts `/tmp/lensX_{setup,1_goalseek,1b_feedback,2_strikedep,3_cap,4_wellposed,5_settle,6_onetx}.js`
+(node float64; v24 tradeUpdate + lens primitives transcribed). Base = `temporal_mvp_v24_rebase_fixed_2.html`.
+**WHAT THE PRIOR PASS GOT WRONG:** it called the architecture STRIKE-BLIND (warp strike-invariant per
+unit cash) and treated the lens as a divorced pricing overlay. Operator (91 verbatim): "the same curve
+warp goal seek works but as seen through the lens... you'd goal seek as per what you'd see there... gross
+truncation." The object SEEN/goal-sought is the LENSED curve-2; a trade reshapes it STRIKE-DEPENDENTLY.
+**CORRECTED VERDICTS (all 7 items work / works-with-bound):**
+- (1) Pool update = plain v24, LENS-FREE (reads only dy; τ-independent, byte-identical for τ∈{.05,.3,1,5}).
+  w=α/x MOVES on trade (entry 16 faithful). Goal-seek = "mode tracks marginal; lensed slope G(u)=γ·h′(|u−u_mode|)
+  re-reads at u_post=u_pre−d, d=ln(mp′/mp)." Lens touches pool ONLY via fixed-notional dy=N·m_lens(K)·mp0.
+- (2) **STRIKE-DEPENDENT (observable) — the corrected headline.** Same cash ⇒ one mode shift d (blind
+  input), but lensed reshape dG(K)=γ[h′(|u_pre−d|)−h′(|u_pre|)] varies strongly: +1.72 at ATM → −0.029 at
+  4× for +10% trade. LARGEST near mode, decays into wings (OPPOSITE of (W) which grew+diverged in wings).
+- (3) **CAP-FREE = operator RIGHT, verified incl. through the lensed goal-seek.** Hard bound |dG|≤γ
+  (h′∈[0,1]). NO w(u)⇒NO 1/w′ channel (the old ~1.4× (W) cap driver is gone). Lens 1/h″ DOES blow up in
+  wings (3.6e6@u=8) BUT only matters for an INVERSE-lens solve, which the architecture does NOT do (reads
+  slope forward, sizes trade by cash dy). SMALLEST COUNTEREXAMPLE flagged: a naive build that inverts the
+  lens to hit a target wing-slope WOULD re-introduce a blow-up+cap — build must avoid.
+- (4) WELL-POSED: round-trip 0.0, path-indep 0.0, single-valued (α/β flow invariants + deterministic
+  readout). CAVEAT: observable lensed-slope-vs-dy is NON-MONOTONE (1 fold at mode-crossing) — read FORWARD
+  only, never invert (= the C.3 hazard + put/call side-of-mode).
+- (5) SETTLEMENT works-with-bound: closed-form S*=K·g_loc/(g_loc+1) per strike; v26b smooth-paste ports
+  EXACTLY (value+slope to machine zero) even g_loc<1; flat-top band |lnK|<τ/√(γ²−1)=±13.1%@τ=.3 American-
+  reading degenerates (operator-tier, ACCEPTED entry 93 #5).
+- (6) ONE-TX EXECUTION survives (same-wing spread = one net plain-v24 tx, path-indep 0.0); closed-form
+  PRICING shortcut DROPPED (entry 93 #4 "one tx execution is all"); premium leg-by-leg through lens.
+- (7) BOTH v24 gaps resolved: (i) ATM-jump → v26b smooth-paste with g_loc; (ii) local-warp/anchoring →
+  lens makes observable warp APPEAR + STRIKE-DEPENDENT (no w(u) field, no cap).
+**OPERATOR RELAXATIONS (entry 93) VERIFIED:** #2 no cap HOLDS; #3 w>½ clamp GONE (just x/y/w move); #4
+closed-form spread pricing dropped; #5 funding→0 ATM + flat-top semantics accepted.
+**BUILD SCOPE delivered (C.9, ready for operator GO entry 93 #6):** Pool unchanged v24 (drop w-clamp);
+Lens query-layer only [L1 side-of-mode |·| branch MANDATORY; L2 static τ no-arb-unbounded; L3 draw curve-2
+through lens; L4 forward-read only never invert]; Pricing/funding/settlement lensed reads [P1 leg-by-leg
+no composite; P2 funding γ→g_loc; P3 v26b smooth-paste g_loc]; gap-fixes G-i (P3) + G-ii (L3).
+**OPERATOR-TIER FLAGS (via manager):** flat-top g_loc<1 American reading; ATM funding→0 behavioural change;
+τ calibration (flat-top width). **NO Lean obligation ready** (lens=static readout; 1/4/6 inherit v24 α/β
+path-indep; candidates g_loc(|u|)+g_loc′>0 + smooth-paste continuity pin only post-build-freeze). Nothing
+submitted/built/edited/git. Manager re-derives + SKEPTIC before operator GO.
+
+---
+
+### V24 + POLAR-LENS ARCHITECTURE — 6-item derivation (operator entries 80–88; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit) — 2026-06-11 [SUPERSEDED by the CORRECTED RE-RUN above — this prior pass mislabelled the observable as strike-blind]
+Note: `notes/research/V24_LENS_derivation_2026-06-11.md`. Scripts `/tmp/lens_{a,a2,a3,b,b2,c,c2,c3,def,e2}.js`
+(node float64; v24 tradeUpdate + v26b smooth-paste mark transcribed). Spec derived-WITHIN (not redesigned):
+`specs/SPEC_v24_lens_architecture_HANDOFF_2026-06-11.md`. OBJECT: plain Balancer pool (scalar w, γ=w/(1−w),
+v24 α/β trade) + a STATIC polar LENS in the QUERY layer only: `h_τ(u)=√(τ²+u²)−τ`, surface decay exponent
+`G(u)=γ·h′_τ(u)` (0 at mode→γ wings). Lens NEVER touches the pool update. Structurally ≠ (W) (which put the
+√-kernel INSIDE w(u)) — THAT is why the divergence dies.
+**(a) WORKS — THE key result: far-OTM divergence ABSENT.** No w(u) ⇒ NO 1/w′ channel (the old ~1.4×-cap
+driver). Lens Jacobian dG/du=γ·h″=γτ²/(τ²+u²)^1.5 BOUNDED (max γ/τ at mode, →0 wings) — opposite shape to
+1/w′→∞. Goal-seek (entry 88) = "lens MODE tracks live marginal," a deterministic READOUT (no root-find, no
+field scalar) ⇒ single-valued/well-posed ∀strike, path-indep + round-trip EXACT (float64 0.0, inherits α/β).
+NO warp cap needed (vs (W)'s hard |Δφ|≤τ wall). CONSTRUCTION REQ: price G=γ·h′(|u−u_mode|) side-of-mode
+branch (else trade-shifted mode flips sign at strikes it crosses; = v24 markFrac shape already).
+**(b) WORKS-WITH-BOUND.** Closed-form S*=K·g_loc/(g_loc+1) PER STRIKE (g_loc=γ·h′(|u_K|) constant per
+strike); ATM-jump smooth-paste ports EXACTLY (value+slope continuous to machine zero), stays real/finite
+even g_loc<1. BOUND: flat-top band |ln K|<τ/√(γ²−1) (τ=0.3,γ=2.64 ⇒ ±13.1%) where g_loc<1 ⇒ American-
+exercise reading of S* degenerates (analytic value law still evaluates). = settlement-semantics call,
+OPERATOR-TIER (entry-85 "ATM-jump at feature level").
+**(c) WORKS — τ NOT bounded by no-arb.** Butterfly(convex-in-K) + strike-monotone hold ∀τ (0.05–3); spot-
+monotone holds ∀τ GIVEN |u−u_mode| branch (guard g_loc(|u|)+g_loc′(|u|)>0 always; SIGNED-lens would fail
+τ≳0.01 but architecture uses |·|); asymptotes preserved unconditionally. τ bounded by FLAT-TOP WIDTH
+(calibration/vol-set), not arbitrage.
+**(d) WORKS.** Funding = HEAD formula γ→g_loc(u_K); SIGN unchanged; SCALE→0 at ATM (flat top, no slope-
+deviation), →γ wings; no divergence. FLAG: ATM funding ~0 is expected behavioural change vs constant-γ HEAD.
+**(e) BROKEN (closed form) / works-with-bound (concept) — THE HARDEST OBSTRUCTION.** θ*=√(θ₁θ₂),2sinh(δ)
+PRICING shortcut was exact ONLY under common OTM exponent; per-leg g_loc(u_i) breaks it (rel.err 63%/29%/10%
+near→deep; near flat top NO valid θ* — 2sinh form can't represent). One-tx EXECUTION survives (single
+strike-free pool warp); CLOSED-FORM PRICING does not — spread priced leg-by-leg through lens. Recovers deep
+wing (common γ). PARTIALLY honours entry-85 "keep VS shortcut": execution yes, closed-form pricing no.
+**(f) WORKS.** Slippage strike-INVARIANT per unit cash (no strike channel on plain Balancer): same-premium
+⇒ identical warp; same-notional ⇒ warp shrinks OTM via lensed mark. Clean value/slippage separation.
+**OPERATOR-TIER FLAGS (via manager):** (b) flat-top settlement semantics (g_loc<1: shallow-power vs
+European clamp); (d) ATM funding→0 acceptable?; (e) is closed-form VS pricing a HARD requirement (if so, lens
+spec needs rework — live tension w/ entry 85); τ calibration (flat-top width). **NO Lean obligation ready to
+pin** (lens = static algebraic readout; (a)/(f) inherit v24 α/β path-indep already; candidate lemmas
+g_loc(|u|)+g_loc′>0 + smooth-paste continuity worth pinning only AFTER operator rules (b)/(e)). Nothing
+submitted/built/edited/git. Manager re-derives + SKEPTIC before operator.
+
+---
+
+_Earlier: 2026-06-11, ENTRY-59 flatten/steepen + warp-visibility run (READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### ENTRY-59 RUN — "w varies with strike: does it work?" vs the VISIBLE bar — 2026-06-11 (operator entry 59; READ-ONLY; HEAD untouched md5 928cde1c pre+post; NO edit/git/build/submit)
+Note: `notes/research/ENTRY59_flatten_steepen_and_warp_visibility_2026-06-11.md`. Scripts
+`/tmp/run59{,b,c,d,e}.js` (node float64, LIVE engine sandboxed; curveTraceW math transcribed).
+**Bar:** (1) knob VISIBLY flattens/steepens drawn curve; (2) trade VISIBLY warps curve.
+**METHOD (load-bearing):** honest metric = PERPENDICULAR polyline separation in px (Hausdorff,
+pt-to-seg, frame-clipped); axis-aligned px overstates ~10× on steep sections (τ-click 11.9px axis
+vs 0.92px perp — reconciles manager's 0.56–0.59%-invisible + my 167.6px axis ≈ their 153px sweep).
+Default frame x∈[0,30], y∈[0,910345]; plot 618×398px; 1% width=6.18px; px/BTC=20.6.
+**(A) BAR-1 = YES — THE knob is the WING PAIR (w₋,w₊), NOT τ:** per click 1.8–2.6px (+frame-jump
+0.3–1.8% — setWingWeights/setTau NULL __curveFrame, axes re-freeze); 3–5 clicks 5–13px visible;
+full travel 15–90px. Clean inside locks (wings exact power-laws ANY w±, γ>1 clamp; moving asymptote
+exponents IS what steepening means). **τ-click px = 3.6·Δw px [numeric law]** ⇒ ≤1.6px everywhere
+locks allow (per-click-visible τ needs Δw≈0.8 — IMPOSSIBLE inside γ>1+UI locks; flag, not decided).
+τ full-sweep 0.05→3 = 24.6–41.5px (cumulative only).
+**(B) BAR-2 = YES mechanism / NO ui-path:** one-sided cash ≥~$90–100k (12% of $800k pool) ⇒
+10.7–11.9px VISIBLE (sell −$90k defaults 11.9px; buy +$100k at WIDE Δw=0.55/0.92 10.7px; buy-side
+non-monotone at defaults: +100k→5.6px, +200k→3.0px u′/z cancellation; near-cap kink 50+px). UI has
+NO one-sided path: same-wing spread bands net-cancel (0.27px@$800k notional); COLLARS COMPOUND
+(both legs same swap direction, ~2×premium — "warp-neutral bands" refined) 6.2px@$2.4M; arb path
+NEVER warps (φ fixed). **PATH-A PROJECTION (validated byte-exact vs reposed-spec gate pool): NOT
+the visibility ingredient** — default pool sits AT elbow center, dlnp/du=3.09 compresses strikes ⇒
+G=1.016/1.087/1.206 at K=1.1/1.25/1.4× (vs gate pool 1.27–4.49); in-cap A perpPx ≈ legacy or
+LOWER (gearing offsets u′ drift); A beats legacy only CAP-EXCEEDED (K=2.3×, 11.4px). A = strike-
+dependence/paper-faithfulness, not visibility.
+**(C) VERDICT relayed:** (1) existing machinery meets BOTH bars — recipe: wing-pair clicks for
+flatten/steepen; one-sided ≥$90–100k trade (wide-Δw helps) for warp. (2) MISSING = a one-sided
+trade UI path (the bar-2 blocker; build-tier) + default-Δw calibration call (operator). (3) CANNOT
+inside locks: per-click-visible τ; v24-magnitude global warp (structural, unchanged).
+**HONEST CARRY:** projection-only; (α,β)-flow + warp∘rebase + φ-anchor/funding stay
+[needs-Aristotle]/OPEN; nothing submitted/built/edited/git; tester live pass = pixel confirmation
+layer. Manager re-derives + skeptic before operator.
+
+---
+
+### GLOBAL-SKEW GOAL-SEEK — does "local-slope goal-seek via one global skew σ" beat the weight? — 2026-06-11 (operator entry 55/56 "go"; READ-ONLY; HEAD untouched 928cde1c; NO edit/git/build/submit)
+Note: `notes/research/GLOBAL_SKEW_goalseek_2026-06-11.md`. Script `/tmp/skew55.py` (python float64+scipy).
+Follow-up to POLAR_density note + skeptic verdict #23 (`VERDICT_POLAR_density_2026-06-11.md`: weight-free
+⟺ B-anchoring; skeptic "attacked for a weight-free A-compatible map and could NOT find one"). Operator (55
+verbatim): "(1) map PRESERVES THE ASYMPTOTES not bounded/saturates; (2) you can still local-slope-goal-seek
+using global skew as a knob right thats the point; (3) monotone important."
+**OBJECT (asymptote-preserving, operator pt-1):** `γ_loc(u;σ)=γ₋+(γ₊−γ₋)·S(κ(u−σ))`, S=√-kernel sigmoid;
+σ=single global scalar = elbow-center SHIFT. Wings frozen ANY σ (float64: γ_loc(±40)→γ±). **LOAD-BEARING
+IDENTITY (resid 0.0): the only asymptote-preserving single global scalar is a SHIFT, and `γ_loc(u;σ)≡
+γ_loc(u−σ;0)` = EXACTLY the (W) field-center φ. "global skew σ" ≡ "local-φ recenter" = ONE translation
+DOF. NOT a third mechanism — it IS path-A's φ renamed.**
+**Q1 STRIKE-DEP = YES but split.** Pure global σ-shift at fixed premium warps the ELBOW (Δln p peaks ATM
+−0.084, decays to ±wings −0.002 to −0.008) — "more warp at elbow," NOT the path-A "more warp OTM." The
+OTM-growing strike-dep reappears ONLY as path A (reflect-branch σ₁≈2·u_tp, geared by 1/γ_loc′), because σ=φ.
+**Q2 WEIGHT-FREE THROUGH TRADE = NO, IMPOSSIBLE (the crux).** Goal-seek "restore pre-trade slope at moved
+point" ⇒ `σ₁=u_R1−u_R0` = cumulative DISPLACEMENT (resid 0.0), = memoryless read u_R1 ONLY at ATM start
+(u_R0=0); away from ATM they disagree by u_R0 and memoryless read FAILS to restore slope (resid 0.05–0.24).
+**Impossibility (map-indep):** target = PRE-trade slope = fn of pre-trade state; memoryless σ=F(x,y) carries
+NO pre-state info ⇒ σ must store history = independent DOF = (W) φ = the weight in disguise. Upgrades
+skeptic's "could not find" → STRUCTURAL IMPOSSIBILITY. Amplitude-skew steelman: same verdict (more restricted).
+**Q3 MONOTONE = PASS, not binding.** Up-skew (γ₊>γ₋>1): σ-shift translates a monotone profile, `d ln p/du
+=1+γ_loc′/γ_loc≥1>0` (min 1.0000 over σ∈[−10,10]). General guard `γ_loc+γ_loc′>0` bites only under forced
+DOWN-skew (translation can't produce). **Q4 DIVERGENCE = SAME (σ≡φ).** Gearing 1/γ_loc′~u³→∞ identical to
+local-φ; ~1.4× strike cap (entry-40, K_max≈1.4mp0 from |Δφ|≤τ) RETURNS unchanged. Global-vs-local cosmetic.
+**Q5 NET = COLLAPSES TO A** (strike-aware+monotone, needs stored scalar), NOT a third option, NOT B.
+**HARDEST OBSTRUCTION (flag to operator):** memoryless reserve→σ map CANNOT restore a pre-trade slope
+target (target lives in pre-state). Weight-elimination still ⟺ B-anchoring; the goal-seek-to-a-prior-slope
+mechanic the operator describes IS path A and necessarily carries the stored φ/σ. A-vs-B = operator-tier.
+**HONEST CARRY:** decision-support, NOT build-auth/curve-swap. NO Lean lemma ready (σ≡φ identity +
+γ_loc+γ_loc′>0 are candidates only post-mechanic-pick; both covered by open (W) (α,β)-flow [needs-Aristotle]
++ warp∘rebase/φ-funding OPEN). Self-adversarial: answered the MECHANIC question head-on, no elegant-theorem
+elevation. Nothing submitted/built/edited/git. Manager re-derives + skeptic before operator.
+
+---
+
+_Earlier: 2026-06-11, POLAR weight-free density first-principles (entry 53/54; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### POLAR WEIGHT-FREE LIQUIDITY-DEPTH DISTRIBUTION — first-principles — 2026-06-11 (operator entry 53/54 "do the needful"; READ-ONLY; HEAD untouched md5 928cde1c; NO edit/git/build/submit)
+Note: `notes/research/POLAR_density_first_principles_2026-06-11.md`. Scripts `/tmp/polar53{,b,c,d}.py`
+(python float64 + sympy; numpy2 `trapz`→`trapezoid`). Operator (53 verbatim): "think from first principles
+as a liquidity (relative radius) distribution native to polar ray coords with natural skew+kurtosis knobs,
+natural map from x,y to the skew knob (maybe dont even need weights)."
+**OBJECT:** primitive = local-exponent/depth field `γ_loc(u)` on log-price ray `u=ln(y/x)=ln tan θ`
+(θ=45°⟺ATM⟺u=0); curve `ln F=∫γ_loc du`; price `p(u)=γ_loc(u)·e^u`; numeraire = depth-per-log-price
+(carry-gauge covariant). Family: `γ_loc=γ₋+(γ₊−γ₋)·½(1+tanh κu)+skew·tanh κu/cosh²κu`.
+**(a) WELL-POSED = YES.** **(b) KURTOSIS⊥SKEW = YES — the headline win (W) CANNOT do:** even part of ln g
+= κ (peak `d²ln g/du²∝−κ`), odd = skew, L2-orthogonal (`<even,odd>`~5e-12 machine-zero); wings frozen at
+corners γ₋,γ₊ (κ/skew-invariant, float64-exact); **kurtosis-at-zero-skew WORKS** (symmetric γ₋=γ₊+skew=0
+still tunes peak −1.25→−12.5 over κ), whereas (W) welds τ to Δw (w′(0)=Δw/2τ ⇒ Δw=0⇒τ inert,
+manager-verified). **(c) WEIGHT-FREE = CONDITIONAL — the crux:** dynamic skew = `u_R=ln(y/x)` read off
+reserves, NO stored scalar — but weight-free ONLY under SPOT/reserves anchoring (entry-38 "B"); under
+TRADE-POINT anchoring (path A, operator's CHOSEN build mechanic) the reseat scalar (W's `z=t·τ/√(1−t²)`,
+=stored φ≠u_R) REAPPEARS = the weight in disguise. **(d) ARB-SANE = YES w/ explicit guard:** monotone
+⟺ `γ_loc+γ_loc′>0` (κ-robust to κ=20; skew-bounded — κ=8,skew=1.5 breaks it); invariant CLOSED-FORM but
+**TRANSCENDENTAL** (base→log-cosh/softplus, skew→sech² both elementary via sympy; NOT the √-kernel's
+ALGEBRAIC `√(τ²+u²)`) ⇒ forfeits entry-41 integrability tiebreak; inversion = bisection (engine already
+does). **TRADE conserves** shape (γ±,κ — central moments translate-invariant) + curve level F=k; dynamic
+d.o.f.=u_R (density-frame analogue of (W)'s α=xw,β=y(1−w)); well-posed ODE `dx=−dy/p` path-indep (converges
+with N). **(Q4) polar family PROPERLY CONTAINS (W)** (=√-kernel-shoulder member); 3 irreducible shape DOF
+{γ₋,γ₊,κ}=level/skew/kurtosis (manager's count CONFIRMED, can't be beaten) — win is DECOUPLING not count.
+**(Q5) bounded θ∈(0,π/2) but u FULL ray** (u=ln tan θ); g>0⇒deep-strike DEPTH floor (depth≠premium;
+value~S^−γ₊→0 INTACT — defensible settlement reading, operator-tier). Carry/rebase/funding/warp∘rebase
+OPEN here as for (W) (frame doesn't fix, doesn't worsen); ITM smooth-pasting + dollar pipe transfer clean.
+**HARDEST OBSTRUCTION (flag to operator):** weight-elimination ⟺ B-anchoring, which CONTRADICTS the
+already-chosen path-A warp mechanic — an A-vs-B / weights-or-no-weights RE-FORK, operator-tier. **HONEST
+CARRY:** decision-support, NOT build-auth/curve-swap. NO Lean lemma crystallised ready to submit (γ_loc+
+γ_loc′>0 monotonicity + recenter path-indep are CANDIDATE obligations only AFTER operator picks mechanic —
+premature to pin). Nothing submitted/built/edited/git. Manager re-derives + skeptic before operator.
+
+---
+
+_Earlier: 2026-06-11, FMI hyperbolic-alts + shoulder-localization (entry 42; READ-ONLY/FMI; notes-only; no submit/edit/git/build)._
+
+### FMI — HYPERBOLIC ALTERNATIVES (Q1) + SHOULDER LOCALIZATION GOVERNOR (Q2) — 2026-06-11 (operator entry 42; READ-ONLY/FMI "not trying to change anything"; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path A PAUSED)
+Note: `notes/research/FMI_hyperbolic_alts_and_shoulder_localisation_2026-06-11.md`. Script `/tmp/fmi42.py`
+(python float64+scipy; companions `/tmp/shoulder.py`, `/tmp/naturalness{,2}.py`). Builds on NATURALNESS (entry 41).
+**Q1 — hyperbolic alternatives split THREE classes:** (i) RE-COORDINATIZATIONS of OUR curve — cosh/`tanh η`
+IS our √-kernel (`max|s_sqrt(u/τ)−tanh η|=1.1e-16`, η=asinh(u/τ)); a chart, NOT an alternative. (ii) genuinely
+DIFFERENT 1-knob curves in the SAME w(u) family: tanh-IN-u (≠tanh-in-η; sharp exp shoulder), Gudermannian
+gd(η) (sharp), erf (sharpest super-exp), algebraic u/(τ+|u|) (widest, but wing not crisply frozen). (iii)
+GH-in-latent-SCORE `√(δ²+v²)` (demoted v25→v26c) = DIFFERENT OBJECT, **4 shape params** (λ/α/β/δ), no scalar
+w handle ⇒ why warp failed. Higher-order `cosh^n`/`s_p=u/(τ²+u²)^p`/q-deformed = the 2-KNOB family ours lives
+in (p=½ is ours). √-kernel singled out (entry-41 carry): UNIQUE 1-knob with closed-form ALGEBRAIC invariant.
+**Q2 — shoulder localization GOVERNOR = kernel's asymptotic approach rate to the wing [analytic+numeric].**
+QUANTIFIED measure: decade width W10=x(gap=0.01)−x(gap=0.1) in τ-units (gap g=1−s): erf 0.74 < tanh 1.17 <
+Gudermannian 1.47 < **√-kernel 4.95** < algebraic 90. √-kernel approach POLYNOMIAL (g~1/2x², w′~x⁻³) = WIDE/
+soft shoulder; tanh exp `e⁻²ᵘ` = SHARP; erf super-exp = sharpest. **In OUR map localization is NOT a separate
+DOF**: τ rescales x→u/τ ⇒ W10 in τ-units is τ-INVARIANT (4.95 at τ=0.1/0.3/1.0) ⇒ τ tunes elbow width AND
+shoulder localization TOGETHER, fixed-by-kernel otherwise. The would-be extra DOF = the KERNEL EXPONENT p
+(cosh^n family). **Divergence link CONFIRMED**: sharper shoulder ⟺ faster w′→0 ⟺ worse 1/w′ gearing (G@12τ:
+erf 1.3e49 > tanh 6.6e9 > gd 7.7e7 > √-kernel 1.7e3 > alg 1.7e2) — √-kernel's soft shoulder IS the gentlest
+among crisp-frozen-wing maps (entry-41 confirmed). **p-sweep pins the extra DOF: TWO-SIDED PINNED** — going
+SHARPER blocked by MONOTONICITY (s_p non-monotone for p>½, turns over at u/τ=1/√(2p−1); √-kernel p=½ = sharpest
+MONOTONE member of `(1+x²)^p`); going SOFTER (p<½ / q-deformed) costs the ALGEBRAIC invariant (elementary only
+at p=½ where amplitude=τcosh η, polar lens closes). So a tunable shoulder-sharpness DOF EXISTS = the operator's
+"DOF for pricing" instinct, but in (W) it's SPENT/PINNED by monotonicity + algebraic-invariant contracts.
+**HONEST CARRY:** FMI/understanding only, NOT a curve-change proposal, NO build auth. Extra-DOF = operator-tier
+(flagged, not decided). (α,β)-flow [needs-Aristotle]/OPEN; warp∘rebase + φ-funding OPEN. Nothing submitted/
+built/edited/git. Manager re-derives + routes through SKEPTIC before relaying to operator.
+
+---
+
+_Earlier: 2026-06-11, NATURALNESS of polar/√-kernel kurtosis map (entry 41; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### NATURALNESS of the polar/√-kernel kurtosis map — 2026-06-11 (operator entry 41; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A PAUSED)
+Note: `notes/research/NATURALNESS_polar_kurtosis_map_2026-06-11.md`. Scripts `/tmp/naturalness{,2,3b}.py`
+(python float64 + scipy). **Q (entry 41 verbatim):** is the (W) `w(u)=w_mid+(Δw/2)·u/√(τ²+u²)` (√-kernel),
+read in the polar/hyperbolic-angle cosh lens, the MOST NATURAL kurtosis map (frozen wings + rounded
+shoulder + one knob τ), or one of many? trig must EARN its place.
+**(i) MOST-NATURAL VERDICT: √-kernel = natural ALGEBRAIC PRIMITIVE; cosh = its COORDINATE, not a 2nd object.**
+Singled out by a CONCRETE non-aesthetic tiebreak: it is the ONLY candidate with a closed-form ALGEBRAIC
+curve invariant — ∫(u/√(τ²+u²))du=√(τ²+u²) ELEMENTARY [num match 0.0]; tanh→τ·ln cosh TRANSCENDENTAL
+(2.2e-16); erf→u·erf+gaussian NON-ELEMENTARY (2.2e-16). Polar lens UNIQUELY forces cosh GIVEN the lens
+(cosh η = unique hyperbolic radius →|u| on wings; τcosh η≡√(τ²+u²) resid 4.4e-16; √-kernel-in-u ≡ tanh-in-η
+resid 0.0) — but the lens is well-MOTIVATED (log-price rapidity), not logically forced over tanh-in-u etc.
+Canonical as primitive, one-of-a-family as shoulder, tiebreak = integrability. TRIG FLAG SATISFIED, lens
+ONLY (no new content; if trig vanished √-kernel stands alone). Confirms+sharpens the CURVE_FAMILY-derivation
+ruling. Max-ent/info-geom does NOT rescue canonicity (shoulder under-determined; Gudermannian d-law already
+FAILED).
+**(ii) DIVERGENCE = INTRINSIC to ANY frozen-power-law-wing map [analytic]** — frozen⟺w→const⟺w′→0⟺gearing
+1/w′→∞ necessarily; only the RATE varies. √-kernel w′~u⁻³ (power) is ALREADY the LEAST-divergent map that
+keeps crisp frozen wings (tanh ~e⁻²ᵘ, erf ~e⁻ᵘ² are FAR worse: G@8τ = √-kernel 524 vs tanh 2.2e6 vs erf
+6.8e21). ONLY softer option = algebraic u/(τ+|u|) (w′~u⁻², G 3.7× softer @5τ, 10× @12τ) BUT: still diverges
+(poly), erodes wing-exactness (resid 1e-3 vs 5e-6 @30τ), AND loses the algebraic invariant ⇒ net DOWNGRADE
+for A. **NO map removes the (g.4) cap; cap is map-INDEPENDENT, correct resolution.** √-kernel sits at the
+sweet spot: least-divergent map honoring all 3 contracts (frozen wing + algebraic invariant + γ>1).
+**HONEST CARRY (unchanged):** theory/naturalness only, NO build auth. (α,β)-flow lemma [needs-Aristotle]/OPEN
+numeric-only; warp∘rebase + φ-funding OPEN. Curve/shoulder-shape choice = operator-tier (flagged, not
+decided). Nothing submitted/built/edited/git. Manager re-derives + routes naturalness claim through SKEPTIC
+before relaying to operator.
+
+---
+
+_Earlier: 2026-06-11, WARP-divergence reconcile + safe-strike cap (entry 40; READ-ONLY; notes-only; no submit/edit/git/build)._
+
+### WARP-DIVERGENCE RECONCILE + SAFE-STRIKE CAP (g.4) — 2026-06-11 (operator entry 40; READ-ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6, build path = A)
+Note: `notes/research/WARP_divergence_reconcile_and_cap_2026-06-11.md`. Script `/tmp/warp_cap.js`
+(node float64; (W) fns byte-mirror /tmp/repose3.js). Gate pool {10,12,0.3,[0.52,0.72],0}, mp0=2.457812.
+**OPERATOR (40 verbatim):** "if you trade at a point far out where slope is tending to infinity... its
+going to goal seek another slope close to infinity so its not a huge warp imo you're probably missing something obvious."
+**VERDICT = OPERATOR HALF-RIGHT; manager reconciliation CONFIRMED + SHARPENED.**
+**(i) Operator RIGHT at trade-point + in-range; WRONG observably/out-of-range.** reshape AT the trade ray
+DECREASES going OTM (6.2e-2→5.3e-3 dust; TEST 1) — slope change demanded far out IS tiny, operator's
+geometry exact there. BUT 1/w′ flat-wing leverage routes warp into the ATM ELBOW + OPPOSITE WING: dust at
+K=2mp0 reshapes ATM 45%, spot price 22% (TESTS 1/2/3). NOT a coordinate artifact — saturates to the
+FROZEN WING (predicted mp@reserves 3.085714 == numeric 3.086047 at K=8, φ′=−36.8; TEST 8). "Missing
+something obvious" = single-φ leverage moves the warp AWAY from the trade point INTO the elbow.
+**(ii) (g.4) CAP — RECOMMEND K_max≈1.4·mp0 (|Δφ|≤τ; spot reshape ≲14%, elbow stays put); outer limit
+≈1.7·mp0 (|Δφ|≤1).** dy-ROBUST (<2% over 100× dy — strike channel G governs, not notional). Confirms
+manager's 1.35/1.70. Closed form: u_tp,max=√((τ²+u_spot²)(τ/z0)^{2/3}−τ²), K_max=price(u_tp,max)/mp0 —
+governed by ELBOW WIDTH τ, Δw-independent in dust limit (conservative vs numeric). G EXACT
+=((τ²+u_tp²)/(τ²+u_spot²))^{3/2} (==num 4dp; TEST 5). Build guard = STRIKE clamp on z0·G>CAP, separate
+from the TRADE wing-range guard (w*).
+**(iii) DOF VERDICT: single-φ GENUINELY LACKS DOF to localize a far-out warp** (one handle=elbow center;
+reshape@TP/reshape@ATM collapses 0.48→0.026; TEST 6) — **BUT adding DOF breaks frozen-wing/γ>1 contracts,
+so BOUNDING THE STRIKE RANGE (the cap) is the CORRECT + SUFFICIENT resolution for A.** Divergence = a
+domain-of-validity boundary, NOT a bug; far-out region (K=4–8mp0, mark≈0) is economically vacuous.
+**HONEST CARRY (unchanged):** (α,β)-flow lemma [needs-Aristotle]/OPEN, numeric-faithful only — no proof
+added. CAP value + whether to list beyond-cap strikes = operator/calibration call. Nothing submitted/
+built/edited/git. Manager re-derives + relays.
+
+---
+
+_Earlier: 2026-06-11, BRAINSTORM B — per-notional (spot-equivalent) slippage (entry 39; BRAINSTORM/notes-only; no submit/edit/git/build)._
+
+### BRAINSTORM B — slippage = same warp principle, same per unit notional as a SPOT trade — 2026-06-11 (operator entry 39; BRAINSTORM ONLY; NO edit/git/build/submit; operator live-playing HEAD 1eebfcd6)
+Note: `notes/research/BRAINSTORM_B_per_notional_slippage_2026-06-11.md`. Builds on curiosity-B. Engine facts read straight off HEAD source (1eebfcd6); numeric warp tables back-stopped by /tmp/curiosityB_explore.js.
+**OPERATOR (39 verbatim):** "my idea with B was that the slippage remains implemented by the same curve warp principle, and is the same per unit notional as for a spot trade. does that make sense?"
+**VERDICT = YES, it makes sense** — coherent + well-defined + self-consistent on (W).
+**PRECISE STATEMENT:** mechanism unchanged (curve-warp, same as A); magnitude strike-INVARIANT, = a spot trade's per notional. Strike enters ONLY the option VALUE (mark), never the execution slippage.
+**ONE-LINE CONSTRUCTION:** feed cash leg `dy := N·oracle` (notional·spot, DROP the premium/mark factor) into the existing spot-anchored `tradeUpdate(state,dy)` ⇒ `|Δφ|=z0(N·oracle)`, strike-free, = the spot trade's warp (one swap primitive on (W), line 1723; strike never an arg).
+**MANAGER'S PREMIUM-vs-NOTIONAL READ = CORRECT, source-verified [analytic]:** HEAD `legPrice` returns `V=N·mark` (L1811/1818); `executeLeg` sets `dy=V·oracle=N·mark·oracle` (L1847/1850) ⇒ live engine sizes warp by PREMIUM ⇒ slippage-per-notional SHRINKS OTM (mark↓). B drops mark ⇒ strike-invariant, spot-equivalent. "Spot trade's slippage per notional" well-defined + right ref: spot trade pushes dy=N·oracle (mark≡1) through the SAME tradeUpdate; B = identity dy_option=dy_spot=N·oracle.
+**SUBTLETY:** "per unit notional"=strike-INVARIANCE not linearity (z0 convex in size, spot ref too — equality preserved).
+**VALUE/SLIPPAGE SEPARATION = clean + recognizable:** value=mark(K,moneyness); slippage=z0(N) spot-equiv, moneyness-blind. = execution-by-size + separate-mark (linear-impact-AMM design). vs A=moneyness-geared (z0·G, G∝1/w′(u_tp), DIVERGES at frozen wing ~14000×). Both sound; different PRODUCTS.
+**SELF-CONSISTENT on (W) = YES, all hold + B LESS divergent than A:** α/β cons (resid 0.0), frozen wings, static τ, γ>1, bounded (no wing blow-up — B's win), wing-guard HELD. ⚠ wing-guard rejects MORE under B (notional sizing dy=N·oracle ≥ premium N·mark·oracle since mark≤1 ⇒ hits w* band sooner ⇒ large-notional deep-OTM that clears today may REJECT — internally consistent, calibration-flag).
+**GIVES UP (unchanged):** paper σ_B trade-point tangent (0.254 vs B's 1.460 @K=1.6mp0) ⇒ self-consistent but NOT paper's trade mechanic. B = spot-anchored (gearing already=live engine) + notional sizing (the CHANGE; live engine still premium-sizes). A & B differ from live engine in OPPOSITE directions.
+**HONEST CARRY:** (α,β)-flow lemma [needs-Aristotle]/OPEN/numeric-0.0 for A AND B — not proven either. A vs B = operator product/curve call (operator pursuing A as build). Nothing built/submitted/edited/git. Manager re-derives + relays to operator.
+
+---
+
+_Earlier: 2026-06-11, CURIOSITY RUN B — warp∝notional inverse-design (entry 38; CURIOSITY/notes-only; no submit/edit/git/build)._
+
+### CURIOSITY RUN B — what invariant yields warp ∝ notional (strike-INDEPENDENT)? — 2026-06-11 (operator entry 38; CURIOSITY ONLY; nothing to do with the build; NO edit/git/build/submit)
+Note: `notes/research/CURIOSITY_B_warp_proportional_notional_2026-06-11.md`. Script `/tmp/curiosityB_explore.js`
+(node float64; engine fns mirror live HEAD v27, copied from `/tmp/repose3.js`). Pool {10,12,0.3,[0.52,0.72],0},
+mp0=2.457812. **CURIOSITY — NOT a build artifact/spec/authorization. Build stays path A (trade-point).**
+**Q:** A's warp = z0(dy)·G(K), G=1/w′(u_tp) strike channel (entry-37: same-notional warp 14000× more OTM,
+"warp∝notional FALSE"). What construction gives B = warp∝notional, strike-FREE?
+**ANSWER (working backward, kill the G channel):** anchor the warp at the **SPOT/reserves point** not the
+trade point ⇒ **G≡w′(u_spot)/w′(u_spot)=1 identically** ⇒ |Δφ|=z0(notional), strike-free `[analytic]`.
+Numeric: B byte-identical across all strikes (0.195752 everywhere) vs A spread 19.5× same band. z0 strictly
+monotone in notional, keeps wing-range guard (dy=2.5 REJECT). Cleanest size = dy:=N·oracle (drop premium/mark).
+**HEADLINE SURPRISE (flag to operator):** **B = exactly what the LIVE engine ALREADY does** — tradeUpdate(state,dy)
+warps at spot, strike never an arg (skeptic #16). B is the status-quo-ante; **A is the CHANGE the build is making.**
+**ECON:** B = impact∝size (constant-product/linear-impact AMM, moneyness-blind, "a contract is a contract");
+A = impact∝curve-location (paper σ_B, moneyness-geared, divergent at frozen wing). B reshapes by flow; A by flow×gearing.
+**SELF-CONSISTENT with (W)? YES** — B keeps α/β cons, frozen wings, static τ, γ>1, wing-guard; exactly (α,β)-consistent
+at reserves (residual 0.0). GIVES UP exactly one thing: the trade-point tangent σ_B (0.254 vs B's 1.460 @K=1.6mp0)
+⇒ B self-consistent but NOT the paper's trade mechanic.
+**FAMILY:** A↔B endpoints of **z=z0·G^λ, λ∈[0,1]** — λ = moneyness-gearing exponent (how much strike feeds impact).
+λ=1 A (spread 19.5×), λ=0 B (1×), interior = tunable blend (no distinct econ object; softens A's wing divergence).
+Same `[needs-Aristotle]`/OPEN (α,β)-flow lemma applies to both. Which mechanic = operator/curve call — but operator
+ALREADY chose A; this only maps what B means. Nothing built/submitted/edited/git. Manager re-derives.
+
+---
+
+_Earlier: 2026-06-11, TRADE-POINT ANCHORING RE-POSED + operator invariant (entry 37; NOTES-ONLY; no submit/edit/git/build)._
+
+### TRADE-POINT ANCHORING — RE-POSED (FAITHFUL) + INVARIANT VERDICT — 2026-06-11 (operator entries 31/36/37; NOTES-ONLY; NO edit/git/build/submit)
+Spec: `notes/research/SPEC_tradepoint_anchoring_REPOSED_2026-06-11.md`. Scripts `/tmp/repose3.js`
+(final form), `/tmp/repose.js`+`/tmp/repose2.js` (two REJECTED discretizations), `/tmp/inv3.js`
+(operator invariant), `/tmp/gate.js` (corrected gate). All node float64, mirror live HEAD v27.
+**WHY RE-POSE:** prior spec (`SPEC_tradepoint_anchoring_fix_2026-06-11.md`) was FLAG-WRONG (skeptic #18,
+`VERDICT_tradepoint_anchoring_spec_2026-06-11.md`) — it set (α,β) AND moved y'=y_B+dy at the TRADE POINT
+⇒ TELEPORTED the pool to the strike ray (dy=0.1 @K=1.6mp0 moved y 12→15.0, spot 2.46→4.01). Discarded
+the live reserves point.
+**THE FIX — SEPARATE THE TWO CHANNELS:** reserves move from the LIVE point (α,β,wStar,x',y' all read off
+`s`; y'=s.y+dy) ⇒ pool FAITHFUL (NOT teleported); the warp AMOUNT (φ') reads the strike gearing at the
+trade point. Construction: keep legacy reserves move + legacy EXACT reseat z0=t·τ/√(1−t²); scale the
+reseat by **G = w′(u_spot)/w′(u_tp)** (genB 1/w′(u_tp) strike channel); **z=z0·G, φ'=u'−z.**
+G==1 at tp=spot ⇒ **spot-reduction EXACT 0.0** (byte-identical, better than prior 1.67e-16 — it's an
+algebraic identity, no bisection). Two naive discretizations REJECTED (first-order gearing |Δφ|=6.7e-2
+at spot; integrated genB 4.0e-4 at spot) — only the curvature-RATIO form reduces exactly.
+**(i) FAITHFUL = YES:** (x',y') IDENTICAL across all strikes at fixed dy (9.9598/12.10 = legacy);
+only φ' warps by strike. Pool stays put; curve skews. mp0=2.457812 on gate pool {10,12,.3,.52,.72,0}.
+**(ii) OPERATOR INVARIANT (entry 37, "same warp any strike same notional") = NO, decisively.** Warp is
+NOT notional-only: **|Δφ| ≈ z0(dy)·G(K)**, strike channel G=1/w′(u_tp) DOMINATES. Same notional sell-call
+(via real executeLeg): |Δφ| 1.9e-4 (ATM) → 2.66 (deep OTM), ~14000×; z0 flat (0.185→0.186), G runs
+1.0→15.3. **Warp ∝ notional FALSE.** Reconciles "same premium ⇒ more warp OTM" (✅ z0 fixed, G grows).
+Curve-reshape Δln(mp) metric agrees (4.3e-4→0.224). FORCED by trade-point anchoring itself (genB
+1/w′(u_tp)); strike-independent warp ⟺ NOT trade-point-anchored ⇒ contradicts entry 31/36. That tension
+is operator/curve-object call — flagged, NOT a defect of the fix.
+**CORRECTED (g.1) GATE (skeptic, re-derived on RE-POSED):** pin pool+dy; assert
+`|φ_far−φ_near| > 1e6·FLOOR` (FLOOR=max(|φ_spotReduce|,EPSILON) — MANDATORY guard, spotReduce now 0.0
+exact ⇒ div-by-zero else) AND `|φ_far|>|φ_near|`. TARGETS: φ_near(1.1mp0)=−0.054467, φ_far(1.6mp0)=
+−0.684490, **|Δφ|=0.630023** (~19× the prior wrong-spec 0.033, warp now in the right channel); ordered
+TRUE; spotReduce=0.0. (g.2) spot-reduce <1e-12 TARGET 0.0; (g.3) one-global-φ at LIVE-β reserves 0.0.
+**HONEST CARRY (unchanged):** (α,β)-flow-confinement lemma [needs-Aristotle] OPEN, NOT Lean-cert — numeric
+only, do not report proven. warp∘rebase-commute + φ-anchor/funding still OPEN; fix does NOT touch rebase.
+Reductions preserved (spot-reduce EXACT, Balancer τ→∞, α/β cons LIVE now, frozen wings, γ>1 iff w_±>½,
+Reading-A untouched, wing-range guard LIVE = identical to legacy surface). Nothing submitted/edited/
+built/git. Manager re-derives; skeptic RE-REVIEWS the RE-POSED spec before intern builds.
+
+---
+_Earlier: 2026-06-10, WARP→genB-kurtosis GENERALISATION (entry 34; READ-ONLY derivation; no submit/edit/git/build)._
+
+### WARP → (W) KURTOSIS GENERALISATION — 2026-06-10 (operator entry 34; READ-ONLY; notes-only; NO submit/edit/git/build)
+Note: `notes/research/WARP_genB_kurtosis_generalisation_2026-06-10.md`. Scripts `/tmp/genB_warp.py`,
+`/tmp/genB_warp2.py` (python float64). Re-read retrieved warp-amm Model-C Lean (`/tmp/aristotle_query/mc/.../Warp.lean`).
+**ANSWER: warp-amm's scalar trade-point re-seat (w₀→w₁) lifts to (W) as a φ-RECENTER of the field,
+anchored at the leg's trade point — the lift is FORCED, not a choice.** Per-leg closed law `[analytic]`:
+**dφ/dy = du′/dy − (1/w′(u))·(β/y²)** (numeric-vs-analytic 1.2e-10). Steps 1–3 (y'=y+dy; w*=1−β/y';
+x'=α/w*) IDENTICAL to warp-amm/Balancer conservation; only Step 4 (invert field for φ') is new.
+**τ/KURTOSIS ENTERS ONLY through the re-seat factor `dz/dw*=1/w′(u)` (exact identity, residual 0
+float64).** Sharp elbow (small τ, w′(0)=Δw/2τ large) ⇒ cheap local warp; frozen wings (w′→0) ⇒
+1/w′→∞ ⇒ divergent φ-travel = the frozen-wing range cap. Strike-dependent, grows toward wings (~27×
+spread reproduced). τ NEVER written by trade (static-knob/frozen-wing design holds; knob CONDITIONS the
+warp, not scaled by it). **CLOSED FORMS: survive in elbow (φ'=ln(y'/x')−t·τ/√(1−t²), |t|<1); warp-amm
+mode_shift/cosh-lens carries VERBATIM on wings (constant w_±); BREAK at frozen wing (t→±1 ⇒ z→±∞ ⇒ no
+finite φ ⇒ numeric clamp/reject/split — global problem is bisection-class).** Balancer limit: τ→∞ ⇒
+w′→0 ⇒ field flat ⇒ collapses to warp-amm scalar mode_shift (1/w₀)log(y_s/y_B) (w′(0)=1e-4@τ=1000).
+**CONTRACTS HOLD:** α/β conservation, frozen wings, γ>1 (iff w_±>½), Reading-A settlement (warp only
+moves φ). **RE-FLAGGED unresolved:** one-global-φ-across-trade-point-AND-reserves-point (the (α,β)-flow
+lemma, `[needs-Aristotle]`, the cert of the lift, path-indep numeric 0.0 not Lean); trades∘rebase commute
+on (W) `[needs-Aristotle]`; φ-anchor/funding under moved φ (operator-tier). Operator-tier: engine→
+trade-point anchoring (curve/economic-object call); wing clamp/reject/split (calibration). Nothing
+submitted/built/git/verified. Manager re-derives; skeptic before operator.
+
+---
+_Earlier: 2026-06-10, ARISTOTLE WARP QUERY (entry 33; READ-ONLY; QUERY-only — no submit/edit/git/build)._
+
+### ARISTOTLE WARP/CONTINUOUS-CASE QUERY — 2026-06-10 (operator entry 33; QUERY-only; NO submit/edit/git/build)
+Note: `notes/research/WARP_continuous_aristotle_query_2026-06-10.md`. Auth: ARISTOTLE_API_KEY clean
+(no literal `<>` this session — starts `ar`, ends `24`, len 49); CLI = `uvx --from aristotlelib aristotle`.
+Enumerated ALL ~80 projects (8 pages of `list`). The operator's "continuous case thing on aristotle"
+= the **`warp-amm` / `warp-amm-handoff` cluster** (3 weeks ago: `d20dda3a` base, `7f933065`+`4e92e3cb`
+Model-C twins) — Lean `RequestProject/Warp.lean`, formalizes a "Warp AMM paper" (`warp-amm.tex`, NOT
+in archive). Downloaded + audited base (d20dda3a) + Model-C (7f933065): token-CLEAN, summary asserts
+axioms ⊆ std three (no inline `#print axioms`). **WHAT IT HAS (trade-point anchored, matches operator's
+pin):** `σ_B w₀ x_B y_B=((1−w₀)/w₀)(x_B/y_B)` = tangent AT THE TRADE POINT (x_B,y_B), NOT spot/45°/
+reserves; `w₁ x_s y_s σB` re-seats curve to that tangent; `mode_shift`: φ-shift `ξ_m(wn)−ξ_m(w₀)=
+log(y_s/x_s)−log(y_B/x_B)`; `mode_shift_closed_call` (needs `hcurve`=both on pre-trade curve):
+`=(1/w₀)log(y_s/y_B)` CLOSED FORM; `slope_integral_sum/prod`: ∫σ_ξ over rapidity = 2σ·sinh Δξ /
+2σ²(cosh Δξ−1). **WHAT IT IS NOT (honest gap):** this is the DISCRETE trade-point mode-shift +
+slope-over-RAPIDITY integral; it is NOT the paper-draft `dw/dy=β/y²` cash-leg integral along the
+conservation hyperbola `(x−α)(y−β)=αβ`. Different parametrization (rapidity/log-price ξ, weight w(θ)),
+no `(α,β)` first integral, no `β/y²` ODE. So: the operator's continuous-case warp EXISTS on Aristotle
+as the WARP-AMM rapidity formalization (trade-point-anchored ✓), but the SPECIFIC `dw/dy=β/y²` integral
+named in the paper-draft placeholder is NOT among the 80 projects (searched: trade-exec `f297c53f` is a
+DIFFERENT "self-referential w=Rx/T" model). Other warp-adjacent: `4895db4e` closed-form pricing surface
+(skew/depth, path-independence), `5f9d64c7` Barrier-on-Balancer (`spot_deriv_in_weight d/dw=(y/x)/(1−w)²`).
+**RECOMMEND:** the WARP-AMM `Warp.lean` IS the continuous-case home (use it); if the engine fix needs the
+`dw/dy=β/y²` hyperbola integral specifically, that is a SHORT fresh derivation/obligation (NOT submitted
+this pass) — the `(α,β)`-flow lemma already flagged in TRADE_WARP_strongform item 1 is the same object.
+Nothing submitted/built/git; READ-ONLY query only. Archives in /tmp/aristotle_query (throwaway).
+
+---
+_Earlier: 2026-06-10, PREMIUM-WARP + SPREAD-SHORTCUT verify (notes-only; NO submit/edit/git; operator entry 30)._
+
+### PREMIUM-WARP MONOTONICITY + VS-SHORTCUT — 2026-06-10 (operator entry 30; TEST-ONLY; NO submit/edit/git; builds md5-unchanged)
+Note: `notes/research/WARP_premium_and_spread_shortcut_2026-06-10.md`. Engines sliced read-only to
+`/tmp/engine_{v24,v27}.js` (Node vm). v24 md5 6f606f52, v27 HEAD md5 1eebfcd6 (matches operator).
+Scripts `/tmp/check1c.js` (engine executeLeg path, authoritative), `/tmp/check1b.js` (dy∝notional
+sensitivity), `/tmp/check1_dymono.js`, `/tmp/check2.js`, `/tmp/check2_analytic.js`. Pools = shipped
+v27 default (x0=10,tau=0.3,wMinus=.60,wPlus=.85,oracle=80000,equil y0,phi0=ln(y0/x0)) + matched-wMid
+v24 (w=0.725, equil-at-load); γ@spot=2.6364 both.
+**CHECK 1 VERDICT = NO (both v24 AND v27), against the operator's verbatim claim — with a clean
+reframe.** LOAD-BEARING ENGINE FACT [analytic, identical both builds]: executeLeg sets the cash leg
+`dy = V_usd = N·m·oracle = PREMIUM·oracle`; tradeUpdate depends ONLY on dy ⇒ warp is a one-to-one
+fn of premium (no separate strike channel). Warp monotone-increasing in |dy| (verified). So:
+(A) const PREMIUM ⇒ dy fixed ⇒ **warp FLAT, not increasing**; (B) const NOTIONAL ⇒ dy=N·m·oracle
+falls further OTM ⇒ **warp + premium + slippage all DECREASE**. The operator's intuition IS the
+const-notional column. "Same premium ⇒ same warp" exactly because premium IS the warp control here.
+The operator's "more warp further OTM" appears ONLY under a NOTIONAL-sized leg (dy∝N: const-premium
+then ⇒ N rises ⇒ warp STRICTLY increases, both builds — /tmp/check1b.js). **NO build difference in
+the monotonicity verdict** — v27 elbow-local φ-warp vs v24 uniform w=α/x changes only metric/
+magnitude (v27 |Δφ|≈2.1e-2 vs v24 |Δw|≈5.5e-2 at matched premium). **FLAG (operator/economic-object):
+which leg the AMM swaps — premium-leg (current) vs notional-leg — is the operator's call; it flips
+the Check-1 answer.**
+**CHECK 2 VERDICT = HOLDS exactly (both builds), residual ≤2.2e-16.** Same-leg same-wing VS on
+(θ₁,θ₂) = single AMM tx at θ*=√(θ₁θ₂) carrying the value diff. θ* strictly between (strict AM-GM).
+EXACT trig identity in the strictly-OTM markFrac branch: N(m₁−m₂)=N·sNorm(1/θ₁−1/θ₂)=N·mark(θ*)·2sinh|δ|
+(call; put symmetric). Build-independent — mark OTM branch byte-identical v24(L24-27)/v27(L58-61).
+DOMAIN CAVEAT (flag, not failure): exact only OTM power-law branch; ITM/v27-smooth-paste-premium
+breaks the bare identity — the ITM extension IS the Lean-proved compositeRay_ITM_substitution (C1).
+Nothing submitted/built/git; builds md5-unchanged post-task. Manager re-derives; tester runs live/visual.
+
+---
+_Earlier: 2026-06-10, WARP kurtosis SWEEP (notes-only; NO submit/edit/git; operator entry 26)._
+
+### WARP KURTOSIS SWEEP (#16-adjacent) — 2026-06-10 (operator entry 26; notes-only; NO submit/edit/git)
+Note: `notes/research/WARP_kurtosis_sweep_2026-06-10.md`. Scripts `/tmp/warp_sweep_{1..5}.js` (Node float64).
+Baseline = skeptic reconcile (NOT the retracted headline): v24 warps via SCALAR w=α/x → UNIFORM shift of
+whole curve across all rays; v27 φ-recenter → elbow-LOCAL bend that DECAYS in wings (frozen-wing price).
+**QUESTION:** is there a kurtosis τ where v27's curve warp matches v24's? **METRIC (skeptic's):** each
+build's ACTUAL rendered curve, Δln(mp) ray-resolved at fixed u, pre/post trade. Sanity: reproduced
+skeptic's 0.0003@1%/u=0.5, 0.0318@10%/u=0.5 EXACTLY.
+**STRUCTURAL KEY:** v24 reshape Δln(w/(1−w)) is u-INDEPENDENT (uniform shift); v27 reshape
+Δln(w(u;φ)/(1−w(u;φ))) is u-DEPENDENT, decays in wings. Different SHAPES of reshape.
+**VERDICT = NO.** Same-sign (correct-direction) elbow warp ratio v27/v24 SUP = 0.9999, attained only at
+τ→∞,Δw→0 (degenerate flat Balancer = no kurtosis knob left). At all realistic τ: elbow ratio <1, wings
+(u≥0.5) ≤0.04 and falling. SIGN TRAP: widening Δw past matched (≈τ/2) FLIPS the elbow reshape sign (φ
+overshoots/reverses; Δw=0.30,τ=0.3 → ratio −0.918) — |warp|>v24 only with WRONG sign = opposite bend, not
+a match. DESIGN CHECK at any near-match: w_mid=0.5 forces w_−<½ ⇒ **γ_−<1, VIOLATES γ>1 lock** (match
+lives at ordinary-CPMM comfort point, NOT a shippable options pool); matched Δw=τ/2 REJECTS 10% trades for
+τ≤0.10 (wing-range guard); wings stay frozen (✓, ~1e−5 shift). Polar-lens: v24=uniform fan re-scale (w),
+v27=fan-center re-aim (φ) — agree at elbow to 1st order, MUST diverge in wings (φ has zero leverage where
+warp term saturates). Operator's "too natural" intuition correct AT ELBOW/1st-order; frozen wings (the
+design choice) cap the match to the elbow. **FLAGS (operator-tier, via manager):** visible-warp gap is
+STRUCTURAL not bug, NOT closable by τ; honest fixes = anchor-overlay viz (true smaller magnitude) or accept
+localized warp; v24-magnitude warp ⇒ give up frozen-wing/static-kurtosis (curve/object call, not
+calibration). Numbers at symmetric (10,10),w_mid=0.5 comfort pool (the v24 object the operator named); γ>1
+options-pool magnitudes a separate sweep. Nothing submitted/built/git. Manager re-derives + skeptic verifies.
+
+---
+
+### WARP v24-vs-v27 COMPARE (#16-adjacent) — 2026-06-10 (operator entry 24; notes-only; NO submit/edit/git)
+Note: `notes/research/WARP_v24_vs_v27_compare_2026-06-10.md`. Scripts `/tmp/warp_cmp_{1..7}.js` (Node float64).
+Engines sandboxed: v24 `temporal_mvp_v24_rebase_fixed_2.html`, v27 `temporal_mvp_v27_wkurtosis_WIP.html`.
+**QUESTION:** does v27's per-trade warp match v24's at "kurtosis implied by ordinary Balancer"? (tester saw
+v27 sub-pixel "dot slide".) **MATCHED SETTING:** ordinary Balancer (v24, w=0.5 anchor) implied local
+curvature `dw/du=1/4` [analytic, = numeric 0.250]. Match v27 at center: `w_mid=0.5, Δw=τ/2`
+(wMinus=0.5−τ/4, wPlus=0.5+τ/4, phi=0); headline τ=0.3 ⇒ (0.425,0.575). Same pool x=10,y=10 (u=0,w=0.5),
+same trade dy=f·y. v27 derived (alpha,beta)=(5,5)=v24; post-trade (x,y) BYTE-IDENTICAL (shared trajectory
+hyperbola).
+**VERDICT — TWO warp metrics:** (A) operating-point dot-slide Δln(mp)/Δu: **v27≡v24, ratio 1.0000 EXACT,
+τ-independent** (the visual the operator likes IS reproduced exactly). (B) genuine curve RESHAPE at fixed
+ref: **v24≡0 EXACTLY** (alpha,beta conserved ⇒ pure dot-slide on a FIXED curve, v24 does NOT warp the
+curve), v27 small reshape (1% trade ≈4e−5 ln(mp) ≈0.004% curve shift; → smaller as τ↑). Same order of
+mag? **dot-slide YES (identical); reshape N/A (v24=0, v27 adds the mechanic v24 never had).**
+**FORK IMPLICATION = RENDER-SCALE / default-pool, NOT a fundamental v27 weakness.** Dot-slide (v24-comfort
+visual) identical ⇒ if not visibly moving it's render-window/pool, not magnitude. The new reshape is small
+BY DESIGN (frozen wings, static τ); larger reshape = calibration (smaller τ / wider Δw) = operator-tier.
+**FLAG (load-bearing premise correction):** "v24's trades warp the curve" is FALSE at curve level — v24 is
+a PURE DOT-SLIDE (alpha,beta conserved). What the operator likes IS the dot-slide; v27 matches it exactly.
+Manager must relay this reframe. Match-def (w_mid=0.5 ordinary-Balancer pt, not γ>1) flagged; dot-slide
+identity is match-def-INDEPENDENT (follows from shared hyperbola). Nothing submitted/built/git. Manager re-derives.
+
+---
+_Earlier: 2026-06-10, STRONG-FORM TRADES-WARP derivation (notes-only; NO submit/edit/git; PRIORITY, build HELD)._
+
+### STRONG-FORM TRADES-WARP (#16, R-paper) — 2026-06-10 (operator PRIORITY; build HELD until landed; notes-only)
+Note: `notes/research/TRADE_WARP_strongform_2026-06-10.md`. Scripts `/tmp/warp{1..8}.py` (python float64).
+**DELIVERED: the strong-form trade→(W)-weight-field→reshaped-curve map is DEFINED (R-paper no longer
+open).** R-simple (BUILD_SPEC §1.2 adopted reading) was a MISCHARACTERISATION — even plain Balancer's
+*pricing* curve `x^w y^(1−w)=k` skews under a trade (w,k both move, verified v24); the genuinely fixed
+object is the **trajectory hyperbola `(x−α)(y−β)=αβ`**, the two tangent at the reserves point. The
+strong form lifts that picture to the field.
+**THE MAP [analytic, closed form]:** field center φ (φ=0 at deploy), `w(u;φ)=w_mid+(Δw/2)(u−φ)/√(τ²+(u−φ)²)`.
+Conserve `α=x·w(u;φ)`, `β=y·(1−w(u;φ))` (shifted-field local weight). Given cash leg dy:
+(1) y'=y+dy; (2) β-cons ⇒ **w*=1−β/y'** (new local weight); (3) α-cons ⇒ **x'=α/w*** (dx forced,
+Balancer-identical); (4) reshape ⇒ **φ' = ln(y'/x') − z**, z=t·τ/√(1−t²), t=(w*−w_mid)/(Δw/2) — UNIQUE
+iff w*∈(w_−,w_+). Reserves faithful, curve skews, τ untouched. **Step-4 ≡ paper's slope-goal-seek**
+(independent root-find matches closed form 8e-16).
+**CONSISTENCY [numeric/analytic, all PASS]:** trajectory=(x−α)(y−β)=αβ to 1e-15 (reserves ride the
+SAME hyperbola as Balancer; φ slaved to position); tangency = algebraic identity (pricing slope ≡
+trajectory slope, 0.0); round-trip 1.8e-15; path-independent 0.0 (⇒ α,β genuine flow invariants);
+marginal price monotone in dy; τ static (never written, γ_+ pre=post); wings frozen (w(±∞;φ)
+shift-invariant); τ→∞ recovers Balancer dx to 1e-13.
+**THE ONE OBSTRUCTION [precise, NOT fatal]:** w*=1−β/y' must stay in (w_−,w_+); outside ⇒ no finite φ
+(curve can't skew past frozen wings). Bounds single-trade cash: y'∈(β/(1−w_−), β/(1−w_+)). Natural
+size cap from frozen wings — unblock by wider Δw (calibration), order-splitting (engine trades
+incrementally), or saturate-at-wing clamp. Operator/calibration-tier guard.
+**DISCARDED VARIANT = GH line v25_gh→v26c (current HEAD). WHY warp failed:** GH puts the kernel in the
+latent SCORE ⇒ NO scalar weight handle for a trade to move. GH `tradeUpdate` (HEAD line 1720) reads
+(x,y) off FIXED tail/CDF tables keyed on static (ghAh,ghBh,ghDelta,ghMu) and returns {...s,x,y} —
+shape NEVER written (point on fixed field). Balancer's warp handle is `w=α/x` (paper: "w is what the
+pool's pricing actually moves"); GH has no `w=α/x` analogue to slave. (W) avoids this BY
+CONSTRUCTION: φ is the weight-field d.o.f. that IS slaved to the reserves point — kernel-in-WEIGHT.
+**needs-Aristotle (flagged, NOT pinned this pass):** (1) (α,β)-first-integral lemma + reserves-projection
+=(x−α)(y−β)=αβ (short, algebraic, Mathlib-tractable, no special fns); (2) trades commute with
+carry-shift rebase on (W) (numeric+Lean, load-bearing for frame well-definedness, OPEN). **Flags to
+operator:** R-paper now defined (replace BUILD_SPEC §1.2 R-simple); frozen-wing trade-size cap;
+φ=0/anchor-under-moved-φ interaction with funding (operator-tier); Reading A/B untouched. Nothing
+submitted/verified. Skeptic pass + manager re-derive precede build resume.
+
+---
+_Earlier: 2026-06-10, (W) BUILD SPEC speed-run (notes-only; NO submit/edit/git; theory-risk ACCEPTED)._
+
+### (W) BUILD SPEC — 2026-06-10 (operator SPEED RUN, autonomy granted, theory-risk accepted; notes-only)
+Doc: `notes/research/BUILD_SPEC_wcurve_2026-06-10.md`. The intern's implementation contract for the (W)
+kurtosis curve off the v24 base (`engine/builds/temporal_mvp_v24_rebase_fixed_2.html` — clean Balancer-
+barrier engine, NO GH tail/ghMu). Verify scripts `/tmp/wcurve_verify{,2,3}.py` (python float64).
+**LOAD-BEARING [proven] FINDING:** on (W) Balancer-warp curve, marginal price == geometric slope EXACTLY
+(`|dy/dx|=(w/(1-w))(y/x)`, 1e-15) ⇒ **GOTCHA#12's e^(-ghMu) factor is GH-only, ABSENT in (W)**; mpGeom
+collapses to getMP_raw, do NOT port any ghMu machinery. Other [proven]: first integral RK4 3.4e-13;
+wing exponents γ_±=w_±/(1-w_±) τ-independent; γ_loc(0)=w_mid/(1-w_mid); price p(u)=γ_loc·e^u strictly
+monotone ⇒ arbitrage inverse unique+round-trips; Reading-A S*=K·γ_loc(S*)/(γ_loc(S*)+1) fixed point
+converges. **4 curve fns specced:** getMP_raw=(w/(1-w))(y/x) with w=wField(u); tradeUpdate=paper Trade-
+Formula (α=x·w,β=y·(1-w) conserved per-trade at PRE-weight, hyperbola algebra unchanged, w re-derived);
+arbitrageToOracle=bisection invert (no closed form on W); rebase=carry-shift q→q−ln r (NOT rigid x→r·x;
+w NOT preserved, curve-shape is). mark=v26c smooth-pasting form with g→γ_loc(strike). Funding anchor=
+price-anchor p=P, γ→±γ_loc. Dollar pipe REUSED (§6 hard-stop). τ knob static/vol-set, wings frozen.
+**[theory-risk-accepted]:** trade per-trade-freeze + R-simple composition (reserves slide on FIXED field;
+R-paper field-recenter w→φ map OPEN #16); rebase carry-shift (covariance-in-q lemma PROPOSED-only, not
+Lean); funding price-anchor; γ_loc-at-strike (elbow few-% under Reading B). **CANNOT-DEFINE flags:**
+(1) trade→skew strong form #16 OPEN; (2) carry-covariance-in-q Lean unverified; (3) **γ>1 needs BOTH
+w_±>½ — asymmetric params can give γ₋<1, calibration/operator constraint, UI must reject w_±≤½**;
+(4) Reading A vs B = operator settlement-semantics call. Nothing submitted/verified; skeptic FAST pass +
+manager re-derive pending before intern ships. **needs-Aristotle: NONE ready** (operator-tier coord/
+settlement decisions precede any Lean obligation).
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY CARRY pass #4 (notes-only; NO submit/edit/git; skeptic-gated)._
+
+### CURVE-FAMILY CARRY (#4) — 2026-06-10 (skeptic ruling DELEGATED_DECISIONS item C: #4 FIRST; notes-only)
+Note: `notes/research/CURVE_FAMILY_carry_pass_2026-06-10.md`. Scripts `/tmp/carry_W.py`, `/tmp/carry_W2.py`
+(numpy/scipy float64). Curve = √-kernel (W) invariant. β=1 engine pin honored throughout.
+**VERDICT — LOCKED CARRY CONTRACT DOES NOT TRANSFER (operator-tier).** Carry constant P=Ny/Nx
+TRANSFERS as reserve anchor. The coordinate identity `u=log price−log P` with `dq/du=1` does NOT:
+on (W) `dq/du = 1 + w′/(w(1−w))` [analytic, ★★], measured peak `dq/du` = 6.99 (τ=0.08)/2.60 (τ=0.3)/
+1.48 (τ=1) at the elbow center, →1 only in wings [numeric]. Two DIFFERENT log-coords: reserve-ratio
+`u=ln(y/x)` vs log-price `q=ln p`, related by `q = u + ln γ_loc(u) + C` (★) — the warp correction
+`ln γ_loc(u)` is a BOUNDED sigmoidal step (ln γ₋→ln γ₊, total 0.981 at the test params), u-dependent,
+so q≠u+const. TRUE carry coordinate = the price leg `ln(p/P)`, NOT `ln(y/x)`. Anchor `P=Ny/Nx`:
+reserve-anchor (y/x=P) and price-anchor (p=P) DECOUPLE unless w=½ there; "anchor w=½" is now a single
+POINT not a curve slice. **β=1 honor:** on GH engine warp correction = ln(Ny·M/Nx) is u-INDEPENDENT ⇒
+`max|dq/du−1|=0` [numeric] ⇒ carry clean on the SHIPPED engine; non-transfer is a (W)-WEIGHT-curve
+fact (kernel-in-weight vs kernel-in-score), NOT an engine regression. **Dependents pinned (NOT worked
+this pass):** #5 rebase + #9 funding + #11 dollar + #8 strike-reg must all work in `q=ln p` not `u`;
+rebase must act on q (rigid-shift in u fails — warp doesn't commute); funding anchor must be pinned
+(reserve p=P vs weight w=½ now differ). **needs-Aristotle: NONE ready** (operator-tier coord decision
+precedes any Lean obligation; a carry-covariance-in-q lemma is PROPOSED only). Nothing trusted-from-
+prover/verified. Skeptic pass pending before merge. Inventory disposition table in note (§5).
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY settlement PASS 2 (notes-only; NO submit/edit/git)._
+
+### CURVE-FAMILY SETTLEMENT — PASS 2, 2026-06-10 (notes-only; NO submit/edit/git; skeptic-gated)
+Note: `notes/research/CURVE_FAMILY_settlement_pass2_2026-06-10.md`. Settles the ONE narrow question the
+skeptic isolated (pass-1 "+16% blow-up" was a RETRACTED artifact — do NOT re-derive it). Scripts
+`/tmp/elbow_riccati.py`, `/tmp/elbow_consequence.py`, `/tmp/elbow_wkb.py` (numpy/scipy float64, Riccati).
+**THE QUESTION:** is the perpetual-American continuation value locally a single power `a·S^(−γ_loc)`
+THROUGH the elbow, or a genuine blend (slope ≠ curve's w/(1−w))?
+**SETUP:** value = eigenfunction of the curve-induced perpetual generator (the locked MERTON_tie/
+AIRTIGHT frame). Constant-coeff wing ⇒ exact single power [analytic]; variable-coeff elbow ⇒ no
+single-power solution [analytic]. Computed via Riccati for the slope p=d lnV/dx (`p′=2r/σ²+p−p²`,
+backward from right wing, decaying branch) on a Gaussian-SLICE generator with local-exponent
+calibration σ²(x)=2r/(γ_loc(γ_loc+1)). ⚠ Gaussian slice, NOT full GH ψ — qualitative verdict
+generator-independent; elbow MAGNITUDES are model-dependent [numeric].
+**VERDICT — single-power-through-elbow: NO (under the dynamic/optimal-stopping reading = team's locked
+frame).** Dynamic slope −p MATCHES γ_loc to ~1e-4..1e-6 on wings, DIVERGES by O(1) in elbow (peak
++0.50 at τ=0.3; +1.41 at τ=0.05). Blend scales 1/τ (sharper elbow=bigger blend). Genuine blend
+correction `−p ≈ γ_loc + γ_loc′/(2γ_loc+1)` [analytic, 1st-order] — THE consistent home of the term
+pass-1 fumbled (lnS-free, lives in the value's Riccati, real). Matches solved Riccati to ~1e-2 in
+smooth elbows.
+**THE FORK (operator-tier, settlement-semantics):** Reading A (curve-intrinsic value law: slope:=−γ_loc
+by definition) ⇒ S*=K·γ_loc/(γ_loc+1) EXACT everywhere, gate PASSES. Reading B (dynamic eigenfunction,
+= MERTON_tie/AIRTIGHT locked frame) ⇒ value is a blend, inherited fixed point is a FEW-PERCENT
+APPROX in elbow, not exact. Which reading = venue settlement definition = operator's call.
+**CONSEQUENCE (lands AGAINST rebuild-blocking momentum):** S* shift dynamic-vs-localFP only ~3–6%,
+S* bounded ~60–68, NO blow-up. Pass-1 catastrophe stays RETRACTED. Gate EXACT on wings; few-%
+approx in elbow under Reading B. Clean recovery = wing-registered strikes (|u_K|≫τ) = product/
+calibration call. **needs-Aristotle (only if Reading B + exact-in-elbow wanted):** NOT the inherited
+Sstar_forced (assumes constant-exp single power) — either (a) a smooth-pasting STABILITY error-bound
+lemma |S*_dyn−K γ_loc/(γ_loc+1)|≤C·γ_loc′/(2γ_loc+1) (a BUILD; Mathlib lacks free-boundary stability)
+or (b) Reading A: Sstar_forced restated with γ:=γ_loc(S*) fixed point (immediate from T1a). NO submit
+this pass — statement PROPOSED not assumed; pin only after operator picks reading. Nothing
+trusted-from-prover/verified. Skeptic pass pending before merge.
+
+---
+_Earlier: 2026-06-10, CURVE-FAMILY derivation pass 1 (notes-only) + memory DEQUARANTINE truth-up._
+
+### CURVE-FAMILY DERIVATION — 2026-06-10 (operator greenlit "start"; manager-relayed; notes-only, NO submit/edit/git)
+Note: `notes/research/CURVE_FAMILY_derivation_2026-06-10.md`. Target spec
+`specs/SPEC_kurtosis_curve_family_TARGET.md`. mpmath/python float64 numerics + analytic.
+**PART 0 DEQUARANTINE DONE (this task, before any derivation):** the three Part-0 corrections are
+now encoded as live truth at the top of this file and the stale assertions struck inline below.
+Confirmed: (1) closed-form invariant EXISTS (was "none"); (2) τ:=δ / engine=one (W) setting is
+FALSE at curve level; (3) the "invariances-hold-by-carry" blanket is DROPPED — carry/rebase/
+value-law/seam/funding are NOT established for a warp family (Esscher d-law fails mid-curve for (W)).
+**PART 1 (conjecture, operator's hyperbolic-angle lens):** THE CURVE = the √-kernel level set
+`F(x,y)= x^{w_mid}·y^{1−w_mid}·exp(−(Δw/2)·√(τ²+ln²(y/x))) = k` (first integral of the Balancer
+local-weight law −dy/dx=(w/(1−w))(y/x), w(u)=w_mid+(Δw/2)·u/√(τ²+u²), u=ln(y/x)). THE LENS = the
+hyperbolic-angle form `exp(−(Δwτ/2)·cosh(η−φ))` with η=asinh(u/τ), via the EXACT identity
+√(τ²+u²)=τ·cosh η (the operator's 90°→180° polar view). Same curve, algebraic change of variable,
+no membership owed. (a) ONE static amplitude/steepness/kurtosis knob = ATM sharpness w′(0)=Δw/2τ;
+set once for vol, trade-invariant. **CAVEAT (flag): "one knob" is exact only in the symmetric
+fixed-wing reading — otherwise Δw (skew spread) and τ (elbow width) are TWO geometric handles.**
+(b) **Skew = φ, the angle SHIFT (η→η−φ) produced by trading** — a trade changes w (x,y follow real
+reserves, paper Trade Formula); static amplitude untouched. The w-trade→φ map is OPEN (#16). (c)
+**Wings frozen** — √(τ²+u²)→|u| ⇒ F→exact CD monomials x^{w₊}y^{1−w₊} (u→+∞) / x^{w₋}y^{1−w₋}
+(u→−∞), γ_±=w_±/(1−w_±) τ-INDEPENDENT (wing weights exact to machine precision). **WHICH FORM:**
+state the family with the √-kernel invariant; narrate it with the angle lens. Trig EARNS its place
+ONLY as the lens (skew=shift, kurtosis=amplitude read off directly), introduces NO new content
+(honors the standing Gudermannian flag — the d was amplitude relabeled; no extra dial in the angle).
+**PART 2 (rebuild gate — does closed-form American settlement survive?):** VERDICT =
+**GATE NOT CLEARED. Survives closed-form on the FROZEN WINGS only; FAILS-as-inherited in the ATM
+elbow, where the most-traded band lives.** On a wing the curve is exact CD with constant local weight
+(w₋ put / w₊ call) ⇒ exact power S^(−γ_±), γ_±=w_±/(1−w_±); the GH/Merton smooth-pasting algebra
+(value+slope ⇒ S*=Kγ/(γ+1), continuation a·S^(−γ)) carries VERBATIM there [analytic]. **In the elbow
+(|u|≲τ) γ_loc=w/(1−w) VARIES** ⇒ continuation is NOT a single power ⇒ inherited S* not guaranteed.
+**Magnitude re-derived [numeric]:** a boundary exponent slope γ′=0.01 shifts S* from 75.0 to 87.3
+(~16%) at γ=3,K=100; γ′_loc(0)=(Δw/2τ)/(1−w_mid)² is O(1)+ in the elbow. **Elbow width [numeric]:**
+τ=0.3 → γ′_loc>1e-2 spans |u|<2.8 (price within ~16× of carry); τ=0.05 → |u|<0.85 (~2.3×). ATM/
+near-ATM strikes sit IN the elbow ⇒ inherited closed form does NOT carry to the operative region.
+Three resolution paths (note §2.5): (i) [needs-numeric/operator] confirm the traded strike band is
+wing-registered (|u_K|≫τ) for the chosen τ — a product/calibration call; (ii) [needs-analytic] find a
+generalized closed-form free boundary for the varying-exponent continuation (open, plausible given the
+elementary integral); (iii) [needs-Aristotle] certify the seam C¹ once a boundary is pinned (cf.
+AIRTIGHT T1a Sstar_forced / PH-5). **FLAGS for operator (via manager):** curve/knob choice
+operator-tier; the rebuild gate currently BLOCKS the rebuild absent (i)/(ii); WHERE strikes register
+(wing vs elbow) is the load-bearing settlement decision, operator/calibration-tier; "one amplitude
+knob" exact only in the symmetric fixed-wing reading (Δw vs τ are two handles otherwise); skew-as-φ-
+from-trading is the operator's frame but the paper-Trade-Formula→φ map is UNIMPLEMENTED (#16, OPEN);
+carry/rebase/funding for the warp family are OPEN/not-shown (do NOT carry from GH). **Numerics
+re-verified THIS pass (numpy/scipy float64, mpmath unavailable):** invariant logF const std 1.4e-13;
+cosh identity 9e-16; wing weights exact; C¹ match ≤7e-15; boundary-shift + elbow-width tables in note.
+Note `notes/research/CURVE_FAMILY_derivation_2026-06-10.md` now WRITTEN (prior header referenced it
+before it existed on disk; the earlier Part-2 "seam-is-the-only-open-obligation" framing UNDERSOLD the
+obstruction and is REPLACED by the gate-not-cleared verdict above). No engine/git/submit this pass;
+nothing trusted-from-prover/verified.
+
+---
 
 > ## ⚠ CORRECTION HEADER (2026-06-10, appended by manager per skeptic verdict + stock-take — READ BEFORE BRIEFING FROM THIS MEMORY)
 > **TRUTH-UP DONE (research-lead, same day, Gudermannian-bridge task):** both broken claims are now
@@ -69,87 +1094,8 @@ binds exactly on the strike continuum; flagged for paper §5 text + any engine b
 > endpoints, β=0 table values, REPARAM δ-unfreeze core. **Truth-up your own entries on your next
 > task before briefing anyone from them.** (Notation: the κ below was renamed τ repo-wide.)
 
-### CURVE-AGNOSTIC FRAMEWORK BUILD — 2026-06-11 (operator entry 1 spec, entry 9 go-ahead; deliverable A DONE)
-**Deliverable: `framework/FRAMEWORK_curve_agnostic_2026-06-11.md`** — 10 admission contracts AC-1…AC-10
-(warp principle / mode-at-mark / 4-number budget / LDF / funding anchor / re-pricing / solvency
-reachable-set / manipulation cost / engine pipe / composition map) + info-geom/PH spine (T2 single-μ
-core lifts at type level; validity gate = generator convexity = R⪰0 [FW-7]; T1a settlement lift;
-PH3-leak abstract lift FW-8) + 13 Lean obligation STATEMENTS FW-1…FW-13 (NOTHING submitted) + numeric
-gates NG-1…NG-10 + full 16-row inventory table. Comparison TABLE = deliverable B, NOT this pass.
-**NEW RESULT (mine, this pass) [DERIVED+NUM mpmath dps=30]:** slope-transport (canonical reading 1 =
-paper's: destination slope arrives at the PRE-trade point; reading 2 forces dw=0, proved not the
-paper's) + mode-at-mark are JOINTLY satisfiable for regular ray-profile warps **iff ε(mark)=1 AND
-ε′(mark)=−½** (w(mark)=½, w′(mark)=−1/8; inside validity gate −¼). Non-empty: translating linear-germ
-family passes both, residuals ∝du² (1.668e-10→1.667e-16); global frozen-germ profile w/ asymmetric
-wings + validity margin +0.125 exists. KILLS: re-anchored √-sigmoid except sign-locked Δw=−τ/4
-(mismatch law −(4Δw/τ+1)du, measured −7.333407e-5 vs predicted −7.333333e-5); symmetric genesis
-(ε′=0) excluded under ANY regular warp ⇒ §AC-2.5 OPERATOR ESCALATION (frozen-germ vs approximate-mode
-vs selector-only; + one sentence wanted on the transport reading). Violation-rate law (2ε′+1)du
-reproduces skeptic's 1.44-vs-1.2 exactly (const-w ratio→1.000001 @Δy=1e-4). Paper Trade Formula
-re-derived independently: dw=(1−w)dy/y ⟺ slope transport; dα=dβ=0 DERIVED (conservation IS the
-principle); micro-integration |Δw|=9.1e-30; round-trip exact. Infinitesimal law + path-independence
-(first integrals = J-leg/Casimirs; round-trip identity; fees = R-leg) stated as AC-1 contract.
-Manager-declared operating default (warp PRIMARY, mode-at-mark SELECTOR) recorded as veto-pending
-label. Skeptic opens (a)-(d) dispositioned (AC-10/AC-2/AC-1); anchor-existence=AC-5 F5 (anchor in
-FAMILY, not reachable set — frozen-germ class has no unskewed reachable state); #13=AC-7;
-cost-to-warp=AC-8 (J-leg reversibility ⇒ manipulation cost lives ENTIRELY in R-leg friction). New
-propagation fact: live w ⇒ live γ ⇒ live S* (warp can trigger exercise frontier, oracle still).
-Queue unchanged; no Aristotle traffic. Scripts /tmp/fw_{warp,germ}_checks.py (ephemeral; all numbers
-restated in the note).
-**PATH MIGRATION (restructure 2026-06-11 — old `notes/`/`specs/` pointers in entries below are
-STALE):** LDF check + PH_RECAP + port_hamiltonian_consistency.md → `framework/`; GUDERMANNIAN +
-REPARAM + CURVE_SWAP → `curves/gh/`; KURTOSIS_KNOB + HETEROGENEOUS_WEIGHT → `curves/balancer_w/`.
-Live pointers below are fixed inline; historical narrative may still say notes/ or specs/.
-
----
-
-### LDF DEFINITION + MODE-CONJECTURE CHECK — 2026-06-11 (operator entries 3–4; derivations INVITED)
-Note: `framework/LDF_DEFINITION_CHECK_2026-06-11.md` (mpmath dps=30; inventory-dispositioned, all 16).
-Operator entry-4 conjecture "mode = unit-tangent-slope point at every skew" — VERDICT:
-- **TRUE EXACTLY for the anchored warp family** (w_mid=½, skew=Δw, any τ): mode = unit-slope =
-  w=½ crossing, 30 dps, BOTH skew signs; robust across all x↔y-symmetric thickness heights.
-  Mechanism: w(0)=½ ⇒ diagonal crossed at slope −1. Unit-slope condition ≡ log carry-price = 0;
-  AMM-validity gate ⟺ uniqueness of the unit-slope point (invalid Δw=−0.3,τ=0.08 grows a 2nd root).
-- **FALSE in EVERY gauge for constant-weight skew** (weighted CD w≠½: elasticity ≡ −w/(1−w),
-  no tangent∥ray point exists) — the conjecture EXCLUDES reweighting, SELECTS the warp.
-- **FALSE for live GH** (γ=3 pin): candidate modes v*≈0.151 / ln M≈0.238 / elasticity−1 v_e≈0.133
-  vs pool mark v0=3 (17.6× price gap); **elasticity at the mark = e^(−ghMu) EXACTLY**
-  (1/748.66 γ=3, 1/44.52 γ=2 — THE gotcha factor IS the mode-displacement). 4th non-membership face.
-- **Selector result:** conjecture pins (1) skew mechanism = anchor-preservation w(0)=½;
-  (2) gauge = carry gauge (mode ray = 45° diagonal); (3) height only up to x↔y symmetry —
-  mode robust, "kurtosis of LDF" still height-dependent (U1 residue; min on plain Balancer =
-  √k·e^(−|ũ|/2) Laplace tent — object clash vs latent-kernel Gaussian corner, flagged not labelled).
-- **Pool-mark leg = item-16 contract [OPEN]:** post-trade warped curve must cross the post-trade
-  point with tangent∥ray (local w=½ in carry units) — stated as the acceptance test for the
-  Trade-Formula build; NOT checked against the paper here. H3=2xy caveat: critical at elasticity−1
-  but a MINIMUM for Δw>0 (xy = e^{2c}e^{Δw√(τ²+ũ²)}); honest height = min(x,y) or 2xy/r.
-- Entry-3 funding pin recorded: anchor = UNSKEWED same-family member at SAME τ (funding prices skew
-  only, per strike ray); functional open (slope-dev ratio = minimal continuation / level gap / area /
-  score gap — candidates listed, not decided). Re-posed γ question (entry-4 item 2 bounce) in one
-  sentence — in note §5, owed to operator via manager. Queue unchanged; no Aristotle traffic.
-
----
-
-### CURVE-AGNOSTIC FRAMEWORK BRAINSTORM — 2026-06-11 (operator entry 1; recap+seeds ONLY, pre-go-ahead)
-Operator spec (verbatim source `history/operator/2026-06-11_curve-agnostic-framework-brainstorm.md`):
-curve-warp AMM where (x,y,w) gives skew + ONE static kurtosis knob of the LIQUIDITY DISTRIBUTION on
-the 180° fan (= my Gudermannian-bridge fan object, mode at spot). Reads as PARTIALLY resolving U1:
-object = the angular/fan density (curve geometry, matches the steepness/flatness ruling); residual
-ambiguity = WHICH density rides the fan (liquidity depth vs latent kernel — kurtosis SIGN flips
-between objects) + the mode-at-spot centering at skew≠0. Returned (text only): recap + framework
-skeleton (admission contracts: generator μ / validity gate / fan contract / power-law-wings⇒forced-S*
-/ Trade-Formula warp / carry+rebase / funding anchor / strike registration / slippage basis /
-solvency-exposure report) + 7 candidate rows (GH-fixed v26c · GH B-MINIMAL · GH B-FULL · (W) family ·
-(W)+Trade-Formula composite · plain Balancer · tanh-score control) + 5 operator questions (fan-density
-object; skew trade-live vs kurt static; which w the Trade Formula moves in a profile family;
-no-hidden-live-state axiom; open-options reprice-vs-keep — still pending from BRAINSTORM_2026-06-10).
-NO derivations, NO Aristotle submits, NO framework/table build — operator go-ahead PENDING. Queue
-unchanged. Truth-up status: DONE (broken claims struck below; not re-asserted).
-
----
-
 ### GUDERMANNIAN BRIDGE — 2026-06-10 (operator entries 8–9; notes-only; skeptic-gated)
-Note: `curves/gh/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
+Note: `notes/GUDERMANNIAN_BRIDGE_2026-06-10.md`. mpmath dps 40–50; every identity below numerically
 checked (~1e-38) AND derived; β=0 AND β=1 throughout (skeptic pattern 3 honored).
 **THE BRIDGE (exact):** strike-ray angle ψ (45°=ATM, tan ψ=y/x), χ=ψ−45°: `ũ=ln(y/x)=gd⁻¹(2χ)` —
 the 90°→180° "fan opening" IS the forced doubling σ=2χ (gd maps ℝ onto exactly 180°); ATM↦ũ=0;
@@ -186,14 +1132,12 @@ DIFFERENT SLOTS (score vs weight/invariant) — broken bridge stays broken, NO i
 **SOLVENCY (#13, explicit):** m=2 X-depth at β=1: 0.0845→0.5630 over δ=0.08→3 (6.7×; reproduces
 skeptic); β=0 reproduces REPARAM 0.034→0.220. B1 re-prices at any shipped setting; extrinsic,
 NOT closed. #8 strike-reg + #9 funding dispositioned: no change proposed; survival on a built
-δ≠0.08 engine = open engine checks (dir_gate/seam/G4 re-reference owed). Full 16-item table in note
-(manager corrigendum 2026-06-11 per skeptic FLAG-OMISSION: "15-item" was the third recurrence of
-the item-16 count dropping; the inventory and the note's table are 16 rows).
+δ≠0.08 engine = open engine checks (dir_gate/seam/G4 re-reference owed). Full 15-item table in note.
 
 ---
 
 ### KURTOSIS-KNOB κ — 2026-06-10 (operator: buildable single-κ asymptote-respecting knob on Balancer; DERIVE not approx)
-Note: `curves/balancer_w/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
+Note: `notes/KURTOSIS_KNOB_kappa_balancer_native_2026-06-10.md`. mpmath 25–60 digit, direct construction.
 Realizes the paper's `(w,κ)` Future-Directions conjecture in implementable form.
 **✗CORRECTED (2026-06-10 truth-up — claim was BROKEN, skeptic counterexample, manager-verified):**
 ~~NO clean algebraic `F(x,y;w,κ)=k` exists~~ — FALSE. The closed form
@@ -230,7 +1174,9 @@ invariances hold for the GH δ-UNFREEZE (branch B) as REPARAM derivations — la
 derived-not-engine-verified (no δ≠0.08 engine ever built); they do NOT transfer to the (W) family
 (Esscher d log slope/du=1 fails mid-curve in (W); carry/rebase/seam for (W) = UNKNOWN). Lean:
 above-AMMCurve-contract untouched; re-instantiate kernel-constant layer only (branch B).
-**FLAGS:** (1) curve choice + knob exposure = operator; (2) no clean invariant — profile is the form;
+**FLAGS:** (1) curve choice + knob exposure = operator; (2) ✗CORRECTED — a clean closed-form
+invariant DOES exist (`x^{w_mid}y^{1−w_mid}·exp(−(Δw/2)√(τ²+ln²(y/x)))=k`); the old "no clean
+invariant, profile is the only form" is FALSE (skeptic counterexample, manager-verified, RK4 4.8e-13);
 (3) label sign object-dependent (track L, 1/κ=fatness); (4) ASYMMETRIC-w SETTLEMENT FORK SURFACED — κ
 holds w₋,w₊ fixed (orthogonal to fork); independent w₋≠w₊ = both S^(±γ_±) live = βh=0/two-root settlement
 change (REPARAM FULL fork). Ship κ with skew held = MINIMAL/safe; freeing skew = separate operator move.
@@ -241,7 +1187,7 @@ but a conservation proof is separate). No engine/git/submit this pass.
 _Earlier: 2026-06-09, HETEROGENEOUS-WEIGHT DERIVATION (closed-form implied density; NO submit/edit/git)._
 
 ### HETEROGENEOUS-WEIGHT DERIVATION — 2026-06-09 (operator: closed form from x,y,w; DERIVE not approx)
-Note: `curves/balancer_w/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
+Note: `notes/HETEROGENEOUS_WEIGHT_implied_density_2026-06-09.md`. mpmath 30-50 digit, direct integration.
 **Closed form (headline):** Balancer with position-dependent w(u) (u=log p−log P):
   q(u)=log p = u + log(w(u)/(1−w(u))) + const ;  d log p/du = 1 + w'(u)/(w(u)(1−w(u))) ;
   implied log-price density f_q = f_u(u(q)) / [1 + w'/(w(1−w))].
@@ -274,8 +1220,8 @@ _Earlier: 2026-06-09, RECONCILE PASS (Balancer-δ + wings-vs-ATM resolved; NO su
 
 ### RECONCILE PASS — 2026-06-09 (resolved the Pass-1 vs Pass-2 δ conflict; manager-requested)
 Built the actual curves (mpmath 35-40 digit, direct integration — not formula-arguing). **Authoritative
-spec is now the v2 body of `curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`** (rewritten to match
-the manager header; whole file self-consistent). Pass-1 note `curves/gh/CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`
+spec is now the v2 body of `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md`** (rewritten to match
+the manager header; whole file self-consistent). Pass-1 note `CURVE_SWAP_GH_vs_CES_analysis_2026-06-09.md`
 got a CORRECTION HEADER. **Three resolved verdicts:**
 - **BALANCER-δ VERDICT: the exact Cobb-Douglas/Balancer RESERVE CURVE is the δ→∞ (Gaussian) limit, NOT
   δ→0. Pass-1's "δ→0" is REFUTED.** Built it: CV of the CD invariant K=X^w·Y^(1−w) along the GH frontier
@@ -296,7 +1242,7 @@ got a CORRECTION HEADER. **Three resolved verdicts:**
   1→0.70, 3→0.25, 10→0.075. Matches manager's δ=0.08,γ=2→2.76. exk∈[0,3].
 
 ### REPARAM DROP-IN SPEC — 2026-06-09 (spec for operator's separate impl session)
-Note: `curves/gh/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (NOW v2 — see reconcile pass above).
+Note: `notes/REPARAM_balancer_kurtosis_dropin_2026-06-09.md` (NOW v2 — see reconcile pass above).
 mpmath sanity checks (30-40 digit) run + reported. **KEY (load-bearing) findings:**
 - Esscher tilt `f_{β+1}/f_β=e^v` is EXACT, INDEPENDENT of (αh,βh,δ) ⇒ value∝S^(−γ) survives freeing
   δ/βh (G4 stays green in form; reference value regenerates). d log(slope)/d log(price)=1 all cases.
@@ -788,8 +1734,7 @@ compile alone never would._
   `Audit.lean`, `Main.lean`. Audit template: `formal/MANAGER_VERIFICATION.md`.
   Aristotle prompt templates: `formal/prompts/aristotle_prompt_{port_hamiltonian,seam,curve_gate}.md`.
 - Aristotle (the prover) is **external** (no Lean in the agent loop). Contract = prompt + returned archive.
-- **PH consistency spec: `framework/port_hamiltonian_consistency.md`** (PH-1…PH-7 obligation targets;
-  moved from `specs/` in the 2026-06-11 restructure, with `PH_RECAP_2026-06-08.md` alongside).
+- **PH consistency spec: `specs/port_hamiltonian_consistency.md`** (PH-1…PH-7 obligation targets).
 - **Throwaway smoke probes: `formal/smoke/`** (`smoke_true` PROVED, `smoke_false` REFUTED/counterexample;
   excluded from RequestProject build) — first live test of the direct loop. I submit these MYSELF via the
   CLI. **SMOKE STATUS (2026-06-08): both round-trips COMPLETED.**
@@ -850,11 +1795,7 @@ Typed interface stack: a change at any seam must type-check at every other seam 
 type-checker, not inspection). The "self-sandwich bug" was an interface violation (settlement
 reaching past its contract into the raw displaced pool) — caught by type under this discipline.
 
-## Live proof queue (UPDATED post-big-run 2026-06-08; OFFATM added 2026-06-12)
-- **OFFATM** — off-ATM trade-at-point transition rule (operator ruling 2026-06-12). **9/9 proved
-  (trusted-from-prover)**, audit PASS (formal/aristotle_runs/OFFATM_trade/; spec
-  specs/SPEC_trade_at_point_transition_rule.md). OPEN remainder (deliberately NOT submitted):
-  round-trip residual economics (operator-deferred), q↦Δy mapping (open interface, referee Q8).
+## Live proof queue (UPDATED post-big-run 2026-06-08)
 - **C1** — composite-ray → ITM via effective-strike substitution. **proved (trusted-from-prover)** (run
   2026-06-08; formal/aristotle_runs/C1/). sinh_log identity + universal-over-effective-strikes.
 - **C2** — no costless-collar arb at w=½. **proved (trusted-from-prover)** (formal/aristotle_runs/C2/).

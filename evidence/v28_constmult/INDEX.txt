@@ -1,0 +1,22 @@
+CONSTMULT smoke-pass evidence — constant-slope-multiplier lens build
+Build: engine/builds/temporal_mvp_v28_lens_constmult.html  md5 8f897edcad49c73853096a05e7ec233d (UNCHANGED post-run, READ-ONLY)
+Operator entries 229/231 — kurtosis/vol knob redefined as a CONSTANT SLOPE MULTIPLIER m.
+Harness: engine/verify/pw_v28_constmult_smoke.mjs (single A/B arg)
+Run: cd engine; PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node verify/pw_v28_constmult_smoke.mjs A
+
+VERDICT: 5/5 items PASS ×2 byte-stable. 0 console / 0 pageerrors. run_all GREEN (lens_selfcheck 13/0 + a16_atm_gate 5/0, exit 0). File-safety GREEN.
+
+RUN_LOG_runA.txt == RUN_LOG_runB.txt  (byte-stable modulo run header + rAF sweep frame-count 49 vs 48 = timing jitter, both animate)
+
+Screenshots:
+  A_item1_m1.png / _m2.png / _m3.png   chart-2 (canvas-pricing) at m=1/2/3 — the steepening
+  VIS_chart2_m1.png ... _m3.png         clean chart-2 captures (apex ~0.25 @ m=1 → ~0.105 @ m=3), no elbow/cusp/flat-top
+  VIS_fullpage_m3.png                   full UI at m=3
+  A_item5_chart1.png                    chart-1 (pool curve) inert to m
+  A_item5_sweep_landed.png              continuous warp sweep landed frame
+
+ITEM 1 PASS: g_loc = m·γ CONSTANT across 11 strikes (spread 0); ATM<1, call arm==put arm (C0, no cusp); steeper everywhere with m.
+ITEM 2 PASS: m=1 ⇒ g_loc==γ exactly; trade lands at chosen strike (theta_tx==chosen).
+ITEM 3 PASS: theta_tx = mode·(chosen/mode)^m further out with m (2×→4×→8× @ m=1/2/3); buy-call cash-out reject fires earlier as m grows — m=3 rejects with verbatim $ depth, N un-mutated, no silent cap.
+ITEM 4 PASS: open→close reserves restore exact (|dx|≤1.78e-15, |dy|=0); settle@chosen ($160k) while swap finances@further (K_tx $320k) — DISTINCT.
+ITEM 5 PASS: continuous warp sweep animates (48-49 rAF frames); chart-1 inert to m (identical hash m1/m3/m6); funding alive on steepened pool (call>0/put<0, m-dependent); settlement ITM path finite.

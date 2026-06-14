@@ -1,0 +1,81 @@
+
+========== STEP 1: open build, τ stepper, chart-2 mark + mode marker ==========
+  tau-input: {"type":"number","value":"0.3","min":"0.05","max":"3","step":"0.05","ranges":0}
+  chart-2 (pricing) lit px: 11535
+  analytic mark sanity: {"sNorm":1,"tau":0.3,"psiWingCall":0.08542582927369315,"psiWingPut":0.08542582927369315}
+
+========== FLAG PROBE: τ stepper event-only redraw of chart-2 ==========
+  τ 0.3→3 via stepper EVENT ALONE: chart-2 px changed = 0  (0 ⇒ knob does NOT auto-redraw)
+  window.Viz=undefined  window.render=undefined  (handler guards on window.Viz)
+
+========== STEP 2: sweep τ 0.3 → 0.05 (elbow sharpens; wings unchanged) — forced redraw ==========
+  τ0.3→0.05 analytic max Δψ=3.279e-1 (~98.4px) at φ=45.8°
+  rendered chart-2 px changed (forced redraw): 6645
+  far-wing Δψ (φ~86.7°): 5.141e-5 (should be ~0)
+
+========== STEP 3: sweep τ 0.3 → 2 — DEFAULT + STEEP pool ==========
+  DEFAULT pool w=0.5000 γ=1.0000: τ0.3→2 analytic max Δψ=3.066e-1 (~91.99px); rendered px changed=8103
+  STEEP pool w=0.7800 γ=3.5455: τ0.3→2 analytic max Δψ=3.625e-1 (~108.76px); rendered px changed=6276
+  STEEP far-wing Δψ (φ~87.6°): 8.536e-5 (tends to same slope)
+
+========== STEP 4: chart-1 plain-v24 + INVARIANT to τ (contamination probe — must be HARD 0) ==========
+  chart-1 lit px: 9744
+    chart-1 px-diff vs τ0.3 at τ=0.05 (forced redraw): 0
+    chart-1 px-diff vs τ0.3 at τ=1 (forced redraw): 0
+    chart-1 px-diff vs τ0.3 at τ=2 (forced redraw): 0
+    chart-1 px-diff vs τ0.3 at τ=3 (forced redraw): 0
+  >>> chart-1 max px-diff across full τ sweep (forced redraws): 0 (MUST be 0)
+
+========== STEP 5: add perp + open band; ATM funding≈0 (g_loc→0), OTM signed; g=0/S*=0 finite ==========
+  (steepened pool w=0.7 ⇒ S=2.3333 ≠ 1; ATM zeroed ONLY by g_loc→0)
+  funding ATM call=0.000e+0 put=0.000e+0 (g_atm=0.000e+0)
+  funding OTM call=2.230e-3 (>0) OTM put=-2.230e-3 (<0)
+  all finite (no NaN/Inf): true
+  markLensed at g=0 exact (S*=0 path): call=1 put=1 finite=true
+
+========== STEP 6: execute in-range trade — chart-1 reserves move on FIXED curve; chart-2 re-renders ==========
+  band form (seeded): {"soldInner":"84000","soldOuter":"","boughtInner":"68000","boughtOuter":"","notional":"0.05","slip":"1.9322 %  ·  ≈ $73.62","net":"$618,314,484.191258"}
+  dialogs during execute: []
+  pre  state: {"x":10,"y":800000,"alpha":5,"beta":400000,"w":0.5,"sNorm":1}
+  post state: {"x":9.905219737137102,"y":807728.9310523907,"alpha":5,"beta":400000,"w":0.5047843594275624,"sNorm":0.9810439474274204}
+  trade invariant (x-α)(y-β)=αβ rel resid: 1.164e-16
+  chart-1 px-diff pre/post trade: 8020 (reserves moved on fixed curve)
+  chart-2 lit px post-trade: 11607
+  trade moved reserves: true
+
+========== STANDING SMOKE: remaining controls, both directions ==========
+  added short perp; total perps: 4
+  after band swap: {"slip":"1.6875 %  ·  ≈ $57.82","net":"−$545,831,965.279125"}
+  ran arbitrage-to-oracle
+  advanced time 1 tick
+  LP deposit/withdraw round-trip: $1,600,000.00 -> $1,600,000.00
+  payoff canvas lit px: 74249
+  trajectory canvas lit px: 7416
+  after reset: {"x":10,"y":800000,"tau":0.3,"perps":2,"bands":0}
+
+========== CONSOLE / ERRORS ==========
+  uncaught pageerrors: 0
+  console errors: 0
+
+========== FLAGS ==========
+  FLAG-1 (chart-2 τ no-auto-redraw): turning the KURTOSIS τ stepper updates Store.state.tau but does NOT redraw chart-2 — px diff 0 on a 0.3→3 step. Root cause: τ-input change/input handler (~L2702) guards the redraw with `if (window.Viz && Viz.drawAll)`, but Viz is a const IIFE (L3175) never attached to window, so window.Viz===undefined and the redraw branch is dead. Chart-2 refreshes only when some OTHER action triggers render()/drawAll (tick/arb/trade/reset). One-line intern fix: `window.Viz = Viz;` or replace the guarded call with `render()`. This is the operator-class "curve insensitive to kurtosis change" symptom at the chart-2 lens.
+
+========== VERDICT SUMMARY ==========
+  PASS  s1_tau_stepper
+  PASS  s1_chart2
+  FAIL  flag_tau_autoredraw
+  PASS  s2_elbow_sharpen
+  PASS  s2_wings_unchanged
+  PASS  s3_default_effect
+  PASS  s3_steep_visible
+  PASS  s4_chart1_tau_invariant
+  PASS  s5_atm_funding_zero
+  PASS  s5_otm_signed
+  PASS  s5_funding_finite
+  PASS  s5_gzero_finite
+  PASS  s6_trade_invariant
+  PASS  s6_chart2_rerenders
+  PASS  zero_console_errors
+
+  OVERALL: FAIL
+exitB=1
