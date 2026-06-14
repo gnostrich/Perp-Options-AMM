@@ -1983,3 +1983,11 @@ _Context: standing paper requirement — every symbol must be explained nearby (
 > remember in the paper and everything in it inwant that a symbol is either explained withba simple englosh thijg nearby of a table nearby — no unintroduced symbol stuff least of all in abstract intro etc.
 >
 > also the same for new terms — i've never used the term carry with you once …
+
+
+---
+
+## Entry 248 — 2026-06-14 14:29 UTC
+_Context: operator authorizes merging the working branch into main (so other sessions see the work), if nondisruptive. Manager runs the §6.2 reconcile→re-gate→squash-merge→retain-branch routine._
+
+> i'd like this on main, in case i open other sessions, if that's nondisruptive
