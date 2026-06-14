@@ -1927,3 +1927,11 @@ _Context: operator catches that the "singular object = GH cumulant-generating fu
 _Context: operator corrects the entry-240 typo "gu" → "GH" (generalized-hyperbolic). Manager had already read it as GH and acted accordingly._
 
 > gh*
+
+
+---
+
+## Entry 242 — 2026-06-14 05:36 UTC
+_Context: operator directs (1) execute the queued encompassing-structure re-examination (Balancer not GH, strip GH baggage), and (2) find where the steepness/flatness lens (m) NATURALLY fits in the theory, instead of being a separate bolted-on read-layer/calibration field._
+
+> do the queue and also figure where the steepness lens naturally fits in instead of being separate
