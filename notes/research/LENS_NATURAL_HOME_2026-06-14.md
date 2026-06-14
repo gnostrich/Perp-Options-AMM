@@ -1,5 +1,24 @@
 # The live-curve encompassing structure + where the steepness lens m naturally fits
 
+> **═══ SKEPTIC GATE RESULT (a00a14ea, 2026-06-14) — TWO FLAG-OVERSELLs (scope), halt-class on the bare headlines ═══**
+> The math is right and manager-verified; the two HEADLINES are scoped too loosely. Binding corrections —
+> the bare phrasings may NOT enter shared truth (INDEX/feature_inventory) without these qualifiers, or operator overrule:
+> 1. **Task A — NOT "no information geometry."** Only the **CGF / exponential-family / measure-backed-Fisher** reading
+>    is dead (μ not globally convex; degenerate boundary zero; Marcinkiewicz — all airtight). BUT info-geometry ⊋ CGF:
+>    the Balancer μ IS convex on t≥β, its Legendre dual `μ*(η)=⅔√(αβ)·η^{3/2}+β·η` exists on η>0 ⇒ a **Hessian /
+>    dually-flat information geometry SURVIVES without a measure.** Honest headline: *no measure-backed (CGF/Fisher)
+>    reading; Hessian/dually-flat info-geometry survives.* Do NOT "drop info-geometric base" flatly.
+> 2. **Task B — the Gibbs/inverse-temperature home is the power-law WING, not the whole option value.** `value=S^(−g)`
+>    is the wing/asymptote; the engine `markLensed` is a bounded-[0,1] smooth-pasted mark (ratio to S^(−g) measured
+>    0.0012–9000), NOT S^(−g) near ATM. The thermal reading is substantive (value_m=(value_1)^m is a real thermal
+>    power, not a relabel) but MUST be scoped to the wing. "kurtosis = temperature of the option-value **tail**," not the whole mark.
+> 3. **Esscher (CLEAR):** m is a dilation, not a tilt — correct. But ADD a line to feature_inventory #14 distinguishing
+>    trade=translation (its existing claim) from the m-knob=dilation; do NOT mark #14 wrong.
+> 4. **Labels CLEAR:** conceptual = math-certain not Lean-pinned; Task B.1 Lean (Aristotle ca042134) = submitted/pending,
+>    NOT trusted-from-prover. Fold only the QUALIFIED versions, after the Lean returns + audit.
+> _(Below is research-lead's original note, gate-flagged on the two headlines above — read the prose B.5/L83-99/L133-134
+> through these qualifiers. Manager header, post-gate; research-lead prose unaltered.)_
+
 **Author: research-lead. 2026-06-14 (operator entry 242).** Read-only theory pass on the LIVE object
 (plain v24 Balancer + constant-m lens). NOT a HEAD build. Honest labels throughout:
 `trusted-from-prover` ≠ `verified`; conjecture ≠ proven; a clean NEGATIVE is a valid result.

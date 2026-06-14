@@ -3176,3 +3176,42 @@ VERDICT FILE: notes/skeptic/VERDICT_PH_UNIFICATION_COMPOSED_2026-06-14.md.
 - Placement: CONCUR. Only 2 copies (COMPOSED + prior INTERNAL archives); NONE in temporal_lean_verified/RequestProject/ (manager's in-tree removal real). Self-contained+namespaced, not lake-globbed, no clash = MonolithConstM status. No FLAG.
 - Honest label for fold (all correct/required): trusted-from-prover (NOT verified, no local kernel) + self-contained (re-declared minimal types, NOT integrated) + INTERNAL half only (external open/conditional).
 - COHERENCE: resolution not reversal — resubmission composed it exactly as I specified. Pattern #NN ("presence-of-both ≠ weld-made") confirmed as the right check: I demanded the actual composing theorem with NO open hypothesis, and that is what arrived. Good template for future weld gates.
+
+## VERDICT #lens-natural-home (entry 242, 2026-06-14) — Task A FLAG-OVERSELL(scope) / Task B FLAG-OVERSELL(scope) / Esscher CLEAR / labels CLEAR
+Universal gate on `notes/research/LENS_NATURAL_HOME_2026-06-14.md` (research-lead a464830b) BEFORE fold to
+shared truth/relay. Task B.1 Lean (project ca042134) RUNNING = OUT OF SCOPE. Source-verified MonolithConstM.lean
+(poolPotential=(t−β)³/3αβ, price=μ′, carry=log price) + markLensed in HEAD v28. Re-derived all math cold (sympy).
+- **Task A math AIRTIGHT, headline OVERSELLS:** μ″=2(t−β)/αβ<0 for t<β, triple-degen root at t=β (μ=μ′=μ″=0),
+  μ‴=const, μ⁗=0 ALL confirmed. CGF/exponential-family/log-MGF reading is GENUINELY DEAD (Marcinkiewicz +
+  non-convexity-below-β + boundary-degeneracy, 3 independent, each sufficient — incl. on any sub-interval since
+  cumulants are the same constants at every expansion point). BUT "NO information-geometric reading" + "DROP
+  information-geometric base" (A.3 headline, A.4) is TOO STRONG: info-geometry (Amari/Hessian/dually-flat) needs
+  a CONVEX POTENTIAL, NOT a CGF. μ IS convex on t≥β (note's own R_psd), Legendre dual μ*(η)=⅔√(αβ)η^{3/2}+βη
+  exists+finite on η>0 ⇒ a Hessian/dually-flat info-geometry EXISTS on the operating half-line (metric degenerate
+  only at boundary t=β). What's killed = CGF/exp-family/measure-backed-Fisher. What SURVIVES = non-CGF Hessian
+  info-geometry. "DROP info-geometric" conflates the superset (info-geo) with the killed subset (CGF). Honest
+  headline: "no CGF/exponential-family/measure reading; Hessian info-geometry survives w/o a measure."
+- **Task B math CONFIRMED, scope SLIPS:** value_is_gibbs (S^(−mγ)=e^(−mγ log S)), value_pow_m, m=1-base all exact
+  (sympy 0). THE HOLE: value=S^(−g) is the WING/power-law asymptote, NOT the engine's option value. markLensed
+  (HEAD L1665-75) is a bounded-[0,1] smooth-pasted mark: LINEAR (c·sNorm) in continuation, 1−(sNorm/θ)^(∓1/g)
+  intrinsic — NOWHERE equal to S^(−g) (ratios 0.0012→9000 across strikes). Lean PROMPT correctly scopes valuePow
+  as "wing law" (docstring L43/L11) — GOOD. Note PROSE slips: L78 says "wing law" but determination box B.5
+  (L133-134) + consequences (L83-99, "baseline option-value distribution" L95) drop the qualifier, read as if
+  the WHOLE option value is a Gibbs weight. Gibbs claim must be SCOPED TO THE POWER-LAW WING REGION, not the
+  whole mark. Conceptual "m=inverse-temperature" is SUBSTANTIVE (value_m=value_1^m IS thermal power, not just
+  relabeling) — but only of the WING law. Pool lock RESPECTED (B.4 correctly flags pool-intrinsic m = operator-tier curve reopen).
+- **Esscher CLEAR:** m-is-dilation(γ→mγ)-not-tilt(γ→γ−h) confirmed (h=(1−m)γ depends on γ ⇒ not fixed tilt).
+  Minor framing: feature_inventory #14 is about TRADE-as-translation (GH line), NOT the m-knob; note ADDS a new
+  fact (m-knob=dilation), doesn't overturn #14's trade claim. "corrects #14" slightly imprecise but harmless.
+- **Labels CLEAR (NOT a 3rd oversell of the type):** note honestly labels NEGATIVE as math-certain-not-Lean-pinned,
+  Task B.1 as submitted-pending-NOT-trusted-from-prover, B.4 as conjecture/operator-tier. Caveats present+correct.
+  This is NOT the GH-conflation oversell (it CORRECTS it, consistent w/ DETERMINATION_CORRECTION entry 240) nor
+  the un-composed-weld oversell. The 2 holes are SCOPE-WIDENINGS (info-geo⊋CGF; wing⊊value), not false claims.
+- NET: (a) relay to operator OK IF the 2 scope qualifiers ride along (info-geo not fully dead — only CGF/measure;
+  Gibbs is the wing, not the whole value); (b) fold to shared truth: Task-A negative folds AS "no CGF/exp-family"
+  (NOT "no info-geometry"); Task-B home folds AS "wing-law thermal coordinate" w/ Lean pending. Bare headlines
+  would be a 3rd framing-overreach in a day — same pattern, gentler. Pool lock + Esscher dilation = solid.
+- Pattern #NN (new): a NEGATIVE result can OVERSELL by widening its own scope — killing the narrow object (CGF)
+  but headlining the kill of the superset (info-geometry). Symmetric twin of the positive-oversell (wing sold as
+  whole value). Both = the boundary of the proven object drawn looser than the proof. Check BOTH directions:
+  does the negative claim MORE-dead than proven? does the positive claim MORE-general than the object supports?
