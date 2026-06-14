@@ -30,7 +30,21 @@ if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD";
   # SKIPs-as-pass on a non-lens build. set -e => any FAIL aborts run_all.
   node verify/a16_atm_gate.js "$HEAD"
   echo ""
-  echo "lens build green. (GH/(W) suites N/A here.)"
+  # ════════════════ REPORT-ONLY (NOT GATING) ════════════════
+  # monolith_consistency.js — ACTIVE theory↔impl consistency layer (operator
+  # entries 243/153#9; skeptic R6 scope-gate a04465ae WITH RIDERS). Cross-checks
+  # the engine's NUMBERS against the monolith Lean formulas (MonolithConstM.lean)
+  # and prints a `Lean thm ⟺ engine — PASS/FAIL` table tagged per line.
+  # ⚠ THIS IS NOT A HARD GATE. It EXITS 0 ALWAYS (the `|| true` belt-and-braces
+  # ensures it can NEVER abort run_all's `set -e`). The HARD gates above
+  # (lens_selfcheck 13 + a16_atm_gate 5) are the bar; a green report line here
+  # is NOT the gate (#5/#6/#8 are table-marked already-HARD-via-CM# cross-refs).
+  # Honest ceiling: cross-checks NUMBERS (engine ⟺ Lean formula); does NOT make
+  # Lean "verified" and does NOT prove the engine IS the Lean object.
+  echo "================ REPORT-ONLY (NOT GATING) — monolith_consistency.js (engine ⟺ Lean numbers) ================"
+  node verify/monolith_consistency.js "$HEAD" || true
+  echo ""
+  echo "lens build green. (GH/(W) suites N/A here. Monolith table above is REPORT-ONLY, not a gate.)"
   exit 0
 fi
 
