@@ -18,6 +18,12 @@ NOT folded to INDEX. CORRECTION recorded: formal/aristotle_runs/PH_UNIFICATION_I
 Operator told (verbatim skeptic + owned miss). RESOLUTION in flight: re-commission research-lead for the composed
 `exchange_internal_passivity` (discharge hR via exchange_Rcurv_nonneg) + trade_no_spontaneous_storage; re-gate on return.
 HEAD/engine UNAFFECTED (theory layer only).
+✅ **WELD RESOLVED + FOLDED 2026-06-14:** re-submitted (run 8ee75026/task 5c2bccf2) → `exchange_internal_passivity`
+with NO open hR (discharged by exchange_Rcurv_nonneg=R_psd; passive BECAUSE geometry PSD) + `trade_no_spontaneous_storage`
+(composes trade_conserves). Manager audit PASS + skeptic re-gate adbc7377 = **CLEAR** (genuine composition, strict gap
+4.367, external half conditional/PH-4b honored, placement concurred). Manager removed the in-canonical-dir copy
+(self-contained/MonolithConstM status). Folded to formal/INDEX (commit 45b0115) as trusted-from-prover, INTERNAL HALF
+ONLY, self-contained/not-integrated. EXTERNAL solvency stays OPEN. Prior FLAGGED run 80cd7ba4 retained + CORRECTION.
 ⚠ **DETERMINATION CORRECTION 2026-06-14 (operator entry 240 caught it) — GH/Balancer conflation, 2nd framing overreach in a row:** this morning's "singular object μ = GH cumulant-generating function / Fisher metric / info-geometric base" is WRONG for the live curve. The live object (MonolithConstM/PHUnification) is the **plain v24 BALANCER constant-product** curve (invariant (x−α)(y−β)=αβ; μ=(t−β)³/3αβ; price=(y−β)²/αβ; R=μ″=2(t−β)/αβ≥0 on t≥β) — **NOT GH (demoted entry 28).** The GH-CGF/Fisher/info-geo framing came from the 2026-06-09 spec addendum written when GH was the curve; carried over without re-checking. SOLID for live curve: convex/Hessian-potential PH object (price=∇μ, R=∇²μ⪰0, proven). BAGGAGE (retracted): μ=GH-CGF, R=Fisher, dually-flat exponential family. OPEN (downgraded from asserted): whether the Balancer potential has ANY info-geo/CGF reading (cubic is convex only on t≥β ⇒ not a global CGF). Correction note: notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md. RE-EXAMINATION QUEUED for research-lead (re-derive structure for live Balancer+constant-m, strip GH baggage) + skeptic re-gate — SERIAL after the weld pass a7bba53b (do NOT spawn concurrent RL). Honest interim label: convex/Hessian-potential PH object on the Balancer constant-product curve; info-geo reading OPEN.
 
 1. Read `CLAUDE.md` (shared truth) and `.claude/agents/manager.md` (charter, now incl. rules R1–R7) in full before acting.
