@@ -3239,3 +3239,40 @@ new harness asserting each load-bearing MonolithConstM/PHUnification Lean FORMUL
   that is EITHER a different proven object (CM6 vs internal_passivity) OR nonexistent (engine "warp"). The
   honest-label test for any "Lean ⟺ engine" line: does the engine actually compute THAT object's number, or a
   coincidentally-equal / differently-proven one? price==slope coincidence is the canonical false-green here.
+
+## VERDICT #R6-monolith-BUILT (2026-06-14) — FLAG-OVERSELL (line 2 theater) ; 7/8 lines CLEAR
+Final gate on the BUILT consistency layer: engine/verify/monolith_consistency.js (REPORT-ONLY) +
+run_all.sh report-only section. HEAD md5 80f050e2 UNCHANGED (no HTML edit). Held for this gate.
+Cold re-derived against MonolithConstM.lean (read full source) + engine fns; ran clean (8 PASS,
+exit 0) then 8 independent mutations.
+- RIDERS from my a04465ae scope-gate ALL honored: check-1 gotcha disclosure (price==slope==getMP_raw
+  on plain-Balancer, value-only) PRESENT+correct; check-3 FIRST-diff of marginal (NOT 2nd-diff)
+  PRESENT — maxRelErr 1.07e-11; check-7 rewritten to gamma_affine m·Δγ (no draw-layer) — genuine;
+  check-8 rewritten to Hs telescoping + FTC + Rcurv=μ″ (OPTION a, NOT CM6 Σdy re-run) — genuine.
+- CHECK-8 RESOLVED (my prior theater-flag): FTC arm reds on additive getMP_raw+0.05; PSD arm reds
+  on concave perturb; both LIVE independently. telOk sub-cond IS tautological alone but ANDed with
+  2 live arms + reported separately ⇒ not carried by the tautology. Genuine internal_passivity analogue.
+- ALPHA/BETA MAPPING correct: engine runtime carries {x,y,alpha,beta}, getW=alpha/x, tradeUpdate
+  conserves alpha,beta (Lean Casimirs), getSNorm==Lean center=beta/(y-beta). Harness s = engine's
+  real shape, not synthetic. Checks 1/3/4/5/6/7/8 read genuine engine code, red on the RIGHT lines.
+- HONEST CEILING accurate+prominent (header L9-14 + run_all L42-43 + table footer); "does NOT make
+  Lean verified / does NOT prove engine IS the object — only AGREE numerically." No line phrased as
+  "proven aligned." Report-only SAFE: after both HARD gates (set -e aborts first), labeled, || true
+  + exit 0 double-belt, exit 0 confirmed even with FAILs. XREF 5/6 table-marked already-HARD-via-CM#.
+- THE HOLE (FLAG-OVERSELL): **CHECK 2 (invariant) is THEATER — cannot red under ANY engine mutation.**
+  Harness defines s.alpha=x*W, s.beta=y*(1-W) (L60) then checks (x-α)(y-β)==αβ. Substitute:
+  (x-xW)(y-y(1-W)) = x(1-W)·yW = αβ — algebraic identity in W,x,y, reads ZERO engine code. Confirmed:
+  getMP_raw×1.3, getW×1.1, dx×1.2, +0.05, concave — ALL leave line 2 green. Tagged NEW +
+  engine:(x,y,alpha,beta) pool, and footer claims "genuinely-NEW lines: 1,2,3,4,7,8" — line 2 is
+  NOT a genuine engine cross-check. The engine's invariant actually lives in tradeUpdate's α,β
+  conservation (which checks 3/7/8 already exercise). Line 2 is the operator's exact "a check that
+  can never red is theater" case. NOT a halt for report-only commit (it's honest elsewhere, 7/8 genuine)
+  but the NEW tag + footer line OVERSELL it: must be relabeled (drop from "genuinely-NEW", mark as
+  harness-construction-tautology / or re-point at tradeUpdate's conserved α,β) before any HARD promotion.
+- PROMOTION-TO-HARD caveat: lines 3 & 8 use finite-difference / Simpson with rel tol 1e-6 — fine for
+  report-only, but FD step h=t*1e-6+1 + tradeUpdate-walk could be marginally noisy; revisit determinism
+  before HARD. Line 2 must be fixed/removed before HARD regardless (a tautology HARD gate is pure theater).
+- Pattern (reinforces #NN "check names a Lean thm next to a coincidentally-equal quantity"): the
+  invariant case is the SHARPEST instance — the quantity isn't coincidentally equal, it's DEFINITIONALLY
+  equal by the harness's own construction of the inputs. Honest-label test for a "Lean⟺engine" line:
+  does mutating the engine red it? If no engine mutation can, the line tests the harness, not the engine.

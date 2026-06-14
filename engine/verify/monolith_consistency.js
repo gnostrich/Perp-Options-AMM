@@ -86,14 +86,25 @@ console.log('══════════════════════�
     '  ⚠RIDER: value-only; price==slope==getMP_raw on plain-Balancer (e^μ≡1, THE-gotcha)');
 }
 
-// ── (2) invariant (x−α)(y−β)=αβ on the pool ──────────────────────────────────
+// ── (2) invariant via tradeUpdate (NOT a harness tautology — skeptic afed2a389 fix) ──
+// The bare (x−α)(y−β)=αβ on the harness-built s is an algebraic identity of the
+// definitions α=x·w, β=y·(1−w) — it reads ZERO engine code. RE-POINTED at the engine's
+// tradeUpdate OUTPUT: the engine must (a) CONSERVE the Casimirs α,β across a trade and
+// (b) keep the post-trade reserves on (x−α)(y−β)=αβ. This reads tradeUpdate and REDS if
+// tradeUpdate breaks Casimir conservation or moves off the constant-product curve
+// (manager-verified: on the good engine |Δα|=|Δβ|=0, post-trade residual ~1e-11).
 {
-  const lhs = (s.x - s.alpha) * (s.y - s.beta);
-  const rhs = s.alpha * s.beta;
-  const err = Math.abs(lhs - rhs);
-  line(2, 'invariant', 'C1 invariant', '(x,y,alpha,beta) pool', 'NEW',
-    err < TOL,
-    '(x−α)(y−β)=' + lhs.toExponential(8) + ' αβ=' + rhs.toExponential(8) + ' |Δ|=' + err.toExponential(2));
+  let casOk = true, invOk = true, worst = '';
+  for (const D of [1234, -2000, 50000]) {
+    const s2 = E.tradeUpdate(s, D);
+    if (!s2) continue;                                  // rejected trade — not a break
+    if (Math.abs(s2.alpha - s.alpha) > TOL || Math.abs(s2.beta - s.beta) > TOL) { casOk = false; worst = 'Casimir@D=' + D; }
+    const res = (s2.x - s2.alpha) * (s2.y - s2.beta) - s2.alpha * s2.beta;
+    if (Math.abs(res) > Math.max(1, Math.abs(s2.alpha * s2.beta)) * 1e-9) { invOk = false; worst = 'inv@D=' + D; }
+  }
+  line(2, 'invariant (post-trade; Casimirs conserved)', 'C1 invariant / trade_conserves', 'tradeUpdate output', 'NEW',
+    casOk && invOk,
+    'tradeUpdate D∈{1234,−2000,50000}: Casimir α,β conserved=' + casOk + '; post-trade (x−α)(y−β)=αβ rel≤1e-9=' + invOk + (worst ? ' worst=' + worst : ''));
 }
 
 // ── (3) R_psd: μ″ = 2(t−β)/(αβ) ≥ 0 on t ≥ β ─────────────────────────────────
