@@ -25,6 +25,20 @@ with NO open hR (discharged by exchange_Rcurv_nonneg=R_psd; passive BECAUSE geom
 (self-contained/MonolithConstM status). Folded to formal/INDEX (commit 45b0115) as trusted-from-prover, INTERNAL HALF
 ONLY, self-contained/not-integrated. EXTERNAL solvency stays OPEN. Prior FLAGGED run 80cd7ba4 retained + CORRECTION.
 ⚠ **DETERMINATION CORRECTION 2026-06-14 (operator entry 240 caught it) — GH/Balancer conflation, 2nd framing overreach in a row:** this morning's "singular object μ = GH cumulant-generating function / Fisher metric / info-geometric base" is WRONG for the live curve. The live object (MonolithConstM/PHUnification) is the **plain v24 BALANCER constant-product** curve (invariant (x−α)(y−β)=αβ; μ=(t−β)³/3αβ; price=(y−β)²/αβ; R=μ″=2(t−β)/αβ≥0 on t≥β) — **NOT GH (demoted entry 28).** The GH-CGF/Fisher/info-geo framing came from the 2026-06-09 spec addendum written when GH was the curve; carried over without re-checking. SOLID for live curve: convex/Hessian-potential PH object (price=∇μ, R=∇²μ⪰0, proven). BAGGAGE (retracted): μ=GH-CGF, R=Fisher, dually-flat exponential family. OPEN (downgraded from asserted): whether the Balancer potential has ANY info-geo/CGF reading (cubic is convex only on t≥β ⇒ not a global CGF). Correction note: notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md. RE-EXAMINATION QUEUED for research-lead (re-derive structure for live Balancer+constant-m, strip GH baggage) + skeptic re-gate — SERIAL after the weld pass a7bba53b (do NOT spawn concurrent RL). Honest interim label: convex/Hessian-potential PH object on the Balancer constant-product curve; info-geo reading OPEN.
+✅ **DETERMINATION/LENS RESOLVED + FOLDED 2026-06-14** (entry 242): measure-backed info-geo (CGF/Fisher) DEAD for the
+Balancer curve (Marcinkiewicz); Hessian/dually-flat info-geo SURVIVES (no measure). Lens natural home = **inverse-temperature
+of the option-value WING law** (`value_m=(value_1)^m`, β_T=m·γ; colder=steeper) — Lean trusted-from-prover (LENS_THERMAL,
+run ca042134); WING-scoped, dilation-not-Esscher-tilt, pool lock intact. Folded to INDEX + feature_inventory #3/#14 (qualified per skeptic a00a14ea).
+✅ **CONSISTENCY LAYER LANDED 2026-06-14** (entry 243): `engine/verify/monolith_consistency.js` — active engine⟺Lean numeric
+bridge, **REPORT-ONLY (non-gating, exits 0)**, wired into run_all after the HARD gates. 8 checks, **genuinely 8/8 real** (check-2
+was theater [harness tautology], skeptic afed2a389 FLAGGED → re-pointed at tradeUpdate Casimir+invariant, manager red-confirmed
+it now FAILs on a tradeUpdate break). R6 scope-gate (a04465ae) + red-confirm (afed2a389) both done; riders all in code. HARD gates
+13+5 unchanged, HEAD 80f050e2 untouched. **Promotion to HARD requires a fresh skeptic red-confirm** (per afed2a389). Manager
+red-confirmed twice (getMP_raw break → 1/3/8 red; tradeUpdate break → 2/3/7/8 red).
+**NET (today's pending all cleared):** weld folded+CLEAR; lens home folded (Lean-backed, wing-scoped); determination corrected;
+Esscher #14 amended; consistency layer report-only-landed. OPEN frontier unchanged: solvency (B1/B3/B4 conditional), Q14 close-mechanic,
+Q10 A15 slippage. ⚠ MANAGER PATTERN (owned, operator-visible): 3 scope-overreaches today (GH conflation, un-composed weld, lens
+headlines) all caught by skeptic — tightening boundary-claims up front.
 
 1. Read `CLAUDE.md` (shared truth) and `.claude/agents/manager.md` (charter, now incl. rules R1–R7) in full before acting.
 2. The succession plan that defines this form: `notes/skeptic/VERDICT_MANAGER_TLDR_AND_SUCCESSION_2026-06-11.md` — R1 citation-or-no-build · R2 one-go-one-build · R3 control-inventory · R4 kill-means-silent · R5 verify-before-reassuring · R6 skeptic scope-gate on builds · R7 tables+simple-English to the operator.
