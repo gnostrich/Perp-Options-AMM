@@ -3215,3 +3215,27 @@ shared truth/relay. Task B.1 Lean (project ca042134) RUNNING = OUT OF SCOPE. Sou
   but headlining the kill of the superset (info-geometry). Symmetric twin of the positive-oversell (wing sold as
   whole value). Both = the boundary of the proven object drawn looser than the proof. Check BOTH directions:
   does the negative claim MORE-dead than proven? does the positive claim MORE-general than the object supports?
+
+## Claims mine-to-defend (verdict #R6-monolith — 2026-06-14, monolith_consistency.js scope-gate)
+VERDICT = **PASS-SCOPE** (dispatch OK) + 2 FLAG-OVERSELL riders the build MUST carry. The brief =
+new harness asserting each load-bearing MonolithConstM/PHUnification Lean FORMULA == engine number.
+- Read the actual `formal/aristotle_runs/MONOLITH_CONSTM/extracted/RequestProject/MonolithConstM.lean`.
+  Confirmed engine matches Lean: price=(y−β)²/(αβ)=getMP_raw (node-verified 21090.9…); invariant
+  (x−α)(y−β)=αβ; R_psd=2(t−β)/(αβ); g=m·γ (gLoc@1649); θ_tx=mode·(chosen/mode)^m (engine@1812).
+- (1) all 8 citation-backed (243/153#9/134). (2) zero scope-creep. (3) NO new user-facing knob — CONFIRMED.
+- THEATER FLAGS: **#8** (Σdy=0 no-free-money) is a DUPLICATE of existing CM6 in lens_selfcheck.js, NOT a
+  Lean-number cross-check (Lean internal_passivity = poolPotential telescoping, a different object) → theater
+  unless it checks the Lean passivity quantity. **#7** "engine warp ΔG=m·Δγ" — ENGINE HAS NO WARP-INTEGRAL FN
+  (only draw-layer framePool@3594); honest analogue = m·(γ_post−γ_pre) from tradeUpdate+gamma_affine. #5/#6
+  duplicate CM5/CM4 (already HARD).
+- FALSE-GREEN/RED traps: **#1** price==slope==getMP_raw ONLY because v28 pool is plain-Balancer (no e^μ);
+  it does NOT discriminate price-coord vs slope → would false-green on a GH/e^μ pool (THE-gotcha #12). Header
+  must say so. **#3 R_psd false-RED reproduced live**: engine exposes only getMP_raw (=price=poolPotential'),
+  NOT poolPotential; second-differencing the marginal gives price''=2/(αβ)≈1.25e-5 ≠ 0.727 (off 58000×).
+  Builder must first-difference the marginal / use closed form 2(t−β)/(αβ), never 2nd-diff the marginal.
+- report-only-first right for NEW checks (#1/#2/#3/#7); #5/#6/#8 must be marked "already-HARD via CM#" so a
+  green report-only line is never mistaken for the gate.
+- Pattern (reinforces #NN): a verify-gate can be theater by naming a Lean theorem next to an engine quantity
+  that is EITHER a different proven object (CM6 vs internal_passivity) OR nonexistent (engine "warp"). The
+  honest-label test for any "Lean ⟺ engine" line: does the engine actually compute THAT object's number, or a
+  coincidentally-equal / differently-proven one? price==slope coincidence is the canonical false-green here.
