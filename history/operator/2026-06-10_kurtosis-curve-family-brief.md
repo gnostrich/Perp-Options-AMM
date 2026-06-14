@@ -1919,3 +1919,11 @@ _Context: operator directs reconfirming WHICH encompassing structure is correct 
 _Context: operator catches that the "singular object = GH cumulant-generating function" framing is wrong — the live curve is NOT GH (GH demoted entry 28; HEAD = Balancer constant-product + constant-m lens). Manager confirms the conflation and re-opens the determination._
 
 > but we arent using gu curve right?
+
+
+---
+
+## Entry 241 — 2026-06-14 05:22 UTC
+_Context: operator corrects the entry-240 typo "gu" → "GH" (generalized-hyperbolic). Manager had already read it as GH and acted accordingly._
+
+> gh*
