@@ -1911,3 +1911,11 @@ _Context: operator authorizes commissioning research-lead to state the whole-exc
 _Context: operator directs reconfirming WHICH encompassing structure is correct (port-Hamiltonian vs information geometry vs whatever — several were explored), and to check the Aristotle history (aristotlelib store) as part of that determination, before building the unification on an assumed scaffold._
 
 > and reconfirm is port hamiltonian or information geometry whatever, since we went through some possible encompassing structures, check aristotle history also
+
+
+---
+
+## Entry 240 — 2026-06-14 05:17 UTC
+_Context: operator catches that the "singular object = GH cumulant-generating function" framing is wrong — the live curve is NOT GH (GH demoted entry 28; HEAD = Balancer constant-product + constant-m lens). Manager confirms the conflation and re-opens the determination._
+
+> but we arent using gu curve right?
