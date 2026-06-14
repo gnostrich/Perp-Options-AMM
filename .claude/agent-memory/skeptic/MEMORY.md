@@ -3131,3 +3131,31 @@ swept only note+prompt+2 MEMORY, honestly labelled, NO VERIFIED/AGREED solvency 
 - Pattern reinforced: #6 (motivation-cluster ruled [motivation-layer] verdict #9 STILL HOLDS — note honors it).
   New watch item: carried-OBLIGATION-field theorems with unconditional-sounding docstrings (solvent/solvent_forever)
   — provenance label lives in the FIELD not the theorem statement; a reader of just the theorem sig sees no premise.
+
+## VERDICT #ph-unification-internal (entry ~240, 2026-06-14) — FLAG-OVERSELL (fold-framing)
+Universal gate on the RETURNED internal-passivity Aristotle proof (task 80cd7ba4, project ad21b66d,
+committed 1b898cd) BEFORE fold to formal/INDEX. Artifact: PH_UNIFICATION_INTERNAL/.../PHUnification.lean
+(md5 d6bef416, 141 lines, self-contained — re-declares minimal TemporalAMM L10 / Exchange L49).
+VERDICT FILE: notes/skeptic/VERDICT_PH_UNIFICATION_INTERNAL_2026-06-14.md.
+- Token scan CLEAN (confirmed). Math NON-VACUOUS: internal_passivity gap = Σ Rcurv·eff², strict on real
+  data (CAS-probed). Weld(a) R_psd REAL — μ''=2(t−β)/αβ CAS-confirmed, nlinarith real, exchange_Rcurv_nonneg
+  = real `exact E.amm.R_psd` not re-stubbed. Weld(b) NO solvency leak — external stays `→` premise everywhere,
+  PH-4b honored. price=μ'(y) confirmed (object geometrically coherent).
+- THE HOLE (why FLAG): conjecture (note L159-160) promised headline `with hR DISCHARGED by R_psd (n=1)`.
+  Returned internal_passivity (L86) carries hR as OPEN free hypothesis; exchange_Rcurv_nonneg (L103, the
+  discharge) is STANDALONE, NEVER composed (grep-confirmed zero downstream); NO exchange_internal_passivity
+  joining them; trade_no_spontaneous_storage (note L158 lossless leg) ABSENT; trade_conserves proved (rfl)
+  but dangles unused. So file proves abstract-passivity(any nonneg Rcurv) + separately GH-curvature-nonneg,
+  but NOT "Temporal exchange is passive BECAUSE its geometry is PSD." The one-line `exact` the conjecture
+  itself called "the new content" (note L165-167) is the line that didn't get written.
+- This is precision-note #2 (passivity free-rider) RECURRING SHARPER — now un-welded in the INTERNAL half too,
+  not just over-credited in external. Same M=Fisher/rfl-class pattern in new costume: proven-SOUNDING headline
+  whose load-bearing JOIN is not in the Lean, composition left to the reader.
+- Coherence w/ prior CLEAR: consistent — I cleared the PLAN to weld (entries 237/239), weld did not arrive.
+  Statements drifted from conjecture (hypothesis stayed open).
+- TURNS TO CLEAR: either composed theorem (internal_passivity instantiated w/ exchange_Rcurv_nonneg as hR),
+  OR INDEX/relay label downgraded to state un-welded reality plain. PLUS self-contained + NOT-integrated
+  caveats (no lakefile, lone .lean in RequestProject = MonolithConstM status) required regardless.
+- Pattern #NN (new): "both halves present in one file, composition left to reader" sold as "X-witnessed."
+  When a gate's whole purpose is to verify a WELD, presence-of-both-pieces ≠ weld-made. Check for the actual
+  composing theorem with NO open hypothesis, not just that the discharge lemma exists nearby.
