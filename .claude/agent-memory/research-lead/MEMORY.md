@@ -1,5 +1,53 @@
 # MEMORY — research-lead
 
+### PH-UNIFICATION-COMPOSED — THE WELD LANDED (resolution of skeptic FLAG-OVERSELL) — 2026-06-14
+**TRIGGER:** skeptic `notes/skeptic/VERDICT_PH_UNIFICATION_INTERNAL_2026-06-14.md` = FLAG-OVERSELL + manager
+`formal/aristotle_runs/PH_UNIFICATION_INTERNAL/CORRECTION_2026-06-14.md`. The prior `PHUnification.lean`
+proved the PIECES but not the WELD: `internal_passivity` carried `hR` (port PSD) as a FREE OPEN hyp;
+`exchange_Rcurv_nonneg` (geometric PSD witness) composed NOWHERE; no `exchange_internal_passivity`;
+`trade_no_spontaneous_storage` ABSENT; `trade_conserves` dangling. So: abstract-passivity (open hR) +
+separately curvature-PSD, but NOT "this exchange is passive BECAUSE its geometry is PSD."
+**DELIVERED — composed file submitted + returned + AUDITED → `proved (trusted-from-prover)`.**
+Prompt `formal/prompts/aristotle_prompt_PH_unification_composed.md`. **Project `8ee75026-4340-4ccc-88e6-a50e99d87c3b`,
+task `5c2bccf2-9ec8-4f02-a066-80e06aeb49e3`.** `--wait` COMPLETE (~7m). Archive `/tmp/ph_unif_composed.tar.gz`
+→ folded `formal/aristotle_runs/PH_UNIFICATION_COMPOSED/` (tar + extracted PHUnification.lean md5
+`65e7bc31…`, 183 lines + ARISTOTLE_SUMMARY.md). Working-tree `formal/temporal_lean_verified/RequestProject/
+PHUnification.lean` updated to the proven version (same md5). NO git (manager folds/commits).
+**THE TWO NEW COMPOSED THEOREMS (the welds the skeptic named):**
+- `exchange_internal_passivity` (L125-130) — concrete `Exchange`, **NO open hR**. Signature premises =
+  only `E,H0,sup,eff,st,hst(domain ∀k E.amm.beta≤st k),N`. Body: `internal_passivity H0 sup
+  (fun k => deriv (deriv E.amm.poolPotential)(st k)) eff (exchange_Rcurv_nonneg E st hst) N` — the hR
+  slot is FILLED by the geometric witness; `Rcurv` IS the explicit geometry term (type-matches). The weld.
+- `trade_no_spontaneous_storage` (L138-145) — uses `(E.amm.trade_conserves D hD).2` to get
+  `hbeta:(E.trade D hD).amm.beta=E.amm.beta`, lifts `hst` to post-trade beta, applies
+  `exchange_internal_passivity` on `E.trade D hD`. `trade_conserves` is LOAD-BEARING (`rw [hbeta]`).
+- Also added `trade_poolPotential` (rfl) + `Exchange.trade` (the post-trade exchange). `exchange_solvency_split`
+  REWIRED: internal component now routes through `exchange_internal_passivity` (welded), external half
+  STILL a `→` arrow (PH-4b intact).
+**FULL AUDIT GATE — PASS (zero-cost; canonical-kernel confirm env-blocked):**
+- Out-of-scope byte-diff: 5 WT modules + lakefile + lean-toolchain + lake-manifest + .gitkeep BYTE-IDENTICAL.
+  Only PHUnification.lean changed. Toolchain v4.28.0 matches.
+- Submitted(sorry)→returned diff = ONLY the 4 sorry placeholders filled; ZERO statement drift.
+- Token scan CLEAN: no sorry/admit/native_decide/sorryAx/unsafe/opaque; no `axiom` decl; no decide. ("extern"
+  hits = the word "external" in comments only.)
+- COMPOSITION grep CONFIRMED: `exchange_internal_passivity` body calls `exchange_Rcurv_nonneg` (L130) +
+  signature has NO hR/PSD premise; `trade_no_spontaneous_storage` body calls `trade_conserves` (L142). The
+  exact thing the skeptic re-checks — genuinely composed, not two adjacent lemmas.
+- #print axioms: SUMMARY lists ALL 13 named theorems (incl. the 2 new) = {propext,Classical.choice,Quot.sound}.
+  (Streamed CLI echo truncated the 2 new ones; archive summary has them explicit.)
+- Math re-derived: bound `Hs N ≤ H0+Σsupplied` is `internal_passivity` instantiated ⇒ non-vacuous (skeptic
+  already confirmed strict on non-degenerate data); geometry term is the genuine μ″ curvature; domain hyp
+  exactly `∀k E.amm.beta≤st k`. Intended claim = Lean claim.
+NO emendation needed (clean as returned). NO statement weakened / hyp dropped / conclusion strengthened.
+**VERDICT: `proved (trusted-from-prover)` — NOT verified (env-blocked, no local canonical kernel).**
+**HONEST LABELS (for INDEX/relay):** trusted-from-prover ≠ verified. Self-contained (re-declares minimal
+TemporalAMM/Exchange, NOT canonical types) + NOT wired into canonical project build (MonolithConstM status).
+EXTERNAL solvency half STAYS OPEN/conditional (PH-4b) — `solvency_of_coverage`/`coverage_iff_solvency`/
+`exchange_solvency_split` keep `hcov` as `→` premise, never discharged. The weld is INTERNAL-half only.
+**HAND TO MANAGER for independent audit + skeptic RE-GATE before fold to formal/INDEX.** NO git.
+
+---
+
 ### PH-UNIFICATION — WHOLE EXCHANGE AS ONE OBJECT, solvency = passivity-under-admissible-inputs (operator entries 237/238 "sure get done by morning") — 2026-06-13 OVERNIGHT
 **GOAL:** state precisely + prove-what's-provable that the whole exchange is ONE pure-math object,
 with solvency = the passivity-under-admissible-inputs predicate and B1/B3/B4 surfaced as explicit
