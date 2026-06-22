@@ -1082,7 +1082,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
         <div class="card-subtitle" id="hdr-pool-spot">spot $—</div>
       </div>
       <div class="inline-banner">
-        <span>Composite-Ray AMM · Identities I–V (trusted-from-prover)</span>
+        <span>Composite-Ray AMM · trusted-from-prover</span>
       </div>
 
       <div class="tabs" role="tablist">
@@ -2428,7 +2428,7 @@ const Store = (function() {
   // Constant slope-multiplier knob m (static; sets the steepness m·γ of the
   // lensed read layer — mark/funding/settlement). READ-LAYER only: never touches
   // the pool / tradeUpdate / arbitrageToOracle (L4 forward-read-only).
-  function setM(t) { if (t > 0 && isFinite(t)) state.m = t; }
+  function setM(t) { if (isFinite(t)) state.m = Math.min(6, Math.max(1, t)); }
   function setTickHours(h) { if (h > 0) state.tick_hours = h; }
   // Perp mark setter — MVP-collapsed to oracle; survives in code only
   // for the carved-slice P&L (a perp, not an option). No UI hook in
@@ -2820,8 +2820,8 @@ document.getElementById('kappa-input').addEventListener('change', (e) => {
 ['change','input'].forEach(ev => {
   const el = document.getElementById('m-input');
   if (el) el.addEventListener(ev, (e) => {
-    const v = parseFloat(e.target.value);
-    if (v > 0 && isFinite(v)) { Store.setM(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
+    let v = parseFloat(e.target.value);
+    if (isFinite(v)) { v = Math.min(6, Math.max(1, v)); if (ev === 'change') e.target.value = v; Store.setM(v); if (typeof previewBand === 'function') previewBand(); if (typeof render === 'function') render(); if (Viz) Viz.drawAll(Store.state); }
   });
 });
 document.getElementById('tick-hours').addEventListener('change', (e) => {
