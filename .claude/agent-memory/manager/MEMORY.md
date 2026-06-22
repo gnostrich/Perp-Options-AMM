@@ -13,6 +13,19 @@ side, so deviation from literal "main wins" is intentional: main was the STALE s
 the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
 work this session still lands on the working branch; re-merge to main on request.
 
+🟡 **OPEN ESCALATION 2026-06-22 — CHART-2 DEPICTION (operator product call, AWAITING REPLY):** operator entry 266
+"the mode thing in second chart isnt reaching the top (1)... beats the purpose" — wants chart-2 mode peak AT 1.
+I built peak-normalization (Option A, md5 6a23f93d) → mode hits 1 BUT tester aef7e07f FLAG-FAIL: peak-normalization
+mathematically CANCELS the kurtosis knob (normalized smooth-paste value = sNorm/θ, g=m·γ cancels; pixel-identical
+m=1 vs m=3, manager re-derived ×2). This COLLIDES with standing entry-226 ("see steeper for higher vol"). Escalated
+3 options: **A** mode=1 but knob invisible (built, broken-for-purpose); **B** absolute curve = knob visible but mode
+<1 (prior shipped behavior, operator rejected this turn); **C (my pick)** plot normalized WING POWER-LAW (mode/θ)^(m·γ)
+→ mode=1 AND steepens with m (verified: θ1.5 m1→0.67/m3→0.30/m6→0.09), trade = chart shows steepness-shape not
+absolute $ value. **Held: HEAD reverted to 9f1e625b (=main, clean); Option-A edit DISCARDED (not committed). No engine
+change until operator picks A/B/C.** Tester FLAG evidence committed b2618bf (evidence/v28_chart2_norm/, DIFF_LEDGER
+row CHART2-NORM-CANCELS-KURTOSIS). NOTE: prior caption fix (mode <1) was built on Option-B framing; if operator picks
+C, caption flips to "normalized steepness shape, peak=1".
+
 ⚠ **OVERNIGHT 2026-06-13 — TWO research-lead agents running concurrently (RECONCILE at completion, write-collision risk on RL MEMORY + conjecture note):**
 (1) `a36a09d100e742a34` — PH-unification whole-exchange conjecture (entry 238 brief, PH ASSUMED as scaffold).
 (2) `a790024277a0143ed` — structure-reconfirm-FIRST (entry 239: PH vs info-geometry/free-potential; check Aristotle history/aristotlelib) THEN unification on the reconfirmed structure. This one is more aligned with the operator's latest instruction.
