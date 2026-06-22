@@ -1415,12 +1415,12 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> puts (post-trade)</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-temporal);"></span> calls (live)</div>
               <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> calls (post-trade)</div>
-              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #888;"></span> mark = 1 (mode)</div>
+              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #888;"></span> mark = 1 (full exercise cap)</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-short-fg);"></span> sold strike</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-long-fg);"></span> bought strike</div>
             </div>
             <div class="caption">
-              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: mark ψ = min(θ, θ_m)/max(θ, θ_m), peaks at 1 at the mode strike θ_m = sNorm. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
+              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: mark ψ = lensed smooth-paste option value (steepness g = m·γ); it peaks at the mode strike θ_m = sNorm at 1/((g+1)·((g+1)/g)^g) &lt; 1 — NOT at 1 — and reaches 1 only at full exercise. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
             </div>
           </div>
 

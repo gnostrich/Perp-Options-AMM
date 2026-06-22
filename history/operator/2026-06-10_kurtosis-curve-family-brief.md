@@ -1991,3 +1991,11 @@ _Context: standing paper requirement — every symbol must be explained nearby (
 _Context: operator authorizes merging the working branch into main (so other sessions see the work), if nondisruptive. Manager runs the §6.2 reconcile→re-gate→squash-merge→retain-branch routine._
 
 > i'd like this on main, in case i open other sessions, if that's nondisruptive
+
+
+---
+
+## Entry 249 — 2026-06-14 (post-caption-fix) UTC
+_Context: operator directs pushing the caption fix to main and grants standing autonomy on all git/GitHub operations (no more asking)._
+
+> push to main and dont ask me about any github stuff

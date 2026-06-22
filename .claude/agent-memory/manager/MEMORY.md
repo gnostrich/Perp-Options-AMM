@@ -2,6 +2,15 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+✅ **MAIN MADE CURRENT 2026-06-14 (operator entry 248):** squash-merged PR #26 (branch→main, `bca93f0`).
+main HEAD md5 `80f050e2` (constant-m; branch now `aa1e5d05` = chart-caption depiction fix, behaviorally identical, re-merge to main pending), byte-identical to the
+branch; gates 13+5 green in-branch; main's #25 (referee response + off-ATM Lean) reconciled IN first (non-engine
+conflicts in 4 agent-MEMORYs + DIFF_LEDGER resolved to OURS = current branch truth — branch is the 434-ahead live
+side, so deviation from literal "main wins" is intentional: main was the STALE side). Branch
+`claude/exciting-archimedes-txs2wx` RETAINED as backup (§6.2.7). Squash ⇒ main has one consolidation commit, not
+the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
+work this session still lands on the working branch; re-merge to main on request.
+
 ⚠ **OVERNIGHT 2026-06-13 — TWO research-lead agents running concurrently (RECONCILE at completion, write-collision risk on RL MEMORY + conjecture note):**
 (1) `a36a09d100e742a34` — PH-unification whole-exchange conjecture (entry 238 brief, PH ASSUMED as scaffold).
 (2) `a790024277a0143ed` — structure-reconfirm-FIRST (entry 239: PH vs info-geometry/free-potential; check Aristotle history/aristotlelib) THEN unification on the reconfirmed structure. This one is more aligned with the operator's latest instruction.
@@ -66,7 +75,7 @@ empirical). On "do a pass": fold #3/#4/#6 clean, #2/#5 w/ caveats, leave #1; rec
 Mechanical state (fact-with-pointer): HEAD = `engine/builds/HEAD_temporal_mvp_v27_wkurtosis.html` md5 `928cde1cccb0f35fdc9a23a7634414c8`, gates 22/22 (CLAUDE.md §8, BUILD_LINEAGE, INTEGRITY). Tree clean at wipe. No dispatches in flight except the skeptic wipe-audit. First act after seed: await operator instruction — no self-assigned work.
 
 ## ★★★ CURRENT STATE 2026-06-12 EVENING (supersedes the seed line above) — read `docs/COMPONENT_REGISTER.md` first
-**HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `80f050e2…`** (comment-cleanup of `8f897edc` per operator entry 234, behaviorally identical; constmult source 8f897edc retained) (**CONSTANT SLOPE-MULTIPLIER lens,
+**HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `aa1e5d05…`** (chart-caption depiction fix 2026-06-14 of `80f050e2`, behaviorally identical; 80f050e2 = comment-cleanup of `8f897edc` per operator entry 234, behaviorally identical; constmult source 8f897edc retained) (**CONSTANT SLOPE-MULTIPLIER lens,
 promoted 2026-06-13, operator entries 229/231**): plain v24 Balancer pool (byte-identical) + a single scalar knob
 `m` — lensed option-value exponent `g_loc(K)=m·γ` CONSTANT at every strike (m=1=plain v24; bigger m = steeper
 everywhere AND trade further out via frozen `θ_tx=mode·(chosen/mode)^m`); settle at the CHOSEN strike. REPLACES the
