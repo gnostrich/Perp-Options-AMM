@@ -24,7 +24,7 @@ Prod port targets:
              - EXTEND:  settlements/perp/ (frozen attribution + leveraged close)
              - NEW:     funding loop (per-strike accrual, per-leg aggregation)
 
-Math reference: Aristotle-verified Lean identities I–V (no sorry, std axioms).
+Math reference: Lean identities I–V, trusted-from-prover (Aristotle-compiled, std axioms; not locally re-verified).
 Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
 ═══════════════════════════════════════════════════════════════════════════════
 -->
@@ -1082,7 +1082,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
         <div class="card-subtitle" id="hdr-pool-spot">spot $—</div>
       </div>
       <div class="inline-banner">
-        <span>Composite-Ray AMM · Lean-validated Identities I–V</span>
+        <span>Composite-Ray AMM · Identities I–V (trusted-from-prover)</span>
       </div>
 
       <div class="tabs" role="tablist">
@@ -1342,7 +1342,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           </div>
         </div>
         <div class="panel-section">
-          <div class="panel-section-title">Math Reference (Lean-validated)</div>
+          <div class="panel-section-title">Math Reference (trusted-from-prover)</div>
           <div style="font-size: 10px; line-height: 1.7; color: var(--c-text-muted); padding: 4px 12px;">
             <div><span class="badge">I/II</span> V = N · mark(θ*) · 2 sinh(δ)</div>
             <div><span class="badge">III</span> V = N · mark(θ*) · 2 cosh(δ)</div>
@@ -1566,7 +1566,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
 </main>
 
 <div class="footer-note">
-  Temporal · Composite-Ray AMM MVP · Lean-validated I–V (no sorry) ·
+  Temporal · Composite-Ray AMM MVP · Identities I–V trusted-from-prover (Aristotle-compiled, not locally re-verified) ·
   <a href="https://docs.temporal.exchange" target="_blank" rel="noreferrer">docs</a>
 </div>
 
@@ -3785,8 +3785,13 @@ const Viz = (function() {
       if (phiDeg < 0 || phiDeg > phiMaxDeg) return;
       const sNormLocal = snap.sNorm;
       const w = theta > sNormLocal ? 'call' : 'put';
-      const m = Engine.mark(w, theta, sNormLocal);
-      const [px, py] = toPx(phiDeg, m);
+      // lensed smooth-paste mark (same value the live curve uses), inlined so it
+      // does not depend on drawState's closure-local psiAt/gAt (out of scope here).
+      const g = Engine.gLoc(state.pool, theta, state.m);
+      let mk;
+      if (!isFinite(g) || g <= 0) { mk = Math.min(1, w === 'call' ? sNormLocal / theta : theta / sNormLocal); }
+      else { const v = Engine.markLensed(w, theta, sNormLocal, g); mk = (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0; }
+      const [px, py] = toPx(phiDeg, mk);
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(px, py, 3.5, 0, 2 * Math.PI); ctx.fill();
       ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.4;
