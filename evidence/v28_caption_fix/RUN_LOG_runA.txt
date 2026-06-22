@@ -1,0 +1,34 @@
+=== CAPTION-FIX SMOKE  run A  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=aa1e5d0593ad36f3581178bca986be3a
+--- RENDERED LEGEND ITEMS ---
+  [0] puts (live)
+  [1] puts (post-trade)
+  [2] calls (live)
+  [3] calls (post-trade)
+  [4] mark = 1 (full exercise cap)
+  [5] sold strike
+  [6] bought strike
+--- mark=1 LEGEND LINE: "mark = 1 (full exercise cap)"
+--- RENDERED CAPTION ---
+  X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: mark ψ = lensed smooth-paste option value (steepness g = m·γ); it peaks at the mode strike θ_m = sNorm at 1/((g+1)·((g+1)/g)^g) < 1 — NOT at 1 — and reaches 1 only at full exercise. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
+CHECK legend new-text="mark = 1 (full exercise cap)": PASS  (stale "(mode)" present: false)
+CHECK caption smooth-paste-text present, no min/max stale: PASS  (stale present: false)
+--- DEFAULT STATE ---
+  w=0.5  gamma=1  m(input)=1  mode(sNorm)=1  g=m·γ=1
+  markLensed(call,mode)=0.250000  markLensed(put,mode)=0.250000
+  closed-form smooth-paste 1/((g+1)·((g+1)/g)^g)=0.250000
+--- PIXEL PEAK AT MODE COLUMN (canvas-pricing, phi=45deg) ---
+  mode column x=466  pink-put apex y=248 => psi=0.2532  cyan-call y=248 => psi=0.2532
+CHECK analytic peak 0.2500 < 1 (not at full-exercise cap): PASS
+CHECK analytic peak == closed-form smooth-paste: PASS
+--- KNOB SWEEP (SLOPE MULT m) ---
+  chart-1 (pool) hashes: m1=44c64875 m3=44c64875 m6=44c64875  (expect IDENTICAL — pool inert to m)
+  chart-2 (mark) hashes: m1=98ff38f4(lit 8352) m3=b4519ffb(lit 8242) m6=95ce223d(lit 8100)
+  chart-2 mode-peak (g,psi): m1=(g1,0.2500) m3=(g3,0.1055) m6=(g6,0.0567)
+CHECK chart-1 inert to m: PASS
+CHECK chart-2 steepens with m (distinct render + mark changes): PASS
+CHECK pixel-apex(0.2532) matches analytic peak(0.2500) within 0.02: PASS
+--- ERRORS ---
+  console errors: 0
+  page errors:    0
+  dialogs: 0

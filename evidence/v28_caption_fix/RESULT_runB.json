@@ -1,0 +1,65 @@
+{
+  "run": "B",
+  "md5": "aa1e5d0593ad36f3581178bca986be3a",
+  "legend": {
+    "markLine": "mark = 1 (full exercise cap)",
+    "legendOK": true,
+    "legendStale": false
+  },
+  "caption": {
+    "text": "X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: mark ψ = lensed smooth-paste option value (steepness g = m·γ); it peaks at the mode strike θ_m = sNorm at 1/((g+1)·((g+1)/g)^g) < 1 — NOT at 1 — and reaches 1 only at full exercise. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.",
+    "capNewOK": true,
+    "capStale": false
+  },
+  "peak": {
+    "analyticCall": 0.25,
+    "analyticPut": 0.25,
+    "closedForm": 0.25,
+    "g": 1,
+    "mInput": 1,
+    "psiFromPixel": 0.2532467532467532,
+    "peakNotOne": true,
+    "peakNear38": true,
+    "pixelMatch": true
+  },
+  "knob": {
+    "chart1": {
+      "m1": "44c64875",
+      "m3": "44c64875",
+      "m6": "44c64875",
+      "inert": true
+    },
+    "chart2": {
+      "m1": {
+        "lit": 8352,
+        "hash": "98ff38f4"
+      },
+      "m3": {
+        "lit": 8242,
+        "hash": "b4519ffb"
+      },
+      "m6": {
+        "lit": 8100,
+        "hash": "95ce223d"
+      },
+      "steepens": true
+    },
+    "marks": {
+      "m1": {
+        "g": 1,
+        "peak": 0.25
+      },
+      "m3": {
+        "g": 3,
+        "peak": 0.10546875000000003
+      },
+      "m6": {
+        "g": 6,
+        "peak": 0.056652779514852265
+      }
+    }
+  },
+  "errors": [],
+  "dialogs": [],
+  "verdict": "PASS"
+}
