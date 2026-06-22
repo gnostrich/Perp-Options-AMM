@@ -13,7 +13,16 @@ side, so deviation from literal "main wins" is intentional: main was the STALE s
 the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
 work this session still lands on the working branch; re-merge to main on request.
 
-🟡 **OPEN ESCALATION 2026-06-22 — CHART-2 DEPICTION (operator product call, AWAITING REPLY):** operator entry 266
+✅ **RESOLVED 2026-06-22 — CHART-2 DEPICTION via Option C (build `dd6fb955`, merging to main):** operator chose action
+("simple english and wy is tis not fixed already" = fix it). Built Option C: chart-2 plots the normalized steepness
+SHAPE `(mode/θ)^(m·γ)` → mode peak=1 at the top AND wings steepen with m (both entry-226 + entry-266 satisfied).
+Tester a74fcf79 PASS 6/6 byte-stable (apex 1.0032; m=1/3/6 chart PNGs DISTINCT e5789975/aa411091/6cf4cd81,
+width-at-half 345→123→63; markers on curve; 0 errors); manager re-derived peak=1 ∀m + wing-steepening; gates 13+5
+green, blobs canonical. DIFF_LEDGER entry for dd6fb955 written (tester a38b448e), CHART2-NORM-CANCELS-KURTOSIS row
+CLOSED. Draw-layer only; markLensed/gLoc/pool byte-unchanged. Option-A (peak-normalization) DISCARDED (cancelled the
+knob: normalized smooth-paste = sNorm/θ, m-free). [Superseded note below kept for trail.]
+
+🟡 ~~OPEN ESCALATION 2026-06-22 — CHART-2 DEPICTION (operator product call, AWAITING REPLY):~~ **[CLOSED by Option C above.]** operator entry 266
 "the mode thing in second chart isnt reaching the top (1)... beats the purpose" — wants chart-2 mode peak AT 1.
 I built peak-normalization (Option A, md5 6a23f93d) → mode hits 1 BUT tester aef7e07f FLAG-FAIL: peak-normalization
 mathematically CANCELS the kurtosis knob (normalized smooth-paste value = sNorm/θ, g=m·γ cancels; pixel-identical

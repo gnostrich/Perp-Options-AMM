@@ -1,0 +1,141 @@
+{
+  "run": "A",
+  "md5": "dd6fb9557c251df222a4f918970576dd",
+  "checks": {
+    "peak_eq_1_at_mode": {
+      "apexPsi": 1.0032,
+      "apexY": 17,
+      "yPsi1": 18,
+      "apexAtMode": true,
+      "analyticPeakShape": 1,
+      "pass": true
+    },
+    "wings_fall_off": {
+      "putWingPsi": 0.4091,
+      "callWingPsi": 0.4058,
+      "analyticShapePut": 0.4,
+      "analyticShapeCall": 0.4,
+      "pass": true
+    },
+    "mode_line_meets_apex_at_top": {
+      "apexY": 17,
+      "yPsi1": 18,
+      "gap_px": 1,
+      "pass": true
+    },
+    "kurtosis_visible": {
+      "chart2_png_md5": {
+        "m1": "e5789975db12d88bf2ce43fb3f4dd1d0",
+        "m3": "aa41109152ed81c9b676985330a6d0a2",
+        "m6": "6cf4cd819ac719746c11ddb3ba34da11"
+      },
+      "md5_m1_neq_m3": true,
+      "md5_m3_neq_m6": true,
+      "md5_all_distinct": true,
+      "widthAtHalf": {
+        "m1": 345,
+        "m3": 123,
+        "m6": 63
+      },
+      "width_monotone_decrease": true,
+      "shapeCall": {
+        "m1": 0.4,
+        "m3": 0.064,
+        "m6": 0.0041
+      },
+      "shapeCall_decrease": true,
+      "shapePut": {
+        "m1": 0.4,
+        "m3": 0.064,
+        "m6": 0.0041
+      },
+      "shapePut_decrease": true,
+      "shapeDeep": {
+        "m1": 0.2,
+        "m3": 0.008,
+        "m6": 0.00006
+      },
+      "apexPsi": {
+        "m1": 1.0032,
+        "m3": 1,
+        "m6": 1
+      },
+      "peak_stays_1": true,
+      "NOTE": "CRITICAL: m=1 and m=3 chart-2 PNG md5 MUST DIFFER (last build they were identical = the bug). Shape must STEEPEN with m (width down, wing values down) while peak stays at 1.",
+      "pass": true
+    },
+    "markers_on_curve": {
+      "bandOpened": true,
+      "red": {
+        "cx": 570,
+        "cy": 129,
+        "n": 40,
+        "phi": 56.25,
+        "dotPsi": 0.6396,
+        "curveShapeHere": 0.6647,
+        "dPsi": 0.0251
+      },
+      "green": {
+        "cx": 336,
+        "cy": 140,
+        "n": 38,
+        "phi": 30.94,
+        "dotPsi": 0.6039,
+        "curveShapeHere": 0.5954,
+        "dPsi": 0.0085
+      },
+      "tol_psi": 0.04,
+      "pass": true
+    },
+    "zero_errors": {
+      "pageerrors": [],
+      "console_errors": [],
+      "dialogs": [],
+      "pass": true
+    }
+  },
+  "kurt": {
+    "1": {
+      "apexPsi": 1.0032,
+      "apexY": 17,
+      "widthAtHalf": 345,
+      "curvePx": 2111,
+      "shapePut": 0.4,
+      "shapeCall": 0.4,
+      "shapeDeep": 0.2,
+      "gMode": 1,
+      "peakShape": 1,
+      "png_md5": "e5789975db12d88bf2ce43fb3f4dd1d0"
+    },
+    "3": {
+      "apexPsi": 1,
+      "apexY": 18,
+      "widthAtHalf": 123,
+      "curvePx": 2368,
+      "shapePut": 0.064,
+      "shapeCall": 0.064,
+      "shapeDeep": 0.008,
+      "gMode": 3,
+      "peakShape": 1,
+      "png_md5": "aa41109152ed81c9b676985330a6d0a2"
+    },
+    "6": {
+      "apexPsi": 1,
+      "apexY": 18,
+      "widthAtHalf": 63,
+      "curvePx": 2522,
+      "shapePut": 0.0041,
+      "shapeCall": 0.0041,
+      "shapeDeep": 0.00006,
+      "gMode": 6,
+      "peakShape": 1,
+      "png_md5": "6cf4cd819ac719746c11ddb3ba34da11"
+    }
+  },
+  "chart2_png_md5": {
+    "1": "e5789975db12d88bf2ce43fb3f4dd1d0",
+    "3": "aa41109152ed81c9b676985330a6d0a2",
+    "6": "6cf4cd819ac719746c11ddb3ba34da11"
+  },
+  "verdict": "PASS"
+}

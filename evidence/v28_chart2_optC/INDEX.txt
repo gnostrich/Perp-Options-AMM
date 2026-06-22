@@ -1,0 +1,50 @@
+CHART-2 OPTION C SMOKE — evidence index
+========================================
+Build: engine/builds/HEAD_temporal_mvp_v28_lens.html  md5 dd6fb9557c251df222a4f918970576dd
+       (WORKING-TREE, NOT pushed; build UNCHANGED pre/post — tester is READ-ONLY on engine)
+Harness: engine/verify/pw_v28_chart2optC_smoke.mjs  (single A|B arg)
+Date: 2026-06-22  Tester live Playwright (headless chromium /opt/pw-browsers/chromium-1194)
+
+CHANGE UNDER TEST (Option C, display-only):
+  Chart-2 "MARK ACROSS STRIKES" (renderPricingFrame/drawState/drawStrikeMark) now plots the
+  NORMALIZED STEEPNESS SHAPE — psiShape (L3737): r = sNorm/θ (call) or θ/sNorm (put), then r^g,
+  g = m·γ. Mode peak r=1 ⇒ 1; wings r<1 ⇒ r^g steepen as m rises. drawStrikeMark (L3804) uses the
+  SAME r^g. Replaces the prior peak-normalized value plot (markLensed/peakNorm) whose g cancelled
+  EXACTLY (sNorm/θ call, θ/sNorm put — g-free) ⇒ m-invisible, m=1≡m=3 PNG md5 (the prior bug).
+
+VERDICT: PASS x2 byte-stable. All 6 checks PASS in run A AND run B. RESULT_runA==RESULT_runB
+         (modulo run label). Per-m chart-2 PNGs byte-identical A/B and DISTINCT across m.
+
+PER-m CHART-2 PNG md5 (the critical kurtosis-visible proof — MUST differ, last build identical):
+  m=1  e5789975db12d88bf2ce43fb3f4dd1d0   widthAtHalf=345  apexPsi=1.0032
+  m=3  aa41109152ed81c9b676985330a6d0a2   widthAtHalf=123  apexPsi=1.0
+  m=6  6cf4cd819ac719746c11ddb3ba34da11   widthAtHalf=63   apexPsi=1.0
+  -> 3 DISTINCT md5s. m=1 != m=3 (was identical last build). Width collapses 345->123->63 as m
+     rises (steeper/narrower), apex stays at 1.00. THE KNOB IS NOW VISIBLE ON CHART-2.
+  NOTE: m=1 md5 e5789975 == the prior FAIL build's m=1 chart — expected, r^1 is unchanged at m=1;
+        what changed is m=3/m=6 now DIFFER from it.
+
+ANALYTIC SHAPE r^g (curve & markers share this; ground truth, not pixels):
+  shapeCall(θ2.5): m1=0.4   m3=0.064  m6=0.0041     (decreasing — steeper)
+  shapePut(θ0.4) : m1=0.4   m3=0.064  m6=0.0041     (decreasing — steeper)
+  shapeDeep(θ5)  : m1=0.2   m3=0.008  m6=0.00006
+
+CHECK RESULTS (both runs):
+  1 peak_eq_1_at_mode         PASS  pixel apex psi=1.0032 @x466 (y17 vs y=1.00 tick y18, 1px), at φ_m; analytic peakShape=1.0
+  2 wings_fall_off            PASS  putWing(22°)=0.4091  callWing(68°)=0.4058 fall from 1 toward 0
+  3 mode_line_meets_apex_top  PASS  apex y17 vs y@psi1=18, gap 1px
+  4 kurtosis_visible          PASS  3 distinct PNG md5; width 345>123>63; shape decreases; peak stays 1
+  5 markers_on_curve          PASS  red(sold θ1.5 φ56.25° $120k) dotPsi 0.640 vs curveShape 0.665 dPsi 0.025;
+                                    green(bought θ0.6 φ30.94° $48k) dotPsi 0.604 vs 0.595 dPsi 0.0085 (both <= dot radius)
+  6 zero_errors               PASS  0 console / 0 pageerror / 0 dialog x2
+
+FILES:
+  RESULT_run{A,B}.json     full check JSON (byte-identical modulo run label)
+  RUN_LOG_run{A,B}.txt      run logs (byte-stable)
+  {A,B}_chart2_m1.png       chart-2 at SLOPE MULT M=1 (broad tent, apex 1.00)
+  {A,B}_chart2_m3.png       chart-2 at M=3 (narrower, apex 1.00)
+  {A,B}_chart2_m6.png       chart-2 at M=6 (sharp spike, apex 1.00)
+  {A,B}_chart2_band_markers.png  chart-2 (m=1) with band open: green bought-put + red sold-call ON the curve
+
+GATES (HEAD build, run_all green): lens_selfcheck 13 PASS / a16_atm_gate 5 PASS (+ monolith 8/8 report-only).
+FILE-SAFETY: webp L74 ab663f5c…, svg L1060 c505b08a… canonical; 3 scripts parse; longest script line 603 chars.

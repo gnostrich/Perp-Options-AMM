@@ -266,7 +266,7 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `9f1e625b…` = chart-caption depiction
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `dd6fb955…` = chart-2 Option-C 2026-06-22 of `9f1e625b`: chart-2 "MARK ACROSS STRIKES" now plots the **normalized steepness SHAPE** `(mode/θ)^(m·γ)` so the mode peak=1 at the top AND wings steepen as `m` rises — replaces a broken peak-normalization that cancelled the kurtosis knob [normalized smooth-paste = sNorm/θ, m-free]; draw-layer only, engine/settlement math byte-unchanged, gates 13+5 green, tester PASS 6/6 byte-stable [m=1/3/6 chart PNGs distinct, width-at-half 345→123→63]; resolves operator entries 226 "steeper for higher vol" + 266 "mode must reach 1" together. Prior `9f1e625b…` = chart-caption depiction
   fix 2026-06-14 of `80f050e2` [legend/caption corrected: mark=1 is the full-exercise cap not the mode, mode peak
   <1 = the smooth-paste value; 2 text lines, behaviorally identical, gates 13+5 green]; `80f050e2` = comment-cleanup
   of `8f897edc` per operator entry 234, behaviorally identical: dead √-kernel comments→constant-m + gate-detector
