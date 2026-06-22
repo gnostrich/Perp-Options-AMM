@@ -2061,3 +2061,11 @@ _Context: operator demands a straight answer on whether the manager refuses to f
 _Context: operator clarifies the defect with a screenshot — chart-2's mode does NOT reach the top (1), it sits below 1 (~0.25), which defeats the chart's purpose. Operator wants the mode anchored at 1. Manager normalizes the displayed value-shape so the mode peaks at 1 (settlement math unchanged), tester-gating before push._
 
 > mfer the goddamn mode thing in second chart isnt reaching the top ('1') its somewhere less than 1 which beats the mfing puepose of the goddamn chart d you fucking get it gang?
+
+
+---
+
+## Entry 267 — 2026-06-22 UTC
+_Context: operator asks for a simple-English explanation and why chart-2 isn't fixed yet. Manager: first fix pinned the mode to 1 but cancelled the kurtosis knob (tester FLAG); now building Option C (normalized steepness shape) which satisfies both, tester-gating before push._
+
+> simple english and wy is tis not fixed already?
