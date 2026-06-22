@@ -1,0 +1,54 @@
+{
+  "run": "B",
+  "md5": "9f1e625b168309b9097c26cb84744e77",
+  "baseline": {
+    "fieldVal": "1",
+    "stateM": 1,
+    "peak": 0.25,
+    "gamma": 1,
+    "g": 1
+  },
+  "check1_below": {
+    "fieldVal": "1",
+    "stateM": 1,
+    "peak": 0.25,
+    "pixelPink": 0.2532467532467532,
+    "PASS": true
+  },
+  "check2_fieldSnap1": {
+    "fieldVal": "1",
+    "PASS": true
+  },
+  "check3_above": {
+    "fieldVal": "6",
+    "stateM": 6,
+    "peak": 0.05665277951485227,
+    "pixelPink": 0.06168831168831169,
+    "PASS": true
+  },
+  "check4_inrange": {
+    "fieldVal": "3",
+    "stateM": 3,
+    "peak": 0.10546875000000003,
+    "pixelPink": 0.11038961038961038,
+    "PASS": true
+  },
+  "check5_header": {
+    "badge": "Composite-Ray AMM · trusted-from-prover",
+    "PASS": true
+  },
+  "check6_markers": {
+    "red": 90,
+    "green": 85,
+    "redPsi": 0.12337662337662338,
+    "greenPsi": 0.11363636363636363,
+    "PASS": true
+  },
+  "errors": {
+    "console": 0,
+    "page": 0,
+    "list": []
+  },
+  "dialogs": [],
+  "verdict": "PASS"
+}

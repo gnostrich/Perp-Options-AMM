@@ -1,0 +1,97 @@
+{
+  "run": "A",
+  "url": "file:///home/user/Perp-Options-AMM/engine/builds/HEAD_temporal_mvp_v28_lens.html",
+  "fix1": {
+    "headerMeta": [
+      "Math Reference (trusted-from-prover)"
+    ],
+    "headerBadge": "Composite-Ray AMM · Identities I–V (trusted-from-prover)",
+    "panelTitle": "Math Reference (trusted-from-prover)",
+    "footer": "(NOT FOUND)",
+    "overclaimsRemaining": [],
+    "trustedShows": true
+  },
+  "band": {
+    "nOpen": 1,
+    "strikes": [
+      {
+        "si": 1.5,
+        "so": null,
+        "bi": 0.6,
+        "bo": null
+      }
+    ],
+    "oracle": 80000,
+    "m": 1,
+    "sNorm": 0.987177503319658
+  },
+  "fix2": {
+    "leftX": 49,
+    "topY": 17,
+    "botY": 326,
+    "plotW": 832,
+    "plotH": 309,
+    "strikes": [
+      {
+        "label": "sold.inner",
+        "phiDeg": 56.31,
+        "wing": "call",
+        "dotPsi": 0.1631,
+        "colX": 570,
+        "expDotY": 276,
+        "foundDot": {
+          "x": 567,
+          "y": 273,
+          "rgb": [
+            255,
+            103,
+            103
+          ]
+        },
+        "leftX": 49,
+        "topY": 17,
+        "botY": 326,
+        "plotW": 832,
+        "plotH": 309
+      },
+      {
+        "label": "bought.inner",
+        "phiDeg": 30.96,
+        "wing": "put",
+        "dotPsi": 0.1506,
+        "colX": 335,
+        "expDotY": 279,
+        "foundDot": {
+          "x": 333,
+          "y": 277,
+          "rgb": [
+            20,
+            232,
+            0
+          ]
+        },
+        "leftX": 49,
+        "topY": 17,
+        "botY": 326,
+        "plotW": 832,
+        "plotH": 309
+      }
+    ],
+    "dotPixelsOnCanvas": 182
+  },
+  "curve": {
+    "sNorm": 0.987177503319658,
+    "m": 1,
+    "g": 1.0129890487143627,
+    "modeMark": 0.24776965457180955
+  },
+  "consoleErrors": 0,
+  "pageErrors": 0,
+  "dialogs": 0,
+  "geom": {
+    "w": 900,
+    "h": 380,
+    "cssW": 900,
+    "cssH": 380
+  }
+}

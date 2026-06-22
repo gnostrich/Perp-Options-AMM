@@ -1,0 +1,32 @@
+=== M-CLAMP SMOKE  run A  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=9f1e625b168309b9097c26cb84744e77
+--- DEFAULT (boot) STATE ---
+  field="1"  state.m=1  w=0.5  gamma=1  mode=1  g=1
+  analytic mode-peak: call=0.2500 put=0.2500 max=0.2500
+  pixel mode-peak: pink psi=0.2532 cyan psi=0.2532
+--- TYPED m=0.1 (below min 1) ---
+  field AFTER change="1"  state.m=1  g=1  analytic peak=0.2500
+  pixel mode-peak: pink psi=0.2532 cyan psi=0.2532
+CHECK1 curve renders at m=1 (state.m=1, peak==baseline 0.2500, NOT ~0.70): PASS
+CHECK2 field snaps to "1" on change: PASS (got "1")
+  (pixel peak 0.2532 matches analytic 0.2500: true)
+--- TYPED m=10 (above max 6) ---
+  field AFTER change="6"  state.m=6  g=6  analytic peak=0.0567
+  pixel mode-peak: pink psi=0.0617
+CHECK3 curve clamps at m=6 (state.m=6, peak 0.0567 < baseline, field="6"): PASS
+--- TYPED m=3 (in range) ---
+  field AFTER change="3"  state.m=3  g=3  analytic peak=0.1055
+  pixel mode-peak: pink psi=0.1104
+CHECK4 in-range m=3 works (state.m=3, field="3", peak 0.1055 between m1 and m6): PASS
+--- HEADER BADGE ---
+  badge text: "Composite-Ray AMM · trusted-from-prover"
+CHECK5 badge == "Composite-Ray AMM · trusted-from-prover", no "Identities I–V": PASS
+  pricing mark-mode selector: no-selector
+--- STRIKE MARKERS (band open, mark-across-strikes) ---
+  red(#FF6767) px=90 centroid=[570,288] psi=0.1234
+  green(#14E800) px=85 centroid=[336,291] psi=0.1136
+CHECK6 strike markers present & on-curve (lensed psi<0.5, not floated ~0.85): PASS
+--- ERRORS ---
+  console errors: 0
+  page errors:    0
+  dialogs: 0 []

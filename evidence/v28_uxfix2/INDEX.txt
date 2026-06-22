@@ -1,0 +1,25 @@
+v28 UX-FIX-2 re-test — strike-marker fix on HEAD d606c3f2 (re-fix of f6029182 drawStrikeMark psiAt-out-of-scope)
+Tester live Playwright ×2, READ-ONLY (build md5 d606c3f27210bb6cbbb37d2ef0c90525 unchanged pre/post).
+Date 2026-06-22. Harness engine/verify/pw_v28_uxfix2_smoke.mjs.
+
+VERDICT = PASS (clears the gate f6029182 failed):
+  - 0 pageerrors both runs (was 4× ReferenceError: psiAt is not defined). Specific drawStrikeMark error GONE.
+  - 182 dot pixels on the pricing canvas both runs (was 0).
+  - sold.inner θ=1.5 @ φ56.31°/$120k: red #FF6767 (255,103,103) at (567,273), dotPsi=0.1631, expY=276, dy=3px — ON the call arm.
+  - bought.inner θ=0.6 @ φ30.96°/$48k: green #14E800 (20,232,0) at (333,277), dotPsi=0.1506, expY=279, dy=2px — ON the put arm.
+  - Dots at the lensed smooth-paste mark (~0.15-0.16), NOT the old un-lensed ~0.85/0.95 float.
+  - Fix #1 (overclaim removal) still clean: trusted-from-prover shows; Lean-validated/Aristotle-verified/no-sorry scan ⇒ [].
+  - Curve byte-unchanged (mode mark 0.2479 < 1). run_all GREEN: lens_selfcheck 13/0 + a16_atm 5/0. File-safety GREEN.
+  - A/B RESULT json byte-identical modulo run label; same dot data; 0 console / 0 dialogs.
+
+FILES:
+  RESULT_run{A,B}.json   — structured result (byte-identical modulo run label)
+  RUN_LOG_run{A,B}.txt   — console transcript
+  A/B_pricing_band.png   — canvas-pricing screenshot (curve + sold red + bought green dots ON the curve)
+                           (A_ md5 5abf21a9… vs B_ a16293b1… differ by PNG-encoder/AA jitter only; pixel data identical)
+  A/B_fullpage.png       — full page
+
+ROOT CAUSE (closed): drawStrikeMark (L3782, depth-1 sibling of drawState) now computes the mark INLINE
+with in-scope identifiers — g=Engine.gLoc(state.pool,θ,state.m) then Engine.markLensed(w,θ,snap.sNorm,g),
+toPx/ctx/phiMaxDeg/colShort/colLong all renderPricingFrame-scope. No psiAt reference (psiAt is a
+closure-local of nested drawState, depth-2 — out of scope, the cause of the f6029182 throw).

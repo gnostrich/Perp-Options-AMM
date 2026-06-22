@@ -1,0 +1,26 @@
+=== RUN B === file:///home/user/Perp-Options-AMM/engine/builds/HEAD_temporal_mvp_v28_lens.html
+
+-- FIX 1: verification-claim text --
+  header-meta line: ["Math Reference (trusted-from-prover)"]
+  header badge    : "Composite-Ray AMM · Identities I–V (trusted-from-prover)"
+  panel title     : "Math Reference (trusted-from-prover)"
+  footer          : "(NOT FOUND)"
+  OVERCLAIMS still present (must be []): []
+  trusted-from-prover wording shows     : true
+
+-- BAND OPEN --
+   {"nOpen":1,"strikes":[{"si":1.5,"so":null,"bi":0.6,"bo":null}],"oracle":80000,"m":1,"sNorm":0.987177503319658}
+
+-- FIX 2: strike dots ON the lensed curve --
+  plot box: {"leftX":49,"topY":17,"botY":326,"plotW":832,"plotH":309}
+  DOT PIXELS on pricing canvas (red colShort + green colLong): 0 (0 = NO dots drew)
+  sold.inner    phi= 56.31° wing=call dotPsi=0.1631  expDotY=276  foundDot=NONE
+  bought.inner  phi= 30.96° wing=put  dotPsi=0.1506  expDotY=279  foundDot=NONE
+
+-- CURVE UNCHANGED (lensed smooth-paste) --
+   {"sNorm":0.987177503319658,"m":1,"g":1.0129890487143627,"modeMark":0.24776965457180955}  -> mode mark < 1 ? true
+
+-- CONSOLE / PAGEERRORS --
+  consoleErrors: 0 []
+  pageErrors   : 4 ["ReferenceError: psiAt is not defined","ReferenceError: psiAt is not defined","ReferenceError: psiAt is not defined","ReferenceError: psiAt is not defined"]
+  dialogs      : 0 []
