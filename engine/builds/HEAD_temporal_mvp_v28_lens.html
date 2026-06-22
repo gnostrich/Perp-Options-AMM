@@ -1415,12 +1415,12 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> puts (post-trade)</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-temporal);"></span> calls (live)</div>
               <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> calls (post-trade)</div>
-              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #888;"></span> mark = 1 (full exercise cap)</div>
+              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #888;"></span> peak = 1 (mode)</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-short-fg);"></span> sold strike</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-long-fg);"></span> bought strike</div>
             </div>
             <div class="caption">
-              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: mark ψ = lensed smooth-paste option value (steepness g = m·γ); it peaks at the mode strike θ_m = sNorm at 1/((g+1)·((g+1)/g)^g) &lt; 1 — NOT at 1 — and reaches 1 only at full exercise. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
+              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: normalized value-SHAPE (steepness) — the lens wing law (θ_m/θ)^(m·γ) for calls, (θ/θ_m)^(m·γ) for puts — so the mode strike θ_m = sNorm sits at 1 (the top) and the wings fall off from there; a bigger SLOPE MULT M makes the wings steeper (more kurtosis / vol). This chart shows the SHAPE, not the dollar level: the absolute smooth-paste option value at the mode is 1/((g+1)·((g+1)/g)^g) &lt; 1 and lives in the settlement math. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
             </div>
           </div>
 
@@ -3729,6 +3729,18 @@ const Viz = (function() {
         const v = Engine.markLensed(wing, theta, sNorm, g);
         return (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0;   // clamp display to [0,1]
       };
+      // Chart-2 plots the NORMALIZED steepness SHAPE: the lens wing law (mode/θ)^g for
+      // calls, (θ/mode)^g for puts, with g = m·γ. Peak = 1 at the mode AND the wings
+      // steepen as m rises (the kurtosis/vol knob is VISIBLE on the curve). The absolute
+      // smooth-paste $ value (psiAt, < 1 at the mode) stays in the settlement math; this
+      // chart shows SHAPE, not that dollar level.
+      const psiShape = (theta, wing) => {
+        if (!(theta > 0) || !(sNorm > 0)) return 0;
+        const g = gAt(theta);
+        const r = wing === 'call' ? sNorm / theta : theta / sNorm;   // ≤ 1 away from the mode
+        if (!isFinite(g) || g <= 0) return Math.min(1, Math.max(0, r));
+        return Math.min(1, Math.pow(Math.max(0, r), g));
+      };
       ctx.lineWidth = 2;
       if (dashed) ctx.setLineDash([2, 5]); else ctx.setLineDash([]);
       // Put wing: φ ∈ [0°, φ_m], lensed ψ (constant exponent g=m·γ) rises toward the mode (no flat top)
@@ -3738,7 +3750,7 @@ const Viz = (function() {
       for (let i = 0; i <= Np; i++) {
         const th = (i / Np) * tmDeg;
         const theta = Math.tan(th * Math.PI / 180);
-        const psi = theta > 0 ? psiAt(theta, 'put') : 0;
+        const psi = theta > 0 ? psiShape(theta, 'put') : 0;
         const [px, py] = toPx(th, psi);
         if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
       }
@@ -3750,7 +3762,7 @@ const Viz = (function() {
       for (let i = 0; i <= Nc; i++) {
         const th = tmDeg + (i / Nc) * (phiMaxDeg - tmDeg);
         const theta = Math.tan(th * Math.PI / 180);
-        const psi = theta > 0 ? psiAt(theta, 'call') : 0;
+        const psi = theta > 0 ? psiShape(theta, 'call') : 0;
         const [px, py] = toPx(th, psi);
         if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
       }
@@ -3787,10 +3799,13 @@ const Viz = (function() {
       const w = theta > sNormLocal ? 'call' : 'put';
       // lensed smooth-paste mark (same value the live curve uses), inlined so it
       // does not depend on drawState's closure-local psiAt/gAt (out of scope here).
+      // Markers use the SAME normalized steepness shape as the drawn curve ((mode/θ)^g
+      // call, (θ/mode)^g put, g = m·γ) so they sit ON the curve, not on the old $ mark.
       const g = Engine.gLoc(state.pool, theta, state.m);
+      const r = w === 'call' ? sNormLocal / theta : theta / sNormLocal;   // ≤ 1 away from the mode
       let mk;
-      if (!isFinite(g) || g <= 0) { mk = Math.min(1, w === 'call' ? sNormLocal / theta : theta / sNormLocal); }
-      else { const v = Engine.markLensed(w, theta, sNormLocal, g); mk = (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0; }
+      if (!isFinite(g) || g <= 0) { mk = Math.min(1, Math.max(0, r)); }
+      else { mk = Math.min(1, Math.pow(Math.max(0, r), g)); }
       const [px, py] = toPx(phiDeg, mk);
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(px, py, 3.5, 0, 2 * Math.PI); ctx.fill();

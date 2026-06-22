@@ -5,13 +5,35 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 ⚠ **GIT-PROXY 403 (2026-06-14, mid-session):** the local git push/fetch proxy (127.0.0.1) started returning 403; the GH API token is fine (200). FALLBACK = push/fetch via the direct GitHub URL `https://x-access-token:$GH_TOKEN@github.com/gnostrich/Perp-Options-AMM.git` (WORKS). Operator entry 249: standing git/GitHub autonomy, do NOT ask. Squash-divergence: re-merging the branch to main after a prior squash needs `git merge -s ours origin/main` first (main has no content the branch lacks).
 
 ✅ **MAIN MADE CURRENT 2026-06-14 (operator entry 248):** squash-merged PR #26 (branch→main, `bca93f0`).
-main HEAD md5 `9f1e625b` (+m-clamp to [1,6]) (squash PR #28, blob-confirmed via API) = constant-m + caption fix + UI-overclaims-removed (trusted-from-prover) + strike-markers-on-curve (inlined lensed mark). f6029182 was BROKEN (psiAt ReferenceError, tester af60b05 caught it) -> re-fixed d606c3f2, tester a2b872c4 PASS (182 dot px, 0 pageerrors, on curve) BEFORE push/merge. LESSON re-applied: no UI fix pushed before live tester (gates test math not draw layer) (constant-m + chart-caption depiction fix, merged via PR #27 squash `ea701197`, blob f700df29 confirmed via API), byte-identical to the
+main HEAD md5 `9f1e625b` (+m-clamp to [1,6]) (squash PR #29 2026-06-14, API-confirmed main html md5=9f1e625b; branch retained) = constant-m + caption fix + UI-overclaims-removed (trusted-from-prover) + strike-markers-on-curve (inlined lensed mark). f6029182 was BROKEN (psiAt ReferenceError, tester af60b05 caught it) -> re-fixed d606c3f2, tester a2b872c4 PASS (182 dot px, 0 pageerrors, on curve) BEFORE push/merge. LESSON re-applied: no UI fix pushed before live tester (gates test math not draw layer) (constant-m + chart-caption depiction fix, merged via PR #27 squash `ea701197`, blob f700df29 confirmed via API), byte-identical to the
 branch; gates 13+5 green in-branch; main's #25 (referee response + off-ATM Lean) reconciled IN first (non-engine
 conflicts in 4 agent-MEMORYs + DIFF_LEDGER resolved to OURS = current branch truth — branch is the 434-ahead live
 side, so deviation from literal "main wins" is intentional: main was the STALE side). Branch
 `claude/exciting-archimedes-txs2wx` RETAINED as backup (§6.2.7). Squash ⇒ main has one consolidation commit, not
 the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
 work this session still lands on the working branch; re-merge to main on request.
+
+✅ **RESOLVED 2026-06-22 — CHART-2 DEPICTION via Option C (build `dd6fb955`, merging to main):** operator chose action
+("simple english and wy is tis not fixed already" = fix it). Built Option C: chart-2 plots the normalized steepness
+SHAPE `(mode/θ)^(m·γ)` → mode peak=1 at the top AND wings steepen with m (both entry-226 + entry-266 satisfied).
+Tester a74fcf79 PASS 6/6 byte-stable (apex 1.0032; m=1/3/6 chart PNGs DISTINCT e5789975/aa411091/6cf4cd81,
+width-at-half 345→123→63; markers on curve; 0 errors); manager re-derived peak=1 ∀m + wing-steepening; gates 13+5
+green, blobs canonical. DIFF_LEDGER entry for dd6fb955 written (tester a38b448e), CHART2-NORM-CANCELS-KURTOSIS row
+CLOSED. Draw-layer only; markLensed/gLoc/pool byte-unchanged. Option-A (peak-normalization) DISCARDED (cancelled the
+knob: normalized smooth-paste = sNorm/θ, m-free). [Superseded note below kept for trail.]
+
+🟡 ~~OPEN ESCALATION 2026-06-22 — CHART-2 DEPICTION (operator product call, AWAITING REPLY):~~ **[CLOSED by Option C above.]** operator entry 266
+"the mode thing in second chart isnt reaching the top (1)... beats the purpose" — wants chart-2 mode peak AT 1.
+I built peak-normalization (Option A, md5 6a23f93d) → mode hits 1 BUT tester aef7e07f FLAG-FAIL: peak-normalization
+mathematically CANCELS the kurtosis knob (normalized smooth-paste value = sNorm/θ, g=m·γ cancels; pixel-identical
+m=1 vs m=3, manager re-derived ×2). This COLLIDES with standing entry-226 ("see steeper for higher vol"). Escalated
+3 options: **A** mode=1 but knob invisible (built, broken-for-purpose); **B** absolute curve = knob visible but mode
+<1 (prior shipped behavior, operator rejected this turn); **C (my pick)** plot normalized WING POWER-LAW (mode/θ)^(m·γ)
+→ mode=1 AND steepens with m (verified: θ1.5 m1→0.67/m3→0.30/m6→0.09), trade = chart shows steepness-shape not
+absolute $ value. **Held: HEAD reverted to 9f1e625b (=main, clean); Option-A edit DISCARDED (not committed). No engine
+change until operator picks A/B/C.** Tester FLAG evidence committed b2618bf (evidence/v28_chart2_norm/, DIFF_LEDGER
+row CHART2-NORM-CANCELS-KURTOSIS). NOTE: prior caption fix (mode <1) was built on Option-B framing; if operator picks
+C, caption flips to "normalized steepness shape, peak=1".
 
 ⚠ **OVERNIGHT 2026-06-13 — TWO research-lead agents running concurrently (RECONCILE at completion, write-collision risk on RL MEMORY + conjecture note):**
 (1) `a36a09d100e742a34` — PH-unification whole-exchange conjecture (entry 238 brief, PH ASSUMED as scaffold).

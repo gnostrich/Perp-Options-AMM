@@ -1,0 +1,11 @@
+=== CHART-2 NORM SMOKE  run A  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=6a23f93de3cbcdbf832cb61115c129eb
+
+[m=1] analytic: peakRaw(mode abs)=0.2500 g_mode=1.0000 normPut(θ0.4)=0.4000 normCall(θ2.5)=0.4000
+[m=1] pixel: apex psi=1.0032 @x=466 (y=17, y@psi=1 is 18); modeCol psi=1.0032; putWing(22°) psi=0.4091; callWing(68°) psi=0.4058; widthAtHalf=345; curvePx=2111
+[m=1] apexPsi=1.0032 apexY=17 widthAtHalf=345 normPut(θ0.4)=0.4 normCall(θ2.5)=0.4 normDeepCall(θ5)=0.2 g_loc=1 peakRaw(abs)=0.25
+[m=3] apexPsi=1.0032 apexY=17 widthAtHalf=345 normPut(θ0.4)=0.4 normCall(θ2.5)=0.4 normDeepCall(θ5)=0.2 g_loc=3 peakRaw(abs)=0.1055
+[m=6] apexPsi=1.0032 apexY=17 widthAtHalf=345 normPut(θ0.4)=0.4 normCall(θ2.5)=0.4 normDeepCall(θ5)=0.2 g_loc=6 peakRaw(abs)=0.0567
+
+[markers] red(sold) @(570,128) φ=56.25° dotPsi=0.6429 curveNorm=0.6682 dPsi=0.0253
+[markers] green(bought) @(336,138) φ=30.94° dotPsi=0.6104 curveNorm=0.5994 dPsi=0.011

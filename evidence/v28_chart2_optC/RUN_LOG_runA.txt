@@ -1,0 +1,11 @@
+=== CHART-2 OPTION C SMOKE  run A  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=dd6fb9557c251df222a4f918970576dd
+
+[m=1] analytic shape: peakShape(mode)=1.0000 g_mode=1.0000 shapePut(θ0.4)=0.4000 shapeCall(θ2.5)=0.4000
+[m=1] pixel: apex psi=1.0032 @x=466 (y=17, y@psi=1 is 18); modeCol psi=1.0032; putWing(22°) psi=0.4091; callWing(68°) psi=0.4058; widthAtHalf=345; curvePx=2111
+[m=1] apexPsi=1.0032 apexY=17 widthAtHalf=345 shapePut(θ0.4)=0.4 shapeCall(θ2.5)=0.4 shapeDeep(θ5)=0.2 g_loc=1 | chart2 PNG md5=e5789975db12d88bf2ce43fb3f4dd1d0
+[m=3] apexPsi=1 apexY=18 widthAtHalf=123 shapePut(θ0.4)=0.064 shapeCall(θ2.5)=0.064 shapeDeep(θ5)=0.008 g_loc=3 | chart2 PNG md5=aa41109152ed81c9b676985330a6d0a2
+[m=6] apexPsi=1 apexY=18 widthAtHalf=63 shapePut(θ0.4)=0.0041 shapeCall(θ2.5)=0.0041 shapeDeep(θ5)=0.00006 g_loc=6 | chart2 PNG md5=6cf4cd819ac719746c11ddb3ba34da11
+
+[markers] red(sold) @(570,129) φ=56.25° dotPsi=0.6396 curveShape=0.6647 dPsi=0.0251
+[markers] green(bought) @(336,140) φ=30.94° dotPsi=0.6039 curveShape=0.5954 dPsi=0.0085
