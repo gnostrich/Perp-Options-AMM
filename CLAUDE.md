@@ -266,7 +266,9 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `80f050e2…` = comment-cleanup
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `aa1e5d05…` = chart-caption depiction
+  fix 2026-06-14 of `80f050e2` [legend/caption corrected: mark=1 is the full-exercise cap not the mode, mode peak
+  <1 = the smooth-paste value; 2 text lines, behaviorally identical, gates 13+5 green]; `80f050e2` = comment-cleanup
   of `8f897edc` per operator entry 234, behaviorally identical: dead √-kernel comments→constant-m + gate-detector
   hardened, gates 13+5 green; `8f897edc` constmult source retained as `temporal_mvp_v28_lens_constmult.html`;
   **PROMOTED 2026-06-13 by operator ruling, entries 229/231 — CONSTANT SLOPE-MULTIPLIER lens**).
