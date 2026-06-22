@@ -3785,7 +3785,12 @@ const Viz = (function() {
       if (phiDeg < 0 || phiDeg > phiMaxDeg) return;
       const sNormLocal = snap.sNorm;
       const w = theta > sNormLocal ? 'call' : 'put';
-      const mk = psiAt(theta, w);
+      // lensed smooth-paste mark (same value the live curve uses), inlined so it
+      // does not depend on drawState's closure-local psiAt/gAt (out of scope here).
+      const g = Engine.gLoc(state.pool, theta, state.m);
+      let mk;
+      if (!isFinite(g) || g <= 0) { mk = Math.min(1, w === 'call' ? sNormLocal / theta : theta / sNormLocal); }
+      else { const v = Engine.markLensed(w, theta, sNormLocal, g); mk = (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0; }
       const [px, py] = toPx(phiDeg, mk);
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(px, py, 3.5, 0, 2 * Math.PI); ctx.fill();
