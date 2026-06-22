@@ -5,7 +5,7 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 ⚠ **GIT-PROXY 403 (2026-06-14, mid-session):** the local git push/fetch proxy (127.0.0.1) started returning 403; the GH API token is fine (200). FALLBACK = push/fetch via the direct GitHub URL `https://x-access-token:$GH_TOKEN@github.com/gnostrich/Perp-Options-AMM.git` (WORKS). Operator entry 249: standing git/GitHub autonomy, do NOT ask. Squash-divergence: re-merging the branch to main after a prior squash needs `git merge -s ours origin/main` first (main has no content the branch lacks).
 
 ✅ **MAIN MADE CURRENT 2026-06-14 (operator entry 248):** squash-merged PR #26 (branch→main, `bca93f0`).
-main HEAD md5 `aa1e5d05` (constant-m + chart-caption depiction fix, merged via PR #27 squash `ea701197`, blob f700df29 confirmed via API), byte-identical to the
+main HEAD md5 `f6029182` (UX fix of aa1e5d05: UI overclaims removed + markers on curve) (constant-m + chart-caption depiction fix, merged via PR #27 squash `ea701197`, blob f700df29 confirmed via API), byte-identical to the
 branch; gates 13+5 green in-branch; main's #25 (referee response + off-ATM Lean) reconciled IN first (non-engine
 conflicts in 4 agent-MEMORYs + DIFF_LEDGER resolved to OURS = current branch truth — branch is the 434-ahead live
 side, so deviation from literal "main wins" is intentional: main was the STALE side). Branch
