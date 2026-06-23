@@ -34,7 +34,18 @@ faith_merton, fixed), all worked-example cells manager-recomputed ✓, merged to
 (81f7812, benign):** the claude -p child inherited repo CLAUDE.md (cwd=repo root) and wrote a fake operator
 transcript into history/operator/ — cleaned, evidence in evidence/dexters_lab/. FIX: `dexters-lab/run_lane_isolated.sh`
 "locked room" — runs lanes from /tmp staging with NO CLAUDE.md/history, hard guard, dry-tested, on main.
-Engine HEAD untouched dd6fb955 throughout. Lab has NO git authority. Skeptic FLAG history: I
+Engine HEAD untouched dd6fb955 throughout.
+**L-MENU ARISTOTLE (entry 276, folded 2026-06-23):** operator green-lit Aristotle ("free"). research-lead ran
+5 menu items; all COMPILED. Manager independent audit: tokens clean (sorry/axiom in COMMENTS only, kernel
++decide), L1 archive canonical modules BYTE-IDENTICAL to baseline, standard axioms → trusted-from-prover (NOT
+verified, env-blocked). KEY AUDIT FINDING: all 5 are self-contained `import Mathlib` MODELS (re-declared defs).
+Skeptic gate adeca113 CLEAR-TO-FOLD w/ 2 oversell corrections (applied to INDEX): **L1** faithful traj lemma
+but NOT composed into canonical PHUnification weld → M10 NOT closed; **L7** two hand-transcriptions agree,
+engine-JS faithfulness asserted-not-proved → M4 NOT closed. L2 (ATM no-jump) + L3 (cond solvency, non-vacuous,
+stays conditional) = genuine model lemmas. L9 = Stage-A optimal-stopping skeleton, stochastic Snell OPEN.
+Artifacts formal/aristotle_runs/L{1,2,3,7,9}_*; INDEX L-MENU block honest. Net: real model-level progress
+(L2/L3); M10/M4/Snell still open on the canonical object. LESSON re-confirmed: audit prover archives hard —
+the headline ("discharges M10"/"engine bridge") overstated; self-contained re-declarations ≠ canonical closure. Lab has NO git authority. Skeptic FLAG history: I
 oversold "lab cannot do git" (it's prompt-contract not a wall); corrected. ⚠ ENV: `claude` CLI present +
 `GH_TOKEN` exported here — "deferred" is discipline not a wall; never wire a cron lane while token live.
 
