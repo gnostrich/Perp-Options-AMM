@@ -23,7 +23,18 @@ avoids auto-arming the lanes). Demoed claim_lint on the paper (1 finding: seam %
 lanes (`lab_review.sh`/`lab_deep_research.sh`) AUTHORIZED as-is, on-demand, MANAGER-SUPERVISED, token-visible
 to the child (operator overruled the skeptic standing condition w/ full info; accepted risk). REMAIN:
 non-cron only (cron needs explicit permission, default no); supervised not unattended; manager sole git
-actor (lab=drafts). My rec had been A (scrub token); operator chose B. Lab has NO git authority. Skeptic FLAG history: I
+actor (lab=drafts). My rec had been A (scrub token); operator chose B.
+**LANE RUN + PAPER FIXES DONE 2026-06-23 (entry 272):** ran lab_review on the AfT paper (supervised, $10.10,
+panel skipped); verdict "weak reject" conf4 — manager+research-lead cross-checked: only NEW catch was Merton
+F1 (γ(γ+1)=2r/σ²), adjudicated NOT-fatal = prose convention slip (quadratic correct under symmetric pairing
+q=r; our Lean merton_vieta_sum/prod + FAITH-4 faith_merton encode it; no-dividend slice gives linear γ=2r/σ²;
+manager re-derived ✓). Other issues = known/hedged (B1/B3/B4, Snell-placeholder, Aristotle-not-public) +
+empirical-thinness. 4 paper fixes applied (paper agent), skeptic-gated (1 FLAG-WRONG: "seam gate"→FAITH-4
+faith_merton, fixed), all worked-example cells manager-recomputed ✓, merged to main PR#32. **LANE BREACH
+(81f7812, benign):** the claude -p child inherited repo CLAUDE.md (cwd=repo root) and wrote a fake operator
+transcript into history/operator/ — cleaned, evidence in evidence/dexters_lab/. FIX: `dexters-lab/run_lane_isolated.sh`
+"locked room" — runs lanes from /tmp staging with NO CLAUDE.md/history, hard guard, dry-tested, on main.
+Engine HEAD untouched dd6fb955 throughout. Lab has NO git authority. Skeptic FLAG history: I
 oversold "lab cannot do git" (it's prompt-contract not a wall); corrected. ⚠ ENV: `claude` CLI present +
 `GH_TOKEN` exported here — "deferred" is discipline not a wall; never wire a cron lane while token live.
 
