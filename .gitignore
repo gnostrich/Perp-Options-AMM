@@ -1,2 +1,6 @@
 # Playwright resolution symlinks to the global package — not a real install
 engine/node_modules/
+
+# Dexter's Lab runtime state (registry/ledger/reviews/drafts/spend) — local only,
+# never committed (lab confidentiality rule: reviewed-paper outputs stay under lab_home)
+dexters-lab/lab_home/
