@@ -2117,3 +2117,11 @@ _Context: operator approves BOTH manager proposals after the lab referee pass + 
 _Context: operator directs offering our Lean/Aristotle capability to the lab and having the lab verify our singular object / monolith. Manager interprets (lab is a pipeline, not a collaborator): run the lab's review pipeline on a current self-contained monolith packet (research-lead-authored, manager-audited), let it surface which claims need formal backing, then route that Lean to research-lead/Aristotle. Run via the locked-room sandbox._
 
 > ask decters labif thehy want any lean stuff run etc. we can help them with that, also have them verify our singular object / monolith thing
+
+
+---
+
+## Entry 274 — 2026-06-23 UTC
+_Context: operator clarifies the OpenRouter model-panel is NOT required for the lab to do a real job (the Claude reviewer is the main pass; the panel is an optional extra) and directs re-running the lab review. No OPENROUTER_API_KEY in env (confirmed). Manager re-runs the monolith review (now on the F1-fixed packet) via the locked room as a fresh independent pass._
+
+> the lab doesn’t need openrouter compulsary, run it again
