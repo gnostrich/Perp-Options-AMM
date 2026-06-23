@@ -101,7 +101,10 @@ old polar-lens Lean theorems are SUPERSEDED, not part of the current object.)
 ITM exercise uses American smooth-pasting at a free boundary, parameterized by any `g>0` (so it applies
 at `g=m·γ`):
 
-- free-boundary spot: `S* = K·g/(g+1)` (normalized `sStar(g,θ) = θ·((g+1)/g)^g`)
+- free-boundary spot: `S* = K·g/(g+1)` (normalized `sStar(g,θ) = θ·((g+1)/g)^g`). `K` is the **dollar
+  strike**; `θ = s_N(K) = K/oracle` is the **normalized strike** (carry coordinate). `S*` (price units)
+  and `sStar` (normalized units) are the SAME free boundary in two coordinate frames — `K=θ` is NOT
+  assumed (closes lab-review F1). The engine and Lean both implement the normalized `sStar` form.
 - continuation arm: `markCont(g,θ,s) = pasteC(g,θ)·s` with `pasteC = 1/((g+1)·sStar)`
 - intrinsic arm: `markInt(g,θ,s) = 1 − (s/θ)^(−1/g)`
 
