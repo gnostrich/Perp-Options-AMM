@@ -3500,3 +3500,29 @@ STANDING CONDITION.
   the gap moved DOWN a layer (from "deferred=safe" framing to "on-demand=authorized" framing).
   Same relabel-the-gap shape, now at the lane-authorization granularity. Watch for "operator said
   X" being stretched to cover a mechanically-broader Y.
+
+---
+## 2026-06-23 — VERDICT: paper FIX-1..4 (American draft, lab-referee response). Mostly CLEAR, 1 FLAG-WRONG.
+Artifact: `git diff paper/temporal_paper_american_2026.tex` (4 operator-approved fixes, entry 272).
+Re-derived everything (not narrated):
+- FIX-1 "seam gate" = **FLAG-WRONG**, manager's suspicion CONFIRMED. Line 663-664 claims the
+  γ(γ+1)=2r/σ² Vieta convention is encoded by "merton_vieta_sum/prod AND **the seam gate**".
+  Read both gates: `faith_merton.js:105,119-124` IS the Vieta/Merton gate (rGauss=g(g+1)σ²/2,
+  Vieta roots {−γ,γ+1} sum=1 prod=−2r/σ²). `seam_gate.js` = C¹ value/slope continuity at S*,
+  ZERO refs to merton/vieta/r/σ (grep clean). Misattribution. Same conclusion in the lab-findings
+  file itself (`evidence/dexters_lab/aft_review_findings_2026-06-23.md:39` cites faith_merton.js:105,
+  NOT the seam gate). Fix: "seam gate"→"FAITH-4 faith_merton gate" or drop. Site 2 (§formal bullet
+  ~832) is CLEAN — cites only the Lean Vieta theorems, no seam gate.
+- FIX-1 domain r>σ²: VERIFIED (γ>1⟺r>σ² under quadratic, boundary γ=1→r=σ²). Symmetric-pairing
+  q=r/root-sum-1 framing matches research-lead adjudication. GH-asymmetry hedge preserved both sites.
+- FIX-2 reproducibility: CLEAR, stays \tfp (explicit "does not upgrade the label"). Minor: cites
+  "aristotle_runs/" but actual path is formal/aristotle_runs/ (parenthetical scoped under formal/,
+  defensible). formal/INDEX.md exists as cited.
+- FIX-3 scope B1/B3/B4: CLEAR, restates already-held conditional solvency (lines 882,1016), no new
+  concession. "geometry necessary not sufficient" / reserves_have_no_floor intact.
+- FIX-4 worked example: CLEAR. Recomputed table independently — ALL cells match (S*=66.67; m1 col
+  .333/.231/.183/.148/.103; m3 col .143/.048/.024/.013/.004). Labelled illustrative, no calibration claim.
+- Regression: no honest hedge weakened. "Laplace exponent"→"log-price Laplace exponent" = sharper.
+Pattern: paper fixes were disciplined this round; the ONE defect was a wrong gate-name attribution
+(seam vs FAITH-4) — a label-precision slip, the recurring "named the wrong machine-checked artifact"
+shape. Manager caught it pre-commit and routed it to me = process working.
