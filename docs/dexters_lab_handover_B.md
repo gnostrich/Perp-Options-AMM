@@ -1,6 +1,10 @@
 # Dexter's Lab handover — Option B (Hybrid), operator-chosen 2026-06-23 (entry 269)
 
-**Status: operator entry 270 ANSWERED the three FLAGs → confirming skeptic re-pass before fold-to-shared-truth.**
+**Status: ✅ ENACTED (cleared parts) — confirming skeptic re-pass CLEAR-TO-ENACT (run a9ec00fe, §8 verbatim),
+with ONE standing condition: the two `claude -p` paper/research lanes (`lab_review.sh`,
+`lab_deep_research.sh`) are NOT yet authorized — they spawn a Bash+WebFetch child that inherits live
+`GH_TOKEN` with no allowlist; pending one operator answer (§6 Q4). The division-of-labor + the pure-Python
+on-demand honesty gates ARE enacted.**
 Governance change = halt-class (Universal Skeptic Gate `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`).
 Source: operator entry 269 ("B") + entry 270 (Q1/Q2 answers), against the manager's B/C/A brainstorm;
 original request entry 268 (verbatim in `history/operator/`).
@@ -67,9 +71,10 @@ agent in any useful way), and the lab's "drafts-only" safety for the cron lanes 
 - Lab **FALSIFIED-is-success / pre-reg-hash / no-rerun-until-green** → reinforces our honest-label rule.
 
 ## 4. What gets wired NOW (safe, no side effects, no keys)
-1. `lab.config.json` at repo root with `lab_home` inside the repo (e.g. `dexters-lab/lab_home/`),
-   pointing the pure-Python tools at our paper/registry paths. (No secrets; OpenRouter key absent → the
-   heavy review panel auto-skips.)
+1. `dexters-lab/lab.config.json` (INSIDE the package, NOT repo root — so it is not auto-resolved by
+   default precedence; tools must be run with explicit `DEXTERS_LAB_CONFIG`) with `lab_home` =
+   `dexters-lab/lab_home/`. (No secrets; OpenRouter key absent → the heavy review panel auto-skips.)
+   **[DONE 2026-06-23.]**
 2. The **pure-Python honesty gates** (`claim_lint.py`, `paper_sync_check.py`, `doc_truth_gate.sh`) as
    on-demand checks the skeptic/manager can run on `paper/temporal_paper_american_2026.tex`.
 3. This division-of-labor note folded into shared truth (after skeptic clearance), with a pointer from
@@ -102,6 +107,13 @@ cron lanes are prompt-guarded only (§1): may **any** lane ever run in an enviro
 live? Default manager recommendation = **no lane runs while `GH_TOKEN` is exported**; on-demand
 pure-Python honesty gates only.
 **Q3.** Budget cap: lab default is $40/mo; only relevant once paid lanes/keys are on.
+**Q4 (standing — the on-demand `claude -p` lanes; raised by the confirming skeptic pass).** The two
+paper/research lanes `lab_review.sh` and `lab_deep_research.sh` don't just run Python — each launches a
+Claude sub-agent (`claude -p --permission-mode acceptEdits`) with the default Bash+WebFetch toolset and
+**no allowlist/env-scrub, so it can read the live `GH_TOKEN`**. Your entry-270 answer covered crons (no)
+and keys-in-env (accepted) but did not authorize *these specific on-demand lanes*. Until you answer, they
+stay UNAUTHORIZED; the pure-Python honesty gates (`claim_lint`, `paper_sync_check`, `doc_truth_gate`,
+`rq_compile`, `stopping_gate`, `lab_budget`) are fully authorized on-demand.
 
 ## 7. Skeptic verdict (appended VERBATIM, unedited — skeptic run acd21e9c, 2026-06-23)
 
@@ -131,3 +143,17 @@ Operator entry 268 (verbatim): "give those agents the handover from our existing
 
 ### Bottom line
 The **pure-Python NOW set + lab.config.json with `lab_home` inside the repo may be wired** — it is genuinely side-effect-free and key-free. **Do NOT** fold the division-of-labor note into shared truth, and do NOT represent the cron-lane deferral as a structural safety guarantee, until: (1) the "cannot do git/sends" language is corrected to "prompt-contract, not capability"; (2) the operator is shown, in plain English, that the `claude` CLI is live and `GH_TOKEN` is in-environment, and rules on whether any lane may run under a live token; (3) the autonomy-scope question ("run the project" vs "tooling-on-top") is put to the operator as the headline question and confirmed. The capability gap is real and B is a reasonable response to it — but the safety story rests on "deferred," and in this environment "deferred" is a promise, not a wall.
+
+## 8. Confirming skeptic verdict (appended VERBATIM, unedited — skeptic run a9ec00fe, 2026-06-23)
+
+**CLEAR-TO-ENACT** the division-of-labor fold and the pure-Python on-demand honesty gates — **with one standing condition** on the two `claude -p` paper/research lanes.
+
+On your four specific checks:
+
+1. **FLAG-SCOPE — RESOLVED.** "let it do paper/research side" + "dont need crons" confirms the tooling-on-top reading in plain English. Encode it.
+
+2. **FLAG-PROCESS — RESOLVED as a decision.** The operator was shown the live-CLI + GH_TOKEN-in-env reality (§6 Q2) and ruled "keys remain in the environment" = accepted, bounded residual risk. I independently verified the manager's claims: config is **inside** `dexters-lab/` (not repo root — confirmed, nothing at root), no cron wired, `OPENROUTER_API_KEY` unset, no `*_run.json`/`*_run.err` outputs (no `claude -p` lane ran), only pure-Python `claim_lint` exercised. Transcript entry 270 matches the verbatim you handed me — no FLAG-PROCESS against the manager on transcription.
+
+3. **FLAG-OVERSELL — RESOLVED.** §1/§5 now read "prompt-contract, not capability wall" and the table/§5 call the lane git-safety "prompt-enforced, not capability-enforced."
+
+4. **The gap the operator's answer does NOT cover (the standing condition):** `dexters-lab/bin/lab_review.sh` (line 133) and `lab_deep_research.sh` (line 193) — the very "paper/research" lanes — spawn `claude -p --permission-mode acceptEdits` with **no `--allowedTools` allowlist and no environment scrub** (verified directly). That child gets the default toolset (Bash + WebFetch) and inherits the live `GH_TOKEN`. The operator ruled on **crons** (no) and **keys-in-env** (accepted) — but did **not** rule on whether the *on-demand, non-cron* paper/research lanes may spawn a token-capable, Bash-capable child. "paper/research side" does not auto-authorize that. The manager must ask one plain-English question before treating `lab_review.sh`/`lab_deep_research.sh` as authorized. The pure-Python gates are clear; those two lanes are not.

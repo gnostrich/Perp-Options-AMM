@@ -13,6 +13,19 @@ side, so deviation from literal "main wins" is intentional: main was the STALE s
 the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
 work this session still lands on the working branch; re-merge to main on request.
 
+🧪 **DEXTER'S LAB — Option-B Hybrid ENACTED (cleared parts) 2026-06-23 (operator entries 268/269/270; record
+`docs/dexters_lab_handover_B.md`; skeptic runs acd21e9c FLAGx3 → a9ec00fe CLEAR-w/-condition).** External
+research-automation package extracted to `./dexters-lab/` (its suite 219 pass/5 skip). ADOPTED as the
+research/paper/honesty-gate layer, ON-DEMAND, NO crons. Engine/Lean/test/git agents UNCHANGED (lab can't do
+that). Skeptic owns its review/claim-lint/stopping gates (advisory only). **AUTHORIZED:** pure-Python gates
+(`claim_lint` etc.) via explicit `DEXTERS_LAB_CONFIG=dexters-lab/lab.config.json` (contained, not repo-root —
+avoids auto-arming the lanes). Demoed claim_lint on the paper (1 finding: seam %s uncited). **HALT-PENDING
+operator Q4:** the two `claude -p` lanes (`lab_review.sh`/`lab_deep_research.sh`) spawn a Bash+WebFetch child
+that inherits live `GH_TOKEN` (no allowlist) — operator's "no crons, keys-remain" answer did NOT authorize
+these specific on-demand lanes; question put to operator. Lab has NO git authority. Skeptic FLAG history: I
+oversold "lab cannot do git" (it's prompt-contract not a wall); corrected. ⚠ ENV: `claude` CLI present +
+`GH_TOKEN` exported here — "deferred" is discipline not a wall; never wire a cron lane while token live.
+
 ✅ **RESOLVED 2026-06-22 — CHART-2 DEPICTION via Option C (build `dd6fb955`, merging to main):** operator chose action
 ("simple english and wy is tis not fixed already" = fix it). Built Option C: chart-2 plots the normalized steepness
 SHAPE `(mode/θ)^(m·γ)` → mode peak=1 at the top AND wings steepen with m (both entry-226 + entry-266 satisfied).

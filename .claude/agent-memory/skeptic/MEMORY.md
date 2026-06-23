@@ -3479,3 +3479,24 @@ Artifact: docs/dexters_lab_handover_B.md; package ./dexters-lab/. Verified indep
   The note's table is OK on this but should say it explicitly.
 Pattern: a capability that "can't" only because a prompt tells an autonomous agent not to is the
 same relabel-the-gap-kind dodge as optstop's "empirical reframe" — soft guarantee sold as structural.
+
+## RE-PASS 2026-06-23 — Dexter's Lab Option-B handover (entry 270 resolution)
+Prior run acd21e9c → 3 FLAGs. Operator entry 270 verbatim: "1 dont need crons, but let it do
+paper / research side; 2 crons only with my permission and generally no, but keys remain in the
+enviroment". Re-pass verdict: CLEAR-TO-ENACT the fold + pure-Python on-demand gates, WITH ONE
+STANDING CONDITION.
+- FLAG-SCOPE → RESOLVED (operator confirmed tooling-on-top in plain English).
+- FLAG-OVERSELL → RESOLVED (§1/§5 corrected to "prompt-contract, not capability wall").
+- FLAG-PROCESS → RESOLVED AS DECISION (keys-in-env = accepted/bounded; operator was shown live
+  CLI + GH_TOKEN). BUT residual: operator ruled on CRONS (no) + KEYS (accepted), did NOT rule on
+  whether the *on-demand* paper/research lanes may spawn a token-capable claude -p child.
+- VERIFIED independently: config INSIDE dexters-lab/ not repo root (TRUE); no cron/key/lane run
+  (TRUE, no *_run.json); transcript entry 270 verbatim matches (no FLAG-PROCESS on manager).
+- KEY FINDING (standing condition): dexters-lab/bin/lab_review.sh:133 + lab_deep_research.sh:193
+  spawn `claude -p --permission-mode acceptEdits` with NO --allowedTools and NO env scrub → child
+  has Bash+WebFetch + inherits live GH_TOKEN. "paper/research side" does NOT auto-authorize these
+  two lanes. Manager must ask operator one plain-English Q before treating them as authorized.
+- Pattern reinforced: manager corrected honestly this round (every file claim checked out) — but
+  the gap moved DOWN a layer (from "deferred=safe" framing to "on-demand=authorized" framing).
+  Same relabel-the-gap shape, now at the lane-authorization granularity. Watch for "operator said
+  X" being stretched to cover a mechanically-broader Y.
