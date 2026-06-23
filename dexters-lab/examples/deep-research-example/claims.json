@@ -1,0 +1,50 @@
+{
+  "_synthetic": "Synthetic: fabricated for the Dexter's Lab deep-research example. The URLs are fake (example.invalid) and label themselves fake. Not from a real run, and no claim here is about the real world.",
+  "question": "Does the (fictional) supplement Zephyrine raise resting heart rate in healthy adults?",
+  "depth": 3,
+  "sub_queries": [
+    {"id": "Q1", "query": "Zephyrine resting heart rate randomized controlled trial healthy adults", "status": "answered"},
+    {"id": "Q2", "query": "Zephyrine cardiovascular side effects mechanism stimulant", "status": "answered"},
+    {"id": "Q3", "query": "Zephyrine long term safety 12 month follow up", "status": "no_sources_found"}
+  ],
+  "claims": [
+    {
+      "id": "CQ1_1",
+      "statement": "In a 4-week trial, Zephyrine at 200 mg/day raised mean resting heart rate by 6 beats per minute versus placebo in healthy adults.",
+      "sub_query_id": "Q1",
+      "sources": [
+        {
+          "url": "https://example.invalid/synthetic/zephyrine-rct-2025",
+          "title": "SYNTHETIC fake source: Zephyrine 4-week RCT (invented for the kit example)",
+          "passage": "Across 80 healthy adults, the 200 mg/day Zephyrine arm showed a mean resting heart rate increase of 6 bpm over 4 weeks, while the placebo arm changed by less than 1 bpm (fabricated text)."
+        }
+      ],
+      "verdict": "supported",
+      "verify_reason": "The cited passage states the 6 bpm rise directly. The skeptic searched for the opposite and found no fabricated source disputing the heart-rate direction. Source is the primary trial as written.",
+      "counter_evidence_url": null,
+      "load_bearing": true
+    },
+    {
+      "id": "CQ2_1",
+      "statement": "Zephyrine is a beta-adrenergic stimulant, which is the mechanism that explains the heart-rate rise.",
+      "sub_query_id": "Q2",
+      "sources": [
+        {
+          "url": "https://example.invalid/synthetic/zephyrine-pharmacology-blog",
+          "title": "SYNTHETIC fake source: a secondary blog post (invented for the kit example)",
+          "passage": "A wellness blog asserts Zephyrine 'works as a beta-adrenergic stimulant' (fabricated, secondary, no primary citation)."
+        }
+      ],
+      "verdict": "refuted",
+      "verify_reason": "The skeptic re-read the source: it is a secondary blog with no primary citation, and it overstates the mechanism. The (synthetic) primary trial source describes Zephyrine as acting on adenosine receptors, not beta-adrenergic receptors. The mechanism claim does not survive: the extractor trusted an aggregator that contradicts the primary source.",
+      "counter_evidence_url": "https://example.invalid/synthetic/zephyrine-rct-2025",
+      "load_bearing": true
+    }
+  ],
+  "contradictions": [
+    "CQ2_1 (blog: beta-adrenergic) contradicts the primary trial source (adenosine-receptor). The primary source wins; the blog mechanism is recorded as refuted, not hidden."
+  ],
+  "no_sources_found": ["Q3"],
+  "report_path": "RESEARCH_REPORT.md",
+  "second_opinion_cost_usd": 0.0
+}

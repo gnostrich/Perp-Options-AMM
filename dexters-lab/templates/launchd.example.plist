@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Dexter's Lab launchd template (macOS).
+
+  REPLACE every __PLACEHOLDER__ before installing:
+    __LAB_REPO__   absolute path to your dexters-lab clone
+                   (example: /Users/yourname/dexters-lab)
+    __LAB_HOME__   absolute path to your lab_home (see lab.config.json;
+                   default is ~/dexters-lab-home, written out in full)
+    __SCRIPT__     lab_executor.sh for the nightly task executor, or
+                   lab_lit.sh for the literature lane (one plist per job;
+                   give each its own Label and log paths)
+
+  Install:
+    cp this file to ~/Library/LaunchAgents/com.dexterslab.executor.plist
+    launchctl load ~/Library/LaunchAgents/com.dexterslab.executor.plist
+
+  Note: launchd ships a bare PATH (/usr/bin:/bin). The lab scripts export
+  the common bin dirs themselves, but if your claude CLI lives somewhere
+  unusual, add an EnvironmentVariables dict with your PATH here.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.dexterslab.executor</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__LAB_REPO__/bin/__SCRIPT__</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict><key>Hour</key><integer>3</integer><key>Minute</key><integer>30</integer></dict>
+  <key>StandardOutPath</key><string>__LAB_HOME__/launchd.executor.log</string>
+  <key>StandardErrorPath</key><string>__LAB_HOME__/launchd.executor.err</string>
+</dict>
+</plist>

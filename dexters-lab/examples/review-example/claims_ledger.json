@@ -1,0 +1,52 @@
+{
+  "_synthetic": "Synthetic: fabricated for the Dexter's Lab review-pipeline example. Not from a real review.",
+  "summary": "A one-page note describing the Drip Pool, a constant-product two-token pool with a derived 'pressure' signal p = a/b used for faucet payouts. The central result is a closed-form pressure update law after a swap. The note also claims round-trip neutrality under zero fees and asserts that all identities are machine-checked.",
+  "claims": [
+    {
+      "id": "D1",
+      "statement": "Pressure is defined as p = a/b over the pool reserves.",
+      "where": "Section 1",
+      "kind": "definition",
+      "evidence": "prose",
+      "load_bearing": true
+    },
+    {
+      "id": "D2",
+      "statement": "A swap of da units of A into the pool preserves a*b = k and pays out -db = b*da/(a+da).",
+      "where": "Section 1",
+      "kind": "identity",
+      "evidence": "derivation",
+      "load_bearing": true
+    },
+    {
+      "id": "D3",
+      "statement": "After a swap of da units of A in, the new pressure is p' = p*(a+da)/a.",
+      "where": "Section 2",
+      "kind": "identity",
+      "evidence": "numerical-example",
+      "load_bearing": true
+    },
+    {
+      "id": "D4",
+      "statement": "With zero fees, a round-trip swap (da in, received amount back) returns the trader exactly to their starting balances.",
+      "where": "Section 3",
+      "kind": "economic",
+      "evidence": "prose",
+      "load_bearing": false
+    },
+    {
+      "id": "D5",
+      "statement": "All identities in the note are machine-checked.",
+      "where": "Section 4",
+      "kind": "verification",
+      "evidence": "none",
+      "load_bearing": false
+    }
+  ],
+  "results_audit": "The note has derivations for D2, a proof sketch plus one worked numerical example for D3, and prose assertions for D4 and D5. No simulations, no data, no cost analysis, no artifact for the machine-checking claim.",
+  "notable": [
+    "The D3 proof is a one-line 'by construction' sketch; the worked example (a=100, b=100, da=25, p'=1.25) is the only evidence.",
+    "Claim D5 names no proof assistant and links no artifact.",
+    "The limitations section concedes no fees, no concurrency, no gas, but does not mention oracle or external-price questions."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "_synthetic": "Synthetic: fabricated for the Dexter's Lab review-pipeline example. Not from a real review.",
+  "recommendation": "reject",
+  "confidence": 5,
+  "soundness_verdicts": {
+    "D1": "holds",
+    "D2": "holds",
+    "D3": "error",
+    "D4": "holds-with-caveats",
+    "D5": "cannot-evaluate"
+  },
+  "fatal_issues": [
+    "D3, the central pressure update law, is wrong by a factor of (a+da)/a: the true law is p' = p*((a+da)/a)^2. The note's own worked example yields 1.5625, not the claimed 1.25."
+  ],
+  "major_issues": [
+    "D5 claims all identities are machine-checked with no named tool and no artifact; a machine check of D3 as stated would have failed, so the claim is doubtful as well as unverifiable.",
+    "No empirical results of any kind: no simulation, no data, no cost analysis."
+  ],
+  "novelty_verdict": "known: the pool is a plain constant-product market maker; the only new element is the pressure framing, and its central law is incorrect",
+  "panel_cost_usd": 0.0,
+  "reconciliation_note": "Synthetic example: the open-model panel was skipped, so all verdicts are internal (math attack angle). In a real run, D3 would be a panel claim and the expected panel verdict is REFUTED."
+}

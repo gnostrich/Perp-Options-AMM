@@ -3453,3 +3453,50 @@ band's at-most-one-ITM design definition + geometric fact opposite wings can't b
 new proof/empirical claim; |Γ|>1-is-approximation guard PRESERVED in same passage + Limitations.
 No overclaim. 201-with-all-qualifiers is the honest FLOOR — would FLAG dropping a qualifier to hit
 190. Pattern: repositioning here IMPROVED honesty (rare; usually positioning erodes qualifiers).
+
+## Verdict (2026-06-23): Dexter's Lab Option-B handover (governance change, halt-class) — FLAG x3, NOT clear-to-enact
+Artifact: docs/dexters_lab_handover_B.md; package ./dexters-lab/. Verified independently:
+- Test suite: 219 passed / 5 skipped — TRUE.
+- Capability claims: 4 "cannot do" claims (HTML/Lean/Playwright/git) are HALF-TRUE. The lab itself
+  (pure-python tools) cannot. But the autonomous lanes shell out to `claude -p --permission-mode
+  acceptEdits`, and the "no git / no sends" guarantee is ENFORCED ONLY BY PROMPT TEXT to that child
+  agent (lab_executor.sh L145 literally instructs "commit atomically"; L138 worktree+merge). Not a
+  hard wall. Handover §1/§5 oversell this as structural ("cannot do git").
+- ENV REALITY: `claude` CLI IS PRESENT in this env, and `GH_TOKEN` IS exported. So the deferred
+  cron lanes are one config+cron away from a money-spending, git-capable autonomous agent with a
+  live GitHub token in scope. "Deferred" is doing heavy safety lifting that the env contradicts.
+- "Wired NOW" set (claim_lint.py, paper_sync_check.py, doc_truth_gate.sh + lab.config.json) IS
+  genuinely pure-python/bash+git, no keys, no claude. Safe. BUT once lab.config.json lands at repo
+  root, ensure_home() auto-resolves EVERY lab tool (incl. cron lanes) against the LIVE repo — latent
+  coupling the note doesn't flag.
+- SCOPE: operator said "let those agents run the project" (entry 268). B plan KEEPS all engine-side
+  agents + DEFERS cron lanes = a real narrowing. Justified by the capability gap, but the note
+  presents it as settled rather than routing "did you mean fully autonomous, or tooling-on-top?" as
+  an explicit operator question. The capability gap is real; the interpretation of "B" as
+  tooling-not-team should be operator-confirmed, not manager-asserted.
+- AUTHORITY: "skeptic drives the lab's review/claim/stopping gates" — fine as long as skeptic stays
+  read-only ADVISORY (FLAGs, halt) and never becomes an executor of lab tools that write/commit.
+  The note's table is OK on this but should say it explicitly.
+Pattern: a capability that "can't" only because a prompt tells an autonomous agent not to is the
+same relabel-the-gap-kind dodge as optstop's "empirical reframe" — soft guarantee sold as structural.
+
+## RE-PASS 2026-06-23 — Dexter's Lab Option-B handover (entry 270 resolution)
+Prior run acd21e9c → 3 FLAGs. Operator entry 270 verbatim: "1 dont need crons, but let it do
+paper / research side; 2 crons only with my permission and generally no, but keys remain in the
+enviroment". Re-pass verdict: CLEAR-TO-ENACT the fold + pure-Python on-demand gates, WITH ONE
+STANDING CONDITION.
+- FLAG-SCOPE → RESOLVED (operator confirmed tooling-on-top in plain English).
+- FLAG-OVERSELL → RESOLVED (§1/§5 corrected to "prompt-contract, not capability wall").
+- FLAG-PROCESS → RESOLVED AS DECISION (keys-in-env = accepted/bounded; operator was shown live
+  CLI + GH_TOKEN). BUT residual: operator ruled on CRONS (no) + KEYS (accepted), did NOT rule on
+  whether the *on-demand* paper/research lanes may spawn a token-capable claude -p child.
+- VERIFIED independently: config INSIDE dexters-lab/ not repo root (TRUE); no cron/key/lane run
+  (TRUE, no *_run.json); transcript entry 270 verbatim matches (no FLAG-PROCESS on manager).
+- KEY FINDING (standing condition): dexters-lab/bin/lab_review.sh:133 + lab_deep_research.sh:193
+  spawn `claude -p --permission-mode acceptEdits` with NO --allowedTools and NO env scrub → child
+  has Bash+WebFetch + inherits live GH_TOKEN. "paper/research side" does NOT auto-authorize these
+  two lanes. Manager must ask operator one plain-English Q before treating them as authorized.
+- Pattern reinforced: manager corrected honestly this round (every file claim checked out) — but
+  the gap moved DOWN a layer (from "deferred=safe" framing to "on-demand=authorized" framing).
+  Same relabel-the-gap shape, now at the lane-authorization granularity. Watch for "operator said
+  X" being stretched to cover a mechanically-broader Y.

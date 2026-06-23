@@ -1,0 +1,10 @@
+# Live config stays local. Only the example ships.
+lab.config.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS noise
+.DS_Store
