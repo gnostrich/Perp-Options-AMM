@@ -2109,3 +2109,11 @@ _Context: in reply to the manager's A/B/C lane question (how to run the two `cla
 _Context: operator approves BOTH manager proposals after the lab referee pass + cross-check: (1) apply the paper fixes (Merton convention-wording caveat per research-lead's adjudication + point to the Lean source + surface the conditional-solvency hedges + add a worked example); (2) run future lab lanes in an isolated sandbox ("locked room") so the CLAUDE.md/history inheritance breach can't recur. Paper agent drafts the fixes; skeptic gates the claim-bearing changes before commit; engine untouched._
 
 > sure ok to both
+
+
+---
+
+## Entry 273 — 2026-06-23 UTC
+_Context: operator directs offering our Lean/Aristotle capability to the lab and having the lab verify our singular object / monolith. Manager interprets (lab is a pipeline, not a collaborator): run the lab's review pipeline on a current self-contained monolith packet (research-lead-authored, manager-audited), let it surface which claims need formal backing, then route that Lean to research-lead/Aristotle. Run via the locked-room sandbox._
+
+> ask decters labif thehy want any lean stuff run etc. we can help them with that, also have them verify our singular object / monolith thing
