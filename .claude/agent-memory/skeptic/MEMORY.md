@@ -3526,3 +3526,29 @@ Re-derived everything (not narrated):
 Pattern: paper fixes were disciplined this round; the ONE defect was a wrong gate-name attribution
 (seam vs FAITH-4) — a label-precision slip, the recurring "named the wrong machine-checked artifact"
 shape. Manager caught it pre-commit and routed it to me = process working.
+
+## 2026-06-23 — VERDICT: L-menu Aristotle fold into formal/INDEX.md (Universal Skeptic Gate). CLEAR-TO-FOLD w/ 2 label edits.
+Artifacts: L{1,3,2,7,9}_*/extracted/.../*.lean; INDEX L-MENU block (166-213); lab monolith_review_findings.
+Verified independently (read all 5 .lean, diffed):
+- Manager F1 (compile+tfp) CONFIRMED: token-scan clean (only sorry hit = L9 COMMENT; decide=kernel +decide
+  not native_decide); L1's 5 canonical modules BYTE-IDENTICAL to formal/temporal_lean_verified baseline.
+- Manager F2 (re-declaration) CONFIRMED w/ nuance. ALL 5 = `import Mathlib` self-contained, re-declare
+  TemporalAMM. KEY: the canonical `hst`/`exchange_internal_passivity` weld lives in PH_UNIFICATION_COMPOSED/
+  PHUnification.lean — NOT in the L1 baseline modules L1 was diffed against. So byte-identical-baseline is
+  orthogonal to hst-discharge. L1's re-declared TemporalAMM/trade are STRUCTURALLY IDENTICAL to canonical
+  (verified) → faithful model lemma on the SAME object, missing only import+compose. So manager's "M10 stands"
+  is right at the COMPOSED-THEOREM level but must NOT imply wrong-object. L3 poolPotential BYTE-IDENTICAL to
+  canonical cubic → genuine; real new content = concrete B3/B4 + non-vacuity witness (covers_iff_solvent
+  re-proves canonical coverage_iff_solvency). L7 = two hand-transcribed Lean copies agree; JS-faithfulness
+  asserted in COMMENT, never Lean-proved → M4 NOT closed (the load-bearing oversell risk).
+- "matches-intent: YES table" named in brief DOES NOT EXIST as artifact (closest: INDEX "statements
+  re-derived = intended"). research-lead's actual INDEX block is ALREADY well-hedged (self-contained/NOT
+  integrated/NOT verified/L7 not-build-integration/L9 stochastic OPEN) — reader NOT misled IF 2 lines tightened.
+- VERDICT: CLEAR-TO-FOLD conditional on 2 edits: (1) L1 "Discharges hst (M10)"→"supplies the lemma hst needs
+  on a structurally-identical re-declaration, NOT Lean-composed into exchange_internal_passivity; M10 open at
+  the weld until composed"; (2) L7 "strongest 'engine IS object'"→"two hand-transcribed Lean copies equal;
+  JS-faithfulness asserted not Lean-proved; M4 NOT closed". No FLAG-PROCESS (entry 276 + IDs check out).
+Pattern reinforced: "byte-identical-to-baseline" provenance is being used near a DIFFERENT claim (hst-discharge)
+than what it actually supports — watch for a true sub-claim parked adjacent to the claim it doesn't cover.
+New shape: "transcribed verbatim from JS" in a Lean COMMENT sold as engine↔object closure (L7) — a comment is
+not a proof; Lean can't read JS. Recurring "named the wrong/over-strong machine-checked artifact" family.
