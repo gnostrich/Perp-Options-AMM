@@ -3500,3 +3500,55 @@ STANDING CONDITION.
   the gap moved DOWN a layer (from "deferred=safe" framing to "on-demand=authorized" framing).
   Same relabel-the-gap shape, now at the lane-authorization granularity. Watch for "operator said
   X" being stretched to cover a mechanically-broader Y.
+
+---
+## 2026-06-23 — VERDICT: paper FIX-1..4 (American draft, lab-referee response). Mostly CLEAR, 1 FLAG-WRONG.
+Artifact: `git diff paper/temporal_paper_american_2026.tex` (4 operator-approved fixes, entry 272).
+Re-derived everything (not narrated):
+- FIX-1 "seam gate" = **FLAG-WRONG**, manager's suspicion CONFIRMED. Line 663-664 claims the
+  γ(γ+1)=2r/σ² Vieta convention is encoded by "merton_vieta_sum/prod AND **the seam gate**".
+  Read both gates: `faith_merton.js:105,119-124` IS the Vieta/Merton gate (rGauss=g(g+1)σ²/2,
+  Vieta roots {−γ,γ+1} sum=1 prod=−2r/σ²). `seam_gate.js` = C¹ value/slope continuity at S*,
+  ZERO refs to merton/vieta/r/σ (grep clean). Misattribution. Same conclusion in the lab-findings
+  file itself (`evidence/dexters_lab/aft_review_findings_2026-06-23.md:39` cites faith_merton.js:105,
+  NOT the seam gate). Fix: "seam gate"→"FAITH-4 faith_merton gate" or drop. Site 2 (§formal bullet
+  ~832) is CLEAN — cites only the Lean Vieta theorems, no seam gate.
+- FIX-1 domain r>σ²: VERIFIED (γ>1⟺r>σ² under quadratic, boundary γ=1→r=σ²). Symmetric-pairing
+  q=r/root-sum-1 framing matches research-lead adjudication. GH-asymmetry hedge preserved both sites.
+- FIX-2 reproducibility: CLEAR, stays \tfp (explicit "does not upgrade the label"). Minor: cites
+  "aristotle_runs/" but actual path is formal/aristotle_runs/ (parenthetical scoped under formal/,
+  defensible). formal/INDEX.md exists as cited.
+- FIX-3 scope B1/B3/B4: CLEAR, restates already-held conditional solvency (lines 882,1016), no new
+  concession. "geometry necessary not sufficient" / reserves_have_no_floor intact.
+- FIX-4 worked example: CLEAR. Recomputed table independently — ALL cells match (S*=66.67; m1 col
+  .333/.231/.183/.148/.103; m3 col .143/.048/.024/.013/.004). Labelled illustrative, no calibration claim.
+- Regression: no honest hedge weakened. "Laplace exponent"→"log-price Laplace exponent" = sharper.
+Pattern: paper fixes were disciplined this round; the ONE defect was a wrong gate-name attribution
+(seam vs FAITH-4) — a label-precision slip, the recurring "named the wrong machine-checked artifact"
+shape. Manager caught it pre-commit and routed it to me = process working.
+
+## 2026-06-23 — VERDICT: L-menu Aristotle fold into formal/INDEX.md (Universal Skeptic Gate). CLEAR-TO-FOLD w/ 2 label edits.
+Artifacts: L{1,3,2,7,9}_*/extracted/.../*.lean; INDEX L-MENU block (166-213); lab monolith_review_findings.
+Verified independently (read all 5 .lean, diffed):
+- Manager F1 (compile+tfp) CONFIRMED: token-scan clean (only sorry hit = L9 COMMENT; decide=kernel +decide
+  not native_decide); L1's 5 canonical modules BYTE-IDENTICAL to formal/temporal_lean_verified baseline.
+- Manager F2 (re-declaration) CONFIRMED w/ nuance. ALL 5 = `import Mathlib` self-contained, re-declare
+  TemporalAMM. KEY: the canonical `hst`/`exchange_internal_passivity` weld lives in PH_UNIFICATION_COMPOSED/
+  PHUnification.lean — NOT in the L1 baseline modules L1 was diffed against. So byte-identical-baseline is
+  orthogonal to hst-discharge. L1's re-declared TemporalAMM/trade are STRUCTURALLY IDENTICAL to canonical
+  (verified) → faithful model lemma on the SAME object, missing only import+compose. So manager's "M10 stands"
+  is right at the COMPOSED-THEOREM level but must NOT imply wrong-object. L3 poolPotential BYTE-IDENTICAL to
+  canonical cubic → genuine; real new content = concrete B3/B4 + non-vacuity witness (covers_iff_solvent
+  re-proves canonical coverage_iff_solvency). L7 = two hand-transcribed Lean copies agree; JS-faithfulness
+  asserted in COMMENT, never Lean-proved → M4 NOT closed (the load-bearing oversell risk).
+- "matches-intent: YES table" named in brief DOES NOT EXIST as artifact (closest: INDEX "statements
+  re-derived = intended"). research-lead's actual INDEX block is ALREADY well-hedged (self-contained/NOT
+  integrated/NOT verified/L7 not-build-integration/L9 stochastic OPEN) — reader NOT misled IF 2 lines tightened.
+- VERDICT: CLEAR-TO-FOLD conditional on 2 edits: (1) L1 "Discharges hst (M10)"→"supplies the lemma hst needs
+  on a structurally-identical re-declaration, NOT Lean-composed into exchange_internal_passivity; M10 open at
+  the weld until composed"; (2) L7 "strongest 'engine IS object'"→"two hand-transcribed Lean copies equal;
+  JS-faithfulness asserted not Lean-proved; M4 NOT closed". No FLAG-PROCESS (entry 276 + IDs check out).
+Pattern reinforced: "byte-identical-to-baseline" provenance is being used near a DIFFERENT claim (hst-discharge)
+than what it actually supports — watch for a true sub-claim parked adjacent to the claim it doesn't cover.
+New shape: "transcribed verbatim from JS" in a Lean COMMENT sold as engine↔object closure (L7) — a comment is
+not a proof; Lean can't read JS. Recurring "named the wrong/over-strong machine-checked artifact" family.

@@ -1,0 +1,15 @@
+# Aristotle L-menu submissions 2026-06-23 (research-lead, operator entry 276 "have aristotle do whatever you want")
+# project-dir = formal/temporal_lean_verified ; toolchain leanprover/lean4:v4.28.0
+L1 trajectory_domain   project 34a9aca5-3b9e-4cc5-9102-151039d23c5c  prompt aristotle_prompt_L1_trajectory_domain.md
+L3 conditional_solvency project e590fcab-1700-4753-8d0f-91159fb567b3  prompt aristotle_prompt_L3_conditional_solvency.md
+L2 a16_nojump          project b14701e7-e5cc-4b6b-a1bb-4112041f4e3b  prompt aristotle_prompt_L2_a16_nojump.md
+L7 engine_bridge       project 8b429b62-ee7e-4f12-8dee-d5114f22bc41  prompt aristotle_prompt_L7_engine_bridge.md
+L9 snell_staged        project 14b029e2-899a-402e-a5d8-7e9e3af2c513  prompt aristotle_prompt_L9_snell.md
+
+# RETURNED + research-lead-AUDITED 2026-06-23 → all 5 COMPILED + trusted-from-prover [pending manager audit]
+# (inner task ids captured from live `show` streams)
+L1 task 46309fbb-2289-42c6-8347-5a6fa18e554c  md5 7cc8dc9b  PASS
+L3 task cc441ec4-7182-4740-b104-6f9645b9ecde  md5 6f217962  PASS
+L2 task 214d1296-07b1-4e39-b2bb-fa0031289b07  md5 940f1a32  PASS
+L7 task (project 8b429b62) EngineBridge        md5 3231f1bf  PASS
+L9 task (project 14b029e2) SnellStaged Stage-A md5 e7884cca  PASS (Stage B obstruction reported)

@@ -2109,3 +2109,44 @@ _Context: in reply to the manager's A/B/C lane question (how to run the two `cla
 _Context: operator approves BOTH manager proposals after the lab referee pass + cross-check: (1) apply the paper fixes (Merton convention-wording caveat per research-lead's adjudication + point to the Lean source + surface the conditional-solvency hedges + add a worked example); (2) run future lab lanes in an isolated sandbox ("locked room") so the CLAUDE.md/history inheritance breach can't recur. Paper agent drafts the fixes; skeptic gates the claim-bearing changes before commit; engine untouched._
 
 > sure ok to both
+
+
+---
+
+## Entry 273 — 2026-06-23 UTC
+_Context: operator directs offering our Lean/Aristotle capability to the lab and having the lab verify our singular object / monolith. Manager interprets (lab is a pipeline, not a collaborator): run the lab's review pipeline on a current self-contained monolith packet (research-lead-authored, manager-audited), let it surface which claims need formal backing, then route that Lean to research-lead/Aristotle. Run via the locked-room sandbox._
+
+> ask decters labif thehy want any lean stuff run etc. we can help them with that, also have them verify our singular object / monolith thing
+
+
+---
+
+## Entry 274 — 2026-06-23 UTC
+_Context: operator clarifies the OpenRouter model-panel is NOT required for the lab to do a real job (the Claude reviewer is the main pass; the panel is an optional extra) and directs re-running the lab review. No OPENROUTER_API_KEY in env (confirmed). Manager re-runs the monolith review (now on the F1-fixed packet) via the locked room as a fresh independent pass._
+
+> the lab doesn’t need openrouter compulsary, run it again
+
+
+---
+
+## Entry 275 — 2026-06-23 UTC
+_Context: operator reports entry 274 was sent to the wrong chat (not intended for this project) and says to leave it if no re-run is required. Manager killed the in-flight re-run (kill-means-silent: its outputs are dead, not relayed), confirmed processes dead + staging cleaned + repo tree clean. No re-run required — the first monolith pass stands._
+
+> sorry last message was for wrong chat, if no rerun required then leave it
+
+### CORRIGENDUM to Entry 274 (per §2.2, appended not edited)
+Entry 274 ("the lab doesn't need openrouter compulsary, run it again") was, per the operator
+in entry 275, **misdirected — meant for a different chat, not this project.** The manager had
+acted on it (launched a monolith-review re-run via the locked room); on the entry-275
+clarification the manager KILLED that re-run before completion. Its outputs are treated as dead
+(kill-means-silent) and were not relayed or folded. The original monolith review (slug
+`review-monolith-20260623`, findings in `evidence/dexters_lab/monolith_review_findings_2026-06-23.md`)
+stands unchanged. Entry 274 is retained verbatim above as the honest record of what was said and acted on.
+
+
+---
+
+## Entry 276 — 2026-06-23 UTC
+_Context: operator green-lights Aristotle broadly ("free"). Manager dispatches research-lead to drive the prioritized Lean menu (L1 hst-discharge, L3 conditional-solvency, L2 A16-no-jump bounded; L7 engine↔Lean bridge, L9 Snell envelope big) — pin predicates first, don't weaken statements, audit returns (forbidden-token scan), label trusted-from-prover; manager audits before any fold to INDEX/shared truth._
+
+> have aristotle do whatever you want its free
