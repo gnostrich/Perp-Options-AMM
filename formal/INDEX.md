@@ -163,6 +163,64 @@ object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on th
   (`notes/research/DETERMINATION_CORRECTION_GH_vs_Balancer_2026-06-14.md`). **Verdict: `proved (trusted-from-prover)`, INTERNAL half only** —
   NOT "verified", NOT integrated; external solvency remains the open frontier.
 
+- **L-MENU (operator entry 276, 2026-06-23) — RETURNED + research-lead-audited + MANAGER-AUDITED + SKEPTIC-GATED (run adeca113) → `trusted-from-prover` (self-contained MODELS; two oversell corrections below).**
+  Five obligations off the Dexter's-Lab monolith-review menu (`evidence/dexters_lab/monolith_review_findings_2026-06-23.md`),
+  submitted to Aristotle (project-dir `formal/temporal_lean_verified`, Lean 4.28.0 / Mathlib v4.28.0).
+  All five COMPILED server-side. **Manager independent audit (2026-06-23):** token scan clean (the only
+  `sorry` is in an L9 COMMENT; `+decide` is kernel decide, NOT native_decide; no admit/axiom-decl/
+  sorryAx/opaque/unsafe); L1's archive carries the canonical modules (AMMCurve/Temporal/Seam/Main/Audit)
+  BYTE-IDENTICAL to the verified baseline (manager-diffed); `#print axioms` ⊆ {propext,Classical.choice,
+  Quot.sound} per each summary. **ALL FIVE ARE SELF-CONTAINED `import Mathlib` MODELS** (each re-declares
+  its own defs), NOT theorems imported into the canonical build. **NOT "verified"** (env-blocked, no
+  local canonical kernel). **Skeptic gate (run adeca113) = CLEAR-TO-FOLD with two required oversell
+  corrections (L1, L7 below); NOTE the canonical `hst`/`exchange_internal_passivity` weld lives in
+  `PHUnification.lean`, NOT in the modules L1 was diffed against, so the byte-identical fact is orthogonal
+  to whether `hst` is discharged.**
+  - **L1 `TrajectoryDomain.lean`** (project `34a9aca5`; archive `aristotle_runs/L1_TRAJECTORY_DOMAIN/`;
+    md5 `7cc8dc9b`). `trade_seq_on_domain` — every state coordinate along an iterated valid-trade
+    trajectory stays on the R_psd operating domain `β ≤ (iterTrade …).y`, via β-conservation
+    (`trade_seq_beta_const`) + the genuine (non-vacuous) trade precondition `β < y + D k`. Also
+    `state_on_domain`, `trade_state_on_domain`. **OVERSELL CORRECTION (skeptic):** the re-declared
+    `TemporalAMM` is STRUCTURALLY IDENTICAL to the canonical object (so this is a faithful lemma on the
+    same object, not a different one), but it is the trajectory lemma IN ISOLATION — NOT yet
+    imported-and-composed into the canonical `exchange_internal_passivity` weld (in `PHUnification.lean`)
+    that carries `hst`. It provides the bounded piece M10 needs but **does NOT by itself close M10 on the
+    canonical weld** — the import-and-compose step remains.
+  - **L3 `ConditionalSolvency.lean`** (project `e590fcab`; archive `aristotle_runs/L3_CONDITIONAL_SOLVENCY/`;
+    md5 `6f217962`). External-half solvency under NAMED concrete B3/B4 forms (packet §5.8):
+    `solvent_of_concrete_funding` (funding = floor − (V−O) + slack, slack ≥ 0 ⇒ solvent),
+    `concrete_funding_covers`, `covers_iff_solvent`, `solvent_of_covers`, and a real non-vacuity witness
+    `concrete_funding_not_vacuous` (a counter-instance where slack<0 ⇒ NOT solvent — proves hslack is
+    load-bearing). **Solvency stays CONDITIONAL (PH-4b honored); NOT made unconditional.**
+  - **L2 `A16NoJump.lean`** (project `b14701e7`; archive `aristotle_runs/L2_A16_NOJUMP/`; md5 `940f1a32`).
+    Promotes the A16 ATM-no-jump GATE fact to a real Lean theorem (lab M2): `arms_agree_at_mode` (call
+    arm == put arm at the mode `s=θ` under `g=m·γ>0`), `markCall_continuousAt_mode` /
+    `markPut_continuousAt_mode` (genuine `ContinuousAt` at the ATM crossing), plus `sStarCall_gt_mode`/
+    `sStarPut_lt_mode`/`markCall_at_mode`/`markPut_at_mode`. DISTINCT from the `S*` smooth-paste seam;
+    does NOT weaken `paste_value`/`paste_slope`.
+  - **L7 (BIG) `EngineBridge.lean`** (project `8b429b62`; archive `aristotle_runs/L7_ENGINE_BRIDGE/`;
+    md5 `3231f1bf`). A Lean-internal analogue of the report-only numeric `monolith_consistency.js`: a
+    re-declared `Engine.*` namespace (JS closed forms `gLoc`/`markLensed`/`tradeUpdate` transcribed by
+    hand — `Engine.gLoc` computes via `w:=1−β/y` then `w/(1−w)`) is proved EQUAL to the re-declared
+    monolith `g`/`markCont`+`markInt`/`trade`. Headline `bridge_tradeUpdate_x`: the transcribed engine
+    `x_new = x + (−αβD)/((y−β)(y+D−β))` lands exactly on the monolith's derived post-trade `x`. Plus
+    `bridge_gLoc`/`bridge_markCont`/`bridge_markInt`/`bridge_tradeUpdate_y`/`bridge_single`.
+    **OVERSELL CORRECTION (skeptic): L7 proves two HAND-TRANSCRIBED Lean copies agree — the faithfulness
+    of those transcriptions to the ACTUAL running engine JS is asserted in a comment, NEVER Lean-proved.
+    So this is Lean-internal consistency between two transcriptions, NOT a verified bridge to the running
+    engine: M4 (engine↔object) is NOT closed.**
+  - **L9 (BIG, STAGED) `SnellStaged.lean`** (project `14b029e2`; archive `aristotle_runs/L9_SNELL/`;
+    md5 `e7884cca`). Stochastic Snell-envelope settlement-optimality (lab M3 / packet §5.10), STAGED:
+    **Stage A PROVED** — the generic finite-horizon discrete optimal-stopping skeleton over an abstract
+    reward `g : Fin (N+1) → ℝ` via genuine `Fin.reverseInduction` (`snellValue`): `snell_ge_reward`,
+    `snell_ge_continuation`, `snell_eq_max` (Bellman), `snell_optimal_stop` (non-vacuous: horizon stop
+    realizes the envelope, stopping region nonempty). **Stage B = REPORTED OBSTRUCTION (not faked):** the
+    monolith carries no price process / oracle / filtration / measure, so the conditional-expectation
+    Snell envelope cannot be instantiated; "optimal stop = first hitting of S*" needs a super-
+    martingale/optional-stopping argument; Mathlib v4.28.0 has the pieces but no packaged Snell-envelope
+    construction — that measure layer + a concrete GH/constant-m price process would have to be built.
+    **The deterministic-boundary smooth-paste theorem is NOT weakened; the full stochastic claim stays OPEN.**
+
 - **LENS NATURAL HOME + structure re-examination RESOLVED** (operator entry 242; note
   `notes/research/LENS_NATURAL_HOME_2026-06-14.md`; skeptic gate `a00a14ea` — 2 scope-qualifiers binding):
   (A) **Measure-backed info-geometry is DEAD for the Balancer curve** — no CGF / exponential-family /

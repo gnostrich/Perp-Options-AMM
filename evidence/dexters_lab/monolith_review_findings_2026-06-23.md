@@ -41,3 +41,21 @@ M8 LP payoff unmodeled / implicit short-perp liability (A14 pending). F3 no empi
 - **L2 — A16 ATM no-jump as a Lean theorem (not gate-only).** BOUNDED.
 - **L7 — engine↔Lean definitional bridge theorem.** BIG (scope decision).
 - **L9 — stochastic Snell-envelope settlement optimality.** BIG (scope decision).
+
+---
+
+## L-menu Aristotle run + audit (operator entry 276, folded 2026-06-23)
+All 5 menu items COMPILED (Aristotle); manager-audited; skeptic-gated (run adeca113, CLEAR-TO-FOLD
+with 2 oversell corrections). Full INDEX block: `formal/INDEX.md` L-MENU. Honest status:
+- **trusted-from-prover** (NOT verified — env-blocked), and **all 5 are self-contained `import Mathlib`
+  MODELS** (re-declared defs), not theorems in the canonical build.
+- **L2** (A16 ATM-no-jump) and **L3** (conditional solvency, non-vacuity witnessed, stays conditional):
+  genuine model lemmas — clean.
+- **L1** (trajectory-stays-on-domain): faithful lemma on a structurally-identical re-declaration, but
+  in isolation — **does NOT by itself close M10** on the canonical `exchange_internal_passivity` weld
+  (`PHUnification.lean`); the import-and-compose step remains.
+- **L7** (engine bridge): proves two HAND-TRANSCRIBED Lean copies agree; engine-JS faithfulness asserted
+  in a comment, NEVER Lean-proved — **M4 (engine↔object) NOT closed.**
+- **L9** (Snell): Stage-A abstract optimal-stopping skeleton proved; **stochastic Snell envelope OPEN**
+  (no price process/measure in the object).
+Net: real model-level progress (esp. L2/L3); M10/M4/Snell remain open on the canonical object.
