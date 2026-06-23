@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "updated": "2026-06-12",
+  "entries": [
+    {
+      "rq_id": "EXAMPLE1",
+      "track": "example",
+      "source_hypothesis_id": "EX-H1",
+      "title": "Example offline RQ: cache hit rate predicts p95 latency",
+      "claim": "Across archived request logs, cache hit rate has a negative effect on p95 latency whose 95% CI excludes zero.",
+      "status": "CANDIDATE",
+      "execution_class": "offline",
+      "effort": "S",
+      "plan_path": null,
+      "prereg_sha": null,
+      "prereg_thresholds": [
+        "effect 95% CI excludes zero",
+        "R^2 >= 0.5",
+        "per-stratum effect spread <= 3x"
+      ],
+      "gates": [],
+      "ledger_tasks": [],
+      "blockers": [],
+      "notes": "Example entry showing the offline class: runs unattended on archived data. Delete once the lab has real entries.",
+      "example": true
+    },
+    {
+      "rq_id": "EXAMPLE2",
+      "track": "example",
+      "source_hypothesis_id": "EX-H2",
+      "title": "Example human-gated RQ: reviewer agreement on failure labels",
+      "claim": "Two human reviewers agree on failure-mode labels for sampled incidents at Cohen's kappa >= 0.7.",
+      "status": "CANDIDATE",
+      "execution_class": "human_labeling",
+      "effort": "M",
+      "plan_path": null,
+      "prereg_sha": null,
+      "prereg_thresholds": [
+        "Cohen's kappa >= 0.7",
+        "n >= 40 labeled incidents"
+      ],
+      "gates": [],
+      "ledger_tasks": [],
+      "blockers": [
+        "needs a human-labeled gold set (n >= 40); the executor parks these rows as PENDING_HUMAN"
+      ],
+      "notes": "Example entry showing the human_labeling class: blocked until humans label data. Delete once the lab has real entries.",
+      "example": true
+    }
+  ]
+}

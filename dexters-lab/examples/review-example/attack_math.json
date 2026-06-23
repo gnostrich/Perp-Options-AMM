@@ -1,0 +1,36 @@
+{
+  "_synthetic": "Synthetic: fabricated for the Dexter's Lab review-pipeline example. Not from a real review.",
+  "angle": "formal/mathematical re-derivation",
+  "verdicts": [
+    {
+      "claim_id": "D2",
+      "verdict": "holds",
+      "reasoning": "From a*b = k: b' = k/(a+da) = a*b/(a+da). So db = b' - b = b*(a - (a+da))/(a+da) = -b*da/(a+da). Exact, for a+da > 0.",
+      "severity": "none"
+    },
+    {
+      "claim_id": "D3",
+      "verdict": "error",
+      "reasoning": "Recompute p' from the definition. b' = a*b/(a+da), so p' = (a+da)/b' = (a+da)^2/(a*b) = p*((a+da)/a)^2. The note claims the FIRST power of (a+da)/a; the true law has the SQUARE, because a swap moves both reserves: a rises by da while b falls by the invariant. The note's own worked example refutes it: a=100, b=100, da=25 gives b' = 10000/125 = 80, so p' = 125/80 = 1.5625, not the claimed 1.25. The 'by construction' proof sketch silently holds b fixed.",
+      "severity": "fatal"
+    },
+    {
+      "claim_id": "D4",
+      "verdict": "holds-with-caveats",
+      "reasoning": "Forward swap from (100,100) with da=25 reaches (125,80); trader pays 25 A, receives 20 B. Swapping 20 B back: a' = 10000/100 = 100, trader receives 25 A. Net zero, so the claim holds in the model. Caveats: it requires zero fees, an atomic round trip with no interleaved trades, and exact arithmetic; none of these survive deployment, and the limitations section concedes only the first.",
+      "severity": "minor"
+    }
+  ],
+  "findings": [
+    "The pressure update error (D3) propagates: any faucet payout proportional to p systematically underpays after inflows by a factor of (a+da)/a.",
+    "The proof-sketch style ('by construction') let the error through; the pipeline rule 'substitute the update rule and simplify fully' catches it in two lines."
+  ],
+  "strengths": [
+    "D2 is stated exactly and derived correctly.",
+    "The note includes a worked numerical example, which is what makes the D3 error decisively checkable."
+  ],
+  "questions_for_authors": [
+    "Recompute the worked example directly from b' = k/(a+da): do you obtain 1.25 or 1.5625?",
+    "Which proof assistant checked the identities in Section 4, and where is the artifact?"
+  ]
+}

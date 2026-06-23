@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "example-prior-art",
+      "slug": "prior-art-survey-rq1",
+      "topic": "EDIT ME: prior-art survey for your first research question (replace with a real topic)",
+      "feeds": "RQ1",
+      "status": "pending",
+      "last_done": null,
+      "runs": 0
+    },
+    {
+      "id": "example-methods",
+      "slug": "measurement-methods-rq2",
+      "topic": "EDIT ME: measurement instruments and methods relevant to your second research question",
+      "feeds": "RQ2",
+      "status": "pending",
+      "last_done": null,
+      "runs": 0
+    }
+  ]
+}

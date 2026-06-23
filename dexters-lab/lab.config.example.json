@@ -1,0 +1,31 @@
+{
+  "lab_name": "dexters-lab",
+  "lab_home": "~/dexters-lab-home",
+  "registry_path": "{lab_home}/rq_registry.json",
+  "ledger_path": "{lab_home}/TASK_LEDGER.md",
+  "verdict_log_path": "{lab_home}/VERDICT_LOG.md",
+  "reviews_dir": "{lab_home}/reviews",
+  "drafts_dir": "{lab_home}/drafts",
+  "monitor_target": "{lab_home}/CLAIMS.md",
+  "stopping_rules": {
+    "rule1_ci_excludes_zero": true,
+    "rule2_r2_min": 0.5,
+    "rule3_stratum_spread_max": 3.0,
+    "rule4_instrument_precision_min": 0.85,
+    "rule5_kappa_min": 0.7
+  },
+  "budget": {
+    "monthly_cap_usd": 40,
+    "spend_ledger": "{lab_home}/spend.jsonl"
+  },
+  "openrouter": {
+    "api_key_env": "OPENROUTER_API_KEY",
+    "panel_models_preference": [
+      "deepseek/deepseek-r1",
+      "moonshotai/kimi-k2-thinking",
+      "z-ai/glm-4.7"
+    ]
+  },
+  "milestone_hook": null,
+  "python": "python3"
+}

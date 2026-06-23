@@ -2069,3 +2069,11 @@ _Context: operator clarifies the defect with a screenshot — chart-2's mode doe
 _Context: operator asks for a simple-English explanation and why chart-2 isn't fixed yet. Manager: first fix pinned the mode to 1 but cancelled the kurtosis knob (tester FLAG); now building Option C (normalized steepness shape) which satisfies both, tester-gating before push._
 
 > simple english and wy is tis not fixed already?
+
+
+---
+
+## Entry 268 — 2026-06-23 UTC
+_Context: operator uploads an external "agent package" (dexters-lab zip), asks to put it in the repo, run/assess it, hand over from existing agents and let it run the project — but to brainstorm first if there's a capability limitation. Manager extracted it to ./dexters-lab, ran its test suite (219 passed), mapped its capabilities, and escalated the handover decision (a real capability gap exists — it's a research/paper-governance pipeline, not an engine/Lean/test/git team)._
+
+> @"/root/.claude/uploads/fd6931bc-a813-533f-92eb-a3100ece1b68/3e1825b3-dexterslabmain.zip" put this innthe repo, its an agent package, run it and see what it says -- assess its capabilities and give those agents the handover from our existing agwnts, and nthen let those agents run the project, --- if there is a capability limitation and we still need some of our agwnts, braisntorm with me and we'll decide

@@ -1,0 +1,20 @@
+# Dexter's Lab crontab template (Linux, or macOS if you prefer cron).
+#
+# REPLACE every __PLACEHOLDER__ before installing:
+#   __LAB_REPO__   absolute path to your dexters-lab clone
+#                  (example: /home/yourname/dexters-lab)
+#   __LAB_HOME__   absolute path to your lab_home (see lab.config.json;
+#                  default is ~/dexters-lab-home, written out in full)
+#
+# Install: crontab -e, then paste the lines you want.
+#
+# Note: cron ships a minimal PATH. The lab scripts export the common bin
+# dirs themselves, but if your claude CLI lives somewhere unusual, set
+# PATH here too, for example:
+# PATH=/usr/local/bin:/usr/bin:/bin
+
+# Nightly task executor at 03:30 (one ledger task per run)
+30 3 * * * /bin/bash __LAB_REPO__/bin/lab_executor.sh >> __LAB_HOME__/cron.executor.log 2>&1
+
+# Nightly literature scan at 04:15 (one queue target per run)
+15 4 * * * /bin/bash __LAB_REPO__/bin/lab_lit.sh >> __LAB_HOME__/cron.lit.log 2>&1
