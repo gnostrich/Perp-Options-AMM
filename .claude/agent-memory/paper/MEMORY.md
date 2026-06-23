@@ -121,6 +121,31 @@ abstract symbol-light + shorter. Folded into `paper/temporal_paper_american_2026
   headline) all intact — only glosses added, no claim touched. Structural checks: $ even, braces
   balanced, envs balanced. No pdflatex in env. Handed to manager for claim-audit + skeptic re-audit.
 
+## Four-fix referee pass (entry 272 "sure ok to both", 2026-06-23) — American draft, text-only
+Folded into `paper/temporal_paper_american_2026.tex` (engine/Lean UNTOUCHED; handed to manager for skeptic-gate):
+- **FIX 1 (Merton convention, substantive).** The FORMULA `γ(γ+1)=2r/σ²` stays; only the wrong
+  "classical/no-dividend Merton" LABEL was replaced. Now stated as the SYMMETRIC put/call-root
+  pairing (put root −γ, call root γ+1, root-sum 1, zero net carry between legs) → Vieta product
+  relation, encoded by Lean `merton_vieta_sum/prod` + seam gate; regime **r>σ²** (quadratic
+  reading, NOT r>σ²/2). The no-dividend BSM slice noted as the LINEAR `γ=2r/σ²`, explicitly "not
+  used here." Three sites: §sec:american prose (~604), §sec:formal Merton bullet (~767), Appendix-A
+  symbol table r/σ rows (~1046). r,σ introduced in plain English at first use.
+- **FIX 2 (reproducibility).** Added "Inspecting the artifacts" para in §sec:formal provenance:
+  Lean statements+source in-repo at `formal/` (+ `formal/INDEX.md`, `aristotle_runs/`); Aristotle
+  private/not reproducible; stays trusted-from-prover, NOT upgraded to "verified."
+- **FIX 3 (surface conditional hedges).** New "Scope and standing assumptions" para in intro
+  (right after the result-stated-first honest bounds): solvency CONDITIONAL on B1/B3/B4 = structure
+  fields not discharged; geometry necessary-never-sufficient; "assumptions, not claims." Wording
+  matches existing B1/B3/B4 naming.
+- **FIX 4 (worked example).** New §"A worked example (illustrative numbers)" in §sec:american:
+  γ=2, K=$100, m=1→S*=$66.67, value-frac 1/3; small table of OTM put marks at S=80/90/100/120 for
+  m=1 (g_loc=2) and m=3 (g_loc=6), via S* formula + wing power-law value∝S^(−mγ). Labelled
+  ILLUSTRATIVE/not-calibrated/no-validation-claim throughout. At-S* m=3 mark=1/(g_loc+1)=1/7 (self-
+  consistent with lensed steepness).
+- Structural checks: $ even (718), braces balanced (838/838), all envs OK (tabular now 3). No
+  pdflatex in env. Only `paper/temporal_paper_american_2026.tex` changed (history/ file mod is
+  pre-existing working-tree state, NOT mine).
+
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't
 go in. New claims/positioning are strategic → flag to the **manager** (who escalates to the operator).

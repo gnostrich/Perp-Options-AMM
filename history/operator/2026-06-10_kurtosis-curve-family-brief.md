@@ -2101,3 +2101,11 @@ _Context: operator answers the manager's two post-skeptic decisions (Q1 autonomy
 _Context: in reply to the manager's A/B/C lane question (how to run the two `claude -p` paper/research lanes that spawn a Bash+WebFetch child able to read the live GH_TOKEN), operator chooses B — allow them as-is, on-demand, under manager supervision (token visible to the child; accepted risk, same basis as keys-in-env). Operator overrules the skeptic's standing condition with full information. Manager records the lanes as authorized for supervised non-cron use; manager's own recommendation had been A (scrub token)._
 
 > b
+
+
+---
+
+## Entry 272 — 2026-06-23 UTC
+_Context: operator approves BOTH manager proposals after the lab referee pass + cross-check: (1) apply the paper fixes (Merton convention-wording caveat per research-lead's adjudication + point to the Lean source + surface the conditional-solvency hedges + add a worked example); (2) run future lab lanes in an isolated sandbox ("locked room") so the CLAUDE.md/history inheritance breach can't recur. Paper agent drafts the fixes; skeptic gates the claim-bearing changes before commit; engine untouched._
+
+> sure ok to both

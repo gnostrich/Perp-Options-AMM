@@ -142,6 +142,20 @@ honest bounds---exact replication only for hedge-ratio magnitude $|\Gamma|\le1$
 (the position's sensitivity to spot, capped at one per wing), and
 \emph{conditional} solvency---are stated below.
 
+\paragraph{Scope and standing assumptions.}
+So that no condition reads as a hidden defect, we state the principal one plainly
+and up front: \emph{solvency in this work is conditional}. It holds only under
+named hypotheses---B1 (a funding port covers the concave deficit), B3 (arbitrage
+is one-way), and B4 (the settlement ledger closes)---which are carried as
+\emph{structure fields}, not discharged facts. The construction proves ``\emph{if}
+the ledger closes, arbitrage is one-way, and the port covers the floor, \emph{then}
+the pool is passive and solvent''; it does \emph{not} prove that the port pays in
+the real world. Geometry is shown \emph{necessary} for solvency
+(\texttt{reserves\_have\_no\_floor}) but never sufficient. These named hypotheses
+are therefore assumptions, not claims, and the reader should not mistake the
+conditional solvency result for an unconditional one
+(Sections~\ref{sec:formal},~\ref{sec:limitations}).
+
 The prior version of this work~\cite{temporal-barrier} priced the OTM continuum
 with a single weighted constant-product pool and treated each position as a
 \emph{barrier} instrument: its value rises toward one perpetual-future unit as
@@ -590,6 +604,42 @@ continuation runs past the strike before exercise pays intrinsic. The curve
 functions, calibration, and funding are unchanged by the rule---it lives entirely
 in the per-leg mark.
 
+\subsection{A worked example (illustrative numbers)}
+To show the formulas in motion we evaluate them at \emph{illustrative} parameter
+values---chosen for arithmetic clarity, \emph{not} calibrated to any market or
+asset, and not an empirical validation of anything. Take a put leg (hedging a
+long) with convexity exponent $\gamma=2$, dollar strike $K=\$100$, and lens
+$m=1$ (plain Balancer, so $g_{\mathrm{loc}}=m\gamma=2$). The early-exercise free
+boundary~\eqref{eq:boundary} sits at
+\[
+  S^{\ast}=K\,\frac{\gamma}{\gamma+1}=100\cdot\tfrac{2}{3}=\$66.67,
+\]
+\emph{below} the strike (the put becomes optimal to exercise only after spot has
+fallen well past $K$), and at that boundary the mark equals the value
+fraction~\eqref{eq:coeff}, $1/(\gamma+1)=1/3$. On the OTM side ($S>S^{\ast}$) the
+continuation mark is $c\,s_{N}$ with $s_{N}\propto S^{-\gamma}$, so it scales as
+$\tfrac{1}{\gamma+1}\,(S^{\ast}/S)^{\gamma}$, growing as spot falls toward the
+boundary. Steepening the lens to $m=3$ (so $g_{\mathrm{loc}}=6$) leaves
+$S^{\ast}$ unchanged (the boundary~\eqref{eq:boundary} depends on $\gamma$, not
+$m$) but makes the off-boundary mark decay far faster:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+spot $S$ & mark, $m=1$ ($g_{\mathrm{loc}}=2$) & mark, $m=3$ ($g_{\mathrm{loc}}=6$) \\
+\midrule
+$\$66.67=S^{\ast}$ & $0.333$ & $0.143$ \\
+$\$80$  & $0.231$ & $0.048$ \\
+$\$90$  & $0.183$ & $0.024$ \\
+$\$100=K$ & $0.148$ & $0.013$ \\
+$\$120$ & $0.103$ & $0.004$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The table simply traces~\eqref{eq:boundary}--\eqref{eq:coeff} and the wing
+power-law $\mathrm{value}\propto S^{-m\gamma}$ at these chosen inputs; it
+illustrates the closed forms (and the kurtosis knob's effect on tail steepness)
+and makes no empirical or market-calibration claim.
+
 \subsection{Why this is the American boundary}
 The smooth-paste solution~\eqref{eq:boundary}--\eqref{eq:coeff} is not an
 arbitrary $C^{1}$ join. It is the \emph{unique} solution of the value-match plus
@@ -602,13 +652,19 @@ maximises the holder's value over \emph{deterministic} exercise boundaries (T1b
 identification with the stochastic optimal-stopping (Snell) boundary is
 \emph{named but not formalised}---the \texttt{AmericanOptimalityPrinciple} field
 is a placeholder obligation (\texttt{True}), not a discharged premise. The closed-form boundary also sits inside a
-deeper tie to the classical perpetual-American (Merton) problem: $\gamma$ is the
-characteristic root of the underlying Laplace exponent, the relation
-$\gamma(\gamma+1)=2r/\sigma^{2}$---where $r$ is the risk-free rate and $\sigma$ the
-underlying's return volatility (the classical Merton parameters; this $r$ is
-distinct from the rebase factor of the same name)---recovers the Gaussian (Merton)
-slice, and
-$S^{\ast}$ is the Merton boundary on that slice (MERTON tie
+deeper tie to the classical perpetual-American (Merton) problem. Here $r$ is the
+risk-free interest rate and $\sigma$ the underlying's return volatility (this $r$
+is distinct from the rebase factor of the same name). The exponent $\gamma$ is the
+characteristic root of the underlying's log-price Laplace exponent. Under the
+\emph{symmetric pairing} we use---a put root $-\gamma$ and a call root $\gamma+1$,
+equivalently zero net carry between the two legs, so that the two log-price roots
+sum to $1$---the product-of-roots (Vieta) relation reads
+$\gamma(\gamma+1)=2r/\sigma^{2}$, which holds in the regime $r>\sigma^{2}$; this is
+the convention our Lean \texttt{merton\_vieta\_sum}/\texttt{merton\_vieta\_prod}
+and the \textsc{faith}-4 \texttt{faith\_merton} gate both encode. (The classical no-dividend
+Black--Scholes--Merton slice, by contrast, keeps only the single decaying root and
+gives the \emph{linear} relation $\gamma=2r/\sigma^{2}$; we do not use that slice
+here.) On the symmetric pairing, $S^{\ast}$ is the Merton boundary (MERTON tie
 \texttt{Sstar\_is\_merton\_boundary}, \texttt{gaussian\_limit\_quadratic};
 \tfp{}, with the GH/Bessel-K distributional layer carried as named hypotheses).
 
@@ -750,6 +806,19 @@ load-bearing carried hypothesis) from \emph{carried} results (conditional on
 named structure-field hypotheses that are not discharged, never on \texttt{axiom}
 declarations).
 
+\paragraph{Inspecting the artifacts.}
+The Aristotle prover is a private server and is not itself publicly reproducible.
+The Lean \emph{statements and proof source}, however, are available in the
+project repository under \texttt{formal/} (the Lean project and its provenance
+map \texttt{formal/INDEX.md}; per-result archives under
+\texttt{aristotle\_runs/}), so a reader can read and check the exact theorem
+statements and proof scripts even though the prover is not public. We stress that
+this does \emph{not} upgrade the label: the artifacts were compiled by Aristotle
+and remain \tfp{} (Aristotle-compiled, audited, but not re-run against a local
+canonical kernel in this work). A reader can inspect what is claimed; a local
+canonical-env rebuild is the separate step that would license ``verified,'' and
+it is environment-blocked here.
+
 \subsection{What is machine-checked (\tfp{})}
 \begin{itemize}[leftmargin=2em]
   \item \textbf{Settlement free boundary.} $C^{1}$ smooth-pasting at
@@ -763,12 +832,17 @@ declarations).
         for arbitrary steepness $g>0$, hence at $g=m\gamma$ (LENSKERNEL
         \texttt{valueMatch\_g}/\texttt{slopeMatch\_g}; constant-$m$
         \texttt{paste\_value}/\texttt{paste\_slope}, grounded).
-  \item \textbf{Merton tie.} $\gamma$ is the characteristic root of the Laplace
-        exponent; $\gamma(\gamma+1)=2r/\sigma^{2}$ is the Gaussian slice;
-        $S^{\ast}$ is the Merton boundary (MERTON tie, grounded in the
+  \item \textbf{Merton tie.} $\gamma$ is the characteristic root of the log-price
+        Laplace exponent. Under the symmetric put/call-root pairing (put root
+        $-\gamma$, call root $\gamma+1$, root-sum $1$), the Vieta product relation
+        reads $\gamma(\gamma+1)=2r/\sigma^{2}$ (regime $r>\sigma^{2}$), with $r$
+        the risk-free rate and $\sigma$ the asset volatility; $S^{\ast}$ is the
+        Merton boundary (MERTON tie, grounded in the
         algebra/curvature/limit/boundary; carried on the GH/Bessel-K
-        distributional layer). The GH asymmetry is recorded honestly: only the put
-        eigenfunction is native (the call root leaves the strip).
+        distributional layer). The classical no-dividend Black--Scholes--Merton
+        slice instead gives the single decaying root $\gamma=2r/\sigma^{2}$ and is
+        not the convention used here. The GH asymmetry is recorded honestly: only
+        the put eigenfunction is native (the call root leaves the strip).
   \item \textbf{Curve / pool spine and lens.} The pool flow, $w$-skew rule,
         conservation hyperbola, and rebase commutation (constant-$m$
         \texttt{TemporalAMM}: \texttt{invariant}, \texttt{trade\_dx},
@@ -1043,8 +1117,8 @@ $m$ & constant slope-multiplier (kurtosis/vol knob), $m>0$ \\
 $g_{\mathrm{loc}}$ & lensed option-value exponent $=m\gamma$ \\
 $s_{N}$ & normalised strike coordinate, $s_{N}=(1-w)/w$ at the $45^{\circ}$ point (pinned convention) \\
 $s_{N}^{\ast},S^{\ast},c$ & smooth-pasting free boundary ($S^{\ast}=K\gamma/(\gamma+1)$) and continuation-value coefficient $c$ \\
-$r$ & rebase factor ($r>0$). \emph{Distinct} from the risk-free interest rate, also written $r$, that appears only in the Merton relation $\gamma(\gamma+1)=2r/\sigma^{2}$ (Section~\ref{sec:american}) \\
-$\sigma$ & asset volatility (Merton/Gaussian slice only) \\
+$r$ & rebase factor ($r>0$). \emph{Distinct} from the risk-free interest rate, also written $r$, that appears only in the Merton relation $\gamma(\gamma+1)=2r/\sigma^{2}$ under the symmetric root-pairing, regime $r>\sigma^{2}$ (Section~\ref{sec:american}) \\
+$\sigma$ & asset return volatility (Merton symmetric-pairing relation only) \\
 $\beta_{\mathrm{th}}$ & thermal inverse temperature $=m\gamma$ (Section~\ref{sec:gibbs}; distinct from the offset $\beta$) \\
 $L_{0}$ & position leverage, frozen at band-open \\
 $P$ & carry (the pool's internal reference price) $P=N_{y}/N_{x}$ \\
