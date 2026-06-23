@@ -2093,3 +2093,11 @@ _Context: in reply to the manager's B/C/A brainstorm, operator chooses B — Hyb
 _Context: operator answers the manager's two post-skeptic decisions (Q1 autonomy scope, Q2 token/secret exposure). Resolves the three skeptic FLAGs: no cron scheduling; lab does the paper/research side on-demand; crons only with explicit operator permission (generally no); GH_TOKEN/keys stay in the environment as accepted risk._
 
 > 1 dont need crons, but let it do paper / research side; 2 crons only with my permission and generally no, but keys remain in the enviroment
+
+
+---
+
+## Entry 271 — 2026-06-23 UTC
+_Context: in reply to the manager's A/B/C lane question (how to run the two `claude -p` paper/research lanes that spawn a Bash+WebFetch child able to read the live GH_TOKEN), operator chooses B — allow them as-is, on-demand, under manager supervision (token visible to the child; accepted risk, same basis as keys-in-env). Operator overrules the skeptic's standing condition with full information. Manager records the lanes as authorized for supervised non-cron use; manager's own recommendation had been A (scrub token)._
+
+> b

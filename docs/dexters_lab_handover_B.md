@@ -1,10 +1,19 @@
 # Dexter's Lab handover — Option B (Hybrid), operator-chosen 2026-06-23 (entry 269)
 
-**Status: ✅ ENACTED (cleared parts) — confirming skeptic re-pass CLEAR-TO-ENACT (run a9ec00fe, §8 verbatim),
-with ONE standing condition: the two `claude -p` paper/research lanes (`lab_review.sh`,
-`lab_deep_research.sh`) are NOT yet authorized — they spawn a Bash+WebFetch child that inherits live
-`GH_TOKEN` with no allowlist; pending one operator answer (§6 Q4). The division-of-labor + the pure-Python
-on-demand honesty gates ARE enacted.**
+**Status: ✅ FULLY ENACTED 2026-06-23 — confirming skeptic re-pass CLEAR-TO-ENACT (run a9ec00fe, §8 verbatim);
+the one standing condition (§6 Q4, the two `claude -p` lanes) RESOLVED by operator entry 271 ("b" = allow
+as-is). The division-of-labor + the pure-Python honesty gates + the two on-demand paper/research lanes
+(`lab_review.sh`, `lab_deep_research.sh`) are all enacted.**
+
+**Q4 resolution (operator entry 271, verbatim source `history/operator/`):** operator chose B —
+`lab_review.sh`/`lab_deep_research.sh` may run **as-is, on-demand, under manager supervision**, with
+`GH_TOKEN` visible to the spawned `claude -p` child (no env-scrub, no allowlist). This is the operator
+**overruling the skeptic's standing condition with full information** — accepted, bounded residual risk,
+same basis as the keys-in-env ruling (entry 270). Constraints that REMAIN: (a) **non-cron only** — these
+lanes run only when a manager/operator invokes them, never unattended/scheduled (cron still needs explicit
+per-entry-270 permission, default no); (b) **manager-supervised** — not fire-and-forget; (c) lab has **NO
+git authority** — manager stays sole git actor, lab output is drafts the manager reviews. Manager's own
+recommendation had been A (scrub the token); operator chose B; recorded without further pushback.
 Governance change = halt-class (Universal Skeptic Gate `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`).
 Source: operator entry 269 ("B") + entry 270 (Q1/Q2 answers), against the manager's B/C/A brainstorm;
 original request entry 268 (verbatim in `history/operator/`).

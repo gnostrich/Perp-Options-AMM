@@ -116,10 +116,12 @@ skeptic runs acd21e9c + a9ec00fe).** External research-automation package at `./
 structurally can't do that work). Skeptic owns its review/claim-lint/stopping gates (advisory; never the
 executor). **AUTHORIZED now:** the pure-Python honesty gates (`claim_lint`, `paper_sync_check`,
 `doc_truth_gate`, `rq_compile`, `stopping_gate`, `lab_budget`) run with explicit `DEXTERS_LAB_CONFIG`
-(`dexters-lab/lab.config.json`, contained, not repo-root). **NOT authorized (halt-class pending operator
-Q4):** the two `claude -p` lanes `lab_review.sh`/`lab_deep_research.sh` — they spawn a Bash+WebFetch child
-inheriting live `GH_TOKEN` with no allowlist; cron lanes need explicit operator permission (entry 270,
-default no). Lab has NO git authority; manager stays sole git actor.
+(`dexters-lab/lab.config.json`, contained, not repo-root). **AUTHORIZED (operator entry 271,
+overruling the skeptic standing condition w/ full info):** the two `claude -p` lanes
+`lab_review.sh`/`lab_deep_research.sh` may run **as-is, on-demand, manager-supervised** with `GH_TOKEN`
+visible to the child (accepted risk). REMAINING constraints: non-cron only (cron needs explicit operator
+permission per entry 270, default no); manager-supervised, not unattended; lab has NO git authority,
+manager stays sole git actor (lab output = drafts the manager reviews).
 
 ## PART D — Theory↔implementation bidirectional consistency → integrated modular monolith (QUEUED — operator entries 141–145, NOT yet populated)
 _**The shape (operator entry 145):** one object, four LAYERS per component, all cross-referenced, single

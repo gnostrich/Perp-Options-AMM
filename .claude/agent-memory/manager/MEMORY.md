@@ -19,10 +19,11 @@ research-automation package extracted to `./dexters-lab/` (its suite 219 pass/5 
 research/paper/honesty-gate layer, ON-DEMAND, NO crons. Engine/Lean/test/git agents UNCHANGED (lab can't do
 that). Skeptic owns its review/claim-lint/stopping gates (advisory only). **AUTHORIZED:** pure-Python gates
 (`claim_lint` etc.) via explicit `DEXTERS_LAB_CONFIG=dexters-lab/lab.config.json` (contained, not repo-root —
-avoids auto-arming the lanes). Demoed claim_lint on the paper (1 finding: seam %s uncited). **HALT-PENDING
-operator Q4:** the two `claude -p` lanes (`lab_review.sh`/`lab_deep_research.sh`) spawn a Bash+WebFetch child
-that inherits live `GH_TOKEN` (no allowlist) — operator's "no crons, keys-remain" answer did NOT authorize
-these specific on-demand lanes; question put to operator. Lab has NO git authority. Skeptic FLAG history: I
+avoids auto-arming the lanes). Demoed claim_lint on the paper (1 finding: seam %s uncited). **Q4 RESOLVED (entry 271 "b"):** the two `claude -p`
+lanes (`lab_review.sh`/`lab_deep_research.sh`) AUTHORIZED as-is, on-demand, MANAGER-SUPERVISED, token-visible
+to the child (operator overruled the skeptic standing condition w/ full info; accepted risk). REMAIN:
+non-cron only (cron needs explicit permission, default no); supervised not unattended; manager sole git
+actor (lab=drafts). My rec had been A (scrub token); operator chose B. Lab has NO git authority. Skeptic FLAG history: I
 oversold "lab cannot do git" (it's prompt-contract not a wall); corrected. ⚠ ENV: `claude` CLI present +
 `GH_TOKEN` exported here — "deferred" is discipline not a wall; never wire a cron lane while token live.
 
