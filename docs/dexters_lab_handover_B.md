@@ -1,11 +1,25 @@
 # Dexter's Lab handover — Option B (Hybrid), operator-chosen 2026-06-23 (entry 269)
 
-**Status: ⛔ HALTED — skeptic verdict NOT-CLEAR-TO-ENACT (2026-06-23, three FLAGs, §7 verbatim).**
+**Status: operator entry 270 ANSWERED the three FLAGs → confirming skeptic re-pass before fold-to-shared-truth.**
 Governance change = halt-class (Universal Skeptic Gate `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`).
-NOT folded into shared truth; nothing wired beyond what the operator authorizes after seeing the FLAGs.
-Source decision: operator entry 269 ("B"), against the manager's B/C/A brainstorm; original request
-entry 268 (verbatim in `history/operator/`). The §1/§5 capability language below is CORRECTED per
-FLAG-OVERSELL; the §6 autonomy/secret questions are the operator's to answer before enactment.
+Source: operator entry 269 ("B") + entry 270 (Q1/Q2 answers), against the manager's B/C/A brainstorm;
+original request entry 268 (verbatim in `history/operator/`).
+
+**Operator entry 270 resolution (verbatim source `history/operator/`):**
+- **Q1 (autonomy):** "dont need crons, but let it do paper / research side" → the lab DOES the paper/research
+  side **on-demand, manager/skeptic/paper-driven; NO cron scheduling.** Tooling-on-top reading
+  CONFIRMED by the operator (clears FLAG-SCOPE).
+- **Q2 (token/secret):** "crons only with my permission and generally no, but keys remain in the
+  enviroment" → **NO autonomous cron `claude -p` lane runs without explicit operator permission (default
+  no)**; `GH_TOKEN`/keys stay in-environment as **operator-accepted residual risk** (clears the decision
+  FLAG-PROCESS demanded — operator was shown and ruled).
+- **FLAG-OVERSELL:** capability language corrected in §1/§5 (prompt-contract, not capability wall).
+
+**Wired NOW (skeptic pre-cleared as side-effect-free; contained):** `dexters-lab/lab.config.json`
+placed INSIDE `dexters-lab/` (NOT repo root) so it is NOT auto-resolved by default precedence — tools run
+only with explicit `DEXTERS_LAB_CONFIG`. Demonstrated: `claim_lint.py` on
+`paper/temporal_paper_american_2026.tex` (pure-Python, read-only) → 1 evidence-pointer finding (seam
+percentages). NOT wired: any `claude -p` lane, any cron, any key.
 
 ## 0. What B means in one line
 Adopt Dexter's Lab as the **research + paper + honesty-gate layer we don't currently have**; **keep**

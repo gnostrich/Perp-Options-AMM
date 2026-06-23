@@ -2085,3 +2085,11 @@ _Context: operator uploads an external "agent package" (dexters-lab zip), asks t
 _Context: in reply to the manager's B/C/A brainstorm, operator chooses B — Hybrid: adopt Dexter's Lab as the research/paper/honesty-gate layer, keep the engine/Lean/test/git agents, map skeptic onto its review+claim-lint+stopping gates. Manager drafts the division-of-labor handover note and runs it through the skeptic (governance change = halt-class gate) before enacting; defers the autonomous cron lanes + API keys._
 
 > B
+
+
+---
+
+## Entry 270 — 2026-06-23 UTC
+_Context: operator answers the manager's two post-skeptic decisions (Q1 autonomy scope, Q2 token/secret exposure). Resolves the three skeptic FLAGs: no cron scheduling; lab does the paper/research side on-demand; crons only with explicit operator permission (generally no); GH_TOKEN/keys stay in the environment as accepted risk._
+
+> 1 dont need crons, but let it do paper / research side; 2 crons only with my permission and generally no, but keys remain in the enviroment
