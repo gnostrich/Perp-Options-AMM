@@ -55,3 +55,15 @@ no-dividend GBM slice gives γ=2r/σ². If any explicit r–σ domain bound appe
 The lane breached its OUTDIR sandbox once (wrote a fake operator transcript via inherited CLAUDE.md;
 contained, see `README_breach_2026-06-23.md`). Open operator decision: isolate future lanes in a
 worktree without `history/` (manager rec) vs run as-is + clean up.
+
+---
+
+## Paper fixes applied (operator entry 272) + skeptic gate (run a02414646, 2026-06-23)
+
+Four operator-approved fixes folded into `paper/temporal_paper_american_2026.tex` (paper agent a16504af; engine/Lean untouched):
+1. **Merton convention wording** — formula `γ(γ+1)=2r/σ²` unchanged; prose now states the symmetric-pairing (q=r, root-sum-1, regime r>σ²) convention our Lean `merton_vieta_sum`/`merton_vieta_prod` + FAITH-4 `faith_merton` gate encode, and notes the no-dividend slice gives the linear `γ=2r/σ²`.
+2. **Reproducibility** — points to the in-repo `formal/` Lean source; stays `trusted-from-prover` (NO "verified" upgrade).
+3. **Scope** — surfaces the B1/B3/B4 conditional-solvency posture up front (prominence, not a new concession).
+4. **Worked example** — one illustrative table (S*=Kγ/(γ+1), mark 1/(g_loc+1), wing ∝ S^(−mγ)); every cell manager-recomputed; labelled illustrative.
+
+**Skeptic verdict (verbatim summary):** one FLAG-WRONG — FIX-1 site 1 (line 664) misattributed the Merton convention to "the seam gate"; the seam gate is the C¹ continuity gate and contains zero Merton/Vieta content (confirmed: `grep merton|vieta|2r/σ seam_gate.js` → 0 matches), whereas `faith_merton.js:105` (`rGauss=g*(g+1)*sig2/2`) + the Vieta root structure IS the gate. FIX-2/3/4 + the rest of FIX-1 CLEAR (domain bound γ>1⟺r>σ² verified; no hedge weakened; reproducibility note stays trusted-from-prover; worked-example numbers all correct). **Manager fix:** line 664 "and the seam gate both encode" → "and the FAITH-4 `faith_merton` gate both encode." After that single edit: CLEAR-TO-COMMIT. Manager re-checked LaTeX structure ($ even, braces 837/837).
