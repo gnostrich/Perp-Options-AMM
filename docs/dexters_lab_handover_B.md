@@ -1,9 +1,11 @@
 # Dexter's Lab handover — Option B (Hybrid), operator-chosen 2026-06-23 (entry 269)
 
-**Status:** DRAFT for skeptic gate (governance change = halt-class, Universal Skeptic Gate
-`notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`). NOT enacted until skeptic-cleared and
-the safe pieces are wired. Source decision: operator entry 269 ("B"), against the manager's B/C/A
-brainstorm; original request entry 268 (verbatim in `history/operator/`).
+**Status: ⛔ HALTED — skeptic verdict NOT-CLEAR-TO-ENACT (2026-06-23, three FLAGs, §7 verbatim).**
+Governance change = halt-class (Universal Skeptic Gate `notes/skeptic/POLICY_universal_skeptic_gate_2026-06-12.md`).
+NOT folded into shared truth; nothing wired beyond what the operator authorizes after seeing the FLAGs.
+Source decision: operator entry 269 ("B"), against the manager's B/C/A brainstorm; original request
+entry 268 (verbatim in `history/operator/`). The §1/§5 capability language below is CORRECTED per
+FLAG-OVERSELL; the §6 autonomy/secret questions are the operator's to answer before enactment.
 
 ## 0. What B means in one line
 Adopt Dexter's Lab as the **research + paper + honesty-gate layer we don't currently have**; **keep**
@@ -11,12 +13,21 @@ our engine/Lean/test/git agents because Dexter's Lab structurally cannot do that
 adversarial-review / claim-lint / stopping gates **through the skeptic**. The lab is **tooling our
 agents invoke**, NOT an autonomous replacement team.
 
-## 1. Why not a wholesale handover (the capability gap, verified)
+## 1. Why not a wholesale handover (the capability gap — CORRECTED per FLAG-OVERSELL)
 Dexter's Lab is a research/paper-governance pipeline (headless `claude -p` lanes + slash-commands +
-OpenRouter calls on a cron). Its own test suite passes here (219 passed, 5 skipped). It **cannot**:
-edit the single-file HTML engine (blob-safe), run Lean/Aristotle, run Playwright browser tests, or do
-git/PR/merge — it parks sends/deploys/git as `PENDING_HUMAN`. Those four are the bulk of the current
-project. So B keeps every engine-side agent and adds the lab as a layer on top.
+OpenRouter calls on a cron). Its own test suite passes here (219 passed, 5 skipped).
+- Its **pure-Python tools** (`claim_lint`, `paper_sync_check`, `rq_compile`, `stopping_gate`, `lab_budget`,
+  `lab_triage`, `lab_autosearch.py` planner) genuinely **cannot** edit HTML, run Lean, run Playwright, or
+  do git — they are read/JSON/markdown only.
+- Its **autonomous lanes** (`lab_executor.sh`, `lab_lit.sh`, `lab_monitor.sh`, `lab_autosearch.sh`,
+  `lab_deep_research.sh`, `lab_review.sh`) all shell out to `claude -p --permission-mode acceptEdits`.
+  The "no git / no sends / drafts-only / park-as-PENDING_HUMAN" guarantee is **enforced only by the prompt
+  text handed to that child agent — NOT by a sandbox, capability lock, or permission boundary**.
+  `lab_executor.sh` literally instructs the child to create a git worktree and **commit atomically**. So
+  the honest statement is: **the lab does not, by prompt contract, do git/sends — but an `acceptEdits`
+  child agent CAN, and is merely asked not to.** This is a soft instruction, not a hard wall.
+So B keeps every engine-side agent (the lab still cannot *do* the engine/Lean/test work even via a child
+agent in any useful way), and the lab's "drafts-only" safety for the cron lanes is **prompt-enforced**.
 
 ## 2. Division of labor (the actual handover)
 
@@ -50,18 +61,59 @@ project. So B keeps every engine-side agent and adds the lab as a layer on top.
 3. This division-of-labor note folded into shared truth (after skeptic clearance), with a pointer from
    `docs/COMPONENT_REGISTER.md`.
 
-## 5. What is DEFERRED (needs an explicit operator go + infra)
-- The **autonomous nightly cron lanes** (`lab_executor`, `lab_lit`, `lab_autosearch`, `lab_monitor`)
-  and any **headless `claude -p`** execution — side-effectful, spend budget, need the `claude` CLI wired
-  into cron.
-- **`OPENROUTER_API_KEY`** for the heavy review panel — not set; review pipeline runs key-less (panel
-  skipped) until provided.
-- Nothing about the lab is given **git authority** — manager stays sole git actor.
+## 5. What is DEFERRED — and why "deferred" is a PROMISE here, not a WALL (FLAG-PROCESS)
+- The **autonomous nightly cron lanes** (`lab_executor`, `lab_lit`, `lab_autosearch`, `lab_monitor`,
+  `lab_deep_research`, `lab_review`) and any **headless `claude -p`** execution — side-effectful, spend
+  budget, web-fetch, and (per §1) git-capable via the `acceptEdits` child.
+- **`OPENROUTER_API_KEY`** for the heavy review panel — not set; the panel auto-skips until provided.
+- **⚠ Environment reality the skeptic surfaced (must reach the operator):** in THIS environment the
+  `claude` CLI **is already present** and **`GH_TOKEN` (a live GitHub PAT) is already exported in the
+  shell**. So the cron lanes are NOT gated by missing infrastructure — they are one `lab.config.json` +
+  one cron line away from a money-spending, git-capable, web-fetching autonomous agent running **with a
+  live GitHub token readable in its environment scope**, behind only prompt-text guardrails (§1). Worse,
+  once `lab.config.json` lands at repo root, `ensure_home()` auto-resolves **every** lab tool — including
+  the deferred lanes — against the live repo by default precedence. "Deferred" is therefore a
+  **discipline**, not a wiring barrier.
+- Nothing about the lab is given **git authority** — manager stays sole git actor — but note this is a
+  policy we enforce, not something the lab's own design prevents (§1).
 
-## 6. Open questions for the operator (post-skeptic, if any)
-- Do we want the nightly cron lanes on at all, or use the lab purely as on-demand tooling (the C-caution
-  the manager recommended folding into B)?
-- Budget cap: lab default is $40/mo; only relevant once paid lanes/keys are on.
+## 6. Operator decisions REQUIRED before enactment (elevated per FLAG-SCOPE + FLAG-PROCESS)
+**Q1 (headline — autonomy scope).** You said "let those agents run the project." The lab structurally
+cannot run the engine / Lean / tests / git. Do you mean: **(a)** the lab as *tooling our existing agents
+invoke* (this B plan), or **(b)** something more autonomous — which we would have to flag as unsafe given
+Q2? "B" chose among the manager's framing; this is the question those two words don't resolve, and the
+manager will not encode "tooling-not-team" as settled truth until you confirm.
+**Q2 (secret exposure).** Given the `claude` CLI is live and `GH_TOKEN` is in-environment here, and the
+cron lanes are prompt-guarded only (§1): may **any** lane ever run in an environment where that token is
+live? Default manager recommendation = **no lane runs while `GH_TOKEN` is exported**; on-demand
+pure-Python honesty gates only.
+**Q3.** Budget cap: lab default is $40/mo; only relevant once paid lanes/keys are on.
 
-## 7. Skeptic verdict
-_(appended unedited below after the gate runs)_
+## 7. Skeptic verdict (appended VERBATIM, unedited — skeptic run acd21e9c, 2026-06-23)
+
+## SKEPTIC VERDICT — Dexter's Lab Option-B handover (governance change, halt-class)
+**Date:** 2026-06-23 · **Artifact:** `docs/dexters_lab_handover_B.md` + package `/home/user/Perp-Options-AMM/dexters-lab/`
+**Result: NOT CLEAR-TO-ENACT as written. Three FLAGs. The pure-Python "wired NOW" set is safe and may proceed; the safety *framing* and one scope step must change before enactment.**
+
+What I verified independently (not trusted from the note): test suite **219 passed / 5 skipped** — TRUE. The three "NOW" tools (`claim_lint.py`, `paper_sync_check.py`, `doc_truth_gate.sh`) and `lab.config.json` are genuinely pure-Python / bash+git, no keys, no `claude` invocation — TRUE and safe. The named `paper/temporal_paper_american_2026.tex` exists, so the claim-lint/paper-sync gates point at a real file. `ensure_home()` only `mkdir`s — benign.
+
+---
+
+### FLAG-OVERSELL — the "lab CANNOT do git / Lean / Playwright / HTML" capability claim is half-true and oversold as structural (handover §1, §5)
+The pure-Python tools genuinely cannot. But the autonomous lanes (`lab_executor.sh`, `lab_lit.sh`, `lab_monitor.sh`, `lab_autosearch.sh`, `lab_deep_research.sh`, `lab_review.sh`) all shell out to `claude -p --permission-mode acceptEdits`. The "no git, no sends, no deploys, drafts-only, PENDING_HUMAN-instead-of-commit" guarantee is enforced **only by prompt text handed to that child agent** — it is not a sandbox, capability lock, or permission boundary. `lab_executor.sh` line 145 literally instructs the child to "**commit atomically**, then update the task's status"; lines 138–140 have it create a git worktree and merge back. So "the lab parks git as PENDING_HUMAN → manager performs" (§2 table row, §5 bullet) describes the *happy path the prompt requests*, not a structural inability. An `acceptEdits` agent told "no git" is an agent that *can* run git and is *asked* not to. The note sells a soft instruction as a hard wall — the same relabel-the-gap dodge I flagged in optstop. **Required change:** restate the four "cannot" claims as "the lab does not, by prompt contract, do X" — and note that the cron lanes' git/send safety is prompt-enforced, not capability-enforced.
+
+### FLAG-PROCESS — the environment contradicts the "deferred = safe" reassurance, and the note glosses a live-secret exposure
+"Deferred (needs the `claude` CLI wired into cron)" is doing the load-bearing safety work in §4/§5. But in **this** environment the `claude` CLI **is already present**, and **`GH_TOKEN` is already exported into the shell** (I confirmed both). That means the deferred lanes are not gated by infrastructure that doesn't exist — they are one `lab.config.json` + one cron line away from a money-spending, git-capable, web-fetching autonomous agent running with a **live GitHub PAT in its environment scope**, behind only prompt-text guardrails (see FLAG-OVERSELL). The handover treats "no `OPENROUTER_API_KEY`" and "cron not wired" as the safety margin; it never reckons with `GH_TOKEN` being readable by any `claude -p` child the lanes spawn. Additionally: once `lab.config.json` lands at repo root, `ensure_home()` auto-resolves **every** lab tool — including the deferred lanes — against the **live repo** by default config precedence, so "deferred" is a discipline, not a wiring barrier. **Required change before enactment:** the manager must state explicitly to the operator that (a) the CLI is present, (b) `GH_TOKEN` is in-environment, (c) the cron lanes are prompt-guarded only, and get an explicit operator decision on whether any lane may ever run in an environment where that token is live. This is a secret-exposure question the operator must see, not a procedural detail.
+
+### FLAG-SCOPE — "B" interpreted as tooling-not-team is a real narrowing of entry 268, asserted rather than operator-confirmed
+Operator entry 268 (verbatim): "give those agents the handover from our existing agwnts, and nthen **let those agents run the project**." Entry 269 is a bare "B" choosing among the manager's own B/C/A framing. The B plan keeps every engine-side agent and demotes the lab to "tooling our agents invoke, NOT an autonomous replacement team" (§0). That demotion is **well-justified by the real capability gap** (the lab is a paper/research-governance pipeline, not an engine/Lean/test/git team) — I am not disputing the gap. What I flag is that the note presents "B = tooling-on-top, autonomy deferred" as a settled reading of the operator's word, when the operator's actual instruction was "let those agents run the project" and the manager's B/C/A vocabulary is exactly the agent-coined framing I'm directed to treat as a dodge vector. The honest move is to surface, in plain English, the one question the operator's two words don't resolve: *"You said let them run the project; the lab structurally can't run the engine/Lean/tests/git — do you want it as tooling our existing agents invoke (this plan), or did you intend something more autonomous that we'd have to flag as unsafe?"* That belongs in §6 as the **headline** operator question, not buried as a sub-bullet about cron lanes. **Required change:** elevate the autonomy-scope question to an explicit operator confirmation before enactment; do not encode "tooling-not-team" into shared truth until the operator confirms that reading.
+
+---
+
+### What I did NOT find wrong (attack attempted, held):
+- **Honesty-model mapping (claim 5):** H1–H4 → operator-via-manager, and "no-auto-sends/append-only/kill-switch" → file-safety-gate/STOP-ON-RED is a **fair** analogy, not forced. The lab's FALSIFIED-is-success / pre-reg-hash / no-rerun-until-green doctrine genuinely reinforces our honest-label rule. PASS on the mapping.
+- **Authority conflict (claim 2):** "skeptic drives the lab's review/claim/stopping gates" does **not** conflict with skeptic read-only / above-manager rank **as long as** the skeptic uses these tools advisorily (run a gate, emit a FLAG) and never becomes the *executor* of a lab tool that writes/commits — which the pure-Python NOW set respects. The note should say this explicitly, but it is not a defect.
+- **Completeness vs `feature_inventory.md`:** this is a governance/tooling note that changes **no** curve/settlement/economics math, so inventory items 1–16 are correctly N-A; no load-bearing curve structure is silently dropped. No existing agent duty is dropped — the division-of-labor table keeps intern/research-lead/tester/manager/skeptic duties UNCHANGED and additive. PASS on completeness.
+
+### Bottom line
+The **pure-Python NOW set + lab.config.json with `lab_home` inside the repo may be wired** — it is genuinely side-effect-free and key-free. **Do NOT** fold the division-of-labor note into shared truth, and do NOT represent the cron-lane deferral as a structural safety guarantee, until: (1) the "cannot do git/sends" language is corrected to "prompt-contract, not capability"; (2) the operator is shown, in plain English, that the `claude` CLI is live and `GH_TOKEN` is in-environment, and rules on whether any lane may run under a live token; (3) the autonomy-scope question ("run the project" vs "tooling-on-top") is put to the operator as the headline question and confirmed. The capability gap is real and B is a reasonable response to it — but the safety story rests on "deferred," and in this environment "deferred" is a promise, not a wall.
