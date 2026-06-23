@@ -2142,3 +2142,11 @@ clarification the manager KILLED that re-run before completion. Its outputs are 
 (kill-means-silent) and were not relayed or folded. The original monolith review (slug
 `review-monolith-20260623`, findings in `evidence/dexters_lab/monolith_review_findings_2026-06-23.md`)
 stands unchanged. Entry 274 is retained verbatim above as the honest record of what was said and acted on.
+
+
+---
+
+## Entry 276 — 2026-06-23 UTC
+_Context: operator green-lights Aristotle broadly ("free"). Manager dispatches research-lead to drive the prioritized Lean menu (L1 hst-discharge, L3 conditional-solvency, L2 A16-no-jump bounded; L7 engine↔Lean bridge, L9 Snell envelope big) — pin predicates first, don't weaken statements, audit returns (forbidden-token scan), label trusted-from-prover; manager audits before any fold to INDEX/shared truth._
+
+> have aristotle do whatever you want its free
