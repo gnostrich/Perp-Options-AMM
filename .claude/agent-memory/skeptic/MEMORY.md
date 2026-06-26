@@ -3552,3 +3552,35 @@ Pattern reinforced: "byte-identical-to-baseline" provenance is being used near a
 than what it actually supports — watch for a true sub-claim parked adjacent to the claim it doesn't cover.
 New shape: "transcribed verbatim from JS" in a Lean COMMENT sold as engine↔object closure (L7) — a comment is
 not a proof; Lean can't read JS. Recurring "named the wrong/over-strong machine-checked artifact" family.
+
+## 2026-06-26 — VERDICT: WINE2026 v2 from-scratch rewrite (Universal Skeptic Gate, halt-class). 1 FLAG-OMISSION (entry-247), rest CLEAR.
+Artifact: paper/wine2026/temporal_wine2026_v2.tex (+ _v2_supplement.tex). Source-of-truth = temporal_wine2026_lncs.tex
++ temporal_paper_american_2026.tex. Adversarial pass (re-derived, not narrated):
+- CLAIM POSTURE faithful to source: solvency CONDITIONAL B1/B3/B4 carried + reserves_have_no_floor
+  necessary-not-sufficient (§6.2, never "closed"); "American"=deterministic-boundary optimal + Snell
+  named-not-formalised (abstract+§4.3, matches LNCS); |Γ|≤1 exact/>1 labelled-approx (§5.3 == LNCS §sec:gamma,
+  per-wing logic intact); every Lean = \tfp, "verified" appears ONLY as the forbidden label (§6.1) + comments.
+- CURVE IDENTITY clean: Balancer x^w y^(1-w)=k + constant-m lens throughout; GH appears ONLY as carried
+  Merton/Bessel-K distributional layer (lines 522,683). No GH-as-live-curve leak.
+- NOVELTY placement correct: curve family NOT claimed (Evans/AEC translated-CPMM, §2.2); novelty = per-trade
+  weight update + semantic layer + American gen + constant-m lens. QuantAMM=PRIOR (666). No "TFMM" coinage.
+- MERTON wording correct: γ(γ+1)=2r/σ² symmetric pairing root-sum-1 regime r>σ²; no-div slice linear γ=2r/σ²;
+  attributed to FAITH-4 faith_merton gate (NOT seam gate — the FIX-1 trap from 06-23 is NOT reintroduced);
+  r/σ glossed plain-English (505-506), rebase-r vs Merton-r disambiguated in-body (506).
+- WORKED EXAMPLE: S*=66.67, mark 1/3, m=1 col {.333,.231,.183,.148,.103} + m=3 col {.143,.048,.024,.013,.004}
+  BYTE-IDENTICAL to both sources (engine-verified in my 06-23 FIX-4 pass). Labelled illustrative. NOTE (carried,
+  NOT a v2 flag): prose "mark at boundary=1/(γ+1)" holds only for m=1; m=3 S*-cell=0.143≠1/3 — a normalization
+  tension PRE-EXISTING in both sources, not a v2 regression; my mandate is "did rewrite outrun source" → it copied faithfully.
+- All tfp theorem cites resolve to formal/INDEX.md with matching depth labels (supplement table == INDEX).
+- REGRESSION check: supplement (notation table + artifact map) is ENTIRELY commented-out (entry-277 "on request").
+  NO dangling \ref to app:notation/app:formal (only a comment mentions them). In-body gloss adequate WITHOUT
+  the table: α/β/u/v/s_N/Γ/θ_tx/mark/P/carry/γ/m/K all glossed at first use. Body self-contained.
+- THE FLAG (FLAG-OMISSION, entry-247): intro Contributions bullet (line 148) uses BARE symbols S*,K,γ in
+  $S^{\ast}=K\gamma/(\gamma+1)$ with γ/K/S* NOT glossed anywhere earlier in §1 (γ's gloss deferred to §4 line 360).
+  The LNCS source did NOT have this — it glosses γ inline at intro (LNCS line 62-64 "convexity exponent γ>1").
+  The storytelling rewrite dropped that inline gloss. Entry-247 = "every symbol glossed nearby / no unintroduced
+  symbol in intro." Abstract itself is clean (0 math $). Fix: gloss γ(+K) at the contributions bullet, or
+  de-symbolize to "a closed-form early-exercise boundary (a price level set by the curve's steepness)".
+Pattern: storytelling-first rewrite IMPROVED honesty in the body (qualifications stated "in one breath") but
+ERODED one entry-247 gloss that the technical source carried — the recurring "prose reframe drops a load-bearing
+nicety the symbolic version had." Title "...That IS an American...Book" is punchier than LNCS but qualified in-abstract → not a flag.
