@@ -1,0 +1,91 @@
+% ============================================================================
+% Temporal Exchange -- WINE 2026 submission, ON-REQUEST SUPPLEMENT.
+%
+% Operator entry 277: the Lean/formal annexures are "on request only, we won't
+% be attaching" -- so this material is NOT part of the submitted 12-page (target
+% <=11.5pp) draft (paper/wine2026/temporal_wine2026_v2.tex). It is held here,
+% available on request, and is NOT compiled into the submission.
+%
+% Two appendices live here, pulled verbatim out of the submission body to
+% engineer page-fit margin:
+%   - Appendix A: Notation table (every symbol is also glossed in-body at first
+%     use; the body is self-contained without this table).
+%   - Appendix B: Formal-artifact map (trusted-from-prover; the full Lean
+%     statements + provenance map are in formal/ and formal/INDEX.md).
+%
+% NO claim, number, hedge, or wording was changed in moving these here. To
+% include them in a non-page-limited venue, paste them back before \appendix's
+% close in the main file (or \input this from there).
+% ============================================================================
+
+% ===========================================================================
+% APPENDIX A -- Notation (on request)
+% ===========================================================================
+% \section{Notation (on request)}\label{app:notation}
+% Every symbol is glossed at first use in the body; this table is a reference.
+%
+% \begin{center}
+% \footnotesize
+% \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
+% \toprule
+% Symbol & Meaning \\
+% \midrule
+% $x,y$ & pool reserves (underlying; cash) \\
+% $S$ & spot price of the underlying \\
+% $w$ & dynamic weight $\in(0,1)$; how the curve leans ($w=\tfrac12$ symmetric) \\
+% $k$ & Balancer level $k=x^{w}y^{1-w}$ (a readout, not conserved by trades) \\
+% $\alpha,\beta$ & curve offsets $\alpha=xw$, $\beta=y(1-w)$ \\
+% $u,v$ & shifted virtual reserves $u=x-\alpha$, $v=y-\beta$ ($u$ also = carry
+%         log-distance $\log(\text{price})-\log P$, by local definition) \\
+% $\theta$ & strike ray (slope of $y=\theta x$); $\theta=1$ is at-the-money \\
+% $\theta_{\mathrm{tx}}$ & executed ray $=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$ \\
+% $K$ & dollar strike price \\
+% $q$ & position notional ($q=\log S$ locally in the wing reading only) \\
+% $\mathrm{mark}$ & value as a fraction of one perp, $\min(\mathrm{slope},1/\mathrm{slope})\in(0,1]$ \\
+% $\Gamma$ & hedge ratio (sensitivity to spot); exact replication needs $|\Gamma|\le1$ per wing \\
+% $\gamma$ & curve convexity (steepness) exponent, $\gamma>1$ \\
+% $m$ & constant slope-multiplier / vol knob, $m>0$ \\
+% $g_{\mathrm{loc}}$ & lensed steepness $=m\gamma$ \\
+% $s_{N}$ & normalised strike coordinate \\
+% $S^{\ast}$ & early-exercise free boundary $=K\gamma/(\gamma+1)$ \\
+% $P;N_x,N_y$ & carry (internal reference price) $P=N_y/N_x$ \\
+% $r;\sigma$ & rebase factor $r>0$ \emph{and}, distinctly, the Merton risk-free rate
+%             $r$ with volatility $\sigma$ in $\gamma(\gamma+1)=2r/\sigma^2$
+%             (regime $r>\sigma^2$) \\
+% \bottomrule
+% \end{tabularx}
+% \end{center}
+
+% ===========================================================================
+% APPENDIX B -- Formal artifacts (trusted-from-prover; on request)
+% ===========================================================================
+% \section{Formal artifacts (trusted-from-prover; on request)}\label{app:formal}
+% All results are \tfp{} (Aristotle-compiled, audited, not locally re-run). The
+% full Lean statements, proof source, and a per-result provenance map live in the
+% repository under \texttt{formal/} and \texttt{formal/INDEX.md}; the detailed
+% artifact map is available on request. The load-bearing spine, with its honest
+% depth:
+%
+% \begin{center}
+% \footnotesize
+% \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{3.0cm}@{}}
+% \toprule
+% Result (headline theorem) & Depth \\
+% \midrule
+% \texttt{valueMatch\_g}/\texttt{slopeMatch\_g}, \texttt{paste\_value} (seam $\forall g$) & grounded \\
+% \texttt{Sstar\_A\_forced}/\texttt{coeffA\_forced} (boundary unique) & grounded \\
+% \texttt{opt\_boundary\_is\_max\_A} (optimality) & grounded; carried[Snell] \\
+% \texttt{crossover\_sNorm\_at\_K} (crossover at $K$) & grounded \\
+% \texttt{Sstar\_is\_merton\_boundary}, \texttt{faith\_merton} & grounded; carried[GH/Bessel-K] \\
+% \texttt{g\_eq\_m\_gamma}, \texttt{warp\_linear} (lens) & grounded \\
+% \texttt{trade\_rebase\_commute}, \texttt{invariant} (pool spine) & grounded \\
+% \texttt{collarSurplus\_zero\_iff\_half} (collar) & carried[surplus form] \\
+% \texttt{reflection\_arrow} (no-arb symmetry) & grounded (arrow); residual engine link \\
+% \texttt{compositeRay\_ITM\_substitution} (settlement) & grounded \\
+% \texttt{reserves\_have\_no\_floor}, \texttt{poolValue\_concaveOn} & grounded \\
+% \texttt{CurvePool.solvent\_forever} (conditional) & carried[B1/B3/B4] \\
+% \texttt{exchange\_internal\_passivity} (single object) & grounded (internal half) \\
+% \texttt{solvency\_of\_coverage} (single object) & carried[coverage] (external OPEN) \\
+% \bottomrule
+% \end{tabularx}
+% \end{center}

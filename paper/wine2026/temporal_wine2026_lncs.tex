@@ -41,14 +41,12 @@
 %    OPEN).
 % ============================================================================
 
-\documentclass[11pt]{article}
+\documentclass[runningheads]{llncs}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb}
 \usepackage{mathtools}
-\usepackage{geometry}
-\geometry{margin=1in}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
 \usepackage{booktabs}
@@ -56,21 +54,21 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage[expansion=false]{microtype}
+\emergencystretch=3em
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
+% Theorem-like environments (theorem, proposition, definition, remark, ...) are
+% predefined by the llncs document class.
 
 % A consistent honest-provenance macro for every Lean citation.
 \newcommand{\tfp}{\emph{trusted-from-prover}}
 
-\title{A Singular Dynamic AMM Pricing American-Style Perpetual Options\\
+\title{A Singular Dynamic AMM Pricing American-Style Perpetual Options
 Across the Strike Continuum}
+\titlerunning{A Singular Dynamic AMM for American-Style Perpetual Options}
 
-\author{Temporal Exchange (working draft)}
-
-\date{June 2026}
+\author{Anonymous Author(s)}
+\authorrunning{Anonymous submission to WINE 2026}
+\institute{Affiliation withheld for double-blind review}
 
 \begin{document}
 \maketitle
@@ -96,9 +94,12 @@ rests on distributional hypotheses carried, not discharged; replication is
 exact only per wing for hedge ratio at most one (beyond, a labelled
 approximation); and \emph{solvency} stays conditional on a funding source shown
 necessary but not discharged.
+
+\keywords{Automated market maker \and Decentralized finance \and Perpetual
+options \and Optimal stopping \and Smooth pasting \and Formal verification}
 \end{abstract}
 
-\tableofcontents
+% \tableofcontents  % removed for WINE submission (conference format; not counted/wanted)
 
 % ---------------------------------------------------------------------------
 \section{Introduction and contributions}
@@ -116,13 +117,11 @@ problem this paper addresses.
 Our central positive result is that a \emph{single} liquidity pool prices the
 entire out-of-the-money strike continuum---calls and puts---of
 \emph{American-style} perpetual options in \emph{closed form}. The position's
-holder may exercise at any time but does so optimally at an exact
-\emph{early-exercise free boundary}: the price level
-$S^{\ast}=K\,m\gamma/(m\gamma+1)$ at which it becomes optimal to take the payoff,
-written in terms of the dollar strike $K$, the curve's \emph{convexity exponent}
-$\gamma>1$ (the larger $\gamma$ is, the steeper the option-value curve), and the
-vol-calibration knob $m$ (Section~\ref{sec:lens}); it reduces to
-$K\,\gamma/(\gamma+1)$ in the plain-Balancer case $m=1$. The continuation value meets the exercised value there
+holder exercises not at the strike but at an exact \emph{early-exercise free
+boundary}: the price level $S^{\ast}=K\,\gamma/(\gamma+1)$ at which it becomes
+optimal to take the payoff, written in terms of the dollar strike $K$ and the
+curve's \emph{convexity exponent} $\gamma>1$ (the larger $\gamma$ is, the steeper
+the option-value curve). The continuation value meets the exercised value there
 with matching value \emph{and} slope---a \emph{smooth} join we call the
 \emph{seam} ($C^{1}$, i.e.\ once continuously differentiable)---and the formula
 needs no new parameters. For the shipped instrument---a vanilla opposite-wing
@@ -158,7 +157,7 @@ are therefore assumptions, not claims, and the reader should not mistake the
 conditional solvency result for an unconditional one
 (Sections~\ref{sec:formal},~\ref{sec:limitations}).
 
-The prior version of this work~\cite{temporal-barrier} priced the OTM continuum
+An earlier barrier-option treatment~\cite{temporal-barrier} priced the OTM continuum
 with a single weighted constant-product pool and treated each position as a
 \emph{barrier} instrument: its value rises toward one perpetual-future unit as
 spot approaches the strike, then is capped at that ceiling once in-the-money and
@@ -196,8 +195,7 @@ contributions are:
         curve, and a carved-perp settlement denomination
         (Sections~\ref{sec:amm},~\ref{sec:settlement}).
   \item The \emph{American generalisation}: a closed-form smooth-pasting free
-        boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (the base form
-        $K\,\gamma/(\gamma+1)$ at $m=1$) with $C^{1}$ value/slope match
+        boundary $S^{\ast}=K\,\gamma/(\gamma+1)$ with $C^{1}$ value/slope match
         and no new parameters, replacing the barrier ceiling
         (Section~\ref{sec:american}). The boundary and its $C^{1}$ join are
         machine-checked by the Aristotle prover (\tfp{}).
@@ -572,26 +570,18 @@ intrinsic (already-in-the-money) payoff at the free boundary, fixed by
 i.e.\ two conditions in the two unknowns $s_{N}^{\ast}$ and $c$. The solution is
 closed-form:
 \begin{align}
-  s_{N}^{\ast} &= \theta\Bigl(\tfrac{g_{\mathrm{loc}}+1}{g_{\mathrm{loc}}}\Bigr)^{\!g_{\mathrm{loc}}},
+  s_{N}^{\ast} &= \theta\Bigl(\tfrac{\gamma+1}{\gamma}\Bigr)^{\!\gamma},
   & \text{equivalently}\quad
-  S^{\ast} &= K\,\frac{g_{\mathrm{loc}}}{g_{\mathrm{loc}}+1}=K\,\frac{m\gamma}{m\gamma+1},
+  S^{\ast} &= K\,\frac{\gamma}{\gamma+1},
   \label{eq:boundary}\\
-  c &= \frac{1}{(g_{\mathrm{loc}}+1)\,s_{N}^{\ast}},
-  & \text{value fraction at the boundary} &= \frac{1}{g_{\mathrm{loc}}+1}.
+  c &= \frac{1}{(\gamma+1)\,s_{N}^{\ast}},
+  & \text{value fraction at the boundary} &= \frac{1}{\gamma+1}.
   \label{eq:coeff}
 \end{align}
-Here $g_{\mathrm{loc}}=m\gamma$ is the lensed (through-the-knob) steepness, and
-$\theta=s_{N}(K)$ is the strike registered in the curve's carry coordinate;
+Here $\theta=s_{N}(K)$ is the strike registered in the curve's carry coordinate;
 because $\theta\to\theta/r$ on rebase, $s_{N}^{\ast}$ tracks the strike
-automatically. The boundary \emph{moves with the lens} and reduces to the base form
-$S^{\ast}=K\gamma/(\gamma+1)$ only in the plain-Balancer special case $m=1$. The
-mark reaches its cap of $1$ only at \emph{full} exercise, not at the boundary: at
-$S^{\ast}$ the position is worth the fraction $1/(g_{\mathrm{loc}}+1)$. Here
-$S^{\ast}$ is the \emph{optimal-exercise} (pricing) boundary, not a forced trigger:
-in the American style the holder may exercise at any time, and $S^{\ast}$ is merely
-where a rational holder would optimally do so and what the valuation assumes. On the
-engine, settlement is a trader-invoked close---there is no auto-exercise at
-$S^{\ast}$.
+automatically. The mark reaches its cap of $1$ only at \emph{full} exercise, not
+at the boundary: at $S^{\ast}$ the position is worth the fraction $1/(\gamma+1)$.
 
 \subsection{The new mark / exercise rule}
 Per leg, wing-aware, with $s_{N}=s_{N}(S)$ and $s_{N}^{\ast},c$ as above:
@@ -623,51 +613,40 @@ long) with convexity exponent $\gamma=2$, dollar strike $K=\$100$, and lens
 $m=1$ (plain Balancer, so $g_{\mathrm{loc}}=m\gamma=2$). The early-exercise free
 boundary~\eqref{eq:boundary} sits at
 \[
-  S^{\ast}=K\,\frac{g_{\mathrm{loc}}}{g_{\mathrm{loc}}+1}=100\cdot\tfrac{2}{3}=\$66.67,
+  S^{\ast}=K\,\frac{\gamma}{\gamma+1}=100\cdot\tfrac{2}{3}=\$66.67,
 \]
 \emph{below} the strike (the put becomes optimal to exercise only after spot has
 fallen well past $K$), and at that boundary the mark equals the value
-fraction~\eqref{eq:coeff}, $1/(g_{\mathrm{loc}}+1)=1/3$. On the OTM side
-($S>S^{\ast}$) the continuation mark is $c\,s_{N}$ with $s_{N}\propto
-S^{-g_{\mathrm{loc}}}$, so it scales as
-$\tfrac{1}{g_{\mathrm{loc}}+1}\,(S^{\ast}/S)^{g_{\mathrm{loc}}}$, growing as spot
-falls toward the boundary. Steepening the lens to $m=3$ (so $g_{\mathrm{loc}}=6$)
-\emph{moves} the boundary: $C^{1}$ smooth-pasting forces the boundary and the
-continuation arm to share the \emph{same} exponent $g_{\mathrm{loc}}$ (a mismatched
-pair would kink the seam for $m\neq1$), so the boundary rises to
-$S^{\ast}=100\cdot\tfrac{6}{7}=\$85.71$ with boundary mark
-$1/(g_{\mathrm{loc}}+1)=1/7\approx0.143$. Below its own $S^{\ast}$ each leg is
-simply intrinsic, $1-S/K$; above it, the off-boundary continuation mark decays
-faster via the wing power-law $\mathrm{value}\propto S^{-g_{\mathrm{loc}}}$. Each
-column below is evaluated at \emph{its own} boundary:
+fraction~\eqref{eq:coeff}, $1/(\gamma+1)=1/3$. On the OTM side ($S>S^{\ast}$) the
+continuation mark is $c\,s_{N}$ with $s_{N}\propto S^{-\gamma}$, so it scales as
+$\tfrac{1}{\gamma+1}\,(S^{\ast}/S)^{\gamma}$, growing as spot falls toward the
+boundary. Steepening the lens to $m=3$ (so $g_{\mathrm{loc}}=6$) leaves
+$S^{\ast}$ unchanged (the boundary~\eqref{eq:boundary} depends on $\gamma$, not
+$m$) but makes the off-boundary mark decay far faster:
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
 spot $S$ & mark, $m=1$ ($g_{\mathrm{loc}}=2$) & mark, $m=3$ ($g_{\mathrm{loc}}=6$) \\
 \midrule
-at $S^{\ast}$ & $0.333$ (at $\$66.67$) & $0.143$ (at $\$85.71$) \\
-$\$80$  & $0.231$ & $0.200$ \\
-$\$90$  & $0.183$ & $0.107$ \\
-$\$100=K$ & $0.148$ & $0.057$ \\
-$\$120$ & $0.103$ & $0.019$ \\
+$\$66.67=S^{\ast}$ & $0.333$ & $0.143$ \\
+$\$80$  & $0.231$ & $0.048$ \\
+$\$90$  & $0.183$ & $0.024$ \\
+$\$100=K$ & $0.148$ & $0.013$ \\
+$\$120$ & $0.103$ & $0.004$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-Each column shows its own boundary $S^{\ast}$ ($\$66.67$ at $m=1$, $\$85.71$ at
-$m=3$) with boundary fraction $1/(g_{\mathrm{loc}}+1)$. Below $S^{\ast}$ the mark is
-intrinsic, $1-S/K$: at $m=3$, $\$80<\$85.71$, so its mark is $1-80/100=0.200$. The
-table simply traces~\eqref{eq:boundary}--\eqref{eq:coeff} and the wing power-law
-$\mathrm{value}\propto S^{-g_{\mathrm{loc}}}$ at these chosen inputs; it illustrates
-the closed forms (and the kurtosis knob's effect on the boundary and tail
-steepness) and makes no empirical or market-calibration claim.
+The table simply traces~\eqref{eq:boundary}--\eqref{eq:coeff} and the wing
+power-law $\mathrm{value}\propto S^{-m\gamma}$ at these chosen inputs; it
+illustrates the closed forms (and the kurtosis knob's effect on tail steepness)
+and makes no empirical or market-calibration claim.
 
 \subsection{Why this is the American boundary}
 The smooth-paste solution~\eqref{eq:boundary}--\eqref{eq:coeff} is not an
 arbitrary $C^{1}$ join. It is the \emph{unique} solution of the value-match plus
 slope-match system, and it coincides with the optimal early-exercise boundary in
 the variational sense. Both facts are machine-checked: the boundary is
-\emph{generated} as the unique smooth-pasting solution at any steepness $g$---hence
-at the lensed $g_{\mathrm{loc}}=m\gamma$---(T1a, generic $g$:
+\emph{generated} as the unique smooth-pasting solution (T1a
 \texttt{Sstar\_A\_forced}, \texttt{coeffA\_forced}; \tfp{}), and $S^{\ast}$
 maximises the holder's value over \emph{deterministic} exercise boundaries (T1b
 \texttt{opt\_boundary\_is\_max\_A}, a genuine variational result, \tfp{}). The
@@ -689,9 +668,6 @@ gives the \emph{linear} relation $\gamma=2r/\sigma^{2}$; we do not use that slic
 here.) On the symmetric pairing, $S^{\ast}$ is the Merton boundary (MERTON tie
 \texttt{Sstar\_is\_merton\_boundary}, \texttt{gaussian\_limit\_quadratic};
 \tfp{}, with the GH/Bessel-K distributional layer carried as named hypotheses).
-This distributional tie is stated at the base characteristic root $\gamma$ (the
-unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
-$g_{\mathrm{loc}}=m\gamma$ by the same generic-$g$ uniqueness above.
 
 \subsection{The $C^{1}$ seam, machine-checked two ways}
 At $s_{N}^{\ast}$ the continuation and intrinsic must agree in value \emph{and}
@@ -847,8 +823,7 @@ it is environment-blocked here.
 \subsection{What is machine-checked (\tfp{})}
 \begin{itemize}[leftmargin=2em]
   \item \textbf{Settlement free boundary.} $C^{1}$ smooth-pasting at
-        $S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$ (the lensed boundary;
-        $K\gamma/(\gamma+1)$ at $m=1$) on both wings (R1
+        $S^{\ast}=K\gamma/(\gamma+1)$ on both wings (R1
         \texttt{valueMatch\_A}/\texttt{slopeMatch\_A}, grounded), generated as the
         \emph{unique} solution (T1a \texttt{Sstar\_A\_forced},
         \texttt{coeffA\_forced}, grounded), and as the \emph{optimal} exercise
@@ -971,7 +946,7 @@ oracle-free perpetual-options protocol; our design differs in pricing the whole
 OTM continuum from one pool state and in lifting the barrier into an American free
 boundary. QuantAMM's ``Temporal Function Market Making'' is \emph{prior} work on
 weight-dynamic AMMs (not concurrent); we treat it as prior art and accordingly do
-not adopt the ``TFMM'' name---we use ``Temporal Exchange'' for the protocol and a
+not adopt the ``TFMM'' name---we use a
 neutral ``per-trade weight-dynamic AMM'' descriptor for the mechanism, to avoid
 the naming collision.
 
@@ -1101,8 +1076,7 @@ weight---run as a state transition system whose conservation law is applied at
 each trade's own point---prices the entire OTM perpetual-option continuum in
 closed form. This draft lifts the prior barrier instrument into an American-style
 perpetual option: a closed-form smooth-pasting free boundary
-$S^{\ast}=K\,m\gamma/(m\gamma+1)$ (the base form $K\gamma/(\gamma+1)$ at $m=1$)
-with a $C^{1}$ seam and no new parameters, backed by
+$S^{\ast}=K\gamma/(\gamma+1)$ with a $C^{1}$ seam and no new parameters, backed by
 machine-checked (\tfp{}) settlement, boundary-uniqueness, optimality, and
 Merton-tie results, and a constant slope-multiplier lens $m$ that acts as a
 vol-calibrated kurtosis knob while leaving the pool flow unchanged. On internal
@@ -1121,7 +1095,7 @@ to the production engine---are the principal directions for future work.
 % ---------------------------------------------------------------------------
 
 \begin{center}
-\begin{tabular}{ll}
+\begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
 \toprule
 Symbol & Meaning \\
 \midrule
@@ -1143,7 +1117,7 @@ $\gamma$ & curve convexity (steepness) exponent, $\gamma\in(1,4)$ \\
 $m$ & constant slope-multiplier (kurtosis/vol knob), $m>0$ \\
 $g_{\mathrm{loc}}$ & lensed option-value exponent $=m\gamma$ \\
 $s_{N}$ & normalised strike coordinate, $s_{N}=(1-w)/w$ at the $45^{\circ}$ point (pinned convention) \\
-$s_{N}^{\ast},S^{\ast},c$ & smooth-pasting free boundary ($S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$; $=K\gamma/(\gamma+1)$ at $m=1$) and continuation-value coefficient $c$ \\
+$s_{N}^{\ast},S^{\ast},c$ & smooth-pasting free boundary ($S^{\ast}=K\gamma/(\gamma+1)$) and continuation-value coefficient $c$ \\
 $r$ & rebase factor ($r>0$). \emph{Distinct} from the risk-free interest rate, also written $r$, that appears only in the Merton relation $\gamma(\gamma+1)=2r/\sigma^{2}$ under the symmetric root-pairing, regime $r>\sigma^{2}$ (Section~\ref{sec:american}) \\
 $\sigma$ & asset return volatility (Merton symmetric-pairing relation only) \\
 $\beta_{\mathrm{th}}$ & thermal inverse temperature $=m\gamma$ (Section~\ref{sec:gibbs}; distinct from the offset $\beta$) \\
@@ -1151,7 +1125,7 @@ $L_{0}$ & position leverage, frozen at band-open \\
 $P$ & carry (the pool's internal reference price) $P=N_{y}/N_{x}$ \\
 $N_{x},N_{y}$ & pool notional holdings of underlying and cash (define the carry $P$) \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 % ---------------------------------------------------------------------------
@@ -1164,7 +1138,9 @@ re-run). ``grounded'' = no load-bearing carried hypothesis; ``carried[$h$]'' =
 conditional on the named undischarged structure-field hypothesis $h$.
 
 \begin{center}
-\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}X@{}}
 \toprule
 Headline theorem & Depth & Archive (returned \texttt{.lean}) \\
 \midrule
@@ -1192,7 +1168,7 @@ Headline theorem & Depth & Archive (returned \texttt{.lean}) \\
 \begin{thebibliography}{99}
 
 \bibitem{temporal-barrier}
-Temporal Exchange.
+Author(s) omitted for double-blind review.
 \emph{A Singular Dynamic AMM Pricing Perpetual Options Across the Strike
 Continuum} (barrier-option version). Working draft, 2026.
 
