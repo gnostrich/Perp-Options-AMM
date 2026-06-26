@@ -2166,3 +2166,11 @@ _Context: operator uploads WINE 2026 LNCS formatting + the current converted dra
 _Context: operator approves putting research-lead on the S*/lens consistency question (does the vol knob m move the exercise boundary S*?) and asks the manager to explain the question in simple English. Manager dispatches research-lead to adjudicate (paper: S*=Kγ/(γ+1), m-independent; engine: S*=K·g_loc/(g_loc+1), g_loc=mγ) and explains it plainly._
 
 > sure, and meantime explain the q in simple englkish
+
+
+---
+
+## Entry 279 — 2026-06-26 UTC
+_Context: operator checks that the exercise mechanism (engine + paper aligned) lets a trader exercise WHEN HE WANTS and does NOT force optimal exercise (i.e. American = holder's right, S* is a pricing/optimality marker not a forced trigger). Manager affirms the design intent + definition, flags the engine-mechanism confirmation as folded into the running research-lead settlement-code read (verify-before-reassuring)._
+
+> just checking: the mechanism thats in the engine (and the paper should be aligned), is going to allow a trader to ultimately excercise when he wants, and not force optimal exercise right?
