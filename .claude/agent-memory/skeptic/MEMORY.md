@@ -3584,3 +3584,20 @@ Artifact: paper/wine2026/temporal_wine2026_v2.tex (+ _v2_supplement.tex). Source
 Pattern: storytelling-first rewrite IMPROVED honesty in the body (qualifications stated "in one breath") but
 ERODED one entry-247 gloss that the technical source carried — the recurring "prose reframe drops a load-bearing
 nicety the symbolic version had." Title "...That IS an American...Book" is punchier than LNCS but qualified in-abstract → not a flag.
+
+## 2026-06-26 — VERDICT: lensed smooth-paste boundary correction (3 files, Universal Skeptic Gate, halt-class). 1 FLAG-OMISSION (incomplete fix), rest CLEAR.
+Artifact: git diff of paper/temporal_paper_american_2026.tex + paper/wine2026/temporal_wine2026_v2.tex + specs/SPEC_itm_exercise_smoothpaste_NEXT.md. Fix = boundary moves with lens: S*=K·g_loc/(g_loc+1)=K·mγ/(mγ+1), fraction 1/(g_loc+1), g_loc=mγ. Replaces old wrong "S*=Kγ/(γ+1) depends on γ not m" + triple-inconsistent m=3 table.
+INDEPENDENTLY RE-DERIVED (python + decimal, not narrated):
+- Boundary: cont A·S^{-g}, intrinsic 1-S/K, C¹ value+slope → S*=Kg/(g+1), frac 1/(g+1). Tracks g_loc=mγ. CONFIRMED. m=1→66.67/0.333; m=3(g=6)→85.71/0.143. Correct.
+- m=3 table: at S* 0.143; $80=0.200 (INTRINSIC, 80<85.71, =1-80/100); $90=0.107; $100=0.057; $120=0.019. ALL CONFIRMED to 4dp. m=1 col unchanged (.333/.231/.183/.148/.103). KEY: old table computed $80 at wrong boundary as continuation 0.048; new correctly flags it intrinsic. This RESOLVES the normalization tension I flagged 06-26 (old "frac=1/(γ+1)" vs m=3 cell mismatch).
+- Merton convention INTACT both papers: γ(γ+1)=2r/σ² symmetric pairing regime r>σ², cited faith_merton NOT seam gate (06-23 FIX-1 trap NOT reintroduced). Distributional tie correctly stated at base-γ m=1 slice, lens transports to g_loc. No hedge weakened, conditional solvency / |Γ|≤1 / tfp labels all intact.
+- Entry-279 framing engine-VERIFIED: mark fn (HEAD 1656-1674) computes cont-vs-intrinsic by spot, closeBand=trader-invoked (1353), NO auto-exercise trigger at S*. "holder may exercise any time, S* optimal/pricing boundary, settlement trader-invoked close" = accurate, not overstated.
+- Entry-247 g_loc gloss: WINE first-use line 368 displayed eq g_loc(K)=mγ; American line 437 inline ±g_loc=±mγ. Both introduce before boundary use. OK.
+THE FLAG (FLAG-OMISSION — fix incomplete in WINE only):
+  WINE v2 leaves TWO stale bare-base-γ boundary statements presenting S*=Kγ/(γ+1) as THE boundary with NO m-qualification:
+   (a) line 148 intro Contributions bullet: "a closed-form smooth-pasting early-exercise boundary S*=Kγ/(γ+1)".
+   (b) line 722 Conclusion: "a closed-form smooth-pasting boundary S*=Kγ/(γ+1)".
+  The American paper corrected BOTH its parallel sites (intro 200 "base form Kγ/(γ+1) at m=1"; conclusion 1104 "Kmγ/(mγ+1) (base form ... at m=1)"). WINE's were missed → the headline boundary in WINE's two summary positions still asserts the exact wrong claim the fix exists to kill. Reader of WINE intro/conclusion sees the false m-independent form. Fix: same qualification as American (→ "Kmγ/(mγ+1), base form at m=1").
+  MINOR (not blocking, commented-out): WINE supplement line 50 "% S*=...=Kγ/(γ+1)" carries stale form but is inside the entirely-disabled notation table (entry-277); flag for consistency if/when uncommented.
+VERDICT: NOT CLEAR-TO-COMMIT as-is. Spec + American paper = CLEAN. WINE v2 = fix the 2 stale summary sites (148, 722) first. Math/arithmetic/Merton/entry-279/247 all CLEAR.
+Pattern reinforced: the "intro+conclusion summary restatement" is the recurring blind spot for boundary-form fixes — the body+abstract get corrected, the contributions-bullet and conclusion (which restate the headline formula) get left stale. Same shape as my 06-26 entry-247 gloss flag (storytelling restatement drops what the symbolic body carries). Two-paper fixes: ALWAYS diff site-parity — corrected-in-A-not-B is the dominant incompleteness mode here.
