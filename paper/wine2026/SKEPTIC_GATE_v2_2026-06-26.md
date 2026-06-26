@@ -36,3 +36,17 @@ two stale base-γ summary sites (L148 intro, L722 conclusion) — the recurring 
 stale" pattern; American paper + spec were clean. **Manager fix:** L148 + L722 → `K·mγ/(mγ+1)` (base form
 at m=1), matching the American paper's phrasing. Post-fix: no uncontextualized bare boundary remains,
 structure sound. CLEAR-TO-COMMIT.
+
+---
+
+## Tone + diagram revision — skeptic gate (run a8ae9223, 2026-06-26) — CLEAR-TO-COMMIT
+Entry-280: crisp the flowy language (keep flow), revert flowy title, QC/fix diagrams. Skeptic re-derived
+both figures + diffed every hedge vs the prior cleared version. Verdict CLEAR: (1) no hedge/gloss lost in
+the de-flow (conditional solvency, |Γ|≤1, deterministic+Snell-named, trusted-from-prover, Balancer-not-GH,
+curve-family-not-contribution, QuantAMM-prior all survived; "needed"→crisper not weaker); (2) entry-247
+preserved (γ/m/g_loc/carry glossed; L148/L722 keep the m-qualified S*=K·mγ/(mγ+1)); (3) S* correction +
+Merton convention intact (not regressed); (4) title "A Single Dynamic AMM Pricing American-Style Perpetual
+Options" accurate — a de-escalation from the old "…that IS a book" identity claim; (5) all 3 figures correct
+— Fig 1 rebuilt (genuine power laws crossing uniquely at T=(1.164,1.804) on the ray, no +0.18 offset),
+Fig 2 axis relabeled log-strike (makes e^(-mγ|x|)=value∝S^(-mγ) honest), Fig 3 untouched. Manager
+independently QC'd Fig 1 geometry + verified title/de-flow/invariants.
