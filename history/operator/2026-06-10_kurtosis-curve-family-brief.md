@@ -2174,3 +2174,11 @@ _Context: operator approves putting research-lead on the S*/lens consistency que
 _Context: operator checks that the exercise mechanism (engine + paper aligned) lets a trader exercise WHEN HE WANTS and does NOT force optimal exercise (i.e. American = holder's right, S* is a pricing/optimality marker not a forced trigger). Manager affirms the design intent + definition, flags the engine-mechanism confirmation as folded into the running research-lead settlement-code read (verify-before-reassuring)._
 
 > just checking: the mechanism thats in the engine (and the paper should be aligned), is going to allow a trader to ultimately excercise when he wants, and not force optimal exercise right?
+
+
+---
+
+## Entry 280 — 2026-06-26 UTC
+_Context: operator approves the FLOW/structure (don't change it) but wants the LANGUAGE reverted from flowy/storytelling-voice back to crisp academic (cites the changed title as the example), and asks for a rigorous QC of the diagrams. Manager QCs the 3 TikZ figures' math himself (read-only), then dispatches a crisp-language pass (keep flow, revert flowy title) + any figure fixes; skeptic-gates._
+
+> do a quick run retaining the flow but reverting language to crisp and not this flowy-ass thing we have like look at how the title etc has changed... flow is ok now dont change that, and QC the diagrams rigorously please
