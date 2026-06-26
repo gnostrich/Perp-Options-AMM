@@ -146,6 +146,58 @@ Folded into `paper/temporal_paper_american_2026.tex` (engine/Lean UNTOUCHED; han
   pdflatex in env. Only `paper/temporal_paper_american_2026.tex` changed (history/ file mod is
   pre-existing working-tree state, NOT mine).
 
+## WINE2026 from-scratch storytelling rewrite (entry 277) — NEW file, claims unchanged
+Wrote `paper/wine2026/temporal_wine2026_v2.tex` (LNCS `runningheads`, single self-contained file,
+all figures TikZ/pgfplots — NO external images, compiles standalone). Storytelling-first per operator:
+idea-flow → notation-with-narration → diagrams. Reference draft `temporal_wine2026_lncs.tex` NOT edited.
+- **Reused ONLY verified content** from `temporal_wine2026_lncs.tex` (claims, contributions, provenance
+  labels, bibliography 15 entries) + worked example / corrected Merton wording from
+  `temporal_paper_american_2026.tex`. NO new claim introduced.
+- **3 TikZ figures:** Fig1 curve warp + trade at arbitrary point on curve (§warp); Fig2 vol-knob
+  steepness shape, mode-peak=1, steeper as m rises, mirrors engine chart-2 (§lens); Fig3 American
+  smooth-paste seam continuation→intrinsic, S*=66.67 worked-example values (§american).
+- **Structure (8 sections):** 1 idea-told-first (result+conditions one breath, contributions) · 2 curve
+  and warp (Balancer plain-English, Fig1) · 3 continuum (mark, carry introduced plainly) · 4 vol knob
+  (Fig2, ceiling=level+skew-not-smile) · 5 American (Fig3, worked table, Merton tie eq:merton) ·
+  6 properties (collar iff w=½ conditional-skeleton, settlement, |Γ|≤1) · 7 honest frontier (tfp,
+  conditional solvency B1/B3/B4 headline, single-object research direction) · 8 related/limits/conclusion.
+  App A notation table (on-request), App B formal artifact list (tfp, on-request) — ~1pp total.
+- **Honest invariants verified present:** Balancer+lens NOT GH (GH only as carried Merton layer);
+  curve-family-not-contribution (Evans/AEC deflation); solvency CONDITIONAL B1/B3/B4 necessary-not-
+  sufficient; American=deterministic + Snell named-not-formalised; |Γ|≤1 exact /|Γ|>1 labelled approx;
+  all Lean tfp NEVER "verified" (only honesty-hedge uses of word); Merton γ(γ+1)=2r/σ² symmetric pairing
+  regime r>σ², faith_merton gate, no-div slice=linear; single object=research direction; QuantAMM PRIOR,
+  no TFMM.
+- **Checks (no pdflatex in env):** $ even 456; braces 556/556; envs matched; 3 fig/axis/tikz matched;
+  abstract math-free, ~211 words. **PAGE-FIT FLAG to manager:** est ~11–11.5pp incl refs (body ~9.5–10
+  + refs ~1 + appendices ~1, on-request/trimmable) — under 12 but tight; operator must compile to confirm.
+  Per-section budget handed to manager in return msg.
+- Engine/Lean UNTOUCHED. Handed to manager for page-fit + skeptic gate. NOT git'd.
+
+## WINE2026 v2 page-fit trim (entry ~277 follow-up, 2026-06-26) — remove/relocate only, no claim touched
+Manager's pessimistic compile est. ~12–13pp > 12 HARD cap (mine was 11.5). Engineered MARGIN by
+moving on-request material OUT of the submission per operator entry 277 (Lean/formal annexures
+"on request only, won't be attaching"):
+- **Appendix B (formal-artifact map) MOVED OUT** → `paper/wine2026/temporal_wine2026_v2_supplement.tex`
+  (commented block, NOT compiled into submission). In-body pointer kept: §7.1 (sec:frontier) now reads
+  "the full formal-artifact map and Lean statements are available on request (see `formal/INDEX.md`)"
+  — replaced the old `Appendix~\ref{app:formal} maps each` cross-ref (which would dangle).
+- **Appendix A (notation table) ALSO MOVED OUT** to the same supplement (budget call: relocating both
+  buys ~1pp margin; body self-contained — every symbol glossed in-body at first use, operator wanted
+  notation near symbols anyway). `\appendix` command removed; no dangling app:notation/app:formal refs.
+- **§8 lightly compressed** (related/limits/concl): tightened "is exactly the"→"is the", "shows how to
+  choose"→"chooses", "we treat it as prior art and use a neutral"→"we use the neutral", conclusion
+  "Closing that port hypothesis---and wiring...---are"→"Closing...and wiring...are". NO cited work,
+  hedge, claim, number, figure, or the Merton wording dropped. "Curve v2" specificity restored after
+  an over-trim. QuantAMM PRIOR, LVR dual, all 15 bibitems intact.
+- **Budget (SUBMITTED part only, title→references):** abstract ~0.35 · §1 idea ~1.0 · §2 warp+Fig1
+  ~1.4 · §3 continuum ~0.85 · §4 lens+Fig2 ~1.4 · §5 American+Fig3+table ~1.7 · §6 properties ~1.1 ·
+  §7 frontier ~1.05 · §8 related/limits/concl ~0.95 · refs (15) ~0.95. **TOTAL submitted ≈ 10.7pp**
+  (pessimistic compile lands ~11–11.5, under 12). On-request supplement (2 tables) ~1pp, OUTSIDE count.
+- **No-claim-change verified:** $ even (364), braces 492/492, 3 figs/axes/tikz matched, tabular(1)=
+  worked-example table kept, worked-example numbers byte-intact, abstract/Merton/B1B3B4/tfp/|Γ| all
+  untouched. No pdflatex in env. Handed to manager for skeptic gate. NOT git'd.
+
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't
 go in. New claims/positioning are strategic → flag to the **manager** (who escalates to the operator).
