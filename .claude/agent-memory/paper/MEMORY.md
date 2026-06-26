@@ -229,6 +229,33 @@ for m≠1). Engine/Lean/gates were ALREADY correct — NOT touched.
   convention / |Γ|≤1 / conditional-solvency / tfp labels UNTOUCHED. NOT git'd — handed to manager for
   skeptic gate.
 
+## WINE2026 v2 DE-FLOW + diagram-fix pass (entry 280, 2026-06-26) — tone+2 figures only, no claim touched
+Operator: voice was "flowy-ass" (cited the TITLE). Reverted prose to crisp academic LNCS register in
+`paper/wine2026/temporal_wine2026_v2.tex` KEEPING section count/order/flow exactly; engine/Lean untouched.
+- **Title** "Trades That Bend the Curve: One AMM Pool That *Is* an American Perpetual-Option Book…"
+  → **"A Single Dynamic AMM Pricing American-Style Perpetual Options Across the Strike Continuum"**
+  (titlerunning → "A Single Dynamic AMM for American-Style Perpetual Options"). Matches reference
+  `temporal_wine2026_lncs.tex` L65 register.
+- **De-flowed:** opener "Picture an ordinary AMM…"→direct defn; "Here is the payoff…"/"One more dial
+  completes the picture"/"in one breath"/"with a twist"/"This is the new core"/"in motion" cut.
+  Headings → reference register: idea-told-first→Introduction and contributions; curve-and-warp→The
+  AMM construction; Balancer-in-plain-English→The Balancer curve; Definition-with-narration→Definition;
+  Funding-briefly→Funding; reference-price-we-call-carry→The reference price (carry); what-a-perp-
+  option-is-here→The perpetual option; The-honest-frontier→Formal verification and the open frontier.
+  Second-person removed. ALL glosses/hedges/qualifiers kept (entry-247: carry still introduced
+  before use; abstract still symbol-light, all qualifiers present).
+- **Fig 1 (fig:warp) faithful+consistent:** offset curve `1.45/x^1.35+0.18` → genuine offset-free
+  power law `2.2146/x^1.35` (p=1.35, same constant-product family). Re-verified: T=(1.164,1.804) on
+  base 2.1/x ∩ ray 1.55x AND on after-curve (2.2146/1.164^1.35=1.804) — trade re-leans AT T. Reserves
+  on base (1.45,1.448). Re-lean arrow base→after wing at x=2 (1.05→0.869). Caption updated.
+- **Fig 2 (fig:lens) label-only:** x-axis "strike (normalized…)"→"log-strike (log-moneyness…)" +
+  caption clause: e^(−mγ|x|) IS value∝S^(−mγ) since axis is log-strike. Plotted fns unchanged
+  (γ=1.5, m=1/3/6→1.5/4.5/9.0).
+- **Fig 3 (fig:seam) UNTOUCHED** (manager-verified correct; absent from diff).
+- Checks: $ even 454; braces 545/545; 22/22 envs; 3 fig/tikz/axis; 1 tabular; worked-example numbers
+  byte-intact; all B1/B3/B4/tfp/|Γ|/Merton/deterministic-Snell/reserves_have_no_floor hedges verified
+  preserved. No pdflatex in env. NOT git'd — handed to manager for skeptic gate.
+
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't
 go in. New claims/positioning are strategic → flag to the **manager** (who escalates to the operator).

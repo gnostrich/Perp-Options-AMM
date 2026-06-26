@@ -3601,3 +3601,36 @@ THE FLAG (FLAG-OMISSION — fix incomplete in WINE only):
   MINOR (not blocking, commented-out): WINE supplement line 50 "% S*=...=Kγ/(γ+1)" carries stale form but is inside the entirely-disabled notation table (entry-277); flag for consistency if/when uncommented.
 VERDICT: NOT CLEAR-TO-COMMIT as-is. Spec + American paper = CLEAN. WINE v2 = fix the 2 stale summary sites (148, 722) first. Math/arithmetic/Merton/entry-279/247 all CLEAR.
 Pattern reinforced: the "intro+conclusion summary restatement" is the recurring blind spot for boundary-form fixes — the body+abstract get corrected, the contributions-bullet and conclusion (which restate the headline formula) get left stale. Same shape as my 06-26 entry-247 gloss flag (storytelling restatement drops what the symbolic body carries). Two-paper fixes: ALWAYS diff site-parity — corrected-in-A-not-B is the dominant incompleteness mode here.
+
+## 2026-06-26 — VERDICT: WINE2026 v2 TONE+DIAGRAM revision (entry 280, Universal Skeptic Gate, halt-class). CLEAR-TO-COMMIT.
+Artifact: git diff temporal_wine2026_v2.tex (de-flow prose, revert title, fix Figs 1-2). Baseline = prior cleared
+runs a0d1c617 (#3556) + a37bc046 (#3588). Regression-check focus: dropped hedge / dropped gloss in the crisping.
+RE-DERIVED both figures (python, not narrated):
+- HEDGE SURVIVAL (abstract+intro de-flow, diff'd line-by-line vs prior - lines): ALL survived. deterministic-exercise +
+  Snell named-not-formalised (abstract+§1(i)); |Γ|≤1 exact/>1 labelled-approx ("hedge ratio at most one", §1(ii));
+  tfp "trusted as compiled, not re-run" (never "verified"); solvency CONDITIONAL "necessary but do not discharge"
+  (old "needed"→new "necessary", same hedge crisper); "geometry necessary, never sufficient" VERBATIM; Balancer-not-GH
+  ("weighted constant-product Balancer"); QuantAMM=PRIOR (L701, untouched); B1/B3/B4 (L660-661, untouched);
+  curve-family-not-contribution (Evans/AEC translated-CPMM, §1 Contributions, untouched). No hedge shortened into overclaim.
+- ENTRY-247 (gloss survival): no bare symbol in abstract (0 math $) or intro prose. γ glossed "convexity exponent" at
+  first use L149; m "steepness knob" L150; g_loc defined at L378; carry plain-English before use. PRIOR entry-247 FLAG
+  (#3556, γ ungloss'd at contributions bullet) is RESOLVED here, not regressed. L148/L722 BOTH now carry m-qualified
+  S*=K·mγ/(mγ+1) (base form at m=1) — the two stale-boundary FLAGs from #3588 DISCHARGED and not reverted.
+- S* CONTENT intact (a37bc046 not regressed): S*=K·g_loc/(g_loc+1); m=3 table {85.71→.143, .200,.107,.057,.019} byte-present;
+  Merton γ(γ+1)=2r/σ² symmetric pairing regime r>σ², faith_merton gate (NOT seam — 06-23 FIX-1 trap absent). Untouched by diff.
+- TITLE: old "...That IS an American...Book Across Every Strike" → new "A Single Dynamic AMM Pricing American-Style
+  Perpetual Options Across the Strike Continuum". "Single"=one pool (central claim). "Dynamic"=per-trade weight update
+  (the contribution). New "Pricing" is a DE-escalation from the old identity "IS a book" — softer, not overclaim. Accurate.
+- FIG 1 (re-derived): base 2.1/x, after 2.2146/x^1.35, ray 1.55x. ALL THREE meet at x=1.164,y=1.804 (verified 1.8041/1.8041/1.8042).
+  base/after cross UNIQUELY at x=1.1639 (solved 2.1·x^0.35=2.2146). Arrow x=2.0: base 1.05→after 0.869 (both on-curve). Reserves
+  (1.45,1.448) on base. NO +0.18 offset — after-curve is genuine power law c'/x^p. Caption "both pass through T / genuine
+  power law no additive offset / same constant-product family" MATCHES figure, no overclaim.
+- FIG 2 (re-derived): plots e^{-1.5|x|},e^{-4.5|x|},e^{-9|x|} for m=1,3,6 at γ=1.5 → exponents = mγ exactly. Axis relabel
+  "strike (normalized)"→"log-strike (log-moneyness)" makes the exponential plot HONEST: on log-moneyness x, e^{-mγ|x|}=(S/mode)^{-mγ}
+  = value∝S^{-mγ} on the wing. Caption claim mathematically CORRECT — a genuine fix (the old axis mislabel made a power law
+  look like raw exponential decay), not a new overclaim. Fig 3 untouched (correct).
+VERDICT: CLEAR-TO-COMMIT. Tone pass crisped without dropping a single hedge or gloss; both figures fixed correctly;
+prior two FLAGs (#3556 entry-247, #3588 stale boundary L148/L722) both resolved and not regressed.
+Pattern note: this is the FIRST tone-pass in the record that did NOT erode an entry-247 gloss or a summary-restatement
+hedge — the recurring "prose reframe drops the symbolic nicety" failure did NOT recur. Counter-evidence to blind-spot #25-ish;
+the paper agent appears to have internalized the entry-247 + site-parity flags. Worth tracking whether it holds.
