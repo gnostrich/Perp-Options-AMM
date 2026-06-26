@@ -2182,3 +2182,11 @@ _Context: operator checks that the exercise mechanism (engine + paper aligned) l
 _Context: operator approves the FLOW/structure (don't change it) but wants the LANGUAGE reverted from flowy/storytelling-voice back to crisp academic (cites the changed title as the example), and asks for a rigorous QC of the diagrams. Manager QCs the 3 TikZ figures' math himself (read-only), then dispatches a crisp-language pass (keep flow, revert flowy title) + any figure fixes; skeptic-gates._
 
 > do a quick run retaining the flow but reverting language to crisp and not this flowy-ass thing we have like look at how the title etc has changed... flow is ok now dont change that, and QC the diagrams rigorously please
+
+
+---
+
+## Entry 281 — 2026-06-26 UTC
+_Context: QC-ONLY / brainstorm mode, NO EDITS. Operator asks to have Dexter's Lab review the current WINE v2 draft using Claude (no OpenRouter panel) and surface QC pointers. Manager runs lab_review on temporal_wine2026_v2.tex via the locked room, will cross-check and relay pointers only — no paper edits._
+
+> ok brainstorm / qc only mode no edits: can you have dexters lab agents review using claude (no openrouter) and give us the needful QC pointers
