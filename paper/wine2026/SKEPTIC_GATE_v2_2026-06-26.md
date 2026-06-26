@@ -21,3 +21,18 @@ not m," but the table's m=3 cell is `1/(g_loc+1)=0.143` (g_loc=mγ=6), and the L
 `S*=K·g_loc/(g_loc+1)` (CLAUDE.md), i.e. the lens DOES move the boundary in the engine. Potential
 paper↔engine inconsistency on whether the lens shifts the exercise boundary S*. Needs research-lead
 adjudication before submission. v2 copied this faithfully from the sources — not a rewrite regression.
+
+---
+
+## S*/lens boundary correction — skeptic gate (run a37bc046, 2026-06-26)
+research-lead adjudicated + manager re-derived + re-verified numbers: the smooth-paste boundary moves
+with the lens — `S*=K·g_loc/(g_loc+1)=K·mγ/(mγ+1)`, fraction `1/(g_loc+1)`, g_loc=mγ. Engine/Lean/gates
+were ALREADY correct (paper-only fix). Old papers wrongly said `S*=Kγ/(γ+1)` "depends on γ not m" with a
+triple-inconsistent m=3 table. Fixed in both papers + `specs/SPEC_itm_exercise_smoothpaste_NEXT.md`.
+**Skeptic verdict:** boundary correctness CONFIRMED (tracks g_loc, C¹ forces shared exponent); m=3 table
+all cells CONFIRMED (S*=85.71; $80→0.200 intrinsic, 0.107/0.057/0.019); Merton convention intact; entry-279
+not-forced framing engine-VERIFIED accurate; entry-247 g_loc glossed. **One FLAG-OMISSION (WINE only):**
+two stale base-γ summary sites (L148 intro, L722 conclusion) — the recurring "headline summary lines left
+stale" pattern; American paper + spec were clean. **Manager fix:** L148 + L722 → `K·mγ/(mγ+1)` (base form
+at m=1), matching the American paper's phrasing. Post-fix: no uncontextualized bare boundary remains,
+structure sound. CLEAR-TO-COMMIT.

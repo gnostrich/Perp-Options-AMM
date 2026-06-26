@@ -145,9 +145,10 @@ theory of Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
         settlement---that reads a continuum of option values from one pool state
         (Sections~\ref{sec:continuum},~\ref{sec:settlement});
   \item an \emph{American generalisation}: a closed-form smooth-pasting
-        early-exercise boundary $S^{\ast}=K\gamma/(\gamma+1)$ --- with $K$ the
-        dollar strike and $\gamma>1$ the curve's \emph{convexity exponent} (larger
-        $\gamma$ = a steeper option-value curve) --- with a smooth
+        early-exercise boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (the base form
+        $K\gamma/(\gamma+1)$ at $m=1$) --- with $K$ the dollar strike, $\gamma>1$
+        the curve's \emph{convexity exponent} (larger $\gamma$ = a steeper
+        option-value curve), and $m$ the steepness knob below --- with a smooth
         (value-and-slope) join and no new parameters, tied to the classical
         perpetual-American (Merton) problem (Section~\ref{sec:american});
   \item a single static, \emph{volatility-calibrated} curvature knob $m$ that
@@ -435,10 +436,11 @@ second-order, but we state this as a plausibility, not a proof.
 \end{tikzpicture}
 \caption{The American rule. While out-of-the-money the mark follows the
 \emph{continuation} curve (value of waiting). At the free boundary
-$S^{\ast}=K\gamma/(\gamma+1)$ it joins the \emph{intrinsic} (exercised) payoff
-with matching value \emph{and} slope---a smooth $C^{1}$ ``seam.'' Shown for a put
-leg with $\gamma=2$, $K=\$100$, $m=1$ (so $S^{\ast}=\$66.67$, mark $=\tfrac13$ at
-the boundary).}
+$S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$ it joins the \emph{intrinsic}
+(exercised) payoff with matching value \emph{and} slope---a smooth $C^{1}$ ``seam.''
+Drawn for the plain-Balancer case $m=1$ (so $g_{\mathrm{loc}}=\gamma=2$), a put leg
+with $K=\$100$ and $S^{\ast}=\$66.67$, mark $=\tfrac13$ at the boundary; for $m\neq1$
+the seam moves to $g_{\mathrm{loc}}=m\gamma$.}
 \label{fig:seam}
 \end{figure}
 
@@ -456,13 +458,21 @@ exercised (intrinsic) payoff at the boundary under \emph{smooth-pasting}: the tw
 pieces must agree in both value and slope---two equations in the two unknowns
 $s_{N}^{\ast}$ and $c$. The solution is closed form:
 \begin{equation}
-  S^{\ast}=K\,\frac{\gamma}{\gamma+1},
+  S^{\ast}=K\,\frac{g_{\mathrm{loc}}}{g_{\mathrm{loc}}+1}
+         =K\,\frac{m\gamma}{m\gamma+1},
   \qquad
-  \text{value fraction at the boundary}=\frac{1}{\gamma+1}.
+  \text{value fraction at the boundary}=\frac{1}{g_{\mathrm{loc}}+1},
   \label{eq:boundary}
 \end{equation}
+where $g_{\mathrm{loc}}=m\gamma$ is the lensed (through-the-knob) steepness. The
+boundary therefore \emph{moves with the lens}; it reduces to the base form
+$S^{\ast}=K\gamma/(\gamma+1)$ only in the plain-Balancer special case $m=1$.
 The mark reaches its cap of $1$ only at \emph{full} exercise, not at the boundary
-(Figure~\ref{fig:seam}). The exercise switch fires exactly where the ratio
+(Figure~\ref{fig:seam}). Here $S^{\ast}$ is the \emph{optimal-exercise} (pricing)
+boundary, not a forced trigger: exercise is the holder's right at any time, and
+$S^{\ast}$ is merely where a rational holder would exercise and what the valuation
+assumes. On the engine, settlement is a trader-invoked close, never an auto-exercise.
+With that reading, the exercise switch fires exactly where the ratio
 intrinsic/continuation hits $1$, which is $S^{\ast}$---past the strike, not at the
 money. The continuation runs \emph{through} the old strike ray, so the strike
 becomes an ordinary interior point; on the bounded (spread) wing the intrinsic
@@ -475,29 +485,40 @@ chosen for arithmetic clarity, not calibrated to any market and not a validation
 of anything. Take a put leg with $\gamma=2$, $K=\$100$, $m=1$ (plain Balancer, so
 $g_{\mathrm{loc}}=m\gamma=2$). The boundary~\eqref{eq:boundary} sits at
 $S^{\ast}=100\cdot\tfrac23=\$66.67$, below the strike, with mark
-$1/(\gamma+1)=1/3$ there. Steepening to $m=3$ ($g_{\mathrm{loc}}=6$) leaves
-$S^{\ast}$ unchanged (it depends on $\gamma$, not $m$) but makes the off-boundary
-mark decay far faster, via the wing power law $\mathrm{value}\propto S^{-m\gamma}$:
+$1/(g_{\mathrm{loc}}+1)=1/3$ there. Steepening to $m=3$ ($g_{\mathrm{loc}}=6$)
+\emph{moves} the boundary, because $C^{1}$ smooth-pasting forces the boundary and
+the continuation arm to share the \emph{same} exponent $g_{\mathrm{loc}}$ (a
+mismatched pair would kink the seam for $m\neq1$). The boundary rises to
+$S^{\ast}=100\cdot\tfrac{6}{7}=\$85.71$ with boundary mark
+$1/(g_{\mathrm{loc}}+1)=1/7\approx0.143$, and below $S^{\ast}$ the leg is simply
+intrinsic, $1-S/K$. The off-boundary continuation mark also decays faster, via the
+wing power law $\mathrm{value}\propto S^{-g_{\mathrm{loc}}}$. Each column below is
+evaluated at \emph{its own} boundary:
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
 spot $S$ & mark, $m=1$ ($g_{\mathrm{loc}}=2$) & mark, $m=3$ ($g_{\mathrm{loc}}=6$) \\
 \midrule
-$\$66.67=S^{\ast}$ & $0.333$ & $0.143$ \\
-$\$80$  & $0.231$ & $0.048$ \\
-$\$90$  & $0.183$ & $0.024$ \\
-$\$100=K$ & $0.148$ & $0.013$ \\
-$\$120$ & $0.103$ & $0.004$ \\
+at $S^{\ast}$ & $0.333$ (at $\$66.67$) & $0.143$ (at $\$85.71$) \\
+$\$80$  & $0.231$ & $0.200$ \\
+$\$90$  & $0.183$ & $0.107$ \\
+$\$100=K$ & $0.148$ & $0.057$ \\
+$\$120$ & $0.103$ & $0.019$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The table simply traces~\eqref{eq:boundary} and the wing power law; it makes no
+Each column shows its own boundary $S^{\ast}$ ($\$66.67$ at $m=1$, $\$85.71$ at
+$m=3$) with boundary fraction $1/(g_{\mathrm{loc}}+1)$. Below $S^{\ast}$ the mark is
+intrinsic ($1-S/K$): at $m=3$, $\$80<\$85.71$, so its mark is $1-80/100=0.200$. The
+table simply traces~\eqref{eq:boundary} and the wing power law; it makes no
 empirical or market-calibration claim.
 
 \subsection{Why this is the American boundary, and the Merton tie}
 The smooth-paste solution is not an arbitrary $C^{1}$ join. It is the \emph{unique}
-solution of the value-and-slope system (machine-checked: \texttt{Sstar\_A\_forced},
-\texttt{coeffA\_forced}; \tfp{}), and it \emph{maximises} the holder's value over
+solution of the value-and-slope system at any steepness $g$---hence at the lensed
+$g_{\mathrm{loc}}=m\gamma$---(machine-checked for generic $g$:
+\texttt{Sstar\_A\_forced}, \texttt{coeffA\_forced}; \tfp{}), and it \emph{maximises}
+the holder's value over
 \emph{deterministic} exercise boundaries (\texttt{opt\_boundary\_is\_max\_A}, a
 genuine variational result; \tfp{}). The identification with the \emph{stochastic}
 optimal-stopping (Snell) boundary is \emph{named but not formalised}---a placeholder
@@ -523,6 +544,9 @@ not use that slice here.) On the symmetric pairing $S^{\ast}$ is the Merton
 boundary (\texttt{Sstar\_is\_merton\_boundary}, \texttt{gaussian\_limit\_quadratic};
 \tfp{}), with the generalized-hyperbolic / Bessel-K distributional layer carried as
 named hypotheses---exact on the log-normal (Gaussian) slice, conditional beyond it.
+This distributional tie is stated at the base characteristic root $\gamma$ (the
+unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
+$g_{\mathrm{loc}}=m\gamma$ by the same generic-$g$ uniqueness above.
 
 \subsection{The seam, checked two ways}
 At the boundary the value-match and slope-match hold for every steepness $g>0$,
@@ -696,7 +720,8 @@ A single Balancer pool with one dynamic weight---run as a state-transition syste
 whose conservation law is applied at each trade's own point, and whose trades
 \emph{bend} the curve---prices the entire out-of-the-money perpetual-option
 continuum in closed form. We lift the prior barrier into an American-style
-perpetual option: a closed-form smooth-pasting boundary $S^{\ast}=K\gamma/(\gamma+1)$
+perpetual option: a closed-form smooth-pasting boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$
+(the base form $K\gamma/(\gamma+1)$ at $m=1$)
 with a smooth seam and no new parameters, machine-checked (\tfp{}) and tied to the
 Merton problem, plus a constant slope-multiplier lens $m$ that acts as a
 vol-calibrated knob while leaving the pool flow unchanged. On internal arbitrage we

@@ -198,6 +198,37 @@ moving on-request material OUT of the submission per operator entry 277 (Lean/fo
   worked-example table kept, worked-example numbers byte-intact, abstract/Merton/B1B3B4/tfp/|Γ| all
   untouched. No pdflatex in env. Handed to manager for skeptic gate. NOT git'd.
 
+## Lensed smooth-paste boundary CORRECTNESS FIX (entries 277/278/279, 2026-06-26) — text-only, 3 files
+Verified correctness fix (research-lead-adjudicated, manager re-derived): the smooth-paste boundary
+MOVES WITH THE LENS. Correct form `S* = K·g_loc/(g_loc+1) = K·mγ/(mγ+1)`, fraction `1/(g_loc+1)`,
+`g_loc=mγ`. Base-γ `S*=Kγ/(γ+1)` is correct ONLY as the m=1 special case (the prior draft text was
+written pre-lens and wrongly said "boundary depends on γ not m / leaves S* unchanged" — DELETED).
+C¹ smooth-pasting forces boundary + continuation arm to share the SAME exponent g_loc (else seam kinks
+for m≠1). Engine/Lean/gates were ALREADY correct — NOT touched.
+- **`paper/wine2026/temporal_wine2026_v2.tex`:** eq:boundary → g_loc form + reduces-at-m=1 note;
+  worked-example prose rewritten (m=3 MOVES boundary to S*=85.71, fraction 1/7); table regenerated
+  (m=3 column at its OWN boundary: S* 0.143@$85.71; $80=0.200 INTRINSIC since 80<85.71; $90=0.107;
+  $100=0.057; $120=0.019; m=1 col unchanged); Merton subsection: generic-g uniqueness now says
+  "at any steepness g, hence g_loc" + Merton tie tagged "base char-root γ, unlensed m=1 slice, lens
+  transports engine boundary to g_loc"; Fig 3 caption → g_loc form, labelled drawn-at-m=1.
+- **`paper/temporal_paper_american_2026.tex`:** eq:boundary/eq:coeff (L571-583) → g_loc; worked
+  example + table (same regen as wine, table spec lccc→lcc fixed); intro L120 boundary → mγ form +
+  m=1 reduction; contributions L198 → mγ form; machine-checked list L850 → g_loc (lensed, m=1 base);
+  conclusion L1103 → mγ form; notation table L1146 → g_loc form. Sstar_A_forced/coeffA_forced KEPT as
+  generic-g uniqueness (item 4). Merton intro tie L131 (γ = char root, Gaussian slice) left correct —
+  it IS a base-γ distributional statement, not the lensed engine boundary.
+- **`specs/SPEC_itm_exercise_smoothpaste_NEXT.md` §1:** base-γ→g_loc, moves-with-lens note, m=1
+  special-case clause (flagged "written pre-lens").
+- **Entry 279 (NOT forced exercise):** added to BOTH papers — S* is the OPTIMAL-exercise/pricing
+  boundary, holder may exercise any time (American), S* is where a rational holder would and what the
+  valuation assumes; engine settlement = trader-invoked close, no auto-exercise.
+- **Re-derived arithmetic CONFIRMED** (python): m=3 g_loc=6 S*=85.71 frac=0.143; $80→0.200 (intrinsic),
+  $90→0.107, $100→0.057, $120→0.019. m=1 unchanged (0.333/0.231/0.183/0.148/0.103).
+- Checks: braces 540/540 (wine), 911/911 (amer); 22/22 envs each; $-delta even (wine +62, amer +84 —
+  parity preserved vs baseline); both worked tables now col-matched. No pdflatex in env. Merton
+  convention / |Γ|≤1 / conditional-solvency / tfp labels UNTOUCHED. NOT git'd — handed to manager for
+  skeptic gate.
+
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't
 go in. New claims/positioning are strategic → flag to the **manager** (who escalates to the operator).

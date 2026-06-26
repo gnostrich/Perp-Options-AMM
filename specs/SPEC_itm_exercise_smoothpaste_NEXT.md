@@ -6,11 +6,12 @@
 
 ## 1. The boundary (closed form — no new parameters)
 
-The continuation value is already `c · sNorm` (the GH curve gives value ∝ sNorm ∝ S^(−γ)). It pastes onto the strike-intrinsic at a free boundary fixed by smooth-pasting (value match + slope match — two conditions, two unknowns):
+The continuation value is already `c · sNorm` (the curve gives value ∝ sNorm ∝ S^(−g_loc), where `g_loc = m·γ` is the lensed steepness; pre-lens this reads S^(−γ)). It pastes onto the strike-intrinsic at a free boundary fixed by smooth-pasting (value match + slope match — two conditions, two unknowns). Because C¹ smooth-pasting forces the boundary and the continuation arm to share the **same** exponent `g_loc`, the boundary **moves with the lens**:
 
-- **Boundary:** `sNorm* = θ · ((γ+1)/γ)^γ`  (equivalently price `S* = K · γ/(γ+1)`).
-- **Coefficient:** `c = 1 / ((γ+1) · sNorm*)`  (from value-match at the boundary).
-- **Fraction at the boundary:** `1/(γ+1)`. The mark reaches its cap of 1 only at full exercise, not at the boundary.
+- **Boundary:** `sNorm* = θ · ((g_loc+1)/g_loc)^g_loc`  (equivalently price `S* = K · g_loc/(g_loc+1) = K · mγ/(mγ+1)`).
+- **Coefficient:** `c = 1 / ((g_loc+1) · sNorm*)`  (from value-match at the boundary).
+- **Fraction at the boundary:** `1/(g_loc+1)`. The mark reaches its cap of 1 only at full exercise, not at the boundary.
+- **m=1 special case:** with the plain Balancer curve (`m=1 ⇒ g_loc=γ`) these reduce to the base-γ forms `S* = K·γ/(γ+1)`, fraction `1/(γ+1)` — the original pre-lens statement. (This §1 was written pre-lens; the base-γ form is correct ONLY at m=1.)
 
 θ is the strike registered in the curve's carry coordinate (`θ = sNorm(K)`, the SHIPPED v26c registration via `sNormStrike = getSNorm∘arbitrageToOracle`); since θ→θ/r on rebase, `sNorm*` tracks it automatically — read the registered θ, no special rebase code. (NOTATION RE-PIN 2026-06-08: was written `θ = K/oracle`; HEAD v26c registers the smooth-pasting/value strike at `θ = sNorm(K)` so the OTM→ITM crossover lands at the dollar strike K for all γ. Same closed form, corrected registration coordinate — NOT a settlement-rule or boundary-value change. The separate chart strike-RAY and the funding/oracle layer-1 reference stay price-measure `K/oracle`; see §5.)
 
