@@ -2203,3 +2203,18 @@ _Context: operator asks why the strike-premium curve is "zigzag" (interrupted). 
 _Context: operator reconciles paper prose vs engine ITM value: architecture A (paste one continuous intrinsic value, no clamp+add) vs B (bounded mark ≤1 + separate intrinsic addend). Wants A/B from the code, whether a clamp-to-1-then-add exists, and the seam C¹ level/slope at S* (put K=100, m=1, S*≈66.67). Manager read the actual code (mark L1608, markLensed L1665, markEff L1978, payoff legFraction L4074) + ran markLensed numerically. (Message sent twice, identical.)_
 
 > Context for you (the engine/artifact chat): I'm reconciling the paper's prose against what the engine actually computes for option value, specifically in-the-money (ITM). [...] Two possible architectures: A — paste intrinsic, one continuous value [...] B — cap the mark at 1, add intrinsic separately [...] Please answer: (1) A or B with the code reference, (2) whether a clamp-to-1-then-add exists, (3) the seam level/slope match at S* with a numeric example.
+
+
+---
+
+## Entry 284 — 2026-06-26 UTC
+_Context: operator says entry 282 (the "zigzag" question) was a wrong-chat message; ignore it. Manager retracts the zigzag thread (corrigendum on 282); the entry-283 ITM architecture answer stands._
+
+> ignore zigzag it was wrong chat message
+
+### CORRIGENDUM to Entry 282 (per §2.2, appended not edited)
+Entry 282 ("why is strike premiu thinfg zigzag") was, per the operator in entry 284,
+**misdirected — meant for a different chat, not this project.** The manager's zigzag remark in
+reply (the v24 mark flat-ITM=1 kink) is DEAD/retracted — not a finding for this project. Entry 282
+is retained verbatim above as the honest record. The entry-283 ITM architecture answer (A; no
+clamp+add; C¹ seam) STANDS — it was the real question.
