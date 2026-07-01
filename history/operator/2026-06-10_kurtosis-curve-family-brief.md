@@ -2190,3 +2190,16 @@ _Context: operator approves the FLOW/structure (don't change it) but wants the L
 _Context: QC-ONLY / brainstorm mode, NO EDITS. Operator asks to have Dexter's Lab review the current WINE v2 draft using Claude (no OpenRouter panel) and surface QC pointers. Manager runs lab_review on temporal_wine2026_v2.tex via the locked room, will cross-check and relay pointers only — no paper edits._
 
 > ok brainstorm / qc only mode no edits: can you have dexters lab agents review using claude (no openrouter) and give us the needful QC pointers
+
+
+---
+
+## Entry 282 — 2026-06-26 UTC
+_Context: operator asks why the strike-premium curve is "zigzag" (interrupted). Manager: the v24 mark's flat ITM=1 cap creates a kink at the strike; markLensed smooths it (C¹)._
+
+> why is strike premiu thinfg zigzag
+
+## Entry 283 — 2026-06-26 UTC
+_Context: operator reconciles paper prose vs engine ITM value: architecture A (paste one continuous intrinsic value, no clamp+add) vs B (bounded mark ≤1 + separate intrinsic addend). Wants A/B from the code, whether a clamp-to-1-then-add exists, and the seam C¹ level/slope at S* (put K=100, m=1, S*≈66.67). Manager read the actual code (mark L1608, markLensed L1665, markEff L1978, payoff legFraction L4074) + ran markLensed numerically. (Message sent twice, identical.)_
+
+> Context for you (the engine/artifact chat): I'm reconciling the paper's prose against what the engine actually computes for option value, specifically in-the-money (ITM). [...] Two possible architectures: A — paste intrinsic, one continuous value [...] B — cap the mark at 1, add intrinsic separately [...] Please answer: (1) A or B with the code reference, (2) whether a clamp-to-1-then-add exists, (3) the seam level/slope match at S* with a numeric example.
