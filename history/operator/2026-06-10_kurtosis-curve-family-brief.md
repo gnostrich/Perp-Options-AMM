@@ -2921,3 +2921,9 @@ _Context: operator: quick would be good._
 _Context: operator asks for the latest file._
 
 > ok give latest file n
+
+
+## Entry 376 — 2026-07-02 UTC
+_Context: WINE 2026 submission completed by the operator (final tex md5 596e1d8c, remote-confirmed on main at 004a27a)._
+
+> sent it in

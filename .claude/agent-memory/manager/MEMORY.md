@@ -3,7 +3,7 @@
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
 🧭 **SUBMISSION FINAL 2026-07-02 ~18:30 (entries 340–372) — CURRENT STATE:**
-**Paper SHIPPED-TO-OPERATOR for blind submission: md5 `7343a880` on main (commit c62e91b).** Chain:
+**WINE 2026 SUBMITTED (operator confirmed, entry 376): final tex md5 `596e1d8c` on main (`004a27a`; operator's abstract opening + de-gas landed post-CLEAR as entries 373/374 no-review edits; NOTE commit-message mishap: one commit described paper edits that had aborted — corrected in the successor commit, honestly labelled).** Chain:
 airtight §6 exec laws (gated, 2 skeptic FLAG rounds fixed) → lab review (weak-reject; anonymity strip
 + 5 go-all fixes, 2 more skeptic FLAGs fixed incl. the settlement-continuity oversell) → dictionary
 sweep (Fig-2 "mark" axis label = retired tent, fixed) → units→cash §6.2 + STORY_TABLE ed.14 station 17
