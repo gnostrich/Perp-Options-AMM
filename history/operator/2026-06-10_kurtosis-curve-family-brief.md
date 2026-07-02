@@ -2423,3 +2423,11 @@ _Context: operator asks the manager to be mindful of their GEOMETRIC mental mode
 _Context: operator asks for a note of open questions / where we are, and a simple-English summary of today's work. Manager wraps: WINE package shipped; unification idea proven + built (PKG-ITM v2 engine fix, tester-verified, on main); main current + git self-serve; display slice mid-build; funding go + WINE-compile confirmation the two open items._
 
 > ok so just note whatever you bave to ask / where we are etc. and give me simple englihs on what we did. /chnaged today
+
+
+---
+
+## Entry 306 — 2026-07-02 UTC
+_Context: operator asks (1) for the HTML to play with; (2) flags a persisting dictionary/vocabulary/communication mental-model dissonance despite the right direction. Manager: hands the main link (ITM-fixed engine; new chart lands after the in-flight live test per the skeptic-ruled hand-back gate), and proposes building the dictionary in REVERSE — the operator names the objects in their own words while playing, we adopt their names everywhere._
+
+> ok 1. give me the html to play with; 2. i'm still not very clear because while i sense we're going in the correct direction, i feel we have a dictoonary / vocabulary / commuication mental model dissonancee
