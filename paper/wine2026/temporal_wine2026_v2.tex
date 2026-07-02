@@ -1,61 +1,9 @@
 % !TEX program = pdflatex
 % ============================================================================
-% Temporal Exchange -- WINE 2026 submission, STORYTELLING-FIRST rewrite (v2).
-% Operator entry 277: a fresh, idea-flow-first take, NOT an incremental trim of
-% temporal_wine2026_lncs.tex. Self-contained single file; all figures TikZ/
-% pgfplots (no external images) so it compiles standalone.
-%
-% This file REUSES the verified claims, contributions, provenance labels, and
-% bibliography of paper/wine2026/temporal_wine2026_lncs.tex and the worked
-% example / corrected Merton wording of paper/temporal_paper_american_2026.tex.
-% NO new claim is introduced beyond those sources. Engine/Lean untouched.
-%
-% HONEST-CLAIMS POSTURE (HARD, carried verbatim in spirit):
-%  - Curve is BALANCER x^w y^(1-w)=k + a constant slope-multiplier lens m;
-%    NOT the generalized-hyperbolic (GH) curve (GH demoted).
-%  - The curve FAMILY is not the contribution (each trade's arc is a translated
-%    constant product, Evans 2020 / Angeris-Evans-Chitra); novelty = the
-%    per-trade endogenous weight update + the semantic layer + the American
-%    generalisation + the constant-m lens. QuantAMM = PRIOR; no "TFMM" coinage.
-%  - Solvency is CONDITIONAL on B1/B3/B4 (carried, never discharged); geometry
-%    necessary (reserves_have_no_floor) never sufficient.
-%  - "American" = optimal over DETERMINISTIC exercise boundaries; the stochastic
-%    optimal-stopping (Snell) identification is named but NOT formalised.
-%  - |Gamma|<=1 exact replication; |Gamma|>1 a labelled approximation.
-%  - All Lean = trusted-from-prover (Aristotle-compiled, NOT locally re-run).
-%    NEVER "verified."
-%  - Merton tie: gamma(gamma+1)=2r/sigma^2 under the symmetric put/call-root
-%    pairing (root-sum 1, regime r>sigma^2); the no-dividend slice gives the
-%    LINEAR gamma=2r/sigma^2. Cite the FAITH-4 faith_merton gate.
-%  - The "single object" is a research direction.
-%
-% PASS 2026-07-02 (operator entries 319 "go paper" + 321 + 318/322; skeptic gate
-% to follow): (J1) stale 0.04%/0.1% old-seam engine stat replaced by the current
-% tester-measured statement (worked table reproduced to 4dp on the rendered UI,
-% both m=1/m=3 columns, both arms + seam points; value>=intrinsic a hard engine
-% gate) -- still engine measurement, not Lean. (J2) NEW O1/O2 linear-seam results
-% folded into Sec. American: paste_value_lin/paste_slope_lin, Vp_hasDerivAt_seam
-% (welded C^1 AT the seam), paste_unique (S* and coefficient forced),
-% value_ge_intrinsic + strictness beyond seam (put-wing model object;
-% call-wing value/slope match also checked). (J3) entry-321 referencing
-% restructure: inline Lean codenames removed from the RENDERED body, replaced by
-% superscripts L1..L13 keyed to ONE annex table (Appendix, plain-English rows,
-% all trusted-from-prover); exception: reserves_have_no_floor stays named ONCE
-% (load-bearing) and appears in the table. Codenames survive only in comments.
-% (J4) one American-consistency framing sentence in the intro (entries 318/322:
-% consistency guaranteed, optimality = the trader's own choice); the
-% deterministic-vs-Snell hedge itself is unweakened.
-% Body-site -> annex-row map (codenames, comment-only):
-%  L1 invariant, trade_dx . L2 trade_rebase_commute . L3 lens g_loc=m*gamma +
-%  pool-unchanged facts . L4 valueMatch_g, slopeMatch_g, Sstar_A_forced,
-%  coeffA_forced, crossover_sNorm_at_K . L5 paste_value_lin, paste_slope_lin,
-%  Vp_hasDerivAt_seam, paste_unique (+ paste_value_lin_call/paste_slope_lin_call)
-%  . L6 value_ge_intrinsic, value_gt_intrinsic_beyond_seam . L7
-%  opt_boundary_is_max_A . L8 merton_vieta_sum/prod (Lean; faith_merton = ENGINE gate, NOT in table),
-%  Sstar_is_merton_boundary, gaussian_limit_quadratic . L9
-%  collarSurplus_zero_iff_half, reflection_arrow . L10
-%  compositeRay_ITM_substitution . L11 solvency stack + cpmm/expPool instances .
-%  L12 reserves_have_no_floor . L13 passivity (internal half, PSD geometry).
+% WINE 2026 submission (double-blind, anonymized). Self-contained single file;
+% all figures TikZ/pgfplots (no external images), compiles standalone.
+% Formal results are keyed by superscripts L1..L13 to the appendix table;
+% full statements and proof artifacts available from the authors on request.
 % ============================================================================
 
 \documentclass[runningheads]{llncs}
@@ -958,20 +906,14 @@ Full formal statements and proof artifacts are available from the authors on
 request.
 
 % ===========================================================================
-% NOTE: The notation table and the formal-artifact map have been moved OUT of
-% the submitted draft into the on-request supplement
-% paper/wine2026/temporal_wine2026_v2_supplement.tex (operator entry 277: the
-% Lean/formal annexures are on request only, not attached). Every symbol is
-% glossed in-body at first use; the in-body pointer in Section~\ref{sec:frontier}
-% directs readers to formal/INDEX.md for the full artifact map and Lean
-% statements. The body above is self-contained without either table.
+% NOTE: The notation table and the formal-artifact map live in the on-request
+% supplement (not attached). Every symbol is glossed in-body at first use.
 % ===========================================================================
 
 % ===========================================================================
 \begin{thebibliography}{99}
 
-% [temporal-barrier bibitem REMOVED for double-blind: never \cite'd; near-identical
-% title is a search vector to the working draft (skeptic gate 2026-07-02).]
+% [one never-cited bibitem removed for double-blind.]
 
 \bibitem{uniswapv2}
 H.~Adams, N.~Zinsmeister, and D.~Robinson. \emph{Uniswap v2 Core.} 2020.
