@@ -2855,3 +2855,9 @@ _Context: operator's Overleaf compile of 86eddeeb: ~2 pages over the 12-page bod
 _Context: during the −2pp compression run, operator adds: (1) check for a disclaimer that the paper was drafted with LLM help; (2) check the Lean formal verification is stated as available on demand; (3) authorizes aggressive annex strategy — scan the body for material to move to annexures and put any Lean material there; annexures unlimited, body must be clearly within 12 pages._
 
 > also check we have a discaleimer that its drafted with help fto LLM and also that lean formal verifivation etc available on demand -- alternatively you can also scan the body for stuff to be throwin into annexures, and youb can also put whatevr lean stuff you want into anexures as long as the body is clearly within 12 pages no limit on annexures
+
+
+## Entry 365 — 2026-07-02 UTC
+_Context: operator asks to be told when the compression + disclaimer + annex close-out is done._
+
+> ok lmk when done
