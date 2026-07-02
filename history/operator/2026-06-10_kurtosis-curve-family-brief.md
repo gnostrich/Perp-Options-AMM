@@ -2695,3 +2695,11 @@ _Context: operator directs: the story table must hold ALL items in a FLOW-RESPEC
 _Context: operator RULES on FLAG-A: the anchoring item is "a flatout regression repeated multiple times (should be trade point....) to be fixed in html and in paper if thats in paper." I.e., trade-point conservation is the ruled truth (standing since the 06-10 entries 14/16 rulings, inventory #16); the ENGINE (reserve-point anchoring) must be FIXED; the paper needs fixing only if it carries the wrong story — audit + skeptic confirm the paper already tells the trade-point story (the displayed w′ formula conserves the local pair α_T/β_T; exhibit w′=11/21), so the fix is HTML-side. Manager: promotes the ruling to the register (C2 → ORDERED-BUILD), dispatches the research-lead engine-coordinate spec (trade-point conservation), R6 skeptic scope-gate + itemized go to follow before any splice. NOTE blast radius: gate CM8 ("pool fns byte-identical to v24") encodes the OLD design and will need retirement/rewrite in the same campaign._
 
 > and 2 is a flatout regression repeated muktiple times (should be trade point....) to be fixed in html and in paper if thats in paper
+
+
+---
+
+## Entry 340 — 2026-07-02 UTC
+_Context: operator: once the queue completes, take stock and get the paper submission-ready — 1 HOUR countdown. Manager: the paper is ALREADY submission-ready on main (all gates passed); the only unverified item is the PAGE COUNT (no TeX in env) — operator must compile on Overleaf NOW; lab review returns within the window (stop-press findings only); everything else queued is engine-side and does not touch the paper._
+
+> and now finally once queue is completed, lets take stock and get the paper in form to submit, countdown 1 hr left
