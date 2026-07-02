@@ -2631,3 +2631,11 @@ _Context: operator (1) notes the min-ratio→smooth-pasted-value replacement sho
 _Context: operator clarifies entry 330: the transparency/disclosure grievance is about OUR CHATS (the team should have plainly disclosed the mark-formula semantic change when it happened), NOT a directive to add disclosure prose to the paper. Manager: owns the June-era under-disclosure; adds the chat-disclosure duty to the communication policy; the §3.2 fix proceeds as the definitional correction ONLY (stop teaching the retired formula) — any added disclosure sentence will be trimmed at the gate; the paper keeps just its pre-existing §5.1 lift language._
 
 > tjis diosclsorue thing is for our vchats not for the paper
+
+
+---
+
+## Entry 332 — 2026-07-02 UTC
+_Context: operator closes the disclosure grievance ("not an issue now") conditional on verified American-faithfulness. Manager confirms with receipts: under the operator's own standard (entries 318/322 — consistency, not optimality) all four holder-facing properties are theorem+gate+measured; the June change should have been flagged in chat at the time (owned; policy now in place)._
+
+> like just you got to hav told me when we changed, anyway not an issue now as long as youve verified ita ameroican faithufl
