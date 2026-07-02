@@ -2599,3 +2599,11 @@ _Context: operator suspects an app mistake: they'd expect ITMs to EXCEED one and
 _Context: operator asks whether the suspected chart "mistake" (entry 326) crosses over into the paper/logic anywhere. Manager crossover sweep: the chart is CORRECT, but the operator's instinct exposes a real leftover — the barrier-era schematic mark (min(slope,1/slope), "climbs toward 1 near the money", ATM=1) survives in: (E) paper §3.2 eq+prose [NEW — inconsistent with the paper's own §5 worked ATM value 0.148]; (B) the app payoff overlay [already queued 325-B]; (D) the American draft [folds into 325-D]; and Story-Table row-4 wording [manager's to fix]. All live pricing/settlement paths use the American mark (verified). Ask: fix §3.2 in the current paper train?_
 
 > also check if that mistake crosses over to anything else paper logic whatever
+
+
+---
+
+## Entry 328 — 2026-07-02 UTC
+_Context: operator (not yet ruling §3.2 wrong) asks how the option price is calculated NOW, since the formula "we used to use gave us 1 atm" and they don't know what's there currently. Manager explains the live calculation (moneyness ray-ratio → seam test → continuation power arm (1/(g+1))·(S*/S)^g or linear intrinsic; ATM = (1/(g+1))·(g/(g+1))^g e.g. 0.148@g=2, 0.25@g=1), and clarifies WHEN 1-at-ATM died: with the barrier→American lift (June), not the recent fix (which left ATM untouched — the sweep's unique unchanged point); the old min-ratio survives only as the moneyness skeleton + the legacy payoff overlay (queued)._
+
+> ok wait so i'm yet not saying this is wrong, but if thats the case can you tell me how we calculate the optipn price thing because the formula we sued to use gave us 1 atm and idj whats there now
