@@ -2623,3 +2623,11 @@ _Context: operator confirms understanding: did we replace the min(slope,1/slope)
 _Context: operator (1) notes the min-ratio→smooth-pasted-value replacement should have been disclosed transparently, directs checking the paper to confirm it now discloses it (= the "fix 3.2" word); (2) asks to confirm in the HTML that the buy QUANTITY is calculated from this formula and the AMM tx is only an ACCOUNTING layer — i.e., NOT deriving buy quantity by routing sell proceeds through the AMM curve directly._
 
 > ok so that clairifes one change, this should have been disclosed transparently though, check paper to confirm now; deocndly, jusrt confirm in the html that we're using this formula to calculate the buy quantiy and the AMM tx is only accunting layer and not using proceeds from sell thig as per AMM directly into get buy q  ...
+
+
+---
+
+## Entry 331 — 2026-07-02 UTC
+_Context: operator clarifies entry 330: the transparency/disclosure grievance is about OUR CHATS (the team should have plainly disclosed the mark-formula semantic change when it happened), NOT a directive to add disclosure prose to the paper. Manager: owns the June-era under-disclosure; adds the chat-disclosure duty to the communication policy; the §3.2 fix proceeds as the definitional correction ONLY (stop teaching the retired formula) — any added disclosure sentence will be trimmed at the gate; the paper keeps just its pre-existing §5.1 lift language._
+
+> tjis diosclsorue thing is for our vchats not for the paper

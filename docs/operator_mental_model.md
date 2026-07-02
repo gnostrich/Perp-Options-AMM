@@ -76,3 +76,12 @@ Whenever the operator and the team need to sync:
    corrections land as dated addenda (entries 304/306).
 4. **Every explanation:** picture → formula → one worked number; name the ruler on any unit change; check
    a "wrong" hunch in another coordinate before contradicting it.
+
+## ADDENDUM 2026-07-02 (entry 331 — the chat-disclosure duty)
+When a formula's MEANING changes (not just its wording — e.g. the mark going from "capped ray ratio,
+1 at the money" to "smooth-pasted value, small at the money"), the operator must be told PLAINLY, IN
+CHAT, AT THE TIME — a one-liner in their geometry ("the price at the money used to read 1; under the
+American lift it reads the waiting value, ~0.15"). Discovering a semantic change months later from a
+chart is a process failure (the June barrier→American mark semantics were under-disclosed; operator
+grievance entry 330/331). This duty is conversational — it does NOT mean adding disclosure prose to
+papers.
