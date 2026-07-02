@@ -2639,3 +2639,11 @@ _Context: operator clarifies entry 330: the transparency/disclosure grievance is
 _Context: operator closes the disclosure grievance ("not an issue now") conditional on verified American-faithfulness. Manager confirms with receipts: under the operator's own standard (entries 318/322 — consistency, not optimality) all four holder-facing properties are theorem+gate+measured; the June change should have been flagged in chat at the time (owned; policy now in place)._
 
 > like just you got to hav told me when we changed, anyway not an issue now as long as youve verified ita ameroican faithufl
+
+
+---
+
+## Entry 333 — 2026-07-02 UTC
+_Context: operator restates the buy-quantity question with the precise frame: buy q derived from sell q via the OPTION-PRICE ratio; AMM = accounting layer + slippage calculator, never the quantity source. Manager confirms from the code (executeBand L1882–1928): V_sell = N_sell·mark_sold (formula); N_buy = V_sell / per-unit mark_bought (formula, evaluated on the POST-SOLD pool state — that sequencing IS where slippage enters the ratio); AMM swaps dy=±N·K_tx are premium-free notional×strike financing/accounting movements that never feed N_buy._
+
+> and on my second question " confirm in the html that we're using this formula to calculate the buy quantiy and the AMM tx is only accunting layer and not using proceeds from sell thig as per AMM directly into get buy q  ..." basically about how buy q derived from sell q... AMM as accounting layer and to calcualrte slippate but option price as axtual thing ratio detemrining
