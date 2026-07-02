@@ -2275,3 +2275,11 @@ _Context: operator hands back an edited paper (uploaded temporal_wine2026_v2_sub
 _Context: operator asks to keep note of the state of things and BRAINSTORM: is it more elegant/possible to make everything naturally "curve-native" instead of housing it in the valuation layer — the curve literally spelling out the entire payoff itself, open/close slippage etc.? Manager brainstorms (no changes): tangent-line reframe (smooth-paste = intrinsic line tangent to continuation curve; V=max = upper envelope; settled-to-cash = trading at the curve's exhausted endpoint), and the two obstructions (communal curve vs per-claim ITM; funded-convexity theorem reserves_have_no_floor). Tonight-package (A1+B1-B4+C1) in flight concurrently._
 
 > ok so keep note of the state of things and brainstorm with me: so is it more elegant / possible to make everything naturally 'curve native' instead of housing it in the valuation layer? so the curve literally spells out the entire payoff itself, open / close slippage etc.
+
+
+---
+
+## Entry 291 — 2026-06-26 UTC
+_Context: operator pushes back gently on the entry-290 brainstorm: they visualize any perp option riding along the SINGLE same curve from OTM to ITM, American-value-faithful, and can't see why each position needs a different payoff curve. Asks for help getting their head around it. Manager clarifies: the intuition is correct in the moneyness coordinate (ONE universal value curve, one seam at S*/K=g/(g+1), every option rides it); the per-claim part is not the value curve but the funding/warehouse (carve), per reserves_have_no_floor + simultaneous-regimes on the shared reserve curve._
+
+> so i sort of get where you're coming from, its just that my visibility feels sort of limited, in the sense that I can sort of see any perp option riding along the single same curve from OTM to ITM regime and being american-style-value-faithful, like i'm not able to see why each has a different payoff curve ... but i'm not saying you're wrong. just help me get my head around this
