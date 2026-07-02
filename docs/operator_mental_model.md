@@ -66,3 +66,13 @@ The mark is NOT presented as a two-ray comparison. The canonical trichotomy:
 ## PROTOCOL (entry 312): THE STORY TABLE
 `docs/STORY_TABLE.md` is the standing one-table story of the whole system. On ANY change or insertion,
 REPRINT THE WHOLE UPDATED TABLE in the operator-facing reply — never just the diff. Bump the edition.
+
+## COMMUNICATION POLICY (entry 313 — the sync-up method, standing)
+Whenever the operator and the team need to sync:
+1. **The Story Table** (`docs/STORY_TABLE.md`) is the shared map — reprint IN FULL on any change (entry 312).
+2. **Geometry first** — curve + rays primary, shadows derived (entry 307); the three reads kept apart:
+   mark = one ray/one curve; funding = same ray/two curves; rebase = re-zoom the frame (entry 311).
+3. **Reverse dictionary** — the operator names the objects; their words become the official vocabulary;
+   corrections land as dated addenda (entries 304/306).
+4. **Every explanation:** picture → formula → one worked number; name the ruler on any unit change; check
+   a "wrong" hunch in another coordinate before contradicting it.

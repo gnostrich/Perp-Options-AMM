@@ -2479,3 +2479,11 @@ _Context: operator corrects walkthrough point 4 (the mark description "your ray 
 _Context: operator directs maintaining the system story as a TABLE during brainstorms, reprinting the WHOLE updated table (not diffs) whenever anything changes. Manager creates the canonical artifact `docs/STORY_TABLE.md` (edition 1, carrying the entry-310/311 corrections) and adds the reprint-in-full rule to the mental-model guide._
 
 > ok as we brainstorm i’d like you to maintain this story in a table form and whenever something adds in between changes reprint the whole updated table not just the diff
+
+
+---
+
+## Entry 313 — 2026-07-02 UTC
+_Context: operator (1) directs recording the sync-up method as a standing communication policy; (2) asks for the ITM funding intuition — challenging whether it should exist at all: "ultimately there'd have to be a certain mark warp effect of pool curve against anchor curve similarly extended, and if we dont have that then maybe there's nothing natural here?" Manager: records the policy; VALIDATES the instinct — parity (K−S) has ZERO sensitivity to the pool's lean, so the natural like-ray deviation funding ITM is exactly zero (the study's "rejected variant reads zero" is the operator's "nothing natural here", seen from the other side); the F1 delta-carry is a DIFFERENT species (perp-equivalence policy, not curve geometry); open crux flagged — does the carved origin-perp slice already accrue perp funding during the band's life? (if yes, species B is already covered and zero ITM option-funding is fully natural). Story Table → Edition 2._
+
+> ok 1. firstly this is great to record as a communication policy for whenever we need to sync up; 2. now give me the intuition for the funding ITM (if that should even be a thing, like ultimately there'd have to be a certain mark warp effect of pool curve against anchor curve similarly extended, and if we dont have that then maybe there's nothing naturla here?) …
