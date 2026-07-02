@@ -2927,3 +2927,9 @@ _Context: operator asks for the latest file._
 _Context: WINE 2026 submission completed by the operator (final tex md5 596e1d8c, remote-confirmed on main at 004a27a)._
 
 > sent it in
+
+
+## Entry 377 — 2026-07-02 UTC
+_Context: post-submission. Operator authorizes overnight autonomous execution of pending HTML work, explicitly no questions. Manager reads this as the go for the ordered trade-point build (entry 339, spec returned) + the small queued HTML items, with the spec's pinned defaults adopted in lieu of the 5 operator-FLAG confirmations (documented, reversible); funding-transfer part-2 and the branch-jump semantics stay EXCLUDED (operator-gated decisions, not pending work). Full chain: R6 scope-gate → intern → gates → manager verification → tester live acceptance → push only if all green; STOP-ON-RED otherwise._
+
+> anything pending on HTML do it while i sleep no questions
