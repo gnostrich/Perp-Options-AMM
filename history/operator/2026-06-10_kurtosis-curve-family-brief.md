@@ -2861,3 +2861,15 @@ _Context: during the −2pp compression run, operator adds: (1) check for a disc
 _Context: operator asks to be told when the compression + disclaimer + annex close-out is done._
 
 > ok lmk when done
+
+
+## Entry 366 — 2026-07-02 UTC
+_Context: operator asks for a status update on the compression close-out._
+
+> stayus update
+
+
+## Entry 367 — 2026-07-02 UTC
+_Context: operator, reviewing the paper during compression, reports rebasing seems missing and orders a check of the story-table missing-things (the 📄-absent stations)._
+
+> also im seeing the paper doesnt seem to have the rebasing or whatever we did fro the story table mssing things check
