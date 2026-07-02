@@ -1,5 +1,39 @@
 # MEMORY — research-lead
 
+### PKG-ITM v2 ENGINE-COORDS SPEC delivered (operator go 298; R6 CLEAR; FLAG-2 discharged) — 2026-07-02
+Deliverable: `specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md` — splice-ready spec for the intern (build (a)
+only; NO engine edits by me, read-only on HTML; NO Aristotle this slice). Everything numerically verified in a
+Node vm sandbox against the REAL HEAD engine (21/21 PASS; harness in session scratchpad `verify_pkg_itm_v2.js`).
+- **Frame map PINNED:** `S/K ↦ ρ = sNorm/θ` (put moneyness = θ/sNorm). Grounded: run-A DOM markUI reproduced by
+  shipped `markLensed('put',θ,1,2)` at all 25 rows (4dp); new form is ray-scale invariant V(θ,sNorm)=V(ρ);
+  at anchor ρ=S/K exact. General frame put continuation = (g^g/(g+1)^(g+1))·(θ/sNorm)^g; seam RAY sNorm*=θ·g/(g+1)
+  (put) / θ·(g+1)/g (call); boundary fraction 1/(g+1). Four named wrong transports (the ~6× trap) in spec §1.4.
+- **Replacement code (spec §2.2):** put `if (sNorm < sStar) return 1 − sNorm/θ; return pow(sNorm/sStar,−g)/(g+1)`
+  with sStar=θ·g/(g+1); call mirrored. Branch order load-bearing (NaN-loud falls to pow arm); g=0 finite (=1,
+  honest delta vs old 0.7-type, unreachable via gLoc); exact seam → 1/(g+1). Old block = HEAD L1656-1676,
+  block-md5 3e4a3ab3, count==1.
+- **max() lives NOWHERE:** re-seamed markLensed IS V=max in escrow units (O2 value_ge_intrinsic; call wing
+  NUMERIC-only — open Lean obligation). NO caller change (markEff L1981 / legPrice / legValueUnified /
+  fundingPerStrike L2273 / pfComponents L4383 / psiAt L3729 all route through the one helper). Do NOT code a
+  literal Math.max of extended arms (extension lies ABOVE tangent below S* — wrong in intrinsic region).
+- **Verification table:** paper §5.2 cells ALL hit to 3dp — g=2: 0.3333/0.2315/0.1829/0.1481/0.1029;
+  g=6: 0.1429/0.2000(intr)/0.1066/0.0567/0.0190; seam C¹ slopes −1/K both sides; call slope g²/(K(g+1)²);
+  ATM invariant g^g/(g+1)^(g+1) (unique old-new agreement pt); g=1 old≡new (5.6e-17).
+- **Gates:** CM4 goes RED (hardcoded old seams) → CM4-v2 + C¹ probe + NEW CM10 sign-table + CM11 wing power-law;
+  CM1-3,5-9 survive (verified). a16_atm_gate: NO change, 5/5 expected (A16.2 closed form ≡ new ATM value,
+  identity 2.8e-17). monolith_consistency line (6) report-only red → repoint to O1 PasteLin labels.
+- **FLAG-2 discharged verbatim in spec §6:** (γ=1,m=2)→g=2 column, (γ=1,m=6)→g=6 column, fixed-g equivalence
+  ASSERTED (ray-scale invariance) not assumed; acceptance = DOM-READ (entry-286 harness, tester), never
+  formula-self-check; C¹ probe on OUTPUT at 0.667K/0.857K (quotients pinned: left −1.000; right −0.957/−0.989
+  g=2, −0.923/−0.980 g=6 at ε=0.02/0.005, tol ±0.03); sign table on OUTPUT all 25 spots, belowIntrinsic empty.
+- **Revert twin:** copy HEAD → `engine/builds/temporal_mvp_v28_lens_powerarm.html` BEFORE splice.
+- **NEW OPEN LEAN OBLIGATIONS (queue):** (i) O-bridge-v2 — EngineBridge/MonolithConstM/LENSKERNEL describe the
+  retained powerarm build post-fix; transcribe spec §2.2 + prove = O1 Vp; INDEX label updates. (ii) O2-call —
+  call-wing value≥intrinsic (mirror; carries C3 caveat if cited as symmetry). (iii) L2 A16NoJump file states
+  old arms (fact survives; label class). NOT submitted this slice (no-Aristotle order). NO git this session.
+
+---
+
 ### O-BATCH FIRED + RETURNED + AUDITED → all 3 `trusted-from-prover [pending manager audit]` (operator entry 296 "throw it to aristotle") — 2026-07-02
 Bounded extended-curve-unification batch off my study §5 (O1/O2/O5, the small high-leverage set; O3 NOT forced —
 pinning its admissible-majorant class is design work; O4/O6/O7 unsubmitted). Predicates pinned FIRST and every
