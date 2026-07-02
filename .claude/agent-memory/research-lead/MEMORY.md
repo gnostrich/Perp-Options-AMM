@@ -1,5 +1,27 @@
 # MEMORY — research-lead
 
+### CARVE-FUNDING FACT-CHECK (operator entries 313/317, Story Table row 9) — ANSWER: NO — 2026-07-02
+READ-ONLY; no edits, no Aristotle, no git. Question: does the carved origin-perp slice accrue normal PERP
+funding while a band is open? **NO — perp funding does not exist ANYWHERE in the engine, carved or free.**
+Static + behavioral (Node vm probe, scratchpad `probe_carve_funding.js`, HEAD `9fdde1de`):
+- ONLY time-advance accrual = `fundingTick(dt)` (state script, HTML L2708-2730): iterates `state.bands` only,
+  calls `Engine.fundingPerStrike` (L2281-2289) per leg-strike → `leg.funding_*` + pool_inflow. OPTION funding only.
+- Perp model: `perpPnl`/`perpEquity` (L2410-2416) = margin + notional·(mark−entry)/entry — NO funding term.
+  No perp-funding rate constant exists in the file. All club-equity mutations enumerated (L2526/2536/2599/
+  2655/2682/2697) — none time-dependent.
+- Carve frozen at open {carvedNotional, carvedEntryEquity, entryPerpMark} (L2645-2647); closeBand Job 2
+  `attributablePnL = carvedNotional·(perpMarkNow−entry)/entry` (L2233-2241) — pure price P&L, no funding.
+- Probe: 24h ticks no band + 48h with band + 48h deep-ITM (mark 80k→50k): perp/club/carve deltas ALL 0;
+  only band option-funding fields moved; close returned attributablePnL=−15000 on 40k carve (pure price).
+- CAVEATS reported: (a) today's SHIPPED fundingPerStrike still charges ITM option funding (no regime branch) —
+  zero-ITM is the PROPOSED design, not current code; (b) prod mapping (L1594-1600) maps perps→perp.PerpService
+  + the 1h funding cron→fundingPerStrike (option funding) — no perp-funding service mapped; whether CTO's Go
+  perp layer charges funding out-of-band is outside this repo → operator/CTO question. Loophole IF unplugged:
+  delta-1 exposure of carvedNotional paying zero funding ≈ perpRate×carvedNotional×T (e.g. 0.01%/8h ⇒ ~$12/day
+  per $40k carve), scalable. Verdict handed to manager.
+
+---
+
 ### PKG-ITM v2 ENGINE-COORDS SPEC delivered (operator go 298; R6 CLEAR; FLAG-2 discharged) — 2026-07-02
 Deliverable: `specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md` — splice-ready spec for the intern (build (a)
 only; NO engine edits by me, read-only on HTML; NO Aristotle this slice). Everything numerically verified in a
