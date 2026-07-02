@@ -2583,3 +2583,11 @@ _Context: operator queues a symmetry study: closure, slippage etc. weren't fully
 _Context: operator asks to flag anything else of the symmetry-study kind they may have missed. Manager sweep finds 4: (A) paper Fig-2 caption "mirrors the live engine's strike-mark chart" now FALSE post-display-slice — immediate one-clause fix after the gate; (B) payoff/liquidation overlay chart still reads the v24 saturating mark, can disagree with v2 settlement values — queued to part-2 display list; (C) on-request supplement stale (pre-fix) — refresh-or-retire queued; (D) companion American arXiv draft carries the stale 0.04% engine sentence — queued for next touch. Plus known cosmetics (engine comments L1622/L2337; Lean bridge INDEX labels). Story Table → edition 8._
 
 > also flag if i missed anything else like this to be checked etc
+
+
+---
+
+## Entry 326 — 2026-07-02 UTC (screenshot of the live % escrow-unit chart)
+_Context: operator suspects an app mistake: they'd expect ITMs to EXCEED one and ATM AT one. Manager verifies the chart against the shipped object (correct): ATM=1 is the OLD BARRIER instrument's artifact (paid a full unit at strike-touch); the ratified American option is worth its waiting value at the money (the operator's own paper table: 0.148 at S=K, g=2; screenshot's 0.25 crossing = (g/(g+1))^g/(g+1) at g=1 exact). "ITM exceeds one" is TRUE in the PERP-COUNT ruler (deep-ITM put worth (K−S)/S perps >1 when K>2S); the % view is the ESCROW ruler (1 = the slice's full payout; ≤1 is the solvency ceiling by design); the $ view shows the unbounded rising line. Offer: an optional third ruler ("in perps") to make the >1 visible._
+
+> on the app i suspect theres a mistake because i'd see the ITMs exceed one and the ATM at one ....
