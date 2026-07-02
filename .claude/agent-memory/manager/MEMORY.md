@@ -12,6 +12,18 @@ side, so deviation from literal "main wins" is intentional: main was the STALE s
 `claude/exciting-archimedes-txs2wx` RETAINED as backup (§6.2.7). Squash ⇒ main has one consolidation commit, not
 the 436 individual commits (branch = granular backup). New sessions should branch from MAIN (now current). Ongoing
 work this session still lands on the working branch; re-merge to main on request.
+✅ **PKG-ITM v2 PROMOTED 2026-07-02 (entries 286/287, go 298, trust mandate 299):** HEAD `9fdde1de` = markLensed
+LINEAR intrinsic re-seam (put seam ray θ·g/(g+1), dollar S*=K·g/(g+1)=0.667K@g=2; call θ·(g+1)/g; boundary 1/(g+1));
+replaces the power arms (measured seam 0.444K + below-intrinsic dip S/K≤0.80, entry-286). One-function splice; pool/
+tx-map/gLoc/callers byte-unchanged; V=max holds identically (O2). Chain: R6 skeptic scope-gate (3 FLAGs discharged,
+corrigendum on 287) → research-lead coord spec (21/21) + my spot-check (10/10 cells, C¹, 80-pt sign, g=1 recovery) →
+intern splice (gates 16+5, negative-controlled) → my gate re-run + live-fn check → tester acceptance PASS ×2 (every
+paper cell |Δ|=0.0 4dp DOM, belowIntrinsic EMPTY, seam 0.667/0.857 measured, 17/17 smoke). Lean: O1/O2/O5
+trusted-from-prover manager-audited. REVERT TWIN temporal_mvp_v28_lens_powerarm.html (dd6fb955). OPEN: (b) display
+slice (queued, R6 FLAG-3 dispositions ready); -B289 vol-caption UI contradiction (part-2); funding-semantics
+extension operator-gated; spec §9.1 Lean bridge-label updates queued to research-lead. PR merge blocked for this
+session type — branch pushed, PR #36 open for operator one-click; MAIN IS STALE (paper + this build live on branch).
+
 
 🧪 **DEXTER'S LAB — Option-B Hybrid ENACTED (cleared parts) 2026-06-23 (operator entries 268/269/270; record
 `docs/dexters_lab_handover_B.md`; skeptic runs acd21e9c FLAGx3 → a9ec00fe CLEAR-w/-condition).** External

@@ -196,15 +196,20 @@ const MS = [1, 1.5, 2, 3, 4];          // several m to exercise
       ok, ok ? 'monotone decay both bounded over m∈{1,1.5,2,3,4}' : worst);
 }
 
-// ── (CM4) smooth-paste C⁰ seam at machine zero with g = m·γ (BOTH wings) ──
-// markLensed continuation past the strike meets the intrinsic arm at the free
-// boundary S* with value (and boundary fraction 1/(g+1)) continuous to machine zero.
+// ── (CM4-v2) PKG-ITM v2 LINEAR re-seam: C⁰ + C¹ weld at the v2 free boundary (BOTH wings) ──
+// Operator entries 286/287, go 298; spec SPEC_pkg_itm_v2_engine_coords_2026-07-02 §7.1;
+// Lean model O1 PasteLin (paste_value_lin/paste_slope_lin/paste_unique, trusted-from-prover).
+// v2 seams: put sNorm* = θ·g/(g+1) (dollar S* = K·g/(g+1) — the 0.667K seam at g=2,
+// 0.857K at g=6), call sNorm* = θ·(g+1)/g. REPLACES the old power-form seams
+// θ·(g/(g+1))^g / θ·((g+1)/g)^g (retained build: temporal_mvp_v28_lens_powerarm.html).
+// Boundary fraction 1/(g+1) exact at the seam; C⁰ machine zero across a ±1e-10
+// relative straddle. g set = m·γ over MS plus the spec's named g∈{2,6} columns.
 {
+  const sStarCall = (theta, g) => theta * (g + 1) / g;
+  const sStarPut = (theta, g) => theta * g / (g + 1);
+  const GS = MS.map((m) => m * gamma).concat([2, 6]);
   let maxVal = 0, worst = '';
-  const sStarCall = (theta, g) => theta * Math.pow((g + 1) / g, g);
-  const sStarPut = (theta, g) => theta * Math.pow(g / (g + 1), g);
-  for (const m of MS) {
-    const g = m * gamma;
+  for (const g of GS) {
     for (const wing of ['call', 'put']) {
       const theta = 1.0;
       const sStar = wing === 'call' ? sStarCall(theta, g) : sStarPut(theta, g);
@@ -213,11 +218,29 @@ const MS = [1, 1.5, 2, 3, 4];          // several m to exercise
       const vGap = Math.abs(vL - vR);
       const fGap = Math.abs(E.markLensed(wing, theta, sStar, g) - 1 / (g + 1));
       const tot = Math.max(vGap, fGap);
-      if (tot > maxVal) { maxVal = tot; worst = wing + ' m=' + m + ' g=' + g.toFixed(2); }
+      if (tot > maxVal) { maxVal = tot; worst = wing + ' g=' + g.toFixed(2); }
     }
   }
-  chk('(CM4) smooth-paste C⁰ seam at S* machine-zero, both wings, g=m·γ', maxVal < 1e-9,
-      'maxSeamGap=' + maxVal.toExponential(2) + ' ' + worst);
+  chk('(CM4-v2) linear re-seam C⁰ at v2 seam (put θ·g/(g+1), call θ·(g+1)/g) machine-zero + boundary fraction 1/(g+1)',
+      maxVal < 1e-9, 'maxSeamGap=' + maxVal.toExponential(2) + ' ' + worst);
+  // C¹ probe: one-sided difference quotients of markLensed in sNorm at the seam
+  // (ε = 1e-6·sStar): put both sides → −1/θ ; call both sides → g²/((g+1)²·θ).
+  let maxRel = 0, worstC1 = '';
+  for (const g of GS) {
+    for (const wing of ['call', 'put']) {
+      const theta = 1.0;
+      const sStar = wing === 'call' ? sStarCall(theta, g) : sStarPut(theta, g);
+      const eps = 1e-6 * sStar;
+      const v0 = E.markLensed(wing, theta, sStar, g);
+      const qL = (v0 - E.markLensed(wing, theta, sStar - eps, g)) / eps;
+      const qR = (E.markLensed(wing, theta, sStar + eps, g) - v0) / eps;
+      const expect = wing === 'put' ? -1 / theta : g * g / ((g + 1) * (g + 1) * theta);
+      const rel = Math.max(Math.abs(qL - expect), Math.abs(qR - expect)) / Math.abs(expect);
+      if (rel > maxRel) { maxRel = rel; worstC1 = wing + ' g=' + g.toFixed(2) + ' qL=' + qL.toFixed(6) + ' qR=' + qR.toFixed(6) + ' exp=' + expect.toFixed(6); }
+    }
+  }
+  chk('(CM4-v2-C1) one-sided slope quotients at the seam: put −1/θ, call g²/((g+1)²·θ), both sides (rel ≤1e-4)',
+      maxRel < 1e-4, 'maxRelErr=' + maxRel.toExponential(2) + ' ' + worstC1);
   // NaN-freedom across both wings / all m (no degenerate pow)
   let bad = 0;
   for (const m of MS) {
@@ -336,6 +359,62 @@ if (hasTradeMap) {
   chk('(CM9) NO dead √-lens kernel: gLoc has no hpTau/√(τ²+u²)/u-factor; hTau/hpTau dropped; markEff routes through gLoc',
       !deadInGLoc && noHpExport && meUsesGLoc,
       'gLoc-clean=' + !deadInGLoc + ' hpTau/hTau-removed=' + noHpExport + ' markEff-via-gLoc=' + meUsesGLoc);
+}
+
+// ── (CM10) sign table / American faithfulness — value ≥ intrinsic (the O2 witness) ──
+// PKG-ITM v2 (spec §7.1). Intrinsic recomputed IN THE GATE from ρ (put
+// max(0, 1−sNorm/θ), call max(0, 1−θ/sNorm)) — NOT read from the engine, and
+// NON-tautological: no max() exists in markLensed (§3); the continuation side is
+// the content, the intrinsic side degenerates to arm-identity by design.
+// Grid = the 25-point entry-286 S/K grid + a wide log-spaced sweep; g ∈ {2,6} × wings.
+{
+  const grid286 = [1.5, 1.333, 1.2, 1.1, 1, 0.95, 0.9, 0.85, 0.82, 0.8, 0.78, 0.75,
+                   0.7, 0.6667, 0.6, 0.5, 0.48, 0.46, 0.45, 0.444, 0.43, 0.4, 0.35, 0.3, 0.2];
+  const sweep = []; for (let r = 0.02; r <= 50; r *= 1.35) sweep.push(r);
+  let ok = true, worst = '', minDiff = Infinity, nPts = 0;
+  for (const g of [2, 6]) {
+    for (const wing of ['call', 'put']) {
+      const theta = 1.0;
+      const seam = wing === 'put' ? g / (g + 1) : (g + 1) / g;
+      for (const rho of grid286.concat(sweep)) {
+        const sNorm = rho * theta;
+        const v = E.markLensed(wing, theta, sNorm, g);
+        const intr = wing === 'put' ? Math.max(0, 1 - sNorm / theta) : Math.max(0, 1 - theta / sNorm);
+        const diff = v - intr; nPts++;
+        if (diff < minDiff) minDiff = diff;
+        if (!(diff >= -1e-12)) { ok = false; worst = 'BELOW-INTRINSIC ' + wing + ' g=' + g + ' ρ=' + rho + ' diff=' + diff; }
+        const inIntrinsic = wing === 'put' ? (rho <= seam) : (rho >= seam);
+        if (inIntrinsic) {
+          if (!(Math.abs(diff) <= 1e-12)) { ok = false; worst = 'intrinsic-arm ' + wing + ' g=' + g + ' ρ=' + rho + ' diff=' + diff; }
+        } else if (!(diff > 0)) { ok = false; worst = 'continuation not strictly > intrinsic ' + wing + ' g=' + g + ' ρ=' + rho + ' diff=' + diff; }
+      }
+    }
+  }
+  chk('(CM10) value ≥ intrinsic on the full grid (O2 witness, intrinsic recomputed in-gate): strict >0 in continuation, ==0 (≤1e-12) at/past the seam',
+      ok, 'points=' + nPts + ' minDiff=' + minDiff.toExponential(2) + (ok ? '' : ' worst=' + worst));
+}
+
+// ── (CM11) OTM wing exact power-law of exponent g = m·γ ──
+// PKG-ITM v2 (spec §7.1): the continuation is an EXACT power law in ρ — put
+// V(2ρ)/V(ρ) == 2^(−g), call V(2ρ)/V(ρ) == 2^(+g) (both points in continuation).
+// Locks the (K/S)^g wing shape the entry-286 finding showed missing.
+{
+  let maxRel = 0, worst = '';
+  const theta = 0.8;   // non-unit ray: locks the ratio in ρ = sNorm/θ, not raw sNorm
+  for (const g of [2, 6]) {
+    for (const rho of [1.1, 3.7]) {      // put continuation: ρ > g/(g+1); 2ρ too
+      const r = E.markLensed('put', theta, 2 * rho * theta, g) / E.markLensed('put', theta, rho * theta, g);
+      const rel = Math.abs(r - Math.pow(2, -g)) / Math.pow(2, -g);
+      if (rel > maxRel) { maxRel = rel; worst = 'put g=' + g + ' ρ=' + rho; }
+    }
+    for (const rho of [0.25, 0.5]) {     // call continuation: ρ ≤ (g+1)/g; 2ρ ≤ 7/6 ok
+      const r = E.markLensed('call', theta, 2 * rho * theta, g) / E.markLensed('call', theta, rho * theta, g);
+      const rel = Math.abs(r - Math.pow(2, g)) / Math.pow(2, g);
+      if (rel > maxRel) { maxRel = rel; worst = 'call g=' + g + ' ρ=' + rho; }
+    }
+  }
+  chk('(CM11) OTM wing exact power-law: put V(2ρ)/V(ρ)=2^(−g), call =2^(+g) (g∈{2,6}, rel ≤1e-12)',
+      maxRel < 1e-12, 'maxRelErr=' + maxRel.toExponential(2) + (worst ? ' worst=' + worst : ''));
 }
 
 console.log('=== lens_selfcheck: ' + pass + ' PASS, ' + fail + ' FAIL ===');

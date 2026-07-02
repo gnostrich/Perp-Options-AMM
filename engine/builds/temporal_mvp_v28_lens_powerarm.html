@@ -1653,32 +1653,25 @@ const Engine = (function() {
     if (!(theta_K > 0)) return NaN;              // strike ray must be positive
     return m * gamma;                            // constant: m·γ at EVERY strike
   }
-  // Lensed mark — PKG-ITM v2 (operator entries 286/287, go 298): American
-  // perpetual value with the LINEAR intrinsic re-seam. Power continuation arm
-  // (exponent ∓g in the moneyness ratio ρ = sNorm/θ) welded C¹ onto the LINEAR
-  // parity line at the free boundary — put seam ρ* = g/(g+1) (dollar S* =
-  // K·g/(g+1), the 0.667K seam at g=2), call seam ρ* = (g+1)/g (S* = K·(g+1)/g);
-  // boundary fraction 1/(g+1) on both wings. Past the seam the arm IS intrinsic:
-  // put 1 − sNorm/θ (= 1 − S/K), call 1 − θ/sNorm (= 1 − K/S) — escrow-unit
-  // fractions in (0,1]. V = max(mark, intrinsic) holds IDENTICALLY (value ≥
-  // intrinsic everywhere: O2 value_ge_intrinsic, trusted-from-prover; call wing
-  // numeric-gated), so NO caller applies a max(). Lean model of this object:
-  // O1 PasteLin.lean (Vp / sStarP / paste_unique), trusted-from-prover.
-  // MUST-APPLY-2 (unchanged): NO γ_min floor; g=0 stays finite (all-continuation,
-  // value → 1 = the g→0 wing law S^0); the boundary is INCLUSIVE on the
-  // continuation side so the exact seam point returns 1/(g+1); NaN g or θ stays
-  // NaN-loud (the branch falls through to the pow arm, which propagates NaN).
+  // Lensed mark — v26b Reading-A American smooth-paste with the strike-LOCAL
+  // exponent g (constant per strike, lens static). Free boundary sNorm*, price
+  // multiple S*=K·g/(g+1), c=1/((g+1)·sNorm*); continuation c·sNorm past the
+  // strike then intrinsic. Value+slope continuous to machine zero at sNorm*,
+  // incl. g<1. MUST-APPLY-2: NO γ_min floor — g=0 ⇒ S*=0 is finite (Math.pow
+  // handles it); the boundary is INCLUSIVE (<= / >=) so the exact g=0,
+  // sNorm===θ point returns the boundary value 1/(g+1) instead of pow(1,−∞)=NaN.
   // This is the lens twin of `mark` (which it does NOT replace — `mark` stays
   // the v24 kinked saturating fraction for the unchanged pool/exec/dollar pipe).
   function markLensed(wing, theta, sNorm, g) {
-    if (wing === 'call') {                        // call arm = sNorm/θ side
-      const sStar = theta * (g + 1) / g;          // seam ray (g=0 ⇒ ∞: all-continuation)
-      if (sNorm > sStar) return 1 - theta / sNorm;         // linear intrinsic 1 − K/S
-      return Math.pow(sNorm / sStar, g) / (g + 1);         // continuation (incl. boundary)
+    if (wing === 'call') {                       // call arm = sNorm/θ side
+      const sStar = theta * Math.pow((g + 1) / g, g);   // ≥ θ (g=0 ⇒ pow(∞,0)=1 ⇒ θ)
+      const c = 1 / ((g + 1) * sStar);
+      if (sNorm <= sStar) return c * sNorm;             // continuation (incl. boundary)
+      return 1 - Math.pow(sNorm / theta, -1 / g);       // intrinsic 1 − S/K
     } else {                                      // put arm = θ/sNorm side
-      const sStar = theta * g / (g + 1);          // seam ray (g=0 ⇒ 0: all-continuation)
-      if (sNorm < sStar) return 1 - sNorm / theta;         // linear intrinsic 1 − S/K
-      return Math.pow(sNorm / sStar, -g) / (g + 1);        // continuation (incl. boundary)
+      const sStar = theta * Math.pow(g / (g + 1), g);   // ≤ θ
+      if (sNorm >= sStar) return sStar / ((g + 1) * sNorm);  // continuation (incl. boundary)
+      return 1 - Math.pow(sNorm / theta, 1 / g);        // intrinsic 1 − K/S
     }
   }
 

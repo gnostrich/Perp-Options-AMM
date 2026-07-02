@@ -15,7 +15,7 @@
 //
 //  REPORT-ONLY — NOT A GATE. This script EXITS 0 ALWAYS. It must never abort
 //  run_all's `set -e` nor be mistaken for a HARD gate. The HARD gates are
-//  lens_selfcheck.js (13) and a16_atm_gate.js (5); their green status is the bar.
+//  lens_selfcheck.js (16) and a16_atm_gate.js (5); their green status is the bar.
 //  Lines #5/#6/#8 that duplicate an existing HARD check are table-marked
 //  "ALREADY HARD via CM# / covered HARD by CM#" so a green report line is never
 //  read as the gate.
@@ -67,7 +67,7 @@ console.log('══════════════════════�
 console.log(' MONOLITH CONSISTENCY (REPORT-ONLY, NOT GATING) — engine ⟺ Lean numeric cross-check');
 console.log('   checks NUMBERS (engine ⟺ Lean formula); stays red-IN-TABLE on drift; does NOT');
 console.log('   make Lean "verified" and does NOT prove the engine IS the Lean object —');
-console.log('   only that they AGREE numerically.   exit 0 ALWAYS (HARD gates = lens 13 + a16 5).');
+console.log('   only that they AGREE numerically.   exit 0 ALWAYS (HARD gates = lens 16 + a16 5).');
 console.log('   Lean: MonolithConstM.lean (run 6016ec57) · engine: ' + path.basename(file));
 console.log('════════════════════════════════════════════════════════════════════════════');
 
@@ -168,12 +168,13 @@ console.log('══════════════════════�
     'θ_tx == mode·(chosen/mode)^m; maxAbsErr=' + maxErr.toExponential(2) + ' (' + worst + ')  ⚑ALREADY HARD via CM5 (report-only cross-ref)');
 }
 
-// ── (6) smooth-paste value+slope at S*=θ((g+1)/g)^g : engine markLensed seam ──
-// RIDER: ALREADY HARD via CM4 — report-only cross-ref.
+// ── (6) PKG-ITM v2 linear re-seam at put S*=θ·g/(g+1) / call S*=θ·(g+1)/g : engine markLensed seam ──
+// (operator entries 286/287, go 298 — replaces the old power-form seams θ·(g/(g+1))^g / θ·((g+1)/g)^g)
+// RIDER: ALREADY HARD via CM4-v2 — report-only cross-ref.
 {
   let maxGap = 0, worst = '';
-  const sStarCall = (g, th) => th * Math.pow((g + 1) / g, g);
-  const sStarPut = (g, th) => th * Math.pow(g / (g + 1), g);
+  const sStarCall = (g, th) => th * (g + 1) / g;
+  const sStarPut = (g, th) => th * g / (g + 1);
   for (const m of [1, 2, 3]) {
     const g = m * gamma, th = 1.0;
     for (const wing of ['call', 'put']) {
@@ -185,9 +186,9 @@ console.log('══════════════════════�
       if (tot > maxGap) { maxGap = tot; worst = wing + ' m=' + m + ' g=' + g.toFixed(2); }
     }
   }
-  line(6, 'paste_value / paste_slope', 'LENSKERNEL valueMatch_g/slopeMatch_g (R1/T1a)', 'markLensed', 'XREF',
+  line(6, 'paste_value_lin / paste_slope_lin', 'O1 PasteLin paste_value_lin/paste_slope_lin/paste_unique (trusted-from-prover)', 'markLensed', 'XREF',
     maxGap < TOL,
-    'C⁰ seam value & boundary-fraction 1/(g+1) at S*; maxSeamGap=' + maxGap.toExponential(2) + ' (' + worst + ')  ⚑ALREADY HARD via CM4 (report-only cross-ref)');
+    'C⁰ seam value & boundary-fraction 1/(g+1) at v2 S*; maxSeamGap=' + maxGap.toExponential(2) + ' (' + worst + ')  ⚑ALREADY HARD via CM4-v2 (report-only cross-ref)');
 }
 
 // ── (7) warp_linear ΔG = m·Δγ : from the engine's tradeUpdate ─────────────────
@@ -265,8 +266,8 @@ for (const r of rows) {
 console.log('');
 console.log('──────────────────────────────────────────────────────────────────────────');
 console.log(' monolith_consistency: ' + nPass + ' PASS, ' + nFail + ' FAIL (REPORT-ONLY — exit 0 ALWAYS)');
-console.log('   genuinely-NEW lines: 1,2,3,4,7,8   ·   cross-ref (already-HARD): 5(CM5), 6(CM4)');
-console.log('   HARD gates remain lens_selfcheck (13) + a16_atm_gate (5); THIS is not a gate.');
+console.log('   genuinely-NEW lines: 1,2,3,4,7,8   ·   cross-ref (already-HARD): 5(CM5), 6(CM4-v2)');
+console.log('   HARD gates remain lens_selfcheck (16) + a16_atm_gate (5); THIS is not a gate.');
 console.log('──────────────────────────────────────────────────────────────────────────');
 
 process.exit(0);  // REPORT-ONLY: never abort run_all's set -e, never mistaken for a HARD gate.

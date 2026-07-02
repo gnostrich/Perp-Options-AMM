@@ -1,6 +1,42 @@
 # MEMORY — intern
-_Last updated: 2026-06-13 (cleanup pass on PROMOTED HEAD + gate detector harden; handed to
-manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-02 (PKG-ITM v2 engine splice on HEAD, IN PLACE per operator go entry 298;
+handed to manager; no git). Rewrite changed bits at task end._
+
+## Done — PKG-ITM v2 LINEAR RE-SEAM (IN-PLACE on HEAD, handed to manager 2026-07-02)
+Executed `specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md` exactly (operator go entry 298;
+skeptic R6 CLEAR). HEAD `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `dd6fb955…` →
+**`9fdde1de0a96874d9ad7b47a6cc8f721`**. Revert twin created FIRST:
+`engine/builds/temporal_mvp_v28_lens_powerarm.html` (byte-copy, md5 `dd6fb9557c…` == old HEAD).
+- **THE ONE ENGINE EDIT** (splice `scratchpad/splice_pkg_itm_v2.py`, work copy, old block sliced
+  by line range 1656–1676, block-md5 `3e4a3ab3…` verified, count==1, NEW block extracted
+  PROGRAMMATICALLY from the spec §2.2 fenced code — never retyped): `markLensed` power-form
+  seams/intrinsic REPLACED by the v2 linear re-seam — put seam `sNorm* = θ·g/(g+1)` (S*=K·g/(g+1),
+  0.667K @g=2), call `θ·(g+1)/g`; continuation `(sNorm/sStar)^(∓g)/(g+1)`; past seam intrinsic IS
+  linear (put `1−sNorm/θ`, call `1−θ/sNorm`). Branch order load-bearing (intrinsic in IF-body so
+  NaN falls to pow arm — NaN-loud). NO caller/export/signature change; V=max holds identically
+  (O2), so NO Math.max anywhere.
+- **Gates:** `lens_selfcheck.js` CM4→**CM4-v2** (v2 seams, C⁰ 1e-9 + boundary 1/(g+1)) +
+  **CM4-v2-C1** (one-sided quotients at seam, ε=1e-6·sStar: put −1/θ, call g²/((g+1)²θ), rel≤1e-4;
+  g-set = m·γ over MS ∪ {2,6} so the 0.667θ/0.857θ seams are probed directly) + **CM10** (value ≥
+  intrinsic, intrinsic recomputed IN-GATE from ρ, 25-pt entry-286 grid + log sweep, strict >0 in
+  continuation, ==0 at/past seam) + **CM11** (wing exact power-law V(2ρ)/V(ρ)=2^∓g, g∈{2,6},
+  1e-12). CM1–3/5–9 + CM4-nan SURVIVE unchanged (spec-predicted, confirmed). `a16_atm_gate.js`
+  UNTOUCHED (A16.2's `1/((g+1)·((g+1)/g)^g)` ≡ new ATM value — 5/5 green as spec predicted).
+  `monolith_consistency.js` line (6) repointed to v2 seams + O1 PasteLin provenance, rider →
+  CM4-v2; stale "lens 13" count strings in monolith + run_all comments → 16.
+- **run_all.sh line 8 re-pinned** to `9fdde1de…` + one-line honest description (PKG-ITM v2,
+  entries 286/287/298, powerarm twin named).
+- **RESULTS:** lens_selfcheck **16 PASS 0 FAIL**; a16 **5 PASS 0 FAIL**; run_all exit 0; monolith
+  8/8 report-green. Blobs `ab663f5c`@74/`c505b08a`@1060 canonical; 3 scripts parse (714/450/1824,
+  longest 509); IIFE intact; diff vs old HEAD = 3 hunks ALL inside L1656–1681 (the one block).
+  **Spec §5 worked table re-derived vs live engine: 14/14 cells to 4dp** (max|Δ| 4.8e-5, both g
+  columns, both arms + seams). **Negative control:** powerarm build fails EXACTLY the 4 new checks
+  (CM10 minDiff −0.58 = the entry-286 below-intrinsic defect) and passes the surviving 12 — gate
+  has teeth. File-safety hook: no block fired this session.
+- **Open for tester:** §6 acceptance protocol (DOM-read oracle sweep, seams at 0.667K/0.857K NOT
+  0.444K, sign table belowIntrinsic empty) + standing UI smoke. **Open for manager:** git (sole
+  actor); BUILD_LINEAGE/INTEGRITY/DIFF_LEDGER rows + CLAUDE.md §4/§8 true-up at promotion;
+  spec §9 risks 1/6 (Lean bridge files describe the retained powerarm arm — research-lead's).
 
 ## Done — CLEANUP PASS (3 edits, IN-PLACE on PROMOTED HEAD + gate, handed to manager 2026-06-13)
 Authority: operator entry 234 "yes pls cleanup" + skeptic R6 scope-gated PASS. ZERO behavior change

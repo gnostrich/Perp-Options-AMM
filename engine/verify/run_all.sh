@@ -5,7 +5,7 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v28_lens.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want dd6fb9557c251df222a4f918970576dd for v28-lens HEAD (constant slope-multiplier m, entries 229/231; chart-2 Option-C 2026-06-22 of 9f1e625b: chart-2 'MARK ACROSS STRIKES' replots the NORMALIZED STEEPNESS SHAPE (mode/θ)^(m·γ) so the mode peak=1 AND wings steepen with m — replaces the broken peak-normalization that cancelled the knob; draw-layer only, engine math byte-unchanged, gates 13+5 green, tester PASS 6/6 byte-stable, m=1/3/6 chart PNGs DISTINCT; m-clamp 2026-06-14: setM + input handler clamp m to [1,6] (input declared min=1/max=6, JS now honors it; typed sub-1 snaps to baseline 1) + header badge shortened; behaviorally identical otherwise; UX fix 2026-06-14 of aa1e5d05 [strike-marker inlined lensed mark — scope-fixed from the broken f6029182 psiAt-ReferenceError]: removed UI verification overclaims (Lean-validated/Aristotle-verified/no-sorry -> trusted-from-prover) + strike markers use lensed mark (psiAt) so they sit on the curve; behaviorally identical; chart-caption depiction fix 2026-06-14 — mark=1 is the full-exercise cap not the mode, mode peak <1; behaviorally identical to 80f050e2; comment-cleanup of 8f897edc 2026-06-13 — behaviorally identical, comments+gate-detector only; constmult source 8f897edc retained as temporal_mvp_v28_lens_constmult.html; inverse-lens 5fea0e8d as temporal_mvp_v28_lens_invtx.html); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 9fdde1de0a96874d9ad7b47a6cc8f721 for v28-lens HEAD (PKG-ITM v2 LINEAR re-seam 2026-07-02 of dd6fb955, operator entries 286/287, go 298: markLensed power continuation welded C¹ onto the LINEAR intrinsic at put seam S*=K·g/(g+1) [0.667K at g=2] / call seam S*=K·(g+1)/g — replaces the power-form seams/intrinsic arms; one-function splice, pool fns + tx-map + gLoc + all callers byte-unchanged; pre-fix power-arm build retained as temporal_mvp_v28_lens_powerarm.html [dd6fb955]; gates lens_selfcheck 16 + a16 5); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 # Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
 # shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
 BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')
@@ -37,7 +37,7 @@ if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD";
   # and prints a `Lean thm ⟺ engine — PASS/FAIL` table tagged per line.
   # ⚠ THIS IS NOT A HARD GATE. It EXITS 0 ALWAYS (the `|| true` belt-and-braces
   # ensures it can NEVER abort run_all's `set -e`). The HARD gates above
-  # (lens_selfcheck 13 + a16_atm_gate 5) are the bar; a green report line here
+  # (lens_selfcheck 16 + a16_atm_gate 5) are the bar; a green report line here
   # is NOT the gate (#5/#6/#8 are table-marked already-HARD-via-CM# cross-refs).
   # Honest ceiling: cross-checks NUMBERS (engine ⟺ Lean formula); does NOT make
   # Lean "verified" and does NOT prove the engine IS the Lean object.

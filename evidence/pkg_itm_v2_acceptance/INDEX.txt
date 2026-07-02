@@ -1,0 +1,32 @@
+PKG-ITM v2 build (a) — LIVE ACCEPTANCE SWEEP evidence (tester, 2026-07-02)
+Build: engine/builds/HEAD_temporal_mvp_v28_lens.html  md5 9fdde1de0a96874d9ad7b47a6cc8f721
+(working-tree, NOT pushed; pre-fix power-arm retained as temporal_mvp_v28_lens_powerarm.html dd6fb955)
+Protocol: specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md §6 (skeptic FLAG-2 discharge pins),
+entry-286 oracle-sweep lineage. READ-ONLY on the engine; DOM-read acceptance (bands-table MARK cell).
+
+Harnesses (engine/verify/):
+  pw_pkg_itm_v2_acceptance.mjs  — two-column sweep (m=2 => g=2, m=6 => g=6), put K=$60,000,
+                                  26 S/K spots 1.5 -> 0.2 incl. both seam neighborhoods
+                                  (+-0.02 / +-0.005) and all paper cells. Run twice (A/B).
+  pw_pkg_itm_v2_smoke.mjs       — standing UI smoke-pass (ACCEPT-4), 17 checks.
+
+Files:
+  RESULT_runA.json / RESULT_runB.json   — full sweep rows + acceptance checks. BYTE-IDENTICAL A==B.
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt   — identical except the run-label header line.
+  SMOKE_RESULT.json / SMOKE_RUN_LOG.txt — standing UI smoke 17/17 PASS.
+  {A,B}_m2_OTM_SK1p20.png               — g=2 OTM (S/K=1.2, mark 0.1029)
+  {A,B}_m2_SEAM_SK0p667.png             — g=2 seam neighborhood (S/K=0.6667, mark 0.3333 = 1/3)
+  {A,B}_m2_seamL02_SK0p647.png          — g=2 just below seam (intrinsic arm)
+  {A,B}_m2_oldseam_SK0p444.png          — the OLD 0.444 seam point: mark 0.5560 == intrinsic (defect gone)
+  {A,B}_m2_deepITM_SK0p20.png           — g=2 deep ITM (mark 0.8000 == 1-S/K)
+  {A,B}_m6_OTM_SK1p20.png               — g=6 OTM (mark 0.0190)
+  {A,B}_m6_SEAM_SK0p857.png             — g=6 seam neighborhood (S/K=0.85715, mark 0.1429 = 1/7)
+  {A,B}_m6_seamL02_SK0p837.png          — g=6 just below seam (intrinsic arm)
+  {A,B}_m6_deepITM_SK0p20.png           — g=6 deep ITM (mark 0.8000)
+  SMOKE_chart2_band_m2.png              — chart-2 overlays: red sold dot / green bought dot on curve arms
+  SMOKE_deepITM_preclose.png            — SHORT band at oracle $12,000 (sold-put theta=5, deep ITM) pre-close
+  SMOKE_deepITM_postclose.png           — after Close: sold leg settled-to-cash, bought reversed on AMM
+
+VERDICT: PASS — all 5 spec-§6 acceptance items hold (14/14 sweep checks x2 byte-stable, smoke 17/17,
+build md5 unchanged pre/post every run). Gates: lens_selfcheck 16/16 + a16_atm_gate 5/5 (HARD),
+monolith 8/8 report-only; blobs canonical ab663f5c/c505b08a, 3 scripts parse.
