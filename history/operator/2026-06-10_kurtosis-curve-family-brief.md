@@ -2399,3 +2399,11 @@ _Context: operator approves ALL open items: (b) display slice (chart-2 true-valu
 _Context: operator asks how OTM funding changes under the funding extension (the F2 call-side recalibration). Manager explains: put-side OTM funding unchanged (today's formula already = the slope-read); call-side keeps sign/shape/zero-point but magnitude scales by (g+1)/g (×1.5 at g=2, →1 as g grows) because the call's dollar value is one power steeper than its fraction curve — the price of one funding rule on both wings._
 
 > how do otm fudnign change?;
+
+
+---
+
+## Entry 303 — 2026-07-02 UTC
+_Context: operator checks the funding mechanism: isn't funding calculated from slope divergence of the pool curve vs the anchor curve? Manager confirms: YES — that mechanism (the crowdedness factor, pool-vs-w=½-anchor deviation at the strike ray) is untouched by the extension; the funding formula is (deviation factor) × (per-strike slope-weight read off the value curve through the lens), and F1/F2 only touch the SECOND factor (put weight already correct; call weight under-read in dollars by (g+1)/g; ITM the weight rides the extended tail = delta-carry while the deviation factor keeps working)._
+
+> isnt funding being calculated based on slope divergence or whatevrr wrt pool curve and anchor curve?
