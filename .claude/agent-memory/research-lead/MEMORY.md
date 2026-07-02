@@ -1,5 +1,23 @@
 # MEMORY — research-lead
 
+### STORY-COMPLETENESS AUDIT delivered (operator entry 335) — 2026-07-02
+Read-only; no Aristotle, no git. `notes/research/STORY_COMPLETENESS_AUDIT_2026-07-02.md` — 17-row gap
+table (code vs STORY_TABLE ed.8 vs WINE v2), HEAD `7015c22c`, vm-probe evidenced. LOUD FLAGS handed to
+manager: **FLAG-A** table row 2 + paper §2.3/Eq.(2) present TRADE-POINT conservation (α_T,β_T at T,
+w′=11/21 exhibit) while the engine applies GLOBAL-(α,β) conservation at the RESERVE point (measured
+w′=0.5455 vs 0.5238 same state; α,β preserved) — inventory-#16 "anchoring-OPEN" disposition absent from
+both artifacts (operator-ruled spec = entry-8 2026-06-12); **FLAG-B** table row 4 still teaches the
+retired v24 min(slope,1/slope) mark (live = markLensed, ATM≈0.148 at g=2) — §3.2 fix must propagate;
+**FLAG-C** funding is rate+ledger only (fundingTick mutates leg.funding_* only; pool/club untouched,
+close payout excludes funding; log line "net trader → pool" overstates) vs row 9 "built & correct" /
+paper "crowded side pays"; **FLAG-D** setOracle snaps perpMark:=oracle vs L2330 comment; **FLAG-E**
+γ=w/(1−w) LIVE (=1 at deploy, breathes with trades ⇒ g_loc/seam/funding move) vs paper "γ>1" static.
+MISSING-mechanic rows drafted for manager fold: buy-q N_buy=V_sell/denom (entry 333), premium-free
+dy=±N·K_tx swap (both legs same direction), two-strike semantics (settle chosen / swap frozen K_tx),
+depth guard 0.90·(y−β), club+L0 payout+floor, 0.01% club fee, LP isotropic resize, m-clamp [1,6].
+
+---
+
 ### CARVE-FUNDING FACT-CHECK (operator entries 313/317, Story Table row 9) — ANSWER: NO — 2026-07-02
 READ-ONLY; no edits, no Aristotle, no git. Question: does the carved origin-perp slice accrue normal PERP
 funding while a band is open? **NO — perp funding does not exist ANYWHERE in the engine, carved or free.**
