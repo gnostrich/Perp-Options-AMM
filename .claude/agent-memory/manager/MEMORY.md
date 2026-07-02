@@ -6,7 +6,7 @@ Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative 
 **HEAD `7015c22c` on main = display slice of `9fdde1de` (PKG-ITM v2 linear re-seam) — all tester-passed,
 promoted, branch==main.** Chart-2 = true-V X wings + %/$ toggle; -B289/-B301 resolved. Engine+state blocks
 of 7015c22c byte-identical to 9fdde1de.
-**IN FLIGHT RIGHT NOW:** paper agent rewriting §3.2 of `paper/wine2026/temporal_wine2026_v2.tex` (the mark
+**IN FLIGHT RIGHT NOW (2):** (A) story-completeness audit (research-lead, entry 335): engine mechanics from code vs STORY_TABLE rows vs paper sections → sequential gap list (e.g. buy-q ratio mechanic, two-strike tx-map semantics, reserve guard, carve/club structure not yet table rows); findings → table edition bump + paper-relevance flags. (B) paper agent rewriting §3.2 of `paper/wine2026/temporal_wine2026_v2.tex` (the mark
 definition still teaches the retired barrier min(slope,1/slope) formula, contradicting §5's ATM=0.148 —
 entries 326/327/330). ⚠ WHEN IT RETURNS: (1) TRIM any added disclosure prose — operator ruled entry 331
 "disclosure is for our chats not the paper" (the brief's item-3 disclosure sentence is now WRONG; keep ONLY

@@ -2655,3 +2655,11 @@ _Context: operator restates the buy-quantity question with the precise frame: bu
 _Context: operator reminds the manager to push all context/memory to main before imminent session compaction. Manager persists the full current-state rollup to manager MEMORY + pushes branch and main._
 
 > also reminder push wharteer you need for context memory whatever to main the session context wil compact soon
+
+
+---
+
+## Entry 335 — 2026-07-02 UTC
+_Context: operator directs a story-completeness sweep: story table + paper vs the ACTUAL HTML, hunting smaller missed story parts (like the §3.2 and buy-q-ratio items), kept sequentially in the story table and flagged where paper-relevant. Manager dispatches the audit (research-lead, read-only) — enumerate engine mechanics from code vs table rows vs paper sections; gap list → table rows + paper flags._
+
+> also in the story tebla , paper etc vs the actual html, check for smaller parts of the story like this that we may have missed , ... and sort of sequnetiaylly at leasdt keep i the stoty tablr and idk where but probbaly relevantf or paper too ...?
