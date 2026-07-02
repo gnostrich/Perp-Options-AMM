@@ -2843,3 +2843,9 @@ _Context: operator attaches the screenshot of entries 359/360 in case the text d
 _Context: dictionary sweep returned (FLAG-1 Fig-2 axis label "option-value mark (mode peak=1)" = retired tent read, halt-class; NIT curvature→steepness knob); manager applied the skeptic's minimal fixes verbatim. Operator asks for the latest file if the paper is done._
 
 > ok if all done on paper give me the latedxt tile
+
+
+## Entry 363 — 2026-07-02 UTC
+_Context: operator's Overleaf compile of 86eddeeb: ~2 pages over the 12-page body limit. Manager launches the emergency −2pp compression (protected: all claims/hedges/ordered content; targets: verbosity, figures, research-direction + related-work prose, appendix moves)._
+
+> ~2 pages over the 12-page body limi
