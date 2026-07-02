@@ -2783,3 +2783,9 @@ _Context: follow-up to the branch-jump explanation. Operator asks what the closi
 _Context: operator asks whether the paper covers tx mechanics, "becaue for an AMM appwr theis is key"._
 
 > and does the paper cover tx mechanics becaue for an AMM appwr theis is key
+
+
+## Entry 353 — 2026-07-02 UTC
+_Context: follow-up on the closing tx. Operator gets the mirror-swap picture but asks how it actually happens on the other side for AMM bookkeeping and slippage purposes._
+
+> i get that but on closure if were doing oposire tx how does it happenn on the other side asking for AMM bookkeeping and slippage purposed...
