@@ -2687,3 +2687,11 @@ _Context: operator clarifies the story-audit scope with an example: SLIPPAGE-cla
 _Context: operator directs: the story table must hold ALL items in a FLOW-RESPECTING order; in the paper the smaller mechanics may be CLUBBED rather than each being section-worthy. Manager reorders the table into lifecycle flow (world → opening → holding → closing → paying → shadows → paper), edition 12; paper-clubbing guidance recorded for the next paper touch._
 
 > so for story table we should have all in a flow respecitng manner, in the paper we may choose to club them or whatever if everything isnt section-worthy if that makes sense
+
+
+---
+
+## Entry 339 — 2026-07-02 UTC
+_Context: operator RULES on FLAG-A: the anchoring item is "a flatout regression repeated multiple times (should be trade point....) to be fixed in html and in paper if thats in paper." I.e., trade-point conservation is the ruled truth (standing since the 06-10 entries 14/16 rulings, inventory #16); the ENGINE (reserve-point anchoring) must be FIXED; the paper needs fixing only if it carries the wrong story — audit + skeptic confirm the paper already tells the trade-point story (the displayed w′ formula conserves the local pair α_T/β_T; exhibit w′=11/21), so the fix is HTML-side. Manager: promotes the ruling to the register (C2 → ORDERED-BUILD), dispatches the research-lead engine-coordinate spec (trade-point conservation), R6 skeptic scope-gate + itemized go to follow before any splice. NOTE blast radius: gate CM8 ("pool fns byte-identical to v24") encodes the OLD design and will need retirement/rewrite in the same campaign._
+
+> and 2 is a flatout regression repeated muktiple times (should be trade point....) to be fixed in html and in paper if thats in paper

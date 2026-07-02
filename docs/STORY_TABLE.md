@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 12, 2026-07-02 (entry 338: reordered into lifecycle FLOW — world → opening → holding →
+Edition 13, 2026-07-02 (entry 339: row-3 anchoring = ORDERED-BUILD; entry 338: reordered into lifecycle FLOW — world → opening → holding →
 closing → paying → shadows → paper; paper may CLUB the small mechanics, not every item is
 section-worthy)._
 
@@ -8,7 +8,7 @@ section-worthy)._
 |---|---------|----------------------------------|--------|
 | 1 | **The pool curve** | THE object: one curve in (asset, cash), leaning by `w`; its slope is the price. Everything else is rays on it or shadows of it. | 🔒 |
 | 2 | **LP liquidity** | adding/removing liquidity re-sizes the whole picture isotropically (×(1+λ)) — price and lean untouched; not a trade. | ✅ code / 📄 absent (clubbable) |
-| 3 | **Trades bend the curve** | a trade re-leans the curve (updates `w`); `k` is a readout. ⚠ ANCHORING: the SPEC says conservation at the trade's own point; the ENGINE applies it at the reserve point (the standing inventory-#16 gap; audit-measured w′ 0.5455 vs 0.5238) — build sequenced per the 06-10 ruling. FLAG-A: does the paper disclose the gap? → operator | ⚠ known #16 |
+| 3 | **Trades bend the curve** | a trade re-leans the curve (updates `w`); `k` is a readout. ⚠ ANCHORING: the SPEC says conservation at the trade's own point; the ENGINE applies it at the reserve point (the standing inventory-#16 gap; audit-measured w′ 0.5455 vs 0.5238) — build sequenced per the 06-10 ruling. FLAG-A RULED (entry 339): trade-point IS the truth; ENGINE to be FIXED (paper already tells trade-point — no paper edit). Spec in flight. | 🔨 ORDERED-BUILD |
 | 4 | **Strikes are rays** | every strike = a ray from the origin; the pool's centre = the mode ray; one curve + a fan of rays = the book. | 🔒 |
 | 5 | **The mark (value)** | moneyness = your ray read against the pool's ray; the mark = the smooth-pasted value on it (waiting arm = a power of the read × the seam constant; exercised arm = parity); 0→1, =1 only at full exercise. | ✅ |
 | 6 | **The dial `m`** | set from vol at creation, never moved by trades; steepens every ray equally; MORE volatile asset ⇒ LOWER m. | ✅ |
