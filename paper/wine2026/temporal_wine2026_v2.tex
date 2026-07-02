@@ -28,6 +28,34 @@
 %    pairing (root-sum 1, regime r>sigma^2); the no-dividend slice gives the
 %    LINEAR gamma=2r/sigma^2. Cite the FAITH-4 faith_merton gate.
 %  - The "single object" is a research direction.
+%
+% PASS 2026-07-02 (operator entries 319 "go paper" + 321 + 318/322; skeptic gate
+% to follow): (J1) stale 0.04%/0.1% old-seam engine stat replaced by the current
+% tester-measured statement (worked table reproduced to 4dp on the rendered UI,
+% both m=1/m=3 columns, both arms + seam points; value>=intrinsic a hard engine
+% gate) -- still engine measurement, not Lean. (J2) NEW O1/O2 linear-seam results
+% folded into Sec. American: paste_value_lin/paste_slope_lin, Vp_hasDerivAt_seam
+% (welded C^1 AT the seam), paste_unique (S* and coefficient forced),
+% value_ge_intrinsic + strictness beyond seam (put-wing model object;
+% call-wing value/slope match also checked). (J3) entry-321 referencing
+% restructure: inline Lean codenames removed from the RENDERED body, replaced by
+% superscripts L1..L13 keyed to ONE annex table (Appendix, plain-English rows,
+% all trusted-from-prover); exception: reserves_have_no_floor stays named ONCE
+% (load-bearing) and appears in the table. Codenames survive only in comments.
+% (J4) one American-consistency framing sentence in the intro (entries 318/322:
+% consistency guaranteed, optimality = the trader's own choice); the
+% deterministic-vs-Snell hedge itself is unweakened.
+% Body-site -> annex-row map (codenames, comment-only):
+%  L1 invariant, trade_dx . L2 trade_rebase_commute . L3 lens g_loc=m*gamma +
+%  pool-unchanged facts . L4 valueMatch_g, slopeMatch_g, Sstar_A_forced,
+%  coeffA_forced, crossover_sNorm_at_K . L5 paste_value_lin, paste_slope_lin,
+%  Vp_hasDerivAt_seam, paste_unique (+ paste_value_lin_call/paste_slope_lin_call)
+%  . L6 value_ge_intrinsic, value_gt_intrinsic_beyond_seam . L7
+%  opt_boundary_is_max_A . L8 merton_vieta_sum/prod (Lean; faith_merton = ENGINE gate, NOT in table),
+%  Sstar_is_merton_boundary, gaussian_limit_quadratic . L9
+%  collarSurplus_zero_iff_half, reflection_arrow . L10
+%  compositeRay_ITM_substitution . L11 solvency stack + cpmm/expPool instances .
+%  L12 reserves_have_no_floor . L13 passivity (internal half, PSD geometry).
 % ============================================================================
 
 \documentclass[runningheads]{llncs}
@@ -131,7 +159,14 @@ boundary, the no-arbitrage symmetry, the curve, and the knob are checked by an
 external theorem prover and \emph{trusted as compiled}, not independently re-run
 here; and \emph{(iv)}~the pool's \emph{solvency is conditional} on a funding
 source we prove is \emph{necessary} but do not discharge---the geometry alone is
-never enough.
+never enough. Framed from the holder's side, the guarantee set is
+\emph{American-consistency}: the holder may exercise at any time (settlement is
+holder-invoked, never automatic); the quoted value is never below the exercised
+payoff\textsuperscript{L6}; the exercised region pays the intrinsic (parity)
+value by construction; and the join between waiting and exercising is
+smooth\textsuperscript{L5} (superscripts index the machine-checked results in
+Appendix~\ref{app:lean})---while the optimality statement of \emph{(i)} is
+additional, exercise timing being the trader's own choice, not a system claim.
 
 \paragraph{Contributions.}
 The curve family itself is \emph{not} new: as Section~\ref{sec:warp} shows, each
@@ -303,9 +338,9 @@ $\alpha/x'=22/43$ (pre-trade $\alpha=xw$ over the new reserve $x'$).
 
 \subsection{What machine-checking covers here}
 The conservation-at-the-trade-point rule, the shifted-reserve hyperbola, and the
-weight update rest on a machine-checked spine (the pool structure's
-\texttt{invariant} and \texttt{trade\_dx}, and the trade/rebase commutation
-\texttt{trade\_rebase\_commute}; \tfp{}, Section~\ref{sec:frontier}). The
+weight update rest on a machine-checked spine---the pool invariant and trade
+law\textsuperscript{L1} and the trade/rebase
+commutation\textsuperscript{L2} (\tfp{}, Section~\ref{sec:frontier}). The
 off-the-money trade-point existence/uniqueness lemmas have been submitted to the
 prover and report complete, but are not yet folded to our \tfp{} bar; we do not
 count them among the machine-checked results.
@@ -350,7 +385,7 @@ price, \emph{strike normalisation} periodically \emph{rebases} the frame:
 rescaling coordinates by a single factor $r>0$ (so $x\to rx$, the offset
 $\alpha\to r\alpha$, the level $k\to r^{w}k$, and each strike ray
 $\theta\to\theta/r$). Trades and rebases \emph{commute}, so the pricing frame is
-well defined regardless of their order (machine-checked: \tfp{}).
+well defined regardless of their order (machine-checked: \tfp{}\textsuperscript{L2}).
 
 \paragraph{Funding.}
 Mirroring a perpetual future, a position accrues \emph{funding} at a rate
@@ -395,8 +430,9 @@ $m$ multiplies the steepness exponent to $m\gamma$ at \emph{every} strike, so th
 wings fall off faster while the peak stays at $1$ and $m=1$ recovers the plain
 Balancer curve. The horizontal axis is \emph{log}-strike (log-moneyness), so the
 plotted exponential decay $e^{-m\gamma|x|}$ \emph{is} the wing power law
-$\mathrm{value}\propto S^{-m\gamma}$ in spot. (This mirrors the live engine's
-strike-mark chart; curves illustrative, $\gamma=1.5$.)}
+$\mathrm{value}\propto S^{-m\gamma}$ in spot. (Curves illustrative,
+$\gamma=1.5$; the normalisation is schematic --- the deployed interface plots the
+un-normalised option value itself.)}
 \label{fig:lens}
 \end{figure}
 
@@ -435,8 +471,8 @@ rule, the oracle-arbitrage map, and the rebase are the plain Balancer dynamics;
 $x,y,w$ move exactly as in Section~\ref{sec:warp}. It is applied as a forward read
 to everything \emph{read} (pricing, the chart, settlement, funding, portfolio
 value) and \emph{written} (trades, settle-at-strike), is never inverted, and the
-underlying pool stays plain Balancer. The pool-byte-identity and
-$g_{\mathrm{loc}}=m\gamma$ facts are machine-checked (\tfp{}).
+underlying pool stays plain Balancer. The pool-unchanged and
+$g_{\mathrm{loc}}=m\gamma$ facts are machine-checked (\tfp{}\textsuperscript{L3}).
 
 \paragraph{The pricing ceiling: level and skew, not smile curvature.}
 We are explicit about how much of an option surface this can fit. The cross-strike
@@ -489,7 +525,8 @@ $S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$ it joins the \emph{intrinsic
 (exercised) payoff with matching value \emph{and} slope---a smooth $C^{1}$ ``seam.''
 Drawn for the plain-Balancer case $m=1$ (so $g_{\mathrm{loc}}=\gamma=2$), a put leg
 with $K=\$100$ and $S^{\ast}=\$66.67$, mark $=\tfrac13$ at the boundary; for $m\neq1$
-the seam moves to $g_{\mathrm{loc}}=m\gamma$.}
+the seam moves to $g_{\mathrm{loc}}=m\gamma$. The weld shown is
+machine-checked\textsuperscript{L5,L6} (\tfp{}; Appendix~\ref{app:lean}).}
 \label{fig:seam}
 \end{figure}
 
@@ -565,11 +602,19 @@ empirical or market-calibration claim.
 \subsection{Why this is the American boundary, and the Merton tie}
 The smooth-paste solution is not an arbitrary $C^{1}$ join. It is the \emph{unique}
 solution of the value-and-slope system at any steepness $g$---hence at the lensed
-$g_{\mathrm{loc}}=m\gamma$---(machine-checked for generic $g$:
-\texttt{Sstar\_A\_forced}, \texttt{coeffA\_forced}; \tfp{}), and it \emph{maximises}
-the holder's value over
-\emph{deterministic} exercise boundaries (\texttt{opt\_boundary\_is\_max\_A}, a
-genuine variational result; \tfp{}). The identification with the \emph{stochastic}
+$g_{\mathrm{loc}}=m\gamma$ (machine-checked for generic $g$;
+\tfp{}\textsuperscript{L4}). The pasted object of Figure~\ref{fig:seam}
+itself---the power continuation welded onto the \emph{linear} exercised payoff in
+the dollar frame---is machine-checked as well (\tfp{}\textsuperscript{L5,L6}):
+value and slope match at $S^{\ast}$ for every steepness $g>0$; the welded value
+function is differentiable \emph{at} the seam, not merely arm-by-arm; the
+two-equation value-and-slope system \emph{forces} $S^{\ast}=K\,g/(g+1)$ and the
+continuation level uniquely; and the quoted value is never below the exercised
+payoff, strictly above it beyond the boundary. (These are statements about the
+put-wing pricing object depicted; the call-wing value-and-slope match is also
+checked.) The boundary moreover \emph{maximises} the holder's value over
+\emph{deterministic} exercise boundaries (a genuine variational result;
+\tfp{}\textsuperscript{L7}). The identification with the \emph{stochastic}
 optimal-stopping (Snell) boundary is \emph{named but not formalised}---a placeholder
 obligation, not a discharged premise.
 
@@ -591,13 +636,13 @@ $1$---the product-of-roots (Vieta) relation reads
   \qquad\text{in the regime }r>\sigma^{2},
   \label{eq:merton}
 \end{equation}
-the convention encoded by our Lean \texttt{merton\_vieta\_sum}/
-\texttt{merton\_vieta\_prod} and the \textsc{faith}-4 \texttt{faith\_merton} gate.
+the convention encoded by our machine-checked Vieta sum/product
+relations\textsuperscript{L8}.
 (The classical no-dividend Black--Scholes--Merton slice instead keeps the single
 decaying root and gives the \emph{linear} relation $\gamma=2r/\sigma^{2}$; we do
 not use that slice here.) On the symmetric pairing $S^{\ast}$ is the Merton
-boundary (\texttt{Sstar\_is\_merton\_boundary}, \texttt{gaussian\_limit\_quadratic};
-\tfp{}), with the generalized-hyperbolic / Bessel-K distributional layer carried as
+boundary, with the Gaussian-slice limit machine-checked
+(\tfp{}\textsuperscript{L8}) and the generalized-hyperbolic / Bessel-K distributional layer carried as
 named hypotheses---exact on the log-normal (Gaussian) slice, conditional beyond it.
 This distributional tie is stated at the base characteristic root $\gamma$ (the
 unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
@@ -615,11 +660,17 @@ quantities implied from market $r$ and $\sigma$ through the formula.
 
 \subsection{The seam, checked two ways}
 At the boundary the value-match and slope-match hold for every steepness $g>0$,
-hence at $g=m\gamma$ (\texttt{valueMatch\_g}/\texttt{slopeMatch\_g}; \tfp{}), and
+hence at $g=m\gamma$---machine-checked both in the curve's own
+coordinate\textsuperscript{L4} and, for the welded linear seam of
+Figure~\ref{fig:seam}, in the dollar frame\textsuperscript{L5} (\tfp{})---and
 the out-of-the-money$\to$in-the-money crossover lands at the dollar strike $K$ for
-all $\gamma$ (\texttt{crossover\_sNorm\_at\_K}; \tfp{}). On the live engine the
-seam holds to $0.04\%$ in value and $0.1\%$ in slope for
-$\gamma\in\{1.5,2,3,4\}$---an engine gate, not a Lean theorem.
+all $\gamma$ (\tfp{}\textsuperscript{L4}). On the live engine, the shipped
+implementation reproduces the worked-example table above cell-for-cell to four
+decimal places, read off the rendered interface---both the $m=1$ and $m=3$
+columns, on both the continuation and exercised arms, and at the two boundary
+points ($\$66.67$ and $\$85.71$)---and the value-never-below-exercised-payoff
+property is enforced as a hard engine gate. These are engine measurements, not
+Lean theorems.
 
 % ===========================================================================
 \section{Properties: no internal arbitrage, settlement, replication}
@@ -639,15 +690,15 @@ pool is symmetric, $w=\tfrac12$. Under skew ($w\neq\tfrac12$) the surplus is
 non-zero, with an explicit counterexample.
 \end{proposition}
 
-The biconditional is the substance, stated at its true strength. The Lean
-\texttt{collarSurplus} is a \emph{posited} form proportional to anchor asymmetry,
+The biconditional is the substance, stated at its true strength. The formalised
+surplus is a \emph{posited} form proportional to anchor asymmetry,
 so the result is a symmetry statement about that posited surplus, not a
 mechanism-level no-arbitrage theorem over swap compositions; we carry it as a named
-definition with the skew sign exhibited (\texttt{collarSurplus\_zero\_iff\_half};
-\tfp{}). A companion result casts the symmetry as a reflection---the put at
+definition with the skew sign exhibited (\tfp{}\textsuperscript{L9}). A
+companion result casts the symmetry as a reflection---the put at
 coordinate $s$ is the call reflected through the at-the-money ray
 ($s\mapsto\theta^{2}/s$)---so no-arbitrage \emph{is} the curve's symmetry
-(\texttt{reflection\_arrow}; \tfp{}). We are precise: the reflection arrow is a
+(\tfp{}\textsuperscript{L9}). We are precise: the reflection arrow is a
 proved identity, but the link from the spec mark to the live engine's instrument is
 a residual modeling premise, so this is best read as a \emph{conditional skeleton},
 not an unconditional no-arbitrage theorem over the production engine.
@@ -668,7 +719,7 @@ equity. A band has two legs on opposite wings; since spot cannot be in-the-money
 both at once, at most one leg is in-the-money at any time, giving a clean two-case
 settlement. The composite-ray closed form holds across the
 out-of-the-money$\to$in-the-money boundary under the effective-strike substitution
-(machine-checked: \texttt{compositeRay\_ITM\_substitution}; \tfp{}).
+(machine-checked: \tfp{}\textsuperscript{L10}).
 
 \subsection{Replication scope: $|\Gamma|\le1$ exact, $|\Gamma|>1$ approximate}
 Let $\Gamma$ be the \emph{hedge ratio}---a position's price-sensitivity to spot.
@@ -687,7 +738,9 @@ keep it \emph{disclosed} as a labelled approximation (Section~\ref{sec:frontier}
 % ===========================================================================
 
 \subsection{Provenance: \tfp{}, never ``verified''}
-Every Lean result above was compiled by an external Lean theorem prover,
+Every machine-checked result cited in this paper is indexed by the superscripts
+L1--L13, one row each in the annex table of Appendix~\ref{app:lean}. Every such
+result was compiled by an external Lean theorem prover,
 server-side (Lean~4.28.0 / Mathlib~v4.28.0) and passed a zero-cost artifact audit
 (forbidden-token scan, \texttt{\#print axioms} restricted to
 $\{\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}\}$, an
@@ -706,9 +759,10 @@ repository.
 \subsection{Solvency is conditional---the headline open item}
 The construction's solvency guarantee is \emph{conditional}. A separate prover line
 formalises the curve\,$\to$\,value\,$\to$\,storage interface as a typed stack and
-proves, machine-checked: pool value is concave in price for any valid curve and
-this propagates into stored equity by types; and the headline
-\texttt{reserves\_have\_no\_floor}---with a convex obligation, reserve value is
+proves, machine-checked\textsuperscript{L11}: pool value is concave in price for
+any valid curve and this propagates into stored equity by types; and the headline
+\texttt{reserves\_have\_no\_floor}\textsuperscript{L12}---with a convex
+obligation, reserve value is
 unbounded below, so \emph{the solvency floor cannot come from reserves}
 (``convexity must be funded'' as a theorem). It then proves: \emph{given} a port
 that covers the concave deficit, the pool is passive and solvent for all time with
@@ -719,11 +773,12 @@ floor), B3 (arbitrage is one-way), and B4 (the settlement ledger closes)---are
 carried as \emph{structure fields}, not discharged facts. The stack proves
 ``\emph{if} the ledger closes, arbitrage is one-way, and the port covers the floor,
 \emph{then} passivity and solvency''; it does \emph{not} prove the port pays in the
-real world. Geometry is shown \emph{necessary}
-(\texttt{reserves\_have\_no\_floor}) but never \emph{sufficient}. These are
+real world. Geometry is shown \emph{necessary} (the no-floor
+theorem\textsuperscript{L12}) but never \emph{sufficient}. These are
 \emph{assumptions, not claims}, and the reader should not mistake conditional
-solvency for an unconditional result. The proven instances are \texttt{cpmm}
-(equal-weight Balancer) and \texttt{expPool} (exponential); the typed contracts are
+solvency for an unconditional result. The proven instances are the equal-weight
+constant-product pool and an exponential pool\textsuperscript{L11}; the typed
+contracts are
 \emph{not} yet wired to the production engine's numeric formulas---that
 instantiation is the next body of work.
 
@@ -731,9 +786,10 @@ instantiation is the next body of work.
 We have a partial result toward unifying the entire exchange---storage, flow,
 funding port, settlement, dollar pipe---as one passive object whose solvency reads
 as passivity-under-admissible-inputs. The \emph{internal} half is machine-checked
-(\tfp{}): the system is passive because the geometry is positive-semidefinite. The
+(\tfp{}\textsuperscript{L13}): the system is passive because the geometry is
+positive-semidefinite. The
 \emph{external}/solvency half stays \emph{open}, keeping the coverage premise
-undischarged and honoring \texttt{reserves\_have\_no\_floor}. We therefore present
+undischarged and honoring the no-floor theorem\textsuperscript{L12}. We therefore present
 the unified single object as a \emph{conjecture / research direction}, not a
 finished proven artifact.
 
@@ -800,15 +856,74 @@ whose conservation law is applied at each trade's own point, and whose trades
 continuum in closed form. We lift the prior barrier into an American-style
 perpetual option: a closed-form smooth-pasting boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$
 (the base form $K\gamma/(\gamma+1)$ at $m=1$)
-with a smooth seam and no new parameters, machine-checked (\tfp{}) and tied to the
+with a smooth seam and no new parameters, machine-checked
+(\tfp{}\textsuperscript{L4,L5,L6}) and tied to the
 Merton problem, plus a constant slope-multiplier lens $m$ that acts as a
 vol-calibrated knob while leaving the pool flow unchanged. On internal arbitrage we
 claim only what is proved: a posited collar surplus vanishes iff the pool is
 symmetric. The honest frontier is solvency: geometry is necessary
-(\texttt{reserves\_have\_no\_floor}) but never sufficient, and solvency stays
+(the no-floor theorem\textsuperscript{L12}) but never sufficient, and solvency stays
 \emph{conditional} on a funding port shown necessary but not discharged. Closing
 that port hypothesis and wiring the trusted-from-prover interface to the production
 engine are the principal directions for future work.
+
+% ===========================================================================
+\appendix
+\section{Annex: index of machine-checked results}\label{app:lean}
+% (Codename map for each row lives in the header comment of this file; codenames
+% are deliberately NOT rendered -- the formal development is on request only.)
+Each superscript L$n$ in the body refers to one row below. All rows carry the
+same provenance: machine-checked by an external Lean~4 theorem prover and
+\emph{trusted as compiled} (\tfp{}), not re-run locally
+(Section~\ref{sec:frontier}). The rows are statements about the
+specification-level objects of the formal development, not about the production
+engine's code; the engine bridge is measured, not extracted
+(Section~\ref{sec:frontier}).
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}l X l@{}}
+\toprule
+ & what is machine-checked & provenance \\
+\midrule
+L1 & The pool invariant and the trade law of Eq.~\eqref{eq:tradeupdate}:
+     conservation applied at the trade's own point, with the weight update. & \tfp{} \\
+L2 & Trades and rebases commute; the pricing frame is order-independent. & \tfp{} \\
+L3 & The lens sets the option-value steepness to $m\gamma$ uniformly at every
+     strike and leaves the pool's trade dynamics unchanged. & \tfp{} \\
+L4 & Smooth pasting in the curve's own coordinate: value and slope match at
+     every steepness $g>0$; boundary and level are forced (unique); the
+     OTM$\to$ITM crossover lands at the dollar strike $K$. & \tfp{} \\
+L5 & The linear seam of Figure~\ref{fig:seam}, dollar frame: the power
+     continuation meets the linear exercised payoff with matching value and
+     slope; the welded value function is differentiable at the boundary (no
+     kink); the value-and-slope system forces $S^{\ast}=Kg/(g+1)$ and the
+     continuation level uniquely (put wing; call-wing value/slope match also
+     checked). & \tfp{} \\
+L6 & American consistency: the quoted value is never below the exercised
+     payoff, strictly above it beyond the boundary (put-wing pricing object). & \tfp{} \\
+L7 & The boundary maximises holder value over \emph{deterministic} exercise
+     policies (the stochastic Snell identification is \emph{not} formalised). & \tfp{} \\
+L8 & The Merton tie: the symmetric-pairing Vieta relations behind
+     $\gamma(\gamma+1)=2r/\sigma^{2}$, the boundary as the Merton boundary on
+     that pairing, and the Gaussian-slice limit. & \tfp{} \\
+L9 & Collar symmetry: the posited costless-collar surplus is zero iff
+     $w=\tfrac12$, with a skew counterexample; the put--call reflection
+     identity through the at-the-money ray. & \tfp{} \\
+L10 & Settlement: the composite-ray closed form holds across the OTM$\to$ITM
+     boundary under the effective-strike substitution. & \tfp{} \\
+L11 & The conditional-solvency stack: pool-value concavity propagates
+     curve$\to$storage by types; \emph{given} the B1/B3/B4 hypotheses,
+     passivity and solvency; proven instances: the equal-weight
+     constant-product pool and an exponential pool. & \tfp{} \\
+L12 & \texttt{reserves\_have\_no\_floor}: with a convex obligation, reserve
+     value is unbounded below---the solvency floor cannot come from reserves
+     (``convexity must be funded'' as a theorem). & \tfp{} \\
+L13 & The internal (passivity) half of the single-object direction: the system
+     is passive because its geometry is positive semidefinite. & \tfp{} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Full formal statements and proof artifacts are available from the authors on
+request.
 
 % ===========================================================================
 % NOTE: The notation table and the formal-artifact map have been moved OUT of

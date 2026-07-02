@@ -1,5 +1,5 @@
 # MEMORY — paper
-_Last updated: 2026-06-08, bootstrap. Rewrite changed bits at task end._
+_Last updated: 2026-07-02 (WINE v2 entry-319/321 pass). Rewrite changed bits at task end._
 
 ## Pipeline / deadlines
 - **AfT 2026** — notification ~Jul 15 2026 (draft: `paper/Temporal_Paper_AfT_2026_v6.docx`).
@@ -290,6 +290,38 @@ Applied to `paper/wine2026/temporal_wine2026_v2.tex` ONLY (engine/Lean untouched
 - Checks: math-$ 528 even (escaped \$/\% handled), braces 598/598, 7/7 equations, no dangling
   refs/dup labels, all cites resolve. Net add est ~0.4pp. Worked example/boundary eqs/figures/hedges
   byte-untouched (diff-verified).
+
+## WINE2026 v2 entry-319/321 pass (2026-07-02) — 4 jobs, text-only, NOT git'd
+Applied to `paper/wine2026/temporal_wine2026_v2.tex` only (supplement md5 `7a728fe0` untouched;
+engine/Lean untouched). Handed to manager for skeptic gate.
+- **J1 (stale engine stat FIXED):** §"The seam, checked two ways" old-seam "0.04%/0.1% for
+  γ∈{1.5,2,3,4}" REPLACED by the current tester-measured truth: shipped engine reproduces the
+  worked-example table cell-for-cell to 4dp on the rendered interface (m=1 + m=3 columns, both
+  arms, both boundary points $66.67/$85.71); value-never-below-exercised-payoff enforced as a
+  HARD engine gate; "engine measurements, not Lean theorems" honesty clause kept. Source:
+  tester live acceptance ×2 byte-stable (CLAUDE.md HEAD 9fdde1de entry) + lens_selfcheck CM10.
+- **J2 (O1/O2 linear-seam backing folded):** §5.3 new content + Fig-3 caption note: value+slope
+  match ∀g>0 in the DOLLAR frame; welded fn differentiable AT the seam (not arm-by-arm);
+  paste_unique forces S*=Kg/(g+1) + level; value≥intrinsic, strict beyond seam. Scoped honestly:
+  put-wing pricing OBJECT (model, not engine code); call-wing value/slope match also checked;
+  call weld/uniqueness NOT in batch, not claimed. Source: formal/INDEX.md O-BATCH (O1 PasteLin
+  md5 604c02fd, O2 ValueGeIntrinsic f718d625, both manager-audited tfp).
+- **J3 (entry-321 referencing restructure):** ALL inline Lean codenames removed from rendered
+  body → superscripts L1..L13 (26 body sites) keyed to ONE annex table (\appendix, app:lean,
+  ~0.5pp, tabularx, plain-English rows, all \tfp{}, footer "available from the authors on
+  request", spec-level-not-engine caveat). EXCEPTION kept: reserves_have_no_floor named ONCE in
+  §7.2 + in table row L12. Codename→row map lives in the file's header comment (non-rendered).
+  cpmm/expPool → plain English. Rendered-token sweep CLEAN (no paths/repo/Aristotle/Temporal;
+  remaining \texttt = Lean axiom names in provenance audit detail + the one exception).
+- **J4 (entries 318/322 American-consistency):** ONE sentence in intro after conditions
+  (i)-(iv): holder-facing guarantee set = American-consistency (exercise any time,
+  holder-invoked settlement; value never below exercised payoff^L6; exercised region pays
+  parity by construction; smooth join^L5); optimality ADDITIONAL, exercise timing the trader's
+  own choice, not a system claim. Snell hedge byte-preserved (named-not-formalised). Abstract
+  untouched (length already flagged).
+- Checks: $ 556 even, braces 646/646, all envs matched, no dangling refs/cites, 13 table rows =
+  13 rows referenced. **Page impact est +0.4–0.5pp** (annex ~0.45 + J2/J4 body adds ≈ codename
+  savings) → pessimistic total ~11.4–12.0pp: TIGHT vs 12 HARD cap, manager must compile-check.
 
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't

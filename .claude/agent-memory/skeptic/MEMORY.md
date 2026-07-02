@@ -3677,3 +3677,50 @@ family) — always demand output-path assertion; (3) bracketed text inside verba
 is an unresolved provenance class — 285/287 both; consider pushing for a transcription-policy rule banning
 unattributed brackets. (4) Parked-for-later operator items (289 vol caption) resurface as silent omissions
 when their surface gets rebuilt — check the parked list against every new scope's touched surface.
+
+## 2026-07-02 — VERDICT: WINE v2 final pass (J1 engine stat / J2 O1-O2 / J3 entry-321 annex / J4 318+322). ONE FLAG-OVERSELL (L8 faith_merton), rest held.
+File: notes/skeptic/VERDICT_wine2026_v2_lean_annex_pass_2026-07-02.md. Artifact: git diff temporal_wine2026_v2.tex (154/39, only file touched).
+THE FLAG: annex row L8 + body 638-639 + header map (line 54) fold the FAITH-4 `faith_merton` JS ENGINE gate
+(engine/verify/faith_merton.js, PIVOT_MAP.md:150) into a table whose preamble asserts every row = Lean-prover tfp
+"specification-level objects... not the production engine's code". Old body text kept the split right ("our Lean
+merton_vieta_sum/prod AND the FAITH-4 gate"); the de-codenaming collapsed it = engine gate upgraded to Lean provenance.
+SETTLED GROUND (attacked, held — don't re-attack):
+- J1 sentence fully evidence-covered: RESULT_runA/B on 9fdde1de, all 10 paper cells |d|=0.0e+0 at 4dp DOM (RUN_LOG re-read),
+  both arms, both S* points (0.3333@0.6667K, 0.1429@0.85715K), CM10 HARD negative-controlled (my R6 FLAG-2 output-path
+  demand honored). HEAD 7015c22c md5'd by me; DIFF_LEDGER: engine+state byte-identical to 9fdde1de (node string-compare).
+- J2: §5.3 text + fig:seam caption EXACTLY match O-BATCH O1/O2 rows (put-wing hedged in body AND rows; call = value/slope
+  match only, weld/uniqueness correctly unclaimed; Vp_hasDerivAt_seam "at the seam not arm-by-arm" faithful). O5 uncited ✓.
+- J3: 26 sites = L1:1 L2:2 L3:1 L4:4 L5:5 L6:3 L7:1 L8:2 L9:2 L10:1 L11:2 L12:4 L13:1; no orphans/unreferenced rows;
+  only rendered codename = reserves_have_no_floor ×2 + axiom names; comment-stripped anonymity scan 0 hits; footer present;
+  L11 conditional/L7 Snell-not-formalised/L13 internal-half/L9 posited/L6 put-wing all survive plain-English translation.
+- J4: faithful to 318/322 verbatim; superscripts only on theorem clauses; Snell hedge intact ×3 sites.
+- J5: all hedges + worked example + figures + supplement + entry-247 intact.
+ADVISORIES (non-blocking, logged): (a) sweep ran (γ=1,m=2/6) not table's (γ=2,m=1/3) — same g_loc, spec-§6 pinned, but
+"the m=1 and m=3 columns" reads as literal knob settings; (b) "shipped implementation" — matches cleared "shipped
+instrument" register, self-labelled as measurement; (c) 4dp claim vs 3dp-printed table (evidence exceeds claim);
+(d) L3 "pool unchanged" = structural-in-model + tester byte-fact, same-or-weaker than cleared baseline; (e) annex ≤1pp
+and ≤12pp total UNVERIFIED — no LaTeX in env, manager must confirm on compiled PDF; (f) O-BATCH INDEX header still says
+"manager audit pending" while its rows say MANAGER-AUDITED — INDEX hygiene.
+PATTERNS: (1) NEW SHAPE of the recurring misattribution family — de-codenaming/plain-English restructures LAUNDER
+provenance: when a body sentence that correctly distinguished "our Lean X and the ENGINE gate Y" gets rewritten without
+names, the distinction is the first casualty and everything inherits the stronger label (L8 here; inverse of 06-23 FIX-1).
+On any "remove codenames" pass, diff each site for a provenance SPLIT the codename was carrying. (2) Referencing-table
+preambles are force multipliers: one blanket provenance sentence over 13 rows means ONE mixed row falsifies the preamble —
+audit rows against the preamble, not just against the body. (3) Third consecutive paper pass where glosses/site-parity
+held — that blind spot looks genuinely closed; provenance-in-translation is the live one.
+
+## 2026-07-02 — VERDICT: L8 discharge + Fig-2 fix (focused confirm). L8 DISCHARGED; Fig-2 CONFIRMED; one NEW narrow FLAG-OVERSELL.
+File: notes/skeptic/VERDICT_wine2026_v2_L8_fig2_discharge_2026-07-02.md.
+- L8 discharged: row = Vieta/Merton-boundary/Gaussian-limit, all Lean (INDEX row 68 GROUNDED); both L8
+  superscript sites (tex 640, 647) land on Lean content; faith_merton comment-only + honestly labelled.
+- Fig-2: old "mirrors the live engine's strike-mark chart" was FALSE post-display-slice (chart-2 = true
+  markLensed V per DIFF_LEDGER a6ca02f3/7015c22c, entries 292/295/298/301); replacement accurate, claim-reducing.
+- THE NEW FLAG (narrow): re-split sentence says gate "enforced against the RUNNING IMPLEMENTATION" — but
+  run_all.sh:104 runs faith_merton.js on temporal_mvp_v26b_itm.html (demoted GH line), NOT v28 HEAD; the
+  paper has only one described implementation, so the referent is wrong. Lean/engine split itself now correct.
+PATTERN (extends 07-02 #1): discharge edits are claim-GENERATING, not just claim-removing — the manager,
+rewriting a flagged sentence, reached for a strengthening phrase ("against the running implementation")
+absent from both the flagged text AND the pre-flag baseline. Always re-derive the NEW words of a
+discharge against ground truth (here: which build the gate actually targets), never just check the
+flagged clause is gone. Settled: rest of the 340-line diff byte-matches the gated pass; ≤1pp/≤12pp
+compiled-PDF check still owed by manager.
