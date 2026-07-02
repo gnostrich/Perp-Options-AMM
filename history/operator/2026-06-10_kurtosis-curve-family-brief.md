@@ -2679,3 +2679,11 @@ _Context: operator FYI (for whenever): small HTML display bug — the chart's un
 _Context: operator clarifies the story-audit scope with an example: SLIPPAGE-class mechanics — things that matter but aren't in the table/paper. Manager confirms slippage is in the audit's walk list and guarantees it appears in the returned gap table (will extend the audit himself if under-covered); expected outcome: slippage has no dedicated table station and thin/no paper treatment → proposed new row + paper-relevance flag._
 
 > on story audit stuff like slippage etc that kind of stuff was an exampke of things that kind of matter but arent in the table / paper and ...
+
+
+---
+
+## Entry 338 — 2026-07-02 UTC
+_Context: operator directs: the story table must hold ALL items in a FLOW-RESPECTING order; in the paper the smaller mechanics may be CLUBBED rather than each being section-worthy. Manager reorders the table into lifecycle flow (world → opening → holding → closing → paying → shadows → paper), edition 12; paper-clubbing guidance recorded for the next paper touch._
+
+> so for story table we should have all in a flow respecitng manner, in the paper we may choose to club them or whatever if everything isnt section-worthy if that makes sense
