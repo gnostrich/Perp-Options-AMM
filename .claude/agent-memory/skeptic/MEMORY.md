@@ -3741,3 +3741,30 @@ Settled ground: §3.2 mark definition now matches shipped object; don't re-attac
 readings. Pattern: fourth consecutive clean paper pass on glosses; retired-formula GHOSTS now live only in
 non-rendering strata (comments, superseded uploads) — on any future uncomment/reuse of supplement App-A or lncs.tex,
 re-run the eq:mark sweep first.
+
+## 2026-07-02 — VERDICT: airtight-spec pass, temporal_wine2026_v2.tex (FLAG x2, one-clause fixes)
+File: notes/skeptic/VERDICT_airtight_pass_2026-07-02.md. New s6 "Execution mechanics" (5 laws).
+- FLAG-WRONG law 4: "pooled equity of the OTHER side" — engine counterparty club = SAME club band was
+  carved from (openBand clubSide / closeBand b.entry.perp_club_side); "floored by remaining equity" —
+  shipped floor is BINARY (equity<=0 => payout 0), no min-cap. "Shipped design" cover defeated there.
+- FLAG-OVERSELL law 3: "reserves round-trip exactly" unconditional; shipped close is two-case — ITM leg
+  settled-to-cash, NO AMM reversal; round-trip exact only per reversed leg / both-OTM close.
+- SURVIVED attack (settled, don't re-attack): laws 1/2/5 match executeBand L1913-1930 / executeLeg /
+  gLoc exactly (incl. sequencing: bought leg priced on post-sold pool); new subsection does NOT assert
+  trade-point conservation (inventory #16 cover intact); sweep deletions preserved every hedge/label
+  (tfp, grounded/carried, posited-surplus, Snell); Limitations swap legitimate.
+- Gloss nit: "(sequenced)" lacked its plain-English one-liner (entry-344 bar).
+- PATTERN (recurring): paper agent writes plausible-sounding mechanism details NOT in the audited record
+  ("other side" club, equity-cap floor) when compressing engine facts into prose — the invented detail
+  reads authoritative. Check every mechanism NOUN in new paper prose against code, not just the formulas.
+
+## 2026-07-02 — RE-CLEAR: airtight-spec pass FLAG x2 DISCHARGED -> CLEAR-TO-COMMIT
+Same verdict file, re-verdict appended. Manager's 3 clause edits re-derived against engine myself:
+law 4 now same-side club (state.clubs[b.entry.perp_club_side]) + binary drained-club floor stated as
+"positive payouts stop once club equity reaches zero" (matches raw_net>0 && equity<=0 => 0, no min-cap
+claim); law 3 round-trip scoped to REVERSED legs with explicit ITM settled-to-cash/no-pool-swap
+exception (matches LOCKED two-case comment); law 1 sequenced gloss added. Structural re-run
+independently: math-$ 562 even AFTER excluding 15 escaped currency \$ (naive grep gives 577 — remember
+the \$ exclusion when re-checking parity), braces 0, refs clean. Settled ground: the 5 execution laws
+as now worded match the engine — don't re-attack absent engine changes. "at leverage L0 frozen at open"
+verified = band.entry.L0.

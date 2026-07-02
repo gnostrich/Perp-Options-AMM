@@ -2,6 +2,30 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **DEADLINE ARC CLOSE-OUT 2026-07-02 late (entries 340–347) — CURRENT STATE, supersedes the in-flight
+lines of the rollup below:**
+- **Paper SUBMISSION-READY, airtight pass LANDED+GATED (md5 `3c553b6d`):** entry 342/343 go → §6
+  "Execution mechanics" (5 laws: quantity bridge N_buy=V_sell/v_buy; premium-free Δy=±N·K_tx; two-strike
+  frozen θ_tx w/ ITM-to-cash exception; payout L₀·net·carve, own-side club, binary drained-club floor;
+  live γ=w/(1−w)) + 3 precision clauses (funding rate-vs-routing; rebase=on-oracle-update; γ live-lean)
+  − 141-word sweep, net ≈ +3–4 rendered lines. Skeptic FLAG×2 (law-4 "other side"+equity-cap floor
+  WRONG; law-3 unconditional round-trip OVERSELL) → I re-derived vs engine (closeBand L2667 same club;
+  binary floor L2249–52; two-case L2025–28) → 3 clause fixes → skeptic RE-CLEAR
+  (`notes/skeptic/VERDICT_airtight_pass_2026-07-02.md`). Skeptic pattern logged: paper agent invents
+  mechanism NOUNS when compressing — check nouns vs code. Entry-344 gloss bar enforced (every law has
+  simple-English twin). PAGE COUNT still operator's Overleaf gate (~11.6–12.1 est, trim list: Fig3 →
+  §6 compress → annex).
+- **Trade-point conservation (entry-339 ORDERED build): spec RETURNED + committed** `specs/
+  SPEC_tradepoint_conservation_2026-07-02.md` (e579709). Exhibit exact w′=11/21; ρ=1 reduces to shipped
+  tradeUpdate (2.7e-16); KEY: live-reanchored close LEAKS in 9/9 cases → close = FROZEN-ARC reversal
+  (R-218 doctrine extended). New tradeUpdateAt+revertArc; CM8-v2/CM6-v2 gate plan; 5 operator FLAGs
+  open. NEXT: R6 skeptic scope-gate → itemized operator go → intern splice → tester acceptance.
+- **Dexter's-Lab review (entry 323): STILL RUNNING** as of 17:05 (PID 11643, started 16:25, locked room
+  /tmp/dexlane.6ahCBK, budget 8, slug review-wine-final-20260702). Mid-verification (wrote
+  verify_core_identities.py 16:47). ⚠ Reviews the PRE-airtight tex (staged 16:25) — reconcile at
+  cross-check; stop-press findings only to operator inside the window.
+- Transcript current through entry 347. Branch+main pushed in sync after each gate.
+
 🧭 **PRE-COMPACTION ROLLUP 2026-07-02 (entry 334) — READ THIS FIRST POST-COMPACTION:**
 **HEAD `7015c22c` on main = display slice of `9fdde1de` (PKG-ITM v2 linear re-seam) — all tester-passed,
 promoted, branch==main.** Chart-2 = true-V X wings + %/$ toggle; -B289/-B301 resolved. Engine+state blocks
