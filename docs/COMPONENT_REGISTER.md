@@ -56,6 +56,15 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7015c22c…` = disp
 ---
 
 ## PART B — Operator-agreed constraints (binding; a violation = REGRESSED = STOP)
+
+**B-AM (entry 318, 2026-07-02): American-style = CONSISTENCY, not optimality.** The product standard
+is "whatever a trader does is american style consistent, not necessarily optimal" (verbatim). SNELL IS
+OUT OF THE PICTURE — not parked, out of scope; no Snell/measure-layer work without an explicit operator
+reopen. The consistency properties are the binding set and are ALL VERIFIED: value≥intrinsic everywhere
+(O2 theorem + CM10 gate + tester-measured), exercise = holder's right anytime (engine-verified), ITM =
+parity (measured), C¹ seam at S*=K·g/(g+1) (O1 theorem + gate + measured). The deterministic-optimality
+theorems (T1b/O1) remain as free, hedged paper bonuses — they are NOT product requirements.
+
 _Completeness is a MAINTAINED property, not one-time: this is a curated subset of the binding
 agreements across ~139 transcript entries; the same-turn promotion duty + the skeptic's per-pass
 register-vs-transcript tail-audit keep it complete. A binding agreement found un-rowed = FLAG-PROCESS._

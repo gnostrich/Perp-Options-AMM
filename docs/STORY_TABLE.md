@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 3, 2026-07-02 (rows 5+11 → live; row 9 crux check in flight)._
+Edition 4, 2026-07-02 (Snell RULED out-of-picture, entry 318 — faithfulness standard = consistency, and it is fully met; row 9 crux check in flight)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
@@ -17,5 +17,6 @@ Edition 3, 2026-07-02 (rows 5+11 → live; row 9 crux check in flight)._
 | 11 | **The shadows (charts)** | Value-vs-price pictures = projections of the ray reads, never the object. Chart-2: both wings through the seam into ITM, CROSSING at the money (the X), with a %→$ toggle (same water, two rulers). | chart-2 rewired to true value + X wings + %→$ toggle + markers-on-curve; tent retired; dash-legibility fixed; acceptance PASS + re-check 17/17 | ✅ LIVE |
 | 12 | **The paper** | Tells this story; was RIGHT on the seam all along. | crisped, vol-direction, explicit trade formula, Merton fine print, anonymized; worked table now = what the app computes, verified | ✅ shipped (submission with operator) |
 
-**Parked / open:** ITM funding formalization (awaits operator's eye — offer: the funding picture);
-WINE compile confirmation (operator side); dictionary corrections ongoing.
+**Parked / open:** row-9 funding crux check (in flight) · paper page-pruning (operator, later) ·
+dictionary corrections ongoing. **Snell: OUT OF PICTURE by ruling (entry 318)** — the standard is
+American-CONSISTENCY (met, fully: theorem+gate+measured), not optimality.

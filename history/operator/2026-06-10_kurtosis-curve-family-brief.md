@@ -2519,3 +2519,11 @@ _Context: operator asks for more-TLDR simple-English answers and an easy path to
 _Context: operator: "just do the needful" (= run the carve check, park Snell, chart lands on PASS); paper page-pruning deferred ("idk yet... later"); asks what Snell is and whether American faithfulness is done. Manager dispatches the carve check and answers both in TLDR form._
 
 > umm just do the needful gang — and paper idk yet pruning pages etc later; can you tell me what snell and also the american faithfulness is that done?
+
+
+---
+
+## Entry 318 — 2026-07-02 UTC
+_Context: operator RULES Snell out of the picture: the standard is "whatever a trader does is american style consistent, not necessarily optimal." Manager records the ruling (register row B-AM), retires the "go snell" lever (Snell = out-of-scope permanently; the existing deterministic-optimality theorems remain as free hedged bonuses in the paper, no changes needed). Under this definition the faithfulness ledger is COMPLETE: consistency properties (value≥payoff, exercise-anytime, parity ITM, C¹ seam) are all theorem+gate+measured._
+
+> i'd like to keep snell away because thats outside my picture. my picture is whatever a trader does is american style consistent, not necessarily optimal
