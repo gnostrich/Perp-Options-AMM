@@ -1,0 +1,79 @@
+{
+  "run": "B",
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "e148c9b734abdff522c31c56be41fb66",
+  "checks": [
+    {
+      "n": "T1 load: 3 scripts live (Engine.tradeUpdateAt+revertArc exported), charts render, 0 pageerrors so far",
+      "p": true,
+      "d": "boot={\"engine\":true,\"store\":true,\"ui\":true,\"oracle\":80000,\"w\":0.5} canvas-curve nonBlank=10056 canvas-pricing nonBlank=12510 errors=0"
+    },
+    {
+      "n": "T2 exhibit in LIVE page: tradeUpdateAt((10,10,5,5),dy=+1,rho=4) → x=215/22, y=11, w=11/21 (NOT naive 22/43)",
+      "p": true,
+      "d": "x=9.772727272727273 (exp 9.772727272727273) y=11 w=0.5238095238095238 (exp 0.5238095238095238=0.523809524; naive 0.511628) input-unmutated=true"
+    },
+    {
+      "n": "T2b rho=1 reduces EXACTLY to spot tradeUpdate; ATM keeps alpha,beta steady",
+      "p": true,
+      "d": "maxRel(reduction)=1.4551915228366853e-16 maxRel(alpha,beta drift @rho=1)=1.4551915228366853e-16"
+    },
+    {
+      "n": "T3 open/close sweep: 5 bands (both wings, deep OTM, m=1+m=2) all restore (x,y,w,alpha,beta) via arc reversal",
+      "p": true,
+      "d": "L1 long call120k/put48k m=1: openΔw=3.106e-3 resid dx=0 dy=0 dw=0 dα=0 dβ=0 settled=null ok=true | S1 short put60k/call100k m=1: openΔw=-1.916e-3 resid dx=0 dy=0 dw=1.1102230246251565e-16 dα=8.881784197001252e-16 dβ=0 settled=null ok=true | L2 long DEEP call200k/put20k m=2: openΔw=3.130e-3 resid dx=0 dy=0 dw=0 dα=0 dβ=1.1641532182693481e-10 settled=null ok=true | S2 short DEEP put30k/call180k m=2: openΔw=-9.877e-4 resid dx=0 dy=0 dw=0 dα=0 dβ=0 settled=null ok=true | L3 long nearATM call90k/put70k m=2: openΔw=2.016e-3 resid dx=0 dy=0 dw=0 dα=0 dβ=0 settled=null ok=true"
+    },
+    {
+      "n": "T3b every off-ATM open VISIBLY re-leans w AND moves alpha (trade-point law live)",
+      "p": true,
+      "d": "L1 long call120k/put48k m=1: Δw=3.106e-3 Δα=-2.670e-4 | S1 short put60k/call100k m=1: Δw=-1.916e-3 Δα=2.471e-4 | L2 long DEEP call200k/put20k m=2: Δw=3.130e-3 Δα=-3.883e-3 | S2 short DEEP put30k/call180k m=2: Δw=-9.877e-4 Δα=-1.322e-3 | L3 long nearATM call90k/put70k m=2: Δw=2.016e-3 Δα=2.175e-5"
+    },
+    {
+      "n": "T4 close WITH intervening trade: succeeds, no NaN, own increments net out EXACTLY (pool keeps B's moves)",
+      "p": true,
+      "d": "A arcs Σ(dxA,dyA,dwA)=(-6.2267e-2,5202.335307670176,3.1060e-3) net-out resid x=0 y=9.094947017729282e-13 w=5.551115123125783e-17 raw_net=0.00006016732842200473 errors=0"
+    },
+    {
+      "n": "T4b closing B too returns the pool to the original state (additivity)",
+      "p": true,
+      "d": "resid x=0 y=0 w=0"
+    },
+    {
+      "n": "T5 iv-alpha/iv-beta VISIBLY move on off-ATM open (disclosed §4-2 delta, measured) and return ~0 on close",
+      "p": true,
+      "d": "iv-alpha \"-8.8818e-16\"→\"-2.6695e-4\"→closed \"-8.8818e-16\" (num -2.6695e-4→-8.8818e-16); iv-beta \"0\"→\"100.2216\"→closed \"1.1642e-10\" (num 1.0022e+2→1.1642e-10)"
+    },
+    {
+      "n": "T5b chart-1 re-anchors on off-ATM trade (hash delta)",
+      "p": true,
+      "d": "hash 6019540fc2c5→51e4c1065890"
+    },
+    {
+      "n": "T6a engine depth guard: put-wing cash-out rejects at TRADE-POINT depth (tighter than old y−beta), honest reason",
+      "p": true,
+      "d": "cash=$200000 newDepth=$200000 (0.9×=180000) oldDepth=$399999.9999999999 (0.9×=359999.9999999999) reason=\"At-strike cash $200000.00 exceeds 90% of pool cash depth at the tx-ray $200000.00 — trade rejected.\""
+    },
+    {
+      "n": "T6b UI depth guard: warn banner cites tx-ray depth, execute disabled, notional NOT silently capped, no band opened",
+      "p": true,
+      "d": "warn=\"At-strike cash $200000.00 exceeds 90% of pool cash depth at the tx-ray $200000.00 — trade rejected.\" execDisabled=true notional=\"10\" open=0"
+    },
+    {
+      "n": "T7 preview animation: multi-frame sweep renders, per-leg {dy,rho} frozen+finite, s=1 endpoint == tradeUpdateAt chain == __previewPool, no errors",
+      "p": true,
+      "d": "distinct-frames=11/16 legs=[{\"dy\":52000,\"rho\":1.625},{\"dy\":20330.37,\"rho\":0.55099}] chainRel=0 previewW=0.5392842674671707 animErrors=0"
+    },
+    {
+      "n": "T-ERR zero console errors / zero pageerrors overall",
+      "p": true,
+      "d": "errors=0 [] dialogs=0"
+    },
+    {
+      "n": "T8 build md5 unchanged (read-only)",
+      "p": true,
+      "d": "e148c9b734abdff522c31c56be41fb66 → e148c9b734abdff522c31c56be41fb66"
+    }
+  ],
+  "errors": [],
+  "dialogs": []
+}

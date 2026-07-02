@@ -1,0 +1,46 @@
+TRADE-POINT CONSERVATION — LIVE ACCEPTANCE EVIDENCE (tester, 2026-07-02)
+Build: engine/builds/HEAD_temporal_mvp_v28_lens.html  md5 e148c9b734abdff522c31c56be41fb66
+Revert twin: engine/builds/temporal_mvp_v28_lens_reservepoint.html  md5 7015c22cbd8e78238bdd621f6126713d
+Spec: specs/SPEC_tradepoint_conservation_2026-07-02.md (operator entry 339 order / entry 377 go)
+Verdict: PASS — acceptance 14/14 x2 byte-stable + adapted standing smoke 17/17 x2 byte-identical.
+Findings: -TP339-CAPTION (stale alpha/beta-conservation UI captions L1340/L1368, OPEN intern
+one-liner); #16 PROVISIONAL pending operator ratification of 5 spec pinned defaults (-TP339-RATIFY).
+
+Files:
+  RESULT_runA.json / RESULT_runB.json      — 14-check acceptance, BYTE-IDENTICAL modulo run label
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt      — full logs
+  A_drift_readout.png / B_...              — iv-alpha/iv-beta visibly moved after off-ATM open (T5)
+  A_depth_guard.png / B_...                — UI warn banner citing tx-ray depth, execute disabled (T6b)
+  A_preview_endstate.png / B_...           — chart-2 after the per-leg animation sweep (T7)
+  TP_SMOKE_RESULT_run1.json / _run2.json   — 17/17 adapted standing smoke, BYTE-IDENTICAL
+  TP_SMOKE_RUN_LOG_run1.txt / _run2.txt    — smoke logs
+  TP_SMOKE_RESULT.json / TP_SMOKE_RUN_LOG.txt — last-run copies (== run2)
+  TP_SMOKE_chart2_band_m2.png              — overlays: red sold + green bought dots on curve arms
+  TP_SMOKE_deepITM_preclose.png / _postclose.png — S11 deep-ITM settle-to-cash path
+
+  DIAGNOSTIC_oldsmoke_RESULT.json / _RUN_LOG.txt — the UNMODIFIED old standing smoke run on this
+                                             build: 16/17, sole FAIL = S4 (w 0.503106 -> 0.499962)
+                                             = the predicted disclosed delta. (The old smoke's own
+                                             output files under evidence/display_slice_acceptance/
+                                             were restored to their committed state afterwards.)
+
+Harnesses: engine/verify/pw_tradepoint_acceptance.mjs (arg A|B)
+           engine/verify/pw_tradepoint_standing_smoke.mjs
+Smoke lineage: forked from pw_display_slice_standing_smoke.mjs with ONE expectation update
+(S4 -> S4-v2): under the trade-point law the arb equilibrium lean is beta/alpha-dependent, so
+"arb -> w=0.5 exactly" is the OLD law's invariant. Diagnostic run of the UNMODIFIED old smoke on
+this build: 16/17, sole FAIL = S4, w post-arb 0.499962 (|w-0.5| = 3.8e-5 = the disclosed spec §4
+delta 2, predicted in a node vm probe BEFORE the live run). S4-v2 asserts mp/oracle == 1 (<=1e-9),
+w visibly moves, and RECORDS the re-lean. Expectation corrected WITH PROOF, not patched to green.
+
+Key measured numbers (run A == run B):
+  T2  exhibit: x'=9.772727272727273 (215/22), y'=11, w'=0.5238095238095238 (11/21); naive 22/43 NOT produced
+  T2b rho=1 reduction maxRel 1.455e-16; ATM alpha/beta steadiness 1.455e-16
+  T3  5-config sweep residuals: dx=0, dy=0, dw<=1.1e-16, dAlpha<=8.9e-16, dBeta<=1.2e-10
+  T3b open re-leans: L1 +3.106e-3 / S1 -1.916e-3 / L2 +3.130e-3 / S2 -9.877e-4 / L3 +2.016e-3
+  T4  intervening-trade net-out residuals: x=0, y=9.09e-13, w=5.55e-17; T4b full unwind 0/0/0
+  T5  iv-alpha -8.8818e-16 -> -2.6695e-4 -> -8.8818e-16; iv-beta 0 -> 100.2216 -> 1.1642e-10
+  T6  guard: reject at $200,000 tx-ray depth (old y-beta depth $400,000) — put wing tighter, honest string
+  T7  animation 11/16 distinct frames; s=1 chain rel 0 (machine-identical to __previewPool)
+  Gates: run_all exit 0 — lens_selfcheck 24/24 + a16 5/5 HARD; monolith 8/8 report-only
+  File-safety: blobs ab663f5c(L74)/c505b08a(L1060) canonical; 3 scripts parse; longest non-blob 1217

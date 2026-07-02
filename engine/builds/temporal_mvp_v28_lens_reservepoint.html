@@ -1337,8 +1337,8 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           <div class="stat-line"><span class="label">β drift</span><span class="val" id="iv-beta">—</span></div>
           <div class="stat-line"><span class="label">curve k drift</span><span class="val" id="iv-k">—</span></div>
           <div class="sim-aid-label" style="padding: 6px 8px 0;">
-            Trade-point law (entry 339): a trade conserves the LOCAL pair (α_T, β_T) at its own trade point — global α, β MOVE on off-ATM trades BY DESIGN, so drift shows here after an off-ATM open.
-            Machine-epsilon drift applies to the ρ=1 paths (spot / arb / rebase) and to open→close arc round-trips. Rebase explicitly rescales α (and k by r^w); see rebasing_logic_note.md §4.
+            Identity IV: trades preserve α, β, and (x−α)(y−β) = αβ. Drifts here should track machine-epsilon only.
+            Rebase explicitly rescales α (and k by r^w); see rebasing_logic_note.md §4.
           </div>
         </div>
         <div class="panel-section">
@@ -1365,7 +1365,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
     <div class="card-outer">
       <div class="card-header">
         <div class="card-title">Pool State · Live</div>
-        <div class="card-subtitle">closed-form · trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths</div>
+        <div class="card-subtitle">closed-form · α/β-conserving · Identity IV</div>
       </div>
 
       <div class="graph-card-body">
@@ -1412,7 +1412,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             <canvas id="canvas-pricing" width="900" height="380"></canvas>
             <div class="preview-stepper">
               <span class="preview-stepper-label">units</span>
-              <button type="button" id="pricing-unit-pct" class="preview-step-btn active">fraction of escrow unit</button>
+              <button type="button" id="pricing-unit-pct" class="preview-step-btn active">% of escrow unit</button>
               <button type="button" id="pricing-unit-usd" class="preview-step-btn">$ value</button>
             </div>
             <div class="legend">
@@ -1425,7 +1425,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-long-fg);"></span> bought strike</div>
             </div>
             <div class="caption">
-              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle; $K lens row shows the strike in dollars. Y-axis: TRUE per-unit option value — the same smooth-pasted read (markLensed at g = m·γ) settlement uses, drawn per wing across ALL strikes at the live pool state, ITM branches included. Solid = pool-quoted continuation; dashed (same color) = parity/intrinsic tail past the smooth-pasting seam — an escrow-backed settlement claim, not a pool quote. Seams: put tail where S &lt; K·g/(g+1) (0.667K at g=2), call tail where S &gt; K·(g+1)/g. Fraction view: value as a fraction of the wing's own escrow unit (put: K cash; call: 1 perp) — both wings saturate toward 1 deep ITM and cross near ATM. $ view: × the unit's dollar size (put ×K, call ×S) — the ITM tails become straight lines (the X); y-axis clamped at 1.25×S, the deep put tail exits the top. SLOPE MULT m stays visible: wings steepen with m, the two seams march inward toward ATM, and the ATM crossing height (g/(g+1))^g/(g+1) falls as m rises. Vertical dashed line = mode φ_m, drawn up to the curve (the peak=1 apex convention is retired). Horizontal dashed line = escrow saturation (1) in fraction view / spot S in $ view. Coffee dotted = post-trade preview.
+              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle; $K lens row shows the strike in dollars. Y-axis: TRUE per-unit option value — the same smooth-pasted read (markLensed at g = m·γ) settlement uses, drawn per wing across ALL strikes at the live pool state, ITM branches included. Solid = pool-quoted continuation; dashed (same color) = parity/intrinsic tail past the smooth-pasting seam — an escrow-backed settlement claim, not a pool quote. Seams: put tail where S &lt; K·g/(g+1) (0.667K at g=2), call tail where S &gt; K·(g+1)/g. % view: value as a fraction of the wing's own escrow unit (put: K cash; call: 1 perp) — both wings saturate toward 1 deep ITM and cross near ATM. $ view: × the unit's dollar size (put ×K, call ×S) — the ITM tails become straight lines (the X); y-axis clamped at 1.25×S, the deep put tail exits the top. SLOPE MULT m stays visible: wings steepen with m, the two seams march inward toward ATM, and the ATM crossing height (g/(g+1))^g/(g+1) falls as m rises. Vertical dashed line = mode φ_m, drawn up to the curve (the peak=1 apex convention is retired). Horizontal dashed line = escrow saturation (1) in % view / spot S in $ view. Coffee dotted = post-trade preview.
             </div>
           </div>
 
@@ -1589,9 +1589,7 @@ SCRIPT BLOCKS
 <script id="engine">
 'use strict';
 /* PROD PORT MAPPING (each function → Go file in perp-backend-main):
- *   tradeUpdate            → transact/amm_update.go (SPOT law — kept byte-identical)
- *   tradeUpdateAt          → transact/amm_update.go (the LIVE trade path — trade-point law, entry 339)
- *   revertArc              → settlements/perp/services/close.go (frozen-arc close reversal)
+ *   tradeUpdate            → transact/amm_update.go (replaces RB-tree path)
  *   compositeRay           → new: transact/composite_ray.go
  *   vsValue / bsValue      → same file, Identities I/II/III
  *   executeCompositeLeg    → transact/transact.go (replaces buy/sell tree walks)
@@ -1619,9 +1617,6 @@ const Engine = (function() {
 
   // ─────────────────────────────────────────────────────────────────────
   // CONSTANT SLOPE-MULTIPLIER LENS (READ LAYER ONLY; never touches the pool).
-  // (The POOL trade law itself is trade-point-anchored since the entry-339
-  // build — tradeUpdateAt; a pool-layer change, not a lens change. The LENS
-  // still never touches the pool.)
   // Static slope-multiplier knob m gives the option/value curve the SAME
   // power-law steepness m·γ at every strike (no elbow-rounding, no flat-top).
   // Constant slope-multiplier lens (operator entries 229/231; skeptic
@@ -1629,9 +1624,8 @@ const Engine = (function() {
   // option-value curve has the SAME power-law steepness at EVERY strike:
   //   g_loc(K) = m · γ   (constant, NO u-dependence),  γ = w/(1−w) LIVE.
   // m is the static slope multiplier (the knob formerly called τ): m = 1 is
-  // exactly the plain v24 curve (steepness γ); larger m ⇒ steeper everywhere.
-  // Vol calibration runs the OTHER way (entry 289): a MORE volatile asset
-  // takes a LOWER m — fatter wings. This REPLACES the old position-dependent elbow lens
+  // exactly the plain v24 curve (steepness γ); larger m ⇒ steeper everywhere
+  // (more vol / sharper). This REPLACES the old position-dependent elbow lens
   // h_τ(u)=√(τ²+u²)−τ — there is NO elbow-rounding, NO flat-top, NO frozen-γ
   // wing: the wings are exact power-laws of exponent m·γ (asymptote-respecting
   // in the weak sense — still power-laws, but at m·γ, not γ). The ATM cusp of
@@ -1712,46 +1706,6 @@ const Engine = (function() {
     const x_new = s.x + dx;
     if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0 || y_new <= 0) return null;
     return { x: x_new, y: y_new, alpha: s.alpha, beta: s.beta };
-  }
-
-  // Identity IV′ — TRADE-POINT conservation law (paper Eq. 2; operator entries
-  // 14/16/339; inventory #16 anchoring fix). rho = theta_tx/mode — the strike's
-  // moneyness ratio (rho=1 ⇒ spot ⇒ reduces EXACTLY to tradeUpdate). The
-  // conservation law is applied AT the trade point T = ray∩curve with the LOCAL
-  // pair α_T,β_T; flows are drawn from the ACTUAL reserves; the new lean is read
-  // at the displaced trade point. Global α,β genuinely move (by design — paper
-  // §2.3). Exhibit: (10,10,½), rho=4, dy=+1 ⇒ Δx=−5/22, w′=11/21.
-  function tradeUpdateAt(s, dy, rho) {
-    if (!(rho > 0) || !isFinite(rho)) return null;         // NaN-loud registration
-    const w  = s.alpha / s.x;
-    const xT = s.x * Math.pow(rho, w - 1);                  // T on the CURRENT curve
-    const yT = s.y * Math.pow(rho, w);
-    const aT = w * xT;                                      // α_T (local offsets AT T)
-    const bT = (1 - w) * yT;                                // β_T
-    const yTn = yT + dy;
-    if (!(yTn > bT)) return null;                           // admissible domain (Eq. 2)
-    const denom = (yT - bT) * (yTn - bT);
-    if (Math.abs(denom) < 1e-12) return null;
-    const dx = -aT * bT * dy / denom;                       // translated-CP flow AT T
-    const x_new = s.x + dx, y_new = s.y + dy;               // ACTUAL reserves move
-    if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0 || y_new <= 0) return null;
-    const w_new = aT / (xT + dx);                           // lean at displaced T
-    if (!(w_new > 0 && w_new < 1)) return null;
-    return { x: x_new, y: y_new, alpha: x_new * w_new, beta: y_new * (1 - w_new) };
-  }
-
-  // Frozen-arc close (R-218 extended: freeze the ARC, not just the strike). arc =
-  // {dxA, dyA, dwA, oOpen} captured at open; rr = oracle_now/arc.oOpen (rebase
-  // scales x-amounts). Exact inverse of the leg's own open flows + lean increment;
-  // machine-exact round trip; intervening trades' moves are kept. Honest reject
-  // on infeasible.
-  function revertArc(s, arc, rr) {
-    if (!arc || !isFinite(arc.dxA) || !isFinite(arc.dyA) || !isFinite(arc.dwA)) return null;
-    const r = (isFinite(rr) && rr > 0) ? rr : 1;
-    const w_live = s.alpha / s.x;
-    const x2 = s.x - arc.dxA * r, y2 = s.y - arc.dyA, w2 = w_live - arc.dwA;
-    if (!(x2 > 0 && y2 > 0 && w2 > 0 && w2 < 1)) return null;
-    return { x: x2, y: y2, alpha: x2 * w2, beta: y2 * (1 - w2) };
   }
 
   // Rebase (frame-keeping; see rebasing_logic_note §3).
@@ -1869,30 +1823,25 @@ const Engine = (function() {
     const u_tx = tau * a_tx;                              // constant multiplier m: u_tx = m·a (tau param carries the knob value m)
     const theta_tx = mode_tx * Math.exp(u_tx);          // = mode·(chosen/mode)^m, FROZEN at open (stored as K_tx)
     const K_tx = theta_tx * fx;                          // tx-strike in dollars (frozen, oracle-drift-invariant)
-    const rho_tx = Math.exp(u_tx);                       // = theta_tx/mode_tx — the strike's moneyness ratio (PIN-2, no new read)
     const K_usd = theta_inner * fx;                      // chosen strike in dollars (settlement/valuation basis, kept)
     const dy = (wingSign * legSign) * N * K_tx;          // cash delta on the pool's y leg (AT inverse-lens tx-strike)
-    // ── Reserve guard (spec §2.3 → trade-point §1.5, entry 339) — cash-OUT
-    // (dy<0) may not exceed the pool's cash depth AT THE TRADE POINT:
-    // y_T − β_T = w·y_T = w·y·ρ^w (the y_T→β_T singularity). Put-side rays
-    // (ρ<1) are genuinely THINNER, call-side deeper — geometrically faithful
-    // (the put corner is x-rich, y-poor). HONEST REJECT with the numbers;
-    // NEVER a silent cap, never a mutated N. DEPTH_FRAC < 1 keeps a margin
-    // off the singularity.
+    // ── Reserve guard (spec §2.3) — cash-OUT (dy<0) may not exceed the pool's
+    // cash depth y−β. HONEST REJECT with the numbers; NEVER a silent cap,
+    // never a mutated N. Now fires on N·K_tx (the bigger swap — capacity at a
+    // chosen strike shrinks; skeptic §4 / g-tx4). DEPTH_FRAC < 1 keeps a margin
+    // off the y→β singularity.
     if (dy < 0) {
-      const w0 = state.alpha / state.x;
-      const depth = w0 * state.y * Math.pow(rho_tx, w0);
+      const depth = state.y - state.beta;
       if (N * K_tx >= DEPTH_FRAC * depth) {
         return { rejected: true,
-                 reason: `At-strike cash $${(N * K_tx).toFixed(2)} exceeds ${(DEPTH_FRAC * 100).toFixed(0)}% of pool cash depth at the tx-ray $${depth.toFixed(2)} — trade rejected.` };
+                 reason: `At-strike cash $${(N * K_tx).toFixed(2)} exceeds ${(DEPTH_FRAC * 100).toFixed(0)}% of pool cash depth $${depth.toFixed(2)} — trade rejected.` };
       }
     }
-    const post = tradeUpdateAt(state, dy, rho_tx);
+    const post = tradeUpdate(state, dy);
     if (!post) return null;
     return { newState: post, V: p.V, theta_star: p.theta_star, delta: p.delta, dy,
              m_star: p.m_star, inner: theta_inner, outer: theta_outer, wing, N, legType, mode: p.mode,
-             K_usd, K_tx, theta_tx, rho_tx,
-             arc: { dxA: post.x - state.x, dyA: dy, dwA: (post.alpha / post.x) - (state.alpha / state.x), oOpen: fx } };
+             K_usd, K_tx, theta_tx };
   }
 
   // Back-compat alias.
@@ -2023,12 +1972,10 @@ const Engine = (function() {
   // ── closeBand — settlement protocol ────────────────────────────────────
   // Unified leg value (carved-perp UNITS — stage 2, NOT dollars):
   //   legValue = N · ( markEff(inner) − markEff(outer) )
-  // markEff = per-barrier settled-to-cash fraction — the LENSED American
-  // smooth-paste markLensed (v28 paragraph below): continuation runs PAST
-  // the strike to S*, then intrinsic. (Historical: the plain v24 mark()
-  // min(·,1) saturating at 1 at the strike WAS the old effective-strike
-  // substitution — SUPERSEDED here; mark() survives only as the plain
-  // regime-test primitive.) A barrier leg has no outer ⇒ outer term = 0.
+  // markEff = per-barrier mark with effective-strike substitution. The
+  // engine's mark() already saturates at 1 once spot crosses the strike
+  // (ITM), which IS the effective-strike substitution (strike → spot ⇒
+  // mark tops out at 1). A barrier leg has no outer ⇒ outer term = 0.
   // legValueUnified is KEPT barrier-by-barrier (N·(markIn−markOut)); the
   // composite-ray shortcut is transaction-side only, not used here.
   // markEff — LENSED (v28 Stage 2, W4). The settled-to-cash fraction is now
@@ -2132,25 +2079,22 @@ const Engine = (function() {
     };
     band = { ...band, sold: liveRay(band.sold), bought: liveRay(band.bought) };
 
-    // ── FROZEN-ARC close reversal (trade-point law, operator entry 339;
-    // extends R-218's frozen-K_tx doctrine: freeze the ARC, not just the
-    // strike). The OPEN leg moved the pool through tradeUpdateAt at the
-    // frozen tx-ray; each leg stored arc = {dxA, dyA, dwA, oOpen} — its own
-    // reserve flows AND its own lean increment. The close applies the exact
-    // inverse (x″ = x − dxA·rr, y″ = y − dyA, w″ = w − dwA; rr = oNow/oOpen
-    // scales the x-flow because rebase scales x-amounts) ⇒ the pool round-
-    // trips machine-exact and intervening trades' moves are KEPT (w″ removes
-    // only this leg's own increment). dy_close = −arc.dyA equals −(open dy)
-    // at the frozen K_tx identically — the dollar-frozen reversal doctrine is
-    // unchanged; it now carries the x-flow and the w-increment too. The
-    // lensed premium X/Y below is UNCHANGED and STILL the trader-valuation
-    // basis (entry 96); only the pool swap changed law.
-    // R-218 (kept): a live-mode re-registration at close would NOT cancel
-    // (skeptic $1395; every live rule leaks — spec §1.4 table). Ksold/Kbought
-    // below stay K_tx-FIRST for the LEGACY fallback (bands saved before this
-    // build carry no arc): those close via today's at-strike tradeUpdate
-    // reversal at the frozen K_tx, K_inner only for pre-R-218 bands — no new
-    // leak vector.
+    // ── A14 AT-STRIKE close reversal (register A14; operator entry 197) ──────
+    // The OPEN leg moved the pool by the at-strike cash dy = wingSign·legSign·
+    // N·K_usd (executeLeg). To make the pool RESERVES round-trip EXACT, the
+    // close reverses each leg with dy = −(open dy) using the SAME stored N and
+    // K_inner (dollars — oracle-drift-invariant, see executeLeg). The lensed
+    // premium X/Y below is UNCHANGED and STILL the trader-valuation basis
+    // (entry 96); only the pool swap is at-strike. (The residual mark-on-own-
+    // bend valuation netting is the A15 deferred item, NOT closed here.)
+    //   open dy (sold,  legSign +1) =  wingSign·N·K   ⇒ reverse = −wingSign·N·K
+    //   open dy (bought, legSign −1) = −wingSign·N·K   ⇒ reverse = +wingSign·N·K
+    // R-218: the OPEN pool swap was sized at the FROZEN inverse-lens tx-strike
+    // K_tx (executeLeg), NOT the chosen K_inner. The reversal MUST reuse the same
+    // frozen K_tx so dy_close = −dy_open and the pool reserves round-trip EXACT —
+    // recomputing theta_tx live here from a drifted mode would NOT cancel (skeptic
+    // $1395 leak). Fall back to K_inner only for legacy bands opened before this
+    // build carried K_tx (loud-ish: keeps old saved bands closable, no new leak).
     const oForK   = (oNow > 0) ? oNow : 1;
     const Ksold   = (isFinite(band.sold.K_tx)   && band.sold.K_tx   > 0) ? band.sold.K_tx
                   : (isFinite(band.sold.K_inner)   && band.sold.K_inner   > 0) ? band.sold.K_inner   : band.sold.inner   * oForK;
@@ -2161,9 +2105,6 @@ const Engine = (function() {
     // reversal dy = −(open dy): sold open legSign +1, bought open legSign −1.
     const dyRevSold   = -(wsSold   * (+1) * band.sold.N   * Ksold);
     const dyRevBought = -(wsBought * (-1) * band.bought.N * Kbought);
-    // Frozen-arc rebase factor rr = oracle_now / oracle_at_open, per leg.
-    const rrSold   = (band.sold.arc   && band.sold.arc.oOpen   > 0) ? oForK / band.sold.arc.oOpen   : 1;
-    const rrBought = (band.bought.arc && band.bought.arc.oOpen > 0) ? oForK / band.bought.arc.oOpen : 1;
 
     // (1) Which leg, if any, is ITM — POOL-MARK-referenced (Item 2):
     // live sNorm vs the leg's live θ, same-layer test companion of
@@ -2222,11 +2163,9 @@ const Engine = (function() {
       // same reciprocal coordinate — both legs move together, §11.4-C).
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
       Y = px_b.V; m_b = px_b.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
-      // Pool reversal — FROZEN ARC (exact inverse of own flows + lean increment);
-      // legacy pre-arc band falls back to today's K_tx-first at-strike reversal.
-      const s_after_Y = band.bought.arc ? revertArc(s, band.bought.arc, rrBought)
-                                        : tradeUpdate(s, dyRevBought);
-      if (!s_after_Y) return { ok: false, reason: band.bought.arc ? 'Bought-leg close infeasible (arc reversal).' : 'Bought-leg (live) close singular.' };
+      // Pool reversal is AT-STRIKE = −(open dy) ⇒ exact reserve restoration.
+      const s_after_Y = tradeUpdate(s, dyRevBought);
+      if (!s_after_Y) return { ok: false, reason: 'Bought-leg (live) close singular.' };
       s = s_after_Y;
       live_leg = 'bought';
     } else if (boughtITM) {
@@ -2238,10 +2177,9 @@ const Engine = (function() {
       // Sold leg is the live OTM leg → reverse on AMM (LENSED legPrice).
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
       X = px_s.V; m_s = px_s.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
-      // Pool reversal — FROZEN ARC; legacy pre-arc band → today's K_tx-first path.
-      const s_after_X = band.sold.arc ? revertArc(s, band.sold.arc, rrSold)
-                                      : tradeUpdate(s, dyRevSold);
-      if (!s_after_X) return { ok: false, reason: band.sold.arc ? 'Sold-leg close infeasible (arc reversal).' : 'Sold-leg (live) close singular.' };
+      // Pool reversal is AT-STRIKE = −(open dy) ⇒ exact reserve restoration.
+      const s_after_X = tradeUpdate(s, dyRevSold);
+      if (!s_after_X) return { ok: false, reason: 'Sold-leg (live) close singular.' };
       s = s_after_X;
       live_leg = 'sold';
     } else {
@@ -2250,16 +2188,14 @@ const Engine = (function() {
       // at-strike reversal dy = −(open dy) per leg ⇒ reserves restore exact.
       const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
       X = px_s.V; m_s = px_s.m_star;
-      const s_after_X = band.sold.arc ? revertArc(s, band.sold.arc, rrSold)
-                                      : tradeUpdate(s, dyRevSold);   // FROZEN ARC; legacy → K_tx-first
-      if (!s_after_X) return { ok: false, reason: band.sold.arc ? 'Sold-leg close infeasible (arc reversal).' : 'Sold-leg close singular.' };
+      const s_after_X = tradeUpdate(s, dyRevSold);
+      if (!s_after_X) return { ok: false, reason: 'Sold-leg close singular.' };
       s = s_after_X;
 
       const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
       Y = px_b.V; m_b = px_b.m_star;
-      const s_after_Y = band.bought.arc ? revertArc(s, band.bought.arc, rrBought)
-                                        : tradeUpdate(s, dyRevBought);   // FROZEN ARC; legacy → K_tx-first
-      if (!s_after_Y) return { ok: false, reason: band.bought.arc ? 'Bought-leg close infeasible (arc reversal).' : 'Bought-leg close singular.' };
+      const s_after_Y = tradeUpdate(s, dyRevBought);
+      if (!s_after_Y) return { ok: false, reason: 'Bought-leg close singular.' };
       s = s_after_Y;
     }
 
@@ -2356,7 +2292,7 @@ const Engine = (function() {
     getW, getSNorm, getDepth, getMP_raw, poolMark,
     mark, compositeRay, vsValue, bsValue,
     lensU, gLoc, markLensed,        // constant slope-multiplier lens (g_loc=m·γ)
-    tradeUpdate, tradeUpdateAt, revertArc, rebase, arbitrageToOracle,
+    tradeUpdate, rebase, arbitrageToOracle,
     legPrice, executeLeg, executeBand,
     executeCompositeLeg, executeFourStrikeSpread,    // aliases for back-compat
     closeBand, fundingPerStrike, isBarrier, isOTM,
@@ -2404,7 +2340,6 @@ const Store = (function() {
       // Constant slope-multiplier knob m — STATIC (vol-set at deploy; never moved
       // by trades). The single NEW user control this build adds. m ≥ 1; m=1 is the
       // plain v24 curve (steepness γ); larger m ⇒ steeper everywhere (g_loc=m·γ).
-      // Vol calibration (entry 289): a MORE volatile asset takes a LOWER m (fatter wings).
       // Steepness γ is v24's derived w/(1−w). Legacy imports without m → setM guards.
       m: 1.0,
 
@@ -2670,14 +2605,12 @@ const Store = (function() {
       sold:   { inner: sold.inner,   outer: sold.outer,
                 K_inner: sold.K_inner, K_outer: sold.K_outer,
                 K_tx: result.leg1.K_tx,                  // FROZEN inverse-lens tx-strike ($) — close reversal reuses this
-                arc: result.leg1.arc,                    // FROZEN open arc {dxA,dyA,dwA,oOpen} — frozen-arc close (entry 339)
                 mode: result.leg1.mode,
                 N: result.N_sell, V_at_open: result.V_sell,
                 funding_inner: 0, funding_outer: 0 },
       bought: { inner: bought.inner, outer: bought.outer,
                 K_inner: bought.K_inner, K_outer: bought.K_outer,
                 K_tx: result.leg2.K_tx,                  // FROZEN inverse-lens tx-strike ($) — close reversal reuses this
-                arc: result.leg2.arc,                    // FROZEN open arc {dxA,dyA,dwA,oOpen} — frozen-arc close (entry 339)
                 mode: result.leg2.mode,
                 N: result.N_buy, V_at_open: result.V_buy,
                 funding_inner: 0, funding_outer: 0 },
@@ -3265,8 +3198,6 @@ function previewBand() {
   window.__previewBand = { sold_wing: inp.sold_wing, bought_wing: inp.bought_wing, sold, bought,
                            leg1_theta_star: sim.leg1.theta_star, leg1_mode: sim.leg1.mode,
                            leg2_theta_star: sim.leg2.theta_star, leg2_mode: sim.leg2.mode,
-                           legs: [ { dy: sim.leg1.dy, rho: sim.leg1.rho_tx },
-                                   { dy: sim.leg2.dy, rho: sim.leg2.rho_tx } ],   // frozen per-leg {dy, ρ} — trade-point animation (entry 339)
                            leg1State: sim.leg1.newState, leg2State: sim.finalState };
   if (window.__previewStep !== 1 && window.__previewStep !== 2) window.__previewStep = 2;
   window.__previewPool = (window.__previewStep === 1) ? sim.leg1.newState : sim.finalState;
@@ -3677,26 +3608,12 @@ const Viz = (function() {
   // the EXISTING live lensed read of an intermediate pool along the trade path —
   // no new curve math, no held center, no override; each frame's curve draws at
   // that frame's OWN 45°-tangent point (the live read). The money path is
-  // untouched: framePool only calls the PURE Engine.tradeUpdateAt (returns a
+  // untouched: framePool only calls the PURE Engine.tradeUpdate (returns a
   // fresh state, never mutates its argument).
-  // framePool(state, legs, s): the pool after executing fraction s of the trade,
-  // PER-LEG SEQUENTIAL (trade-point law, entry 339): legs = [{dy, rho}] frozen by
-  // the preview dry-run; leg k owns s ∈ (k/n, (k+1)/n] — earlier legs applied in
-  // FULL, the active leg partially, all through the SAME pure Engine.tradeUpdateAt
-  // the money path uses (a net-dy spot replay would ride the wrong fixed-α,β path
-  // and jump at the end). s=0 ⇒ pre-trade state; s=1 ⇒ EXACTLY the preview pool
-  // (same calls, same frozen dy/ρ). Returns null on an infeasible step (caller
-  // degrades to a static draw — never animate a wrong path).
-  function framePool(state, legs, s) {
-    if (!legs || !legs.length) return null;
-    let pool = state;
-    for (let k = 0; k < legs.length; k++) {
-      const frac = Math.min(1, Math.max(0, s * legs.length - k));
-      if (frac <= 0) break;
-      pool = Engine.tradeUpdateAt(pool, legs[k].dy * frac, legs[k].rho);
-      if (!pool) return null;
-    }
-    return pool;
+  // framePool(state, dy, s): the pool after executing fraction s of the trade's
+  // cash dy. s=0 ⇒ the pre-trade state; s=1 ⇒ the full preview pool.
+  function framePool(state, dy, s) {
+    return Engine.tradeUpdate(state, dy * s);
   }
   let _cwKey = null, _cwRaf = null;   // continuous-warp animation bookkeeping (draw layer only)
 
@@ -3721,23 +3638,13 @@ const Viz = (function() {
     }
     _cwKey = key;
     const prePool = state.pool;
-    // Per-leg animation (entry 339): the preview stash carries the frozen
-    // {dy, ρ} per leg. Step-1 preview (leg1State) animates leg 1 only; the
-    // full preview (leg2State) animates both sequentially. No leg data ⇒
-    // STATIC draw of the true previewPool (never animate a wrong path).
-    const pb = (typeof window !== 'undefined') ? window.__previewBand : null;
-    let legs = null;
-    if (pb && pb.legs && pb.legs.length) {
-      if (previewPool === pb.leg1State) legs = pb.legs.slice(0, 1);
-      else if (previewPool === pb.leg2State) legs = pb.legs;
-    }
-    if (!legs) { renderPricingFrame(state, previewPool); return; }
+    const dyFull = previewPool.y - prePool.y;               // the trade's net cash
     const t0 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
     const DUR_MS = 800;
     const step = (tNow) => {
       const el = (isFinite(tNow) ? tNow : Date.now()) - t0;
       const sFrac = Math.min(1, Math.max(0, el / DUR_MS));
-      const fp = (sFrac >= 1) ? previewPool : (framePool(prePool, legs, sFrac) || previewPool);
+      const fp = (sFrac >= 1) ? previewPool : (framePool(prePool, dyFull, sFrac) || previewPool);
       renderPricingFrame(state, fp);
       _cwRaf = (sFrac < 1) ? raf(step) : null;
     };

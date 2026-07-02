@@ -5,7 +5,7 @@
 set -e
 HEAD=${1:-builds/HEAD_temporal_mvp_v28_lens.html}
 echo "================ integrity ================"
-echo -n "whole-file md5 (want 7015c22cbd8e78238bdd621f6126713d for v28-lens HEAD (display slice a6ca02f3→7015c22c + dash-legibility fix -B301-DASH 2026-07-02: chart-2 %/$ true-V views [entries 298/301] + parity-tail dashes made screen-space [8,6]·cssScale with 3·yMax coordinate clamp so the $ put-tail dash survives CSS downscale AA; draw-layer only, engine script byte-identical to 9fdde1de PKG-ITM v2 LINEAR re-seam of dd6fb955 [powerarm twin retained]; gates lens_selfcheck 16 + a16 5); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
+echo -n "whole-file md5 (want 0e0a006277a1c2215a3244d510691697 for v28-lens HEAD (CAPTION/COMMENT slice 2026-07-02 of e148c9b7 [same trade-point campaign, second slice; strings/comments ONLY, zero behavior]: -TP339-CAPTION Invariant-Watch + Pool-State strings now state the trade-point (α_T,β_T) law with machine-epsilon scoped to ρ=1 paths + arc round-trips; R6-item-3 stale comments fixed (entry-289 vol direction ×2, closeBand barrier-era saturation paragraph — v28 correction paragraph preserved); R6-item-4/325-F chart-2 unit label %→fraction. Prior TRADE-POINT conservation 2026-07-02 of 7015c22c [operator entry 339, go 377; spec SPEC_tradepoint_conservation_2026-07-02]: live trade path = tradeUpdateAt at T=ray∩curve [paper Eq. 2; exhibit w′=11/21], frozen-ARC close revertArc, trade-point depth guard w·y·ρ^w, per-leg preview animation; SPOT trio byte-identical to v24; revert twin temporal_mvp_v28_lens_reservepoint.html = 7015c22c; gates lens_selfcheck 24 + a16 5); 928cde1cccb0f35fdc9a23a7634414c8 for demoted v27 (W); 6cc73563779a3e030774b7597d0ae187 for demoted GH v26c): "; md5sum "$HEAD" | awk '{print $1}'
 # Blob check is LINE-AGNOSTIC (the two longest lines ARE the blobs; their line numbers may
 # shift with edits above them — v27 svg moved 1060->1064 — but the line-md5s are canonical).
 BLOBQ=$(awk '{print length($0), NR}' "$HEAD" | sort -nr | head -2 | while read len nr; do sed -n "${nr}p" "$HEAD" | md5sum | awk '{print $1}'; done | sort | tr '\n' ' ')
@@ -37,7 +37,7 @@ if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD";
   # and prints a `Lean thm ⟺ engine — PASS/FAIL` table tagged per line.
   # ⚠ THIS IS NOT A HARD GATE. It EXITS 0 ALWAYS (the `|| true` belt-and-braces
   # ensures it can NEVER abort run_all's `set -e`). The HARD gates above
-  # (lens_selfcheck 16 + a16_atm_gate 5) are the bar; a green report line here
+  # (lens_selfcheck 24 + a16_atm_gate 5) are the bar; a green report line here
   # is NOT the gate (#5/#6/#8 are table-marked already-HARD-via-CM# cross-refs).
   # Honest ceiling: cross-checks NUMBERS (engine ⟺ Lean formula); does NOT make
   # Lean "verified" and does NOT prove the engine IS the Lean object.

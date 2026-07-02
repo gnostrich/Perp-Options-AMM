@@ -15,7 +15,7 @@
 //
 //  REPORT-ONLY — NOT A GATE. This script EXITS 0 ALWAYS. It must never abort
 //  run_all's `set -e` nor be mistaken for a HARD gate. The HARD gates are
-//  lens_selfcheck.js (16) and a16_atm_gate.js (5); their green status is the bar.
+//  lens_selfcheck.js (24) and a16_atm_gate.js (5); their green status is the bar.
 //  Lines #5/#6/#8 that duplicate an existing HARD check are table-marked
 //  "ALREADY HARD via CM# / covered HARD by CM#" so a green report line is never
 //  read as the gate.
@@ -67,7 +67,7 @@ console.log('══════════════════════�
 console.log(' MONOLITH CONSISTENCY (REPORT-ONLY, NOT GATING) — engine ⟺ Lean numeric cross-check');
 console.log('   checks NUMBERS (engine ⟺ Lean formula); stays red-IN-TABLE on drift; does NOT');
 console.log('   make Lean "verified" and does NOT prove the engine IS the Lean object —');
-console.log('   only that they AGREE numerically.   exit 0 ALWAYS (HARD gates = lens 16 + a16 5).');
+console.log('   only that they AGREE numerically.   exit 0 ALWAYS (HARD gates = lens 24 + a16 5).');
 console.log('   Lean: MonolithConstM.lean (run 6016ec57) · engine: ' + path.basename(file));
 console.log('════════════════════════════════════════════════════════════════════════════');
 
@@ -102,9 +102,10 @@ console.log('══════════════════════�
     const res = (s2.x - s2.alpha) * (s2.y - s2.beta) - s2.alpha * s2.beta;
     if (Math.abs(res) > Math.max(1, Math.abs(s2.alpha * s2.beta)) * 1e-9) { invOk = false; worst = 'inv@D=' + D; }
   }
-  line(2, 'invariant (post-trade; Casimirs conserved)', 'C1 invariant / trade_conserves', 'tradeUpdate output', 'NEW',
+  line(2, 'invariant (post-trade; Casimirs conserved) — SPOT LAW ONLY', 'C1 invariant / trade_conserves (SPOT)', 'tradeUpdate (spot) output', 'NEW',
     casOk && invOk,
-    'tradeUpdate D∈{1234,−2000,50000}: Casimir α,β conserved=' + casOk + '; post-trade (x−α)(y−β)=αβ rel≤1e-9=' + invOk + (worst ? ' worst=' + worst : ''));
+    'SPOT tradeUpdate D∈{1234,−2000,50000}: Casimir α,β conserved=' + casOk + '; post-trade (x−α)(y−β)=αβ rel≤1e-9=' + invOk + (worst ? ' worst=' + worst : '') +
+    '  ⚠SCOPE: describes the SPOT law only — the LIVE trade path (tradeUpdateAt, entry 339) moves α,β BY DESIGN (that is the fix, not a break; gated HARD by CM8-v2/CM6-v2)');
 }
 
 // ── (3) R_psd: μ″ = 2(t−β)/(αβ) ≥ 0 on t ≥ β ─────────────────────────────────
@@ -209,9 +210,10 @@ console.log('══════════════════════�
       if (e > maxErr) { maxErr = e; worst = 'D=' + D + ' m=' + m + ' eng=' + warpEng.toExponential(4) + ' lean=' + warpLean.toExponential(4); }
     }
   }
-  line(7, 'warp_linear / gamma_affine', 'MonolithConstM warp_linear / warp_eq_m_dgamma', 'tradeUpdate (Δγ)', 'NEW',
+  line(7, 'warp_linear / gamma_affine — SPOT LAW ONLY', 'MonolithConstM warp_linear / warp_eq_m_dgamma (SPOT)', 'tradeUpdate (spot, Δγ)', 'NEW',
     maxErr < 1e-9,
-    'm·Δγ(engine tradeUpdate) == m·(D/β)(Lean); maxAbsErr=' + maxErr.toExponential(2) + ' (' + worst + ')  [rewrote brief: warp=gamma_affine, no draw-layer]');
+    'm·Δγ(engine SPOT tradeUpdate) == m·(D/β)(Lean); maxAbsErr=' + maxErr.toExponential(2) + ' (' + worst + ')  [rewrote brief: warp=gamma_affine, no draw-layer]' +
+    '  ⚠SCOPE: SPOT law only — the LIVE trade path (tradeUpdateAt, entry 339) re-leans at the trade point (CM8-v2)');
 }
 
 // ── (8) internal_passivity : Hs telescoping with Rcurv = μ″ (OPTION a) ────────
@@ -267,7 +269,7 @@ console.log('');
 console.log('──────────────────────────────────────────────────────────────────────────');
 console.log(' monolith_consistency: ' + nPass + ' PASS, ' + nFail + ' FAIL (REPORT-ONLY — exit 0 ALWAYS)');
 console.log('   genuinely-NEW lines: 1,2,3,4,7,8   ·   cross-ref (already-HARD): 5(CM5), 6(CM4-v2)');
-console.log('   HARD gates remain lens_selfcheck (16) + a16_atm_gate (5); THIS is not a gate.');
+console.log('   HARD gates remain lens_selfcheck (24) + a16_atm_gate (5); THIS is not a gate.');
 console.log('──────────────────────────────────────────────────────────────────────────');
 
 process.exit(0);  // REPORT-ONLY: never abort run_all's set -e, never mistaken for a HARD gate.

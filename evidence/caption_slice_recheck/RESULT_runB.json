@@ -1,0 +1,60 @@
+{
+  "build": "0e0a006277a1c2215a3244d510691697",
+  "checks": [
+    {
+      "n": "C1 load: engine exports live, 0 pageerrors, every chart state renders",
+      "p": true,
+      "d": "boot={\"engine\":true,\"store\":true,\"oracle\":80000,\"w\":0.5} chartStates={\"curve\":10056,\"pricing\":12476,\"trajectory\":7720,\"payoff\":111596} errors=0"
+    },
+    {
+      "n": "C2 Invariant Watch caption = trade-point law (LOCAL pair; global α,β move by design; machine-eps on ρ=1)",
+      "p": true,
+      "d": "\"\\n            Trade-point law (entry 339): a trade conserves the LOCAL pair (α_T, β_T) at its own trade point — global α, β MOVE on off-ATM trades BY DESIGN, so drift shows here after an off-ATM open.\\n            Machine-epsilon drift applies to the ρ=1 paths (spot / arb / rebase) and to open→close arc round-trips. Rebase explicitly rescales α (and k by r^w); see rebasing_logic_note.md §4.\\n          \""
+    },
+    {
+      "n": "C3 NO stale claim on page: no \"trades preserve\", no \"α/β-conserving\", no \"% of escrow unit\"",
+      "p": true,
+      "d": "tradesPreserve=false abConserving=false pctEscrow=false arbCaption(scoped ρ=1 claim, kept)=\"\""
+    },
+    {
+      "n": "C4 Pool State subtitle = \"closed-form · trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths\"",
+      "p": true,
+      "d": "\"closed-form · trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths\""
+    },
+    {
+      "n": "C5a toggle btn = \"fraction of escrow unit\" (+ \"$ value\"); caption says \"Fraction view\"",
+      "p": true,
+      "d": "btnPct=\"fraction of escrow unit\" btnUsd=\"$ value\" captionHasFractionView=true"
+    },
+    {
+      "n": "C6 chart-2 NOT rescaled: % X crossing x=462 v=0.15 + put-seam boundary v=0.3307 (prior-run anchors ±1px)",
+      "p": true,
+      "d": "crossing x=462 (prior 462) v=0.15 (prior 0.15) · seam v=0.3307 (prior 0.3307) @x=568"
+    },
+    {
+      "n": "C5b unit toggle flips ($ hash differs, active class moves) and returns byte-identical",
+      "p": true,
+      "d": "pct0=685e5a5c9b61 usd=8890add61e9f pct1=685e5a5c9b61 usdActive=true"
+    },
+    {
+      "n": "C7 exhibit: tradeUpdateAt((10,10,5,5),+1,4) → x=215/22, y=11, w=11/21 (NOT naive 22/43)",
+      "p": true,
+      "d": "x=9.772727272727273 y=11 w=0.5238095238095238"
+    },
+    {
+      "n": "C8 open/close round-trip restores (x,y,w,α,β) machine-exact (open re-leans w)",
+      "p": true,
+      "d": "openΔw=3.106e-3 restore rel: x=0.00e+0 y=0.00e+0 w=0.00e+0 α=0.00e+0 β=0.00e+0"
+    },
+    {
+      "n": "C9 zero errors/dialogs across the whole run",
+      "p": true,
+      "d": "errors=[] dialogs=[]"
+    },
+    {
+      "n": "C10 build md5 unchanged pre/post AND == expected slice md5",
+      "p": true,
+      "d": "pre=0e0a006277a1c2215a3244d510691697 post=0e0a006277a1c2215a3244d510691697"
+    }
+  ]
+}

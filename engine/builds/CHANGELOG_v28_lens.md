@@ -52,3 +52,48 @@ steepness) in the wings; one static knob τ sets its width.
 ## Build sequence (files retained for diff)
 - `temporal_mvp_v28_lens_S1.html` — read lens (md5 `1ed8fe2d`).
 - `temporal_mvp_v28_lens_S2.html` — + write/settle through lens (md5 `b53ace99`). `temporal_mvp_v28_lens_FINAL.html` (+cleanup C1–C9, md5 `989752294`) — **PROMOTED TO HEAD 2026-06-12 as `HEAD_temporal_mvp_v28_lens.html`** (operator entries 84/94/96/106; tester FINAL 27/27; v27 demoted, retained). **+ 1-line live-slippage-refresh wire 2026-06-12 (entry 111): the τ stepper now re-runs the band preview so slippage updates live when kurtosis changes — md5 989752294→`7e1ae39b`, pool byte-identical, gate 23/0.**
+
+
+## 2026-07-02 — TRADE-POINT CONSERVATION (operator entry 339, go 377) — md5 `7015c22c` → `e148c9b7`
+Spec (controlling): `specs/SPEC_tradepoint_conservation_2026-07-02.md`. Skeptic scope-gate:
+`notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md`. Revert twin:
+`temporal_mvp_v28_lens_reservepoint.html` (byte-copy of pre-build HEAD, md5 `7015c22c`).
+- **Live trade path = the paper's Trade Formula at the trade point.** New `tradeUpdateAt(s, dy, ρ)`
+  (ρ = θ_tx/mode, the tx-map's own mode read): conservation law applied at T = ray∩curve with the
+  LOCAL pair α_T = x_T·w, β_T = y_T·(1−w); flows drawn from actual reserves; w′ = α_T/(x_T+Δx);
+  global α,β re-derived — **they now MOVE on off-ATM trades, by design** (entries 14/16/339;
+  inventory #16 anchoring fix, label flip PROVISIONAL pending operator ratification of the 5 spec
+  FLAG pins). Exhibit engine-true: (10,10,½), ρ=4, dy=+1 ⇒ w′=11/21, Δx=−5/22, x′=215/22 (exact).
+  ρ=1 reduces to the spot law (2.3e-16); `tradeUpdate`/`arbitrageToOracle`/`rebase` BYTE-IDENTICAL
+  to v24 (spot trades and arb unchanged).
+- **Frozen-ARC close.** New `revertArc`: each leg stores `arc = {dxA, dyA, dwA, oOpen}` at open;
+  close applies the exact inverse (x−dxA·rr, y−dyA, w−dwA; rr = oNow/oOpen) ⇒ pool round-trips
+  machine-exact, open→rebase→close == rebase(s₀,r) exact, intervening trades' moves kept. Legacy
+  pre-arc bands fall back to today's **K_tx-first** close path (K_inner only for pre-R-218 bands).
+- **Depth guard at the trade point:** cash-out capacity = w·y·ρ^w (put-side rays thinner,
+  call-side deeper); reject message prints the tx-ray depth.
+- **Preview animation per-leg** (draw layer only): framePool replays the frozen per-leg {dy, ρ}
+  through `tradeUpdateAt` sequentially; s=1 lands exactly on the preview pool; degrades to a
+  static draw when leg data is missing (never animates a wrong path).
+- **Gates:** `lens_selfcheck.js` 16 → **24 PASS [HARD]** — CM8→**CM8-v2** (spot trio byte-id;
+  11/21 exhibit HARD; ρ=1 grid; local-pair conservation at T; executeLeg routing) and
+  CM6→**CM6-v2** (band arc round trip incl. w; single-leg ≤1e-12; rebase-interleaved;
+  live-re-registration-leaks negative control; no-free-money Σ own dx/dy == 0 incl. an intervening
+  spot trade). All new checks negative-controlled: the pre-build HEAD fails exactly the 8 new-law
+  checks; 7 targeted engine mutants each red only the intended checks. `a16_atm_gate` 5 PASS.
+  monolith lines (2)/(7) re-scoped **SPOT law only** (report-only).
+- Tester live acceptance per spec §3.2 PENDING; DIFF_LEDGER entry keyed to inventory #16 owed.
+
+## 2026-07-02 — CAPTION/COMMENT slice (same trade-point campaign, second slice) — md5 `e148c9b7` → `0e0a0062`
+Strings/comments ONLY, zero behavior (7 surgical regions; engine numeric paths untouched; gates
+re-run green lens 24 + a16 5). (1) **-TP339-CAPTION** (tester flag): Invariant Watch caption +
+Pool State subtitle rewritten to the trade-point law — trades conserve the LOCAL pair (α_T, β_T)
+at the trade point, global α, β MOVE on off-ATM trades BY DESIGN (entry 339); machine-epsilon
+scoped to the ρ=1 paths (spot/arb/rebase) and open→close arc round-trips. (2) **R6 item 3** stale
+comments: entry-289 vol direction corrected at the lens header and the m-knob state comment
+(MORE volatile asset ⇒ LOWER m, fatter wings); closeBand barrier-era "mark() saturates at 1 …
+IS the effective-strike substitution" paragraph rewritten to the lensed smooth-paste truth — the
+v28 correction paragraph beneath it preserved (skeptic condition; CTO port source). (3) **R6
+item 4 / 325-F** (operator entry 336): chart-2 unit toggle button "% of escrow unit" →
+"fraction of escrow unit" + caption "% view"→"Fraction view" — the axis draws fractions
+(0.25/0.50/…), not percent; DOM ids (`pricing-unit-pct`) and all values/axes untouched.

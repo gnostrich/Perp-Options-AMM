@@ -1,5 +1,62 @@
 # MEMORY — tester
-_Last updated: 2026-07-02, after the -B301-DASH TARGETED RECHECK on WORKING-TREE build `7015c22cbd8e78238bdd621f6126713d` (NOT pushed; engine+state blocks byte-identical to promoted `9fdde1de`). **VERDICT = PASS 17/17 ×2 byte-stable — -B301-DASH RESOLVED; DISPLAY-SLICE ACCEPTANCE = PASS, no standing tester FLAG.** DIFF_LEDGER `a6ca02f3` entry AMENDED (fix folded as addendum; rolling -B301-DASH → RESOLVED(evidence)-in-`7015c22c`; table rows #7/#15 amended)._
+_Last updated: 2026-07-02 (latest), after the CAPTION/COMMENT SLICE quick recheck on WORKING-TREE build `0e0a006277a1c2215a3244d510691697` (string/comment-only slice on `e148c9b7`; -TP339-CAPTION folded + R6 items 3/4). **VERDICT = PASS 11/11 ×2 byte-stable; rolling -TP339-CAPTION → RESOLVED(evidence)-in-`0e0a0062`; ledger one-line entry appended.** Prior: TRADE-POINT CONSERVATION acceptance `e148c9b7` = PASS (14/14 ×2 + smoke 17/17 ×2)._
+
+## ★★★★★ MOST RECENT — CAPTION/COMMENT SLICE recheck, build `0e0a0062` = 11/11 PASS ×2 (closes -TP339-CAPTION)
+String/comment-only slice on `e148c9b7`. Harness `engine/verify/pw_caption_slice_recheck.mjs` (A/B); evidence
+`evidence/caption_slice_recheck/` (RESULT A==B byte-identical modulo label; chart2 PNGs).
+- **Captions live-verified rendered:** Invariant Watch = trade-point law ("Trade-point law (entry 339): … LOCAL pair
+  (α_T, β_T) … global α, β MOVE on off-ATM trades BY DESIGN … Machine-epsilon drift applies to the ρ=1 paths (spot /
+  arb / rebase) and to open→close arc round-trips"); Pool State subtitle EXACT "closed-form · trade-point
+  (α_T, β_T)-conserving · Identity IV on ρ=1 paths"; body.innerText has NO "trades preserve" / "α/β-conserving" /
+  "% of escrow unit". NOTE: arb caption L1327 "restores |dy/dx| = oracle (preserves α, β; shifts w)" KEPT — a scoped
+  ρ=1-path claim about arbitrageToOracle (spot trio byte-identical to v24), TRUE not stale.
+- **Chart-2 unit toggle:** btn "fraction of escrow unit" + "$ value"; caption has "Fraction view"; toggle flips ($ hash
+  differs) and returns byte-identical (hash 685e5a5c9b61). NOT rescaled: % X crossing x=462 v=0.15 + put-seam boundary
+  v=0.3307 == prior anchors.
+- **Behavior identical:** tradeUpdateAt exhibit 215/22 / 11 / 11/21 exact (≤1e-15, not naive 22/43); open/close
+  round-trip (m=1 long 120k/48k N=0.03) restores (x,y,w,α,β) rel 0.0, openΔw=3.1e-3; 0 pageerrors/dialogs; all 4 chart
+  states render; blobs canonical; run_all GREEN lens 24 + a16 5 HARD, monolith 8/8 report-only, pin keyed `0e0a0062`.
+- **R6 item-3 comment fixes spot-checked in source:** L1626-27 + L2400-01 now "MORE volatile asset takes a LOWER m"
+  (entry-289 direction); closeBand barrier-era paragraph gone.
+- ★ HARNESS GOTCHA (measurement-point, not chart): my first C6 run FAILed the put-seam anchor at 0.3375 — I measured
+  midY at x=571 (round(xAtPhi(56.31°))) but the prior R3c anchor is nearestMidY at that MINUS 3 (x=568); the steep put
+  arm moves ~2px over those 3 columns. Reproduced the prior harness's anchor VERBATIM → 0.3307 exact. When re-checking
+  "value unchanged" claims, reuse the prior harness's exact measurement expression, never a re-derivation of it.
+- Ledger: rolling -TP339-CAPTION → RESOLVED(evidence)-in-`0e0a0062`; new `### 0e0a0062` one-line entry (feature map
+  #15 only, none beyond; VERDICT PASS). -TP339-RATIFY (#16 PROVISIONAL) UNCHANGED — still awaits operator ratification.
+- Did NOT git (manager promotes). OPEN handed to manager: -TP339-RATIFY; funding-semantics extension operator-gated;
+  -B295 items 3/4; -B289 part-2 app list.
+
+## ★★★★★ MOST RECENT — TRADE-POINT CONSERVATION acceptance, build `e148c9b7` = PASS (14/14 ×2 + smoke 17/17 ×2)
+The entry-339 fix: LIVE trade path = paper Trade Formula at T=ray∩curve. NEW `tradeUpdateAt(s,dy,ρ)` (ρ_tx=θ_tx/mode)
++ `revertArc` frozen-arc close; executeLeg routes swap through tradeUpdateAt, stores arc {dxA,dyA,dwA,oOpen}/leg; depth
+guard → w·y·ρ^w at the tx-ray; framePool animates PER-LEG through Engine.tradeUpdateAt. Spot trio byte-identical
+(I re-verified by function-body compare vs the twin, independent of manager). Gates run_all exit 0: lens 24/24 + a16 5/5
+HARD (CM8-v2 exhibit-hard 11/21 + routing negative control; CM6-v2 frozen-arc + live-reversal negative control).
+- **Acceptance highlights (`verify/pw_tradepoint_acceptance.mjs` A/B, evidence `evidence/tradepoint_acceptance/`):**
+  T2 LIVE-DOM exhibit tradeUpdateAt((10,10,5,5),+1,4) → x′=215/22 / y′=11 / w′=11/21 EXACT (≤1e-15), NOT naive 22/43;
+  ρ=1 ≡ tradeUpdate (1.5e-16), ATM α,β steady. T3 5-band open/close sweep (both wings, deep OTM $200k/$20k + $30k/$180k,
+  near-ATM, m=1+m=2) restores (x,y,w,α,β) machine-exact (dβ≤1.2e-10); every open re-leans w (±1e-3…3e-3). T4 intervening
+  trade: close nets closer's OWN arc increments EXACTLY (x=0, y=9.1e-13, w=5.6e-17); closing both → original pool 0/0/0.
+  T5 iv-alpha/iv-beta VISIBLY move (iv-β "0"→"100.2216" on the std $120k/$48k N=0.03 band; back to 1.2e-10 on close);
+  chart-1 hash re-anchors. T6 guard: reject at $200,000 tx-ray depth where old y−β held $400,000 (put ρ=0.25, w=½);
+  verbatim "…pool cash depth at the tx-ray…"; UI banner + btn disabled + notional un-mutated. T7 preview animation 11/16
+  distinct frames; s=1 == tradeUpdateAt chain == __previewPool (rel 0). 0 errors; md5 unchanged; A==B byte-identical.
+- ★ **S4 EXPECTATION CORRECTION (with proof, not patched-to-green):** old smoke S4 "arb → w=0.5 exactly" is the OLD
+  law's invariant — under trade-point law α,β move ⇒ arb equilibrium w = α/(α+√(αβ/oracle)) ≠ ½. PREDICTED in a node vm
+  probe (0.4999639), then diagnostic run of the UNMODIFIED smoke = 16/17 with S4 the sole FAIL (w=0.499962, 3.8e-5).
+  New `pw_tradepoint_standing_smoke.mjs` = fork with S4-v2: |mp/oracle−1|≤1e-9 + w moves + re-lean RECORDED. 17/17 ×2.
+- ★ NEW FINDINGS: **-TP339-CAPTION** — on-screen L1340 "Identity IV: trades preserve α, β … machine-epsilon only" +
+  L1368 card subtitle "α/β-conserving" now CONTRADICT the live readouts (spec §2.7 moved code comments, missed these 2
+  UI strings). Operator-caught-class; recommend fix at/before promotion. **-TP339-RATIFY** — 5 spec pinned defaults
+  (FLAG-1..5: ρ basis / frozen-arc close / undo-own-increment / T@θ_tx / legacy fallback) adopted under entry-377
+  overnight go, NOT individually ratified ⇒ inventory #16 stays PROVISIONAL (skeptic R6 condition).
+- ★ HARNESS GOTCHAS (new): grep of the HEAD HTML for `dxA`/`arc:` matches INSIDE the base64 blob line (valid b64 chars)
+  — filter with `awk 'length($0)<300'`. Band close per-id: `button[data-close-band="<id>"]` on portfolio bands tab.
+  Preview legs live at `window.__previewBand.legs` = frozen [{dy,rho}]; endpoint check = chain Engine.tradeUpdateAt
+  from Store.state.pool and compare to `window.__previewPool` (leg2State) — framePool itself is draw-layer-internal.
+- Did NOT git (manager promotes). OPEN handed to manager: -TP339-CAPTION two-string fix; -TP339-RATIFY operator
+  ratification when awake; funding-semantics extension still operator-gated; -B295 items 3/4 still open.
 
 ## ★★★★★ MOST RECENT — -B301-DASH RECHECK, build `7015c22c` = 17/17 PASS ×2 (closes the a6ca02f3 FLAG)
 Intern draw-layer-only fix: parity-tail dash SCREEN-SPACE `[8,6]·cssScale` (cssScale=W/clientWidth=1.2968 live) + plotted
@@ -257,7 +314,7 @@ TWO canvases: canvas-curve (chart-1 pool) / canvas-pricing (chart-2 option/value
 
 ## File-safety canon
 Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060 on the v28 lens line); 3 `<script>` parse. Key off line-md5, not line number.
-Latest WORKING-TREE `7015c22c…` (display slice + -B301-DASH fix; engine+state == `9fdde1de…` PKG-ITM v2; prior slice `a6ca02f3…`; powerarm twin `dd6fb955…`). Prior constmult `8f897edc…`. Prior: invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
+Latest WORKING-TREE `e148c9b7…` (TRADE-POINT conservation, entry 339; revert twin reservepoint = `7015c22c…` display slice; engine spot trio byte-identical, tradeUpdateAt/revertArc NEW). Prior: `9fdde1de…` PKG-ITM v2; slice `a6ca02f3…`; powerarm `dd6fb955…`; constmult `8f897edc…`; invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
 lens HEAD `7e1ae39b…`, FINAL `989752294…`; v27 `928cde1c…`; v26c `6cc73563…`.
 
 ## Environment quick-ref

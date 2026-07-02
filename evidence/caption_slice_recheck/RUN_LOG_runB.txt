@@ -1,0 +1,13 @@
+=== CAPTION-SLICE RECHECK run B  build md5 0e0a006277a1c2215a3244d510691697 (expect 0e0a006277a1c2215a3244d510691697) ===
+PASS C1 load: engine exports live, 0 pageerrors, every chart state renders  boot={"engine":true,"store":true,"oracle":80000,"w":0.5} chartStates={"curve":10056,"pricing":12476,"trajectory":7720,"payoff":111596} errors=0
+PASS C2 Invariant Watch caption = trade-point law (LOCAL pair; global α,β move by design; machine-eps on ρ=1)  "\n            Trade-point law (entry 339): a trade conserves the LOCAL pair (α_T, β_T) at its own trade point — global α, β MOVE on off-ATM trades BY DESIGN, so drift shows here after an off-ATM open.\n            Machine-epsilon drift applies to the ρ=1 paths (spot / arb / rebase) and to open→close arc round-trips. Rebase explicitly rescales α (and k by r^w); see rebasing_logic_note.md §4.\n          "
+PASS C3 NO stale claim on page: no "trades preserve", no "α/β-conserving", no "% of escrow unit"  tradesPreserve=false abConserving=false pctEscrow=false arbCaption(scoped ρ=1 claim, kept)=""
+PASS C4 Pool State subtitle = "closed-form · trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths"  "closed-form · trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths"
+PASS C5a toggle btn = "fraction of escrow unit" (+ "$ value"); caption says "Fraction view"  btnPct="fraction of escrow unit" btnUsd="$ value" captionHasFractionView=true
+PASS C6 chart-2 NOT rescaled: % X crossing x=462 v=0.15 + put-seam boundary v=0.3307 (prior-run anchors ±1px)  crossing x=462 (prior 462) v=0.15 (prior 0.15) · seam v=0.3307 (prior 0.3307) @x=568
+PASS C5b unit toggle flips ($ hash differs, active class moves) and returns byte-identical  pct0=685e5a5c9b61 usd=8890add61e9f pct1=685e5a5c9b61 usdActive=true
+PASS C7 exhibit: tradeUpdateAt((10,10,5,5),+1,4) → x=215/22, y=11, w=11/21 (NOT naive 22/43)  x=9.772727272727273 y=11 w=0.5238095238095238
+PASS C8 open/close round-trip restores (x,y,w,α,β) machine-exact (open re-leans w)  openΔw=3.106e-3 restore rel: x=0.00e+0 y=0.00e+0 w=0.00e+0 α=0.00e+0 β=0.00e+0
+PASS C9 zero errors/dialogs across the whole run  errors=[] dialogs=[]
+PASS C10 build md5 unchanged pre/post AND == expected slice md5  pre=0e0a006277a1c2215a3244d510691697 post=0e0a006277a1c2215a3244d510691697
+=== RESULT: 11/11 PASS ===

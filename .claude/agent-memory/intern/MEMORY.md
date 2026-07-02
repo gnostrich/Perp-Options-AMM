@@ -1,6 +1,100 @@
 # MEMORY — intern
-_Last updated: 2026-07-02 (-B301-DASH dash-legibility fix on HEAD, IN PLACE; handed to manager;
+_Last updated: 2026-07-02 (CAPTION/COMMENT slice promoted to HEAD `0e0a0062`; handed to manager;
 no git). Rewrite changed bits at task end._
+
+## Done — CAPTION/COMMENT SLICE (PROMOTED TO HEAD 2026-07-02, second slice of the trade-point campaign)
+Strings/comments ONLY, ZERO behavior. HEAD `e148c9b734abdff522c31c56be41fb66` →
+**`0e0a006277a1c2215a3244d510691697`**. Splice `scratchpad/splice_captions_pass.py` (work copy,
+7 anchored regions each count==1, old strings sliced by line range, blobs never through).
+- **S1/S2 (-TP339-CAPTION, tester flag):** L1340-41 Invariant Watch caption + L1368 Pool State
+  subtitle rewritten to spec §2.7 vocabulary — trades conserve the LOCAL pair (α_T, β_T) at the
+  trade point, global α, β MOVE on off-ATM trades BY DESIGN (entry 339); machine-epsilon scoped
+  to ρ=1 paths (spot/arb/rebase) + open→close arc round-trips. Subtitle: "closed-form ·
+  trade-point (α_T, β_T)-conserving · Identity IV on ρ=1 paths".
+- **S3/S4 (R6 item 4 / 325-F, entry 336):** chart-2 unit toggle button L1415 "% of escrow unit"
+  → "fraction of escrow unit"; caption L1428 "% view:"→"Fraction view:", "in % view"→"in
+  fraction view". DOM ids (`pricing-unit-pct`) + all axes/values untouched (axis draws 0.25/0.50
+  fractions — label now matches).
+- **S5/S7 (R6 item 3, vol direction, entry 289):** lens header L1632-33 "(more vol / sharper)"
+  → "Vol calibration runs the OTHER way (entry 289): a MORE volatile asset takes a LOWER m —
+  fatter wings"; m-knob state comment (old L2337-area, now ~L2404) gained the same entry-289
+  direction line. Matches the corrected -B289 UI caption at L1321.
+- **S6 (R6 item 3, closeBand header, old "L1975-78"):** barrier-era paragraph ("mark() already
+  saturates at 1 … IS the effective-strike substitution") rewritten: markEff = LENSED smooth-paste
+  (continuation past strike to S* then intrinsic); old saturation = SUPERSEDED historical; mark()
+  survives only as the plain regime-test primitive. **The v28 correction paragraph below it
+  (markEff — LENSED, W4, MUST-APPLY-A) preserved untouched — skeptic's binding condition (CTO
+  port source).** Did NOT touch the other "mark saturates" mentions (L2121/L2181 regime-test
+  narration — accurate for the plain primitive, out of R6 scope).
+- **FILE-SAFETY:** blobs `ab663f5c`/`c505b08a` canonical before+after; 3 scripts parse
+  (778/453/1925, maxline 509); IIFE intact; surgical diff = exactly the 7 regions, ALL
+  caption/comment lines; no signature/behavior change; hook: no block.
+- **GATES:** run_all exit 0 on work copy AND promoted HEAD — lens_selfcheck **24 PASS**, a16
+  **5 PASS**, monolith 8/8 report-green. run_all.sh line-8 pin rewritten → `0e0a0062…` (honest
+  slice description, prior e148c9b7 text retained in-line). BUILD_LINEAGE HEAD row re-keyed +
+  CHANGELOG_v28_lens entry appended (same campaign, second slice).
+- **Open for manager:** git (promotion commit folds this per brief); relay exact before/after
+  strings (in hand-back). **Open for tester:** trivial visual re-check — Invariant Watch text,
+  Pool State subtitle, chart-2 "fraction of escrow unit" button; behavior identical.
+
+## Done — TRADE-POINT CONSERVATION (PROMOTED TO HEAD 2026-07-02, handed to manager)
+Operator entry 339 (go 377); spec `specs/SPEC_tradepoint_conservation_2026-07-02.md` (CONTROLLING —
+implemented §2.1–2.7 + §3.1 exactly); skeptic `notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md`
+conditions honored (K_tx-FIRST legacy fallback, never bare K_inner; CM8-v2(4)+CM6-v2(5) shipped).
+HEAD `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `7015c22c…` → **`e148c9b734abdff522c31c56be41fb66`**.
+**Revert twin created FIRST: `temporal_mvp_v28_lens_reservepoint.html` (byte-copy, md5 == 7015c22c).**
+- **Splice `scratchpad/splice_tradepoint.py`** (work copy, every anchor count==1, blobs never
+  through; spec §2.1 code extracted PROGRAMMATICALLY from the spec's js fence — never retyped).
+  22 diff hunks, all intended: R1 prod-map comment; R2 lens-header line; R3 NEW `tradeUpdateAt`
+  (law at T: x_T=x·ρ^(w−1), y_T=y·ρ^w, α_T/β_T local, Δx, w′=α_T/(x_T+Δx), α,β re-derived) +
+  `revertArc` (x−dxA·rr, y−dyA, w−dwA, guards→null) inserted after tradeUpdate; R4 executeLeg —
+  `rho_tx=Math.exp(u_tx)` after K_tx, depth guard → trade-point depth `w·y·ρ^w` ("at the tx-ray"
+  in reject string), swap → `tradeUpdateAt(state,dy,rho_tx)`, return + `rho_tx` + `arc{dxA,dyA,
+  dwA,oOpen:fx}`; R5 closeBand — comment rewritten for frozen ARC, Ksold/Kbought K_tx-first
+  derivation KEPT verbatim, + rrSold/rrBought = oForK/arc.oOpen; R6–R9 all four reversal sites
+  arc-first w/ legacy `tradeUpdate(s,dyRev…)` fallback + per-path reject reasons; R10 exports
+  `tradeUpdateAt, revertArc`; R11 openBand stores `arc:` beside K_tx both legs; R12 framePool →
+  per-leg sequential `(state, legs, s)` via tradeUpdateAt (s=1 lands EXACT on preview; null-degrade),
+  drawPricing derives legs from `__previewBand.legs` by leg1State/leg2State identity, static-degrade;
+  R13 previewBand stashes `legs:[{dy,rho:rho_tx}×2]`.
+- **NOT touched (spec list):** tradeUpdate/arbitrageToOracle/rebase (BYTE-IDENTICAL to v24,
+  gate-verified), gLoc/markLensed/legPrice, tx-map θ_tx/K_tx freeze, N_buy formula, funding,
+  carve/club/L0, settlement marks, dy sizing N·K_tx.
+- **Acceptance anchors measured:** exhibit (10,10,½),ρ=4,dy=+1 ⇒ w′=11/21 Δ=0, x′=215/22 Δ=0,
+  y′==11, |Δx+5/22|=6.4e-16, NOT 22/43 nor 6/11; ρ=1≡tradeUpdate 2.3e-16 (≤1e-15 anchor ✓); arc
+  round-trip 0.0 machine-exact; rebase-interleaved rel 0.0 (band path 1.4e-16); live re-reg leak
+  −2.78e-2 == spec table; spec §5 C2/C3/C6 rows reproduced exactly; framePool s=1/s=0.5 maxAbs 0.
+- **GATES (`verify/lens_selfcheck.js` rewritten per spec §3.1):** CM8→**CM8-v2** .1 spot-trio
+  byte-id ·.2 exhibit HARD ·.3 ρ=1 grid ·.4 local-pair grid (4.5e-16, 72 pts) ·.5 executeLeg
+  routing (tradeUpdateAt(state,dy + NO tradeUpdate(state,dy)); CM6→**CM6-v2** .1 band arc close
+  restores x,y,w ·.2 single-leg ≤1e-12 ·.3 open→rebase(r)→close==rebase(s₀,r) r∈{0.8,1.25} leg AND
+  closeBand paths (r=0.8 call band / r=1.25 put band so regimes don't flip) ·.4 in-gate negative
+  control: live re-registered reversal LEAKS >1e-3 ·.5 no-free-money Σ own dx==0 ∧ Σ own dy==0
+  incl. one intervening spot trade + ownΔw-only. Guarded `hasArcLaw` so a lawless build fails
+  LOUD-not-crash. (P)/(P-num)/L4/CM1–5,7,9–11 survive; a16 untouched. **Result 16→24 PASS 0 FAIL**;
+  a16 5 PASS; run_all exit 0 (work copy + promoted HEAD, default path); monolith 8/8 report-green,
+  lines (2)/(7) labels re-scoped **SPOT LAW ONLY** (report-only edit per spec).
+- **NEGATIVE CONTROLS:** pre-build HEAD (twin) = 16 PASS / **8 FAIL = exactly the 8 new-law checks**,
+  exit 1, no crash. 7 targeted mutants (`scratchpad/negctrl_tradepoint.sh` + mutant_*.html): mut1
+  naive-global-lean → v2.2+v2.4 red; mut2 drop-dwA → CM6 .1/.2/.3/.5 red; mut3 ignore-rr → .3 red;
+  mut4 route-back-to-spot → CM8-v2.5 red ONLY; mut5 dx·1.000001 → CM8 .2/.3/.4 red; mut6
+  collapse-to-global-law → CM6-v2.4 + CM8 .2/.4 red; mut7 dxA·1.000001 in revertArc → CM6 .1/.2/.3/.5
+  red. Every new sub-check controlled.
+- **FILE-SAFETY:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical before+after; 3 scripts parse
+  (775/452/1925, maxline 509); IIFE intact; surgical diff = 22 intended hunks only; hook exit 0
+  ("FILE-SAFETY GATE PASS"). run_all.sh line-8 pin rewritten → `e148c9b7…` (honest description);
+  count strings 16→24 in run_all comment + monolith. BUILD_LINEAGE HEAD row + CHANGELOG_v28_lens
+  appended (twin + provisional-#16 label noted).
+- **Open for manager:** git (sole actor); morning report must carry the 5 adopted spec defaults +
+  §4 behavioral deltas 1–8 for operator ratification (inventory-#16 label flip stays PROVISIONAL per
+  spec §3.2(7)/§4(8) + skeptic condition (b)); DIFF_LEDGER row keyed to #16 is tester's at
+  verification; Lean/INDEX re-scope of trade_conserves/L1/L7 to SPOT law = research-lead's (spec §6).
+  **Open for tester:** spec §3.2 protocol — vm-probe exhibit; band open/close both wings OTM+ITM;
+  α,β VISIBLY move on off-ATM trade (poolInvariants readout iv-alpha/iv-beta now drift BY DESIGN —
+  disclosed delta §4-2, not a bug); depth-guard reject prints tx-ray depth; m=1 vs m=2 co-move;
+  per-leg preview animation (step-1 animates leg1 only); full 17/17 UI smoke. **Pre-existing
+  stale-ish:** run_all L17-19 "(14)+(8)" routing comment still stale (untouched); engine comments
+  L1622/L2337 vol-phrasing — RESOLVED by the caption/comment slice above (2026-07-02).
 
 ## Done — -B301-DASH parity-tail dash legibility (IN-PLACE on HEAD, 2026-07-02)
 Tester FLAG -B301-DASH: $-view PUT parity tail's `setLineDash([5,3])` reads solid on the steep
