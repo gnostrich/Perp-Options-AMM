@@ -2,7 +2,23 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
-🧭 **SUBMISSION FINAL 2026-07-02 ~18:30 (entries 340–372) — CURRENT STATE:**
+🧭 **OVERNIGHT ENGINE CAMPAIGN 2026-07-02 night (entry 377 blanket go) — CURRENT STATE:**
+**HEAD = `0e0a0062` on main (`ecb9c444`) = TRADE-POINT CONSERVATION (entry 339) + caption/comment/label
+slice.** Ladder all green: R6 scope-gate (4 CLEARED; skeptic caught my K_tx-first misstatement) → intern
+build e148c9b7 (tradeUpdateAt/revertArc per spec; exhibit 11/21 Δ=0; SPOT trio byte-id v24; CM8 retired,
+CM8-v2+CM6-v2 negative-controlled; gates 24+5) → my exact-rational + vm verification (all Δ=0) → tester
+acceptance PASS 14/14×2 + smoke 17/17×2 (S4-v2 expectation-correction; α/β drift = disclosed delta) →
+slice 0e0a0062 (tester's -TP339-CAPTION + R6 items 3/4: entry-289 vol comments, %→fraction 325-F) →
+tester re-check 11/11×2. Revert twin `temporal_mvp_v28_lens_reservepoint.html` (=7015c22c).
+**AWAITING OPERATOR (morning): RATIFY (a) the 5 spec pinned defaults (single-basis ρ; frozen-arc close —
+live re-anchoring leaks 9/9; undo-own-increment; T at θ_tx; K_tx-first legacy) + (b) spec §4 behavioral
+deltas 1–8 (visible: α/β move off-ATM; tighter tx-ray depth guard) + (c) inventory-#16/register-C2 flip
+(ledger PROVISIONAL until ratified; -TP339-RATIFY).** Open operator decisions (unchanged): funding
+transfer part-2; close branch-jump semantics; 325-B overlay (needs entry-324 study); 325-C supplement
+refresh (paper-side, held under HTML-scoped 377, named per skeptic condition). Lean re-scope of
+trade_conserves/L1/L7 to spot law = research-lead queue.
+
+🧭 **SUBMISSION FINAL 2026-07-02 ~18:30 (entries 340–372) — prior arc:**
 **WINE 2026 SUBMITTED (operator confirmed, entry 376): final tex md5 `596e1d8c` on main (`004a27a`; operator's abstract opening + de-gas landed post-CLEAR as entries 373/374 no-review edits; NOTE commit-message mishap: one commit described paper edits that had aborted — corrected in the successor commit, honestly labelled).** Chain:
 airtight §6 exec laws (gated, 2 skeptic FLAG rounds fixed) → lab review (weak-reject; anonymity strip
 + 5 go-all fixes, 2 more skeptic FLAGs fixed incl. the settlement-continuity oversell) → dictionary
