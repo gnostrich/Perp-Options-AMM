@@ -2375,3 +2375,11 @@ load-bearing sections are restored VERBATIM from the operator's original message
 
 These are the operator's exact words (main-session message, 2026-06-26). The entry-287 bracketed
 condensation was the manager's; the decision content is identical.
+
+
+---
+
+## Entry 300 — 2026-07-02 UTC
+_Context: operator asks whether the manager can handle any and all git actions from this end. Manager runs a live capability test (local git, push/fetch, PR open, PR merge API, direct main push path) and reports honestly._
+
+> can you manage any and all git actions at your end?
