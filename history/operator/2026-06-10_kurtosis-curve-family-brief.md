@@ -2226,3 +2226,20 @@ clamp+add; C¹ seam) STANDS — it was the real question.
 _Context: operator authorizes the research-lead re-derivation (QC-only, no edits) of the engine-ITM-arm vs paper reconciliation. Four questions: (1) g=2 divergence table engine power-law vs paper linear 1−S/K at S=60/66.67/80/90 + is it the same object under the reciprocal map or genuinely different + which is the correct American intrinsic; (2) write out the exact sNorm↔S reciprocal map (L1972/1975) + confirm engine boundary θ(g/(g+1))^g maps to paper S*=Kg/(g+1)=66.67 for g=2,K=100; (3) which mark is canonical (markLensed vs v24 mark vs min-formula) — any live v24 caller?; (4) confirm ≤1 everywhere, L4076 "past 1" comment stale. Manager dispatches research-lead, will cross-check numbers before relay._
 
 > Go ahead on the research-lead re-derivation (QC-only, no edits). The A/B/C¹-seam answer is closed — thanks. What's still open is everything off the boundary point, plus a couple of loose ends. [...] 1. does the engine's ITM arm equal the paper's, away from the boundary? [g=2 divergence table S=60/66.67/80/90; same object under reciprocal map or different; which is correct American intrinsic] 2. Nail the sNorm↔spot S map explicitly [written out, boundary check g=2 K=100 →66.67]. 3. Which mark is canonical? [markLensed live? v24/min legacy? any live v24 caller] 4. The stale comment [L4076 "past 1"; confirm ≤1 everywhere, no live path >1]. QC only — don't change anything.
+
+
+---
+
+## Entry 286 — 2026-06-26 UTC (image IMG_5563.png — operator's tester dispatch, transcribed from screenshot)
+_Context: operator sends a screenshot of the precise tester brief and says "go on the test, no changes." Manager dispatches the tester for a live-browser oracle sweep reading the REAL quoted mark (not analytic), QC-only, no edits._
+
+> GO on the tester live-browser oracle sweep. QC-only, engine untouched, no edits.
+>
+> Read the real quoted mark off the running engine — don't recompute analytically (both analytic traces were buggy; the point of the sweep is to bypass the map). Put leg, m=1 / γ=2 (so g=2), the engine's K-equivalent of $100. Sweep spot across OTM → boundary → deep ITM.
+>
+> Headline question (this is the one that matters): at each spot, is the engine's quoted ITM mark ≥ the true exercise payoff (i.e. faithful, value ≥ intrinsic) or does it dip below it? Report the sign of (engine mark − true intrinsic) at every spot, not just the size. Below-intrinsic anywhere = engine faithfulness bug, not a paper edit.
+>
+> Secondary (magnitudes):
+> - Same spots: tabulate engine quoted mark vs the paper's linear 1 − S/K. How far apart, and where.
+> - Where does the seam actually land in dollars — is it $66.67? (Settle the sNorm↔S map empirically.)
+> [continues, cut off:] ...spanning both sides of the seam. That closes the reconciliation.
