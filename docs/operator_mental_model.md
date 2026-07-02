@@ -1,0 +1,30 @@
+# Operator mental model — the geometric translation guide (entry 304, 2026-07-02)
+
+_The operator thinks in GEOMETRY: curves that lean and bend, points riding along them, tangent
+lines, wings, seams, tails, envelopes. Operator-facing explanations LEAD with the picture, then
+attach the formula, then one concrete number. This extends R7 (tables + formula + simple English)
+and entry 247 (no unintroduced symbols). Binding for every agent whose output the manager relays._
+
+## Translation table (session-proven — these landed)
+| Our jargon | The operator's geometric language |
+|---|---|
+| mark ∈ (0,1] | "how far the curve has bent — a number between 0 and 1" |
+| smooth-pasting / C¹ seam | "the payoff line is the TANGENT to the waiting curve; the joint has no kink" |
+| V = max(mark, intrinsic) | "the upper envelope: the curve plus its tangent tail; you're worth whichever is higher" |
+| ITM settled-to-cash (no AMM tx) | "trading at the curve's exhausted endpoint — the straight tail has no bend, so no slippage toll" |
+| slippage (path integral of price) | "the toll of the curve's BEND — flat pieces are free" |
+| funding (slope-deviation vs w=½ anchor) | "the curve's LEAN against the anchor curve, weighed at your strike" |
+| exercise boundary S* | "the spot where you step OFF the curve onto the payoff line" |
+| moneyness coordinate (S/K, sNorm/θ) | "every option is a dot sliding along the SAME one shape; your strike only picks where you sit" |
+| ITM wings, both wings drawn | "the Deribit X — each side one continuous curve through OTM and ITM, crossing at the money" |
+| fraction vs dollar denomination | "% of tank full vs liters in the tank — same water, two rulers" |
+| per-claim carve/escrow | "the vault: one curve tells everyone what they're worth; it can't also be everybody's vault" |
+| kurtosis knob m | "the steepness dial — set once from vol, never moved by trades" (NB entry 289: MORE volatile asset = LOWER m, fatter wings) |
+
+## What works / what doesn't
+- **Works:** picture first → formula second → one worked number (K=$100, g=2, S*=$66.67, mark=1/3). Tables. "Same object, two rulers" unit-translations. Naming what does NOT change alongside what does.
+- **Doesn't:** coordinate-frame jargon (sNorm/θ/reciprocal) without a picture; symbols before plain English; flowy prose (they want crisp AND geometric); burying a unit change (%/$ confusion caused real doubt — always name the ruler).
+- **Respect the instincts:** the operator's geometric hunches have repeatedly been correct ahead of formalization (one-universal-curve = exact in moneyness coords, entry 291; extend-the-OTM-machinery = validated + built, entries 296→298). When a hunch seems wrong, FIRST check whether it's right in a different coordinate — that has been the pattern.
+
+## Corrections
+Operator corrections to this guide land as dated addenda below; the guide is theirs to tune.

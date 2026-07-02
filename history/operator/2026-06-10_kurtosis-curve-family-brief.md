@@ -2407,3 +2407,11 @@ _Context: operator asks how OTM funding changes under the funding extension (the
 _Context: operator checks the funding mechanism: isn't funding calculated from slope divergence of the pool curve vs the anchor curve? Manager confirms: YES — that mechanism (the crowdedness factor, pool-vs-w=½-anchor deviation at the strike ray) is untouched by the extension; the funding formula is (deviation factor) × (per-strike slope-weight read off the value curve through the lens), and F1/F2 only touch the SECOND factor (put weight already correct; call weight under-read in dollars by (g+1)/g; ITM the weight rides the extended tail = delta-carry while the deviation factor keeps working)._
 
 > isnt funding being calculated based on slope divergence or whatevrr wrt pool curve and anchor curve?
+
+
+---
+
+## Entry 304 — 2026-07-02 UTC
+_Context: operator asks the manager to be mindful of their GEOMETRIC mental models and to map/translate to their language ("makes this sync up easier for us both"). Manager persists a standing translation guide `docs/operator_mental_model.md` (built from this session's evidence of what landed), points it from manager MEMORY, and makes it binding for operator-facing briefs (extends the R7 transparency form)._
+
+> ok so you'll have to be mindful of my mental models idk if you have a memory or somerhing of how i think about these things geometrically but mapping / translting to my langauhge makes this shync up easier for us both
