@@ -2789,3 +2789,15 @@ _Context: operator asks whether the paper covers tx mechanics, "becaue for an AM
 _Context: follow-up on the closing tx. Operator gets the mirror-swap picture but asks how it actually happens on the other side for AMM bookkeeping and slippage purposes._
 
 > i get that but on closure if were doing oposire tx how does it happenn on the other side asking for AMM bookkeeping and slippage purposed...
+
+
+## Entry 354 — 2026-07-02 UTC
+_Context: follow-up on close-side mechanics. Operator asks whether the ray parks ATM when a leg goes ITM, or crosses to the other side so an opposite option would have to be transacted (directionality)._
+
+> ok got that too -- simke Q does the ray park atm or does it go eo the other side so you have to transatt the opposite option or something respecting directionaloity or whatever
+
+
+## Entry 355 — 2026-07-02 UTC
+_Context: after the ray-parking explanation, operator confirms understanding and asks whether that part was unchanged. Manager: parking mechanism unchanged (today: zero engine edits; predates PKG-ITM v2); the value read while parking changed with the operator's go entries 286/298 (smooth-paste replaced the hard ITM=1 cap)._
+
+> ok i think i see what you're saying ... basically this part was unchanged right
