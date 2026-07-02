@@ -2455,3 +2455,11 @@ _Context: operator states their funding mental model: backbone = curve divergenc
 _Context: operator disclaims certainty on the ITM funding intuition, affirms the OTM like-ray backbone. Manager: NO go inferred — funding extension (F1–F4) PARKED pending the operator's ITM intuition settling; status quo is safe (post-v2 the engine's ITM funding already rides the corrected value curve, un-designed but continuous; the arb hole existed only in the rejected symmetric-extension variant). Offer: a picture (funding across strikes OTM→ITM, today's formula vs F1 delta-carry) so the geometric intuition can adjudicate later._
 
 > im not really sure of the itm intuition (disclaimer); but yeah whatever i said about otm holds
+
+
+---
+
+## Entry 310 — 2026-07-02 UTC
+_Context: operator asks for the whole story/flow of how the system works, paper-style, with what-we-changed-where highlighted, in simple English — as the time-saving sync artifact. Manager delivers the station-by-station narrative in the operator's geometry (curve+rays primary, shadows derived)._
+
+> basically what will save us both time is if you walk me through the whole story / flow of how it works kind of like the paper does, and sort of highlight what we changed where in simple english
