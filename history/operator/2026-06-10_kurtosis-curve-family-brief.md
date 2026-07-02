@@ -2615,3 +2615,11 @@ _Context: operator (not yet ruling §3.2 wrong) asks how the option price is cal
 _Context: operator confirms understanding: did we replace the min(slope,1/slope) thing with something else for the option price? Manager: YES — replaced at the barrier→American lift (operator-approved, June): pricing = the two-arm smooth-pasted value (power continuation 1/(g+1)·(S*/S)^g, linear payoff past the seam); the min-ratio survives only as the moneyness coordinate inside it + one legacy display (payoff overlay, queued)._
 
 > so we replaced the min slope 1/slope thing with somethign else to getn the opton price thing?
+
+
+---
+
+## Entry 330 — 2026-07-02 UTC
+_Context: operator (1) notes the min-ratio→smooth-pasted-value replacement should have been disclosed transparently, directs checking the paper to confirm it now discloses it (= the "fix 3.2" word); (2) asks to confirm in the HTML that the buy QUANTITY is calculated from this formula and the AMM tx is only an ACCOUNTING layer — i.e., NOT deriving buy quantity by routing sell proceeds through the AMM curve directly._
+
+> ok so that clairifes one change, this should have been disclosed transparently though, check paper to confirm now; deocndly, jusrt confirm in the html that we're using this formula to calculate the buy quantiy and the AMM tx is only accunting layer and not using proceeds from sell thig as per AMM directly into get buy q  ...
