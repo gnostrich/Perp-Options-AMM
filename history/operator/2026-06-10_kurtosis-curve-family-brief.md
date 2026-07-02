@@ -2527,3 +2527,11 @@ _Context: operator: "just do the needful" (= run the carve check, park Snell, ch
 _Context: operator RULES Snell out of the picture: the standard is "whatever a trader does is american style consistent, not necessarily optimal." Manager records the ruling (register row B-AM), retires the "go snell" lever (Snell = out-of-scope permanently; the existing deterministic-optimality theorems remain as free hedged bonuses in the paper, no changes needed). Under this definition the faithfulness ledger is COMPLETE: consistency properties (value≥payoff, exercise-anytime, parity ITM, C¹ seam) are all theorem+gate+measured._
 
 > i'd like to keep snell away because thats outside my picture. my picture is whatever a trader does is american style consistent, not necessarily optimal
+
+
+---
+
+## Entry 319 — 2026-07-02 UTC
+_Context: operator asks whether anything is TBD/improvable on the paper given the story table + today's clarifications. Manager identifies 3 small improvements: (a) cite the NEW theorems (O1 linear-paste + O2 value≥intrinsic) — Fig 3 depicts the linear seam and its exact formal backing now exists; (b) refresh the STALE engine-agreement sentence (the 0.04%/0.1% stat came from the old wrong-seam build; should now read: engine reproduces the worked table to 4dp, DOM-measured); (c) optional entry-318 positioning (holder-facing guarantee set = American-consistency, all machine-checked; optimality a bonus). Recommends one small pass, skeptic-gated._
+
+> ok meantime anything tbd on the paper? given the story table, clarifications changes etc everuything we went over is there anything you;d like to imrpove?
