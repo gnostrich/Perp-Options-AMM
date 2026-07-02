@@ -135,7 +135,7 @@ theory of Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
         option-value curve), and $m$ the steepness knob below --- with a smooth
         (value-and-slope) join and no new parameters, tied to the classical
         perpetual-American (Merton) problem (Section~\ref{sec:american});
-  \item a single static, \emph{volatility-calibrated} curvature knob $m$ that
+  \item a single static, \emph{volatility-calibrated} steepness knob $m$ that
         sets the option-value steepness uniformly across strikes
         (Section~\ref{sec:lens});
 \end{enumerate}
@@ -361,7 +361,7 @@ that analysis is deferred (Section~\ref{sec:frontier}).
   \begin{axis}[
       width=8.6cm, height=4.7cm,
       xlabel={log-strike (log-moneyness, mode at centre)},
-      ylabel={option-value mark (mode peak $=1$)},
+      ylabel={wing-steepness shape (normalized, mode $=1$)},
       xmin=-2.6, xmax=2.6, ymin=0, ymax=1.08,
       xtick=\empty, ytick={0,0.5,1}, yticklabels={$0$,$\tfrac12$,$1$},
       axis lines=left, samples=160,
@@ -379,7 +379,9 @@ that analysis is deferred (Section~\ref{sec:frontier}).
   \end{axis}
 \end{tikzpicture}
 \caption{The vol knob $m$ steepens the option-value curve \emph{uniformly across
-strikes}. The shape is normalized so the mode (at-the-money) peak is $1$; raising
+strikes}. The plotted quantity is the normalized steepness \emph{shape}---not the
+mark, whose at-the-money value is the continuation value
+(Section~\ref{sec:american})---with the mode (at-the-money) peak at $1$; raising
 $m$ multiplies the steepness exponent to $m\gamma$ at \emph{every} strike, so the
 wings fall off faster while the peak stays at $1$ and $m=1$ recovers the plain
 Balancer curve. The horizontal axis is \emph{log}-strike (log-moneyness), so the

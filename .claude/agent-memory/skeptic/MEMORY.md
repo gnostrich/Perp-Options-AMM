@@ -3839,3 +3839,20 @@ Halt lifted; the whole "go all" lab-review diff is CLEAR-TO-COMMIT. The two ENGI
 for the operator UNCHANGED — commit clearance does not close them.
 SETTLED (don't re-attack): "no repricing profit extractable from the pool's reserves" as worded,
 premise scoped per reversed leg + inline ITM exception.
+
+## 2026-07-02 · Dictionary/doctrine regression sweep — WINE paper v2 (md5 6ca5755f)
+- Verdict file: notes/skeptic/SWEEP_dictionary_regressions_2026-07-02.md
+- **FLAG (REGRESSION, doctrine row 1 mark):** Fig 2 (fig:lens) ylabel line 364 "option-value mark
+  (mode peak =1)" + caption line 382 "mode (at-the-money) peak is 1" — teaches retired mark=1-at-ATM
+  (barrier-era / retired peak-at-1 tent, entries 298/301; 06-14 caption ruling already forbade this).
+  Body text §3.2 is correct (ATM mark = continuation 0.148) — caption/axis regression class (-B289
+  pattern CONFIRMED AGAIN: captions/axis labels lag body-text doctrine; ALWAYS sweep figure labels,
+  not just captions). Minimal fix = relabel "wing-steepness shape (normalized, mode=1)".
+- NIT: line 138 "curvature knob m" vs paper's own "not smile curvature" ceiling — suggest "steepness knob".
+- SETTLED GROUND (don't re-attack): funding anchor-curve/own-ray wording (341-352) correct; trade-point
+  taught everywhere incl. conclusion; vol direction correct at all 3 loci; Snell named-not-formalised;
+  exec dictionary consistent; **carry P=Ny/Nx in paper §3.3 is LEGITIMATE current mechanics** —
+  COMPONENT_REGISTER row C4 VERIFIED on v28 (raised, checked, dissolved — do not re-flag).
+- Pattern note: the one regression was in a figure AXIS LABEL, the previously-fixed one (this turn)
+  was in prose §5 — regressions cluster where old chart semantics were copied into the paper before
+  the 07-02 mark-semantics/chart-2 retirement landed.
