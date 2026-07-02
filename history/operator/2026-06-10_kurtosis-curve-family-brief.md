@@ -2771,3 +2771,15 @@ _Context: operator green-lights all five within-the-hour lab-review fixes; on fi
 _Context: manager relayed the skeptic's engine finding from the go-all gate (close-payout branch jump, +0.016·equity·L0 in the example, from branch-dependent settlement sequencing). Operator asks for the simple-English meaning and whether it errs away from what an American-style perpetual option payoff should be._
 
 > ok simple english meaning of this? is it erring away from what an american styles perpetual optons payoff should be?
+
+
+## Entry 351 — 2026-07-02 UTC
+_Context: follow-up to the branch-jump explanation. Operator asks what the closing tx on the AMM actually is, "since its on the other side ...?"_
+
+> ok and one mor eclarification whjats the closing tx on the AMM? since its on the other side ...?
+
+
+## Entry 352 — 2026-07-02 UTC
+_Context: operator asks whether the paper covers tx mechanics, "becaue for an AMM appwr theis is key"._
+
+> and does the paper cover tx mechanics becaue for an AMM appwr theis is key
