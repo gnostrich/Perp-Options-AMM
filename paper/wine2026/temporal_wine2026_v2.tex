@@ -667,9 +667,12 @@ A position is opened as a \emph{band}---a composition of legs---against a perpet
 future the trader already holds, the \emph{origin perp}. At open the band is minted
 against a carved slice of that perp, whose notional, equity, and entry mark are
 frozen for the band's life, so settlement attribution cannot be contaminated by
-unrelated perp activity. Settlement is therefore \emph{perp-denominated}: leg
-values are carried in units of the carved perp and converted to cash at closing
-equity. A band has two legs on opposite wings; since spot cannot be in-the-money on
+unrelated perp activity. Settlement is therefore \emph{perp-denominated}: a
+mark is a fraction of one escrow unit, so a leg of notional $q$ is worth
+$q\cdot\mathrm{mark}$ \emph{perp units}, and dollars enter only at the end:
+at close, the leg values are netted in perp units and the net converts to
+cash at the carved slice's \emph{closing} equity---its dollar worth at the
+reference price then---scaled by the payout law below. A band has two legs on opposite wings; since spot cannot be in-the-money on
 both at once, at most one leg is in-the-money at any time, giving a clean two-case
 settlement. The composite-ray closed form holds across the
 out-of-the-money$\to$in-the-money boundary under the effective-strike substitution

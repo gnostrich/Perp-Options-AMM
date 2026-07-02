@@ -2819,3 +2819,21 @@ _Context: closure-slippage answer accepted. Operator orders a quick story-table-
 _Context: after the mark/saturate fix, operator broadens the order: sweep the paper for OTHER dictionary/doctrine regressions of the same kind, against the story table and the mental-model conversations, not just this one instance._
 
 > not just for this particiular dictionary regression but in general for other such things vs the story table etc conveersationwe had
+
+
+## Entry 359 — 2026-07-02 UTC
+_Context: operator (also attached as screenshot in case the text didn't go): the perp-units→cash conversion mechanism is important and both the paper and the story table should have it._
+
+> also the mechanism of how perp units convert to actual cash etc. is also imprtant and paper should have it and story ta le should have it
+
+
+## Entry 360 — 2026-07-02 UTC
+_Context: operator clarifies the standing duty: they're checking manually, but these dictionary/coverage regressions are the kinds of things the manager should keep checking for._
+
+> aoso if you get my drift i'm checkingm manually but these are the kinds of thigns to keep checkin for
+
+
+## Entry 361 — 2026-07-02 UTC
+_Context: operator attaches the screenshot of entries 359/360 in case the text didn't send; declares overtime — submit now, wind up soon._
+
+> attyach img. incase if goes and also lastly taking stokc we are overtime have to submit now so lets wind up soon

@@ -1,8 +1,8 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 13, 2026-07-02 (entry 339: row-3 anchoring = ORDERED-BUILD; entry 338: reordered into lifecycle FLOW — world → opening → holding →
-closing → paying → shadows → paper; paper may CLUB the small mechanics, not every item is
-section-worthy)._
+Edition 14, 2026-07-02 (entry 359: NEW station 17 — perp-units→cash conversion, ordered into
+both table and paper; prior: entry 339 row-3 ORDERED-BUILD; entry 338 lifecycle FLOW; paper may
+CLUB the small mechanics)._
 
 | # | Station | The geometry (operator language) | Status |
 |---|---------|----------------------------------|--------|
@@ -22,9 +22,10 @@ section-worthy)._
 | 14 | **Closing — the seam** | the payoff line is the TANGENT to the waiting curve; step off at S*=K·g/(g+1) ($66.67 at g=2); value ≥ payoff everywhere (theorem + gate + measured). | ✅ live |
 | 15 | **Closing — settlement** | your right, never forced; OTM close walks the curve (the bend's toll = slippage); ITM close = the straight tail, no toll, parity cash. | ✅ |
 | 16 | **Paying — the vault (carve)** | your ITM win is paid from your carved slice, frozen at open; whole-system solvency CONDITIONAL on the funding port (theorem-honest). | 🔒 |
-| 17 | **Paying — the club & L₀** | payout = L₀ × raw net × your carved equity; the CLUB is the (L₀−1) counterparty; a drained club pays a winner nothing (the floor). | ✅ code / 📄 carve-only (clubbable) |
-| 18 | **The shadows (charts)** | value pictures = projections of the ray reads; chart-2 = true-V X wings + %→$ toggle (325-F %-label nit queued). | ✅ live |
-| 19 | **The paper** | tells stations 1–16 (smaller mechanics may be CLUBBED per entry 338); §3.2 fixed; lab review running. | ✅ / review running |
+| 17 | **Paying — units→cash** | the mark is a fraction of ONE escrow unit ⇒ a leg of notional q is worth q·mark PERP UNITS; legs net in perp units; dollars enter only at the very end — the net × the carved slice's CLOSING equity (its dollar worth at the reference price then) × L₀. One doorway from perp-land to cash-land, and it's at the exit. | ✅ code / 📄 added (entry 359) |
+| 18 | **Paying — the club & L₀** | payout = L₀ × raw net × your carved equity; the CLUB is the (L₀−1) counterparty; a drained club pays a winner nothing (the floor). | ✅ code / 📄 carve-only (clubbable) |
+| 19 | **The shadows (charts)** | value pictures = projections of the ray reads; chart-2 = true-V X wings + %→$ toggle (325-F %-label nit queued). | ✅ live |
+| 20 | **The paper** | tells stations 1–17 (smaller mechanics may be CLUBBED per entry 338); §3.2 fixed; lab review running. | ✅ / review running |
 
 **Queue:** tx-symmetry study (324) · payoff-chart old-mark read (325-B) · supplement refresh (325-C) ·
 American-draft stat (325-D) · %-label vs fraction axis (325-F) · FLAG-A + FLAG-C operator words ·
