@@ -2807,3 +2807,9 @@ _Context: after the ray-parking explanation, operator confirms understanding and
 _Context: operator asks the direct design question: is there any mechanism for position-closure slippage, and if not, is that natural because closure is treated as exercise._
 
 > so my q is simple: do we hava any mechanism for position closure slippage? or not --- and if not then i suspect this would be natural becuase its treated as exercise or something...?
+
+
+## Entry 357 — 2026-07-02 UTC
+_Context: closure-slippage answer accepted. Operator orders a quick story-table-vs-paper language check: they saw a regression referring to the saturate-at-1 thing as "mark"._
+
+> ok fine seems ok; lastly run a quick check with the story table vs paper because i ssaw some language regression here referring to the saturate at 1 thing as mark
