@@ -69,7 +69,10 @@ OUT OF THE PICTURE — not parked, out of scope; no Snell/measure-layer work wit
 reopen. The consistency properties are the binding set and are ALL VERIFIED: value≥intrinsic everywhere
 (O2 theorem + CM10 gate + tester-measured), exercise = holder's right anytime (engine-verified), ITM =
 parity (measured), C¹ seam at S*=K·g/(g+1) (O1 theorem + gate + measured). The deterministic-optimality
-theorems (T1b/O1) remain as free, hedged paper bonuses — they are NOT product requirements.
+theorems (T1b/O1) remain as free, hedged paper bonuses — they are NOT product requirements. **Sharpened
+(entry 322): "we dont care about optimality, thats a trader choice, the app just has to ensure whatever
+he does we give american style payoff as per the traders choice" (verbatim). S* is the indifference/
+pricing point, never advice or a trigger.**
 
 _Completeness is a MAINTAINED property, not one-time: this is a curated subset of the binding
 agreements across ~139 transcript entries; the same-turn promotion duty + the skeptic's per-pass

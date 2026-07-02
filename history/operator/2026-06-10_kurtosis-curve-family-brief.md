@@ -2551,3 +2551,11 @@ _Context: operator rules perp-layer funding EXTERNAL to the paper and the HTML f
 _Context: operator gives "go paper" for the 3 fixes, PLUS a referencing directive: don't over-quote Lean results by codename in the body (Lean work is on-request only, not attached — page limit + anonymity, no file sharing); at best ONE ≤1-page annex table, with SUPERSCRIPT markers in the body matching the table rows. Manager dispatches the paper pass (3 fixes + Lean-reference restructure), skeptic gate to follow._
 
 > go paper, rrememebr though that no point over-quting lean results by their codename becuase the lean work is available on request and not attahed for paper ,imit and anonymity so no file sharing.... so you can at best have 1 page table in annexures and superscript things done in lean so they match the thing in the gtable
+
+
+---
+
+## Entry 322 — 2026-07-02 UTC
+_Context: operator sharpens entry 318 while the paper pass runs: we don't care about optimality AT ALL — it's a trader choice; the app just ensures American-style payoff per the trader's choice. Manager: appended to register B-AM; the JOB-4 framing sentence will be checked against this exact wording at the skeptic gate (optimality = trader's own choice, never a system claim; S* = the indifference/pricing point, not advice)._
+
+> and we dont care about optimality, thats a trader choice, the app just has to ensure whatever he does we give american style payoff as per the traders choice
