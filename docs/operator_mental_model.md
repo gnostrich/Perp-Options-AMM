@@ -51,3 +51,14 @@ adopt the operator's phrasing everywhere.) ITM extension: no sign flip — a smo
 the signal, the position's weight becomes its delta. NOTE the studied trap: tangent-extending BOTH curves
 and comparing like-ray tails reads zero divergence deep ITM (parallel straights) ⇒ funding-free leverage —
 rejected; explain this whenever the symmetric-extension instinct comes up.
+
+## ADDENDUM 2026-07-02 (entry 311 — the three reads, operator-corrected)
+The mark is NOT presented as a two-ray comparison. The canonical trichotomy:
+- **MARK (value):** ONE ray on ONE curve — your strike ray's own slope on the pool curve, in the curve's
+  frame; the lesser of slope and its reciprocal, 0→1. Nothing compared.
+- **FUNDING (rent):** the SAME ray on TWO curves — pool curve vs anchor curve, like ray to like ray; the
+  slope DEVIATION between them is what funding is a factor of.
+- **REBASE (housekeeping):** re-zoom the whole picture — curve and every ray rescaled together by one
+  factor r so the pool's centre stays lined up with the outside price; no ray gains or loses meaning;
+  trades and rebases commute (proven). Rebasing also bounds how fast drift can pile into the funding
+  deviation. NEVER omit rebasing from a full-story walkthrough.

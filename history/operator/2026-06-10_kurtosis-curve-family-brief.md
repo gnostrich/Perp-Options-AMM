@@ -2463,3 +2463,11 @@ _Context: operator disclaims certainty on the ITM funding intuition, affirms the
 _Context: operator asks for the whole story/flow of how the system works, paper-style, with what-we-changed-where highlighted, in simple English — as the time-saving sync artifact. Manager delivers the station-by-station narrative in the operator's geometry (curve+rays primary, shadows derived)._
 
 > basically what will save us both time is if you walk me through the whole story / flow of how it works kind of like the paper does, and sort of highlight what we changed where in simple english
+
+
+---
+
+## Entry 311 — 2026-07-02 UTC
+_Context: operator corrects walkthrough point 4 (the mark description "your ray against the pool's ray" isn't recognisable — the like-ray comparison belongs to FUNDING: like rays on pool curve vs anchor curve, deviation drives funding) and flags REBASING missing from the walkthrough. Manager adopts the trichotomy: MARK = one ray's slope on the pool curve alone (value); FUNDING = same ray on both curves, compared (rent); REBASE = re-zoom the whole frame (curve + rays together) so rays keep their meaning — trades/rebases commute (proven). Guide updated._
+
+> point 4 isnt recognisable. we compare like rays representing the perp option on the pool curve and anchor curve and the deviation is what funding is a factor of; did you also get rebasing … dont see it anywhere
