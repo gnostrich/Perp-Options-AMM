@@ -2591,3 +2591,11 @@ _Context: operator asks to flag anything else of the symmetry-study kind they ma
 _Context: operator suspects an app mistake: they'd expect ITMs to EXCEED one and ATM AT one. Manager verifies the chart against the shipped object (correct): ATM=1 is the OLD BARRIER instrument's artifact (paid a full unit at strike-touch); the ratified American option is worth its waiting value at the money (the operator's own paper table: 0.148 at S=K, g=2; screenshot's 0.25 crossing = (g/(g+1))^g/(g+1) at g=1 exact). "ITM exceeds one" is TRUE in the PERP-COUNT ruler (deep-ITM put worth (K−S)/S perps >1 when K>2S); the % view is the ESCROW ruler (1 = the slice's full payout; ≤1 is the solvency ceiling by design); the $ view shows the unbounded rising line. Offer: an optional third ruler ("in perps") to make the >1 visible._
 
 > on the app i suspect theres a mistake because i'd see the ITMs exceed one and the ATM at one ....
+
+
+---
+
+## Entry 327 — 2026-07-02 UTC
+_Context: operator asks whether the suspected chart "mistake" (entry 326) crosses over into the paper/logic anywhere. Manager crossover sweep: the chart is CORRECT, but the operator's instinct exposes a real leftover — the barrier-era schematic mark (min(slope,1/slope), "climbs toward 1 near the money", ATM=1) survives in: (E) paper §3.2 eq+prose [NEW — inconsistent with the paper's own §5 worked ATM value 0.148]; (B) the app payoff overlay [already queued 325-B]; (D) the American draft [folds into 325-D]; and Story-Table row-4 wording [manager's to fix]. All live pricing/settlement paths use the American mark (verified). Ask: fix §3.2 in the current paper train?_
+
+> also check if that mistake crosses over to anything else paper logic whatever
