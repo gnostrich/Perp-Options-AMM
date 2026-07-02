@@ -1,5 +1,35 @@
 # MEMORY — research-lead
 
+### TRADE-POINT CONSERVATION SPEC delivered (operator entry 339; FLAG-A/inventory-#16 fix) — 2026-07-02
+Deliverable: `specs/SPEC_tradepoint_conservation_2026-07-02.md` — splice-ready for the intern; READ-ONLY on
+engine, no Aristotle, no git. Everything measured in Node vm vs REAL HEAD (`9fdde1de`); harnesses in session
+scratchpad (verify_tradepoint / verify_close_variants / verify_frozen_arc; 12+3 checks green).
+- **Law pinned (paper Eq. 2 in engine coords):** ρ=θ_tx/getSNorm (PIN-2, single-basis w/ tx-map L1821);
+  T: x_T=x·ρ^(w−1), y_T=y·ρ^w (no k needed); Δx=−α_Tβ_T dy/((y_T−β_T)(y_T+dy−β_T)); x′,y′ global flows;
+  w′=α_T/(x_T+Δx); α′,β′ re-derived. Exhibit EXACT in rationals: Δx=−5/22, w′=11/21, x′=215/22 (old engine
+  6/11=0.5455). ρ=1 reduces EXACTLY to shipped tradeUpdate (≤2.7e-16) ⇒ arbitrageToOracle byte-unchanged.
+- **KEY DERIVATION — live re-anchored close LEAKS:** all live registrations (sNorm-live/frozen-ρ) leak pool-x
+  in ALL 9 cases (exhibit −2.8e-2; deep put −6.2); reserve-ray variant overcharges; no uniform zero-residual
+  κ exists. **Pinned close = FROZEN-ARC** (store {dxA,dyA,dwA,oOpen} per leg; revert = inverse flows·(oNow/oOpen
+  on x) + w_live−dwA): machine-exact round trip, open→rebase→close==rebase(s0,r) exact, intervening-trade
+  flow-neutral. Rebase commutation: EXACT at fixed moneyness ρ (≤5.5e-16); fixed-dollar-K orderings now differ
+  (1.6e-4 probe) — disclosed, economically correct.
+- **Depth guard → trade point:** capacity = w·y·ρ^w (put wing thinner, call deeper).
+- Code plan: NEW tradeUpdateAt + revertArc; tradeUpdate KEPT byte-identical (spot); executeLeg L1840 reroute +
+  guard; openBand stores arc; closeBand revertArc w/ legacy fallback; framePool per-leg animation; exports L2295.
+  Gates: CM8-v2 (spot trio byte-id + 11/21 HARD + ρ=1 reduction + routing negative-control), CM6-v2 (arc round
+  trip + rebase interleave + live-reversal negative control); CM1-5,7,9-11 + a16 + P/P-num survive;
+  monolith_consistency (2)/(7) labels re-scope to SPOT law.
+- **5 operator FLAGs:** registration basis (lean-pool sNorm vs price-basis); close=frozen-arc confirm;
+  intervening-trade "undo own increment"; T at θ_tx confirm; legacy-band fallback.
+- **NEW LEAN QUEUE (post-build, not submitted):** trade-point local-pair conservation/w′ identity; ρ=1
+  reduction; fixed-ρ rebase commutation; frozen-arc exactness; PH internal-passivity re-derivation (R_psd at T).
+  **SCOPE RE-LABEL needed:** trade_conserves/L1 TrajectoryDomain/L7 EngineBridge tradeUpdate = SPOT law only
+  once the build lands (INDEX edits queued, manager-gated).
+R6 skeptic scope-gate + itemized operator go come AFTER this spec; nobody splices from it alone.
+
+---
+
 ### STORY-COMPLETENESS AUDIT delivered (operator entry 335) — 2026-07-02
 Read-only; no Aristotle, no git. `notes/research/STORY_COMPLETENESS_AUDIT_2026-07-02.md` — 17-row gap
 table (code vs STORY_TABLE ed.8 vs WINE v2), HEAD `7015c22c`, vm-probe evidenced. LOUD FLAGS handed to

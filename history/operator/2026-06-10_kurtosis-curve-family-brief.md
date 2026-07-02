@@ -2735,3 +2735,21 @@ _Context: operator approves the airtight-spec pass ("yeah go for it") under the 
 _Context: operator constraint on the airtight pass: EVERYTHING technical/jargon/notation must carry a one-line simple-English explanation matching the intuition of THEIR story (the mental-model guide vocabulary). Manager: the running brief carries entry-247 glossing + operator geometry; this exact bar will be enforced at the manager check AND the focused skeptic gate before commit._
 
 > but keep one thing in mind -- everyhing technical / jargon / notation must have a one line simple englosh explanation that matches the intuiton with which i crafted the story
+
+
+## Entry 345 — 2026-07-02 UTC
+_Context: operator asks for a nondisruptive status update on the Dexter's-Lab review while the airtight paper pass runs. Manager reports from process inspection: lane alive (PID 11643, started 16:25), staging dir actively written._
+
+> nondisruptive status update on dexters lab ting?
+
+
+## Entry 346 — 2026-07-02 UTC
+_Context: operator asks why the lab review is taking that long. Manager diagnosis from live inspection: lane elapsed ~26–29 min, mid-verification phase (writing verify_core_identities.py at 16:47); prior runs took 30–60 min; does not block the submission._
+
+> ok but why dexters lab taking that long?
+
+
+## Entry 347 — 2026-07-02 UTC
+_Context: operator asks for a nondisruptive status update during the airtight-pass endgame. Manager reports: airtight pass landed + manager-verified, focused skeptic gate running, lab review mid-verification, trade-point spec returned (engine-side, post-deadline)._
+
+> nondisruptive status update
