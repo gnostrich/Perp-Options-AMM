@@ -2447,3 +2447,11 @@ _Context: operator corrects the vocabulary hierarchy: the mark is referred to in
 _Context: operator states their funding mental model: backbone = curve divergence of POOL curve vs ANCHOR curve, compared LIKE-RAY TO LIKE-RAY on each curve (NOT vs the 45°/mode ray), and suspects funding "flips or something" when extended ITM. Manager: confirms the backbone matches the locked mechanism exactly; discloses honestly that the operator's "extend both curves, keep comparing like rays" instinct was one of the two studied candidates and FAILS (past both seams the tails are parallel ⇒ divergence reads zero ⇒ deep-ITM funding-free delta-1 leverage = an arb hole); the adopted F1 keeps the like-ray backbone as the signal but the position's weight becomes its delta past the seam (smooth handover to perp carry, no sign flip — proven continuous at the seam)._
 
 > the backbone of funding mechanics is the curve divergence of pool curve vs anchor curve; and i think when we extent ITM or whatever funding flips or something idk; but its like ray to like ray on each curve , not a comparison with the 45 degree slope / ‘mode’ thing
+
+
+---
+
+## Entry 309 — 2026-07-02 UTC
+_Context: operator disclaims certainty on the ITM funding intuition, affirms the OTM like-ray backbone. Manager: NO go inferred — funding extension (F1–F4) PARKED pending the operator's ITM intuition settling; status quo is safe (post-v2 the engine's ITM funding already rides the corrected value curve, un-designed but continuous; the arb hole existed only in the rejected symmetric-extension variant). Offer: a picture (funding across strikes OTM→ITM, today's formula vs F1 delta-carry) so the geometric intuition can adjudicate later._
+
+> im not really sure of the itm intuition (disclaimer); but yeah whatever i said about otm holds
