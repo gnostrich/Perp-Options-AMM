@@ -237,6 +237,52 @@ object: `notes/research/CONSTANT_M_lens_object_sync_2026-06-13.md`. Effect on th
   Esscher tilt. Pool lock (entries 229/231) intact. **Making m intrinsic to the POOL would need a curve reopen
   = operator-tier, NOT done.** Manager + research-lead audits both PASS; honest labels per a00a14ea.
 
+- **O-BATCH — EXTENDED-CURVE UNIFICATION (operator entry 296 "throw it to aristotle", 2026-07-02) — PROVISIONAL research-lead entry; manager audit pending.**
+  Bounded batch O1/O2/O5 off the design study `notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md`
+  §5 (PKG-ITM-v2 obligations). All three are **self-contained `import Mathlib` MODELS of the
+  DESIGN-TARGET put value object** (bounded re-seamed mark: power continuation arm exponent −g welded
+  to the LINEAR intrinsic `(K−S)⁺/K` at `S* = K·g/(g+1)`, dollar/spot frame, ∀ g>0) — NOT the live
+  engine (`markLensed` ships a different ITM arm — the entry-286 violation), NOT the canonical modules,
+  NOT integrated into the canonical build. Submission ledger `aristotle_runs/EXTCURVE_SUBMISSION_IDS.txt`;
+  prompts `formal/prompts/aristotle_prompt_O{1,2,5}_*.md`. Toolchain Lean 4.28.0 / Mathlib v4.28.0.
+  O3 `envelope_least_majorant` NOT forced into this batch (pinning its admissible-majorant class is
+  design work). O4/O6/O7 remain unsubmitted.
+  - **O2 `ValueGeIntrinsic.lean`** (project `d3c118f3`, task `3c93ddf9`; archive
+    `aristotle_runs/O2_VALUE_GE_INTRINSIC/`; md5 `f718d625`) — **`trusted-from-prover — MANAGER-AUDITED 2026-07-02 (tokens clean, canonical modules byte-identical, statements match intent, axioms standard)`.** American faithfulness AS A THEOREM on the v2 object: `value_ge_intrinsic`
+    (`max (1−S/K) 0 ≤ Vp` ∀ S>0), strict-region non-vacuity `value_gt_intrinsic_beyond_seam` +
+    `strict_region_nonempty`, via the strict tangent inequality `powArm_tangent_strict`
+    (`g+1 < t^(−g)+g·t`, t≠1). The theorem-shaped version of the tester's entry-286 finding — under
+    the v2 re-seam the dip-below class is impossible. Research-lead audit gate PASS (canonical modules
+    byte-identical; token-clean, `+decide`=kernel; axioms exactly {propext,Classical.choice,Quot.sound}
+    on all 5 targets; statements = pinned prompt byte-for-byte; math re-derived pre-submission).
+    Fragile-tactic flags (no-math): `grind +qlia` (cont_gt_intrinsic), heavy `nlinarith`.
+  - **O5 `LogSlopeFunding.lean`** (project `e3ad4eed`, task `1a6f4316`; archive
+    `aristotle_runs/O5_LOGSLOPE_FUNDING/`; md5 `655ac0b8`) — **`trusted-from-prover — MANAGER-AUDITED 2026-07-02 (tokens clean, canonical modules byte-identical, statements match intent, axioms standard)`.** The funding log-slope read on the v2 object: HEADLINE `logslope_cont_at_seam`
+    (`ContinuousAt (lamP g K) S*` — C¹ paste ⇒ no funding-rate jump at the seam), `funding_otm_identity`
+    (`S·(−V′) = g·contP` — today's OTM magnitude IS the log-slope read), `funding_tail_delta_carry`
+    (dollar tail read = S = |Δ|·S, the perp-futures delta-carry), `lam_seam_identity` (g·contP(S*)=S*/K),
+    `funding_zero_iff_on_anchor` (zeroes iff pool on anchor), + arm derivatives. **NOT an
+    operator-approved funding semantics** (that sign-off is pending; call-side (g+1)/g recalibration
+    deliberately NOT stated). Research-lead audit gate PASS (same checks; axioms exactly the standard
+    three on all 5 targets; statements = pinned prompt byte-for-byte). Fragile-tactic flags (no-math):
+    `grind` (contP_hasDerivAt/lamP_eq_otm_read).
+  - **O1 `PasteLin.lean`** (project `822f8d6a`, task `41302c31`; archive `aristotle_runs/O1_PASTE_LIN/`;
+    md5 `604c02fd`) — **`trusted-from-prover — MANAGER-AUDITED 2026-07-02 (tokens clean, canonical modules byte-identical, statements match intent, axioms standard)`.** The LINEAR re-seam:
+    `paste_value_lin`/`paste_slope_lin` (power continuation arm meets the linear intrinsic with value
+    AND slope −1/K at S*), the **welded C¹ statement `Vp_hasDerivAt_seam`** (the piecewise Vp itself is
+    differentiable AT the seam — no kink in the welded function, not just arm-by-arm match), the
+    **uniqueness headline `paste_unique`** (the two-equation value+slope system for a general power arm
+    `A·S^(−g)` FORCES `b = S* = K·g/(g+1)` and `A = S*^g/(g+1)`), + call-wing value/slope match
+    (`paste_value_lin_call`/`paste_slope_lin_call` at S*_c = K(g+1)/g; call weld/uniqueness deliberately
+    not in batch), + `contP_A_form`/`powArm_hasDerivAt`/arm derivatives/`sStarP_pos`/`sStarP_lt_K`.
+    Genuinely NEW vs archived LENSKERNEL `valueMatch_g`/`slopeMatch_g`, which prove the POWER paste in
+    the sNorm coordinate — the entry-287 flag stands confirmed. Research-lead audit gate PASS (canonical
+    modules byte-identical; token-clean, only kernel `+decide`; axioms exactly the standard three on all
+    6 targets; statements = pinned prompt byte-for-byte; math re-derived pre-submission; the
+    interrupted-stream PARTIAL snapshot with 6 sorries was quarantined, only the final IDLE-state archive
+    was audited/folded). Fragile-tactic flags (no-math): `grind`/`grind +qlia` (paste_unique,
+    paste_slope_lin_call), `aesop` (powArm_hasDerivAt).
+
 ## ⟢ V28-LENS LINE — LENSKERNEL + WARPCALC (submitted 2026-06-12 overnight, RETURNED + AUDITED 2026-06-13 → trusted-from-prover; WARPCALC NOW SUPERSEDED BY CONSTANT-m, see above)
 Both overnight submissions reached Aristotle and returned COMPLETE; audited 2026-06-13 (token-clean,
 no sorry/admit/native_decide/axiom-decl/opaque/unsafe — only kernel `simp +decide`; axioms ⊆

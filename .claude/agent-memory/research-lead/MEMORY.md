@@ -1,5 +1,42 @@
 # MEMORY — research-lead
 
+### O-BATCH FIRED + RETURNED + AUDITED → all 3 `trusted-from-prover [pending manager audit]` (operator entry 296 "throw it to aristotle") — 2026-07-02
+Bounded extended-curve-unification batch off my study §5 (O1/O2/O5, the small high-leverage set; O3 NOT forced —
+pinning its admissible-majorant class is design work; O4/O6/O7 unsubmitted). Predicates pinned FIRST and every
+identity numerically re-derived in node pre-submission (value/slope matches, uniqueness algebra u=1/(g+1)⇒b=Kg/(g+1),
+tangent ineq t^(−g)+g·t>g+1 t≠1, log-slope identities, call-wing slopes g²/(K(g+1)²)). Three prompts
+`formal/prompts/aristotle_prompt_O{1,2,5}_*.md`, submitted parallel `--project-dir formal/temporal_lean_verified`
+(Lean 4.28.0/Mathlib v4.28.0). Ledger `formal/aristotle_runs/EXTCURVE_SUBMISSION_IDS.txt`. All three are
+self-contained `import Mathlib` MODELS of the PKG-ITM-v2 DESIGN-TARGET put object (dollar frame, ∀g>0; linear
+intrinsic (K−S)⁺/K re-seam at S*=K·g/(g+1)) — NOT the live engine (markLensed ships the entry-286-violating arm),
+NOT canonical modules, NOT integrated. MODEL disclosure docstring embedded in each file.
+**FULL AUDIT GATE per item — PASS** (canonical 5 modules + lakefile + lean-toolchain + lake-manifest BYTE-IDENTICAL
+to WT for each archive; token scan clean — only `#print axioms` lines match "axiom", `+decide`=kernel; summaries
+report axioms EXACTLY {propext,Classical.choice,Quot.sound} per named target; statements = pinned prompts
+byte-for-byte, zero drift, no weakened shadow; math re-derived).
+- **O1** `PasteLin.lean` (project `822f8d6a`, task `41302c31`, md5 `604c02fd`, 138 lines) — the LINEAR re-seam
+  (entry-287 flag confirmed NEW vs LENSKERNEL power-paste): paste_value_lin/paste_slope_lin, welded C¹
+  `Vp_hasDerivAt_seam` (punctured Iio∪Ioi one-sided glue — the piecewise Vp itself differentiable at S*),
+  UNIQUENESS `paste_unique` (value+slope system forces b=S* ∧ A=S*^g/(g+1)), call-wing value/slope match,
+  A-form/powArm/guards. ~49m. NOTE: its `--wait` stream died ~15m in and left a PARTIAL 6-sorry snapshot tar —
+  QUARANTINED (scratchpad only, never folded); final archive re-downloaded after IDLE. PASS.
+- **O2** `ValueGeIntrinsic.lean` (project `d3c118f3`, task `3c93ddf9`, md5 `f718d625`, 80 lines) — American
+  faithfulness AS THEOREM: `value_ge_intrinsic` (max(1−S/K,0) ≤ Vp ∀S>0), strict `value_gt_intrinsic_beyond_seam`
+  + `strict_region_nonempty` (witness (S*+K)/2), via `powArm_tangent_strict` (exp(x)>1+x + log t<t−1 route). The
+  theorem-form of the tester's entry-286 finding: under the v2 re-seam the dip-below class is impossible. ~21m. PASS.
+- **O5** `LogSlopeFunding.lean` (project `e3ad4eed`, task `1a6f4316`, md5 `655ac0b8`, 96 lines) — funding read:
+  HEADLINE `logslope_cont_at_seam` (ContinuousAt lamP at S* — C¹⇒no funding jump), `funding_otm_identity`
+  (S·(−V′)=g·contP), `funding_tail_delta_carry` (dollar tail read = S = |Δ|·S delta-carry), `lam_seam_identity`,
+  `funding_zero_iff_on_anchor`, arm derivatives. **NOT operator-approved funding semantics** (sign-off pending;
+  call-side (g+1)/g recalibration deliberately NOT stated). ~22m. PASS.
+Folded `formal/aristotle_runs/O{1,2,5}_*/` (tar+extracted+summary); INDEX.md new O-BATCH block (provisional,
+manager audit pending). Fragile-tactic flags (no-math): grind/grind+qlia/aesop/heavy nlinarith across all three.
+NO git, NOT "verified" (env-blocked local kernel). Aristotle REACHABLE all session (list/submit/download 200).
+HAND TO MANAGER for independent audit + skeptic gate. Known transport quirk: long `--wait` streams can drop
+("Connection to server was interrupted") — run keeps going server-side; NEVER fold the interruption-time tar.
+
+---
+
 ### EXTENDED-CURVE UNIFICATION design study (operator entry 295, PKG-ITM possible v2) — 2026-07-02
 Brainstorm-grade, NO edits beyond the note, NO Aristotle, NO git. Delivered `notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md` (self-contained, operator-readable). Base = PKG-ITM-FIX-DESIGN (V=max, linear intrinsic re-seam, S*=K·g/(g+1)). Key results (hand math, numerically spot-checked):
 - **The one object:** per-wing value curve = power wing (exp m·γ) ∪ tangent linear intrinsic ray, C¹ weld at S* (put S*=Kg/(g+1), call K(g+1)/g); K scales out ⇒ ONE universal moneyness curve φ_g (entry-291 intuition exact). Envelope slogan pinned correctly: V=max is curve∪tangent-ray / least-majorant (Snell-lite), NOT max(line, extended-power-branch) — the extension lies ABOVE its tangent (convexity).

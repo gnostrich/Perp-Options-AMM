@@ -1,0 +1,20 @@
+# Aristotle extended-curve unification submissions 2026-07-02 (research-lead, operator entry 296 "throw it to aristotle")
+# Source study: notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md §5 (O-menu); batch = O1/O2/O5 (small, high-leverage).
+# project-dir = formal/temporal_lean_verified ; toolchain leanprover/lean4:v4.28.0 / Mathlib v4.28.0
+# All three are self-contained MODELS of the PKG-ITM-v2 design-target put object (dollar frame),
+# NOT the live engine, NOT canonical modules. O3 envelope_least_majorant NOT forced into this batch.
+# Mapping confirmed from live `--wait` stream echoes (prompt titles + task ids).
+O1 paste_lin           project 822f8d6a-cd2e-48b5-b2b4-68590ea3fba6  task 41302c31-688e-426b-8022-b6dabd767ec9  prompt aristotle_prompt_O1_paste_lin.md            file RequestProject/PasteLin.lean
+O2 value_ge_intrinsic  project d3c118f3-452f-4bc2-8289-9100cd1cb728  task 3c93ddf9-8845-43eb-8329-54f624a3f0a1  prompt aristotle_prompt_O2_value_ge_intrinsic.md   file RequestProject/ValueGeIntrinsic.lean
+O5 logslope_funding    project e3ad4eed-fcf3-4b30-b604-30164edb6de6  task 1a6f4316-abaf-4a6c-bc32-1e35032bff89  prompt aristotle_prompt_O5_logslope_funding.md     file RequestProject/LogSlopeFunding.lean
+
+# STATUS 2026-07-02 (research-lead):
+# O2 RETURNED COMPLETE (~21m) + research-lead FULL AUDIT GATE PASS -> trusted-from-prover [pending manager audit]
+#    archive aristotle_runs/O2_VALUE_GE_INTRINSIC/  ValueGeIntrinsic.lean md5 f718d625  (80 lines)
+# O5 RETURNED COMPLETE (~22m) + research-lead FULL AUDIT GATE PASS -> trusted-from-prover [pending manager audit]
+#    archive aristotle_runs/O5_LOGSLOPE_FUNDING/    LogSlopeFunding.lean md5 655ac0b8  (96 lines)
+# O1 RETURNED COMPLETE (~49m; its first --wait stream was interrupted ~15m in — the interrupted-stream
+#    partial snapshot [6 sorries] was QUARANTINED in scratchpad and NOT folded; the FINAL archive was
+#    re-downloaded via `aristotle download 822f8d6a` after project went IDLE) + research-lead FULL AUDIT
+#    GATE PASS -> trusted-from-prover [pending manager audit]
+#    archive aristotle_runs/O1_PASTE_LIN/           PasteLin.lean md5 604c02fd  (138 lines)
