@@ -1,0 +1,32 @@
+=== ORACLE SWEEP QC  run B  build HEAD_temporal_mvp_v28_lens.html ===
+md5(build)=dd6fb9557c251df222a4f918970576dd
+SETUP after open+arb: {"oracle":80000,"m":2,"w":0.5,"sNorm":1,"gamma":1,"g_loc":2,"openBands":1}
+btn-execute was disabled at click? false
+dialogs so far: []
+ora=90000 S/K=1.5000 g=2.000 mark=0.098800 intr=0.000000 diff=0.098800 [+] $60,000 · OTM
+ora=79980 S/K=1.3330 g=2.000 mark=0.111100 intr=0.000000 diff=0.111100 [+] $60,000 · OTM
+ora=72000 S/K=1.2000 g=2.000 mark=0.123500 intr=0.000000 diff=0.123500 [+] $60,000 · OTM
+ora=66000 S/K=1.1000 g=2.000 mark=0.134700 intr=0.000000 diff=0.134700 [+] $60,000 · OTM
+ora=60000 S/K=1.0000 g=2.000 mark=0.148100 intr=0.000000 diff=0.148100 [+] $60,000 · ITM
+ora=57000 S/K=0.9500 g=2.000 mark=0.155900 intr=0.050000 diff=0.105900 [+] $57,000 · ITM
+ora=54000 S/K=0.9000 g=2.000 mark=0.164600 intr=0.100000 diff=0.064600 [+] $54,000 · ITM
+ora=51000 S/K=0.8500 g=2.000 mark=0.174300 intr=0.150000 diff=0.024300 [+] $51,000 · ITM
+ora=49200 S/K=0.8200 g=2.000 mark=0.180700 intr=0.180000 diff=0.000700 [+] $49,200 · ITM
+ora=48000 S/K=0.8000 g=2.000 mark=0.185200 intr=0.200000 diff=-0.014800 [-] $48,000 · ITM
+ora=46800 S/K=0.7800 g=2.000 mark=0.189900 intr=0.220000 diff=-0.030100 [-] $46,800 · ITM
+ora=45000 S/K=0.7500 g=2.000 mark=0.197500 intr=0.250000 diff=-0.052500 [-] $45,000 · ITM
+ora=42000 S/K=0.7000 g=2.000 mark=0.211600 intr=0.300000 diff=-0.088400 [-] $42,000 · ITM
+ora=40002 S/K=0.6667 g=2.000 mark=0.222200 intr=0.333300 diff=-0.111100 [-] $40,002 · ITM
+ora=36000 S/K=0.6000 g=2.000 mark=0.246900 intr=0.400000 diff=-0.153100 [-] $36,000 · ITM
+ora=30000 S/K=0.5000 g=2.000 mark=0.296300 intr=0.500000 diff=-0.203700 [-] $30,000 · ITM
+ora=28800 S/K=0.4800 g=2.000 mark=0.308600 intr=0.520000 diff=-0.211400 [-] $28,800 · ITM
+ora=27600 S/K=0.4600 g=2.000 mark=0.322100 intr=0.540000 diff=-0.217900 [-] $27,600 · ITM
+ora=27000 S/K=0.4500 g=2.000 mark=0.329200 intr=0.550000 diff=-0.220800 [-] $27,000 · ITM
+ora=26640 S/K=0.4440 g=2.000 mark=0.333700 intr=0.556000 diff=-0.222300 [-] $26,640 · ITM
+ora=25800 S/K=0.4300 g=2.000 mark=0.344300 intr=0.570000 diff=-0.225700 [-] $25,800 · ITM
+ora=24000 S/K=0.4000 g=2.000 mark=0.367500 intr=0.600000 diff=-0.232500 [-] $24,000 · ITM
+ora=21000 S/K=0.3500 g=2.000 mark=0.408400 intr=0.650000 diff=-0.241600 [-] $21,000 · ITM
+ora=18000 S/K=0.3000 g=2.000 mark=0.452300 intr=0.700000 diff=-0.247700 [-] $18,000 · ITM
+ora=12000 S/K=0.2000 g=2.000 mark=0.552800 intr=0.800000 diff=-0.247200 [-] $12,000 · ITM
+
+EMPIRICAL SEAM: g=2.0000, boundary mark 1/(g+1)=0.3333; nearest reading S/K=0.444 (mark 0.3337)

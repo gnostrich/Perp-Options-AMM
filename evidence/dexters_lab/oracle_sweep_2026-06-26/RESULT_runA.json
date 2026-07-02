@@ -1,0 +1,645 @@
+{
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "dd6fb9557c251df222a4f918970576dd",
+  "run": "A",
+  "setup": {
+    "oracle": 80000,
+    "m": 2,
+    "w": 0.5,
+    "sNorm": 1,
+    "gamma": 1,
+    "g_loc": 2,
+    "openBands": 1
+  },
+  "K_PUT": 60000,
+  "boundary_mark_1_over_gp1": 0.333333,
+  "errors": [],
+  "dialogs": [],
+  "rows": [
+    {
+      "oracle": 90000,
+      "spot": 90000,
+      "K": 60000,
+      "SK": 1.5,
+      "theta": 0.6667,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.0988,
+      "intrinsic": 0,
+      "diff": 0.0988,
+      "sign": "+",
+      "regime": "$60,000 · OTM",
+      "value": "0.001053",
+      "paper_1_minus_SK": -0.5
+    },
+    {
+      "oracle": 79980,
+      "spot": 79980,
+      "K": 60000,
+      "SK": 1.333,
+      "theta": 0.7502,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1111,
+      "intrinsic": 0,
+      "diff": 0.1111,
+      "sign": "+",
+      "regime": "$60,000 · OTM",
+      "value": "0.001185",
+      "paper_1_minus_SK": -0.333
+    },
+    {
+      "oracle": 72000,
+      "spot": 72000,
+      "K": 60000,
+      "SK": 1.2,
+      "theta": 0.8333,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1235,
+      "intrinsic": 0,
+      "diff": 0.1235,
+      "sign": "+",
+      "regime": "$60,000 · OTM",
+      "value": "0.001316",
+      "paper_1_minus_SK": -0.2
+    },
+    {
+      "oracle": 66000,
+      "spot": 66000,
+      "K": 60000,
+      "SK": 1.1,
+      "theta": 0.9091,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1347,
+      "intrinsic": 0,
+      "diff": 0.1347,
+      "sign": "+",
+      "regime": "$60,000 · OTM",
+      "value": "0.001436",
+      "paper_1_minus_SK": -0.1
+    },
+    {
+      "oracle": 60000,
+      "spot": 60000,
+      "K": 60000,
+      "SK": 1,
+      "theta": 1,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1481,
+      "intrinsic": 0,
+      "diff": 0.1481,
+      "sign": "+",
+      "regime": "$60,000 · ITM",
+      "value": "0.001579",
+      "paper_1_minus_SK": 0
+    },
+    {
+      "oracle": 57000,
+      "spot": 57000,
+      "K": 60000,
+      "SK": 0.95,
+      "theta": 1.0526,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1559,
+      "intrinsic": 0.05,
+      "diff": 0.1059,
+      "sign": "+",
+      "regime": "$57,000 · ITM",
+      "value": "0.001662",
+      "paper_1_minus_SK": 0.05
+    },
+    {
+      "oracle": 54000,
+      "spot": 54000,
+      "K": 60000,
+      "SK": 0.9,
+      "theta": 1.1111,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1646,
+      "intrinsic": 0.1,
+      "diff": 0.0646,
+      "sign": "+",
+      "regime": "$54,000 · ITM",
+      "value": "0.001755",
+      "paper_1_minus_SK": 0.1
+    },
+    {
+      "oracle": 51000,
+      "spot": 51000,
+      "K": 60000,
+      "SK": 0.85,
+      "theta": 1.1765,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1743,
+      "intrinsic": 0.15,
+      "diff": 0.0243,
+      "sign": "+",
+      "regime": "$51,000 · ITM",
+      "value": "0.001858",
+      "paper_1_minus_SK": 0.15
+    },
+    {
+      "oracle": 49200,
+      "spot": 49200,
+      "K": 60000,
+      "SK": 0.82,
+      "theta": 1.2195,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1807,
+      "intrinsic": 0.18,
+      "diff": 0.0007,
+      "sign": "+",
+      "regime": "$49,200 · ITM",
+      "value": "0.001926",
+      "paper_1_minus_SK": 0.18
+    },
+    {
+      "oracle": 48000,
+      "spot": 48000,
+      "K": 60000,
+      "SK": 0.8,
+      "theta": 1.25,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1852,
+      "intrinsic": 0.2,
+      "diff": -0.0148,
+      "sign": "-",
+      "regime": "$48,000 · ITM",
+      "value": "0.001974",
+      "paper_1_minus_SK": 0.2
+    },
+    {
+      "oracle": 46800,
+      "spot": 46800,
+      "K": 60000,
+      "SK": 0.78,
+      "theta": 1.2821,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1899,
+      "intrinsic": 0.22,
+      "diff": -0.0301,
+      "sign": "-",
+      "regime": "$46,800 · ITM",
+      "value": "0.002025",
+      "paper_1_minus_SK": 0.22
+    },
+    {
+      "oracle": 45000,
+      "spot": 45000,
+      "K": 60000,
+      "SK": 0.75,
+      "theta": 1.3333,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.1975,
+      "intrinsic": 0.25,
+      "diff": -0.0525,
+      "sign": "-",
+      "regime": "$45,000 · ITM",
+      "value": "0.002106",
+      "paper_1_minus_SK": 0.25
+    },
+    {
+      "oracle": 42000,
+      "spot": 42000,
+      "K": 60000,
+      "SK": 0.7,
+      "theta": 1.4286,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.2116,
+      "intrinsic": 0.3,
+      "diff": -0.0884,
+      "sign": "-",
+      "regime": "$42,000 · ITM",
+      "value": "0.002256",
+      "paper_1_minus_SK": 0.3
+    },
+    {
+      "oracle": 40002,
+      "spot": 40002,
+      "K": 60000,
+      "SK": 0.6667,
+      "theta": 1.4999,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.2222,
+      "intrinsic": 0.3333,
+      "diff": -0.1111,
+      "sign": "-",
+      "regime": "$40,002 · ITM",
+      "value": "0.002369",
+      "paper_1_minus_SK": 0.3333
+    },
+    {
+      "oracle": 36000,
+      "spot": 36000,
+      "K": 60000,
+      "SK": 0.6,
+      "theta": 1.6667,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.2469,
+      "intrinsic": 0.4,
+      "diff": -0.1531,
+      "sign": "-",
+      "regime": "$36,000 · ITM",
+      "value": "0.002632",
+      "paper_1_minus_SK": 0.4
+    },
+    {
+      "oracle": 30000,
+      "spot": 30000,
+      "K": 60000,
+      "SK": 0.5,
+      "theta": 2,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.2963,
+      "intrinsic": 0.5,
+      "diff": -0.2037,
+      "sign": "-",
+      "regime": "$30,000 · ITM",
+      "value": "0.003159",
+      "paper_1_minus_SK": 0.5
+    },
+    {
+      "oracle": 28800,
+      "spot": 28800,
+      "K": 60000,
+      "SK": 0.48,
+      "theta": 2.0833,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3086,
+      "intrinsic": 0.52,
+      "diff": -0.2114,
+      "sign": "-",
+      "regime": "$28,800 · ITM",
+      "value": "0.003290",
+      "paper_1_minus_SK": 0.52
+    },
+    {
+      "oracle": 27600,
+      "spot": 27600,
+      "K": 60000,
+      "SK": 0.46,
+      "theta": 2.1739,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3221,
+      "intrinsic": 0.54,
+      "diff": -0.2179,
+      "sign": "-",
+      "regime": "$27,600 · ITM",
+      "value": "0.003433",
+      "paper_1_minus_SK": 0.54
+    },
+    {
+      "oracle": 27000,
+      "spot": 27000,
+      "K": 60000,
+      "SK": 0.45,
+      "theta": 2.2222,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3292,
+      "intrinsic": 0.55,
+      "diff": -0.2208,
+      "sign": "-",
+      "regime": "$27,000 · ITM",
+      "value": "0.003510",
+      "paper_1_minus_SK": 0.55
+    },
+    {
+      "oracle": 26640,
+      "spot": 26640,
+      "K": 60000,
+      "SK": 0.444,
+      "theta": 2.2523,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3337,
+      "intrinsic": 0.556,
+      "diff": -0.2223,
+      "sign": "-",
+      "regime": "$26,640 · ITM",
+      "value": "0.003557",
+      "paper_1_minus_SK": 0.556
+    },
+    {
+      "oracle": 25800,
+      "spot": 25800,
+      "K": 60000,
+      "SK": 0.43,
+      "theta": 2.3256,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3443,
+      "intrinsic": 0.57,
+      "diff": -0.2257,
+      "sign": "-",
+      "regime": "$25,800 · ITM",
+      "value": "0.003670",
+      "paper_1_minus_SK": 0.57
+    },
+    {
+      "oracle": 24000,
+      "spot": 24000,
+      "K": 60000,
+      "SK": 0.4,
+      "theta": 2.5,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.3675,
+      "intrinsic": 0.6,
+      "diff": -0.2325,
+      "sign": "-",
+      "regime": "$24,000 · ITM",
+      "value": "0.003918",
+      "paper_1_minus_SK": 0.6
+    },
+    {
+      "oracle": 21000,
+      "spot": 21000,
+      "K": 60000,
+      "SK": 0.35,
+      "theta": 2.8571,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.4084,
+      "intrinsic": 0.65,
+      "diff": -0.2416,
+      "sign": "-",
+      "regime": "$21,000 · ITM",
+      "value": "0.004354",
+      "paper_1_minus_SK": 0.65
+    },
+    {
+      "oracle": 18000,
+      "spot": 18000,
+      "K": 60000,
+      "SK": 0.3,
+      "theta": 3.3333,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.4523,
+      "intrinsic": 0.7,
+      "diff": -0.2477,
+      "sign": "-",
+      "regime": "$18,000 · ITM",
+      "value": "0.004821",
+      "paper_1_minus_SK": 0.7
+    },
+    {
+      "oracle": 12000,
+      "spot": 12000,
+      "K": 60000,
+      "SK": 0.2,
+      "theta": 5,
+      "g_loc": 2,
+      "w": 0.5,
+      "markUI": 0.5528,
+      "intrinsic": 0.8,
+      "diff": -0.2472,
+      "sign": "-",
+      "regime": "$12,000 · ITM",
+      "value": "0.005893",
+      "paper_1_minus_SK": 0.8
+    }
+  ],
+  "signs": [
+    {
+      "SK": 1.5,
+      "sign": "+",
+      "diff": 0.0988
+    },
+    {
+      "SK": 1.333,
+      "sign": "+",
+      "diff": 0.1111
+    },
+    {
+      "SK": 1.2,
+      "sign": "+",
+      "diff": 0.1235
+    },
+    {
+      "SK": 1.1,
+      "sign": "+",
+      "diff": 0.1347
+    },
+    {
+      "SK": 1,
+      "sign": "+",
+      "diff": 0.1481
+    },
+    {
+      "SK": 0.95,
+      "sign": "+",
+      "diff": 0.1059
+    },
+    {
+      "SK": 0.9,
+      "sign": "+",
+      "diff": 0.0646
+    },
+    {
+      "SK": 0.85,
+      "sign": "+",
+      "diff": 0.0243
+    },
+    {
+      "SK": 0.82,
+      "sign": "+",
+      "diff": 0.0007
+    },
+    {
+      "SK": 0.8,
+      "sign": "-",
+      "diff": -0.0148
+    },
+    {
+      "SK": 0.78,
+      "sign": "-",
+      "diff": -0.0301
+    },
+    {
+      "SK": 0.75,
+      "sign": "-",
+      "diff": -0.0525
+    },
+    {
+      "SK": 0.7,
+      "sign": "-",
+      "diff": -0.0884
+    },
+    {
+      "SK": 0.6667,
+      "sign": "-",
+      "diff": -0.1111
+    },
+    {
+      "SK": 0.6,
+      "sign": "-",
+      "diff": -0.1531
+    },
+    {
+      "SK": 0.5,
+      "sign": "-",
+      "diff": -0.2037
+    },
+    {
+      "SK": 0.48,
+      "sign": "-",
+      "diff": -0.2114
+    },
+    {
+      "SK": 0.46,
+      "sign": "-",
+      "diff": -0.2179
+    },
+    {
+      "SK": 0.45,
+      "sign": "-",
+      "diff": -0.2208
+    },
+    {
+      "SK": 0.444,
+      "sign": "-",
+      "diff": -0.2223
+    },
+    {
+      "SK": 0.43,
+      "sign": "-",
+      "diff": -0.2257
+    },
+    {
+      "SK": 0.4,
+      "sign": "-",
+      "diff": -0.2325
+    },
+    {
+      "SK": 0.35,
+      "sign": "-",
+      "diff": -0.2416
+    },
+    {
+      "SK": 0.3,
+      "sign": "-",
+      "diff": -0.2477
+    },
+    {
+      "SK": 0.2,
+      "sign": "-",
+      "diff": -0.2472
+    }
+  ],
+  "belowIntrinsic": [
+    {
+      "SK": 0.8,
+      "diff": -0.0148,
+      "mark": 0.1852,
+      "intr": 0.2
+    },
+    {
+      "SK": 0.78,
+      "diff": -0.0301,
+      "mark": 0.1899,
+      "intr": 0.22
+    },
+    {
+      "SK": 0.75,
+      "diff": -0.0525,
+      "mark": 0.1975,
+      "intr": 0.25
+    },
+    {
+      "SK": 0.7,
+      "diff": -0.0884,
+      "mark": 0.2116,
+      "intr": 0.3
+    },
+    {
+      "SK": 0.6667,
+      "diff": -0.1111,
+      "mark": 0.2222,
+      "intr": 0.3333
+    },
+    {
+      "SK": 0.6,
+      "diff": -0.1531,
+      "mark": 0.2469,
+      "intr": 0.4
+    },
+    {
+      "SK": 0.5,
+      "diff": -0.2037,
+      "mark": 0.2963,
+      "intr": 0.5
+    },
+    {
+      "SK": 0.48,
+      "diff": -0.2114,
+      "mark": 0.3086,
+      "intr": 0.52
+    },
+    {
+      "SK": 0.46,
+      "diff": -0.2179,
+      "mark": 0.3221,
+      "intr": 0.54
+    },
+    {
+      "SK": 0.45,
+      "diff": -0.2208,
+      "mark": 0.3292,
+      "intr": 0.55
+    },
+    {
+      "SK": 0.444,
+      "diff": -0.2223,
+      "mark": 0.3337,
+      "intr": 0.556
+    },
+    {
+      "SK": 0.43,
+      "diff": -0.2257,
+      "mark": 0.3443,
+      "intr": 0.57
+    },
+    {
+      "SK": 0.4,
+      "diff": -0.2325,
+      "mark": 0.3675,
+      "intr": 0.6
+    },
+    {
+      "SK": 0.35,
+      "diff": -0.2416,
+      "mark": 0.4084,
+      "intr": 0.65
+    },
+    {
+      "SK": 0.3,
+      "diff": -0.2477,
+      "mark": 0.4523,
+      "intr": 0.7
+    },
+    {
+      "SK": 0.2,
+      "diff": -0.2472,
+      "mark": 0.5528,
+      "intr": 0.8
+    }
+  ]
+}
