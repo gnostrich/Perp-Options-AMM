@@ -2439,3 +2439,11 @@ _Context: operator asks (1) for the HTML to play with; (2) flags a persisting di
 _Context: operator corrects the vocabulary hierarchy: the mark is referred to in terms of the POOL CURVE / RAYS, not the derived option-price curve. Manager confirms from the code (markLensed consumes ray coordinates θ vs sNorm; the seam is itself a ray θ·g/(g+1)) and re-orders the object hierarchy in the mental-model guide: pool curve + rays = primary geometry; the "value curve" pictures are derived shadows/projections._
 
 > but don’t we refer to mark in terms of the pool curve / rays not the derived option price curve
+
+
+---
+
+## Entry 308 — 2026-07-02 UTC
+_Context: operator states their funding mental model: backbone = curve divergence of POOL curve vs ANCHOR curve, compared LIKE-RAY TO LIKE-RAY on each curve (NOT vs the 45°/mode ray), and suspects funding "flips or something" when extended ITM. Manager: confirms the backbone matches the locked mechanism exactly; discloses honestly that the operator's "extend both curves, keep comparing like rays" instinct was one of the two studied candidates and FAILS (past both seams the tails are parallel ⇒ divergence reads zero ⇒ deep-ITM funding-free delta-1 leverage = an arb hole); the adopted F1 keeps the like-ray backbone as the signal but the position's weight becomes its delta past the seam (smooth handover to perp carry, no sign flip — proven continuous at the seam)._
+
+> the backbone of funding mechanics is the curve divergence of pool curve vs anchor curve; and i think when we extent ITM or whatever funding flips or something idk; but its like ray to like ray on each curve , not a comparison with the 45 degree slope / ‘mode’ thing

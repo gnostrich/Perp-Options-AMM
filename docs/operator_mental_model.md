@@ -41,3 +41,13 @@ The operator's primary geometry is the **POOL CURVE + RAYS**, not the derived va
    primary object.
 Rule: operator-facing explanations anchor on curve+rays FIRST, then show the derived picture as "the
 shadow this ray-read casts when you sweep." (The prior table's items 1–2 inverted this — corrected here.)
+
+## ADDENDUM 2026-07-02 (entry 308 — funding, in the operator's words)
+**Funding backbone = "curve divergence of pool curve vs anchor curve, LIKE RAY TO LIKE RAY."** At each
+strike ray, compare the pool curve's slope where the ray meets it vs the ANCHOR (w=½) curve's slope where
+the SAME ray meets it. It is NOT a comparison against the 45°/mode ray. (Matches the locked mechanism;
+adopt the operator's phrasing everywhere.) ITM extension: no sign flip — a smooth HANDOVER at the seam
+(proven continuous) from wing-crowdedness pricing to perp-style delta-carry; the like-ray divergence stays
+the signal, the position's weight becomes its delta. NOTE the studied trap: tangent-extending BOTH curves
+and comparing like-ray tails reads zero divergence deep ITM (parallel straights) ⇒ funding-free leverage —
+rejected; explain this whenever the symmetric-extension instinct comes up.
