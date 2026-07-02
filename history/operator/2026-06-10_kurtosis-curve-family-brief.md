@@ -2567,3 +2567,11 @@ _Context: operator sharpens entry 318 while the paper pass runs: we don't care a
 _Context: operator queues a Dexter's Lab review (Claude reviewer, no OpenRouter) of the paper once the current pass is done. Manager pipeline: paper pass → entry-322 framing check → skeptic gate → commit/push → lab_review via the locked room → manager cross-check → relay QC pointers._
 
 > also once the paper is done lets get dexter's lab to review it (without openrouter)
+
+
+---
+
+## Entry 324 — 2026-07-02 UTC
+_Context: operator queues a symmetry study: closure, slippage etc. weren't fully discussed — ideal picture = EVERYTHING off the curve, the SAME tx logic for open and close, no separate settlement thing. Manager queues the design study (research-lead, after the paper pipeline): can the two-case close (reverse-on-AMM vs settled-to-cash) collapse into one "walk the extended curve" primitive that yields reverse-trade OTM and parity-cash ITM automatically — code-level symmetry, slippage semantics both ways, escrow interaction, no-free-money invariants. Story Table → edition 7 (queued item added)._
+
+> also add to queue to check the whole symmetry thing, because we didn't discuss closure, slippage etc. now it seems that ideally eveeythig is off the curve, and the same tx logic open and close, no separate settlement thing etc...

@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 6, 2026-07-02 (row 9 CLOSED for our scope — perp funding ruled external, entry 320)._
+Edition 7, 2026-07-02 (entry 324: tx-symmetry study QUEUED)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
@@ -17,6 +17,9 @@ Edition 6, 2026-07-02 (row 9 CLOSED for our scope — perp funding ruled externa
 | 11 | **The shadows (charts)** | Value-vs-price pictures = projections of the ray reads, never the object. Chart-2: both wings through the seam into ITM, CROSSING at the money (the X), with a %→$ toggle (same water, two rulers). | chart-2 rewired to true value + X wings + %→$ toggle + markers-on-curve; tent retired; dash-legibility fixed; acceptance PASS + re-check 17/17 | ✅ LIVE |
 | 12 | **The paper** | Tells this story; was RIGHT on the seam all along. | crisped, vol-direction, explicit trade formula, Merton fine print, anonymized; worked table now = what the app computes, verified | ✅ shipped (submission with operator) |
 
-**Parked / open:** row-9 funding crux check (in flight) · paper page-pruning (operator, later) ·
-dictionary corrections ongoing. **Snell: OUT OF PICTURE by ruling (entry 318)** — the standard is
+**Parked / open:** paper pass in skeptic gate → then lab review · paper page-pruning (operator, later) ·
+**QUEUED (entry 324): tx-symmetry study** — ideal = everything off the (extended) curve, ONE tx logic for
+open AND close, no separate settlement path; study whether the two-case close collapses into a single
+"walk the extended curve" primitive (reverse-trade OTM / parity-cash ITM automatically), slippage
+semantics both ways, escrow interaction, no-free-money invariants · dictionary corrections ongoing. **Snell: OUT OF PICTURE by ruling (entry 318)** — the standard is
 American-CONSISTENCY (met, fully: theorem+gate+measured), not optimality.
