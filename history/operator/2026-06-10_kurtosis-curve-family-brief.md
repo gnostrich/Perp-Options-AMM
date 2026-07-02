@@ -2415,3 +2415,11 @@ _Context: operator checks the funding mechanism: isn't funding calculated from s
 _Context: operator asks the manager to be mindful of their GEOMETRIC mental models and to map/translate to their language ("makes this sync up easier for us both"). Manager persists a standing translation guide `docs/operator_mental_model.md` (built from this session's evidence of what landed), points it from manager MEMORY, and makes it binding for operator-facing briefs (extends the R7 transparency form)._
 
 > ok so you'll have to be mindful of my mental models idk if you have a memory or somerhing of how i think about these things geometrically but mapping / translting to my langauhge makes this shync up easier for us both
+
+
+---
+
+## Entry 305 — 2026-07-02 UTC
+_Context: operator asks for a note of open questions / where we are, and a simple-English summary of today's work. Manager wraps: WINE package shipped; unification idea proven + built (PKG-ITM v2 engine fix, tester-verified, on main); main current + git self-serve; display slice mid-build; funding go + WINE-compile confirmation the two open items._
+
+> ok so just note whatever you bave to ask / where we are etc. and give me simple englihs on what we did. /chnaged today
