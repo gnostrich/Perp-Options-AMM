@@ -1,0 +1,179 @@
+{
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "a6ca02f33aa6500d4803a5273bc10989",
+  "checks": [
+    {
+      "n": "SETUP default pool M=2 ⇒ g=2, sNorm=1, unit=pct, no preview ghost",
+      "p": true,
+      "d": "{\"m\":2,\"w\":0.5,\"gamma\":1,\"g\":2,\"sNorm\":1,\"oracle\":80000,\"unit\":\"pct\",\"previewBand\":false,\"mkPutSeam\":0.3333,\"mkAtm\":0.1481}"
+    },
+    {
+      "n": "1a % X: put wing spans OTM (left of ATM) AND ITM (right of ATM)",
+      "p": true,
+      "d": "putCols left=391 right=253"
+    },
+    {
+      "n": "1b % X: call wing spans ITM (left) AND OTM (right)",
+      "p": true,
+      "d": "callCols left=243 right=391"
+    },
+    {
+      "n": "1c % X crosses at ATM at height (g/(g+1))^g/(g+1)",
+      "p": true,
+      "d": "minGap=2px @x=462 height v=0.15 expect 0.1481"
+    },
+    {
+      "n": "1d % continuation SOLID (full column coverage), tails DASHED (gapped), same wing colors",
+      "p": true,
+      "d": "cov putCont=0.9897 callCont=0.9906 putTail=0.5426 callTail=0.5247"
+    },
+    {
+      "n": "2c % wings saturate toward 1 deep ITM",
+      "p": true,
+      "d": "put v@φ≈88°=0.9682 call v@φ≈2°=0.9682"
+    },
+    {
+      "n": "3a put seam pixel at S/K=g/(g+1)=0.667-class, NOT 0.444",
+      "p": true,
+      "d": "dash onset x=561 φ=55.2764° S/K=0.693 expect 0.6667 (0.444-class would be φ≈66°)"
+    },
+    {
+      "n": "3b call seam pixel at θ=g/(g+1)=0.667-class",
+      "p": true,
+      "d": "dash onset x=374 φ=35.0481° θ=0.7015 expect 0.6667"
+    },
+    {
+      "n": "3c boundary height 1/(g+1) at the put seam",
+      "p": true,
+      "d": "pixel v=0.3307 expect 0.3333; engine markLensed(put,1.5,1,2)=0.3333"
+    },
+    {
+      "n": "2a %→$ toggle: unit flips, active class flips, chart rescales (hash differs)",
+      "p": true,
+      "d": "unit=usd active(pct,usd)=(false,true) hash 47d2726c4995→7d936f2359f6"
+    },
+    {
+      "n": "2b $ X crosses at ATM too, at ≈ ATM_V×S dollars",
+      "p": true,
+      "d": "minGap=2px height $12013 expect $11852"
+    },
+    {
+      "n": "2d $ ITM put tail exits cleanly at the 1.25×S clamp (top edge ≈ φ66°, nothing beyond, no blowup)",
+      "p": true,
+      "d": "top-edge hit {\"x\":658,\"yMin\":21} (expect x≈660); put cols beyond exit+40=0"
+    },
+    {
+      "n": "2e $ view: continuation solid + BOTH tails legibly dashed (X drawn through ITM in $)",
+      "p": false,
+      "d": "cov putCont=0.9897 callCont=0.9977 putTailRowCov=0.9647 (legible dash <0.9; solid ~0.95+) callTail=0.5112"
+    },
+    {
+      "n": "2f $→% toggles back byte-identical",
+      "p": true,
+      "d": "unit=pct hash 47d2726c4995 vs 47d2726c4995"
+    },
+    {
+      "n": "5a 3 distinct chart hashes (M=1/3/6)",
+      "p": true,
+      "d": "m1=890215a57aaa m3=349199aa6722 m6=2fe1681e5cd9"
+    },
+    {
+      "n": "5b wings visibly steepen with m (OTM value falls both wings)",
+      "p": true,
+      "d": "putV@20° 0.092→0.0068→0.0034; callV@75° 0.0682→0.0034→0.0034"
+    },
+    {
+      "n": "5c seams march inward toward ATM (put dash onset φ: 63.4°→53.1°→49.4°-class)",
+      "p": true,
+      "d": "measured 62.4159/52.1394/48.8942 expect 63.4349/53.1301/49.3987"
+    },
+    {
+      "n": "5d ATM crossing height falls with m (0.25→0.1055→0.0567)",
+      "p": true,
+      "d": "measured 0.2523/0.1074/0.058 expect 0.25/0.1055/0.0567"
+    },
+    {
+      "n": "6a -B289 vol direction: \"MORE volatile asset ⇒ LOWER m\" present, old \"(more vol)\" gone",
+      "p": true,
+      "d": "\"constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere. Vol calibration: MORE volatile asset ⇒ LOWER m (fatter wings, richer tails).\""
+    },
+    {
+      "n": "6b geometry sentence intact (steepness m·γ at EVERY strike; m=1 plain; larger m steeper everywhere)",
+      "p": true,
+      "d": "\"constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere. Vol calibration: MORE volatile asset ⇒ LOWER m (fatter wings, richer tails).\""
+    },
+    {
+      "n": "6c legend: quoted(pool) vs parity(escrow) per wing; \"peak = 1 (mode)\" retired",
+      "p": true,
+      "d": "put — quoted (pool) | put — parity (escrow) | call — quoted (pool) | call — parity (escrow) | post-trade (preview) | sold strike | bought strike"
+    },
+    {
+      "n": "4a band open (sold-call $120k / bought-put $48k), wings tagged, arb w→0.5",
+      "p": true,
+      "d": "{\"open\":true,\"g\":2,\"sN\":1,\"oracle\":80000,\"sold_wing\":\"call\",\"bought_wing\":\"put\",\"thSold\":1.5,\"thBought\":0.6,\"mkSold\":0.0658,\"mkBought\":0.0533}"
+    },
+    {
+      "n": "4b % view: sold red + bought green dots ON the plotted curves",
+      "p": true,
+      "d": "{\"unit\":\"pct\",\"red\":{\"x\":569.65,\"y\":306,\"n\":20},\"grn\":{\"x\":335.60869565217394,\"y\":309.39130434782606,\"n\":23},\"dR\":1.1348,\"dG\":1.154,\"onR\":1,\"onG\":0.3913,\"expRed\":{\"x\":570.554,\"y\":306.6859},\"expGrn\":{\"x\":336.2427,\"y\":310.3556}}"
+    },
+    {
+      "n": "4c $ view (toggled while band open): dots ON the curves in $ too",
+      "p": true,
+      "d": "{\"unit\":\"usd\",\"red\":{\"x\":569.6666666666666,\"y\":309,\"n\":21},\"grn\":{\"x\":335.8636363636364,\"y\":317.09090909090907,\"n\":22},\"dR\":1.1789,\"dG\":1.0922,\"onR\":1,\"onG\":0.0909,\"expRed\":{\"x\":570.554,\"y\":309.7761},\"expGrn\":{\"x\":336.2427,\"y\":318.1152}}"
+    },
+    {
+      "n": "7a OTM close: both legs reversed (settled_cash_leg=null), finite",
+      "p": true,
+      "d": "{\"open\":0,\"settled\":null,\"raw_net\":-0.000008903820524487974}"
+    },
+    {
+      "n": "7b ITM close (oracle 12000, sold-put θ=5): settled-to-cash, finite",
+      "p": true,
+      "d": "{\"open\":0,\"settled\":\"sold\",\"live_leg\":\"bought\",\"raw_net\":-0.007932015596674339,\"payout\":95.18418716009204,\"poolFinite\":true}"
+    },
+    {
+      "n": "7c every chart state renders non-blank (chart-1 included)",
+      "p": true,
+      "d": "{\"curve\":9769,\"pricing\":11194,\"trajectory\":7411,\"payoff\":58892}"
+    },
+    {
+      "n": "7d zero console errors / pageerrors / stray dialogs",
+      "p": true,
+      "d": "errors=0 [] dialogs=0"
+    },
+    {
+      "n": "7e build md5 unchanged pre/post (read-only)",
+      "p": true,
+      "d": "a6ca02f33aa6500d4803a5273bc10989 → a6ca02f33aa6500d4803a5273bc10989"
+    }
+  ],
+  "mMeas": {
+    "1": {
+      "g": 1,
+      "hash": "890215a57aaa",
+      "crossV": 0.2523,
+      "seamPhi": 62.4159,
+      "putV20": 0.092,
+      "callV75": 0.0682
+    },
+    "3": {
+      "g": 3,
+      "hash": "349199aa6722",
+      "crossV": 0.1074,
+      "seamPhi": 52.1394,
+      "putV20": 0.0068,
+      "callV75": 0.0034
+    },
+    "6": {
+      "g": 6,
+      "hash": "2fe1681e5cd9",
+      "crossV": 0.058,
+      "seamPhi": 48.8942,
+      "putV20": 0.0034,
+      "callV75": 0.0034
+    }
+  },
+  "errors": [],
+  "dialogs": []
+}

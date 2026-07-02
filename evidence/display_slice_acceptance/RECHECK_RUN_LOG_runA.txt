@@ -1,0 +1,20 @@
+=== -B301-DASH RECHECK run A  build md5 7015c22cbd8e78238bdd621f6126713d ===
+PASS R0 SETUP M=2 ⇒ g=2, sNorm=1, unit=pct, no preview ghost  {"m":2,"g":2,"sNorm":1,"oracle":80000,"unit":"pct","previewBand":false,"cssScale":1.2968}
+PASS R2a % continuations still solid (unchanged vs prior 0.9897/0.9906)  cov putCont=0.9897 (prior 0.9897) callCont=0.9906 (prior 0.9906)
+PASS R2b % tails legibly dashed (coverage <0.9, >0.25) under the new [8,6] pattern  putTail=0.5067 callTail=0.5336 (prior [5,3]: 0.5426/0.5247)
+PASS R3a % X crossing unchanged (prior x=462 v=0.15) ±1px  x=462 (prior 462) v=0.15 (prior 0.15; analytic 0.1481)
+PASS R3b % seam dash-onsets within dash-pattern bound of prior (put 561 / call 374), still 0.667-class NOT 0.444  put onset x=565 (prior 561, Δ=4, bound ±7, φ=55.7091° S/K=0.6819) call onset x=373 (prior 374, Δ=-1)
+PASS R3b2 clamp analytically INERT in % view (max value < 3·yMax=3.15 ⇒ % polyline point-identical to prior; only dash differs)  max % viewVal=0.9983
+PASS R3c % boundary height at put seam unchanged (prior v=0.3307) ±1px  v=0.3307 (prior 0.3307; analytic 1/(g+1)=0.3333)
+PASS R3d % deep-ITM saturation unchanged (prior 0.9682/0.9682) ±1px  put=0.9682 call=0.9682
+PASS R1 THE FLAG ITEM: $ put parity tail (seam→clamp exit) per-pixel ROW coverage < 0.9 (legible dash; was 0.9647)  rowCov=0.4941 (broken build 0.9647; predicted ~0.7–0.8) box={"x0":575,"x1":670,"y0":195,"y1":26}
+PASS R2c $ continuations still solid (prior 0.9897/0.9977) + call tail dashed <0.9  putCont=0.9897 callCont=0.9977 callTail=0.5067 (prior tail 0.5112)
+PASS R3e $ X crossing height unchanged (prior $12013) ±1px ($325)  $12013 @x=463 (prior $12013; analytic $11852)
+PASS R3f $ put tail clamp-exit unchanged (prior top-edge x=658) ±1px, nothing beyond  top-edge {"x":658,"yMin":22} (prior x=658; analytic 660) beyond=0
+PASS R4a %→$→% round-trip redraw byte-identical  685e5a5c9b61 vs 685e5a5c9b61
+PASS R4b two $ redraws byte-identical  8890add61e9f vs 8890add61e9f
+PASS R5a m-change works (M=6 ⇒ g=6, chart redraws distinct)  g=6 hash c415cd00af10 vs m2 685e5a5c9b61
+PASS R5b zero console errors / pageerrors / stray dialogs (load + toggles + m-change)  errors=0 [] dialogs=0
+PASS R4c build md5 unchanged pre/post (read-only)  7015c22cbd8e78238bdd621f6126713d → 7015c22cbd8e78238bdd621f6126713d
+
+=== -B301-DASH RECHECK A VERDICT: PASS (17/17) ===

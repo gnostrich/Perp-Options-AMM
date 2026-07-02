@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 2, 2026-07-02 (row 9 revised per entry 313)._
+Edition 3, 2026-07-02 (rows 5+11 → live; row 9 crux check in flight)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
@@ -14,7 +14,7 @@ Edition 2, 2026-07-02 (row 9 revised per entry 313)._
 | 8 | **Settlement (stepping off)** | Exercise = holder's right, never forced. ITM close = walking the straight tail: no bend ⇒ no slippage toll, cash at parity from your slice. OTM open/close = walking the curved part, paying the bend's toll. One rule everywhere. | amounts now right (reads the fixed curve); mechanics untouched | ✅ correct |
 | 9 | **Funding (rent)** | SAME ray on TWO curves: pool vs anchor, like ray to like ray; the slope DEVIATION is what funding is a factor of. Crowded pays contrarian; zero on-anchor. **ITM (entry 313): parity has ZERO warp-sensitivity to the pool's lean ⇒ the natural like-ray funding ITM is exactly ZERO — the operator's instinct, validated.** Any ITM charge would be a DIFFERENT species (perp-equivalence policy, not curve geometry). | open crux: does the carved origin-perp slice already accrue perp funding during the band's life? (if yes, zero ITM option-funding is fully natural and complete) | ⏸ parked pending the crux check |
 | 10 | **The vault (who pays)** | One curve prices everyone but can't be everybody's vault: your ITM win is paid from your own carved slice (frozen at open). Solvency of the whole = CONDITIONAL on the funding port (theorem: a bounded curve cannot warehouse convex obligations). | none — honest and open as ever | 🔒 unchanged / conditional |
-| 11 | **The shadows (charts)** | Value-vs-price pictures = projections of the ray reads, never the object. Chart-2: both wings through the seam into ITM, CROSSING at the money (the X), with a %→$ toggle (same water, two rulers). | 🔧 chart-2 rewired to true value + X wings + toggle + markers-on-curve; tent retired | 🧪 in live test |
+| 11 | **The shadows (charts)** | Value-vs-price pictures = projections of the ray reads, never the object. Chart-2: both wings through the seam into ITM, CROSSING at the money (the X), with a %→$ toggle (same water, two rulers). | chart-2 rewired to true value + X wings + %→$ toggle + markers-on-curve; tent retired; dash-legibility fixed; acceptance PASS + re-check 17/17 | ✅ LIVE |
 | 12 | **The paper** | Tells this story; was RIGHT on the seam all along. | crisped, vol-direction, explicit trade formula, Merton fine print, anonymized; worked table now = what the app computes, verified | ✅ shipped (submission with operator) |
 
 **Parked / open:** ITM funding formalization (awaits operator's eye — offer: the funding picture);

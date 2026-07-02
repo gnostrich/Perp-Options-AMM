@@ -1,0 +1,93 @@
+{
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "7015c22cbd8e78238bdd621f6126713d",
+  "checks": [
+    {
+      "n": "R0 SETUP M=2 ⇒ g=2, sNorm=1, unit=pct, no preview ghost",
+      "p": true,
+      "d": "{\"m\":2,\"g\":2,\"sNorm\":1,\"oracle\":80000,\"unit\":\"pct\",\"previewBand\":false,\"cssScale\":1.2968}"
+    },
+    {
+      "n": "R2a % continuations still solid (unchanged vs prior 0.9897/0.9906)",
+      "p": true,
+      "d": "cov putCont=0.9897 (prior 0.9897) callCont=0.9906 (prior 0.9906)"
+    },
+    {
+      "n": "R2b % tails legibly dashed (coverage <0.9, >0.25) under the new [8,6] pattern",
+      "p": true,
+      "d": "putTail=0.5067 callTail=0.5336 (prior [5,3]: 0.5426/0.5247)"
+    },
+    {
+      "n": "R3a % X crossing unchanged (prior x=462 v=0.15) ±1px",
+      "p": true,
+      "d": "x=462 (prior 462) v=0.15 (prior 0.15; analytic 0.1481)"
+    },
+    {
+      "n": "R3b % seam dash-onsets within dash-pattern bound of prior (put 561 / call 374), still 0.667-class NOT 0.444",
+      "p": true,
+      "d": "put onset x=565 (prior 561, Δ=4, bound ±7, φ=55.7091° S/K=0.6819) call onset x=373 (prior 374, Δ=-1)"
+    },
+    {
+      "n": "R3b2 clamp analytically INERT in % view (max value < 3·yMax=3.15 ⇒ % polyline point-identical to prior; only dash differs)",
+      "p": true,
+      "d": "max % viewVal=0.9983"
+    },
+    {
+      "n": "R3c % boundary height at put seam unchanged (prior v=0.3307) ±1px",
+      "p": true,
+      "d": "v=0.3307 (prior 0.3307; analytic 1/(g+1)=0.3333)"
+    },
+    {
+      "n": "R3d % deep-ITM saturation unchanged (prior 0.9682/0.9682) ±1px",
+      "p": true,
+      "d": "put=0.9682 call=0.9682"
+    },
+    {
+      "n": "R1 THE FLAG ITEM: $ put parity tail (seam→clamp exit) per-pixel ROW coverage < 0.9 (legible dash; was 0.9647)",
+      "p": true,
+      "d": "rowCov=0.4941 (broken build 0.9647; predicted ~0.7–0.8) box={\"x0\":575,\"x1\":670,\"y0\":195,\"y1\":26}"
+    },
+    {
+      "n": "R2c $ continuations still solid (prior 0.9897/0.9977) + call tail dashed <0.9",
+      "p": true,
+      "d": "putCont=0.9897 callCont=0.9977 callTail=0.5067 (prior tail 0.5112)"
+    },
+    {
+      "n": "R3e $ X crossing height unchanged (prior $12013) ±1px ($325)",
+      "p": true,
+      "d": "$12013 @x=463 (prior $12013; analytic $11852)"
+    },
+    {
+      "n": "R3f $ put tail clamp-exit unchanged (prior top-edge x=658) ±1px, nothing beyond",
+      "p": true,
+      "d": "top-edge {\"x\":658,\"yMin\":22} (prior x=658; analytic 660) beyond=0"
+    },
+    {
+      "n": "R4a %→$→% round-trip redraw byte-identical",
+      "p": true,
+      "d": "685e5a5c9b61 vs 685e5a5c9b61"
+    },
+    {
+      "n": "R4b two $ redraws byte-identical",
+      "p": true,
+      "d": "8890add61e9f vs 8890add61e9f"
+    },
+    {
+      "n": "R5a m-change works (M=6 ⇒ g=6, chart redraws distinct)",
+      "p": true,
+      "d": "g=6 hash c415cd00af10 vs m2 685e5a5c9b61"
+    },
+    {
+      "n": "R5b zero console errors / pageerrors / stray dialogs (load + toggles + m-change)",
+      "p": true,
+      "d": "errors=0 [] dialogs=0"
+    },
+    {
+      "n": "R4c build md5 unchanged pre/post (read-only)",
+      "p": true,
+      "d": "7015c22cbd8e78238bdd621f6126713d → 7015c22cbd8e78238bdd621f6126713d"
+    }
+  ],
+  "errors": [],
+  "dialogs": []
+}

@@ -1,6 +1,74 @@
 # MEMORY — intern
-_Last updated: 2026-07-02 (PKG-ITM v2 engine splice on HEAD, IN PLACE per operator go entry 298;
-handed to manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-02 (-B301-DASH dash-legibility fix on HEAD, IN PLACE; handed to manager;
+no git). Rewrite changed bits at task end._
+
+## Done — -B301-DASH parity-tail dash legibility (IN-PLACE on HEAD, 2026-07-02)
+Tester FLAG -B301-DASH: $-view PUT parity tail's `setLineDash([5,3])` reads solid on the steep
+seam→1.25S-exit drop (row coverage 0.9647; legible <0.9; % tails ~0.51 fine). HEAD
+`a6ca02f33aa6500d4803a5273bc10989` → **`7015c22cbd8e78238bdd621f6126713d`**. Draw-layer only —
+engine AND state `<script>` blocks BYTE-IDENTICAL (node-verified). Splice
+`scratchpad/splice_dash_legibility.py` on a work copy, 2 anchored edits in `drawState`
+(renderPricingFrame, ui block), count==1 each:
+- **E1 (was L3808):** `dashTail` live pattern `[5,3]` → **screen-space `[8·cssScale, 6·cssScale]`**,
+  `cssScale = cv.clientWidth>0 ? W/cv.clientWidth : 1` (canvas 900px is CSS-downscaled ~2×; the old
+  3-canvas-px gap blurred solid under downscale AA). Uniform across ALL parity tails — both wings,
+  both %/$ views; preview `[2,5]` + continuation dashes untouched (tester's "don't disturb %" bound).
+- **E2 (was L3794):** plotted view value clamped `Math.min(viewVal, 3·yMax)` — the $ put tail grows
+  ~tan(90°) (θ→1.6e16 ⇒ py→−1e20), quasi-infinite coords defeat dash rasterization on the
+  frame-crossing segments; clamp keeps points ≤2·plotH above the top edge (invisible under the
+  existing ctx.clip; in-frame geometry unchanged to sub-pixel; inert in % view and for the call $
+  wing which tops at 0.8·yMax).
+- **RESULTS:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical before+after; 3 scripts parse
+  (714/450/1899, longest 246); engine IIFE intact; lens_selfcheck **16 PASS**, a16 **5 PASS**,
+  run_all exit 0; monolith 8/8 report-green; surgical diff = exactly the 2 regions; hook no-block.
+  **run_all.sh line 8 re-pinned** `9fdde1de`→`7015c22c` (covers display slice a6ca02f3 + this fix;
+  the a6ca02f3 pin was never separately made — folded into this one, noted honest in the string).
+- **Open for tester:** targeted re-check — $-view put-tail per-pixel row coverage (<0.9) +
+  byte-stability. **Open for manager:** git.
+
+## Done — (b) DISPLAY SLICE + -B289 CAPTION FIX (IN-PLACE on HEAD, handed to manager 2026-07-02)
+Operator go entries 298+301; skeptic R6 cleared scope; design source
+`notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md` items 1–2. HEAD
+`engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 `9fdde1de…` →
+**`a6ca02f33aa6500d4803a5273bc10989`**. Draw-layer + captions ONLY — engine
+`<script id="engine">` BYTE-IDENTICAL (node-verified); markLensed/gLoc/pool/settlement/funding/
+tx-map untouched. Splice `scratchpad/splice_display_slice.py` on a work copy (4 anchored
+regions, count==1 each, blobs never through): **R1** L1321 SLOPE-MULT caption — vol direction
+fixed per entry 289 (larger m ⇒ steeper everywhere; MORE volatile asset ⇒ LOWER m, fatter
+wings); **R2** L1412-1424 chart-2 canvas block — added %/$ toggle buttons
+(`pricing-unit-pct`/`pricing-unit-usd`, preview-stepper style), legend rewritten
+(quoted-pool solid vs parity-escrow dashed per wing; "peak = 1 (mode)" item REMOVED), caption
+rewritten to the true-V depiction; **R3** L3664-3837 renderPricingFrame — `psiShape` tent
+RETIRED, curves now plot TRUE V per wing across ALL strikes via the SAME
+`Engine.markLensed(wing,θ,sNorm,gLoc)` read settlement uses (single-basis, NaN-loud, no
+draw-local formula), continuation solid / intrinsic-parity tail dashed (preview trace: tail at
+alpha .5), seams drawn C¹ at θ_put*=sNorm·(g+1)/g, θ_call*=sNorm·g/(g+1); %/$ views:
+`%` = escrow-unit fraction yMax=1.05, `$` = put×K / call×S (S=sNorm·oracle), yMax=1.25·S with
+ctx.clip so the unbounded put tail exits cleanly at K=2.25S; per-view y-ticks + rotated y-axis
+label; ref line = 1.0 (%) / spot S ($); mode φ_m line now ends AT the curve (peak-at-1 apex
+RETIRED); drawStrikeMark re-anchored to the same markLensed read in the active view, wing now
+from `b.sold_wing`/`b.bought_wing` (fallback: old OTM-side convention), $ overflow clamps to
+top edge; **R4** after L4237 — `setPricingUnit()` wiring on `window.__pricingUnit` (default
+'pct'), redraw via `Viz.drawPricing(Store.state, __previewPool)`, animation frames pick the
+unit up live.
+- **RESULTS:** lens_selfcheck **16 PASS 0 FAIL**; a16 **5 PASS 0 FAIL**; run_all exit 0 (on
+  work copy AND promoted HEAD); monolith 8/8 report-green. Blobs `ab663f5c`@74/`c505b08a`@1060
+  canonical before+after; 3 scripts parse (714/450/1889, longest 246); IIFE intact; diff = the
+  4 intended regions only. Sanity harness `scratchpad/sanity_draw.js` (71 checks, 4 pool/m
+  combos): sweep finite both views incl. φ→90°, %≤1.05, seam value 1/(g+1) + S/K=g/(g+1)
+  (0.667 @g=2), C⁰ across seams, X crossing at ATM height (g/(g+1))^g/(g+1), $ tails exactly
+  K−S / S−K, drawn V ≥ intrinsic (min −5.6e-17), markers ON curve (diff 0), m-monotonicity
+  (steeper wings / seams inward / crossing falls) — ALL PASS.
+- **FLAG-3(iii) for tester's ledger:** DIFF_LEDGER OPERATOR-VOICE rows entry-226 and L2063 are
+  re-dispositioned **RETIRED-by-entry-298/301-scope** (tent deliberately replaced), NOT
+  silently regressed.
+- **Open for manager:** ~~re-pin run_all.sh line-8 md5 to `a6ca02f3…`~~ (DONE with the -B301-DASH
+  fix, pinned to `7015c22c…`); git. **Findings (not
+  touched, out of scope):** engine comments L1622/L2337 still carry the OLD "larger m ⇒ …
+  (more vol)" phrasing (contradicts the corrected -B289 caption; comment-only); run_all md5
+  pin stale until re-pinned. **Open for tester:** live acceptance — X-shape both views, %/$
+  toggle, markers-on-curve, seams at 0.667K/0.857K-class positions, m steepens visibly, 0
+  console errors.
 
 ## Done — PKG-ITM v2 LINEAR RE-SEAM (IN-PLACE on HEAD, handed to manager 2026-07-02)
 Executed `specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md` exactly (operator go entry 298;

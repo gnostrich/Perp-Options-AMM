@@ -1,0 +1,88 @@
+DISPLAY SLICE + -B289 CAPTION FIX — LIVE ACCEPTANCE EVIDENCE (tester, 2026-07-02)
+Build under test: engine/builds/HEAD_temporal_mvp_v28_lens.html (WORKING TREE, NOT pushed)
+  md5 a6ca02f33aa6500d4803a5273bc10989 — UNCHANGED pre/post every run (tester READ-ONLY)
+  <script id="engine"> BYTE-IDENTICAL to promoted HEAD 9fdde1de (independently re-verified this
+  session, node string-compare, 43156 bytes) — draw-layer + captions only.
+Authority: operator go entries 298+301 (history/operator/2026-06-10_kurtosis-curve-family-brief.md
+  L2338/L2390); design source notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md items 1-2.
+Harness: engine/verify/pw_display_slice_acceptance.mjs (A|B arg) — 29 checks;
+         engine/verify/pw_display_slice_standing_smoke.mjs — the standing 17-point UI smoke
+         (pw_pkg_itm_v2_smoke.mjs with evidence redirected here, NOT overwriting 9fdde1de evidence).
+
+VERDICT: FLAG — 28/29 ×2 byte-stable + standing smoke 17/17. ONE reproducible cosmetic finding
+blocks a clean PASS (check 2e): "$-VIEW STEEP-TAIL DASH SWALLOW" — in the $ view the put
+parity/intrinsic tail (seam S/K=0.667 up to the 1.25×S clamp exit, φ≈56°-66° at M=2) renders
+effectively SOLID: setLineDash([5,3]) IS applied in code, but on this steep segment (~$40k→$100k
+over ~90px) anti-aliasing swallows ~70% of the dash gaps (true per-pixel row coverage 0.9647 vs
+0.51 for the legible $ call tail and ~0.54 for the legible % tails; a legible dash reads <0.9).
+At 1× zoom the tail reads as a pool-quoted solid line — the pool-quote vs escrow-claim distinction
+(the dash's semantic purpose per the new legend) is illegible exactly on the unbounded ITM put
+tail. See A_zoom_usd_puttail.png (6× magnification) vs the clearly-dashed % tails in
+A_chart2_pct_m2.png. Everything else PASS.
+
+FILES
+  RESULT_runA.json / RESULT_runB.json — 29 checks + m-sweep measures; BYTE-IDENTICAL A vs B
+    (diff modulo run label = empty).
+  RUN_LOG_runA.txt / RUN_LOG_runB.txt — full check logs.
+  {A,B}_chart2_pct_m2.png   — % view, M=2: the X (teal call / pink put), dashed tails, crossing
+    at ATM v=0.15 (analytic 0.1481), seams measured put S/K=0.6667-class / call θ=0.667-class,
+    boundary height 0.3307 (analytic 1/3).
+  {A,B}_chart2_usd_m2.png   — $ view, M=2: X crosses at $12,013 (analytic $11,852), put tail
+    exits top edge at x=658 (analytic 660 = K=2.25×S), zero put pixels beyond exit+40, y-ticks
+    in $, "S (spot)" ref line. ALSO the FLAG exhibit (put tail reads solid).
+  A_zoom_usd_puttail.png    — 6× magnification of the $ put tail = the FLAG evidence.
+  {A,B}_chart2_pct_m1.png / _m6.png — m-channel sweep endpoints (with _m2: 3 distinct hashes;
+    wings steepen putV@20° 0.092→0.0068→0.0034; seams march inward 63.4°→53.1°→49.8°;
+    ATM crossing falls 0.2523→0.1074→0.058 vs analytic 0.25/0.1055/0.0567).
+  {A,B}_chart2_band_pct.png / _band_usd.png — band open (sold-call $120k red, bought-put $48k
+    green), dots ON the curves in BOTH views (dR/dG ≤ 1.2px vs analytic markLensed read).
+  STANDING_SMOKE_RESULT.json / _RUN_LOG.txt / 3 PNGs — standing 17-point UI smoke 17/17 PASS
+    on THIS build (perps, band exec, arb, tick, kappa, M-clamp, overlays, chart states,
+    OTM close, SHORT band, deep-ITM close, export/LP/reset, 0 errors, md5 unchanged).
+
+-B289 caption: PASS — sim-aid-label now reads "...larger m ⇒ steeper everywhere. Vol calibration:
+MORE volatile asset ⇒ LOWER m (fatter wings, richer tails)."; old "(more vol)" phrasing gone;
+geometry sentence intact (checks 6a/6b). Legend: quoted(pool)/parity(escrow) per wing; "peak = 1
+(mode)" item retired (6c).
+
+Gates on this build (this session): run_all.sh GREEN exit 0 — lens_selfcheck 16/16 HARD +
+a16_atm_gate 5/5 HARD + monolith 8/8 report-only. Blobs canonical ab663f5c@L74 / c505b08a@L1060;
+3 scripts parse; longest non-blob line 1217. NOTE run_all.sh line-8 integrity md5 pin still says
+9fdde1de (stale string, does not gate; manager re-pins at promotion).
+
+════════════════════════════════════════════════════════════════════════════
+ADDENDUM — -B301-DASH FIX TARGETED RECHECK (tester, 2026-07-02)
+Build: same file, WORKING TREE md5 7015c22cbd8e78238bdd621f6126713d — UNCHANGED pre/post every
+  run (tester READ-ONLY). <script id="engine"> AND <script id="state"> BYTE-IDENTICAL to promoted
+  9fdde1de (node string-compare this session); ui/draw-layer only: parity-tail dash made
+  SCREEN-SPACE [8,6]·cssScale (cssScale=W/clientWidth, measured 1.2968) + plotted value clamped
+  min(viewVal, 3·yMax) so quasi-infinite $ put-tail coordinates no longer defeat dash rasterization.
+Harness: engine/verify/pw_b301_dash_recheck.mjs (A|B arg) — 17 checks, narrow scope; prior
+  a6ca02f3 28/29 PASS items carry (geometry anchors re-verified below).
+
+VERDICT: PASS — 17/17 ×2, RESULT_runA==runB byte-identical modulo run label; -B301-DASH RESOLVED.
+  THE FLAG ITEM (R1): $ view M=2 put parity tail (seam→clamp exit) per-pixel ROW coverage
+    0.4941 (was 0.9647 on a6ca02f3; legible <0.9). Visually confirmed: distinct dashes, clean gaps.
+  Tails (R2): % put/call 0.5067/0.5336, $ call 0.5067 — all legibly dashed; continuations solid,
+    EXACT 4dp match to a6ca02f3 (% 0.9897/0.9906, $ 0.9897/0.9977).
+  Geometry unchanged (R3): % crossing x=462/v=0.15, boundary v=0.3307, saturation 0.9682/0.9682,
+    $ crossing $12,013, clamp exit x=658 (yMin 22 vs 21, ≤1px) — all vs prior ±1px. Clamp proven
+    analytically INERT in % view (max viewVal 0.9983 < 3·yMax=3.15 ⇒ % polyline point-identical).
+    Dash-onset detector shifted put +4px / call −1px — within the ±7px first-dash-lengthening
+    bound (5→10.4 canvas-px), a dash-pattern arithmetic consequence, NOT a seam move; seam still
+    0.667-class (φ55.7°, S/K=0.682), not 0.444-class.
+  Stability (R4/R5): two $ redraws byte-identical; %→$→% round-trip byte-identical; zoom PNGs
+    md5-identical A/B (7bf38f5a…); 0 console / 0 pageerrors / 0 dialogs across load + toggles +
+    one m-change (M=6 ⇒ g=6, distinct hash); build md5 unchanged pre/post.
+
+RECHECK FILES
+  RECHECK_RESULT_runA.json / RECHECK_RESULT_runB.json — 17 checks; byte-identical modulo label.
+  RECHECK_RUN_LOG_runA.txt / RECHECK_RUN_LOG_runB.txt — full logs.
+  RECHECK_{A,B}_zoom_usd_puttail.png — 6× zoom of the $ put tail: NOW LEGIBLY DASHED (compare
+    A_zoom_usd_puttail.png above = the broken exhibit).
+  RECHECK_{A,B}_chart2_usd_m2.png — full $ view on the fix build.
+
+Gates on 7015c22c (this session): run_all.sh GREEN exit 0 — lens_selfcheck 16/16 + a16 5/5 HARD,
+monolith 8/8 report-only; blobs canonical ab663f5c@L74 / c505b08a@L1060; 3 scripts parse; the
+run_all line-8 integrity pin is NOW keyed to 7015c22c (stale-pin residue closed).
+DISPLAY-SLICE ACCEPTANCE = PASS. No standing tester FLAG on this build.

@@ -1,0 +1,21 @@
+=== PKG-ITM v2 STANDING UI SMOKE  build md5 a6ca02f33aa6500d4803a5273bc10989 ===
+PASS S1 boot: chart-1 renders  canvas-curve nonBlank=10037 state={"t":0,"oracle":80000,"m":1,"w":0.5,"sNorm":1,"x":10,"y":800000,"open":0,"perps":2,"bands":0}
+PASS S2 perps: add long + add short + remove (per-click delta)  perps 2→3→4→3
+PASS S3 LONG band executes; w moves (KPI delta)  open=1 w 0.500000→0.503231 kpi-w="0.5032"
+PASS S4 RUN ARBITRAGE: w → 0.5  w 0.503231→0.500000
+PASS S5 ADVANCE TIME: t delta visible  t 0→1 kpi "0h"→"1h"
+PASS S5b kappa-input + second tick  {"k":0.1,"t":2}
+PASS S6 M clamp: 0.1→1, 10→6, 3→3  lo={"m":1,"field":"1"} hi={"m":6,"field":"6"} mid={"m":3,"field":"3"}
+PASS S6b chart-2 per-click delta (m knob visible)  hash m1=e9ec27b65dd6 m6=fc3c78bc4aea m3=59329c0e0fa2
+PASS S7 chart-2 overlays: red sold dot + green bought dot + both curve arms  census={"nonBlank":10932,"red":20,"green":23,"teal":775,"pink":789}
+PASS S8 every chart state renders non-blank  {"curve:canvas-curve":10353,"pricing:canvas-pricing":10932,"trajectory:canvas-ratio":7471,"payoff:canvas-payoff":54442}
+PASS S9 close band OTM: closes, both legs reversed on AMM (no cash-settled leg)  open 1→0 status=closed settled_cash_leg=null live_leg=null raw_net=-0.00019686081815093771 trader_payout=-0.47246596356225057
+PASS S10 SHORT band executes (opposite direction)  open=1 legs={"dir":null,"sold_inner":0.75,"bought_inner":1.25,"keys":"id,sold_wing,bought_wing,status,t_open,sold,bought,entry,carved"}
+PASS S11 close band deep-ITM: sold-put settled-to-cash, finite  settled_cash_leg=sold live_leg=bought raw_net=-0.00790808340929124 trader_payout=-8.093459928112528 floored=false poolFinite=true
+filechooser opened (import) — cancelled, no file supplied
+PASS S12 export + import-chooser + LP deposit/withdraw (per-click deltas)  download=["temporal_state_t2.json"] pool.y 556963→581963→571963
+PASS S12b RESET restores boot state  {"t":0,"oracle":80000,"m":1,"w":0.5,"sNorm":1,"x":10,"y":800000,"open":0,"perps":2,"bands":0}
+PASS S13 zero console errors / zero pageerrors  errors=0 [] dialogs=0 []
+PASS S14 build md5 unchanged (read-only)  a6ca02f33aa6500d4803a5273bc10989 → a6ca02f33aa6500d4803a5273bc10989
+
+=== SMOKE VERDICT: PASS (17/17) ===

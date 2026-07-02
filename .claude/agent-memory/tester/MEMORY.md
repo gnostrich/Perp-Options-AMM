@@ -1,7 +1,65 @@
 # MEMORY — tester
-_Last updated: 2026-07-02, after the PKG-ITM v2 LIVE ACCEPTANCE SWEEP (spec §6) on WORKING-TREE build `9fdde1de0a96874d9ad7b47a6cc8f721` (NOT pushed). **VERDICT = PASS — ALL 5 spec-§6 accept items hold; PROMOTABLE from my side.** DIFF_LEDGER entry `9fdde1de` WRITTEN (feature-keyed #6/#7/#9/#11/#15 + none-beyond; OPERATOR-VOICE 286/287/298/299 + 289/295-296; table rows amended; rolling -B286 RESOLVED-in-9fdde1de, -B289 OPEN, -B295 OPEN/queued)._
+_Last updated: 2026-07-02, after the -B301-DASH TARGETED RECHECK on WORKING-TREE build `7015c22cbd8e78238bdd621f6126713d` (NOT pushed; engine+state blocks byte-identical to promoted `9fdde1de`). **VERDICT = PASS 17/17 ×2 byte-stable — -B301-DASH RESOLVED; DISPLAY-SLICE ACCEPTANCE = PASS, no standing tester FLAG.** DIFF_LEDGER `a6ca02f3` entry AMENDED (fix folded as addendum; rolling -B301-DASH → RESOLVED(evidence)-in-`7015c22c`; table rows #7/#15 amended)._
 
-## ★★★★★ MOST RECENT — PKG-ITM v2 ACCEPTANCE (operator entries 286/287/298/299), build `9fdde1de` = PASS ×2 byte-stable + SMOKE 17/17
+## ★★★★★ MOST RECENT — -B301-DASH RECHECK, build `7015c22c` = 17/17 PASS ×2 (closes the a6ca02f3 FLAG)
+Intern draw-layer-only fix: parity-tail dash SCREEN-SPACE `[8,6]·cssScale` (cssScale=W/clientWidth=1.2968 live) + plotted
+value clamped `min(viewVal, 3·yMax)` (quasi-infinite $ put-tail coords defeated dash rasterization). Harness
+`engine/verify/pw_b301_dash_recheck.mjs` (A/B; measurement fns verbatim from acceptance harness); evidence
+`evidence/display_slice_acceptance/RECHECK_*` (RESULTs byte-identical modulo label; zoom PNGs md5-identical A/B).
+- **THE FLAG ITEM:** $ M=2 put parity tail row coverage 0.9647→**0.4941** (<0.9 legible; better than my 0.7–0.8 prediction).
+  Visually confirmed at 6× (distinct dashes, clean gaps). All 4 tails legible: % 0.5067/0.5336, $ call 0.5067.
+- **Geometry UNCHANGED:** continuations EXACT 4dp match (0.9897/0.9906/0.9897/0.9977); % crossing x462/v0.15,
+  boundary 0.3307, saturation 0.9682, $ crossing $12,013, clamp exit x658 (yMin 22 vs 21) — all ±1px vs a6ca02f3.
+- **run_all GREEN on 7015c22c** (lens 16/16 + a16 5/5 + monolith 8/8 report-only) AND line-8 pin NOW keyed to
+  `7015c22c` (manager re-pinned; stale-pin residue CLOSED). Blobs canonical; engine+state node string-compare identical.
+- ★ HARNESS GOTCHA (permanent): the windowed dash-ONSET detector is DASH-PATTERN-dependent — lengthening the first
+  dash 5→10.4 canvas-px legitimately shifts detected onset +4px. Never use dash-onset as a geometry anchor across a
+  dash-pattern change; use dash-independent anchors (crossing/boundary/saturation/clamp-exit) + analytic clamp-inertness
+  (% max viewVal 0.9983 < 3·yMax ⇒ % polyline point-identical). My first R3b run FAILed on a wrong ±1px anchor; I
+  corrected the EXPECTATION with proof (not patched toward green) and documented raw deltas.
+- ★ cssScale gotcha: canvas is CSS-downscaled (900→~694px); screen-space dashing must scale the pattern INTO canvas px.
+- Did NOT git (manager promotes). OPEN handed to manager: engine comments L1622/L2337 old vol phrasing (non-rendered);
+  funding-semantics extension awaits its own R2 go; -B295 items 3/4 still open.
+
+## ★★★★ Prior — (b) DISPLAY SLICE + -B289 ACCEPTANCE (operator go entries 298+301), build `a6ca02f3` = FLAG (28/29 ×2 + smoke 17/17; -B301-DASH blocker NOW RESOLVED-in-`7015c22c` above)
+Intern draw-layer+caption-only build on HEAD: chart-2 tent RETIRED → TRUE per-unit V per wing OTM+ITM
+(same Engine.markLensed read settlement uses), continuation solid / parity tail dashed, C¹ seams
+drawn, %/$ toggle (`pricing-unit-pct`/`-usd`, window.__pricingUnit), markers re-anchored to the
+active view + wing from b.sold_wing/b.bought_wing; -B289 m-caption vol direction fixed. I verified:
+- **PRE-FLIGHT:** `<script id="engine">` BYTE-IDENTICAL to committed 9fdde1de (node string-compare,
+  43156 b); blobs canonical ab663f5c@74/c505b08a@1060; 3 scripts parse (longest non-blob 1217);
+  run_all GREEN 16+5 HARD + monolith 8/8 (line-8 md5 pin STALE `9fdde1de` — prints only, manager re-pins).
+- **PASS highlights (pixel vs analytic, M=2 ⇒ g=2 default pool):** X both views (put 391/253 cols
+  left/right of ATM); crossing at ATM v=0.15 (%; analytic (g/(g+1))^g/(g+1)=0.1481) / $12,013 ($;
+  11,852); % wings saturate 0.968 deep-ITM; put seam dash-onset φ≈56.5° = 0.667-class NOT 0.444
+  (φ66°); boundary height 0.3307 vs 1/3; $ put tail exits clamp top at x=658 (analytic 660 =
+  K=2.25S), 0 pixels beyond; toggle flips class+hash and back byte-identical; markers ON curve
+  both views dR/dG ≤1.2px; m-channels M=1/3/6: 3 hashes, wings steepen (putV@20° .092→.0068→.0034),
+  seams inward 63.4→53.1→49.8°, crossing falls .2523→.1074→.058; caption 6a/6b/6c (legend has NO
+  "peak = 1"); OTM close settled=null + deep-ITM close (oracle 12000) settled='sold' payout $95.18;
+  all chart states render; 0 errors; md5 unchanged; RESULT A==B byte-identical. STANDING SMOKE
+  17/17 re-run on THIS md5 (`pw_display_slice_standing_smoke.mjs` = pkg smoke w/ evidence redirect).
+- **THE FLAG (-B301-DASH, check 2e, ×2):** $-view put parity tail (seam→1.25×S clamp, φ56–66°)
+  renders effectively SOLID — [5,3] dash set in code but AA swallows ~70% of gaps on the steep
+  segment ($40k→$100k over ~90px): TRUE per-pixel row coverage 0.9647 (legible dash <0.9; $ call
+  tail 0.51, % tails ~0.54 legible). Pool-quote vs escrow-claim distinction illegible exactly on
+  the unbounded ITM put tail in $. Evidence A_zoom_usd_puttail.png (6×). Fix candidate: steeper
+  dash period ([8,6]) or screen-space dashing — draw-layer one-liner; then targeted re-check of 2e.
+- Harness `engine/verify/pw_display_slice_acceptance.mjs` (A/B); evidence
+  `evidence/display_slice_acceptance/` (INDEX.txt, RESULTs ×2, 12 PNGs + zoom, smoke set).
+- ★ HARNESS GOTCHAS (new, permanent): (1) exact-RGB column scans get isolated 1–2px AA misses even
+  on SOLID strokes — never treat a single empty column as a dash gap; use WINDOWED coverage
+  (15-col, <0.85 = dashed) for seam onset. (2) dash legibility on STEEP segments must be measured
+  in per-pixel ROWS, and NOT by filling yMin..yMax per column (that erases the gaps you're
+  looking for). (3) chart-2 geometry now: yMax=1.05 (%) / 1.25·sNorm·oracle ($); v=(1−(y−18)/308)·yMax;
+  toPx x=50+φ/90·832. (4) boot suggestStrikes ghost: clear band-notional+sold-inner+bought-inner
+  BEFORE measuring chart-2 (else preview markers pollute the census).
+- Did NOT git (manager promotes). OPEN for manager: -B301-DASH (the blocker: intern one-liner + my
+  targeted re-check, or operator ACCEPTED(cosmetic)); run_all line-8 re-pin at promotion; engine
+  comments L1622/L2337 old vol phrasing (non-rendered, intern residue); funding-semantics extension
+  awaiting its own R2 go; -B295 items 3/4 still open.
+
+## ★★★★ Prior — PKG-ITM v2 ACCEPTANCE (operator entries 286/287/298/299), build `9fdde1de` = PASS ×2 byte-stable + SMOKE 17/17
 The linear re-seam fix of `markLensed` (intern splice per `specs/SPEC_pkg_itm_v2_engine_coords_2026-07-02.md`; pre-fix `dd6fb955` retained as `temporal_mvp_v28_lens_powerarm.html`). I ran the skeptic-pinned §6 protocol: entry-286 harness lineage, TWO columns (default pool post-arb w=0.5⇒γ=1, sNorm=1; m=2⇒g=2 and m=6⇒g=6), bought-put K=$60k, oracle swept so S/K 1.5→0.2 (26 spots incl. seam straddles ±0.02/±0.005 + all paper cells), MARK read from the DOM bands-table cell (never recomputed).
 - **ACCEPT-1 paper cells EXACT at 4dp (|Δ|=0.0 every pinned cell):** g=2: 0.3333@0.6667 / 0.2315@0.80 / 0.1829@0.90 / 0.1481@1.00 / 0.1029@1.20 / 0.0658@1.5 / 0.3023@0.70 / 0.1642@0.95; g=6: 0.1429@0.85715 / 0.2000@0.80(intrinsic) / 0.1066@0.90 / 0.0567@1.00 / 0.0190@1.20 / 0.0771@0.95.
 - **ACCEPT-2 sign table CLEAN:** mark−max(1−S/K,0) ≥ 0 at ALL 26 spots × both columns × both runs; belowIntrinsic EMPTY (on `dd6fb955` it was 16 spots from S/K=0.80 down, max −0.248 — GONE); diff==0(4dp) at/below seam, strictly + above.
@@ -199,7 +257,7 @@ TWO canvases: canvas-curve (chart-1 pool) / canvas-pricing (chart-2 option/value
 
 ## File-safety canon
 Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060 on the v28 lens line); 3 `<script>` parse. Key off line-md5, not line number.
-Latest WORKING-TREE `9fdde1de…` (PKG-ITM v2 linear re-seam; powerarm twin `dd6fb955…`). Prior constmult `8f897edc…`. Prior: invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
+Latest WORKING-TREE `7015c22c…` (display slice + -B301-DASH fix; engine+state == `9fdde1de…` PKG-ITM v2; prior slice `a6ca02f3…`; powerarm twin `dd6fb955…`). Prior constmult `8f897edc…`. Prior: invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
 lens HEAD `7e1ae39b…`, FINAL `989752294…`; v27 `928cde1c…`; v26c `6cc73563…`.
 
 ## Environment quick-ref

@@ -1,0 +1,96 @@
+{
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "a6ca02f33aa6500d4803a5273bc10989",
+  "checks": [
+    {
+      "n": "S1 boot: chart-1 renders",
+      "p": true,
+      "d": "canvas-curve nonBlank=10037 state={\"t\":0,\"oracle\":80000,\"m\":1,\"w\":0.5,\"sNorm\":1,\"x\":10,\"y\":800000,\"open\":0,\"perps\":2,\"bands\":0}"
+    },
+    {
+      "n": "S2 perps: add long + add short + remove (per-click delta)",
+      "p": true,
+      "d": "perps 2→3→4→3"
+    },
+    {
+      "n": "S3 LONG band executes; w moves (KPI delta)",
+      "p": true,
+      "d": "open=1 w 0.500000→0.503231 kpi-w=\"0.5032\""
+    },
+    {
+      "n": "S4 RUN ARBITRAGE: w → 0.5",
+      "p": true,
+      "d": "w 0.503231→0.500000"
+    },
+    {
+      "n": "S5 ADVANCE TIME: t delta visible",
+      "p": true,
+      "d": "t 0→1 kpi \"0h\"→\"1h\""
+    },
+    {
+      "n": "S5b kappa-input + second tick",
+      "p": true,
+      "d": "{\"k\":0.1,\"t\":2}"
+    },
+    {
+      "n": "S6 M clamp: 0.1→1, 10→6, 3→3",
+      "p": true,
+      "d": "lo={\"m\":1,\"field\":\"1\"} hi={\"m\":6,\"field\":\"6\"} mid={\"m\":3,\"field\":\"3\"}"
+    },
+    {
+      "n": "S6b chart-2 per-click delta (m knob visible)",
+      "p": true,
+      "d": "hash m1=e9ec27b65dd6 m6=fc3c78bc4aea m3=59329c0e0fa2"
+    },
+    {
+      "n": "S7 chart-2 overlays: red sold dot + green bought dot + both curve arms",
+      "p": true,
+      "d": "census={\"nonBlank\":10932,\"red\":20,\"green\":23,\"teal\":775,\"pink\":789}"
+    },
+    {
+      "n": "S8 every chart state renders non-blank",
+      "p": true,
+      "d": "{\"curve:canvas-curve\":10353,\"pricing:canvas-pricing\":10932,\"trajectory:canvas-ratio\":7471,\"payoff:canvas-payoff\":54442}"
+    },
+    {
+      "n": "S9 close band OTM: closes, both legs reversed on AMM (no cash-settled leg)",
+      "p": true,
+      "d": "open 1→0 status=closed settled_cash_leg=null live_leg=null raw_net=-0.00019686081815093771 trader_payout=-0.47246596356225057"
+    },
+    {
+      "n": "S10 SHORT band executes (opposite direction)",
+      "p": true,
+      "d": "open=1 legs={\"dir\":null,\"sold_inner\":0.75,\"bought_inner\":1.25,\"keys\":\"id,sold_wing,bought_wing,status,t_open,sold,bought,entry,carved\"}"
+    },
+    {
+      "n": "S11 close band deep-ITM: sold-put settled-to-cash, finite",
+      "p": true,
+      "d": "settled_cash_leg=sold live_leg=bought raw_net=-0.00790808340929124 trader_payout=-8.093459928112528 floored=false poolFinite=true"
+    },
+    {
+      "n": "S12 export + import-chooser + LP deposit/withdraw (per-click deltas)",
+      "p": true,
+      "d": "download=[\"temporal_state_t2.json\"] pool.y 556963→581963→571963"
+    },
+    {
+      "n": "S12b RESET restores boot state",
+      "p": true,
+      "d": "{\"t\":0,\"oracle\":80000,\"m\":1,\"w\":0.5,\"sNorm\":1,\"x\":10,\"y\":800000,\"open\":0,\"perps\":2,\"bands\":0}"
+    },
+    {
+      "n": "S13 zero console errors / zero pageerrors",
+      "p": true,
+      "d": "errors=0 [] dialogs=0 []"
+    },
+    {
+      "n": "S14 build md5 unchanged (read-only)",
+      "p": true,
+      "d": "a6ca02f33aa6500d4803a5273bc10989 → a6ca02f33aa6500d4803a5273bc10989"
+    }
+  ],
+  "errors": [],
+  "dialogs": [],
+  "downloads": [
+    "temporal_state_t2.json"
+  ]
+}

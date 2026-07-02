@@ -1318,7 +1318,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
             <div class="field-label">SLOPE MULT m</div>
             <div class="field-input-wrap">
               <input type="number" id="m-input" min="1" max="6" step="0.25" value="1">
-              <div class="sim-aid-label">constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere (more vol).</div>
+              <div class="sim-aid-label">constant slope-multiplier knob m · STATIC (vol-set at deploy) · the option/value curve has steepness m·γ at EVERY strike. m=1 = plain curve (γ); larger m ⇒ steeper everywhere. Vol calibration: MORE volatile asset ⇒ LOWER m (fatter wings, richer tails).</div>
             </div>
           </div>
         </div>
@@ -1410,17 +1410,22 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           <!-- Pricing view -->
           <div class="canvas-wrap" data-chart="pricing">
             <canvas id="canvas-pricing" width="900" height="380"></canvas>
+            <div class="preview-stepper">
+              <span class="preview-stepper-label">units</span>
+              <button type="button" id="pricing-unit-pct" class="preview-step-btn active">% of escrow unit</button>
+              <button type="button" id="pricing-unit-usd" class="preview-step-btn">$ value</button>
+            </div>
             <div class="legend">
-              <div class="legend-item"><span class="swatch" style="border-top-color: #FF85B0;"></span> puts (live)</div>
-              <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> puts (post-trade)</div>
-              <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-temporal);"></span> calls (live)</div>
-              <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> calls (post-trade)</div>
-              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #888;"></span> peak = 1 (mode)</div>
+              <div class="legend-item"><span class="swatch" style="border-top-color: #FF85B0;"></span> put — quoted (pool)</div>
+              <div class="legend-item"><span class="swatch dashed" style="border-top-color: #FF85B0;"></span> put — parity (escrow)</div>
+              <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-temporal);"></span> call — quoted (pool)</div>
+              <div class="legend-item"><span class="swatch dashed" style="border-top-color: var(--c-temporal);"></span> call — parity (escrow)</div>
+              <div class="legend-item"><span class="swatch dotted" style="border-top-color: var(--c-coffee);"></span> post-trade (preview)</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-short-fg);"></span> sold strike</div>
               <div class="legend-item"><span class="swatch" style="border-top-color: var(--c-long-fg);"></span> bought strike</div>
             </div>
             <div class="caption">
-              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle. Y-axis: normalized value-SHAPE (steepness) — the lens wing law (θ_m/θ)^(m·γ) for calls, (θ/θ_m)^(m·γ) for puts — so the mode strike θ_m = sNorm sits at 1 (the top) and the wings fall off from there; a bigger SLOPE MULT M makes the wings steeper (more kurtosis / vol). This chart shows the SHAPE, not the dollar level: the absolute smooth-paste option value at the mode is 1/((g+1)·((g+1)/g)^g) &lt; 1 and lives in the settlement math. $K lens row shows actual strike in dollars. Solid = live, dotted = post-trade.
+              X-axis: strike polar angle φ (deg), tan(φ) = θ = K/oracle; $K lens row shows the strike in dollars. Y-axis: TRUE per-unit option value — the same smooth-pasted read (markLensed at g = m·γ) settlement uses, drawn per wing across ALL strikes at the live pool state, ITM branches included. Solid = pool-quoted continuation; dashed (same color) = parity/intrinsic tail past the smooth-pasting seam — an escrow-backed settlement claim, not a pool quote. Seams: put tail where S &lt; K·g/(g+1) (0.667K at g=2), call tail where S &gt; K·(g+1)/g. % view: value as a fraction of the wing's own escrow unit (put: K cash; call: 1 perp) — both wings saturate toward 1 deep ITM and cross near ATM. $ view: × the unit's dollar size (put ×K, call ×S) — the ITM tails become straight lines (the X); y-axis clamped at 1.25×S, the deep put tail exits the top. SLOPE MULT m stays visible: wings steepen with m, the two seams march inward toward ATM, and the ATM crossing height (g/(g+1))^g/(g+1) falls as m rises. Vertical dashed line = mode φ_m, drawn up to the curve (the peak=1 apex convention is retired). Horizontal dashed line = escrow saturation (1) in % view / spot S in $ view. Coffee dotted = post-trade preview.
             </div>
           </div>
 
@@ -3665,9 +3670,20 @@ const Viz = (function() {
     const plotW = W - pad.left - pad.right;
     const plotH = H - pad.top - pad.bottom;
     const phiMaxDeg = 90;
-    const toPx = (phiDeg, psi) => [
+
+    // %/$ unit toggle (display-only; entries 298/301). '%' = value as a fraction
+    // of the wing's OWN escrow unit (put: K cash; call: 1 perp), y ∈ [0, 1.05];
+    // '$' = × the unit's dollar size (put ×K, call ×S = sNorm·oracle). The $
+    // y-axis is clamped at 1.25×spot (the deep-ITM put tail K−S is unbounded in
+    // K; it exits the clipped frame at K = 2.25×S — a sane clamp, not a cap on
+    // the value itself).
+    const unitUsd = (window.__pricingUnit === 'usd');
+    const snap = snapshot(state);
+    const spotUsd = snap.sNorm * state.oracle;   // ATM strike in $ (= the perp's $ price here)
+    const yMax = unitUsd ? 1.25 * spotUsd : 1.05;
+    const toPx = (phiDeg, v) => [
       pad.left + (phiDeg / phiMaxDeg) * plotW,
-      pad.top + (1 - psi) * plotH
+      pad.top + (1 - v / yMax) * plotH
     ];
 
     // Axes
@@ -3677,12 +3693,21 @@ const Viz = (function() {
     ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, pad.top + plotH);
     ctx.stroke();
 
-    // mark = 1 reference line
-    ctx.strokeStyle = '#888'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
-    const [, oneY] = toPx(0, 1);
-    ctx.beginPath();
-    ctx.moveTo(pad.left, oneY); ctx.lineTo(pad.left + plotW, oneY); ctx.stroke();
-    ctx.setLineDash([]);
+    // Reference line — % view: escrow saturation (value 1, both wings' deep-ITM
+    // asymptote); $ view: spot S (the call tail's $ asymptote as K → 0).
+    const refVal = unitUsd ? spotUsd : 1.0;
+    if (isFinite(refVal) && refVal > 0 && refVal <= yMax) {
+      ctx.strokeStyle = '#888'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+      const [, refY] = toPx(0, refVal);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, refY); ctx.lineTo(pad.left + plotW, refY); ctx.stroke();
+      ctx.setLineDash([]);
+      if (unitUsd) {
+        ctx.fillStyle = colTertiary; ctx.font = '9px "IBM Plex Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText('S (spot)', pad.left + plotW - 4, refY - 4);
+      }
+    }
 
     // Tick labels — degrees on top row, $K lens on bottom row
     ctx.fillStyle = colText; ctx.font = '10px "IBM Plex Mono", monospace';
@@ -3706,22 +3731,36 @@ const Viz = (function() {
     ctx.fillStyle = colText;
     ctx.textAlign = 'right';
     [0.25, 0.5, 0.75, 1.0].forEach(p => {
-      const [px, py] = toPx(0, p);
-      ctx.fillText(p.toFixed(2), pad.left - 4, py + 3);
+      const v = p * (unitUsd ? yMax : 1.0);
+      const [, py] = toPx(0, v);
+      ctx.fillText(unitUsd ? fmtTickUSDCompact(v) : v.toFixed(2), pad.left - 4, py + 3);
     });
     ctx.font = '11px "IBM Plex Mono", monospace';
     ctx.textAlign = 'center';
     ctx.fillText('strike polar angle φ (°)  /  $K via lens', pad.left + plotW / 2, pad.top + plotH + 48);
+    // Y-axis label, per active view (FLAG-3 ii)
+    ctx.save();
+    ctx.translate(13, pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.font = '10px "IBM Plex Mono", monospace';
+    ctx.fillStyle = colTertiary;
+    ctx.fillText(unitUsd ? 'value ($ per unit)' : 'value (fraction of escrow unit)', 0, 0);
+    ctx.restore();
 
-    // Lensed mark curves (constant slope multiplier m): the option/value view
-    // drawn THROUGH the static lens, so steepness is visible — the curve has the
-    // SAME power-law exponent m·γ at EVERY strike (no elbow, no flat-top). ψ is
-    // the strike-by-strike lensed mark Engine.markLensed(wing, θ, sNorm, g_loc),
-    // g_loc = m·γ (constant), γ = w/(1−w) read LIVE off poolForLens. The third
-    // arg below (`tau`/`tau_v`) is the slope multiplier m (knob formerly called τ).
-    // x-axis is φ with tan(φ)=θ; the mode φ_m = atan(sNorm). poolForLens is the
-    // live pool (or the preview pool for the dashed trace) — READ-ONLY (L4);
-    // drawing never feeds a slope back into sizing. m defaults to 1 if absent.
+    // TRUE VALUE curves (operator entries 292/295, go 298/301; design source
+    // notes/research/EXTENDED_CURVE_UNIFICATION_2026-07-02.md items 1–2). Chart-2
+    // plots the ACTUAL per-unit option value V(θ) per wing across ALL strikes at
+    // the live pool state — the SAME Engine.markLensed read settlement uses
+    // (single-basis; NO draw-local value formula), at the live constant exponent
+    // g = m·γ (Engine.gLoc). Each wing = power-law continuation welded C¹ onto
+    // its LINEAR intrinsic/parity tail at the smooth-pasting seam: put tail for
+    // θ ≥ sNorm·(g+1)/g (i.e. S ≤ K·g/(g+1), the 0.667K seam at g=2), call
+    // tail for θ ≤ sNorm·g/(g+1). Continuation = pool-quoted (solid); tail =
+    // parity, escrow-backed (dashed) — the pool only ever quotes the ≤1
+    // continuation mark, the tails are settlement claims on the carve. The two
+    // wings CROSS near ATM (the X); the peak=1 tent normalization (Option-C
+    // 2026-06-22, entries 226/266) is RETIRED by entry-298/301 scope. poolForLens
+    // is READ-ONLY (L4); drawing never feeds a slope back into sizing.
     function drawState(sNorm, dashed, poolForLens, tau) {
       const tmDeg = Math.atan(sNorm) * 180 / Math.PI;
       const tau_v = (isFinite(tau) && tau > 0) ? tau : 1;
@@ -3730,90 +3769,116 @@ const Viz = (function() {
         ? Engine.gLoc(poolForLens, theta, tau_v)
         : (function(){ const w = sNorm > 0 ? 1/(1+sNorm) : 0.5; const gamma = w/(1-w);
                        return tau_v * gamma; })();
-      const psiAt = (theta, wing) => {
+      // True per-unit value at strike ray θ: the settlement read (V = markLensed,
+      // ≥ intrinsic everywhere — O2). NaN-loud: a bad g or θ draws NO point.
+      const valAt = (theta, wing) => {
+        if (!(theta > 0) || !(sNorm > 0)) return NaN;
         const g = gAt(theta);
-        if (!isFinite(g) || g <= 0) return Math.min(1, wing === 'call' ? sNorm/theta : theta/sNorm); // degenerate guard
-        const v = Engine.markLensed(wing, theta, sNorm, g);
-        return (isFinite(v) && v >= 0) ? Math.min(1.0, v) : 0;   // clamp display to [0,1]
+        if (!isFinite(g) || g <= 0) return NaN;
+        return Engine.markLensed(wing, theta, sNorm, g);
       };
-      // Chart-2 plots the NORMALIZED steepness SHAPE: the lens wing law (mode/θ)^g for
-      // calls, (θ/mode)^g for puts, with g = m·γ. Peak = 1 at the mode AND the wings
-      // steepen as m rises (the kurtosis/vol knob is VISIBLE on the curve). The absolute
-      // smooth-paste $ value (psiAt, < 1 at the mode) stays in the settlement math; this
-      // chart shows SHAPE, not that dollar level.
-      const psiShape = (theta, wing) => {
-        if (!(theta > 0) || !(sNorm > 0)) return 0;
-        const g = gAt(theta);
-        const r = wing === 'call' ? sNorm / theta : theta / sNorm;   // ≤ 1 away from the mode
-        if (!isFinite(g) || g <= 0) return Math.min(1, Math.max(0, r));
-        return Math.min(1, Math.pow(Math.max(0, r), g));
+      // View transform: % = fraction of own escrow unit; $ = ×K (put) / ×S (call).
+      const viewVal = (theta, wing, v) => unitUsd
+        ? v * (wing === 'put' ? theta : sNorm) * state.oracle
+        : v;
+      const strokeSeg = (wing, phiA, phiB, color, dash) => {
+        if (!(phiB > phiA)) return;
+        ctx.strokeStyle = color; ctx.setLineDash(dash);
+        ctx.beginPath();
+        const N = 160; let started = false;
+        for (let i = 0; i <= N; i++) {
+          const ph = phiA + (i / N) * (phiB - phiA);
+          const theta = Math.tan(ph * Math.PI / 180);
+          const v = valAt(theta, wing);
+          if (!isFinite(v)) { started = false; continue; }
+          // -B301-DASH: bound the plotted value. The $ put tail grows ~tan(90deg)
+          // (quasi-infinite canvas coordinates), which defeats dash rasterization on
+          // the segments crossing the frame. 3*yMax keeps every point <= 2*plotH above
+          // the top edge - invisible under the clip; in-frame geometry unchanged.
+          const [px, py] = toPx(ph, Math.min(viewVal(theta, wing, v), 3 * yMax));
+          if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
       };
+      // Seam angles (g is constant across strikes; both segments include the seam
+      // point — the weld is C¹, value+slope continuous, drawn as such).
+      const gC = gAt(sNorm);
+      const phiPutSeam = (isFinite(gC) && gC > 0) ? Math.atan(sNorm * (gC + 1) / gC) * 180 / Math.PI : NaN;
+      const phiCallSeam = (isFinite(gC) && gC > 0) ? Math.atan(sNorm * gC / (gC + 1)) * 180 / Math.PI : NaN;
+      ctx.save();
+      ctx.beginPath(); ctx.rect(pad.left, pad.top, plotW, plotH); ctx.clip();   // $ ITM tails exit the frame cleanly
       ctx.lineWidth = 2;
-      if (dashed) ctx.setLineDash([2, 5]); else ctx.setLineDash([]);
-      // Put wing: φ ∈ [0°, φ_m], lensed ψ (constant exponent g=m·γ) rises toward the mode (no flat top)
-      ctx.strokeStyle = dashed ? colPreview : colPut;
-      ctx.beginPath();
-      const Np = 120;
-      for (let i = 0; i <= Np; i++) {
-        const th = (i / Np) * tmDeg;
-        const theta = Math.tan(th * Math.PI / 180);
-        const psi = theta > 0 ? psiShape(theta, 'put') : 0;
-        const [px, py] = toPx(th, psi);
-        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      const dashCont = dashed ? [2, 5] : [];        // pool-quoted continuation
+      // -B301-DASH: parity-tail dash in SCREEN pixels. The canvas is CSS-downscaled,
+      // so a [5,3] canvas-px dash blurs solid on the near-vertical $ put-tail drop
+      // (measured per-pixel row coverage 0.9647; legible needs < 0.9). Scale an [8,6]
+      // screen-px pattern back to canvas units off the live clientWidth (fallback 1
+      // when not laid out). Applies to ALL parity tails - both wings, both views.
+      const cssScale = (cv.clientWidth > 0) ? W / cv.clientWidth : 1;
+      const dashTail = dashed ? [2, 5] : [8 * cssScale, 6 * cssScale];   // parity/intrinsic tail
+      const putCol = dashed ? colPreview : colPut;
+      const callCol = dashed ? colPreview : colCall;
+      if (dashed) ctx.globalAlpha = 0.9;
+      // Put wing: continuation φ ∈ [0, seam], parity tail φ ∈ [seam, 90]
+      strokeSeg('put', 0, isFinite(phiPutSeam) ? phiPutSeam : phiMaxDeg, putCol, dashCont);
+      if (isFinite(phiPutSeam)) {
+        if (dashed) ctx.globalAlpha = 0.5;
+        strokeSeg('put', phiPutSeam, phiMaxDeg, putCol, dashTail);
+        if (dashed) ctx.globalAlpha = 0.9;
       }
-      ctx.stroke();
-      // Call wing: φ ∈ [φ_m, 90°], lensed ψ decays through the lensed wing
-      ctx.strokeStyle = dashed ? colPreview : colCall;
-      ctx.beginPath();
-      const Nc = 180;
-      for (let i = 0; i <= Nc; i++) {
-        const th = tmDeg + (i / Nc) * (phiMaxDeg - tmDeg);
-        const theta = Math.tan(th * Math.PI / 180);
-        const psi = theta > 0 ? psiShape(theta, 'call') : 0;
-        const [px, py] = toPx(th, psi);
-        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      // Call wing: parity tail φ ∈ [0, seam], continuation φ ∈ [seam, 90]
+      if (isFinite(phiCallSeam)) {
+        if (dashed) ctx.globalAlpha = 0.5;
+        strokeSeg('call', 0, phiCallSeam, callCol, dashTail);
+        if (dashed) ctx.globalAlpha = 0.9;
       }
-      ctx.stroke();
+      strokeSeg('call', isFinite(phiCallSeam) ? phiCallSeam : 0, phiMaxDeg, callCol, dashCont);
+      ctx.globalAlpha = 1;
       ctx.setLineDash([]);
-      // Mode marker
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = dashed ? '#aaa' : '#777';
-      if (dashed) ctx.setLineDash([2, 4]); else ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      const [mx, my0] = toPx(tmDeg, 0);
-      const [, my1] = toPx(tmDeg, 1);
-      ctx.moveTo(mx, my0); ctx.lineTo(mx, my1); ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.fillStyle = dashed ? '#aaa' : '#777';
-      ctx.font = '9px "IBM Plex Mono", monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText('φ_m', mx, my1 - 4);
+      ctx.restore();
+      // Mode/ATM reference line — ends AT the curve: the X crossing height
+      // (g/(g+1))^g/(g+1) < 1. The peak=1 apex convention is RETIRED (FLAG-3 ii).
+      const vAtm = valAt(sNorm, 'put');            // == call value at ATM (the crossing)
+      if (isFinite(vAtm)) {
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = dashed ? '#aaa' : '#777';
+        if (dashed) ctx.setLineDash([2, 4]); else ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        const [mx, my0] = toPx(tmDeg, 0);
+        const [, my1] = toPx(tmDeg, viewVal(sNorm, 'put', vAtm));
+        ctx.moveTo(mx, my0); ctx.lineTo(mx, my1); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = dashed ? '#aaa' : '#777';
+        ctx.font = '9px "IBM Plex Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('φ_m', mx, my1 - 4);
+      }
     }
 
-    const snap = snapshot(state);
     drawState(snap.sNorm, false, state.pool, state.m);
     if (previewPool) {
       const snapPost = snapshot(state, previewPool);
       if (Math.abs(snapPost.sNorm - snap.sNorm) > 1e-6) drawState(snapPost.sNorm, true, previewPool, state.m);
     }
 
-    // Strike markers — band strikes plotted at φ = atan(θ)
-    function drawStrikeMark(theta, color) {
+    // Strike markers — band strikes plotted at φ = atan(θ), anchored to the SAME
+    // true-value read the curve plots (Engine.markLensed at the live g_loc = m·γ),
+    // in the ACTIVE %/$ view — dots sit ON the plotted curve (FLAG-3 i). Wing comes
+    // from the band leg (sold_wing/bought_wing), not from which side of the mode the
+    // strike sits; legacy fallback keeps the old OTM-side convention. A deep-ITM $
+    // put marker past the frame clamps to the top edge (its curve is clipped there).
+    function drawStrikeMark(theta, wing, color) {
       if (!isFinite(theta) || theta <= 0) return;
       const phiDeg = Math.atan(theta) * 180 / Math.PI;
       if (phiDeg < 0 || phiDeg > phiMaxDeg) return;
-      const sNormLocal = snap.sNorm;
-      const w = theta > sNormLocal ? 'call' : 'put';
-      // lensed smooth-paste mark (same value the live curve uses), inlined so it
-      // does not depend on drawState's closure-local psiAt/gAt (out of scope here).
-      // Markers use the SAME normalized steepness shape as the drawn curve ((mode/θ)^g
-      // call, (θ/mode)^g put, g = m·γ) so they sit ON the curve, not on the old $ mark.
+      const wg = (wing === 'call' || wing === 'put') ? wing
+        : (theta > snap.sNorm ? 'call' : 'put');
       const g = Engine.gLoc(state.pool, theta, state.m);
-      const r = w === 'call' ? sNormLocal / theta : theta / sNormLocal;   // ≤ 1 away from the mode
-      let mk;
-      if (!isFinite(g) || g <= 0) { mk = Math.min(1, Math.max(0, r)); }
-      else { mk = Math.min(1, Math.pow(Math.max(0, r), g)); }
-      const [px, py] = toPx(phiDeg, mk);
+      if (!isFinite(g) || g <= 0) return;            // NaN-loud: no marker
+      const v = Engine.markLensed(wg, theta, snap.sNorm, g);
+      if (!isFinite(v) || v < 0) return;
+      const yView = unitUsd ? v * (wg === 'put' ? theta : snap.sNorm) * state.oracle : v;
+      const [px, py] = toPx(phiDeg, Math.min(yView, yMax));
       ctx.fillStyle = color;
       ctx.beginPath(); ctx.arc(px, py, 3.5, 0, 2 * Math.PI); ctx.fill();
       ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.globalAlpha = 0.4;
@@ -3823,17 +3888,17 @@ const Viz = (function() {
     }
     for (const b of state.bands) {
       if (b.status !== 'open') continue;
-      drawStrikeMark(b.sold.inner, colShort);
-      drawStrikeMark(b.sold.outer, colShort);
-      drawStrikeMark(b.bought.inner, colLong);
-      drawStrikeMark(b.bought.outer, colLong);
+      drawStrikeMark(b.sold.inner, b.sold_wing, colShort);
+      drawStrikeMark(b.sold.outer, b.sold_wing, colShort);
+      drawStrikeMark(b.bought.inner, b.bought_wing, colLong);
+      drawStrikeMark(b.bought.outer, b.bought_wing, colLong);
     }
     if (window.__previewBand) {
       const p = window.__previewBand;
-      drawStrikeMark(p.sold.inner, colShort);
-      drawStrikeMark(p.sold.outer, colShort);
-      drawStrikeMark(p.bought.inner, colLong);
-      drawStrikeMark(p.bought.outer, colLong);
+      drawStrikeMark(p.sold.inner, p.sold_wing, colShort);
+      drawStrikeMark(p.sold.outer, p.sold_wing, colShort);
+      drawStrikeMark(p.bought.inner, p.bought_wing, colLong);
+      drawStrikeMark(p.bought.outer, p.bought_wing, colLong);
     }
   }
 
@@ -4235,6 +4300,21 @@ const Viz = (function() {
 })();
 
 document.getElementById('chart-select').addEventListener('change', (e) => Viz.setView(e.target.value));
+
+// Chart-2 %/$ unit toggle (entries 298/301) — DISPLAY-ONLY: flips the y-unit of
+// the pricing chart ('pct' = fraction of the wing's own escrow unit; 'usd' =
+// × numeraire, put ×K / call ×S) and redraws. No math/state path touched.
+window.__pricingUnit = window.__pricingUnit || 'pct';
+function setPricingUnit(u) {
+  window.__pricingUnit = u;
+  const bp = document.getElementById('pricing-unit-pct');
+  const bu = document.getElementById('pricing-unit-usd');
+  if (bp) bp.classList.toggle('active', u === 'pct');
+  if (bu) bu.classList.toggle('active', u === 'usd');
+  if (Viz && Store) Viz.drawPricing(Store.state, window.__previewPool || null);
+}
+document.getElementById('pricing-unit-pct').addEventListener('click', () => setPricingUnit('pct'));
+document.getElementById('pricing-unit-usd').addEventListener('click', () => setPricingUnit('usd'));
 
 // Payoff simulator: comparison-leverage input redraws just the payoff chart.
 (function wirePayoffControls() {
