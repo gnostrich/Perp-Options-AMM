@@ -2607,3 +2607,11 @@ _Context: operator asks whether the suspected chart "mistake" (entry 326) crosse
 _Context: operator (not yet ruling §3.2 wrong) asks how the option price is calculated NOW, since the formula "we used to use gave us 1 atm" and they don't know what's there currently. Manager explains the live calculation (moneyness ray-ratio → seam test → continuation power arm (1/(g+1))·(S*/S)^g or linear intrinsic; ATM = (1/(g+1))·(g/(g+1))^g e.g. 0.148@g=2, 0.25@g=1), and clarifies WHEN 1-at-ATM died: with the barrier→American lift (June), not the recent fix (which left ATM untouched — the sweep's unique unchanged point); the old min-ratio survives only as the moneyness skeleton + the legacy payoff overlay (queued)._
 
 > ok wait so i'm yet not saying this is wrong, but if thats the case can you tell me how we calculate the optipn price thing because the formula we sued to use gave us 1 atm and idj whats there now
+
+
+---
+
+## Entry 329 — 2026-07-02 UTC
+_Context: operator confirms understanding: did we replace the min(slope,1/slope) thing with something else for the option price? Manager: YES — replaced at the barrier→American lift (operator-approved, June): pricing = the two-arm smooth-pasted value (power continuation 1/(g+1)·(S*/S)^g, linear payoff past the seam); the min-ratio survives only as the moneyness coordinate inside it + one legacy display (payoff overlay, queued)._
+
+> so we replaced the min slope 1/slope thing with somethign else to getn the opton price thing?
