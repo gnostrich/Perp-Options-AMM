@@ -28,3 +28,16 @@ and entry 247 (no unintroduced symbols). Binding for every agent whose output th
 
 ## Corrections
 Operator corrections to this guide land as dated addenda below; the guide is theirs to tune.
+
+## ADDENDUM 2026-07-02 (entry 307 — operator correction, the OBJECT HIERARCHY)
+The operator's primary geometry is the **POOL CURVE + RAYS**, not the derived value pictures. Order:
+1. **The pool curve** (x^w·y^(1−w)=k, the lean w) — THE object.
+2. **Rays from the origin** — each strike IS a ray (θ = K/oracle); the pool's own centre is the mode ray (sNorm).
+3. **The mark = a RAY relationship** — read off ray coordinates (the code literally takes rays:
+   `markLensed(wing, θ, sNorm, g)`); "how your ray sits against the pool's ray." Even the ITM seam is a
+   RAY (`θ·g/(g+1)`): you "step off" in ray space.
+4. **The "option price curve" (value-vs-spot/strike pictures, chart-2, Fig 3, the Deribit X) = derived
+   SHADOWS** — projections of the ray read when you sweep spot or strike. Never present a shadow as the
+   primary object.
+Rule: operator-facing explanations anchor on curve+rays FIRST, then show the derived picture as "the
+shadow this ray-read casts when you sweep." (The prior table's items 1–2 inverted this — corrected here.)

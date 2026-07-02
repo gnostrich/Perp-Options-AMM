@@ -2431,3 +2431,11 @@ _Context: operator asks for a note of open questions / where we are, and a simpl
 _Context: operator asks (1) for the HTML to play with; (2) flags a persisting dictionary/vocabulary/communication mental-model dissonance despite the right direction. Manager: hands the main link (ITM-fixed engine; new chart lands after the in-flight live test per the skeptic-ruled hand-back gate), and proposes building the dictionary in REVERSE — the operator names the objects in their own words while playing, we adopt their names everywhere._
 
 > ok 1. give me the html to play with; 2. i'm still not very clear because while i sense we're going in the correct direction, i feel we have a dictoonary / vocabulary / commuication mental model dissonancee
+
+
+---
+
+## Entry 307 — 2026-07-02 UTC
+_Context: operator corrects the vocabulary hierarchy: the mark is referred to in terms of the POOL CURVE / RAYS, not the derived option-price curve. Manager confirms from the code (markLensed consumes ray coordinates θ vs sNorm; the seam is itself a ray θ·g/(g+1)) and re-orders the object hierarchy in the mental-model guide: pool curve + rays = primary geometry; the "value curve" pictures are derived shadows/projections._
+
+> but don’t we refer to mark in terms of the pool curve / rays not the derived option price curve
