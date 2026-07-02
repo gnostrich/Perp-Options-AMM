@@ -2559,3 +2559,11 @@ _Context: operator gives "go paper" for the 3 fixes, PLUS a referencing directiv
 _Context: operator sharpens entry 318 while the paper pass runs: we don't care about optimality AT ALL — it's a trader choice; the app just ensures American-style payoff per the trader's choice. Manager: appended to register B-AM; the JOB-4 framing sentence will be checked against this exact wording at the skeptic gate (optimality = trader's own choice, never a system claim; S* = the indifference/pricing point, not advice)._
 
 > and we dont care about optimality, thats a trader choice, the app just has to ensure whatever he does we give american style payoff as per the traders choice
+
+
+---
+
+## Entry 323 — 2026-07-02 UTC
+_Context: operator queues a Dexter's Lab review (Claude reviewer, no OpenRouter) of the paper once the current pass is done. Manager pipeline: paper pass → entry-322 framing check → skeptic gate → commit/push → lab_review via the locked room → manager cross-check → relay QC pointers._
+
+> also once the paper is done lets get dexter's lab to review it (without openrouter)
