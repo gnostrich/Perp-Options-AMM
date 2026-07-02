@@ -2,8 +2,24 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
-🧭 **DEADLINE ARC CLOSE-OUT 2026-07-02 late (entries 340–347) — CURRENT STATE, supersedes the in-flight
-lines of the rollup below:**
+🧭 **SUBMISSION FINAL 2026-07-02 ~18:30 (entries 340–372) — CURRENT STATE:**
+**Paper SHIPPED-TO-OPERATOR for blind submission: md5 `7343a880` on main (commit c62e91b).** Chain:
+airtight §6 exec laws (gated, 2 skeptic FLAG rounds fixed) → lab review (weak-reject; anonymity strip
++ 5 go-all fixes, 2 more skeptic FLAGs fixed incl. the settlement-continuity oversell) → dictionary
+sweep (Fig-2 "mark" axis label = retired tent, fixed) → units→cash §6.2 + STORY_TABLE ed.14 station 17
+→ −2pp compression (paper agent, −574 body words, figs 8.0×4.0) → **Appendix B `app:spec`** (rebase
+transform engine-exact; shipped funding rate law κ·(±mγ)·N·mark·(Σ−1)/Σ; worked table moved verbatim,
+10 cells recomputed; collar/Merton notes; entries 369/370 annex-and-ref + whole-story-coverage
+directives) → LP/depth/fee clubbed sentence → LLM drafting disclosure → FINAL skeptic gate
+**CLEAR-TO-SHIP** (all 5 checks re-derived). Body est ~11.0–11.3pp (word arithmetic, no TeX in env;
+deliberately overshot). Operator submitting BLIND (entry 368 — no operator QC; no more questions).
+**NEW ENGINE FINDINGS (queued for operator, post-deadline):** (1) close branch-sequencing payout jump
++0.016·equity·L₀ fixed as ε→0 (skeptic-measured, both-OTM vs soldITM branches price the companion leg
+on differently-sequenced pools) — settlement-semantics call; (2) skeptic's A15 note. Trade-point spec
+(entry 339) awaits R6 scope-gate + itemized operator go. Transcript current through entry 372.
+Skeptic pattern (twice today): agents invent mechanism NOUNS when compressing — check nouns vs code.
+
+🧭 **DEADLINE ARC CLOSE-OUT 2026-07-02 late (entries 340–347) — prior state, superseded above:**
 - **Paper SUBMISSION-READY, airtight pass LANDED+GATED (md5 `3c553b6d`):** entry 342/343 go → §6
   "Execution mechanics" (5 laws: quantity bridge N_buy=V_sell/v_buy; premium-free Δy=±N·K_tx; two-strike
   frozen θ_tx w/ ITM-to-cash exception; payout L₀·net·carve, own-side club, binary drained-club floor;
