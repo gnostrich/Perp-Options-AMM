@@ -2663,3 +2663,11 @@ _Context: operator reminds the manager to push all context/memory to main before
 _Context: operator directs a story-completeness sweep: story table + paper vs the ACTUAL HTML, hunting smaller missed story parts (like the §3.2 and buy-q-ratio items), kept sequentially in the story table and flagged where paper-relevant. Manager dispatches the audit (research-lead, read-only) — enumerate engine mechanics from code vs table rows vs paper sections; gap list → table rows + paper flags._
 
 > also in the story tebla , paper etc vs the actual html, check for smaller parts of the story like this that we may have missed , ... and sort of sequnetiaylly at leasdt keep i the stoty tablr and idk where but probbaly relevantf or paper too ...?
+
+
+---
+
+## Entry 336 — 2026-07-02 UTC
+_Context: operator FYI (for whenever): small HTML display bug — the chart's unit toggle/label says "percentage" but the graph quotes FRACTIONS (0.25/0.5/1.0, not 25%/50%/100%). Manager queues it (325-F) with the part-2 display items._
+
+> also fyi note for whenever on html small display buy i think you say percentage but quote in fraction on the graph

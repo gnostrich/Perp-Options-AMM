@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 8, 2026-07-02 (entry 325 sweep: 4 more queued — Fig-2 clause immediate; payoff-chart read; supplement refresh; American-draft stat)._
+Edition 9, 2026-07-02 (entry 336: %-label-vs-fraction display nit queued as 325-F)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
@@ -20,7 +20,7 @@ Edition 8, 2026-07-02 (entry 325 sweep: 4 more queued — Fig-2 clause immediate
 **Parked / open:** paper pass in skeptic gate → then Fig-2 stale-clause fix (entry 325-A, focused gate) →
 lab review · paper page-pruning (operator, later) · **payoff-chart consistency** (still reads the v24
 saturating mark, entry 325-B — part-2 with the symmetry study) · **supplement refresh-or-retire**
-(pre-fix content, entry 325-C) · American-draft stale stat (entry 325-D, next touch) ·
+(pre-fix content, entry 325-C) · American-draft stale stat (entry 325-D, next touch) · **325-F (entry 336):** chart unit label says "%" but axis quotes fractions (0.25 not 25%) — label/units mismatch, part-2 display ·
 **QUEUED (entry 324): tx-symmetry study** — ideal = everything off the (extended) curve, ONE tx logic for
 open AND close, no separate settlement path; study whether the two-case close collapses into a single
 "walk the extended curve" primitive (reverse-trade OTM / parity-cash ITM automatically), slippage
