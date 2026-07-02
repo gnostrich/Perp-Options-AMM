@@ -2753,3 +2753,9 @@ _Context: operator asks why the lab review is taking that long. Manager diagnosi
 _Context: operator asks for a nondisruptive status update during the airtight-pass endgame. Manager reports: airtight pass landed + manager-verified, focused skeptic gate running, lab review mid-verification, trade-point spec returned (engine-side, post-deadline)._
 
 > nondisruptive status update
+
+
+## Entry 348 — 2026-07-02 UTC
+_Context: manager relayed the lab-review verdict table (weak reject; venue-fit fatal; anonymity stop-press already fixed). Operator asks for an added column: best fix achievable within the hour per finding, plus the manager's own assessment of where that puts the paper (another lab run too slow)._
+
+> can you add another column to this table with the best fix we can do within the hour, and sort of assess at your end where that might put us? (another lab run will take long)
