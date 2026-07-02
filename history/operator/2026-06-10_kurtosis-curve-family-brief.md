@@ -2495,3 +2495,11 @@ _Context: operator (1) directs recording the sync-up method as a standing commun
 _Context: operator concludes: if the ITM piece is naturally a graft, ITM funding is moot; the real requirement = CONVICTION that the grafting (and everything else) is completely faithful to the American-style perpetual option picture. Manager delivers the conviction ledger: proven+measured (value≥intrinsic theorem+gate+measured; C¹ seam + uniqueness; holder's-right; parity ITM; deterministic-boundary optimality; m=1 recovery; engine=paper 4dp) vs the honest gaps (stochastic Snell identification = THE structural gap, L9 Stage-B project; distributional layer beyond the Gaussian slice carried; funding carve-accrual crux pending; engine↔Lean bridge model-level; solvency conditional)._
 
 > so if the ITM thing is actually grafted on (naturally) then i guess funding ITM is moot; so tldr we kind of need conviction that the grafting (and along with everything else) is completely faithful the american style perpetual options picture
+
+
+---
+
+## Entry 315 — 2026-07-02 UTC (with screenshot of the manager's Snell-hedge paragraph)
+_Context: operator questions the Snell/deterministic distinction: the holder can exercise at any time at choice — an exercise-time choice — so wrt best closure (sell/exercise same thing here) "theres got to be a direct answer right". Manager validates: YES — the direct answer exists and is S* ("hold until the tripwire, then cash in"); fancy path-dependent rules can't beat the best tripwire because the option is perpetual (no clock) and the picture is memoryless (future depends only on where spot IS); the remaining gap is proof-bookkeeping (formalizing randomness/measure so "no fancy rule beats the tripwire" becomes a Lean theorem), not an open question about what the trader should do._
+
+> on this thing: i'm sort of not sure what it means because ultimately you have exercise at any point in time at choice of the option holding trader right, thats an exercise time choice, so wrt best closure (sell exercise whatever same thing here its sell) theres got to be a direct answer right
