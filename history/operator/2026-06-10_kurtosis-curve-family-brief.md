@@ -2383,3 +2383,11 @@ condensation was the manager's; the decision content is identical.
 _Context: operator asks whether the manager can handle any and all git actions from this end. Manager runs a live capability test (local git, push/fetch, PR open, PR merge API, direct main push path) and reports honestly._
 
 > can you manage any and all git actions at your end?
+
+
+---
+
+## Entry 301 — 2026-07-02 UTC
+_Context: operator approves ALL open items: (b) display slice (chart-2 true-value rewire + %→$ toggle + uncapped crossing wings), -B289 vol-caption fix, and the funding-semantics extension. Manager: dispatches (b)+B289 as one display slice (R6 FLAG-3 dispositions discharged in the brief); presents the itemized funding scope for its R2 one-word go (funding = real cash-flow semantics, never precisely itemized to the operator before)._
+
+> ok to all still opens
