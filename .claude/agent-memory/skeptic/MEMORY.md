@@ -3874,3 +3874,26 @@ worked-example arithmetic; "no position gains or loses from a rebase" as a frame
 NIT recorded (not a flag): manager's "moved VERBATIM" is exact for tables/hedges, approximate for
 connective prose (kink-parenthetical, "We are precise:" dropped) — watch that "verbatim" claims
 about prose get spot-checked, they drift.
+
+## 2026-07-02 (overnight) — R6 SCOPE-GATE, entry-377 overnight HTML dispatch: ALL 4 ITEMS CLEARED (with corrections riding).
+- Verdict: notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md.
+- R2 for the trade-point build SATISFIED: entry 339 verbatim orders "to be fixed in html"; entry 377
+  blanket go postdates spec commit e579709; entries 340–376 all paper-side, no kill/scope change.
+  Wind-up-message wording = manager-claim provenance (replies untranscribed) but not load-bearing.
+- FLAG (correction, not halt): manager MISSTATED default 5 — "legacy bands fall back to K_inner
+  reversal" vs spec §2.4's pin = today's close path, K_tx-FIRST (HEAD L2099–2102), K_inner only
+  pre-R-218. Literal K_inner would reintroduce the $1395 leak. Intern must build from SPEC text.
+- Manager's gate itemization omitted CM8-v2(4) local-pair grid + CM6-v2(5) no-free-money Σ-flows
+  (the anti-leak gate). Spec §3.1 controlling — pattern: manager summaries of specs drop sub-checks;
+  ALWAYS diff itemization vs spec before clearing.
+- L1975–78 verified stale MYSELF (barrier "saturates at 1" paragraph contradicted by the v28
+  correction paragraph below it; markEff settlement path already lensed — distinct from queued
+  325-B overlay). Condition: correction paragraph survives the splice (CTO port source).
+- Accounting gap named: 325-C (on-request supplement refresh-or-retire) in neither list — do or
+  account by name in morning report. 326 third-ruler offer correctly dead. Exclusions (funding
+  part-2, branch-jump semantics, 325-B) all verified legitimately operator-gated/decision-class.
+- Morning-report ratification package required: 5 adopted defaults + spec §4 deltas 1–8; #16/C2
+  label flip PROVISIONAL per spec's own §3.2(7)/§4(8) wording — entry 377 = go to BUILD, not
+  ratification of the operator-tier pins.
+- SETTLED (don't re-attack): defaults 1–4 match spec pins; R3 clean (no new controls); item-4
+  citation = entry 336 verbatim.
