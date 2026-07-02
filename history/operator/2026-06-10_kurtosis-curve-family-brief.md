@@ -2813,3 +2813,9 @@ _Context: operator asks the direct design question: is there any mechanism for p
 _Context: closure-slippage answer accepted. Operator orders a quick story-table-vs-paper language check: they saw a regression referring to the saturate-at-1 thing as "mark"._
 
 > ok fine seems ok; lastly run a quick check with the story table vs paper because i ssaw some language regression here referring to the saturate at 1 thing as mark
+
+
+## Entry 358 — 2026-07-02 UTC
+_Context: after the mark/saturate fix, operator broadens the order: sweep the paper for OTHER dictionary/doctrine regressions of the same kind, against the story table and the mental-model conversations, not just this one instance._
+
+> not just for this particiular dictionary regression but in general for other such things vs the story table etc conveersationwe had
