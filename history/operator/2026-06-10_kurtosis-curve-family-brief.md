@@ -2391,3 +2391,11 @@ _Context: operator asks whether the manager can handle any and all git actions f
 _Context: operator approves ALL open items: (b) display slice (chart-2 true-value rewire + %→$ toggle + uncapped crossing wings), -B289 vol-caption fix, and the funding-semantics extension. Manager: dispatches (b)+B289 as one display slice (R6 FLAG-3 dispositions discharged in the brief); presents the itemized funding scope for its R2 one-word go (funding = real cash-flow semantics, never precisely itemized to the operator before)._
 
 > ok to all still opens
+
+
+---
+
+## Entry 302 — 2026-07-02 UTC
+_Context: operator asks how OTM funding changes under the funding extension (the F2 call-side recalibration). Manager explains: put-side OTM funding unchanged (today's formula already = the slope-read); call-side keeps sign/shape/zero-point but magnitude scales by (g+1)/g (×1.5 at g=2, →1 as g grows) because the call's dollar value is one power steeper than its fraction curve — the price of one funding rule on both wings._
+
+> how do otm fudnign change?;
