@@ -41,23 +41,23 @@ Across the Strike Continuum}
 
 % ===========================================================================
 \begin{abstract}
-Perpetual options let a trader cap liquidation loss without closing the position.
-We show that a \emph{single} liquidity pool prices that protection at every strike
-at once. The pool runs on the weighted constant-product (``Balancer'') curve, with
-one structural change: each trade does not slide a point along a fixed curve but
-\emph{re-leans} the curve, and that lean \emph{is} an option position. A single
-static knob, set once from the asset's volatility, fixes the curve's steepness
-and hence the whole book's pricing. From one pool state we read the
-value of every out-of-the-money call and put in closed form, with an exact
+American-style perpetual options let perpetual-futures traders reduce
+liquidation risk without closing the position. We show that a \emph{single}
+liquidity pool prices that protection at every strike at once. The pool runs on
+the weighted constant-product (``Balancer'') curve, with one structural change:
+a trade does not slide a point along a fixed curve but \emph{skews} the curve
+instead---and that skew (the curve's \emph{lean}) \emph{is} an option
+position. One static knob, set from the asset's volatility, fixes the curve's
+steepness and with it the whole book's pricing. From one pool state we read
+every out-of-the-money call and put in closed form, with an exact
 \emph{American} early-exercise level and a smooth join between waiting and
-exercising. We state the conditions plainly. The early-exercise rule is proved
+exercising. The conditions, plainly: The early-exercise rule is proved
 optimal over \emph{deterministic} exercise policies, and the stochastic
 optimal-stopping identification is named, not formalised; exact replication holds
 only per option ``wing'' for hedge ratio at most one; the curve and knob are
 machine-checked by an external prover and \emph{trusted as compiled}, not re-run
-here; and \emph{solvency stays conditional} on a funding source we show is
-necessary but do not discharge. The geometry is necessary for solvency, never
-sufficient.
+here; and \emph{solvency stays conditional} on a funding source shown necessary
+but not discharged---geometry is necessary for solvency, never sufficient.
 
 \keywords{Automated market maker \and Decentralized finance \and Perpetual
 options \and Optimal stopping \and Smooth pasting \and Formal verification}
@@ -74,11 +74,10 @@ makes one structural change: a trade does not slide the point but \emph{re-leans
 the curve itself} (Figure~\ref{fig:warp}); the pool stores the lean, and every
 trade updates it.
 
-The payoff: \emph{the lean of the curve is an option position}. A pool whose curve
-leans a given way is, read correctly, holding (or selling) a perpetual option at a
-particular strike, and because the curve covers a range of slopes, one pool state
-prices an entire continuum of strikes---calls on one side, puts on the other---in
-closed form. There is no separate premium and no expiry: a position's worth is how
+The payoff: \emph{the lean of the curve is an option position}. A pool leaning a
+given way is, read correctly, holding (or selling) a perpetual option at a
+particular strike; since the curve covers a range of slopes, one pool state prices
+the whole continuum---calls one side, puts the other---in closed form. There is no separate premium and no expiry: a position's worth is how
 far the curve has leaned, a number between zero and one.
 
 One further parameter sets the curve's steepness. A \emph{shallower} curve prices
@@ -91,7 +90,7 @@ neutral setting recovers the plain Balancer curve. The knob never moves while
 trading; it is the pool's geometry, not a quantity traders push around.
 
 \paragraph{The result, stated first.}
-The central positive result is that this single pool prices the entire
+This single pool prices the entire
 out-of-the-money strike continuum of \emph{American-style} perpetual options in
 closed form, with an exact early-exercise level and a smooth join between waiting
 and exercising. We state the conditions alongside it:

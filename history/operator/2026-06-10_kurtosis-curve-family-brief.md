@@ -2909,3 +2909,9 @@ _Context: operator asks for the ETA on the final gate._
 _Context: operator orders a quick no-review edit: their rewritten (crudely truncated) abstract opening replaces the paper's "gassed up" one — they are putting their version in the submission form regardless — plus one last quick de-gassing shot at abstract/intro and similar._
 
 > also small edit make this quick no review reeqd, "American-style perpetual options let perpetual futures traders reduce liquidation risk without closing the position. We show that a single liquidity pool can prices that protection at every strike at once. The pool runs on the weighted constant product (Balancer) curve, with one structural change: each trade does not slide a point along the but skews the curve instead. " this is a better abstract i've crudely truncated becaus ewe have gassed up abstract and maybe  other things like this intro etc. anyway you can take one last quick shot at de-gassing things but yeah i;m putting thos ion the form not the one from the paper
+
+
+## Entry 374 — 2026-07-02 UTC
+_Context: operator: quick would be good._
+
+> and yeah quick woudl be good
