@@ -57,6 +57,12 @@ HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` (md5 `7015c22c…` = disp
 
 ## PART B — Operator-agreed constraints (binding; a violation = REGRESSED = STOP)
 
+**B-PF (entry 320, 2026-07-02): perp-layer funding is EXTERNAL to the paper and the HTML for now**
+(verbatim). The CTO perp-funding question (notes/CTO_QUESTION_perp_funding_2026-07-02.md) is retired from
+our open list — it is the external layer's concern. In-scope funding = the OTM like-ray divergence
+(built, correct); ITM option funding = naturally zero by geometry (entry 313), current un-designed
+status-quo charge stands, NO build without a fresh operator go.
+
 **B-AM (entry 318, 2026-07-02): American-style = CONSISTENCY, not optimality.** The product standard
 is "whatever a trader does is american style consistent, not necessarily optimal" (verbatim). SNELL IS
 OUT OF THE PICTURE — not parked, out of scope; no Snell/measure-layer work without an explicit operator

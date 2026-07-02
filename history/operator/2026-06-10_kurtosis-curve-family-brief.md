@@ -2535,3 +2535,11 @@ _Context: operator RULES Snell out of the picture: the standard is "whatever a t
 _Context: operator asks whether anything is TBD/improvable on the paper given the story table + today's clarifications. Manager identifies 3 small improvements: (a) cite the NEW theorems (O1 linear-paste + O2 value≥intrinsic) — Fig 3 depicts the linear seam and its exact formal backing now exists; (b) refresh the STALE engine-agreement sentence (the 0.04%/0.1% stat came from the old wrong-seam build; should now read: engine reproduces the worked table to 4dp, DOM-measured); (c) optional entry-318 positioning (holder-facing guarantee set = American-consistency, all machine-checked; optimality a bonus). Recommends one small pass, skeptic-gated._
 
 > ok meantime anything tbd on the paper? given the story table, clarifications changes etc everuything we went over is there anything you;d like to imrpove?
+
+
+---
+
+## Entry 320 — 2026-07-02 UTC
+_Context: operator rules perp-layer funding EXTERNAL to the paper and the HTML for now. Manager closes Story Table row 9 for our scope (OTM like-ray funding correct + built; ITM option funding naturally zero by geometry, current un-designed status quo stands, no build; perp funding = external concern, CTO question retired from our open list), promotes the ruling to the register._
+
+> funding on perp is external to paper and html for now
