@@ -2,6 +2,45 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **PRE-COMPACTION ROLLUP 2026-07-02 (entry 334) — READ THIS FIRST POST-COMPACTION:**
+**HEAD `7015c22c` on main = display slice of `9fdde1de` (PKG-ITM v2 linear re-seam) — all tester-passed,
+promoted, branch==main.** Chart-2 = true-V X wings + %/$ toggle; -B289/-B301 resolved. Engine+state blocks
+of 7015c22c byte-identical to 9fdde1de.
+**IN FLIGHT RIGHT NOW:** paper agent rewriting §3.2 of `paper/wine2026/temporal_wine2026_v2.tex` (the mark
+definition still teaches the retired barrier min(slope,1/slope) formula, contradicting §5's ATM=0.148 —
+entries 326/327/330). ⚠ WHEN IT RETURNS: (1) TRIM any added disclosure prose — operator ruled entry 331
+"disclosure is for our chats not the paper" (the brief's item-3 disclosure sentence is now WRONG; keep ONLY
+the definitional correction + at most the pre-existing §5.1 lift language); (2) focused skeptic gate;
+(3) commit+push branch AND main; (4) THEN run the queued Dexter's-Lab review (entry 323, Claude-only, no
+OpenRouter, via `dexters-lab/run_lane_isolated.sh review ...` locked room) on the final tex; (5) manager
+cross-check → QC pointers to operator.
+**Paper state (committed 58da38c):** WINE final pass done+gated — J1 stale 0.04% stat → tester-evidenced 4dp
+sentence; J2 O1/O2 linear-seam backing (put-wing scoped); J3 entry-321 restructure (26 superscripts → 13-row
+tfp annex, zero rendered codenames/paths except reserves_have_no_floor+axiom names, "on request" footer);
+J4 American-consistency framing (entries 318/322). Skeptic gates ×2: L8 provenance flag discharged (engine
+gate removed from Lean table; the "running implementation" residual phrase DROPPED). PAGE COUNT UNVERIFIED
+(no TeX env) — operator compiles; est ~11.4–12.0 TIGHT vs the 12pp cap; operator prunes pages later.
+**Operator rulings this arc (all in register/PART B + transcripts):** B-AM entry 318+322 = American-style =
+CONSISTENCY not optimality, Snell OUT OF PICTURE (killed, needs explicit reopen); B-PF entry 320 = perp-layer
+funding EXTERNAL to paper+HTML (row 9 closed; CTO note filed `notes/CTO_QUESTION_perp_funding_2026-07-02.md`);
+entry 324 = tx-symmetry study QUEUED (one tx logic open+close, no separate settlement path — design study,
+research-lead, not started); entry 331 = chat-disclosure duty (semantic formula changes must be disclosed
+in-chat at the time — policy in `docs/operator_mental_model.md`).
+**Queued (entry 325 sweep):** 325-B payoff-overlay chart still reads v24 saturating mark (part-2, with the
+symmetry study); 325-C on-request supplement stale (refresh-or-retire); 325-D American arXiv draft stale
+0.04% stat (next touch); engine comments L1622/L2337 old vol phrasing (cosmetic); Lean bridge INDEX labels
+(research-lead, spec §9.1); O-BATCH INDEX header "pending" vs rows "MANAGER-AUDITED" hygiene.
+**Comm protocol (BINDING):** `docs/operator_mental_model.md` (geometry-first, reverse dictionary, chat-
+disclosure duty) + `docs/STORY_TABLE.md` (edition 8; REPRINT WHOLE TABLE on any change, never a diff) —
+row 4's "lesser of slope & reciprocal" wording still needs the §3.2-consistent fix when that lands.
+**Verified-for-operator this arc (receipts):** buy-q = option-price ratio (executeBand L1882–1928: N_buy =
+V_sell/legPrice-per-unit on the POST-SOLD pool = slippage-in-ratio; AMM dy = ±N·K_tx premium-free accounting;
+formula "NO LONGER sizes the pool swap"); faithfulness = consistency set all theorem+gate+measured.
+**Git:** PR-merge API blocked this session type; main updated via plain fast-forward push (`git push <url>
+HEAD:main`, ff-safe since branch contains main). Both in sync at every step. Cosmetic "Unverified" stop-hook
+nag = ignore (no signing key; never force-push).
+
+
 ⚠ **GIT-PROXY 403 (2026-06-14, mid-session):** the local git push/fetch proxy (127.0.0.1) started returning 403; the GH API token is fine (200). FALLBACK = push/fetch via the direct GitHub URL `https://x-access-token:$GH_TOKEN@github.com/gnostrich/Perp-Options-AMM.git` (WORKS). Operator entry 249: standing git/GitHub autonomy, do NOT ask. Squash-divergence: re-merging the branch to main after a prior squash needs `git merge -s ours origin/main` first (main has no content the branch lacks).
 
 ✅ **MAIN MADE CURRENT 2026-06-14 (operator entry 248):** squash-merged PR #26 (branch→main, `bca93f0`).
