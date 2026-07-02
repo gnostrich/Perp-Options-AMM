@@ -2323,3 +2323,11 @@ _Context: operator brainstorm, extending entries 290/291/294 toward a UNIFICATIO
 _Context: operator sharpens entry 295 into a testable hypothesis: for items 2/3/4 the solution is to EXTEND THE ENTIRE OTM MACHINERY INTO ITM (with the right natural extension of the pool curve AND the anchor curve) — and directs research-lead to run tests / idiot-check / send to Aristotle, because if it works it is THE simplification that brings the whole paper and build together. Manager folds this into the in-flight unification study as its central hypothesis, authorizes numeric tests (read-only Node sandbox) + Aristotle runs on bounded lemmas (tfp discipline)._
 
 > so i sense that for 2,3,4 the solution would be to actually just extend  the entire OTM machinery into ITM (with the right natural extension for pool curve and anchor curve) ... and i'd like research guy to maybe run the tests / idiot check / throw it to aristotle or whatever, because its probably the simplificatio that if it works really brings the whole paper and build together ...
+
+
+---
+
+## Entry 297 — 2026-07-02 UTC
+_Context: operator asks whether to wait for Aristotle before proceeding with (a) the V=max engine fix and (b) the chart display slice. Manager: no need to wait (Aristotle is formalizing already-hand-derived + numerically-verified math; the build is protected by its own hard gates + tester + skeptic); presents itemized scope per R1/R2 and requests the fresh go, with the halt-condition that a mathematically-FAILED Aristotle return blocks HEAD promotion pending reconciliation._
+
+> so iyo do we need to wait for aristotle before or should we proceed with a and b?
