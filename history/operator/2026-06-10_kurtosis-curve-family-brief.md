@@ -2671,3 +2671,11 @@ _Context: operator directs a story-completeness sweep: story table + paper vs th
 _Context: operator FYI (for whenever): small HTML display bug — the chart's unit toggle/label says "percentage" but the graph quotes FRACTIONS (0.25/0.5/1.0, not 25%/50%/100%). Manager queues it (325-F) with the part-2 display items._
 
 > also fyi note for whenever on html small display buy i think you say percentage but quote in fraction on the graph
+
+
+---
+
+## Entry 337 — 2026-07-02 UTC
+_Context: operator clarifies the story-audit scope with an example: SLIPPAGE-class mechanics — things that matter but aren't in the table/paper. Manager confirms slippage is in the audit's walk list and guarantees it appears in the returned gap table (will extend the audit himself if under-covered); expected outcome: slippage has no dedicated table station and thin/no paper treatment → proposed new row + paper-relevance flag._
+
+> on story audit stuff like slippage etc that kind of stuff was an exampke of things that kind of matter but arent in the table / paper and ...
