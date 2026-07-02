@@ -2801,3 +2801,9 @@ _Context: follow-up on close-side mechanics. Operator asks whether the ray parks
 _Context: after the ray-parking explanation, operator confirms understanding and asks whether that part was unchanged. Manager: parking mechanism unchanged (today: zero engine edits; predates PKG-ITM v2); the value read while parking changed with the operator's go entries 286/298 (smooth-paste replaced the hard ITM=1 cap)._
 
 > ok i think i see what you're saying ... basically this part was unchanged right
+
+
+## Entry 356 — 2026-07-02 UTC
+_Context: operator asks the direct design question: is there any mechanism for position-closure slippage, and if not, is that natural because closure is treated as exercise._
+
+> so my q is simple: do we hava any mechanism for position closure slippage? or not --- and if not then i suspect this would be natural becuase its treated as exercise or something...?
