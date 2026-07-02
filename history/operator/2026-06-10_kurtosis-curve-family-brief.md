@@ -2511,3 +2511,11 @@ _Context: operator questions the Snell/deterministic distinction: the holder can
 _Context: operator asks for more-TLDR simple-English answers and an easy path to closing the open ends. Manager offers the one-word default package: "ok" = run the carve check now, park Snell as future work, chart auto-lands on re-check PASS; only remaining question = did the WINE compile come out ≤12 pages._
 
 > ok i need a little more tldr kind of simple english answers, really would like to get the open ends closed, can you make this a bit easier for me
+
+
+---
+
+## Entry 317 — 2026-07-02 UTC
+_Context: operator: "just do the needful" (= run the carve check, park Snell, chart lands on PASS); paper page-pruning deferred ("idk yet... later"); asks what Snell is and whether American faithfulness is done. Manager dispatches the carve check and answers both in TLDR form._
+
+> umm just do the needful gang — and paper idk yet pruning pages etc later; can you tell me what snell and also the american faithfulness is that done?
