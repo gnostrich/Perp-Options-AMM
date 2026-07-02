@@ -357,19 +357,19 @@ position closed, and because it never expires the protection persists for the li
 of the perp. The only decision the holder faces is \emph{when} to realise it.
 
 \subsection{The mark: value as a fraction, no separate premium}
-The worth of an out-of-the-money position is its \emph{mark}: the lesser of the
-strike ray's slope and its reciprocal,
-\begin{equation}
-  \mathrm{mark}=\min\!\bigl(\mathrm{slope},\,1/\mathrm{slope}\bigr)\in(0,1].
-  \label{eq:mark}
-\end{equation}
-The mark is the \emph{fraction of one full perpetual future} the position is
-worth: it climbs toward $1$ near the money and decays toward $0$ deep
-out-of-the-money. A position of size $q$ (its \emph{notional}) is worth
-$q\cdot\mathrm{mark}$, and nothing else---there is no extra premium object and no
-intrinsic/extrinsic split layered on top. The whole call/put continuum is priced
-from the one pool state $(x,y,w)$ through~\eqref{eq:mark}: every strike's mark is
-a different slope read off the same curve.
+The worth of a position is its \emph{mark}: the smooth-pasted American value of
+Section~\ref{sec:american}, a fraction in $(0,1]$ of the wing's \emph{escrow
+unit} (one full perpetual future). Out-of-the-money the mark is the
+\emph{continuation} (waiting) value; past the \emph{free boundary} (the
+optimal-exercise level) it is the exercised (parity) value; it reaches $1$
+only at \emph{full} exercise---at the money it is the continuation value
+($0.148$ at $\gamma=2$ in the worked example of Section~\ref{sec:american}).
+The ingredient is still a \emph{ray read}: moneyness is the strike ray's slope
+read against the pool's own ray---one ray, one curve---and the waiting value
+is a power of that read times a constant fixed at the smooth join. A position
+of size $q$ (its \emph{notional}) is worth $q\cdot\mathrm{mark}$, and nothing
+else---no separate premium object, no expiry, no intrinsic/extrinsic split;
+the whole continuum is priced from the one pool state $(x,y,w)$.
 
 \subsection{The reference price (``carry'')}
 The pool keeps an internal reference price---a price it treats as its own

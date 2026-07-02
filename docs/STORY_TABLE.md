@@ -1,13 +1,13 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 9, 2026-07-02 (entry 336: %-label-vs-fraction display nit queued as 325-F)._
+Edition 10, 2026-07-02 (§3.2 committed; row 4 wording aligned to the shipped mark)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
 | 1 | **The pool curve** | THE object: one curve in (asset, cash), leaning by `w`, level `k`. Its slope is the price. Everything else is rays on it or shadows of it. | none — byte-identical throughout | 🔒 unchanged |
 | 2 | **Trades bend the curve** | A trade re-leans the curve itself (updates `w`), conservation applied at the trade's own point; `k` is a readout. | paper now displays the explicit update formula | 🔒 unchanged (engine) |
 | 3 | **Strikes are rays** | Every strike = a ray from the origin; the pool's centre = the mode ray. One curve + a fan of rays = the whole book. | none | 🔒 unchanged |
-| 4 | **The mark (value)** | ONE ray on ONE curve: your ray's own slope in the curve's frame — lesser of slope & reciprocal, 0→1. Nothing compared. | none OTM (was always right) | 🔒 unchanged |
+| 4 | **The mark (value)** | ONE ray on ONE curve: the moneyness is your ray's read against the pool's ray; the mark = the smooth-pasted value built on it (waiting arm = a power of the read × the seam constant; exercised arm = parity), 0→1, =1 only at full exercise. Nothing compared to the anchor. | §3.2 now defines it this way (the retired capped-ratio read renders nowhere) | ✅ aligned |
 | 5 | **The steepness dial `m`** | One number set from vol at creation, never moved by trades; multiplies steepness at every ray equally. MORE volatile asset ⇒ LOWER m (fatter wings). | vol DIRECTION corrected in paper (entry 289); app caption fix in the build under test | 🔧 caption in-test |
 | 6 | **Rebase (housekeeping)** | Re-zoom the whole picture — curve + every ray together by one factor `r` — so the pool's centre stays lined up with the outside price. No ray gains/loses; trades & rebases commute (proven). Bounds drift piling into funding deviation. | none | 🔒 unchanged |
 | 7 | **The seam (waiting vs cashing in)** | The payoff line is the TANGENT to the waiting curve — curve, then straight tail, no kink. You step off at the seam ray. | ⭐ THE FIX: old tail was curved & misplaced (seam $44, value could dip below payoff). Now: straight tangent tail, seam $66.67 = the paper, value ≥ payoff everywhere (theorem + gate + measured 4dp) | ✅ FIXED & live (on main) |

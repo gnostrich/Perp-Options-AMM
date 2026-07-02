@@ -1,5 +1,5 @@
 # MEMORY — paper
-_Last updated: 2026-07-02 (WINE v2 entry-319/321 pass). Rewrite changed bits at task end._
+_Last updated: 2026-07-02 (WINE v2 §3.2 mark-disclosure fix, entries 326/327/330). Rewrite changed bits at task end._
 
 ## Pipeline / deadlines
 - **AfT 2026** — notification ~Jul 15 2026 (draft: `paper/Temporal_Paper_AfT_2026_v6.docx`).
@@ -322,6 +322,28 @@ engine/Lean untouched). Handed to manager for skeptic gate.
 - Checks: $ 556 even, braces 646/646, all envs matched, no dangling refs/cites, 13 table rows =
   13 rows referenced. **Page impact est +0.4–0.5pp** (annex ~0.45 + J2/J4 body adds ≈ codename
   savings) → pessimistic total ~11.4–12.0pp: TIGHT vs 12 HARD cap, manager must compile-check.
+
+## WINE2026 v2 §3.2 mark-disclosure fix (entries 326/327/330, 2026-07-02) — one section, text-only, NOT git'd
+Operator: the min-ratio→smooth-pasted-value replacement "should have been disclosed transparently".
+§3.2 still TAUGHT the retired barrier formula as current (eq:mark = min(slope,1/slope), "climbs
+toward 1 near the money") — contradicting the paper's own §5 (ATM 0.148 at γ=2; cap=1 only at full
+exercise). Rewrote §3.2 in `paper/wine2026/temporal_wine2026_v2.tex` ONLY (heading unchanged):
+- Mark now defined as THE smooth-pasted American value of §5 (forward ref): fraction in (0,1] of
+  the wing's escrow unit (glossed = one full perpetual future); continuation (waiting) value OTM,
+  exercised (parity) value past the free boundary; reaches 1 only at FULL exercise; ATM = the
+  continuation value, cited 0.148 at γ=2 from the §5 worked example (verified table).
+- Ray-read kept as the ingredient (moneyness = strike ray's slope vs pool's ray, one ray one curve;
+  waiting value = power of that read × seam constant). "No separate premium, no expiry" kept.
+- TRANSPARENT DISCLOSURE sentence added: prior (barrier) treatment priced by capped ray ratio
+  min(slope,1/slope) saturating to 1 at strike; this paper's American instrument REPLACES that
+  read (cross-refs §5's lift opening). Old formula appears exactly ONCE, labelled retired, NOT
+  as an equation of this paper.
+- `eq:mark` label REMOVED (only ref was internal L371, rewritten). §5/annex/figures untouched.
+- Checks: $ 564 even, braces 657/657, all envs OK, no dangling refs/cites; unused labels
+  eq:lens/prop:collar/sec:props/sec:related are PRE-EXISTING (not mine). Diff +18/−13 = +5 source
+  lines; display-equation removal offsets ~2 rendered → net ~+3 rendered lines (~0.07pp), flagged.
+- NOTE (residual, not mine to fix): American draft §mark + app payoff overlay carry the same
+  barrier-era read — queued under 325-B/D per manager.
 
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't

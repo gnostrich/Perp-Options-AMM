@@ -3724,3 +3724,20 @@ absent from both the flagged text AND the pre-flag baseline. Always re-derive th
 discharge against ground truth (here: which build the gate actually targets), never just check the
 flagged clause is gone. Settled: rest of the 340-line diff byte-matches the gated pass; ≤1pp/≤12pp
 compiled-PDF check still owed by manager.
+
+## 2026-07-02 — VERDICT: WINE v2 §3.2 mark rewrite (entries 326/327/330/331). PASS / CLEAR-TO-COMMIT.
+File: notes/skeptic/VERDICT_wine2026_v2_sec32_mark_rewrite_2026-07-02.md. Diff = 1 tex hunk (357-372) + paper MEMORY only.
+Attacked, all held: (1) re-derived ATM 4/27=0.148 at g=2; new "power of ray-read x seam-fixed constant" sentence is
+EXACT — V=[g^g/(g+1)^(g+1)]*(K/S)^g, ATM value IS the constant; (2) "(0,1]" vs §5 "uncapped wing grows past 1" — the
+new escrow-unit gloss pins the bounded/spread object, engine arms 1-S/K,1-K/S in (0,1], no contradiction; (3) split is
+at the FREE BOUNDARY not the strike (ITM-before-boundary=continuation covered); (4) power claim scoped to waiting arm
+only, exercised arm = "parity", no whole-mark power claim; (5) zero dangling eq:mark/min(slope/"climbs toward" in v2 +
+rendered supplement; §5.1 lift paragraph untouched = sole prior-treatment mention (331 honored); (6) γ pre-introduced
+(L141, L185-6), all new terms glossed inline, m correctly absent pre-§4.
+Advisories logged: "0.148 at γ=2" under-pins column (two γ=2 columns; number+pointer disambiguate); lncs.tex v1
+reference upload STILL RENDERS retired eq:mark (out of scope, historical); supplement's commented-out glossary L44
+carries the retired mark row dormant — resurfaces if ever uncommented.
+Settled ground: §3.2 mark definition now matches shipped object; don't re-attack the escrow-(0,1] or boundary-split
+readings. Pattern: fourth consecutive clean paper pass on glosses; retired-formula GHOSTS now live only in
+non-rendering strata (comments, superseded uploads) — on any future uncomment/reuse of supplement App-A or lncs.tex,
+re-run the eq:mark sweep first.
