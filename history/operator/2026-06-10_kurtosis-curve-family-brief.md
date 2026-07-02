@@ -2727,3 +2727,11 @@ _Context: operator (not forcing, few-minute brainstorm): the overarching objecti
 _Context: operator approves the airtight-spec pass ("yeah go for it") under the 1-hour countdown. Manager dispatches: clubbed "Execution mechanics" subsection (5 spec-critical laws) + 3 one-clause precision fixes, paid by a targeted verbosity sweep (net ~0pp); focused skeptic gate; commit; push._
 
 > yeah go for it
+
+
+---
+
+## Entry 344 — 2026-07-02 UTC
+_Context: operator constraint on the airtight pass: EVERYTHING technical/jargon/notation must carry a one-line simple-English explanation matching the intuition of THEIR story (the mental-model guide vocabulary). Manager: the running brief carries entry-247 glossing + operator geometry; this exact bar will be enforced at the manager check AND the focused skeptic gate before commit._
+
+> but keep one thing in mind -- everyhing technical / jargon / notation must have a one line simple englosh explanation that matches the intuiton with which i crafted the story
