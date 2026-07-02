@@ -256,6 +256,41 @@ Operator: voice was "flowy-ass" (cited the TITLE). Reverted prose to crisp acade
   byte-intact; all B1/B3/B4/tfp/|Γ|/Merton/deterministic-Snell/reserves_have_no_floor hedges verified
   preserved. No pdflatex in env. NOT git'd — handed to manager for skeptic gate.
 
+## WINE2026 v2 "tonight package" (entries 288/289, 2026-07-02) — operator's edited base, surgical
+Applied to `paper/wine2026/temporal_wine2026_v2.tex` ONLY (engine/Lean untouched; NOT git'd):
+- **A1 double-blind:** rendered `\texttt{TemporalAMM}`→"the pool structure's \texttt{invariant}/\texttt{trade\_dx}";
+  "the Aristotle theorem prover"→"an external Lean theorem prover, server-side"; both
+  `formal/`+`formal/INDEX.md` rendered pointers→"anonymized artifact repository (available on
+  request)". Rendered-text token sweep CLEAN (Temporal/Aristotle/repo paths only in comments,
+  which don't render). Pre-existing: bibitem `temporal-barrier` (anonymized working draft) is
+  never \cite'd + its title is near-identical to this paper's — flagged, not changed.
+- **B1 weight-update display (eq:tradeupdate, §2.3):** y′=y+Δy; Δx=−α_Tβ_TΔy/((y_T−β_T)(y_T+Δy−β_T));
+  x′=x+Δx; **w′=α_T/(x_T+Δx)** — trade-point coordinate, NOT global x′ (brief's "w′=α/x′" would be
+  wrong off-ATM: α_T/(x+Δx)=11/43). Verified in exact rationals: exhibit (10,10,½), θ=4 ⇒ T=(5,20),
+  Δy=1 ⇒ Δx=−5/22, w′=11/21 ✓; global recompute α₀/x′=22/43 ✓; identity w′=α_T/(x_T+Δx)=w+β_TΔy/(y_T(y_T+Δy))
+  (American eq:trade) checked on random states; matches engine tradeUpdate HEAD v28 L1689–97.
+  Verification kept as a LaTeX comment above the display. Exhibit sentence now cites the display.
+- **B2:** §5.3 one sentence naming the zero-net-carry pricing ODE (σ²/2)S²V″−rV=0 (no first-order
+  term = symmetric pairing; V=S^ρ ⇒ ρ(ρ−1)=2r/σ², roots −γ, γ+1, sum 1 ✓). Convention text untouched.
+- **B3:** §5.3 \paragraph "How literally to read the Merton relation": regime r>σ² fails at crypto
+  vol (σ≈80% ⇒ r>64%); relation = THEORY ANCHOR (direction: higher vol ⇒ lower γ, shallower, exact
+  on Gaussian slice); γ,m = design parameters at deployment, not market-implied. Supports operator's
+  new intro direction.
+- **B4 QuantAMM cite RESOLVED with a VERIFIED artifact:** \cite{quantamm} =
+  **Willetts & Harrington, "Optimal Rebalancing in Dynamic AMMs," arXiv:2403.18737, 2024** —
+  live-verified against the arXiv API 2026-07-02 (title/authors/ID/abstract explicitly TFMM
+  dynamic-weight pools; 2024 = prior ✓). NOT the litepaper (couldn't verify it here) — operator
+  hand-check per the existing Limitations sentence. Also real: arXiv:2602.22069 (same authors, 2026).
+- **C1:** \paragraph "Mechanism design: open" after Limitations (IC of funding schedule, strategic
+  traders at S*/m, LP rationality, welfare vs order books; ties to B1/B3/B4 as behavioural assumptions).
+- **Vol-direction sweep (entry 289):** intro = operator's (shallower/lower γ = more volatile).
+  Only ONE latent site needed alignment: §4.2 lens is/is-not now says "(a more volatile asset takes
+  a lower setting—shallower wings, fatter tails; §1)". Abstract/Fig2 caption/§4 geometry prose have
+  NO vol-direction claim (geometry "larger m = steeper" retained per brief).
+- Checks: math-$ 528 even (escaped \$/\% handled), braces 598/598, 7/7 equations, no dangling
+  refs/dup labels, all cites resolve. Net add est ~0.4pp. Worked example/boundary eqs/figures/hedges
+  byte-untouched (diff-verified).
+
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't
 go in. New claims/positioning are strategic → flag to the **manager** (who escalates to the operator).

@@ -256,17 +256,54 @@ $45^{\circ}$ ray ($\theta=1$) is the at-the-money strike; steeper and shallower
 rays split the continuum into the two \emph{wings}---the call side and the put
 side---both priced from the same $(x,y,w)$ state (Figure~\ref{fig:warp}).
 
+Explicitly, write $T=(x_{T},y_{T})$ for the trade point on the ray, and
+$\alpha_{T}=x_{T}\,w$, $\beta_{T}=y_{T}\,(1-w)$ for the curve offsets of
+Section~\ref{sec:warp} evaluated \emph{at $T$}. A trade whose cash leg is
+$\Delta y$ (the cash the trader pays in or takes out) updates the state
+$(x,y,w)$ by
+% --- VERIFICATION of eq:tradeupdate against the arithmetic exhibit below ---
+% From (x,y,w)=(10,10,1/2): curve x^{1/2}y^{1/2}=10, i.e. xy=100; the ray
+% theta=4 meets it at T=(5,20). alpha_T=5*(1/2)=5/2, beta_T=20*(1/2)=10.
+% Delta y = 1:
+%   Delta x = -(5/2)(10)(1)/((20-10)(20+1-10)) = -25/110 = -5/22,
+%   w' = alpha_T/(x_T+Delta x) = (5/2)/(5-5/22) = (5/2)/(105/22) = 55/105
+%      = 11/21.   [matches the exhibit's w' = 11/21]
+% The naive global recompute alpha/x' = 5/(10-5/22) = 110/215 = 22/43
+% [matches the exhibit's 22/43]. Equivalent increment form (American draft
+% eq:trade): Delta w = beta_T*Delta y/(y_T(y_T+Delta y)) = 10/(20*21) = 1/42;
+% 1/2 + 1/42 = 11/21. Same closed form as the engine's tradeUpdate
+% (HEAD v28, engine lines ~1689-97): dx = -alpha*beta*dy/((y-beta)(y+dy-beta)),
+% with alpha,beta preserved; identity w' = alpha_T/(x_T+Dx) = w + Dw checked
+% exactly (rational arithmetic) on random states.
+\begin{equation}
+  y'=y+\Delta y,\qquad
+  x'=x+\Delta x,\quad
+  \Delta x=-\frac{\alpha_{T}\,\beta_{T}\,\Delta y}
+                 {(y_{T}-\beta_{T})\,(y_{T}+\Delta y-\beta_{T})},\qquad
+  w'=\frac{\alpha_{T}}{x_{T}+\Delta x},
+  \label{eq:tradeupdate}
+\end{equation}
+on the admissible domain $y_{T}+\Delta y>\beta_{T}$ and subject to reserve
+feasibility ($x+\Delta x>0$, $y+\Delta y>0$). In words: the reserve flows
+$\Delta x,\Delta y$ are the ordinary translated-constant-product amounts
+computed at the trade's own point $T$ rather than at the reserve point (they
+conserve the local pair $\alpha_{T},\beta_{T}$), the flows are drawn from the
+pool's actual reserves $(x,y)$, and the new lean $w'$ is read off at the
+displaced trade point $x_{T}+\Delta x$.
+
 A spot swap is the special case where the trade point \emph{is} the reserve point;
 there, and only there, the trade traces the familiar constant-product trajectory.
 Off-the-money trades genuinely change the global offsets $\alpha,\beta$ by design;
 nothing is violated, because those were never claimed constant across such trades.
 That $w$ must be stored (rather than recomputed from $x$) is shown by a small
-arithmetic exhibit: from $(x,y,w)=(10,10,\tfrac12)$, the $\theta=4$ trade with a
-unit cash leg leaves $w'=11/21$, not $\alpha/x'=22/43$.
+arithmetic exhibit of~\eqref{eq:tradeupdate}: from $(x,y,w)=(10,10,\tfrac12)$
+the $\theta=4$ trade point is $T=(5,20)$, and a unit cash leg $\Delta y=1$
+gives $\Delta x=-5/22$ and $w'=11/21$---not the global recompute
+$\alpha/x'=22/43$ (pre-trade $\alpha=xw$ over the new reserve $x'$).
 
 \subsection{What machine-checking covers here}
 The conservation-at-the-trade-point rule, the shifted-reserve hyperbola, and the
-weight update rest on a machine-checked spine (the \texttt{TemporalAMM}
+weight update rest on a machine-checked spine (the pool structure's
 \texttt{invariant} and \texttt{trade\_dx}, and the trade/rebase commutation
 \texttt{trade\_rebase\_commute}; \tfp{}, Section~\ref{sec:frontier}). The
 off-the-money trade-point existence/uniqueness lemmas have been submitted to the
@@ -391,8 +428,9 @@ on. Steepness and outward placement move in the \emph{same} direction with $m$.
 
 \subsection{What the lens is and is not}
 The lens is \emph{vol-calibrated at setup and static under trading}: it is the
-curve's geometry chosen to suit an asset of a given volatility, not a
-trader-measured statistic. It leaves the \textbf{pool flow unchanged}---the trade
+curve's geometry chosen to suit an asset of a given volatility (a more volatile
+asset takes a \emph{lower} setting---shallower wings, fatter tails;
+Section~\ref{sec:idea}), not a trader-measured statistic. It leaves the \textbf{pool flow unchanged}---the trade
 rule, the oracle-arbitrage map, and the rebase are the plain Balancer dynamics;
 $x,y,w$ move exactly as in Section~\ref{sec:warp}. It is applied as a forward read
 to everything \emph{read} (pricing, the chart, settlement, funding, portfolio
@@ -539,6 +577,12 @@ The boundary also sits on a tie to the classical perpetual-American (Merton)
 problem. Here $r$ is the risk-free interest rate and $\sigma$ the underlying's
 return volatility (this $r$ is distinct from the rebase factor). The exponent
 $\gamma$ is the \emph{characteristic root} of the underlying's log-price process.
+Concretely, the roots in play are those of the \emph{zero-net-carry} pricing ODE
+$\tfrac{\sigma^{2}}{2}S^{2}V''(S)-rV(S)=0$, where $V(S)$ is the option value as a
+function of spot---the absent first-order ($SV'$) term \emph{is} the symmetric
+pairing, distinguishing it from the standard no-dividend
+Black--Scholes--Merton ODE; substituting a power law $V=S^{\rho}$ gives
+$\rho(\rho-1)=2r/\sigma^{2}$, from which~\eqref{eq:merton} can be re-derived.
 Under the \emph{symmetric pairing} we use---a put root $-\gamma$ and a call root
 $\gamma+1$, equivalently zero net carry between the legs, so the two roots sum to
 $1$---the product-of-roots (Vieta) relation reads
@@ -558,6 +602,16 @@ named hypotheses---exact on the log-normal (Gaussian) slice, conditional beyond 
 This distributional tie is stated at the base characteristic root $\gamma$ (the
 unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
 $g_{\mathrm{loc}}=m\gamma$ by the same generic-$g$ uniqueness above.
+
+\paragraph{How literally to read the Merton relation.}
+Taken literally as a calibration formula, \eqref{eq:merton} lives in the regime
+$r>\sigma^{2}$, which fails at crypto-scale volatility: at $\sigma\approx80\%$
+it would demand a risk-free rate above $64\%$. We therefore use the relation as
+a \emph{theory anchor}: it fixes the \emph{direction} of calibration---higher
+volatility, lower $\gamma$, a shallower curve with fatter wings
+(Section~\ref{sec:idea})---and it is exact on the Gaussian slice, but $\gamma$
+and the knob $m$ are \emph{design parameters} chosen at deployment, not
+quantities implied from market $r$ and $\sigma$ through the formula.
 
 \subsection{The seam, checked two ways}
 At the boundary the value-match and slope-match hold for every steepness $g>0$,
@@ -633,20 +687,21 @@ keep it \emph{disclosed} as a labelled approximation (Section~\ref{sec:frontier}
 % ===========================================================================
 
 \subsection{Provenance: \tfp{}, never ``verified''}
-Every Lean result above was compiled by the Aristotle theorem prover server-side
-(Lean~4.28.0 / Mathlib~v4.28.0) and passed a zero-cost artifact audit
+Every Lean result above was compiled by an external Lean theorem prover,
+server-side (Lean~4.28.0 / Mathlib~v4.28.0) and passed a zero-cost artifact audit
 (forbidden-token scan, \texttt{\#print axioms} restricted to
 $\{\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}\}$, an
 unscoped-module diff, and a hand re-derivation), but was \emph{not} re-run against
 a local canonical kernel here. We therefore label these results \tfp{} and never
 ``verified''---that label is reserved for a local canonical build, which is
-environment-blocked in the present work. The statements and proof source are in the
-repository under \texttt{formal/} (with the provenance map \texttt{formal/INDEX.md}),
+environment-blocked in the present work. The statements and proof source, with a
+provenance map, are in the anonymized artifact repository (available on request),
 so a reader can inspect exactly what is claimed even though the prover server is not
 itself public. We distinguish \emph{grounded} results (no load-bearing carried
 hypothesis) from \emph{carried} results (conditional on named, undischarged
 structure-field hypotheses---never on \texttt{axiom}s); the full formal-artifact
-map and Lean statements are available on request (see \texttt{formal/INDEX.md}).
+map and Lean statements are available on request in the anonymized artifact
+repository.
 
 \subsection{Solvency is conditional---the headline open item}
 The construction's solvency guarantee is \emph{conditional}. A separate prover line
@@ -700,8 +755,8 @@ payoff---so we do not claim the curve family as a contribution. InfinityPools~%
 \cite{infinitypools} builds options-like exposure on concentrated liquidity, and
 Panoptic~\cite{panoptic} is the closest oracle-free perpetual-options protocol; we
 differ in pricing the whole continuum from one pool state and in the American free
-boundary. QuantAMM's weight-dynamic AMM work is \emph{prior} (not concurrent); we
-use the neutral ``per-trade weight-dynamic AMM'' descriptor. The Lean-AMM line is
+boundary. QuantAMM's weight-dynamic AMM work~\cite{quantamm} is \emph{prior} (not
+concurrent); we use the neutral ``per-trade weight-dynamic AMM'' descriptor. The Lean-AMM line is
 anchored by Pusceddu--Bartoletti~\cite{pusceddu-bartoletti}; our ledger extends it
 to the smooth-pasting boundary, the lens, and the conditional-solvency stack, on
 Lean~4~\cite{lean4} and Mathlib~\cite{mathlib}. The nearest analytic neighbour is
@@ -725,6 +780,18 @@ notional-to-cash-leg sizing across the bought leg are open; and the prior-art
 citation identifiers added in revision will be hand-checked against primary
 sources before submission. None of these is dropped; each is stated rather than
 buried.
+
+\paragraph{Mechanism design: open.}
+This paper's contribution is the pricing construction and its machine-checked
+spine, not an equilibrium analysis. Incentive compatibility of the funding
+schedule, the behaviour of strategic traders near the exercise boundary
+$S^{\ast}$ and around the static knob $m$, the participation rationality of
+liquidity providers, and a welfare comparison against order-book alternatives
+are explicitly open, and we name them as future work. They are where the formal
+spine meets the market: the conditional-solvency hypotheses of
+Section~\ref{sec:frontier} (a funding port that pays, one-way arbitrage, a
+ledger that closes) are behavioural assumptions, and discharging them is a
+mechanism-design task as much as a proof task.
 
 \paragraph{Conclusion.}
 A single Balancer pool with one dynamic weight---run as a state-transition system
@@ -756,10 +823,8 @@ engine are the principal directions for future work.
 % ===========================================================================
 \begin{thebibliography}{99}
 
-\bibitem{temporal-barrier}
-Author(s) omitted for double-blind review.
-\emph{A Singular Dynamic AMM Pricing Perpetual Options Across the Strike
-Continuum} (barrier-option version). Working draft, 2026.
+% [temporal-barrier bibitem REMOVED for double-blind: never \cite'd; near-identical
+% title is a search vector to the working draft (skeptic gate 2026-07-02).]
 
 \bibitem{uniswapv2}
 H.~Adams, N.~Zinsmeister, and D.~Robinson. \emph{Uniswap v2 Core.} 2020.
@@ -800,6 +865,10 @@ Protocol whitepaper, 2021.
 \bibitem{infinitypools}
 InfinityPools. \emph{InfinityPools: leverage and options on concentrated
 liquidity.} Protocol documentation, 2023.
+
+\bibitem{quantamm}
+M.~Willetts and C.~Harrington. \emph{Optimal Rebalancing in Dynamic AMMs.}
+arXiv:2403.18737, 2024.
 
 \bibitem{pusceddu-bartoletti}
 N.~Pusceddu and M.~Bartoletti.

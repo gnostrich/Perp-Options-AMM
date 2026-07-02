@@ -2299,3 +2299,11 @@ _Context: brainstorm continues — operator asks, with reference to chart-2 (opt
 _Context: operator challenges what the manager is fixing mid-brainstorm. Manager clarifies: the only edit in flight was the skeptic-gate-required bibitem deletion — the final step of the entry-289-approved tonight-package, not brainstorm work; package now PAUSED awaiting the operator's "finish"; brainstorm thread has zero edits._
 
 > yo what are you fixing, were brainstoring
+
+
+---
+
+## Entry 294 — 2026-07-02 UTC
+_Context: operator (1) approves finishing the tonight-package (bibitem deletion + commit + merge); (2) asks for an ape-simple explanation of the claim that the dollar version of our curve IS the Deribit picture — wants the residual ambiguity resolved before submitting. Manager finishes the package and explains (fraction×strike=dollars; deep-ITM (K−S)/K × K = K−S = the straight market wing; same photo, different units; near-money time-value nuance stated honestly)._
+
+> 1.  approved, finish; 2. oh so you're literally saying that the dollar version of our curve is that?  -- i get some idea of this but i'm also not entirely convinced, you'll have to explain this like to me like i'm an ape (not literally) -- basically by now i'm hoping you're getting a feel of my dilemma / confusion in this area -- like i'm not totally clueless but there's still a bit of ambiguity i'm trying to do away with before submitting
