@@ -3645,3 +3645,35 @@ Artifact: git diff paper/wine2026/temporal_wine2026_v2.tex (83 ins/12 del on ope
 - C1 honest (open items named, restates carried B1/B3/B4, no new claim). Regression: all hedges intact (cond-solvency ×4 sites, tfp-never-verified, |Γ|≤1, Snell-named, no-GH-leak, curve-family-not-contribution, offatm not-counted L309-311); figures/table/boundary untouched by diff; entry-247 glosses present for T,α_T,β_T,Δx,Δy,V,ρ.
 Advisories (non-blocking): stale comment L814-820 still says formal/INDEX.md; comments carry identifying info (fine for PDF-only submission, strip if source upload); submitted filename shouldn't carry "temporal"; entry-226 "steeper for higher vol" as quoted in CLAUDE.md §8 reads opposite to entry-289 — post-deadline reconciliation of shared truth needed.
 Pattern: second consecutive pass where the paper agent pre-empted my recurring flags (glosses, site-parity). Operator-edit bases: check the edit's own algebra too — it held here.
+
+## 2026-07-02 — VERDICT: R6 scope-gate PKG-ITM (a) V=max/re-seam + (b) display slice (entries 297/298/299). CLEAR-TO-DISPATCH conditional on 3 FLAGs.
+File: notes/skeptic/VERDICT_R6_PKG_ITM_scope_gate_2026-07-02.md. Attacked, key results:
+- RE-DERIVED both paper columns (python exact): re-seamed V=(1/(g+1))(S*/S)^g, S*=Kg/(g+1) reproduces EVERY
+  §5.2 cell (m=1 g=2: .333/.2315/.1829/.1481/.1029; m=3 g=6: .1429/.200-intrinsic/.1066/.0567/.0190). Verified
+  in-file temporal_wine2026_v2.tex L551-555.
+- READ the actual entry-286 sweep JSON (evidence/dexters_lab/oracle_sweep_2026-06-26/): today's engine
+  continuation mark = 0.1481·K/S EXACTLY (linear in K/S, g=2) — NOT a power law in S. ATM is the UNIQUE
+  agreement point with the target (both = g^g/(g+1)^(g+1)); OTM quotes DROP (.1235→.103 @S/K=1.2), near-ITM
+  RISE (.185→.231 @0.8). Manager's "re-seam moves the constant" UNDERSTATES — whole continuation reshapes.
+- CONFIRMED manager's contested reading citation-backed (check 4): OTM-shift covered by 286 ("engine
+  faithfulness bug, not a paper edit") + 287 verbatim (paper=intended product; re-seam 0.444K→0.667K) +
+  ratified paper table CONTAINS OTM cells + 297 item-3 "matches shipped paper" + 298 go. No extra operator
+  sentence required. Fix RESTORES locked §4 S*=Kγ/(γ+1) (engine empirically at 0.444K = the bug).
+- FLAG-1 PROCESS (dischargeable): entry-287's load-bearing decisions sit in SQUARE BRACKETS inside the quote;
+  entry 285 proves brackets = manager condensation in this file. Demand attestation-or-corrigendum.
+- FLAG-2 OMISSION: acceptance criterion says "entry-286 protocol re-run must reproduce paper columns" but 286
+  ran γ=1,m=2 (g=2) while paper cols are g=2/g=6 at γ=2 — (γ,m) per column must be PINNED or tester
+  spurious-FAILs/quietly adapts. PLUS: value≥intrinsic gate on the max() FORMULA = rfl-tautology; must assert
+  on OUTPUT path (displayed/settled, DOM-read like 286).
+- FLAG-3 OMISSION (blocks (b)): R3 inventory silent on band markers, mode-line/peak-at-1 axis convention
+  (call intrinsic >1 uncapped), DIFF_LEDGER OPERATOR-VOICE rows entry-226/L2063 (currently RESOLVED vs the
+  tent, need RETIRED-by-entry-298-scope not silent regression), and the entry-289-parked m-slider vol caption
+  (LARGER M = MORE VOL now contradicts shipped paper's REVERSED direction — in the exact surface (b) rebuilds).
+- Settled ground (don't re-attack): (a)4 settlement-reads-V is ENTAILED by single-basis helper + 287 arch;
+  zero unrequested items in scope; the two not-operator-named details were itemized pre-go = ratified.
+Patterns reinforced: (1) "protocol re-run" criteria that name a prior test whose PARAMETERS don't match the
+new target = the quiet-adaptation trap; (2) V=max-style fixes breed formula-level tautology gates (M=Fisher
+family) — always demand output-path assertion; (3) bracketed text inside verbatim quotes in history/operator/
+is an unresolved provenance class — 285/287 both; consider pushing for a transcription-policy rule banning
+unattributed brackets. (4) Parked-for-later operator items (289 vol caption) resurface as silent omissions
+when their surface gets rebuilt — check the parked list against every new scope's touched surface.

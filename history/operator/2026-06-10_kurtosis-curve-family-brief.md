@@ -2347,3 +2347,31 @@ _Context: operator gives the fresh R2 go on the itemized (a)+(b) scope (entry 29
 _Context: operator notes the go is a leap of trust (limited review capacity) and asks the manager to cover them with rigor. Manager lays out the concrete protection structure: behavior-defined acceptance (paper worked-example = ground truth, entry-286 sweep re-run as the measured acceptance test), independent five-role chain, revert chain, halt conditions (math-failed Aristotle blocks promotion; STOP-ON-RED; no green-patching), full audit trail._
 
 > but its a bit of an act / leap of trust for me, so just make sure you've got me covered by being rigorous
+
+
+---
+
+### CORRIGENDUM to Entry 287 (per §2.2, appended not edited — discharges skeptic FLAG-1, R6 gate 2026-07-02)
+Entry 287's quote block condensed the operator's long task message with bracketed summaries. The
+load-bearing sections are restored VERBATIM from the operator's original message here:
+
+> ## Operator decisions (binding)
+>
+> - **No solvency/payout concern** — linear `K−S` deep ITM is fundable. The
+>   reserve-feasibility question is CLOSED as a non-issue.
+> - **Engine fix is easy and DEFERRED** (post-submission). Paper ships tonight
+>   describing the linear/0.667 instrument — that is the intended product.
+> - **Target architecture** (PKG-ITM-FIX-DESIGN, operator-approved direction):
+>   - Keep the pricing curve as the bounded continuation mark ∈ (0,1]
+>     (unchanged; still the OTM/quoting object).
+>   - Add a **separate intrinsic module outside the curve**: put `(K−S)⁺`, call
+>     `(S−K)⁺`; may exceed 1.
+>   - Total value `V = max(mark, intrinsic)` — equivalently
+>     `mark + max(0, intrinsic − mark)`.
+>   - **Never a raw `capped-mark + intrinsic` sum** (double-counts near the
+>     money, over-pays vs the true American, reintroduces a kink).
+>   - For C¹, the continuation must re-seam onto the **linear** intrinsic →
+>     S\* moves 0.444K → **0.667K**, matching the paper.
+
+These are the operator's exact words (main-session message, 2026-06-26). The entry-287 bracketed
+condensation was the manager's; the decision content is identical.
