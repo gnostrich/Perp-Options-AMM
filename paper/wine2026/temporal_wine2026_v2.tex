@@ -108,10 +108,12 @@ one side and puts on the other---at once and in closed form. There is no separat
 premium and no expiry: the worth of a position is how far the curve has leaned,
 read off as a number between zero and one.
 
-One further parameter sets the curve's steepness. A steeper curve prices a more
-volatile asset. We fix the steepness once, at pool creation, with a single number
+One further parameter sets the curve's steepness. A \emph{shallower} curve prices a more
+volatile asset---fatter wings make deep out-of-the-money strikes relatively richer
+(via $\gamma(\gamma+1)=2r/\sigma^{2}$: higher volatility, lower $\gamma$). We fix the steepness once, at pool creation, with a single number
 we call the \emph{vol knob}: the larger it is, the steeper the option-value curve
-at \emph{every} strike. Its neutral setting recovers the plain Balancer curve. The
+at \emph{every} strike, so the knob is calibrated to take a \emph{lower} setting for a
+more volatile asset (shallower wings, richer tails). Its neutral setting recovers the plain Balancer curve. The
 knob is set from the asset's volatility and never moves while trading; it is the
 pool's geometry, not a quantity traders push around.
 
@@ -601,7 +603,7 @@ the trader pays for that displacement at fair, sequenced prices (a swap's procee
 are the path integral of the marginal price), so there is no free cash. Zero skew
 removes the \emph{free} edge, not the \emph{worth} of the protection.
 
-\subsection{Settlement}
+\subsection{Settlement}\label{sec:settlement}
 A position is opened as a \emph{band}---a composition of legs---against a perpetual
 future the trader already holds, the \emph{origin perp}. At open the band is minted
 against a carved slice of that perp, whose notional, equity, and entry mark are

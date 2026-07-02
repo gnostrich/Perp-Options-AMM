@@ -2259,3 +2259,11 @@ _Context: operator issues a BRAINSTORM-ONLY mechanism-diff / sync-matrix + stand
 _Context: operator splits the work: (1) PAPER — hard deadline, priority = academically submittable form; (2) APP/HTML — small straightforward edits, time available, NOTE FOR LATER. Manager parks PKG-ITM-FIX-DESIGN (app side) as deferred and walks the operator through the paper to-submittable checklist._
 
 > so let's break this down into 2 parts: 1. paper; 2. app / html -- i have a hard deadline on 1 so my priority will be to get that into a form that's academically submittable; and 2 seems like small straightformward edits and also we have time -- so note 2 stuff for later and walk me throiugh the. 1 stuff
+
+
+---
+
+## Entry 289 — 2026-06-26 UTC
+_Context: operator hands back an edited paper (uploaded temporal_wine2026_v2_submission.tex) as the new working base — two edits: (1) vol-calibration direction REVERSED: a SHALLOWER curve prices a more volatile asset (via γ(γ+1)=2r/σ²: higher vol → lower γ); the knob takes a LOWER setting for a more volatile asset (fatter wings, richer tails); (2) missing \label{sec:settlement} added. Operator green-lights the recommended tonight-package (A1 double-blind + B1–B4 + C1), delegating idiot-checking to manager/research-lead/skeptic (limited operator review time). Residual operator question: is the AMM pricing curve EXTENDED by smooth-pasting so ITM comes off the curve, or does that math happen OFF the curve in settlements? NOTE: the vol-direction edit supersedes the entry-226-era "steeper = more vol" framing; the engine UI text (LARGER M = MORE VOL) now contradicts the paper — parked to the part-2 app list._
+
+> ok so let me give youb the paper to work out of because i made some edits, and you can go ahead with the recommented package; trusting you / research guy and skeptic with the heavy lifting of idiot checking / ensuring correctness etc. because i won't be able to devote much time to review tbh -- for me a residual confusion is whether the AMM pricing curve is to be extended by the smooth pasting thing so that it gives a clean ITM extension and everything comes off the curve, or whether that math has to happen 'off the curve' in settlements
