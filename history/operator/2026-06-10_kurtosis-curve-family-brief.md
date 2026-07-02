@@ -2703,3 +2703,11 @@ _Context: operator RULES on FLAG-A: the anchoring item is "a flatout regression 
 _Context: operator: once the queue completes, take stock and get the paper submission-ready — 1 HOUR countdown. Manager: the paper is ALREADY submission-ready on main (all gates passed); the only unverified item is the PAGE COUNT (no TeX in env) — operator must compile on Overleaf NOW; lab review returns within the window (stop-press findings only); everything else queued is engine-side and does not touch the paper._
 
 > and now finally once queue is completed, lets take stock and get the paper in form to submit, countdown 1 hr left
+
+
+---
+
+## Entry 341 — 2026-07-02 UTC
+_Context: operator asks whether the paper is up to date for the entry-338 directive (clubbing the audit's smaller mechanics). Manager answers honestly: NO — the clubbed paragraph was recorded as next-touch guidance, not yet written; half of the 7 are already covered in essence (cash-neutral construction, tx-map formula, two-case settlement); none is a correctness gap; deadline recommendation = submit WITHOUT, club in the next revision — unless the operator says "club now" AND the page count leaves room._
+
+> paper is uptodate for the srtuff i sai "so for story table we should have all in a flow respecitng manner, in the paper we may choose to club them or whatever if everything isnt section-worthy if that makes sense"
