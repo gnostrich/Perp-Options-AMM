@@ -1,5 +1,5 @@
 # MEMORY — paper
-_Last updated: 2026-07-02 (WINE v2 §3.2 mark-disclosure fix, entries 326/327/330). Rewrite changed bits at task end._
+_Last updated: 2026-07-02 (WINE v2 EMERGENCY page compression on live submission). Rewrite changed bits at task end._
 
 ## Pipeline / deadlines
 - **AfT 2026** — notification ~Jul 15 2026 (draft: `paper/Temporal_Paper_AfT_2026_v6.docx`).
@@ -344,6 +344,23 @@ exercise). Rewrote §3.2 in `paper/wine2026/temporal_wine2026_v2.tex` ONLY (head
   lines; display-equation removal offsets ~2 rendered → net ~+3 rendered lines (~0.07pp), flagged.
 - NOTE (residual, not mine to fix): American draft §mark + app payoff overlay carry the same
   barrier-era read — queued under 325-B/D per manager.
+
+## WINE2026 v2 EMERGENCY compression (2026-07-02, live submission ~2pp over 12pp LNCS body) — cuts only, NOT git'd
+Base md5 `86eddeeb` → `753daf1a` (note: base state's §3.2 did NOT contain the min(slope,1/slope)
+disclosure sentence recorded above — tree had moved before this task; I removed nothing).
+- BODY words 6734→6160 (−574; per-section: intro −78, §2 −106, §3 −49, §4 −67, §5 −124, §6 −46,
+  §7 −31, §8 −72, abstract −4). Appendix table, bib, all L1–L13, all numbers untouched.
+- All 3 figures → width 8.0cm height 4.0cm; captions tightened (fig2 "wing-steepness shape…not the
+  mark" semantics kept; fig3 L5,L6 kept). No vspace/fontsize hacks.
+- §7 single-object → 3 sentences. Related work −30% (all cites + QuantAMM-prior/LVR-dual/P-B kept).
+- ALL protected hedges/claims verified present post-edit (scripted check + grep): tfp, B1/B3/B4,
+  deterministic-vs-Snell, |Γ|≤1, conditional skeleton, feed-trust, perp-units→cash (entry 359),
+  w′=11/21, 0.148, 66.67/85.71, 5 exec laws incl. ITM-to-cash + own-club/zero-floor, round-trip
+  residual + cross-strike externality, not-yet-an-instance.
+- Structural checks green: $ 548 even, braces 692/692, envs matched, no dangling ref/cite.
+- Estimated yield ≈1.8–2.1 rendered pages (−574 words ≈1.2pp + figures/captions ≈0.6pp). If compile
+  still overflows: next candidates = §6 settlement narration (protected-dense, needs operator),
+  eq:tradeupdate "In words" gloss, §5 Merton ODE parenthetical.
 
 ## Discipline
 Every quantitative/formal claim traces to a verified artifact or a named assumption, or it doesn't

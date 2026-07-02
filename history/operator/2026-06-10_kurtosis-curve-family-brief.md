@@ -2885,3 +2885,21 @@ _Context: operator declares full delegation under time pressure: no more questio
 _Context: operator saw the rebase prose; rules it under-explained/under-specified given its implications. Standing directive: move detail to annexes and incorporate via reference — never leave things hanging._
 
 > ok i saw rebase but its underexplained or whagtever it has implications like thats an underspecification, you could throw things in annex and incorp via ref but never leave things hanging
+
+
+## Entry 370 — 2026-07-02 UTC
+_Context: operator generalizes entry 369: not just rebase — the WHOLE story table must be covered in the paper one way or another; free use of annexes with incorporation by reference._
+
+> and not just rebase but yeah u get the drift, basically the whole story table etc eberything had to be covered one way or another and feel free to use the annex and incorp via ref
+
+
+## Entry 371 — 2026-07-02 UTC
+_Context: operator (sent twice): needs the file — what's left? Manager: everything is written; only the final skeptic gate is running, then push + hand-off._
+
+> ok gang need the  file whats left now?
+
+
+## Entry 372 — 2026-07-02 UTC
+_Context: operator asks for the ETA on the final gate._
+
+> eta?

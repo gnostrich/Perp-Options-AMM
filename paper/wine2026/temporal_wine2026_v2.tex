@@ -46,8 +46,8 @@ We show that a \emph{single} liquidity pool prices that protection at every stri
 at once. The pool runs on the weighted constant-product (``Balancer'') curve, with
 one structural change: each trade does not slide a point along a fixed curve but
 \emph{re-leans} the curve, and that lean \emph{is} an option position. A single
-static knob, set once from the asset's volatility, fixes the curve's steepness and
-hence the pricing of the whole book of strikes. From one pool state we read the
+static knob, set once from the asset's volatility, fixes the curve's steepness
+and hence the whole book's pricing. From one pool state we read the
 value of every out-of-the-money call and put in closed form, with an exact
 \emph{American} early-exercise level and a smooth join between waiting and
 exercising. We state the conditions plainly. The early-exercise rule is proved
@@ -68,36 +68,33 @@ options \and Optimal stopping \and Smooth pasting \and Formal verification}
 % ===========================================================================
 
 An automated market maker (AMM) is a pool holding two assets whose quoted price is
-the slope of a fixed curve, where a trade slides the reserve point along that
-curve. Our pool starts from the same object---the weighted constant-product curve
-of Balancer~\cite{balancer}---and makes one structural change: a trade does not
-slide the point along the curve but \emph{re-leans the curve itself}. The pool
-stores how the curve currently leans, and every trade updates that lean.
-Figure~\ref{fig:warp} shows the construction: a trade lands at a point out along
-the curve and re-leans it there.
+the slope of a fixed curve; a trade slides the reserve point along it. Our pool
+starts from the weighted constant-product curve of Balancer~\cite{balancer} and
+makes one structural change: a trade does not slide the point but \emph{re-leans
+the curve itself} (Figure~\ref{fig:warp}); the pool stores the lean, and every
+trade updates it.
 
-That single change has one payoff: \emph{the lean of the curve is an option
-position}. A pool whose curve leans a given way is, read correctly, holding (or
-selling) a perpetual option at a particular strike, and because the curve covers a
-range of slopes, one pool state prices an entire continuum of strikes---calls on
-one side and puts on the other---at once and in closed form. There is no separate
-premium and no expiry: the worth of a position is how far the curve has leaned,
-read off as a number between zero and one.
+The payoff: \emph{the lean of the curve is an option position}. A pool whose curve
+leans a given way is, read correctly, holding (or selling) a perpetual option at a
+particular strike, and because the curve covers a range of slopes, one pool state
+prices an entire continuum of strikes---calls on one side, puts on the other---in
+closed form. There is no separate premium and no expiry: a position's worth is how
+far the curve has leaned, a number between zero and one.
 
-One further parameter sets the curve's steepness. A \emph{shallower} curve prices a more
-volatile asset---fatter wings make deep out-of-the-money strikes relatively richer
-(via $\gamma(\gamma+1)=2r/\sigma^{2}$: higher volatility, lower $\gamma$). We fix the steepness once, at pool creation, with a single number
-we call the \emph{vol knob}: the larger it is, the steeper the option-value curve
-at \emph{every} strike, so a more volatile asset takes a \emph{lower} setting
-(shallower wings, richer tails); the neutral setting recovers the plain Balancer
-curve. Set from the asset's volatility, the knob never moves while trading; it is
-the pool's geometry, not a quantity traders push around.
+One further parameter sets the curve's steepness. A \emph{shallower} curve prices
+a more volatile asset---fatter wings make deep out-of-the-money strikes relatively
+richer (via $\gamma(\gamma+1)=2r/\sigma^{2}$: higher volatility, lower $\gamma$).
+We fix the steepness once, at pool creation, with a single number we call the
+\emph{vol knob}: the larger it is, the steeper the option-value curve at
+\emph{every} strike, so a more volatile asset takes a \emph{lower} setting; the
+neutral setting recovers the plain Balancer curve. The knob never moves while
+trading; it is the pool's geometry, not a quantity traders push around.
 
 \paragraph{The result, stated first.}
 The central positive result is that this single pool prices the entire
 out-of-the-money strike continuum of \emph{American-style} perpetual options in
 closed form, with an exact early-exercise level and a smooth join between waiting
-and exercising. We state the conditions alongside it rather than burying them:
+and exercising. We state the conditions alongside it:
 \emph{(i)}~``American'' means optimal over \emph{deterministic} exercise rules---a
 genuine result---while the matching \emph{stochastic} optimal-stopping statement
 is named but not proved; \emph{(ii)}~the construction replicates the target payoff
@@ -114,13 +111,13 @@ payoff\textsuperscript{L6}; the exercised region pays the intrinsic (parity)
 value by construction; and the join between waiting and exercising is
 smooth\textsuperscript{L5} (superscripts index the machine-checked results in
 Appendix~\ref{app:lean})---while the optimality statement of \emph{(i)} is
-additional, exercise timing being the trader's own choice, not a system claim.
+additional: exercise timing is the trader's own choice, not a system claim.
 
 \paragraph{Contributions.}
-The curve family itself is \emph{not} new: as Section~\ref{sec:warp} shows, each
-trade's arc is, after a change of coordinates, an ordinary constant product---a
-translated market maker in the sense of Evans~\cite{evans2020} and the replication
-theory of Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
+The curve family itself is \emph{not} new: each trade's arc is, after a change of
+coordinates, an ordinary constant product (Section~\ref{sec:warp})---a translated
+market maker in the sense of Evans~\cite{evans2020} and the replication theory of
+Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
 \begin{enumerate}[leftmargin=2em,itemsep=2pt]
   \item a \emph{per-trade weight update} that turns a Balancer pool into a
         state machine whose stored lean prices a tradable claim at every strike
@@ -129,22 +126,21 @@ theory of Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
         settlement---that reads a continuum of option values from one pool state
         (Sections~\ref{sec:continuum},~\ref{sec:settlement});
   \item an \emph{American generalisation}: a closed-form smooth-pasting
-        early-exercise boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (the base form
-        $K\gamma/(\gamma+1)$ at $m=1$) --- with $K$ the dollar strike, $\gamma>1$
-        the curve's \emph{convexity exponent} (larger $\gamma$ = a steeper
-        option-value curve), and $m$ the steepness knob below --- with a smooth
-        (value-and-slope) join and no new parameters, tied to the classical
+        early-exercise boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (base form
+        $K\gamma/(\gamma+1)$ at $m=1$; $K$ the dollar strike, $\gamma>1$ the
+        curve's convexity exponent, $m$ the knob below), with a smooth
+        value-and-slope join and no new parameters, tied to the classical
         perpetual-American (Merton) problem (Section~\ref{sec:american});
   \item a single static, \emph{volatility-calibrated} steepness knob $m$ that
         sets the option-value steepness uniformly across strikes
         (Section~\ref{sec:lens});
 \end{enumerate}
 together with an honest formal-verification ledger (Section~\ref{sec:frontier})
-that states exactly what is machine-checked, under what label, and where the open
-frontier is---namely that solvency is conditional on a funding port shown
-necessary but not discharged. The object throughout is the mechanism itself---the
-pool \emph{is} the option market; equilibrium and welfare analysis of the market
-around it are stated as future work (Section~\ref{sec:related}).
+stating exactly what is machine-checked, under what label, and where the open
+frontier is---solvency is conditional on a funding port shown necessary but not
+discharged. The object throughout is the mechanism itself---the pool \emph{is} the
+option market; equilibrium and welfare analysis are future work
+(Section~\ref{sec:related}).
 
 % ===========================================================================
 \section{The AMM construction}\label{sec:warp}
@@ -154,7 +150,7 @@ around it are stated as future work (Section~\ref{sec:related}).
 \centering
 \begin{tikzpicture}[scale=1.0,>=Latex]
   \begin{axis}[
-      width=8.2cm, height=5.6cm,
+      width=8.0cm, height=4.0cm,
       xlabel={$x$ (underlying reserves)}, ylabel={$y$ (cash reserves)},
       xmin=0.35, xmax=4.2, ymin=0.35, ymax=4.2,
       xtick=\empty, ytick=\empty,
@@ -186,60 +182,53 @@ around it are stated as future work (Section~\ref{sec:related}).
     \node[font=\scriptsize] at (axis cs:1.97,1.62) {reserves};
   \end{axis}
 \end{tikzpicture}
-\caption{A trade occurs at a point $T$ on the curve---where a \emph{strike ray}
-$\theta$ from the origin meets it---and \emph{re-leans} the curve there rather than
-sliding the reserve point along it. Both curves pass through $T$, where the trade
-acts; the re-leaned wing (dashed) is a genuine power law $c'/x^{p}$ with no
-additive offset, a member of the same constant-product family as the base
-curve $c/x$. The lean of the curve is stored state; it is the option position.
-Curves shown are illustrative.}
+\caption{A trade occurs where a \emph{strike ray} $\theta$ meets the curve (point
+$T$) and \emph{re-leans} the curve there rather than sliding the reserve point.
+Both curves pass through $T$; the re-leaned wing (dashed) is a genuine power law
+$c'/x^{p}$, same constant-product family as the base $c/x$. The stored lean is the
+option position. Curves illustrative.}
 \label{fig:warp}
 \end{figure}
 
 \subsection{The Balancer curve}
 A two-asset constant-function market maker is a curve in the plane of reserves,
-$x$ of the underlying asset and $y$ of cash. The pool's state is a single point on
-that curve, and the price it quotes is the slope of the curve at that point. The
-Balancer curve is
+$x$ of the underlying and $y$ of cash; the pool's state is a point on that curve,
+and the quoted price is the slope there. The Balancer curve is
 \begin{equation}
   x^{w}\,y^{1-w}=k ,
   \label{eq:balancer}
 \end{equation}
-read as: \emph{the weighted geometric mean of the two reserves stays at a fixed
-level}. Two numbers describe it. The \emph{weight} $w\in(0,1)$ says how the curve
-\emph{leans} between the two assets---$w=\tfrac12$ is the symmetric, equal-weight
-curve, and pushing $w$ away from $\tfrac12$ tilts pricing toward one asset. The
-\emph{level} $k$ says how far out the curve sits---its overall scale. In ordinary
-use $w$ and $k$ are fixed and trades slide the point $(x,y)$ along the curve.
+a fixed weighted geometric mean of the reserves. The \emph{weight} $w\in(0,1)$
+says how the curve \emph{leans} between the assets---$w=\tfrac12$ is symmetric,
+and pushing $w$ off $\tfrac12$ tilts pricing toward one asset; the \emph{level}
+$k$ is its overall scale. In ordinary use $w$ and $k$ are fixed and trades slide
+$(x,y)$ along the curve.
 
 \subsection{Trades bend the curve}
-Our one structural change is that \emph{a trade updates the weight $w$}, and a
-change in $w$ re-leans the curve~\eqref{eq:balancer}---it warps. The pool becomes
-a \emph{state-transition system}: a sequence of state updates, one per trade, not
-a single fixed equation. The stored state is the triple $(x,y,w)$, with $w$
-genuine memory; the level $k=x^{w}y^{1-w}$ is a dependent \emph{readout} that
-trades do not hold constant.
+Our one structural change: \emph{a trade updates the weight $w$}, and a change in
+$w$ re-leans the curve~\eqref{eq:balancer}. The pool becomes a
+\emph{state-transition system}, one state update per trade. The stored state is
+the triple $(x,y,w)$, with $w$ genuine memory; the level $k=x^{w}y^{1-w}$ is a
+dependent \emph{readout} that trades do not hold constant.
 
 Two views of a trade coincide. Sliding the origin to \emph{shifted virtual
 reserves} $u=x-\alpha$ and $v=y-\beta$, where $\alpha=xw$ and $\beta=y(1-w)$ are
-curve offsets, each individual trade's arc satisfies the ordinary constant product
-$u\,v=\text{const}$. So the per-trade geometry is nothing exotic: it is a
-\emph{translated} constant-function market maker in the sense of
-Evans~\cite{evans2020}, and the ``bending'' picture is a re-description of a weight
-change, not a new invariant. \textbf{This is exactly why we do not claim the curve
-family as a contribution}---we claim the per-trade weight \emph{update} and the
-semantic layer built on it.
+curve offsets, each trade's arc satisfies the ordinary constant product
+$u\,v=\text{const}$: a \emph{translated} constant-function market maker in the
+sense of Evans~\cite{evans2020}, so the ``bending'' picture is a re-description of
+a weight change, not a new invariant. \textbf{This is exactly why we do not claim
+the curve family as a contribution}---we claim the per-trade weight \emph{update}
+and the semantic layer built on it.
 
 \subsection{Trades happen anywhere on the curve}
-In ordinary market makers a trade is always at the reserve point. Here a trade may
-land at \emph{any} out-of-the-money point on the curve. Each ray from the
-origin---a line $y=\theta x$ of fixed reserve ratio, with slope $\theta$---is
-identified with one strike. The ray meets the curve at a single \emph{trade
-point}, and a transaction there is handled as if that point were the reserve
-point: the conservation law is applied locally, at the trade's own point. The
-$45^{\circ}$ ray ($\theta=1$) is the at-the-money strike; steeper and shallower
-rays split the continuum into the two \emph{wings}---the call side and the put
-side---both priced from the same $(x,y,w)$ state (Figure~\ref{fig:warp}).
+In ordinary market makers a trade is always at the reserve point; here it may land
+at \emph{any} out-of-the-money point. Each ray from the origin---a line
+$y=\theta x$ of fixed reserve ratio---is identified with one strike. The ray meets
+the curve at a single \emph{trade point}, and a transaction there is handled as if
+that point were the reserve point: the conservation law is applied locally, at the
+trade's own point. The $\theta=1$ ray is the at-the-money strike; steeper and
+shallower rays split the continuum into the call and put \emph{wings}, both priced
+from the same $(x,y,w)$ state (Figure~\ref{fig:warp}).
 
 Explicitly, write $T=(x_{T},y_{T})$ for the trade point on the ray, and
 $\alpha_{T}=x_{T}\,w$, $\beta_{T}=y_{T}\,(1-w)$ for the curve offsets of
@@ -269,31 +258,30 @@ $(x,y,w)$ by
   \label{eq:tradeupdate}
 \end{equation}
 on the admissible domain $y_{T}+\Delta y>\beta_{T}$ and subject to reserve
-feasibility ($x+\Delta x>0$, $y+\Delta y>0$). In words: the reserve flows
-$\Delta x,\Delta y$ are the ordinary translated-constant-product amounts
-computed at the trade's own point $T$ rather than at the reserve point (they
-conserve the local pair $\alpha_{T},\beta_{T}$), the flows are drawn from the
-pool's actual reserves $(x,y)$, and the new lean $w'$ is read off at the
-displaced trade point $x_{T}+\Delta x$.
+feasibility ($x+\Delta x>0$, $y+\Delta y>0$). In words: the flows
+$\Delta x,\Delta y$ are the translated-constant-product amounts computed at the
+trade's own point $T$ rather than at the reserve point (conserving the local pair
+$\alpha_{T},\beta_{T}$), drawn from the pool's actual reserves $(x,y)$; the new
+lean $w'$ is read off at the displaced trade point $x_{T}+\Delta x$.
 
-A spot swap is the special case where the trade point \emph{is} the reserve point;
-there, and only there, the trade traces the familiar constant-product trajectory.
+A spot swap is the special case where the trade point \emph{is} the reserve
+point, and only there does the trade trace the familiar constant-product
+trajectory.
 Off-the-money trades genuinely change the global offsets $\alpha,\beta$ by design;
-nothing is violated, because those were never claimed constant across such trades.
-That $w$ must be stored (rather than recomputed from $x$) is shown by a small
-arithmetic exhibit of~\eqref{eq:tradeupdate}: from $(x,y,w)=(10,10,\tfrac12)$
-the $\theta=4$ trade point is $T=(5,20)$, and a unit cash leg $\Delta y=1$
-gives $\Delta x=-5/22$ and $w'=11/21$---not the global recompute
-$\alpha/x'=22/43$ (pre-trade $\alpha=xw$ over the new reserve $x'$).
+those were never claimed constant across such trades. That $w$ must be stored
+(rather than recomputed from $x$) is shown by an arithmetic exhibit
+of~\eqref{eq:tradeupdate}: from $(x,y,w)=(10,10,\tfrac12)$ the $\theta=4$ trade
+point is $T=(5,20)$, and a unit cash leg $\Delta y=1$ gives $\Delta x=-5/22$ and
+$w'=11/21$---not the global recompute $\alpha/x'=22/43$ (pre-trade $\alpha=xw$
+over the new reserve $x'$).
 
 \subsection{What machine-checking covers here}
 The conservation-at-the-trade-point rule, the shifted-reserve hyperbola, and the
-weight update rest on a machine-checked spine---the pool invariant and trade
-law\textsuperscript{L1} and the trade/rebase
-commutation\textsuperscript{L2} (\tfp{}, Section~\ref{sec:frontier}). The
-off-the-money trade-point existence/uniqueness lemmas have been submitted to the
-prover and report complete, but are not yet folded to our \tfp{} bar; we do not
-count them among the machine-checked results.
+weight update rest on a machine-checked spine: the pool invariant and trade
+law\textsuperscript{L1} and the trade/rebase commutation\textsuperscript{L2}
+(\tfp{}, Section~\ref{sec:frontier}). The off-the-money trade-point
+existence/uniqueness lemmas report complete at the prover but are not yet folded
+to our \tfp{} bar; we do not count them among the machine-checked results.
 
 % ===========================================================================
 \section{Options across the strike continuum}\label{sec:continuum}
@@ -301,10 +289,9 @@ count them among the machine-checked results.
 
 \subsection{The perpetual option}
 A perpetual option is a never-expiring claim on favourable price action---upward
-for a call, downward for a put---of the underlying past a strike $K$. Composed
-with a perpetual future, it caps the trader's loss beyond $K$ without forcing the
-position closed; the protection persists for the life of the perp, and the only
-decision the holder faces is \emph{when} to realise it.
+for a call, downward for a put---past a strike $K$. Composed with a perpetual
+future, it caps the trader's loss beyond $K$ without forcing the position closed;
+the only decision the holder faces is \emph{when} to realise it.
 
 \subsection{The mark: value as a fraction, no separate premium}
 The worth of a position is its \emph{mark}: the smooth-pasted American value of
@@ -314,29 +301,28 @@ unit} (one full perpetual future). Out-of-the-money the mark is the
 optimal-exercise level) it is the exercised (parity) value; it reaches $1$
 only at \emph{full} exercise---at the money it is the continuation value
 ($0.148$ at $\gamma=2$ in the worked example of Section~\ref{sec:american}).
-The ingredient is still a \emph{ray read}: moneyness is the strike ray's slope
-read against the pool's own ray---one ray, one curve---and the waiting value
-is a power of that read times a constant fixed at the smooth join. A position
-of size $q$ (its \emph{notional}) is worth $q\cdot\mathrm{mark}$, and nothing
-else---no separate premium object, no expiry, no intrinsic/extrinsic split;
-the whole continuum is priced from the one pool state $(x,y,w)$.
+The ingredient is a \emph{ray read}: moneyness is the strike ray's slope read
+against the pool's own ray, and the waiting value is a power of that read times
+a constant fixed at the smooth join. A position of notional $q$ is worth
+$q\cdot\mathrm{mark}$, and nothing else---no separate premium object, no expiry,
+no intrinsic/extrinsic split; the whole continuum is priced from the one pool
+state $(x,y,w)$.
 
 \subsection{The reference price (``carry'')}
-The pool keeps an internal reference price---a price it treats as its own
-centre---which we call the \emph{carry} and write
+The pool keeps an internal reference price, the \emph{carry}
 \begin{equation}
   P=N_{y}/N_{x},
 \end{equation}
 the ratio of the pool's notional cash holding $N_{y}$ to its notional underlying
 holding $N_{x}$. A strike is registered relative to the carry by the log-distance
-$u=\log(\text{price})-\log P$ (how far, in log-price, a price sits from the
-centre). To keep the pool's price from drifting away from the external oracle
-price, \emph{strike normalisation} \emph{rebases} the frame on each oracle
-update---whenever the reference price moves:
-rescaling coordinates by a single factor $r>0$ (so $x\to rx$, the offset
-$\alpha\to r\alpha$, the level $k\to r^{w}k$, and each strike ray
-$\theta\to\theta/r$). Trades and rebases \emph{commute}, so the pricing frame is
-well defined regardless of their order (machine-checked: \tfp{}\textsuperscript{L2}).
+$u=\log(\text{price})-\log P$. To keep the pool's price from drifting away from
+the external oracle price, \emph{strike normalisation} \emph{rebases} the frame on
+each oracle update, rescaling coordinates by a single factor $r>0$ (so $x\to rx$,
+$\alpha\to r\alpha$, $k\to r^{w}k$, and each strike ray $\theta\to\theta/r$).
+Trades and rebases \emph{commute}, so the pricing frame is well defined regardless
+of their order (machine-checked: \tfp{}\textsuperscript{L2}). The full rebase
+transform and its three load-bearing implications are specified in
+Appendix~\ref{app:spec}.
 
 \paragraph{Funding.}
 Mirroring a perpetual future, a position accrues \emph{funding} at a rate
@@ -345,11 +331,11 @@ anchor curve, measured at the position's own strike ray and read through the vol
 knob of Section~\ref{sec:lens}. The crowded side pays the contrarian side---this
 paper fixes the \emph{rate} law; the cash-transfer routing is
 implementation-level, deferred with the funding-equilibrium analysis
-(Section~\ref{sec:frontier})---and a
-rebase bounds how fast drift accumulates into that deviation. With a vol-free
-mark this funding vanishes exactly at the anchor; the knob is what gives it a
-vol-aware scale. We do not claim it neutralises any specific equilibrium drift;
-that analysis is deferred (Section~\ref{sec:frontier}).
+(Section~\ref{sec:frontier})---and a rebase bounds how fast drift accumulates into
+that deviation. With a vol-free mark this funding vanishes exactly at the anchor;
+the knob gives it a vol-aware scale. The exact shipped rate law is given in
+Appendix~\ref{app:spec}. We do not claim it neutralises any specific
+equilibrium drift; that analysis is deferred (Section~\ref{sec:frontier}).
 
 % ===========================================================================
 \section{The vol knob (the lens)}\label{sec:lens}
@@ -359,7 +345,7 @@ that analysis is deferred (Section~\ref{sec:frontier}).
 \centering
 \begin{tikzpicture}
   \begin{axis}[
-      width=8.6cm, height=4.7cm,
+      width=8.0cm, height=4.0cm,
       xlabel={log-strike (log-moneyness, mode at centre)},
       ylabel={wing-steepness shape (normalized, mode $=1$)},
       xmin=-2.6, xmax=2.6, ymin=0, ymax=1.08,
@@ -378,75 +364,69 @@ that analysis is deferred (Section~\ref{sec:frontier}).
     \node[font=\scriptsize,gray] at (axis cs:0.0,1.04) {mode};
   \end{axis}
 \end{tikzpicture}
-\caption{The vol knob $m$ steepens the option-value curve \emph{uniformly across
-strikes}. The plotted quantity is the normalized steepness \emph{shape}---not the
-mark, whose at-the-money value is the continuation value
-(Section~\ref{sec:american})---with the mode (at-the-money) peak at $1$; raising
-$m$ multiplies the steepness exponent to $m\gamma$ at \emph{every} strike, so the
-wings fall off faster while the peak stays at $1$ and $m=1$ recovers the plain
-Balancer curve. The horizontal axis is \emph{log}-strike (log-moneyness), so the
-plotted exponential decay $e^{-m\gamma|x|}$ \emph{is} the wing power law
-$\mathrm{value}\propto S^{-m\gamma}$ in spot. (Curves illustrative,
-$\gamma=1.5$; the normalisation is schematic --- the deployed interface plots the
-un-normalised option value itself.)}
+\caption{The vol knob $m$ steepens the option-value curve uniformly across
+strikes. Plotted is the normalized wing-steepness \emph{shape}---not the mark,
+whose at-the-money value is the continuation value (Section~\ref{sec:american})---%
+mode peak at $1$; raising $m$ multiplies the steepness exponent to $m\gamma$ at
+every strike; $m=1$ recovers plain Balancer. The axis is \emph{log}-strike, so the
+decay $e^{-m\gamma|x|}$ \emph{is} the wing power law
+$\mathrm{value}\propto S^{-m\gamma}$ in spot. (Illustrative, $\gamma=1.5$; the
+normalisation is schematic---the deployed interface plots the un-normalised
+option value.)}
 \label{fig:lens}
 \end{figure}
 
 The pool above prices within one fixed liquidity shape; the remaining degree of
 freedom is its steepness---how concentrated value is near the money, a volatility
-choice. We realise it as a \emph{lens}: a single
-read-time transformation---a lens because every priced quantity is read
-\emph{through} it, as through a fixed optical element---that rescales the curve's
-steepness by one number without touching the pool's reserves or trade mechanics.
+choice. We realise it as a \emph{lens}: a read-time transformation---every priced
+quantity is read \emph{through} it---that rescales the curve's steepness by one
+number without touching the pool's reserves or trade mechanics.
 
 \subsection{Definition}
 Let $\gamma>1$ be the curve's \emph{convexity exponent}---read from the pool's
-live lean, not fixed at deployment (Section~\ref{sec:exec})---the steepness parameter
-for which option value follows the power law $\mathrm{value}\propto S^{-\gamma}$
-far from the strike (in the wings), with $S$ the spot price. The larger $\gamma$,
-the steeper the curve. This power law is the \emph{design target}: the
-construction enforces it by definition of the mark, and a derivation of it from
-the pool's own trade mechanics---rather than by construction---remains open
-(Section~\ref{sec:frontier}). The lens adds one scalar $m>0$ and sets the \emph{lensed}
-steepness
+live lean, not fixed at deployment (Section~\ref{sec:exec})---the steepness
+parameter for which option value follows the power law
+$\mathrm{value}\propto S^{-\gamma}$ in the wings, with $S$ the spot price. This
+power law is the \emph{design target}: the construction enforces it by definition
+of the mark, and a derivation of it from the pool's own trade
+mechanics---rather than by construction---remains open (Section~\ref{sec:frontier}).
+The lens adds one scalar $m>0$ and sets the \emph{lensed} steepness
 \begin{equation}
   g_{\mathrm{loc}}(K)=m\,\gamma\qquad\text{for every strike }K,
   \label{eq:lens}
 \end{equation}
-in words: \emph{the steepness is multiplied by $m$, equally at every strike}.
-Setting $m=1$ gives back the plain Balancer steepness $\gamma$; larger $m$ makes
-the option-value curve steeper everywhere (Figure~\ref{fig:lens}), and sends a
-trade further out along the curve through the frozen map
+the steepness multiplied by $m$, equally at every strike. Setting $m=1$ gives back
+the plain Balancer steepness $\gamma$; larger $m$ makes the option-value curve
+steeper everywhere (Figure~\ref{fig:lens}) and sends a trade further out along the
+curve through the frozen map
 $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$,
-where $\mathrm{chosen}$ is the ray the trader selected, $\mathrm{mode}$ the
-at-the-money centre, and $\theta_{\mathrm{tx}}$ the ray the trade actually lands
-on. Steepness and outward placement move in the \emph{same} direction with $m$.
+where $\mathrm{chosen}$ is the trader's ray, $\mathrm{mode}$ the at-the-money
+centre, and $\theta_{\mathrm{tx}}$ the ray the trade lands on. Steepness and
+outward placement move in the \emph{same} direction with $m$.
 
 \subsection{What the lens is and is not}
 The lens is \emph{vol-calibrated at setup and static under trading}: curve
 geometry chosen for the asset's volatility (a more volatile asset takes a
 \emph{lower} setting; Section~\ref{sec:idea}), not a trader-measured statistic.
-It leaves the \textbf{pool flow unchanged}---the trade
-rule, the oracle-arbitrage map, and the rebase are the plain Balancer dynamics;
-$x,y,w$ move exactly as in Section~\ref{sec:warp}. It is applied as a forward read
-to everything \emph{read} (pricing, the chart, settlement, funding, portfolio
-value) and \emph{written} (trades, settle-at-strike), and is never inverted. The
-pool-unchanged and
+It leaves the \textbf{pool flow unchanged}---trade rule, oracle-arbitrage map, and
+rebase are the plain Balancer dynamics; $x,y,w$ move exactly as in
+Section~\ref{sec:warp}. It is applied as a forward read to everything \emph{read}
+(pricing, the chart, settlement, funding, portfolio value) and \emph{written}
+(trades, settle-at-strike), and is never inverted. The pool-unchanged and
 $g_{\mathrm{loc}}=m\gamma$ facts are machine-checked (\tfp{}\textsuperscript{L3}).
 
 \paragraph{The pricing ceiling: level and skew, not smile curvature.}
-The cross-strike
-surface is governed by essentially \emph{two} shape numbers---the tail steepness
-$m\gamma$ and the skew $w$---giving one power-law exponent per wing. It can match a
+The cross-strike surface is governed by two shape numbers---the tail steepness
+$m\gamma$ and the skew $w$---one power-law exponent per wing. It can match a
 surface's \emph{level} and \emph{skew} but not strike-dependent \emph{smile
-curvature}, since one exponent per wing cannot bend differently across strikes.
-This is the same object as the single-pool rigidity that buys the closed form
-(Section~\ref{sec:frontier}). Whether a single-exponent tail is adequate for a
-given real asset is an \emph{empirical} question; a backtest would speak only to
-tail adequacy and would not discharge the carried Merton or distributional
-hypotheses. For the out-of-the-money liquidation strikes the design targets---which
-are level- and skew-dominated---we expect the smile-curvature ceiling to be
-second-order, but we state this as a plausibility, not a proof.
+curvature}: one exponent per wing cannot bend differently across strikes. This is
+the single-pool rigidity that buys the closed form (Section~\ref{sec:frontier}).
+Whether a single-exponent tail is adequate for a given real asset is an
+\emph{empirical} question; a backtest would speak only to tail adequacy and would
+not discharge the carried Merton or distributional hypotheses. For the
+out-of-the-money liquidation strikes the design targets---level- and
+skew-dominated---we expect the ceiling to be second-order, but we state this as a
+plausibility, not a proof.
 
 % ===========================================================================
 \section{American exercise: the smooth-pasting boundary}\label{sec:american}
@@ -456,7 +436,7 @@ second-order, but we state this as a plausibility, not a proof.
 \centering
 \begin{tikzpicture}
   \begin{axis}[
-      width=8.8cm, height=4.6cm,
+      width=8.0cm, height=4.0cm,
       xlabel={spot price $S$},
       ylabel={position mark},
       xmin=40, xmax=130, ymin=0, ymax=1.1,
@@ -479,21 +459,20 @@ second-order, but we state this as a plausibility, not a proof.
     \draw[->,gray] (axis cs:78,0.56) to[bend right=20] (axis cs:68,0.36);
   \end{axis}
 \end{tikzpicture}
-\caption{The American rule. While out-of-the-money the mark follows the
-\emph{continuation} curve (value of waiting). At the free boundary
+\caption{The American rule: out-of-the-money the mark follows the
+\emph{continuation} curve; at the free boundary
 $S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$ it joins the \emph{intrinsic}
-(exercised) payoff with matching value \emph{and} slope---a smooth $C^{1}$ ``seam.''
-Drawn for the plain-Balancer case $m=1$ (so $g_{\mathrm{loc}}=\gamma=2$), a put leg
-with $K=\$100$ and $S^{\ast}=\$66.67$, mark $=\tfrac13$ at the boundary; for $m\neq1$
-the seam moves to $g_{\mathrm{loc}}=m\gamma$. The weld shown is
-machine-checked\textsuperscript{L5,L6} (\tfp{}; Appendix~\ref{app:lean}).}
+payoff with matching value \emph{and} slope (a $C^{1}$ ``seam''). Drawn for $m=1$
+($g_{\mathrm{loc}}=\gamma=2$), put leg, $K=\$100$, $S^{\ast}=\$66.67$, boundary
+mark $\tfrac13$; for $m\neq1$ the seam moves to $g_{\mathrm{loc}}=m\gamma$. The
+weld is machine-checked\textsuperscript{L5,L6} (\tfp{}; Appendix~\ref{app:lean}).}
 \label{fig:seam}
 \end{figure}
 
 This is the paper's core construction: the prior treatment's \emph{barrier}---a
 value capped at $1$ at the strike---is lifted into an American-style
-\emph{early-exercise free boundary}, a price level solved for rather than fixed in
-advance, marking where the holder optimally exercises.
+\emph{early-exercise free boundary}, a price level solved for rather than fixed
+in advance.
 
 \subsection{The construction}
 While the holder waits, the position is worth its \emph{continuation value}
@@ -501,7 +480,7 @@ $c\cdot s_{N}$, where $s_{N}$ is the \emph{normalised strike coordinate} (the
 strike in the curve's own scaled units, with value $\propto s_{N}\propto
 S^{-\gamma}$) and $c$ fixes the overall level. Continuation \emph{pastes} onto the
 exercised (intrinsic) payoff at the boundary under \emph{smooth-pasting}: the two
-pieces must agree in both value and slope---two equations in the two unknowns
+pieces agree in value and slope---two equations in the two unknowns
 $s_{N}^{\ast}$ and $c$. The solution is closed form:
 \begin{equation}
   S^{\ast}=K\,\frac{g_{\mathrm{loc}}}{g_{\mathrm{loc}}+1}
@@ -510,82 +489,57 @@ $s_{N}^{\ast}$ and $c$. The solution is closed form:
   \text{value fraction at the boundary}=\frac{1}{g_{\mathrm{loc}}+1},
   \label{eq:boundary}
 \end{equation}
-where $g_{\mathrm{loc}}=m\gamma$ is the lensed (through-the-knob) steepness. The
-boundary therefore \emph{moves with the lens}; it reduces to the base form
-$S^{\ast}=K\gamma/(\gamma+1)$ only in the plain-Balancer special case $m=1$.
-The mark reaches its cap of $1$ only at \emph{full} exercise, not at the boundary
-(Figure~\ref{fig:seam}). Here $S^{\ast}$ is the \emph{optimal-exercise} (pricing)
-boundary, not a forced trigger: exercise is the holder's right at any time (on the
-engine, settlement is a trader-invoked close, never an auto-exercise), and
-$S^{\ast}$ is merely where a rational holder would exercise and what the valuation
-assumes---the point where the ratio intrinsic/continuation hits $1$, past the
-strike, not at the money. The continuation runs \emph{through} the old strike ray, so the strike
-becomes an ordinary interior point; on the bounded (spread) wing the intrinsic
-$1-S/K$ caps at $1$, while a single uncapped option wing keeps growing past $1$,
-as it should.
+where $g_{\mathrm{loc}}=m\gamma$ is the lensed steepness. The boundary therefore
+\emph{moves with the lens}, reducing to the base form
+$S^{\ast}=K\gamma/(\gamma+1)$ only at $m=1$. The mark reaches its cap of $1$ only
+at \emph{full} exercise, not at the boundary (Figure~\ref{fig:seam}). $S^{\ast}$
+is the \emph{optimal-exercise} (pricing) boundary, not a forced trigger: exercise
+is the holder's right at any time (on the engine, settlement is a trader-invoked
+close, never an auto-exercise); $S^{\ast}$ is where a rational holder would
+exercise and what the valuation assumes---where the ratio intrinsic/continuation
+hits $1$, past the strike, not at the money. The continuation runs \emph{through}
+the old strike ray, so the strike becomes an ordinary interior point; on the
+bounded (spread) wing the intrinsic $1-S/K$ caps at $1$, while a single uncapped
+option wing keeps growing past $1$, as it should.
 
 \subsection{A worked example (illustrative numbers)}
-We evaluate the formulas at \emph{illustrative} values, chosen for arithmetic
-clarity, not calibrated to any market and not a validation of anything. Take a put leg with $\gamma=2$, $K=\$100$, $m=1$ (plain Balancer, so
-$g_{\mathrm{loc}}=m\gamma=2$). The boundary~\eqref{eq:boundary} sits at
-$S^{\ast}=100\cdot\tfrac23=\$66.67$, below the strike, with mark
-$1/(g_{\mathrm{loc}}+1)=1/3$ there. Steepening to $m=3$ ($g_{\mathrm{loc}}=6$)
-\emph{moves} the boundary, because $C^{1}$ smooth-pasting forces the boundary and
-the continuation arm to share the \emph{same} exponent $g_{\mathrm{loc}}$ (a
-mismatched pair would kink the seam for $m\neq1$). The boundary rises to
-$S^{\ast}=100\cdot\tfrac{6}{7}=\$85.71$ with boundary mark
-$1/(g_{\mathrm{loc}}+1)=1/7\approx0.143$, and below $S^{\ast}$ the leg is simply
-intrinsic, $1-S/K$. The off-boundary continuation mark also decays faster, via the
-wing power law $\mathrm{value}\propto S^{-g_{\mathrm{loc}}}$. Each column below is
-evaluated at \emph{its own} boundary:
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-spot $S$ & mark, $m=1$ ($g_{\mathrm{loc}}=2$) & mark, $m=3$ ($g_{\mathrm{loc}}=6$) \\
-\midrule
-at $S^{\ast}$ & $0.333$ (at $\$66.67$) & $0.143$ (at $\$85.71$) \\
-$\$80$  & $0.231$ & $0.200$ \\
-$\$90$  & $0.183$ & $0.107$ \\
-$\$100=K$ & $0.148$ & $0.057$ \\
-$\$120$ & $0.103$ & $0.019$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-Below $S^{\ast}$ the mark is
-intrinsic ($1-S/K$): at $m=3$, $\$80<\$85.71$, so its mark is $1-80/100=0.200$. The
-table simply traces~\eqref{eq:boundary} and the wing power law; it makes no
-empirical or market-calibration claim.
+A fully worked put-leg example ($\gamma=2$, $K=\$100$, both $m=1$ and $m=3$
+columns, each evaluated at \emph{its own} boundary) is tabulated in
+Appendix~\ref{app:spec}. At a glance: the boundary~\eqref{eq:boundary} sits at
+$S^{\ast}=\$66.67$ for $m=1$ (boundary mark $1/3$) and rises to $\$85.71$ for
+$m=3$ (mark $1/7$); the at-the-money marks are $0.148$ and $0.057$; below
+$S^{\ast}$ the mark is simply intrinsic, $1-S/K$. The numbers are
+\emph{illustrative}---chosen for arithmetic clarity, not calibrated to any
+market and not a validation of anything.
 
 \subsection{Why this is the American boundary, and the Merton tie}
-The smooth-paste solution is not an arbitrary $C^{1}$ join. It is the \emph{unique}
-solution of the value-and-slope system at any steepness $g$---hence at the lensed
-$g_{\mathrm{loc}}=m\gamma$ (machine-checked for generic $g$;
-\tfp{}\textsuperscript{L4}). The pasted object of Figure~\ref{fig:seam}
-itself---the power continuation welded onto the \emph{linear} exercised payoff in
-the dollar frame---is machine-checked as well (\tfp{}\textsuperscript{L5,L6}):
-value and slope match at $S^{\ast}$ for every steepness $g>0$; the welded value
-function is differentiable \emph{at} the seam, not merely arm-by-arm; the
-two-equation value-and-slope system \emph{forces} $S^{\ast}=K\,g/(g+1)$ and the
-continuation level uniquely; and the quoted value is never below the exercised
-payoff, strictly above it beyond the boundary (put-wing pricing object as
-depicted; the call-wing value-and-slope match is also checked). The boundary moreover \emph{maximises} the holder's value over
-\emph{deterministic} exercise boundaries (a genuine variational result;
+The smooth-paste solution is not an arbitrary $C^{1}$ join: it is the
+\emph{unique} solution of the value-and-slope system at any steepness $g$---hence
+at $g_{\mathrm{loc}}=m\gamma$ (machine-checked for generic $g$;
+\tfp{}\textsuperscript{L4}). The pasted object of Figure~\ref{fig:seam}---the
+power continuation welded onto the \emph{linear} exercised payoff in the dollar
+frame---is machine-checked as well (\tfp{}\textsuperscript{L5,L6}): value and
+slope match at $S^{\ast}$ for every $g>0$; the welded value function is
+differentiable \emph{at} the seam, not merely arm-by-arm; the value-and-slope
+system \emph{forces} $S^{\ast}=K\,g/(g+1)$ and the continuation level uniquely;
+and the quoted value is never below the exercised payoff, strictly above it beyond
+the boundary (put-wing pricing object as depicted; the call-wing value-and-slope
+match is also checked). The boundary moreover \emph{maximises} the holder's value
+over \emph{deterministic} exercise boundaries (a genuine variational result;
 \tfp{}\textsuperscript{L7}). The identification with the \emph{stochastic}
-optimal-stopping (Snell) boundary is \emph{named but not formalised}---a placeholder
-obligation, not a discharged premise.
+optimal-stopping (Snell) boundary is \emph{named but not formalised}---a
+placeholder obligation, not a discharged premise.
 
-The boundary also sits on a tie to the classical perpetual-American (Merton)
-problem. Here $r$ is the risk-free interest rate and $\sigma$ the underlying's
-return volatility (this $r$ is distinct from the rebase factor). The exponent
-$\gamma$ is the \emph{characteristic root} of the underlying's log-price process.
-Concretely, the roots in play are those of the \emph{zero-net-carry} pricing ODE
-$\tfrac{\sigma^{2}}{2}S^{2}V''(S)-rV(S)=0$, where $V(S)$ is the option value as a
-function of spot---the absent first-order ($SV'$) term \emph{is} the symmetric
-pairing, distinguishing it from the standard no-dividend
-Black--Scholes--Merton ODE; substituting a power law $V=S^{\rho}$ gives
-$\rho(\rho-1)=2r/\sigma^{2}$, from which~\eqref{eq:merton} can be re-derived.
-Under the \emph{symmetric pairing} we use---a put root $-\gamma$ and a call root
-$\gamma+1$, equivalently zero net carry between the legs, so the two roots sum to
+The boundary also ties to the classical perpetual-American (Merton) problem. Here
+$r$ is the risk-free rate and $\sigma$ the underlying's return volatility ($r$
+distinct from the rebase factor); $\gamma$ is the \emph{characteristic root} of
+the underlying's log-price process. The roots in play are those of the
+\emph{zero-net-carry} pricing ODE $\tfrac{\sigma^{2}}{2}S^{2}V''(S)-rV(S)=0$---the
+absent first-order ($SV'$) term \emph{is} the symmetric pairing, distinguishing it
+from the standard no-dividend Black--Scholes--Merton ODE; substituting $V=S^{\rho}$
+gives $\rho(\rho-1)=2r/\sigma^{2}$, from which~\eqref{eq:merton} can be
+re-derived. Under the \emph{symmetric pairing}---put root $-\gamma$, call root
+$\gamma+1$, equivalently zero net carry between the legs, so the roots sum to
 $1$---the product-of-roots (Vieta) relation reads
 \begin{equation}
   \gamma(\gamma+1)=2r/\sigma^{2},
@@ -594,9 +548,8 @@ $1$---the product-of-roots (Vieta) relation reads
 \end{equation}
 the convention encoded by our machine-checked Vieta sum/product
 relations\textsuperscript{L8}.
-(The classical no-dividend Black--Scholes--Merton slice instead keeps the single
-decaying root and gives the \emph{linear} relation $\gamma=2r/\sigma^{2}$; we do
-not use that slice here.) On the symmetric pairing $S^{\ast}$ is the Merton
+(The classical no-dividend Black--Scholes--Merton slice keeps the single decaying
+root, giving the \emph{linear} $\gamma=2r/\sigma^{2}$; we do not use that slice.) On the symmetric pairing $S^{\ast}$ is the Merton
 boundary, with the Gaussian-slice limit machine-checked
 (\tfp{}\textsuperscript{L8}) and the generalized-hyperbolic / Bessel-K distributional layer carried as
 named hypotheses---exact on the log-normal (Gaussian) slice, conditional beyond it.
@@ -605,28 +558,23 @@ unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
 $g_{\mathrm{loc}}=m\gamma$ by the same generic-$g$ uniqueness above.
 
 \paragraph{How literally to read the Merton relation.}
-Taken literally as a calibration formula, \eqref{eq:merton} lives in the regime
-$r>\sigma^{2}$, which fails at crypto-scale volatility: at $\sigma\approx80\%$
-it would demand a risk-free rate above $64\%$. We therefore use the relation as
-a \emph{theory anchor}: it fixes the \emph{direction} of calibration---higher
-volatility, lower $\gamma$, a shallower curve with fatter wings
-(Section~\ref{sec:idea})---and it is exact on the Gaussian slice, but $\gamma$
-and the knob $m$ are \emph{design parameters} chosen at deployment, not
-quantities implied from market $r$ and $\sigma$ through the formula.
+As a literal calibration formula, \eqref{eq:merton} requires $r>\sigma^{2}$,
+which fails at crypto-scale volatility; we use it as a \emph{theory anchor}
+fixing the calibration \emph{direction} (higher volatility, lower $\gamma$,
+fatter wings), with $\gamma$ and $m$ \emph{design parameters} chosen at
+deployment---full discussion in Appendix~\ref{app:spec}.
 
 \subsection{The seam, checked two ways}
-At the boundary the value-match and slope-match hold for every steepness $g>0$,
-hence at $g=m\gamma$---machine-checked both in the curve's own
-coordinate\textsuperscript{L4} and, for the welded linear seam of
-Figure~\ref{fig:seam}, in the dollar frame\textsuperscript{L5} (\tfp{})---and
-the out-of-the-money$\to$in-the-money crossover lands at the dollar strike $K$ for
-all $\gamma$ (\tfp{}\textsuperscript{L4}). On the live engine, the shipped
-implementation reproduces the worked-example table above cell-for-cell to four
-decimal places, read off the rendered interface---both the $m=1$ and $m=3$
-columns, on both the continuation and exercised arms, and at the two boundary
-points ($\$66.67$ and $\$85.71$)---and the value-never-below-exercised-payoff
-property is enforced as a hard engine gate. These are engine measurements, not
-Lean theorems.
+At the boundary the value- and slope-match hold for every $g>0$, hence at
+$g=m\gamma$---machine-checked both in the curve's own coordinate\textsuperscript{L4}
+and, for the welded linear seam of Figure~\ref{fig:seam}, in the dollar
+frame\textsuperscript{L5} (\tfp{})---and the out-of-the-money$\to$in-the-money
+crossover lands at the dollar strike $K$ for all $\gamma$
+(\tfp{}\textsuperscript{L4}). On the live engine, the shipped implementation
+reproduces the worked-example table cell-for-cell to four decimal places, read off
+the rendered interface---both $m$ columns, both arms, and the two boundary points
+($\$66.67$ and $\$85.71$)---and the value-never-below-exercised-payoff property is
+enforced as a hard engine gate. These are engine measurements, not Lean theorems.
 
 % ===========================================================================
 \section{Properties: no internal arbitrage, settlement, replication}
@@ -638,7 +586,7 @@ The sharp statement concerns a \emph{costless collar}: a band whose sold and
 bought legs are cash-neutral by construction. We do \emph{not} claim that no
 composition of swaps yields a riskless edge---no formal result covers swap
 compositions, and that claim is withdrawn until one does. What we establish is a
-clean symmetry.
+symmetry.
 
 \begin{proposition}[Collar surplus vanishes exactly at symmetry]\label{prop:collar}
 The costless-collar capital-efficiency surplus is zero \emph{if and only if} the
@@ -646,47 +594,35 @@ pool is symmetric, $w=\tfrac12$. Under skew ($w\neq\tfrac12$) the surplus is
 non-zero, with an explicit counterexample.
 \end{proposition}
 
-The biconditional is the substance. The formalised
-surplus is a \emph{posited} form proportional to anchor asymmetry,
-so the result is a symmetry statement about that posited surplus, not a
-mechanism-level no-arbitrage theorem over swap compositions; we carry it as a named
-definition with the skew sign exhibited (\tfp{}\textsuperscript{L9}). A
-companion result casts the symmetry as a reflection---the put at
-coordinate $s$ is the call reflected through the at-the-money ray
-($s\mapsto\theta^{2}/s$)---so no-arbitrage \emph{is} the curve's symmetry
-(\tfp{}\textsuperscript{L9}). We are precise: the reflection arrow is a
-proved identity, but the link from the spec mark to the live engine's instrument is
-a residual modeling premise, so this is best read as a \emph{conditional skeleton},
-not an unconditional no-arbitrage theorem over the production engine.
-
-A costless collar is not free of \emph{pool motion}---its two legs move $w$---but
-the trader pays for that displacement at fair, sequenced prices (a swap's proceeds
-are the path integral of the marginal price), so there is no free cash. Zero skew
-removes the \emph{free} edge, not the \emph{worth} of the protection.
+The biconditional is the substance---but the formalised surplus is a
+\emph{posited} form, so this is a symmetry statement about that posited surplus,
+best read as a \emph{conditional skeleton}, not an unconditional no-arbitrage
+theorem over the production engine (\tfp{}\textsuperscript{L9}; the full scope
+notes, the reflection reading of the symmetry, and the pool-motion caveat are in
+Appendix~\ref{app:spec}).
 
 \subsection{Settlement}\label{sec:settlement}
-A position is opened as a \emph{band}---a composition of legs---against a perpetual
-future the trader already holds, the \emph{origin perp}. At open the band is minted
-against a carved slice of that perp, whose notional, equity, and entry mark are
-frozen for the band's life, so settlement attribution cannot be contaminated by
-unrelated perp activity. Settlement is therefore \emph{perp-denominated}: a
-mark is a fraction of one escrow unit, so a leg of notional $q$ is worth
-$q\cdot\mathrm{mark}$ \emph{perp units}, and dollars enter only at the end:
-at close, the leg values are netted in perp units and the net converts to
-cash at the carved slice's \emph{closing} equity---its dollar worth at the
-reference price then---scaled by the payout law below. A band has two legs on opposite wings; since spot cannot be in-the-money on
-both at once, at most one leg is in-the-money at any time, giving a clean two-case
-settlement. The composite-ray closed form holds across the
+A position is opened as a \emph{band}---a composition of legs---against a
+perpetual future the trader already holds, the \emph{origin perp}. At open the
+band is minted against a carved slice of that perp, whose notional, equity, and
+entry mark are frozen for the band's life, so settlement attribution cannot be
+contaminated by unrelated perp activity. Settlement is therefore
+\emph{perp-denominated}: a mark is a fraction of one escrow unit, so a leg of
+notional $q$ is worth $q\cdot\mathrm{mark}$ \emph{perp units}, and dollars enter
+only at the end: at close, the leg values are netted in perp units and the net
+converts to cash at the carved slice's \emph{closing} equity---its dollar worth at
+the reference price then---scaled by the payout law below. A band has two legs on
+opposite wings; spot cannot be in-the-money on both at once, giving a clean
+two-case settlement. The composite-ray closed form holds across the
 out-of-the-money$\to$in-the-money boundary under the effective-strike substitution
-(machine-checked: \tfp{}\textsuperscript{L10}). Settlement's auxiliary inputs
-are pinned: cash conversion reads the external reference feed (the same feed
-that drives rebases), and the financing strike is the dollar $K_{\mathrm{tx}}$
-frozen at open. Settlement \emph{values} are pool-mark reads---that is the
-construction's point---and the in-/out-of-the-money regime test likewise reads
-the pool's marked price; a leg crossing that boundary settles at a value
-continuous across it (the closed form above), so there is no cliff-edge
-intrinsic grab at the boundary itself. Trust in the reference feed is an
-explicit assumption.
+(machine-checked: \tfp{}\textsuperscript{L10}). Settlement's auxiliary inputs are
+pinned: cash conversion reads the external reference feed (the same feed that
+drives rebases), and the financing strike is the dollar $K_{\mathrm{tx}}$ frozen
+at open. Settlement \emph{values} are pool-mark reads---that is the construction's
+point---and the in-/out-of-the-money regime test likewise reads the pool's marked
+price; a leg crossing that boundary settles at a value continuous across it (the
+closed form above), so there is no cliff-edge intrinsic grab at the boundary.
+Trust in the reference feed is an explicit assumption.
 
 \subsection{Execution mechanics}\label{sec:exec}
 Five design laws pin execution down; they are specification-level statements of
@@ -694,12 +630,11 @@ the shipped design, not machine-checked results.
 \begin{enumerate}[leftmargin=2em,itemsep=1pt]
   \item \textbf{Quantity bridge.} A band's bought-leg size is set by the pricing
     formula, not by pool proceeds:
-    $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$, with
-    $V_{\mathrm{sell}}$ the sold leg's value and $v_{\mathrm{buy}}$ the bought
-    leg's per-unit value, both read from the sequenced pool state (the bought
-    leg is priced on the pool as the sold leg left it)---so
-    $V_{\mathrm{buy}}=V_{\mathrm{sell}}$ exactly and slippage enters only
-    through the sequenced prices. The pool is never a premium counterparty.
+    $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$, both values read from
+    the sequenced pool state (the bought leg is priced on the pool as the sold
+    leg left it)---so $V_{\mathrm{buy}}=V_{\mathrm{sell}}$ exactly and slippage
+    enters only through the sequenced prices. The pool is never a premium
+    counterparty.
   \item \textbf{Pool-swap law.} Each leg's pool movement is premium-free:
     $\Delta y=\pm N\,K_{\mathrm{tx}}$ (notional times the transaction strike).
     Option premium never enters the pool, and a band's two legs move the pool
@@ -715,85 +650,84 @@ the shipped design, not machine-checked results.
   \item \textbf{Payout law.} A closing position pays
     $L_{0}\times(\text{net result})\times(\text{its carved equity})$; the
     counterparty is the position's own \emph{club}---the pooled equity of the
-    side the position was carved from, at leverage $L_{0}$ frozen at open---and
-    a drained club pays nothing: positive payouts stop once club equity
-    reaches zero.
+    side it was carved from, at leverage $L_{0}$ frozen at open---and a drained
+    club pays nothing: positive payouts stop once club equity reaches zero.
   \item \textbf{Live steepness.} $\gamma=w/(1-w)$ is read from the \emph{live}
     pool at every use---it moves as trades re-lean the curve; only the knob $m$
     is static.
 \end{enumerate}
+Three smaller mechanics complete the picture: liquidity provision resizes the
+pool \emph{isotropically}---price and lean untouched, not a trade; a cash leg
+exceeding the pool's usable depth is rejected outright with the numbers, never
+silently capped; and the open fee ($0.01\%$ of notional) is paid from club
+equity, never into the pool.
 
 \subsection{Replication scope: $|\Gamma|\le1$ exact, $|\Gamma|>1$ approximate}
 Let $\Gamma$ be the \emph{hedge ratio}---a position's price-sensitivity to spot.
 The construction replicates the target American payoff \emph{exactly} for
-$|\Gamma|\le1$, a bound that is \emph{per wing}: each wing manufactures a delta of
-magnitude at most one. The shipped instrument is a vanilla \emph{opposite-wing
-band}---two legs on opposite wings, at most one in-the-money at a time---so the
-active wing is always a single $|\Gamma|\le1$ leg, and replication is exact for the
-shipped product. The $|\Gamma|>1$ regime arises only outside that design
+$|\Gamma|\le1$, a bound that is \emph{per wing}. The shipped instrument is a
+vanilla \emph{opposite-wing band}---at most one leg in-the-money at a time---so
+the active wing is always a single $|\Gamma|\le1$ leg and replication is exact for
+the shipped product. The $|\Gamma|>1$ regime arises only outside that design
 (same-wing stacking or single-leg leverage), where ``true American'' exercise and
-``exact replication per wing'' cannot both hold; we scope it out of the product but
-keep it \emph{disclosed} as a labelled approximation (Section~\ref{sec:frontier}).
+``exact replication per wing'' cannot both hold; we scope it out of the product
+but keep it \emph{disclosed} as a labelled approximation
+(Section~\ref{sec:frontier}).
 
 % ===========================================================================
 \section{Formal verification and the open frontier}\label{sec:frontier}
 % ===========================================================================
 
 \subsection{Provenance: \tfp{}, never ``verified''}
-Every machine-checked result cited in this paper is indexed by the superscripts
-L1--L13, one row each in the annex table of Appendix~\ref{app:lean}. Each was
-compiled by an external Lean theorem prover, server-side
-(Lean~4.28.0 / Mathlib~v4.28.0), and passed a zero-cost artifact audit
-(forbidden-token scan, \texttt{\#print axioms} restricted to
-$\{\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}\}$, an
+Every machine-checked result cited here is indexed by the superscripts L1--L13,
+one row each in Appendix~\ref{app:lean}. Each was compiled by an external Lean
+theorem prover, server-side (Lean~4.28.0 / Mathlib~v4.28.0), and passed a
+zero-cost artifact audit (forbidden-token scan, \texttt{\#print axioms} restricted
+to $\{\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}\}$, an
 unscoped-module diff, and a hand re-derivation), but was \emph{not} re-run against
-a local canonical kernel here. We therefore label these results \tfp{} and never
+a local canonical kernel. We therefore label these results \tfp{} and never
 ``verified''---that label is reserved for a local canonical build,
 environment-blocked in the present work. We distinguish \emph{grounded} results
 (no load-bearing carried hypothesis) from \emph{carried} results (conditional on
-named, undischarged structure-field hypotheses---never on \texttt{axiom}s). The
-full formal statements, proof source, and provenance map are in the anonymized
-artifact repository (available on request), so a reader can inspect exactly what
-is claimed even though the prover server is not itself public.
+named, undischarged structure-field hypotheses---never on \texttt{axiom}s). Full
+formal statements, proof source, and the provenance map are in the anonymized
+artifact repository (available on request).
 
 \subsection{Solvency is conditional---the headline open item}
-The construction's solvency guarantee is \emph{conditional}. A separate prover line
-formalises the curve\,$\to$\,value\,$\to$\,storage interface as a typed stack and
-proves, machine-checked\textsuperscript{L11}: pool value is concave in price for
-any valid curve and this propagates into stored equity by types; and the headline
-\texttt{reserves\_have\_no\_floor}\textsuperscript{L12}---with a convex
-obligation, reserve value is
-unbounded below, so \emph{the solvency floor cannot come from reserves}
-(``convexity must be funded'' as a theorem). It then proves: \emph{given} a port
-that covers the concave deficit, the pool is passive and solvent for all time with
-no free lunch.
+The construction's solvency guarantee is \emph{conditional}. A separate prover
+line formalises the curve\,$\to$\,value\,$\to$\,storage interface as a typed stack
+and proves, machine-checked\textsuperscript{L11}: pool value is concave in price
+for any valid curve and this propagates into stored equity by types; and the
+headline \texttt{reserves\_have\_no\_floor}\textsuperscript{L12}---with a convex
+obligation, reserve value is unbounded below, so \emph{the solvency floor cannot
+come from reserves} (``convexity must be funded'' as a theorem). It then proves:
+\emph{given} a port that covers the concave deficit, the pool is passive and
+solvent for all time with no free lunch.
 
 That ``given'' is the whole point. The hypotheses---B1 (a funding port covers the
 floor), B3 (arbitrage is one-way), and B4 (the settlement ledger closes)---are
 carried as \emph{structure fields}, not discharged facts. The stack proves
-``\emph{if} the ledger closes, arbitrage is one-way, and the port covers the floor,
-\emph{then} passivity and solvency''; it does \emph{not} prove the port pays in the
-real world. Geometry is shown \emph{necessary} (the no-floor
+``\emph{if} the ledger closes, arbitrage is one-way, and the port covers the
+floor, \emph{then} passivity and solvency''; it does \emph{not} prove the port
+pays in the real world. Geometry is shown \emph{necessary} (the no-floor
 theorem\textsuperscript{L12}) but never \emph{sufficient}. These are
-\emph{assumptions, not claims}, and the reader should not mistake conditional
-solvency for an unconditional result. The proven instances are the equal-weight
+\emph{assumptions, not claims}; the reader should not mistake conditional solvency
+for an unconditional result. The proven instances are the equal-weight
 constant-product pool and an exponential pool\textsuperscript{L11}; the lensed
-American construction of
-Sections~\ref{sec:lens}--\ref{sec:american} is not yet an instance of the stack,
-and the typed contracts are
-\emph{not} yet wired to the production engine's numeric formulas---that
-instantiation is the next body of work.
+American construction of Sections~\ref{sec:lens}--\ref{sec:american} is not yet an
+instance of the stack, and the typed contracts are \emph{not} yet wired to the
+production engine's numeric formulas---that instantiation is the next body of
+work.
 
 \subsection{The whole exchange as a single object (research direction)}
-We have a partial result toward unifying the entire exchange---storage, flow,
-funding port, settlement, dollar pipe---as one passive object whose solvency reads
-as passivity-under-admissible-inputs. The \emph{internal} half is machine-checked
-(\tfp{}\textsuperscript{L13}): the system is passive because the geometry is
-positive-semidefinite. The
-\emph{external}/solvency half stays \emph{open}, keeping the coverage premise
-undischarged and honoring the no-floor theorem\textsuperscript{L12}. We therefore present
-the unified single object as a \emph{conjecture / research direction}, not a
-finished proven artifact.
+A partial result unifies the entire exchange---storage, flow, funding port,
+settlement, dollar pipe---as one passive object whose solvency reads as
+passivity-under-admissible-inputs. The \emph{internal} half is machine-checked
+(\tfp{}\textsuperscript{L13}): the system is passive because its geometry is
+positive-semidefinite. The \emph{external}/solvency half stays \emph{open},
+keeping the coverage premise undischarged and honoring the no-floor
+theorem\textsuperscript{L12}; we present the single object as a conjecture /
+research direction, not a finished proven artifact.
 
 % ===========================================================================
 \section{Related work, limitations, conclusion}\label{sec:related}
@@ -802,72 +736,66 @@ finished proven artifact.
 \paragraph{Related work.}
 The weighted constant-product invariant is from Balancer~\cite{balancer}, whose
 Liquidity Bootstrapping Pools already use time-varying weights; our per-trade
-update is a finer-grained, trade-driven analogue, not a new curve family. CFMM
-pricing-oracle theory is from Angeris et al.~\cite{angeris-cfmm,angeris-uniswap},
-with Uniswap v2/v3 as references~\cite{uniswapv2,uniswapv3}. That each trade is,
-under shifted virtual reserves, an ordinary constant product is the
-translated-curve view of Evans~\cite{evans2020}; the replication theory of
+update is a finer-grained, trade-driven analogue. CFMM pricing-oracle theory is
+from Angeris et al.~\cite{angeris-cfmm,angeris-uniswap}, alongside Uniswap
+v2/v3~\cite{uniswapv2,uniswapv3}. The translated-curve view of each trade is
+Evans~\cite{evans2020}; the replication theory of
 Angeris--Evans--Chitra~\cite{angeris-replicating}, instantiated in
-RMM-01~\cite{rmm01}, chooses a trading function to replicate a target
-payoff---so we do not claim the curve family as a contribution. InfinityPools~%
+RMM-01~\cite{rmm01}, chooses a trading function to replicate a target payoff---so
+we do not claim the curve family as a contribution. InfinityPools~%
 \cite{infinitypools} builds options-like exposure on concentrated liquidity, and
 Panoptic~\cite{panoptic} is the closest oracle-free perpetual-options protocol; we
 differ in pricing the whole continuum from one pool state and in the American free
 boundary. QuantAMM's weight-dynamic AMM work~\cite{quantamm} is \emph{prior} (not
-concurrent); we use the neutral ``per-trade weight-dynamic AMM'' descriptor. The Lean-AMM line is
-anchored by Pusceddu--Bartoletti~\cite{pusceddu-bartoletti}; our ledger extends it
-to the smooth-pasting boundary, the lens, and the conditional-solvency stack, on
-Lean~4~\cite{lean4} and Mathlib~\cite{mathlib}. The nearest analytic neighbour is
-loss-versus-rebalancing (LVR) of Milionis et al.~\cite{lvr}: an LP position read as
-a continuum of short perpetual options is the \emph{dual} of our sell-side
-construction, and the LVR framing covers our small trader-borne \emph{round-trip
-residual} (open-then-reverse at the same ray; a path-dependence of the Curve~v2
-class; quantitative treatment deferred).
+concurrent); we use the neutral ``per-trade weight-dynamic AMM'' descriptor. The
+Lean-AMM line is anchored by Pusceddu--Bartoletti~\cite{pusceddu-bartoletti}; our
+ledger extends it to the smooth-pasting boundary, the lens, and the
+conditional-solvency stack, on Lean~4~\cite{lean4} and Mathlib~\cite{mathlib}. The
+nearest analytic neighbour is loss-versus-rebalancing (LVR) of Milionis et
+al.~\cite{lvr}: an LP position read as a continuum of short perpetual options is
+the \emph{dual} of our sell-side construction, and the LVR framing covers our
+small trader-borne \emph{round-trip residual} (open-then-reverse at the same ray;
+quantitative treatment deferred).
 
 \paragraph{Limitations.}
-Beyond the headline conditional solvency, we carry as honest open surfaces:
-exact replication is per-wing $|\Gamma|\le1$ ($|\Gamma|>1$ a labelled
-approximation); single-pool rigidity fixes the liquidity shape (level and skew,
-not smile curvature); the Merton tie is exact only on the Gaussian slice, with the
-generalized-hyperbolic / Bessel-K layer carried, not discharged; the
-trusted-from-prover interface is not yet wired to the production engine (the
-bridge is an oracle, not a verified extraction); the carved-perp settlement
-ledger, the funding equilibrium-drift quantification and cash-transfer routing
+Beyond the headline conditional solvency, the open surfaces are: exact replication
+is per-wing $|\Gamma|\le1$ ($|\Gamma|>1$ a labelled approximation); single-pool
+rigidity fixes the liquidity shape (level and skew, not smile curvature); the
+Merton tie is exact only on the Gaussian slice, with the generalized-hyperbolic /
+Bessel-K layer carried, not discharged; the trusted-from-prover interface is not
+yet wired to the production engine (the bridge is an oracle, not a verified
+extraction); the carved-perp settlement ledger, the funding equilibrium-drift
+quantification and cash-transfer routing
 (Sections~\ref{sec:continuum},~\ref{sec:frontier}), and the round-trip residual
-are open---the reversed legs round-trip the pool exactly
-(Section~\ref{sec:exec}); the residual arises when an in-the-money leg settles
-to cash, so its opening swap remains in the pool. Relatedly, all strikes read
-one shared curve, so each trade's re-lean moves every other strike's mark: the
-core mechanic of Section~\ref{sec:warp} read as an externality, unquantified
-here. Finally, the prior-art citation identifiers added in revision will be
-hand-checked against primary sources before submission. None is dropped; each is
-stated, not buried.
+are open---the reversed legs round-trip the pool exactly (Section~\ref{sec:exec});
+the residual arises when an in-the-money leg settles to cash, so its opening swap
+remains in the pool. Relatedly, all strikes read one shared curve, so each trade's
+re-lean moves every other strike's mark: the core mechanic of
+Section~\ref{sec:warp} read as an externality, unquantified here. The prior-art
+citation identifiers added in revision will be hand-checked against primary
+sources before submission.
 
 \paragraph{Incentive properties (informal).}
-The construction carries its first-order incentives by design, each a stated
-law rather than a theorem: funding is congestion pricing---the crowded side
-pays the contrarian side in proportion to how far trades have leaned the curve
-from the anchor, so the price of imbalance rises with the imbalance itself
-(Section~\ref{sec:continuum}); the frozen transaction strike returns the
+The construction carries its first-order incentives by design, each a stated law
+rather than a theorem: funding is congestion pricing---the crowded side pays the
+contrarian side in proportion to how far trades have leaned the curve from the
+anchor (Section~\ref{sec:continuum}); the frozen transaction strike returns the
 pool's reserves exactly on every leg reversed at close (an in-the-money leg
-settles to cash instead), so no repricing profit is extractable from the
-pool's reserves (Section~\ref{sec:exec}); the pool never holds premium, so
-liquidity providers are exposed to the curve's lean, never to option payouts;
-and payouts are borne by the side's own club with a hard stop at zero equity,
-so counterparty risk is internalized per side, not socialized. None of this
-replaces an equilibrium analysis; it states the mechanism's built-in pressure
-toward balance.
+settles to cash instead), so no repricing profit is extractable from the pool's
+reserves (Section~\ref{sec:exec}); the pool never holds premium, so liquidity
+providers are exposed to the curve's lean, never to option payouts; and payouts
+are borne by the side's own club with a hard stop at zero equity, so counterparty
+risk is internalized per side, not socialized. None of this replaces an
+equilibrium analysis; it states the mechanism's built-in pressure toward balance.
 
 \paragraph{Mechanism design: open.}
-This paper's contribution is the pricing construction and its machine-checked
-spine, not an equilibrium analysis. Incentive compatibility of the funding
-schedule, the behaviour of strategic traders near the exercise boundary
-$S^{\ast}$ and around the static knob $m$, the participation rationality of
-liquidity providers, and a welfare comparison against order-book alternatives
-are explicitly open, and we name them as future work. They are where the formal
-spine meets the market: the conditional-solvency hypotheses of
-Section~\ref{sec:frontier} (a funding port that pays, one-way arbitrage, a
-ledger that closes) are behavioural assumptions, and discharging them is a
+Incentive compatibility of the funding schedule, strategic behaviour near the
+exercise boundary $S^{\ast}$ and around the static knob $m$, the participation
+rationality of liquidity providers, and a welfare comparison against order-book
+alternatives are explicitly open future work. They are where the formal spine
+meets the market: the conditional-solvency hypotheses of
+Section~\ref{sec:frontier} (a funding port that pays, one-way arbitrage, a ledger
+that closes) are behavioural assumptions, and discharging them is a
 mechanism-design task as much as a proof task.
 
 \paragraph{Conclusion.}
@@ -875,17 +803,24 @@ A single Balancer pool with one dynamic weight---run as a state-transition syste
 whose conservation law is applied at each trade's own point, and whose trades
 \emph{bend} the curve---prices the entire out-of-the-money perpetual-option
 continuum in closed form. We lift the prior barrier into an American-style
-perpetual option: a closed-form smooth-pasting boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$
-with a smooth seam and no new parameters, machine-checked
-(\tfp{}\textsuperscript{L4,L5,L6}) and tied to the
-Merton problem, plus a constant slope-multiplier lens $m$ that acts as a
-vol-calibrated knob while leaving the pool flow unchanged. On internal arbitrage we
-claim only what is proved: a posited collar surplus vanishes iff the pool is
-symmetric. The honest frontier is solvency: geometry is necessary
-(the no-floor theorem\textsuperscript{L12}) but never sufficient, and solvency stays
+perpetual option: a closed-form smooth-pasting boundary
+$S^{\ast}=K\,m\gamma/(m\gamma+1)$ with a smooth seam and no new parameters,
+machine-checked (\tfp{}\textsuperscript{L4,L5,L6}) and tied to the Merton problem,
+plus a constant slope-multiplier lens $m$ acting as a vol-calibrated knob while
+leaving the pool flow unchanged. On internal arbitrage we claim only what is
+proved: a posited collar surplus vanishes iff the pool is symmetric. The honest
+frontier is solvency: geometry is necessary (the no-floor
+theorem\textsuperscript{L12}) but never sufficient, and solvency stays
 \emph{conditional} on a funding port shown necessary but not discharged. Closing
-that port hypothesis and wiring the trusted-from-prover interface to the production
-engine are the principal directions for future work.
+that port hypothesis and wiring the trusted-from-prover interface to the
+production engine are the principal future directions.
+
+\paragraph{Drafting disclosure.}
+Portions of this paper's prose were drafted and edited with the assistance of a
+large language model, under the authors' direction; all mathematical content,
+claims, numbers, and provenance labels were specified, reviewed, and verified by
+the authors, with the machine-checked results produced as described in
+Section~\ref{sec:frontier}.
 
 % ===========================================================================
 \appendix
@@ -944,6 +879,104 @@ L13 & The internal (passivity) half of the single-object direction: the system
 \end{center}
 Full formal statements and proof artifacts are available from the authors on
 request.
+
+% ===========================================================================
+\section{Annex: mechanism specifications and worked example}\label{app:spec}
+
+\subsection{The rebase, in full}
+A rebase fires on each oracle update (whenever the external reference price
+moves), with factor $r=S_{\mathrm{new}}/S_{\mathrm{old}}$. It is one rescaling
+of the pricing frame:
+\[
+  x\to r\,x,\qquad \alpha\to r\,\alpha,\qquad
+  y,\ \beta,\ w\ \text{invariant},\qquad
+  \theta\to\theta/r\ \text{(each strike ray)},\qquad k\to r^{w}k .
+\]
+In simple terms: the curve and every strike ray are re-zoomed \emph{together},
+so the pool's centre tracks the outside price. Three implications, each
+load-bearing: (i)~a rebase is a \emph{gauge move}---a change of coordinates,
+not a trade: every normalized quantity (moneyness, marks, position values) is
+invariant, so no position gains or loses from a rebase; (ii)~trades and rebases
+\emph{commute} (machine-checked: \tfp{}\textsuperscript{L2}), so the pricing
+frame is well defined no matter how trades interleave with oracle updates; and
+(iii)~by re-centering the frame on every oracle move it bounds how fast drift
+can accumulate into the funding deviation of Section~\ref{sec:continuum}.
+
+\subsection{The funding rate law (shipped form)}
+Per position of notional $N$ at strike ray $\theta$, per unit time,
+\[
+  \text{funding rate}
+  \;=\;
+  \kappa\cdot(\pm g_{\mathrm{loc}})\cdot N\cdot
+  \mathrm{mark}(\theta)\cdot\frac{\Sigma-1}{\Sigma},
+  \qquad
+  \Sigma=\frac{\text{pool-marked price}}{\text{reference price}},
+\]
+with $\kappa$ a rate constant, the sign $+$ for calls and $-$ for puts (this
+sign pairing is what makes the crowded side pay the contrarian side),
+$g_{\mathrm{loc}}=m\gamma$ the lensed steepness of Section~\ref{sec:lens},
+$\mathrm{mark}(\theta)$ the position's own mark, and $\Sigma$ the deviation
+ratio of the live (leaned) curve from the anchor. On-anchor ($\Sigma=1$) the
+rate is exactly zero. This is the shipped design law (a specification, not a
+machine-checked result); the cash transfer it meters remains
+implementation-level (Section~\ref{sec:continuum}).
+
+\subsection{Worked example (illustrative numbers), in full}
+The values are \emph{illustrative}---chosen for arithmetic clarity, not calibrated
+to any market and not a validation of anything. Take a put leg with $\gamma=2$,
+$K=\$100$, $m=1$ ($g_{\mathrm{loc}}=2$). The boundary~\eqref{eq:boundary} sits at
+$S^{\ast}=100\cdot\tfrac23=\$66.67$, below the strike, with mark
+$1/(g_{\mathrm{loc}}+1)=1/3$ there. Steepening to $m=3$ ($g_{\mathrm{loc}}=6$)
+\emph{moves} the boundary---$C^{1}$ smooth-pasting forces the boundary and the
+continuation arm to share the same exponent $g_{\mathrm{loc}}$---rising to
+$S^{\ast}=100\cdot\tfrac{6}{7}=\$85.71$ with boundary mark
+$1/(g_{\mathrm{loc}}+1)=1/7\approx0.143$; below $S^{\ast}$ the leg is simply
+intrinsic, $1-S/K$. The continuation mark also decays faster, via the wing power
+law $\mathrm{value}\propto S^{-g_{\mathrm{loc}}}$. Each column below is evaluated
+at \emph{its own} boundary:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+spot $S$ & mark, $m=1$ ($g_{\mathrm{loc}}=2$) & mark, $m=3$ ($g_{\mathrm{loc}}=6$) \\
+\midrule
+at $S^{\ast}$ & $0.333$ (at $\$66.67$) & $0.143$ (at $\$85.71$) \\
+$\$80$  & $0.231$ & $0.200$ \\
+$\$90$  & $0.183$ & $0.107$ \\
+$\$100=K$ & $0.148$ & $0.057$ \\
+$\$120$ & $0.103$ & $0.019$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Below $S^{\ast}$ the mark is intrinsic ($1-S/K$): at $m=3$, $\$80<\$85.71$, so its
+mark is $1-80/100=0.200$. The table traces~\eqref{eq:boundary} and the wing power
+law; it makes no empirical or market-calibration claim.
+
+\subsection{The costless collar: scope notes}
+The biconditional is the substance. The formalised surplus is a \emph{posited}
+form proportional to anchor asymmetry, so the result is a symmetry statement about
+that posited surplus, not a mechanism-level no-arbitrage theorem over swap
+compositions; we carry it as a named definition with the skew sign exhibited
+(\tfp{}\textsuperscript{L9}). A companion result casts the symmetry as a
+reflection---the put at coordinate $s$ is the call reflected through the
+at-the-money ray ($s\mapsto\theta^{2}/s$)---so no-arbitrage \emph{is} the curve's
+symmetry (\tfp{}\textsuperscript{L9}). The reflection arrow is a proved identity,
+but the link from the spec mark to the live engine's instrument is a residual
+modeling premise, so this is best read as a \emph{conditional skeleton}, not an
+unconditional no-arbitrage theorem over the production engine.
+
+A costless collar is not free of \emph{pool motion}---its two legs move $w$---but
+the trader pays for that displacement at fair, sequenced prices (a swap's proceeds
+are the path integral of the marginal price): no free cash. Zero skew removes the
+\emph{free} edge, not the \emph{worth} of the protection.
+
+\subsection{The Merton relation: how literally to read it}
+As a literal calibration formula, \eqref{eq:merton} lives in the regime
+$r>\sigma^{2}$, which fails at crypto-scale volatility ($\sigma\approx80\%$ would
+demand $r>64\%$). We use it as a \emph{theory anchor}: it fixes the
+\emph{direction} of calibration---higher volatility, lower $\gamma$, fatter wings
+(Section~\ref{sec:idea})---and is exact on the Gaussian slice, but $\gamma$ and
+$m$ are \emph{design parameters} chosen at deployment, not quantities implied
+from market $r$ and $\sigma$ through the formula.
 
 % ===========================================================================
 % NOTE: The notation table and the formal-artifact map live in the on-request

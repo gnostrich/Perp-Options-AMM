@@ -3856,3 +3856,21 @@ premise scoped per reversed leg + inline ITM exception.
 - Pattern note: the one regression was in a figure AXIS LABEL, the previously-fixed one (this turn)
   was in prose §5 — regressions cluster where old chart semantics were copied into the paper before
   the 07-02 mark-semantics/chart-2 retirement landed.
+
+## 2026-07-02 (submission gate) — FINAL WINE v2 GATE: CLEAR-TO-SHIP (blind submission, entries 368/369/370).
+- Verdict appended to notes/skeptic/VERDICT_airtight_pass_2026-07-02.md (section "FINAL SUBMISSION GATE").
+- Verified AT ENGINE SOURCE: annex rebase transform ≡ HEAD L1711–15 (incl. my own w=α/x and k→r^w k
+  re-derivations); annex funding law ≡ fundingPerStrike L2282–90 term-by-term (±g sign, markLensed,
+  Σ=poolMark/oracle, dt="per unit time"). Both honestly typed as spec/design law, not machine-checked.
+- Worked-example table byte-verbatim in annex; ALL 10 cells recomputed independently — exact.
+  Body at-a-glance (66.67/85.71, 1/3, 1/7, 0.148, 0.057) consistent; §3.2's 0.148 pointer coherent.
+- All protected hedges survived compression (tfp-never-verified, B1/B3/B4 carried, Snell
+  named-not-formalised, |Γ|≤1, design-target, Fig-2 shape-not-mark [my SWEEP fix confirmed landed],
+  cap-of-1, perp-units→cash, feed-trust, residual+cross-strike). ref/label/cite integrity mechanical-clean.
+- Story stations 1–18 all covered body-or-annex; clubbed sentence = stations 2/11/12 faithful;
+  LLM disclosure anonymity-safe.
+SETTLED (don't re-attack): annex rebase+funding formal statements vs engine as of HEAD 7015c22c;
+worked-example arithmetic; "no position gains or loses from a rebase" as a frame-keeping spec claim.
+NIT recorded (not a flag): manager's "moved VERBATIM" is exact for tables/hedges, approximate for
+connective prose (kink-parenthetical, "We are precise:" dropped) — watch that "verbatim" claims
+about prose get spot-checked, they drift.

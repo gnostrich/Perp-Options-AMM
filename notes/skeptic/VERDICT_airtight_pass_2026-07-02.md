@@ -269,3 +269,96 @@ state-layer overlay semantics read at L2664–2700)
 ---
 
 ## RE-CLEAR PASS 3 (2026-07-02): CLEAR-TO-COMMIT. Edit-6 claim 2's tail now reads "so no repricing profit is extractable from the pool's reserves (Section~\ref{sec:exec})" — my surviving steelman verbatim, premise scoped per reversed leg with the ITM exception inline; verified in the working-tree diff MYSELF this turn (only change since RE-CLEAR PASS 2; all other hunks re-read, unchanged, previously cleared); last attack attempted and held (the ITM residual swap is an invariant-preserving pool-quote trade, both measured profit channels are club-side — CM6 + no-free-money cover the reserve side). Renewed FLAG-OVERSELL discharged; the halt is lifted. The two engine findings (branch-sequencing payout jump; A15 fee-beating immediate-cycle residual + self-push ITM election) remain queued for the operator UNCHANGED — commit clearance does not close them. — skeptic
+
+---
+
+## FINAL SUBMISSION GATE (2026-07-02, blind-submission gate per entries 368/369/370): CLEAR-TO-SHIP.
+
+Artifact: working-tree `paper/wine2026/temporal_wine2026_v2.tex` (uncommitted diff vs 86eddeeb =
+compression pass + manager close-out). All five ordered checks executed THIS TURN; attacks
+attempted and all failed. Zero flags.
+
+### (a) The two NEW formal statements vs the engine — PASS (re-derived, not narrated).
+**Rebase (app:spec):** annex `x→rx, α→rα, y/β/w invariant, θ→θ/r, k→r^w k` checked against engine
+HEAD L1711–15 (`// r = s_new/s_old. x → r·x, α → r·α, β invariant, y invariant, w invariant` and
+`rebase(s,r) = {x: s.x*r, y: s.y, alpha: s.alpha*r, beta: s.beta}`) — exact match; the two
+non-engine clauses re-derived myself: `w=α/x → rα/rx = w` invariant ✓; `k=x^w y^{1−w} → r^w k` ✓;
+θ→θ/r is the locked §3.3/story-station-7 transform, pre-existing body text unchanged. The three
+implications are honestly typed: (ii) machine-checked L2, (i)/(iii) stated as spec implications
+inside an annex titled "mechanism specifications" — no proof-label inflation.
+**Funding law (app:spec):** annex `κ·(±g_loc)·N·mark(θ)·(Σ−1)/Σ, Σ = pool-marked/reference,
++call/−put, zero at Σ=1` checked term-by-term against engine `fundingPerStrike` (L2282–2290):
+`kappa * gamma * N * m * (S-1)/S * dt` with `gamma = (wing==='call') ? +g : -g`,
+`m = markLensed(...)`, `S = poolMark(...)/oracle` — exact match ("per unit time" = the engine's
+·dt; the S≤0 guard is a numeric guard, not a law term). Explicitly labelled "shipped design law
+(a specification, not a machine-checked result)" ✓ and g_loc=mγ = the entry-232 through-the-lens
+ruling ✓.
+
+### (b) Moved-verbatim blocks — PASS.
+Worked-example TABLE byte-identical (all 10 cells + boundary row); I re-derived every cell
+independently: 4/27=0.148 ✓, (1/7)(6/7)^6=0.0567→0.057 ✓, (1/3)(0.8333)²=0.2315→0.231 ✓,
+0.183/0.107/0.103/0.019 ✓, intrinsic 0.200 at m=3/$80 ✓, 1/7≈0.143 ✓. Body at-a-glance keeps
+66.67/85.71, 1/3, 1/7, 0.148, 0.057 — matches the moved table exactly. Collar: "that claim is
+withdrawn until one does" SURVIVES IN BODY (§6.1) ✓; "posited form" in body AND annex ✓;
+"conditional skeleton, not an unconditional no-arbitrage theorem over the production engine" in
+body AND annex ✓; pool-motion/fair-sequenced-prices caveat in annex ✓. Merton: body keeps the
+compact r>σ² failure + theory-anchor + design-parameters triple, annex keeps the full σ≈80%⇒r>64%
+version ✓. (Nit, not a flag: prose AROUND the moved table/collar is lightly compressed — e.g.
+"a mismatched pair would kink the seam" parenthetical dropped, "We are precise:" dropped — the
+manager's "verbatim" is exact for the table and for every hedge, approximate for connective prose.)
+
+### (c) Compression-pass protected hedges — PASS, all present in current file.
+tfp-never-"verified" (label reserved for local canonical build) ✓ · B1/B3/B4 "carried as structure
+fields, not discharged facts" + does-NOT-prove-the-port-pays ✓ · deterministic-vs-Snell
+("named but not formalised — a placeholder obligation") in §5 AND intro condition (i) ✓ ·
+|Γ|≤1 per-wing scope + labelled approximation, in §6.3 AND Limitations ✓ · design-target value-law
+sentence ("enforces it by definition of the mark... remains open") ✓ · Fig-2 label/caption =
+"wing-steepness shape (normalized, mode=1)" / "not the mark, whose at-the-money value is the
+continuation value" — my SWEEP regression fix confirmed landed ✓ · "cap of 1 only at full
+exercise" + barrier "value capped at 1" lineage sentence ✓ · perp-units→cash sentence (station 17)
+intact in §6.2 ✓ · "Trust in the reference feed is an explicit assumption" ✓ · round-trip residual
+(ITM-scoped: "arises when an in-the-money leg settles to cash") + cross-strike externality
+("every other strike's mark... unquantified") ✓. Cuts I checked and accept as non-hedges:
+"path-dependence of the Curve v2 class" classifier, "None is dropped" meta-sentence.
+
+### (d) Reference integrity — PASS.
+Every `\ref`/`\eqref` target has exactly one matching `\label` (app:spec ×5, app:lean ×3, all
+sec/fig/eq keys — mechanically cross-checked); `\cite` keys ≡ `\bibitem` keys (diff clean);
+`\tfp` defined; document env balanced. §3.2's "0.148 ... worked example of Section~\ref{sec:american}"
+stays coherent: §5.2 keeps its "A worked example" subsection heading with 0.148 in the at-a-glance.
+Annex-and-ref hanging test (entry 369): both directions closed — every annex subsection is
+pointed to from body (§3.3 rebase, §3.3 funding, §5.2 table, §6.1 collar, §5.3 Merton), and
+app:spec sits after app:lean as stated.
+
+### (e) Story-table coverage (entry 370, stations 1–18) — PASS, tick-list against current file.
+1 pool curve §2.1 ✓ · 2 LP isotropic — NEW clubbed sentence ("price and lean untouched, not a
+trade") ✓ matches station text · 3 trades-bend §2.2 (trade-point truth, per entry-339 "no paper
+edit") ✓ · 4 rays §2.3 ✓ · 5 mark §3.2 ✓ · 6 dial m §4 + MORE-volatile⇒LOWER-m at intro and §4.2 ✓
+· 7 rebase §3.3+annex ✓ · 8 quantity bridge exec-1 ✓ · 9 premium-free swap exec-2 (same-direction
+clause survived) ✓ · 10 two-strike exec-3 (settle-at-chosen + frozen θ_tx + ITM-no-pool-swap) ✓ ·
+11 depth guard — clubbed ("rejected outright with the numbers, never silently capped") ✓ ·
+12 fee — clubbed ("from club equity, never into the pool") ✓ · 13 funding §3.3+annex, FLAG-C hedge
+("cash-transfer routing is implementation-level, deferred") intact ✓ · 14 seam §5 ✓ · 15 settlement
+§6.2 ✓ · 16 vault/carve (frozen carved slice + conditional solvency) ✓ · 17 units→cash §6.2 ✓ ·
+18 club & L₀ exec-4 ✓. Stations 19 (charts=UI) / 20 (the paper itself) correctly out of paper scope.
+
+### Manager close-out items 2–4 — PASS.
+Clubbed sentence present and station-faithful (2/11/12); LLM drafting disclosure after Conclusion
+is anonymity-safe ("the authors" only; `\author{Anonymous Author(s)}` unchanged, no identity leak
+anywhere I grepped); §3.3 annex pointers both present.
+
+### Attack on the strongest claim (discipline record).
+Strongest new claim = the annex funding law presented as "the exact shipped rate law." I attacked
+it by reading the shipped function, not the spec chain: every factor, the sign pairing, and the
+zero-at-anchor property match the engine byte-level. Second attack: the annex rebase implication
+(i) "no position gains or loses from a rebase" as potential oversell — it holds: marks are ratio
+reads (θ vs mode), both scale by 1/r, ratio invariant; matches locked story station 7 ("no ray
+gains/loses") and the frame-keeping doctrine. Both attacks failed.
+
+## VERDICT: CLEAR-TO-SHIP.
+Standing engine findings (branch-sequencing payout jump; A15 fee-beating residual) remain queued
+for the operator — they are engine-side, disclosed in the paper's own scoping, and do not block
+this submission.
+
+— skeptic (re-derivations this turn: engine L1711–15 + L2282–2290 read at source; 10 table cells
+recomputed; ref/label/cite cross-check mechanical; story-table walked station-by-station)
