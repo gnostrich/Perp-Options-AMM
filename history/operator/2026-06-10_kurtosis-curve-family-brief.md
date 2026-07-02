@@ -2575,3 +2575,11 @@ _Context: operator queues a Dexter's Lab review (Claude reviewer, no OpenRouter)
 _Context: operator queues a symmetry study: closure, slippage etc. weren't fully discussed — ideal picture = EVERYTHING off the curve, the SAME tx logic for open and close, no separate settlement thing. Manager queues the design study (research-lead, after the paper pipeline): can the two-case close (reverse-on-AMM vs settled-to-cash) collapse into one "walk the extended curve" primitive that yields reverse-trade OTM and parity-cash ITM automatically — code-level symmetry, slippage semantics both ways, escrow interaction, no-free-money invariants. Story Table → edition 7 (queued item added)._
 
 > also add to queue to check the whole symmetry thing, because we didn't discuss closure, slippage etc. now it seems that ideally eveeythig is off the curve, and the same tx logic open and close, no separate settlement thing etc...
+
+
+---
+
+## Entry 325 — 2026-07-02 UTC
+_Context: operator asks to flag anything else of the symmetry-study kind they may have missed. Manager sweep finds 4: (A) paper Fig-2 caption "mirrors the live engine's strike-mark chart" now FALSE post-display-slice — immediate one-clause fix after the gate; (B) payoff/liquidation overlay chart still reads the v24 saturating mark, can disagree with v2 settlement values — queued to part-2 display list; (C) on-request supplement stale (pre-fix) — refresh-or-retire queued; (D) companion American arXiv draft carries the stale 0.04% engine sentence — queued for next touch. Plus known cosmetics (engine comments L1622/L2337; Lean bridge INDEX labels). Story Table → edition 8._
+
+> also flag if i missed anything else like this to be checked etc

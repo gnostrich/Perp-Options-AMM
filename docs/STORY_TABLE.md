@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 7, 2026-07-02 (entry 324: tx-symmetry study QUEUED)._
+Edition 8, 2026-07-02 (entry 325 sweep: 4 more queued — Fig-2 clause immediate; payoff-chart read; supplement refresh; American-draft stat)._
 
 | # | Station | The geometry (operator language) | Recent change | Status |
 |---|---------|----------------------------------|---------------|--------|
@@ -17,7 +17,10 @@ Edition 7, 2026-07-02 (entry 324: tx-symmetry study QUEUED)._
 | 11 | **The shadows (charts)** | Value-vs-price pictures = projections of the ray reads, never the object. Chart-2: both wings through the seam into ITM, CROSSING at the money (the X), with a %→$ toggle (same water, two rulers). | chart-2 rewired to true value + X wings + %→$ toggle + markers-on-curve; tent retired; dash-legibility fixed; acceptance PASS + re-check 17/17 | ✅ LIVE |
 | 12 | **The paper** | Tells this story; was RIGHT on the seam all along. | crisped, vol-direction, explicit trade formula, Merton fine print, anonymized; worked table now = what the app computes, verified | ✅ shipped (submission with operator) |
 
-**Parked / open:** paper pass in skeptic gate → then lab review · paper page-pruning (operator, later) ·
+**Parked / open:** paper pass in skeptic gate → then Fig-2 stale-clause fix (entry 325-A, focused gate) →
+lab review · paper page-pruning (operator, later) · **payoff-chart consistency** (still reads the v24
+saturating mark, entry 325-B — part-2 with the symmetry study) · **supplement refresh-or-retire**
+(pre-fix content, entry 325-C) · American-draft stale stat (entry 325-D, next touch) ·
 **QUEUED (entry 324): tx-symmetry study** — ideal = everything off the (extended) curve, ONE tx logic for
 open AND close, no separate settlement path; study whether the two-case close collapses into a single
 "walk the extended curve" primitive (reverse-trade OTM / parity-cash ITM automatically), slippage
