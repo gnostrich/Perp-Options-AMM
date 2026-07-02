@@ -3768,3 +3768,74 @@ independently: math-$ 562 even AFTER excluding 15 escaped currency \$ (naive gre
 the \$ exclusion when re-checking parity), braces 0, refs clean. Settled ground: the 5 execution laws
 as now worded match the engine — don't re-attack absent engine changes. "at leverage L0 frozen at open"
 verified = band.entry.L0.
+
+## 2026-07-02 (later) — VERDICT: "go all" lab-review 6-edit pass. NOT CLEAR — FLAG-WRONG x1 + FLAG-OVERSELL x2.
+File: notes/skeptic/VERDICT_airtight_pass_2026-07-02.md (new dated section, same file as the exec-laws pass).
+- FLAG-WRONG (edit 5): "momentary pool push cannot produce a discontinuous settlement gain" — BROKEN
+  numerically. closeBand payout jumps a FIXED amount at a leg's regime boundary (+0.0161·equity·L0
+  opposite-wing product; -0.2588 same-wing control): both-OTM branch prices the OTHER leg on the
+  post-sold-reversal pool (s_after_X), soldITM branch on the UN-reversed pool. L10/a16 back only the
+  crossing leg's OWN value (X continuous to 8dp — verified). Backing covers mark continuity, not
+  branch sequencing.
+- FLAG-OVERSELL (edit 5): "ONLY the regime test reads the pool's marked price" — false; X/Y settlement
+  amounts ARE pool reads (legValueUnified(s)/legPrice(s) at close). The three auxiliary inputs
+  (feed cash, frozen K_tx, pool-mark regime) each verified TRUE; the "only" is the defect.
+- FLAG-OVERSELL (edit 6 claim 2): unconditional "open-then-close cycle returns reserves exactly / not
+  a money pump" RESURRECTS the law-3 overclaim I flagged+discharged earlier the SAME DAY in the SAME
+  file — while edit 3 of the SAME DIFF concedes the ITM residual in Limitations. One diff, both sides.
+- SURVIVED (settled, don't re-attack): edits 1/2/3/4; edit 6 claims 1/3/4 (each really restates §3.3
+  rate law / laws 2+4); "built-in pressure toward balance" acceptable under its double hedge (advisory:
+  only funding supplies the pressure); scope clean (6 edits + 2 fig trims + transcript append only).
+- Probe recipe that worked (reuse): sandbox engine per lens_selfcheck engineOf(); mkPool(10,800000,.5),
+  orc 80000, m 2; executeBand; external tradeUpdate bisection on sNorm0=poolMark(s,orc,orc)/orc to a
+  leg's θ; closeBand(st,band,{equity:1e12},orc,orc,orc,m) either side. legIsITM tolerance 1e-9.
+PATTERNS (two reinforced, one new):
+1. (extends 07-02 discharge pattern) Fix passes GENERATE claims: the manager verified the regime-test
+   half of edit 5 (the part a prior draft got wrong) but the sentence's INFERENCE clause ("cannot
+   produce discontinuous gain") was never re-derived — verification effort concentrates where the
+   LAST error was, the new overclaim rides in the same sentence's tail.
+2. NEW: discharged flags REGROW in new prose strata — law 3's scoped round-trip was re-asserted
+   unconditional in the Related-work incentive paragraph within hours. When a paper adds a summary/
+   informal restatement layer, re-check it against the SCOPED versions of every previously-discharged
+   claim; summaries drop scoping clauses.
+3. Continuity claims about SETTLEMENT need branch-sequencing checks, not just value-function checks:
+   the two-case protocol evaluates the other leg at different pool states per branch. Any future
+   "no discontinuity at the ITM boundary" claim: probe closeBand both sides, don't cite L10.
+
+## 2026-07-02 (later still) — RE-CLEAR PASS 2 on "go all" rewordings: edit-5 CLEAR, edit-6 claim 2 RENEWED FLAG-OVERSELL.
+Same verdict file, new section. Edit-5 reworded discharged both its flags (values owned as pool-mark
+reads; continuity per-LEG scoped with "at the boundary itself" fence — matches my 8dp measurement).
+Edit-6 claim 2: round-trip premise now correctly scoped (discharge stands), but retained tail "so an
+immediate open-then-close cycle yields no repricing profit" MEASURED AND FAILED at the design's own
+accounting layer: both-OTM immediate cycle records raw_net=+0.0011 at N=0.1 (= N·oracle·raw_net =
+$8.78 vs $0.80 fee; quadratic in N, beats fee for N>~0.03) — the engine's OWN A15 comment concedes
+the residual ("mark-on-own-bend valuation netting ... NOT closed here", closeBand ~L2088). AND the
+ITM branch is trader-electable: the band's own open pushes mark past a barely-OTM strike (sold-call
+1.001 N=0.1 -> mark 1.0816, immediate close = soldITM branch; raw_net +0.457 at N=2 ~ $73k vs $16
+fee). Graded OVERSELL not WRONG because trader_payout is overlay-recorded, "NOT added to club.equity"
+(state closeBand ~L2686) — realization = the disclosed-open carved-perp ledger. Surviving steelman:
+"no repricing profit extractable from the POOL'S RESERVES" (CM6-backed). ENGINE FINDING queued for
+operator: positive fee-beating A15 residual + self-push-electable ITM branch.
+SETTLED (don't re-attack): edit-5 as reworded; edit-6 premise scoping; (b) sweep — no residual
+total-payout-continuity or unconditional-round-trip sentence anywhere in the diff.
+PATTERNS:
+4. NEW: "immediate/trivial-case" incentive claims need measuring too — the team treats the
+   degenerate cycle (open-then-close, nothing moves) as obviously-zero; it isn't (own-bend valuation
+   residual is second-order, positive, and fee-beating). Any "no profit from doing-then-undoing"
+   claim: run the actual do-undo through the engine and compare against the fee, at several sizes.
+5. NEW: guards checked at OPEN don't bind at CLOSE — the OTM-at-open guard uses the PRE-open pool,
+   the regime test at close uses the post-open pool, so the trader's own execution can flip the
+   protective predicate between the two reads. Check every paired guard/test for basis drift.
+
+## 2026-07-02 (final) — RE-CLEAR PASS 3: edit-6 claim 2 renewed OVERSELL DISCHARGED -> CLEAR-TO-COMMIT.
+Same verdict file, appended section. Manager adopted the surviving steelman VERBATIM: tail now
+"so no repricing profit is extractable from the pool's reserves (Section~\ref{sec:exec})";
+trader-facing no-profit assertion gone. Verified in working-tree diff MYSELF (only change since
+RE-CLEAR PASS 2; every other hunk re-read, unchanged, previously cleared). Last attack held: the
+ITM residual open swap is an invariant-preserving pool-quote trade; both measured profit channels
+(A15 residual, branch jump) are CLUB-side objects — CM6 + no-free-money cover the reserve side.
+Halt lifted; the whole "go all" lab-review diff is CLEAR-TO-COMMIT. The two ENGINE FINDINGS
+(branch-sequencing payout jump; A15 fee-beating residual + self-push ITM election) remain queued
+for the operator UNCHANGED — commit clearance does not close them.
+SETTLED (don't re-attack): "no repricing profit extractable from the pool's reserves" as worded,
+premise scoped per reversed leg + inline ITM exception.

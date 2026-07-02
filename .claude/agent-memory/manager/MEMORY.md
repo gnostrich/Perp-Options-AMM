@@ -24,7 +24,24 @@ lines of the rollup below:**
   /tmp/dexlane.6ahCBK, budget 8, slug review-wine-final-20260702). Mid-verification (wrote
   verify_core_identities.py 16:47). ⚠ Reviews the PRE-airtight tex (staged 16:25) — reconcile at
   cross-check; stop-press findings only to operator inside the window.
-- Transcript current through entry 347. Branch+main pushed in sync after each gate.
+- **GO-ALL lab-fix pass (entry 349) LANDED + skeptic-gated 3 rounds:** 6 edits (intro mechanism-object
+  sentence; §4.1 value-law=design-target; Limitations residual-sourced + cross-strike externality; §7
+  lensed-construction-not-an-instance; §6 settlement price-input pinning; Related-work "Incentive
+  properties (informal)") + 2 figure trims (5.4→4.7, 5.2→4.6cm). Skeptic round 1 FLAG×3 (settlement
+  total-payout continuity WRONG — measured branch jump; "only regime test reads pool" oversell; cycle
+  no-money-pump oversell) → reworded → round 2 renewed FLAG on "no repricing profit" tail (measured A15
+  fee-beating residual $8.78 vs $0.80 fee; self-push ITM election ~$73k recorded P&L at N=2) → adopted
+  skeptic steelman verbatim ("no repricing profit extractable from the pool's RESERVES", CM6-backed) →
+  round 3 CLEAR. Also anonymity comment-strip (3d366a5, lab stop-press; comments-only diff proven).
+- **⚠ TWO NEW ENGINE FINDINGS (skeptic-measured, queued for operator, NOT fixed — STOP-ON-RED):**
+  (1) close-payout branch jump +0.016·equity·L0 fixed as eps→0 — both-OTM branch prices companion leg
+  on post-reversal pool, ITM branch on un-reversed pool (closeBand ~L2165/L2192 sequencing); (2) A15
+  immediate-cycle residual is fee-beating (raw_net +0.0011 at N=0.1 ⇒ N·oracle·raw_net = $8.78 vs $0.80
+  fee, quadratic in N) + the ITM branch is trader-electable (open's own push flips regime between the
+  OTM guard read L1891–96 pre-open and the close regime read L2074 post-open). Both club-overlay-side;
+  pool reserves stay exact (CM6). Evidence: notes/skeptic/VERDICT_airtight_pass_2026-07-02.md.
+  Candidates for the trade-point campaign's acceptance scope.
+- Transcript current through entry 355. Branch+main pushed in sync after each gate.
 
 🧭 **PRE-COMPACTION ROLLUP 2026-07-02 (entry 334) — READ THIS FIRST POST-COMPACTION:**
 **HEAD `7015c22c` on main = display slice of `9fdde1de` (PKG-ITM v2 linear re-seam) — all tester-passed,

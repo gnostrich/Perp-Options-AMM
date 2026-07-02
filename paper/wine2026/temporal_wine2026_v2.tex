@@ -142,7 +142,9 @@ theory of Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
 together with an honest formal-verification ledger (Section~\ref{sec:frontier})
 that states exactly what is machine-checked, under what label, and where the open
 frontier is---namely that solvency is conditional on a funding port shown
-necessary but not discharged.
+necessary but not discharged. The object throughout is the mechanism itself---the
+pool \emph{is} the option market; equilibrium and welfare analysis of the market
+around it are stated as future work (Section~\ref{sec:related}).
 
 % ===========================================================================
 \section{The AMM construction}\label{sec:warp}
@@ -357,7 +359,7 @@ that analysis is deferred (Section~\ref{sec:frontier}).
 \centering
 \begin{tikzpicture}
   \begin{axis}[
-      width=8.6cm, height=5.4cm,
+      width=8.6cm, height=4.7cm,
       xlabel={log-strike (log-moneyness, mode at centre)},
       ylabel={option-value mark (mode peak $=1$)},
       xmin=-2.6, xmax=2.6, ymin=0, ymax=1.08,
@@ -400,7 +402,10 @@ Let $\gamma>1$ be the curve's \emph{convexity exponent}---read from the pool's
 live lean, not fixed at deployment (Section~\ref{sec:exec})---the steepness parameter
 for which option value follows the power law $\mathrm{value}\propto S^{-\gamma}$
 far from the strike (in the wings), with $S$ the spot price. The larger $\gamma$,
-the steeper the curve. The lens adds one scalar $m>0$ and sets the \emph{lensed}
+the steeper the curve. This power law is the \emph{design target}: the
+construction enforces it by definition of the mark, and a derivation of it from
+the pool's own trade mechanics---rather than by construction---remains open
+(Section~\ref{sec:frontier}). The lens adds one scalar $m>0$ and sets the \emph{lensed}
 steepness
 \begin{equation}
   g_{\mathrm{loc}}(K)=m\,\gamma\qquad\text{for every strike }K,
@@ -449,7 +454,7 @@ second-order, but we state this as a plausibility, not a proof.
 \centering
 \begin{tikzpicture}
   \begin{axis}[
-      width=8.8cm, height=5.2cm,
+      width=8.8cm, height=4.6cm,
       xlabel={spot price $S$},
       ylabel={position mark},
       xmin=40, xmax=130, ymin=0, ymax=1.1,
@@ -668,7 +673,15 @@ equity. A band has two legs on opposite wings; since spot cannot be in-the-money
 both at once, at most one leg is in-the-money at any time, giving a clean two-case
 settlement. The composite-ray closed form holds across the
 out-of-the-money$\to$in-the-money boundary under the effective-strike substitution
-(machine-checked: \tfp{}\textsuperscript{L10}).
+(machine-checked: \tfp{}\textsuperscript{L10}). Settlement's auxiliary inputs
+are pinned: cash conversion reads the external reference feed (the same feed
+that drives rebases), and the financing strike is the dollar $K_{\mathrm{tx}}$
+frozen at open. Settlement \emph{values} are pool-mark reads---that is the
+construction's point---and the in-/out-of-the-money regime test likewise reads
+the pool's marked price; a leg crossing that boundary settles at a value
+continuous across it (the closed form above), so there is no cliff-edge
+intrinsic grab at the boundary itself. Trust in the reference feed is an
+explicit assumption.
 
 \subsection{Execution mechanics}\label{sec:exec}
 Five design laws pin execution down; they are specification-level statements of
@@ -759,8 +772,10 @@ real world. Geometry is shown \emph{necessary} (the no-floor
 theorem\textsuperscript{L12}) but never \emph{sufficient}. These are
 \emph{assumptions, not claims}, and the reader should not mistake conditional
 solvency for an unconditional result. The proven instances are the equal-weight
-constant-product pool and an exponential pool\textsuperscript{L11}; the typed
-contracts are
+constant-product pool and an exponential pool\textsuperscript{L11}; the lensed
+American construction of
+Sections~\ref{sec:lens}--\ref{sec:american} is not yet an instance of the stack,
+and the typed contracts are
 \emph{not} yet wired to the production engine's numeric formulas---that
 instantiation is the next body of work.
 
@@ -814,9 +829,29 @@ trusted-from-prover interface is not yet wired to the production engine (the
 bridge is an oracle, not a verified extraction); the carved-perp settlement
 ledger, the funding equilibrium-drift quantification and cash-transfer routing
 (Sections~\ref{sec:continuum},~\ref{sec:frontier}), and the round-trip residual
-are open; and the prior-art citation identifiers added in revision will be
+are open---the reversed legs round-trip the pool exactly
+(Section~\ref{sec:exec}); the residual arises when an in-the-money leg settles
+to cash, so its opening swap remains in the pool. Relatedly, all strikes read
+one shared curve, so each trade's re-lean moves every other strike's mark: the
+core mechanic of Section~\ref{sec:warp} read as an externality, unquantified
+here. Finally, the prior-art citation identifiers added in revision will be
 hand-checked against primary sources before submission. None is dropped; each is
 stated, not buried.
+
+\paragraph{Incentive properties (informal).}
+The construction carries its first-order incentives by design, each a stated
+law rather than a theorem: funding is congestion pricing---the crowded side
+pays the contrarian side in proportion to how far trades have leaned the curve
+from the anchor, so the price of imbalance rises with the imbalance itself
+(Section~\ref{sec:continuum}); the frozen transaction strike returns the
+pool's reserves exactly on every leg reversed at close (an in-the-money leg
+settles to cash instead), so no repricing profit is extractable from the
+pool's reserves (Section~\ref{sec:exec}); the pool never holds premium, so
+liquidity providers are exposed to the curve's lean, never to option payouts;
+and payouts are borne by the side's own club with a hard stop at zero equity,
+so counterparty risk is internalized per side, not socialized. None of this
+replaces an equilibrium analysis; it states the mechanism's built-in pressure
+toward balance.
 
 \paragraph{Mechanism design: open.}
 This paper's contribution is the pricing construction and its machine-checked
