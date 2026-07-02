@@ -62,3 +62,7 @@ The mark is NOT presented as a two-ray comparison. The canonical trichotomy:
   factor r so the pool's centre stays lined up with the outside price; no ray gains or loses meaning;
   trades and rebases commute (proven). Rebasing also bounds how fast drift can pile into the funding
   deviation. NEVER omit rebasing from a full-story walkthrough.
+
+## PROTOCOL (entry 312): THE STORY TABLE
+`docs/STORY_TABLE.md` is the standing one-table story of the whole system. On ANY change or insertion,
+REPRINT THE WHOLE UPDATED TABLE in the operator-facing reply — never just the diff. Bump the edition.

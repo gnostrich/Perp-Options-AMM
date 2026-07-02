@@ -2471,3 +2471,11 @@ _Context: operator asks for the whole story/flow of how the system works, paper-
 _Context: operator corrects walkthrough point 4 (the mark description "your ray against the pool's ray" isn't recognisable — the like-ray comparison belongs to FUNDING: like rays on pool curve vs anchor curve, deviation drives funding) and flags REBASING missing from the walkthrough. Manager adopts the trichotomy: MARK = one ray's slope on the pool curve alone (value); FUNDING = same ray on both curves, compared (rent); REBASE = re-zoom the whole frame (curve + rays together) so rays keep their meaning — trades/rebases commute (proven). Guide updated._
 
 > point 4 isnt recognisable. we compare like rays representing the perp option on the pool curve and anchor curve and the deviation is what funding is a factor of; did you also get rebasing … dont see it anywhere
+
+
+---
+
+## Entry 312 — 2026-07-02 UTC
+_Context: operator directs maintaining the system story as a TABLE during brainstorms, reprinting the WHOLE updated table (not diffs) whenever anything changes. Manager creates the canonical artifact `docs/STORY_TABLE.md` (edition 1, carrying the entry-310/311 corrections) and adds the reprint-in-full rule to the mental-model guide._
+
+> ok as we brainstorm i’d like you to maintain this story in a table form and whenever something adds in between changes reprint the whole updated table not just the diff
