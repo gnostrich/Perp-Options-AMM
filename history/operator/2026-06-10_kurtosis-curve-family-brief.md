@@ -2873,3 +2873,15 @@ _Context: operator asks for a status update on the compression close-out._
 _Context: operator, reviewing the paper during compression, reports rebasing seems missing and orders a check of the story-table missing-things (the 📄-absent stations)._
 
 > also im seeing the paper doesnt seem to have the rebasing or whatever we did fro the story table mssing things check
+
+
+## Entry 368 — 2026-07-02 UTC
+_Context: operator declares full delegation under time pressure: no more questions to them, no more operator-side QC — they will submit the final file blind. Manager owns final QC entirely._
+
+> concerning we dont have time ... dont ask me what to do now... i need the final thing and not going to do any more qc at my end ... submitting blinf ...
+
+
+## Entry 369 — 2026-07-02 UTC
+_Context: operator saw the rebase prose; rules it under-explained/under-specified given its implications. Standing directive: move detail to annexes and incorporate via reference — never leave things hanging._
+
+> ok i saw rebase but its underexplained or whagtever it has implications like thats an underspecification, you could throw things in annex and incorp via ref but never leave things hanging
