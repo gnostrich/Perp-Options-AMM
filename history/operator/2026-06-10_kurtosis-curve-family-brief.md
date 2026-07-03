@@ -3139,3 +3139,9 @@ _Context: operator accepts the counterfactual charge-back design "for now"; flag
 _Context: operator probes the LP-attack family concretely: someone puts in big liquidity, does a huge trade, then pulls LP and exits._
 
 > ok so if someone puts in big lquidity does a huge trade and then pulls LP and exits that kind of thing
+
+
+## Entry 417 — 2026-07-03 UTC
+_Context: operator: LP attacks can go through other wallets (identity-based defenses are sybil-weak — kills the LP-lock option, leaving the code fix); and observes none of this seems unique to Temporal._
+
+> also so you know lp attacks can go thru other wallets, having said none of this seem sunique to temppral
