@@ -3109,3 +3109,9 @@ _Context: operator: no overnight pacing — keep going, earlier is better. Manag
 
 ## Entry 410 — 2026-07-03 UTC
 > simpke englisuh tldr?
+
+
+## Entry 411 — 2026-07-03 UTC
+_Context: on the FLAG-CURVE fork, operator orders a research run: benchmark the round-trip point against other dynamic AMMs (Curve etc.) — if our behavior is no worse than theirs, they're inclined to accept (no R-A tweak needed)._
+
+> do a researfch run on no worse than other dynamic amm like curve etc. for the round trip point, if no worse i guess we ok
