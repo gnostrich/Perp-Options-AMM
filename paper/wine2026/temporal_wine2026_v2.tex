@@ -130,10 +130,10 @@ option market; equilibrium and welfare analysis are future work
     % skewed curve: a GENUINE power law c'/x^p (p=1.35, no additive offset),
     % chosen to pass through the trade point T; domain starts at 0.635 so the
     % curve stays inside the frame (hits y=4.1 at x=0.635).
-    \addplot[very thick,dashed,domain=0.635:4.1,blue!65!black] {2.2146/x^(1.35)};
+    \addplot[very thick,dashed,domain=0.635:3.92,blue!65!black] {2.2146/x^(1.35)};
     \addlegendentry{curve after trade (skewed)}
     % strike ray from origin: y = theta x with theta=1.55
-    \addplot[gray,thin,domain=0.23:2.68] {1.55*x};
+    \addplot[gray,thin,domain=0.35:2.68] {1.55*x};
     \node[gray,font=\scriptsize] at (axis cs:0.95,2.95) {strike ray $\theta$};
     % trade point T: ray meets BOTH curves at (1.164,1.804). The trade skews
     % the curve AT T, so before- and after-curve cross here. (2.1/1.164=1.804;
@@ -430,8 +430,8 @@ deferred (Appendix~\ref{sec:frontier}).
     \addplot[very thick,black,domain=0.86:3.3] {2.3004/x^(1.5)};
     \addlegendentry{pool curve (skewed, $w\neq\tfrac12$)}
     % the two rays at which each curve attains the SAME slope
-    \addplot[black!45,thin,dashed,domain=0.3:1.35] {1.75*x};
-    \addplot[blue!60!black,thin,domain=0.4:1.62] {1.1667*x};
+    \addplot[black!45,thin,dashed,domain=0.5:1.35] {1.75*x};
+    \addplot[blue!60!black,thin,domain=0.5:1.62] {1.1667*x};
     % parallel tangent segments, both slope -1.75
     \draw[black!45,thick]
       (axis cs:0.86,{1.9170+1.75*0.235}) -- (axis cs:1.33,{1.9170-1.75*0.235});
