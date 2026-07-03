@@ -3075,3 +3075,9 @@ _Context: operator asks about pending item 2 (close branch-jump): they don't rem
 _Context: operator probes whether the branch-jump, the frozen-arc reversal, and the curve-native settlement question are separate or related — and states they are not convinced about the reversal design._
 
 > are these things separate or somehow related... im not convinced about the reversal thing
+
+
+## Entry 405 — 2026-07-02 UTC
+_Context: operator RULES the close-semantics question: option (b) — close is a second first-class trade on the live curve (curve-native; one tx logic open and close; no frozen-arc un-booking, no separate ITM-to-cash branch). Design ruling; build still requires spec → R6 scope-gate → itemized go. Manager flags: the just-submitted paper describes (a) — divergence to manage in revision; the spec's 9-case systematic x-drain finding becomes the central hazard to resolve under (b)._
+
+> its to be b
