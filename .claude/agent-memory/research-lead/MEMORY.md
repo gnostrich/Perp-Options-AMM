@@ -1,5 +1,43 @@
 # MEMORY — research-lead
 
+### DEFENSE TAKE-STOCK (RESEARCH RUN #2) delivered — attack/defense surface + counterfactual charge attribution (operator entry 415) — 2026-07-03
+Deliverable: `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NO web (external = [TK]);
+measured = Node-vm vs HEAD `0e0a0062` (scratchpad `closeb/h8_cf.js`, NEW). Design under test = the
+COUNTERFACTUAL charge-back (entries 412/414/415): `charge = V[receipt-undo (revertArc own arc)] −
+V[live-close (tradeUpdateAt)]`, both from the SAME current state; pay → keep live `w`, pool made whole via
+charge credit; don't pay → revert to receipt (w reset). Design-stage; close-(b) build HOLDS behind this.
+- **PART 1 attribution numbers (all measured):**
+  - **(a) free cycler:** charge sum = **18 178 609.27** == measured live-close drain sum EXACTLY; w 0.5→0.5000
+    exact over 30 cyc (unpaid ⇒ receipt reset); pool 1.6M→1.6M. Charge = own drain to the cent.
+  - **(b) bystander interleave:** closer charge no-bystander = with-bystander = **605 953.64**, contribution
+    = **0 (exact)** — STRUCTURAL: both counterfactuals start from same current state, differ only by
+    closer's own leg, bystander cancels. Attribution holds by construction, not calibration. = multi-wallet
+    cleanliness guarantee.
+  - **(c) rebase interleave:** rr=1.25; receipt value **2 050 000 == rebased pre-open 2 050 000 exact**;
+    charge 37 734.14 ≥0. Receipt oracle-scaling clean.
+  - **(d) SYBIL — CRITICAL, MEASURED SYBIL-RESISTANT:** charge ∝ dy² BUT w-motion dw ∝ dy² TOO ⇒
+    cost/unit-w → a POSITIVE FLOOR ≈ 1.46e7 $/unit-w, NOT →0. Cost to steepen w 0.5→0.60 (γ 1→1.5)
+    converges to a HARD FLOOR ≈ **$546k (0.34× the 1.6M pool)** as cycles shrink; single monster cycle =
+    $4.74M (2.97× pool); splitting gives bounded ~8.7× gain then PLATEAUS. **No free ratchet.** Reaching
+    γ=14.4 ≈ multiples of pool value even at sybil-optimal granularity. Multi-wallet == cycle-splitting
+    (attribution (b)). VERDICT: sybil does NOT resurrect the attack. Honest residual: whether ~0.34×-pool
+    floor deters an actor SHORT the book (blast radius) = economics/product [TBD-operator].
+- **PART 2 table (10 attack classes):** sandwich/MEV; JIT-liquidity; sybil; LP first-depositor/inflation;
+  donation; deposit/withdraw timing around state moves; LP exit-before-repricing; internal-oracle-manip
+  (Curve v2 EMA band = most transferable defense); cross-function arb; griefing. Each: Curve v2/Uni v3/
+  Balancer/QuantAMM [TK] → our exposure (measured where vm-testable, reasoned else) → candidate → cost.
+  **KEY NEW SURFACE the receipt/charge design creates:** charge is credited to pool x ⇒ JIT-LP can dilute
+  the drain-compensation (#2/#6/#9) → mitigation = open-time LP snapshot for the charge credit. **KEY WIN:**
+  charge-back converts free griefing/ratchet (#10, unique to our warp — no listed AMM has shared-curve-
+  steepness surface) into a COSTLY vector (same floor as sybil).
+- **SHORTLIST:** MUST = pool-value floor + counterfactual charge + open-time LP snapshot. SHOULD = EMA-band
+  the internal mark (Curve-v2 analogue) + per-window w-rate-limit + value-based/no-lag LP-equity marking.
+  DEFER = R-A full unwind (FLAG-CURVE still open) + LP withdrawal delay + share-inflation/donation vault
+  hardening (CTO). TBD markers per operator's words on all product-decision items.
+No git, no engine edits, no Aristotle (none needed). Handed to manager for skeptic gate + operator.
+
+---
+
 ### NO-WORSE-THAN-CURVE research run delivered (operator entry 411, FLAG-CURVE decision input) — 2026-07-03
 Deliverable: `notes/research/NOWORSE_roundtrip_vs_dynamic_amms_2026-07-03.md`. NO web (all external
 claims labelled [TK] training-knowledge); measured = Node-vm vs HEAD `0e0a0062` (scratchpad
