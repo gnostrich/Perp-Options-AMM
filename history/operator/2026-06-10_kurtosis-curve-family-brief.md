@@ -3069,3 +3069,9 @@ _Context: paper submitted (second submission, final md5 f8b37a71). Operator turn
 _Context: operator asks about pending item 2 (close branch-jump): they don't remember asking for it; how does reversal work after state changes from other trades; and whether the extended chart-2 / curve-native payoff work means there could be no separate per-position ITM settlement branch at all._
 
 > explain 2. i dont remember asking for this and how do you reverse after state changes form other trades etc.? the is the extended chart 2 thing now sort of making  payoffs curve native so no separate ITM settlement thing on a per posisiton basis...?
+
+
+## Entry 404 — 2026-07-02 UTC
+_Context: operator probes whether the branch-jump, the frozen-arc reversal, and the curve-native settlement question are separate or related — and states they are not convinced about the reversal design._
+
+> are these things separate or somehow related... im not convinced about the reversal thing
