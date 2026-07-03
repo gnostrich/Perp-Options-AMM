@@ -52,7 +52,7 @@ every out-of-the-money call and put in closed form, with an exact
 \emph{American} early-exercise level and a smooth join between waiting and
 exercising. One knob, set from the asset's volatility, fixes the whole
 book's steepness. The core results are verified in Lean (by Harmonic's
-Aristotle prover, compiled server-side, not re-run locally).
+Aristotle prover).
 
 \keywords{Automated market maker \and Decentralized finance \and Perpetual
 options \and Optimal stopping \and Smooth pasting \and Formal verification}
@@ -90,7 +90,7 @@ Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
   \item a \emph{semantic layer} over that pool---strike-as-a-ray, the mark, and
         settlement---that reads a continuum of option values from one pool state
         (Section~\ref{sec:continuum}; settlement in Appendix~\ref{app:properties});
-  \item an \emph{American generalisation}: a closed-form early-exercise
+  \item an \emph{exact American exercise rule}: a closed-form early-exercise
         boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$, where the exercised
         payoff line joins the waiting-value curve \emph{tangentially}---same
         value, same slope, no kink (``smooth pasting'') (base form
@@ -125,7 +125,7 @@ option market; equilibrium and welfare analysis are future work
       legend style={at={(0.98,0.98)},anchor=north east,font=\scriptsize,draw=none}]
     % Balancer level curves (illustrative): y = k^{1/(1-w)} x^{-w/(1-w)}.
     % base curve w=1/2: y = c/x  with c=2.1
-    \addplot[very thick,domain=0.45:4.1,black] {2.1/x};
+    \addplot[very thick,domain=0.51:4.1,black] {2.1/x};
     \addlegendentry{curve before trade}
     % skewed curve: a GENUINE power law c'/x^p (p=1.35, no additive offset),
     % chosen to pass through the trade point T; domain starts at 0.635 so the
@@ -133,7 +133,7 @@ option market; equilibrium and welfare analysis are future work
     \addplot[very thick,dashed,domain=0.635:4.1,blue!65!black] {2.2146/x^(1.35)};
     \addlegendentry{curve after trade (skewed)}
     % strike ray from origin: y = theta x with theta=1.55
-    \addplot[gray,thin,domain=0:3.4] {1.55*x};
+    \addplot[gray,thin,domain=0.23:2.68] {1.55*x};
     \node[gray,font=\scriptsize] at (axis cs:0.95,2.95) {strike ray $\theta$};
     % trade point T: ray meets BOTH curves at (1.164,1.804). The trade skews
     % the curve AT T, so before- and after-curve cross here. (2.1/1.164=1.804;
@@ -251,7 +251,51 @@ quantity is set by the \emph{option-pricing} layer of
 Section~\ref{sec:continuum} reading that state: position values, trade sizing
 (a bought leg is sized by the ratio of option prices, never by pool proceeds),
 and payouts. The pool never holds premium and is never a counterparty
-(Appendix~\ref{sec:exec}).
+(Section~\ref{sec:exec}).
+
+
+% ===========================================================================
+\section{How a trade runs}\label{sec:exec}
+% ===========================================================================
+The life of a position, in the order a trader lives it. Throughout, remember
+the division of labour: the \emph{pricing layer} decides every economic
+number; the \emph{pool} only bookkeeps the flows and charges the slippage.
+These are specification-level statements of the shipped design, not
+Lean-verified results.
+\begin{enumerate}[leftmargin=2em,itemsep=1pt]
+  \item \textbf{You open.} You hold a perpetual future and pick a strike. A
+    slice of your perp is \emph{carved}---its notional, equity, and entry
+    mark frozen as your escrow. Your band's sold leg is valued by the pricing
+    layer, and the bought leg's size is that value divided by the bought
+    leg's per-unit price: $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$,
+    an option-price \emph{ratio}. Premium never touches the pool; slippage
+    enters because the second leg is priced on the pool as the first leg left
+    it. A small fee ($0.01\%$ of notional) is paid from club equity---never
+    into the pool.
+  \item \textbf{The pool bookkeeps your open.} Each leg moves the pool by
+    $\Delta y=\pm N\,K_{\mathrm{tx}}$---notional times the \emph{transaction
+    strike} $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$
+    (Section~\ref{sec:lens}), frozen at open as a dollar number. If your cash
+    leg exceeds the pool's usable depth, the trade is rejected outright with
+    the numbers---never silently capped.
+  \item \textbf{You hold.} Funding is metered by the slope-deviation read of
+    Section~\ref{sec:funding}; the curve's steepness $\gamma=w/(1-w)$ is
+    read \emph{live} at every step (it moves as trades skew the curve; the
+    knob $m$ is never moved by trades).
+  \item \textbf{You close.} Settlement is at the strike \emph{you chose}.
+    Each leg still on the pool reverses its opening swap at the \emph{same}
+    frozen $K_{\mathrm{tx}}$---the reserves round-trip exactly. A leg past
+    its boundary has left the pool's world: it settles to cash at its mark,
+    no pool swap (the two-case rule of Appendix~\ref{sec:settlement}).
+  \item \textbf{You get paid.} Your legs net in perp units; the net converts
+    to cash at your carved slice's closing equity, scaled by $L_{0}$:
+    payout $=L_{0}\times(\text{net result})\times(\text{carved equity})$.
+    The counterparty is your own side's \emph{club} (its pooled equity,
+    $L_{0}$ frozen at open); a drained club pays nothing---positive payouts
+    stop at zero club equity.
+\end{enumerate}
+One background mechanic: liquidity provision resizes the pool
+\emph{isotropically}---price and skew untouched; it is not a trade.
 
 
 % ===========================================================================
@@ -310,14 +354,14 @@ Section~\ref{sec:lens} enters both the read and the transaction.
     \addplot[very thick,black,domain=0.65:3.5] {2.1/x};
     \addlegendentry{pool curve}
     % mode ray y=x (ATM): meets curve at (1.449,1.449)
-    \addplot[gray,thin,domain=0:2.9] {x};
+    \addplot[gray,thin,domain=0.45:2.9] {x};
     \node[gray,font=\scriptsize] at (axis cs:2.72,2.52) {mode};
     % chosen strike ray y=1.55x: meets curve at (1.164,1.804)
-    \addplot[blue!60!black,thin,domain=0:1.85] {1.55*x};
+    \addplot[blue!60!black,thin,domain=0.3:1.85] {1.55*x};
     \node[blue!60!black,font=\scriptsize] at (axis cs:1.62,2.98) {chosen ray $\theta$};
     % lens tx ray m=2: theta_tx=1.55^2=2.4025: meets curve at (0.935,2.246)
-    \addplot[red!60!black,dashed,thin,domain=0:1.28] {2.4025*x};
-    \node[red!60!black,font=\scriptsize] at (axis cs:0.62,3.22) {$\theta_{\mathrm{tx}}$};
+    \addplot[red!60!black,dashed,thin,domain=0.3:1.28] {2.4025*x};
+    \node[red!60!black,font=\scriptsize] at (axis cs:1.45,3.18) {$\theta_{\mathrm{tx}}$};
     % intersection points
     \node[circle,fill=blue!60!black,inner sep=1.3pt,
       label={[font=\scriptsize,blue!60!black]right:read}] at (axis cs:1.164,1.804) {};
@@ -386,8 +430,8 @@ deferred (Appendix~\ref{sec:frontier}).
     \addplot[very thick,black,domain=0.86:3.3] {2.3004/x^(1.5)};
     \addlegendentry{pool curve (skewed, $w\neq\tfrac12$)}
     % the two rays at which each curve attains the SAME slope
-    \addplot[black!45,thin,dashed,domain=0:1.35] {1.75*x};
-    \addplot[blue!60!black,thin,domain=0:1.62] {1.1667*x};
+    \addplot[black!45,thin,dashed,domain=0.3:1.35] {1.75*x};
+    \addplot[blue!60!black,thin,domain=0.4:1.62] {1.1667*x};
     % parallel tangent segments, both slope -1.75
     \draw[black!45,thick]
       (axis cs:0.86,{1.9170+1.75*0.235}) -- (axis cs:1.33,{1.9170-1.75*0.235});
@@ -395,8 +439,8 @@ deferred (Appendix~\ref{sec:frontier}).
       (axis cs:1.07,{1.5307+1.75*0.242}) -- (axis cs:1.55,{1.5307-1.75*0.238});
     \node[circle,fill=black!45,inner sep=1.2pt] at (axis cs:1.0954,1.9170) {};
     \node[circle,fill=black,inner sep=1.3pt] at (axis cs:1.3120,1.5307) {};
-    \draw[<->,red!60!black,thick] (axis cs:1.06,1.855) arc[start angle=60,end angle=49.4,radius=2.1];
-    \node[red!60!black,font=\scriptsize] at (axis cs:1.44,2.12) {$\Delta$ ray};
+    \draw[<->,red!60!black,thick] (axis cs:1.04,1.82) to[bend left=15] (axis cs:1.30,1.5167);
+    \node[red!60!black,font=\scriptsize] at (axis cs:1.45,1.83) {$\Delta$ ray};
   \end{axis}
 \end{tikzpicture}
 \caption{The funding read: the \emph{same slope} is located on both
@@ -503,7 +547,7 @@ skew-dominated---we expect the ceiling to be second-order, but we state this as 
 plausibility, not a proof.
 
 % ===========================================================================
-\section{American exercise: where waiting ends}\label{sec:american}
+\section{American exercise}\label{sec:american}
 % ===========================================================================
 
 \begin{figure}[t]
@@ -808,47 +852,6 @@ point---and the in-/out-of-the-money regime test likewise reads the pool's marke
 price; a leg crossing that boundary settles at a value continuous across it (the
 closed form above), so there is no cliff-edge intrinsic grab at the boundary.
 Trust in the reference feed is an explicit assumption.
-
-\subsection{Execution: how a trade actually runs}\label{sec:exec}
-The life of a position, in the order a trader lives it. Throughout, remember
-the division of labour: the \emph{pricing layer} decides every economic
-number; the \emph{pool} only bookkeeps the flows and charges the slippage.
-These are specification-level statements of the shipped design, not
-Lean-verified results.
-\begin{enumerate}[leftmargin=2em,itemsep=1pt]
-  \item \textbf{You open.} You hold a perpetual future and pick a strike. A
-    slice of your perp is \emph{carved}---its notional, equity, and entry
-    mark frozen as your escrow. Your band's sold leg is valued by the pricing
-    layer, and the bought leg's size is that value divided by the bought
-    leg's per-unit price: $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$,
-    an option-price \emph{ratio}. Premium never touches the pool; slippage
-    enters because the second leg is priced on the pool as the first leg left
-    it. A small fee ($0.01\%$ of notional) is paid from club equity---never
-    into the pool.
-  \item \textbf{The pool bookkeeps your open.} Each leg moves the pool by
-    $\Delta y=\pm N\,K_{\mathrm{tx}}$---notional times the \emph{transaction
-    strike} $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$
-    (Section~\ref{sec:lens}), frozen at open as a dollar number. If your cash
-    leg exceeds the pool's usable depth, the trade is rejected outright with
-    the numbers---never silently capped.
-  \item \textbf{You hold.} Funding is metered by the slope-deviation read of
-    Section~\ref{sec:funding}; the curve's steepness $\gamma=w/(1-w)$ is
-    read \emph{live} at every step (it moves as trades skew the curve; the
-    knob $m$ is never moved by trades).
-  \item \textbf{You close.} Settlement is at the strike \emph{you chose}.
-    Each leg still on the pool reverses its opening swap at the \emph{same}
-    frozen $K_{\mathrm{tx}}$---the reserves round-trip exactly. A leg past
-    its boundary has left the pool's world: it settles to cash at its mark,
-    no pool swap (the two-case rule of Appendix~\ref{sec:settlement}).
-  \item \textbf{You get paid.} Your legs net in perp units; the net converts
-    to cash at your carved slice's closing equity, scaled by $L_{0}$:
-    payout $=L_{0}\times(\text{net result})\times(\text{carved equity})$.
-    The counterparty is your own side's \emph{club} (its pooled equity,
-    $L_{0}$ frozen at open); a drained club pays nothing---positive payouts
-    stop at zero club equity.
-\end{enumerate}
-One background mechanic: liquidity provision resizes the pool
-\emph{isotropically}---price and skew untouched; it is not a trade.
 
 \subsection{Replication scope: $|\Gamma|\le1$ exact, $|\Gamma|>1$ approximate}
 Let $\Gamma$ be the \emph{hedge ratio}---a position's price-sensitivity to spot.
