@@ -3145,3 +3145,9 @@ _Context: operator probes the LP-attack family concretely: someone puts in big l
 _Context: operator: LP attacks can go through other wallets (identity-based defenses are sybil-weak — kills the LP-lock option, leaving the code fix); and observes none of this seems unique to Temporal._
 
 > also so you know lp attacks can go thru other wallets, having said none of this seem sunique to temppral
+
+
+## Entry 418 — 2026-07-03 UTC
+_Context: operator: continue research to figure out the best mitigation; FYI calibration — the parallel is perps and spot manipulation; whole-book manipulation isn't unique to Temporal either._
+
+> ok continue research and let's figure out the best mitigation... but yeah FYI I think a parallel is perps and spot maniupuatlin etc.  like i dont think whole book manipulation is also unique
