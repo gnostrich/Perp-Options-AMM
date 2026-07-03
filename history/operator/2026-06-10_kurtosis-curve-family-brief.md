@@ -2957,3 +2957,29 @@ _Context: operator asks for a status update on the v6 fix pass._
 _Context: operator adds: remove all references to the prior paper / barriers etc.; and asks for a simple-English assurance that the manager gets the overarching thread — organic thinking, not just execution, given the little time left._
 
 > also remove all references to prior paper / barriers etc.  and more than this table which i'll read in a bit, i want an assurance in simple englsh that youb get the overarching thread. like a bit more organic thinking rather than just executing would prbably go a long wauy considring how little time we have left
+
+
+## Entry 382 — 2026-07-02 UTC
+_Context: operator, after diffing their v6 against the manager's pass: the manager restored near-the-same intro they had deleted; "AMM is 2 assets" is wrong (n assets) and shouldn't be explained at all; "American-style smooth-pasting" is unreadable jargon; the mark was framed as strike-ray-vs-pool-ray, wrong — the ray comparison in the story is across pool curve and anchor curve; §3.3 diagrams too crowded; nobody knows what smooth pasting is; asks again for the common thread; threatens to retract/cancel the submission._
+
+> read the paper i sent you its abstract and the other shit diff it and see you restored almost the same  dogshit  intro and amm is 2 assets motherfuck thats wrong it can be n assets but idgaf whuy are you explanaing it when its so basic and that tooo ficking it up; american style smmoth pasting motherfucker irritating fuck, who the fuck reads thast and goig to understansd anhything at all uck; -- mark is strikes ray against the pools rsy? what the dogfuck is this, we have ray comparison across pool curve and anchor curve... do you know what you're fucking doing or shoudl i retract and cancel the motherfcucking submission? 3.3 diagrams are too motherfcucking croeded fuck;  nobody knws that the morhteufk is smooth pasting -- now again whats the motherfucknigcommini thrad?
+
+
+## Entry 383 — 2026-07-02 UTC
+> like do you even motherfucking kn ow the geometry?
+
+
+## Entry 384 — 2026-07-02 UTC
+> are  you  trying to get me desk rejected you fuck
+
+
+## Entry 385 — 2026-07-02 UTC
+_Context: operator refines the funding geometry: the comparison may equivalently be same-slope-to-same-slope across the two curves at different ray angles — the dual of the same-ray-two-slopes read, same intent — anchored so the ATM point is respected (deviation vanishes there). Manager encodes the dual sentence in §3.4 + fig:funding caption; story-table row-13 refinement deferred to post-submission._
+
+> and the comparison may be same slope to same slope across the curves with different ray angles since theres got to tresoect the atm point (dual of what i said but same intent)
+
+
+## Entry 386 — 2026-07-02 UTC
+_Context: operator rules between the two funding reads: the SAME-SLOPE-on-both-curves read is the right one; the same-ray read would violate the ATM point._
+
+> the same slkope on both is the right ont the other woulr violate the atm point

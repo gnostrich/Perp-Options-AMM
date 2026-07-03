@@ -453,3 +453,69 @@ the .lean sources — the attack failed everywhere.
 — skeptic (re-derivations this turn: 10 table cells + 4 figure geometries + trade exhibit in
 rational arithmetic; PasteLin.lean/ValueGeIntrinsic.lean read at source; 24 identifiers grepped
 into compiled artifacts; ref/cite/env checks mechanical)
+
+---
+
+# MICRO-GATE: frame-fix edits (entries 382/383/384), uncommitted on top of c187cb35 — 2026-07-03
+
+Baseline verified: md5 of committed file at e5045e9 = `c187cb3546881d5b686cf7d828a6c60a` (the
+CLEAR-TO-SHIP state); working-tree diff is 34+/38− lines, all within the five ordered areas.
+Entries 382–384 read verbatim from `history/operator/2026-06-10_kurtosis-curve-family-brief.md`.
+
+**(a) Mark subsection — PASS.** Retitled "The mark: one ray, one curve"; body says the strike's
+ray meets the POOL CURVE at one point, "One ray, one curve---no second object", and the
+parenthetical routes the two-curve comparison to funding ONLY ("appears exactly once in this
+paper, in funding: the same ray read on the pool curve and on the anchor curve") — this is the
+operator's entry-382 doctrine near-verbatim ("we have ray comparison across pool curve and
+anchor curve"). Residual-language grep (`mode ray|ray read against|against the pool|ray
+against|ratio of the two`): ONE hit, line 299 — a `%` TikZ source comment, never rendered.
+The eq:mark case gloss "a power of the ray read" is the one-object read, not a comparison.
+Funding prose (line 344–346) independently agrees: "the same strike ray read on both curves,
+slope against slope". Consistent frame, both directions.
+
+**(b) Intro + §2.1 — PASS.** Old opener ("An automated market maker (AMM) is a pool of two
+assets…") DELETED; new opener starts inside the mechanism ("In the pool's reserve plane, every
+strike is a ray…"). No definitional AMM claim anywhere ("two assets"/"pool of two" grep: zero
+rendered hits). §2.1's "We work on the two-asset slice of Balancer's weighted constant-product
+family" is a true scoping statement (Balancer is Π xᵢ^wᵢ over n assets; x^w y^{1−w}=k is its
+two-asset member) — scopes, doesn't lecture. Note: the deleted sentence also carried
+"quoted price is the slope"; that identity is now nowhere stated — but that is precisely the
+"so basic why are you explaining it" material the operator ordered out (entry 382), and no
+downstream passage depends on it being pre-defined (funding compares slopes AS slopes). Not a flag.
+
+**(c) Smooth-pasting glosses — PASS.** Contributions item 3: "the exercised payoff line joins
+the waiting-value curve tangentially---same value, same slope, no kink (``smooth pasting'')" —
+gloss AT first prose use (only earlier occurrences: title-keywords line 59). §5 construction
+(line 534): "in plain terms, the payoff line is tangent to the waiting curve… no kink and no
+jump". §5 title now "American exercise: where waiting ends". Abstract already plain ("a smooth
+join between waiting and exercising"), untouched.
+
+**(d) Figures — PASS with one residual (below).** fig:read: both in-plot formula boxes removed
+(tx-map formula survives in caption; mark formula via Eq. ref), labels shortened
+(read/transact/mode). Caption no longer says "ray read against the mode ray" — now "The meet
+sits at moneyness S/K". fig:funding: three-line in-plot box reduced to "$\Delta$ slope";
+caption carries the content and I re-derived its numbers as my attack: anchor y=2.1/x slope at
+x=1.2 → 2.1/1.44 = 1.4583 ✓ (caption 1.458); pool y=2.3004/x^1.5 slope → 3.4506/1.2^2.5 =
+2.1875 ✓ (caption 2.19); both curves through (1.2,1.75) ✓; ray 1.4583·1.2 = 1.75 ✓. Caption's
+"like ray to like ray, never against a fixed diagonal" matches doctrine. Attack failed.
+
+**(e) eq:mark + numbers — PASS.** eq:mark block byte-untouched by the diff; 0.148-at-g=2,
+S*=Kg/(g+1), table values, worked exhibits all outside the diff. Only numeric edits anywhere
+are TikZ node PLACEMENT coordinates (label positions: 2.62,2.42→2.72,2.52; new Δ-slope node at
+1.98,1.12; three removed nodes) — typography, not results.
+
+**One residual, NON-BLOCKING, named for the manager:** the rewrite deleted the mark
+subsection's definition of the mode ("The pool's centre (its at-the-money ray, the mode)…"),
+and the fig:read label was shortened from "mode ray (ATM)" to bare "mode" — so the term "mode"
+now first renders (fig:read label + its caption's θ_tx formula, §3) BEFORE its only surviving
+prose gloss ("mode the at-the-money ray", line ~455, §4 lens). Undefined-jargon-at-first-use is
+exactly the entry-382 complaint class ("who the fuck reads that and going to understand
+anything"). Two words in the fig:read caption or label would close it; I name the hole, I don't
+prescribe.
+
+**VERDICT: CLEAR** — all five gated items encode the operator's entries-382 doctrine correctly;
+attack (funding-figure re-derivation + residual-language greps + baseline md5) attempted and
+failed. The mode-gloss residual is flagged as a non-blocking note in the same jargon class the
+operator just corrected; manager's call whether to spend the two words before commit.
+
+— skeptic (micro-gate, ~3 min; re-derivations: 2 tangent slopes, 3 incidence checks, baseline md5)

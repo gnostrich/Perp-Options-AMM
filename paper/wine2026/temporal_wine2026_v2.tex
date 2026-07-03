@@ -63,12 +63,10 @@ options \and Optimal stopping \and Smooth pasting \and Formal verification}
 \section{Introduction and contributions}\label{sec:idea}
 % ===========================================================================
 
-An automated market maker (AMM) is a pool of two assets whose quoted price is
-the slope of a curve through its reserves; ordinarily a trade slides the
-reserve point along that fixed curve. Here every strike is a \emph{ray} from
-the origin, a trade executes where its ray meets the curve, and the trade
-\emph{skews the curve} at that point---the weight of the Balancer invariant is
-updated per trade, so the pool carries its trading history as a stored skew.
+In the pool's reserve plane, every strike is a \emph{ray} from the origin. A
+trade executes where its ray meets the pool curve, and it \emph{skews the
+curve} at that point: the weight of the Balancer invariant is updated per
+trade, so the pool carries its trading history as a stored skew.
 
 That stored skew is the pricing state. From the single state $(x,y,w)$ the
 mechanism reads the value of \emph{every} out-of-the-money call and put in
@@ -90,8 +88,10 @@ Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
   \item a \emph{semantic layer} over that pool---strike-as-a-ray, the mark, and
         settlement---that reads a continuum of option values from one pool state
         (Section~\ref{sec:continuum}; settlement in Appendix~\ref{app:properties});
-  \item an \emph{American generalisation}: a closed-form smooth-pasting
-        early-exercise boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (base form
+  \item an \emph{American generalisation}: a closed-form early-exercise
+        boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$, where the exercised
+        payoff line joins the waiting-value curve \emph{tangentially}---same
+        value, same slope, no kink (``smooth pasting'') (base form
         $K\gamma/(\gamma+1)$ at $m=1$; $K$ the dollar strike, $\gamma>1$ the
         curve's convexity exponent, $m$ the knob below), with a smooth
         value-and-slope join and no new parameters, tied to the classical
@@ -156,9 +156,8 @@ pricing state: every strike's option value is read from it. Curves illustrative.
 \end{figure}
 
 \subsection{The Balancer curve}
-A two-asset constant-function market maker is a curve in the plane of reserves,
-$x$ of the underlying and $y$ of cash; the pool's state is a point on that curve,
-and the quoted price is the slope there. The Balancer curve is
+We work on the two-asset slice of Balancer's weighted constant-product family,
+in the plane of reserves $x$ (underlying) and $y$ (cash):
 \begin{equation}
   x^{w}\,y^{1-w}=k ,
   \label{eq:balancer}
@@ -253,15 +252,16 @@ for a call, downward for a put---past a strike $K$. Composed with a perpetual
 future, it caps the trader's loss beyond $K$ without forcing the position closed;
 the only decision the holder faces is \emph{when} to realise it.
 
-\subsection{The mark: one ray read against the curve}
+\subsection{The mark: one ray, one curve}
 The worth of a position is its \emph{mark}, and the mark is one geometric
-read: the strike's ray against the pool's own ray. The pool's centre (its
-at-the-money ray, the \emph{mode}) is where the skew currently points; a
-strike is another ray $\theta$; the \emph{moneyness read} is the ratio of the
-two, which in dollars is $S/K$ (spot over strike). The map from strike ray to
-option price is then explicit---a power of the read, welded to the exercised
-payoff (put wing shown; the call wing mirrors it by the reflection symmetry of
-Section~\ref{app:properties}):
+read: the strike's ray meets the \emph{pool curve} at one point, and the value
+is read off at that meet. One ray, one curve---no second object. (A comparison
+across \emph{two} curves appears exactly once in this paper, in funding:
+the same slope located on the pool curve and on the anchor curve,
+Section~\ref{sec:funding}.) In dollars the meet sits at moneyness $S/K$ (spot
+over strike), and the map from the meet to the option price is explicit---a
+power law, welded to the exercised payoff (put wing shown; the call wing
+mirrors it by reflection, Section~\ref{app:properties}):
 \begin{equation}
   \mathrm{mark}(\theta)\;=\;
   \begin{cases}
@@ -298,7 +298,7 @@ Section~\ref{sec:lens} enters both the read and the transaction.
     \addlegendentry{pool curve}
     % mode ray y=x (ATM): meets curve at (1.449,1.449)
     \addplot[gray,thin,domain=0:2.9] {x};
-    \node[gray,font=\scriptsize,rotate=38] at (axis cs:2.62,2.42) {mode ray (ATM)};
+    \node[gray,font=\scriptsize] at (axis cs:2.72,2.52) {mode};
     % chosen strike ray y=1.55x: meets curve at (1.164,1.804)
     \addplot[blue!60!black,thin,domain=0:1.85] {1.55*x};
     \node[blue!60!black,font=\scriptsize] at (axis cs:1.62,2.98) {chosen ray $\theta$};
@@ -307,26 +307,21 @@ Section~\ref{sec:lens} enters both the read and the transaction.
     \node[red!60!black,font=\scriptsize] at (axis cs:0.62,3.22) {$\theta_{\mathrm{tx}}$};
     % intersection points
     \node[circle,fill=blue!60!black,inner sep=1.3pt,
-      label={[font=\scriptsize,blue!60!black]right:read point}] at (axis cs:1.164,1.804) {};
+      label={[font=\scriptsize,blue!60!black]right:read}] at (axis cs:1.164,1.804) {};
     \node[circle,fill=red!60!black,inner sep=1.3pt,
-      label={[font=\scriptsize,red!60!black]above right:transact point}] at (axis cs:0.935,2.246) {};
+      label={[font=\scriptsize,red!60!black]above right:transact}] at (axis cs:0.935,2.246) {};
     \node[circle,fill=gray,inner sep=1.2pt] at (axis cs:1.449,1.449) {};
-    % lens arrow from chosen to tx ray along the curve
     \draw[->,thick,red!60!black] (axis cs:1.115,1.86) to[bend left=18] (axis cs:0.985,2.19);
-    \node[red!60!black,font=\scriptsize,align=left] at (axis cs:2.3,1.35)
-      {transact through the lens:\\ $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\theta/\mathrm{mode})^{m}$};
-    \node[blue!60!black,font=\scriptsize,align=left] at (axis cs:2.72,0.72)
-      {read through the lens:\\ $\mathrm{mark}=\tfrac{1}{g+1}\bigl(\tfrac{S^{\ast}}{S}\bigr)^{g}$, $g=m\gamma$};
   \end{axis}
 \end{tikzpicture}
 \caption{From strike ray to option price, through the lens. A strike is a ray;
 its meet with the pool curve is where everything happens. \emph{Reading}: the
-ray read against the mode ray gives moneyness $S/K$, and the mark is the power
-law of Eq.~\eqref{eq:mark} with lensed exponent $g=m\gamma$. \emph{Transacting}:
-the swap executes further out, on the lens ray
-$\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\theta/\mathrm{mode})^{m}$ (drawn for
-$m=2$), frozen at open. One knob $m$ steepens the read and displaces the
-transaction in the same direction. Geometry exact for the drawn curve.}
+meet sits at moneyness $S/K$, and the mark is the power law of
+Eq.~\eqref{eq:mark} with lensed exponent $g=m\gamma$. \emph{Transacting}: the
+swap executes further out, on the lens ray
+$\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\theta/\mathrm{mode})^{m}$ (the
+\emph{mode} is the pool's at-the-money ray; drawn for $m=2$), frozen at open. One knob $m$ steepens the read and displaces the
+transaction in the same direction.}
 \label{fig:read}
 \end{figure}
 
@@ -347,9 +342,13 @@ Appendix~\ref{app:spec}.
 \subsection{Funding}\label{sec:funding}
 Mirroring a perpetual future, a position accrues \emph{funding} at a rate
 proportional to how far the live curve deviates from the symmetric
-($w=\tfrac12$) \emph{anchor} curve---the same strike ray read on both curves,
-slope against slope (Figure~\ref{fig:funding})---through the vol knob of
-Section~\ref{sec:lens}. The crowded side pays the contrarian side; on-anchor
+($w=\tfrac12$) \emph{anchor} curve, read \emph{like slope to like slope}:
+the slope at the position's strike is located on \emph{both} curves, and the
+deviation is the gap between the two ray angles at which they attain it
+(Figure~\ref{fig:funding}), through the vol knob of Section~\ref{sec:lens}.
+Matching the slope---rather than the ray---is what respects the at-the-money
+point: on-anchor, both curves attain the reference slope at the same ray, so
+the deviation---and the rate---vanishes exactly there. The crowded side pays the contrarian side; on-anchor
 the rate is exactly zero; a rebase bounds how fast drift accumulates into the
 deviation. This paper fixes the \emph{rate} law (the exact shipped form is in
 Appendix~\ref{app:spec}); the cash-transfer routing is implementation-level
@@ -366,32 +365,35 @@ deferred (Appendix~\ref{sec:frontier}).
       xtick=\empty, ytick=\empty,
       axis lines=left, clip=false, samples=140,
       legend style={at={(0.98,0.98)},anchor=north east,font=\scriptsize,draw=none}]
-    % anchor curve w=1/2: y=2.1/x ; skewed pool curve w=0.6: y=2.3004/x^1.5
-    % both pass through (1.2,1.75); the strike ray y=1.4583x meets both THERE.
+    % anchor curve w=1/2: y=2.1/x ; skewed pool curve w=0.6: y=2.3004/x^1.5.
+    % SAME SLOPE s=1.75 located on both (entry 386): anchor attains it at
+    % (1.0954,1.9170) [ray 1.75], pool at (1.3120,1.5307) [ray 1.1667].
     \addplot[very thick,black!45,dashed,domain=0.72:3.3] {2.1/x};
     \addlegendentry{anchor curve ($w=\tfrac12$)}
     \addplot[very thick,black,domain=0.86:3.3] {2.3004/x^(1.5)};
     \addlegendentry{pool curve (skewed, $w\neq\tfrac12$)}
-    \addplot[blue!60!black,thin,domain=0:1.9] {1.4583*x};
-    \node[blue!60!black,font=\scriptsize] at (axis cs:2.18,2.78) {strike ray $\theta$};
-    \node[circle,fill=black,inner sep=1.3pt] at (axis cs:1.2,1.75) {};
-    % tangent segments at the shared point: anchor slope -1.4583, pool slope -2.1875
-    \draw[black!45,dashed,thick]
-      (axis cs:0.95,{1.75+1.4583*0.25}) -- (axis cs:1.45,{1.75-1.4583*0.25});
+    % the two rays at which each curve attains the SAME slope
+    \addplot[black!45,thin,dashed,domain=0:1.35] {1.75*x};
+    \addplot[blue!60!black,thin,domain=0:1.62] {1.1667*x};
+    % parallel tangent segments, both slope -1.75
+    \draw[black!45,thick]
+      (axis cs:0.86,{1.9170+1.75*0.235}) -- (axis cs:1.33,{1.9170-1.75*0.235});
     \draw[black,thick]
-      (axis cs:0.98,{1.75+2.1875*0.22}) -- (axis cs:1.42,{1.75-2.1875*0.22});
-    \draw[<->,red!60!black,thick] (axis cs:1.52,1.28) arc[start angle=-35,end angle=-62,radius=1.35];
-    \node[red!60!black,font=\scriptsize,align=left] at (axis cs:2.45,1.15)
-      {slope deviation at the SAME ray\\ $\Rightarrow$ funding; zero when\\ pool $=$ anchor};
+      (axis cs:1.07,{1.5307+1.75*0.242}) -- (axis cs:1.55,{1.5307-1.75*0.238});
+    \node[circle,fill=black!45,inner sep=1.2pt] at (axis cs:1.0954,1.9170) {};
+    \node[circle,fill=black,inner sep=1.3pt] at (axis cs:1.3120,1.5307) {};
+    \draw[<->,red!60!black,thick] (axis cs:1.06,1.855) arc[start angle=60,end angle=49.4,radius=2.1];
+    \node[red!60!black,font=\scriptsize] at (axis cs:1.44,2.12) {$\Delta$ ray};
   \end{axis}
 \end{tikzpicture}
-\caption{The funding read: the position's own strike ray is read on \emph{two}
+\caption{The funding read: the \emph{same slope} is located on both
 curves---the live (skewed) pool curve and the $w=\tfrac12$ anchor---and the
-funding rate is proportional to the slope deviation between the two reads (like
-ray to like ray, never against a fixed diagonal). Drawn with both curves through
-the read point so the two tangents are directly comparable: anchor slope
-$1.458$, skewed slope $2.19$. On-anchor the deviation---and the rate---is
-exactly zero. Exact rate law: Appendix~\ref{app:spec}.}
+funding rate is proportional to the gap between the two ray angles at which
+they attain it ($\Delta$~ray; the parallel segments are the two equal-slope
+tangents, drawn for slope $1.75$: rays $1.75$ vs $1.167$). Matching slope
+rather than ray is what respects the at-the-money point: on-anchor both
+curves attain the reference slope at the same ray, so the deviation---and
+the rate---is exactly zero. Exact rate law: Appendix~\ref{app:spec}.}
 \label{fig:funding}
 \end{figure}
 
@@ -487,7 +489,7 @@ skew-dominated---we expect the ceiling to be second-order, but we state this as 
 plausibility, not a proof.
 
 % ===========================================================================
-\section{American exercise: the smooth-pasting boundary}\label{sec:american}
+\section{American exercise: where waiting ends}\label{sec:american}
 % ===========================================================================
 
 \begin{figure}[t]
@@ -537,8 +539,10 @@ While the holder waits, the position is worth its \emph{continuation value}
 $c\cdot s_{N}$, where $s_{N}$ is the \emph{normalised strike coordinate} (the
 strike in the curve's own scaled units, with value $\propto s_{N}\propto
 S^{-\gamma}$) and $c$ fixes the overall level. Continuation \emph{pastes} onto the
-exercised (intrinsic) payoff at the boundary under \emph{smooth-pasting}: the two
-pieces agree in value and slope---two equations in the two unknowns
+exercised (intrinsic) payoff at the boundary under \emph{smooth pasting}---in
+plain terms, the payoff line is \emph{tangent} to the waiting curve: the two
+pieces agree in value and slope, no kink and no jump---two equations in the two
+unknowns
 $s_{N}^{\ast}$ and $c$. The solution is closed form:
 \begin{equation}
   S^{\ast}=K\,\frac{g_{\mathrm{loc}}}{g_{\mathrm{loc}}+1}

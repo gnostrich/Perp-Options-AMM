@@ -3916,3 +3916,25 @@ about prose get spot-checked, they drift.
 - NO LaTeX compiler in env — verdict explicitly NOT a compile check; manager must compile.
 - SETTLED (don't re-attack): v2 tex figure arithmetic, worked-example table, annex identifier
   column, the two verbatim statements.
+
+## 2026-07-03 — MICRO-GATE on entry-382/383/384 frame-fix edits (uncommitted, base md5 c187cb35): CLEAR.
+- Verdict appended to notes/skeptic/VERDICT_airtight_pass_2026-07-02.md (MICRO-GATE section).
+- Operator doctrine (entry 382, read verbatim): mark = ONE ray meets ONE curve (pool); two-curve
+  comparison lives ONLY in funding (same ray, pool vs anchor); no AMM-101 ("2 assets" is WRONG,
+  Balancer is n-asset); smooth pasting needs plain gloss (tangent/no-kink) at first use; figures
+  decrowded. Operator threatened retraction (384) — highest-stakes doctrine encoding to date.
+- All 5 gated items PASS: (a) mark retitled "one ray, one curve", parenthetical routes two-curve
+  read to funding only, residual grep clean (sole hit = non-rendered TikZ % comment L299);
+  (b) AMM-101 opener deleted, "two-asset slice of Balancer's family" is accurate scoping;
+  (c) tangent/no-kink glosses at contributions item 3 + §5, title "where waiting ends";
+  (d) fig:read/fig:funding decrowded, captions re-derived (anchor slope 1.4583, pool 2.1875,
+  incidence at (1.2,1.75) — attack failed); (e) eq:mark byte-untouched, only TikZ label coords moved.
+- NON-BLOCKING residual named: "mode" now first renders (fig:read label/caption) BEFORE its only
+  prose gloss (§4 lens, "mode the at-the-money ray") — the edit deleted the mark-subsection
+  definition and shortened the label from "mode ray (ATM)" to "mode". Same jargon-at-first-use
+  class as the operator's smooth-pasting complaint. Manager's call pre-commit.
+- SETTLED (don't re-attack): fig:funding geometry numbers (re-derived twice now); "quoted price =
+  slope" deletion is operator-ordered basics-removal, nothing downstream depends on pre-defining it.
+- Pattern (recurring): manager edits that DELETE framing prose keep dropping the definitional
+  gloss riding inside it (this time "mode"; entry-382 round it was smooth pasting). When auditing
+  deletions, always ask: what term was defined ONLY inside the deleted sentence?
