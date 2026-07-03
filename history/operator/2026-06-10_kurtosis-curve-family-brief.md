@@ -3043,3 +3043,9 @@ _Context: operator on the 650b2397 build: (1) "how a trade runs" is good and mus
 _Context: final pass ordered: unintroduced-concept/jargon/simple-English-next-to-notation check; small debulk (1–2 paragraphs over 12pp before annexes); general check — operator cannot QC further._
 
 > ok do one check for unintroduced stuff etc. like talking od something without explaning it, is sipleenelgih there next to the notation etc. jargon whrre itts not required that kind of stuff and i need a small debulking because we're running 1-2 paragtaphs over 12 pages before annex starts, and yes generally please just fucking chekc it i really cant QC more theres no time
+
+
+## Entry 399 — 2026-07-02 UTC
+_Context: operator, reading the compiled journey step 2 (an earlier render): the θ_tx=mode·(chosen/mode)^m presentation reads as if the trade happens "at mode" when it is supposed to be at the STRIKE; and orders trader-plain English in the bookkeeping step — e.g., the pool treats buy-call as buy-asset-at-strike, buy-put as sell-asset-at-strike and vice versa; the value-exchange part separately explains how the option price determines the bought quantity._
+
+> [screenshot of rendered step 2] what the motherfcuck is the goddamn fucking thing here mode tx what the fux its suposed to be at strike not at motherfuckng mode you goddamn lying fuck; and how much do i fuckning tell yoju that you have to make it simple english understandable for example you coul dsay in the boookeeping thong that thwe poool treats buy call as buy asset at strikr, buy put as sell aeest at strike and vice versa, then in the thing talkingof actual valiue exchange whatever yoj talk of how theoption price determines the boght q    ....

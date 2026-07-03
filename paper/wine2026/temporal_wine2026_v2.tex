@@ -273,12 +273,17 @@ Lean-verified results.
     second leg is priced on the pool as the first leg left it. A small fee
     ($0.01\%$ of notional) is paid from your side's \emph{club}---its pooled
     equity, your counterparty in step~5---never into the pool.
-  \item \textbf{The pool bookkeeps your open.} Each leg moves the pool by
-    $\Delta y=\pm N\,K_{\mathrm{tx}}$---notional times the \emph{transaction
-    strike} in dollars, from
-    $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$,
-    where the \emph{mode} is the pool's at-the-money ray and $m$ the vol knob
-    of Section~\ref{sec:lens}; $K_{\mathrm{tx}}$ is frozen at open. If your cash
+  \item \textbf{The pool bookkeeps your open.} In the pool's books an
+    option is just an asset swap \emph{at a strike}: buying a call is booked
+    as buying the underlying at the strike, buying a put as selling the
+    underlying at the strike---and selling either leg is the reverse. So each
+    leg moves the pool by $\Delta y=\pm N\,K_{\mathrm{tx}}$: notional times
+    the strike, in dollars. The booking strike is \emph{your} strike passed
+    through the lens---equal to your chosen strike at $m=1$, pushed further
+    out along the curve as $m$ grows
+    ($\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$,
+    the mode being the at-the-money ray; Section~\ref{sec:lens})---and its
+    dollar value $K_{\mathrm{tx}}$ is frozen at open. If your cash
     leg exceeds the pool's usable depth, the trade is rejected outright with
     the numbers---never silently capped.
   \item \textbf{You hold.} Funding is metered by the slope-deviation read of
