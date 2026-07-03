@@ -8,7 +8,7 @@ CLUB the small mechanics)._
 |---|---------|----------------------------------|--------|
 | 1 | **The pool curve** | THE object: one curve in (asset, cash), leaning by `w`; its slope is the price. Everything else is rays on it or shadows of it. | 🔒 |
 | 2 | **LP liquidity** | adding/removing liquidity re-sizes the whole picture isotropically (×(1+λ)) — price and lean untouched; not a trade. | ✅ code / 📄 absent (clubbable) |
-| 3 | **Trades bend the curve** | a trade re-leans the curve (updates `w`); `k` is a readout. ⚠ ANCHORING RESOLVED: BUILT `0e0a0062` (entry 377 go) — live path = trade-point law (w′=11/21 exhibit live-exact; α,β move off-ATM by design). | ✅ BUILT-PROVISIONAL (ratification -TP339-RATIFY) |
+| 3 | **Trades bend the curve** | a trade re-leans the curve (updates `w`); `k` is a readout. ⚠ ANCHORING RESOLVED: BUILT `0e0a0062` (entry 377 go) — live path = trade-point law (w′=11/21 exhibit live-exact; α,β move off-ATM by design). | ✅ BUILT-RATIFIED (entry 425) |
 | 4 | **Strikes are rays** | every strike = a ray from the origin; the pool's centre = the mode ray; one curve + a fan of rays = the book. | 🔒 |
 | 5 | **The mark (value)** | moneyness = your ray's own read on the pool curve (ONE ray, ONE curve — nothing compared; entries 311/382); the mark = the smooth-pasted value on it (waiting arm = a power of the read × the seam constant; exercised arm = parity); 0→1, =1 only at full exercise. | ✅ |
 | 6 | **The dial `m`** | set from vol at creation; not changed by trades (could move realtime in future versions — entry 389); steepens every ray equally; MORE volatile asset ⇒ LOWER m. | ✅ |
