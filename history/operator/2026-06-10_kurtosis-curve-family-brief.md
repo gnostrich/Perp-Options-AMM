@@ -2987,3 +2987,11 @@ _Context: operator rules between the two funding reads: the SAME-SLOPE-on-both-c
 
 ## Entry 387 — 2026-07-02 UTC
 > give the tex file
+
+
+## Entry 388 — 2026-07-02 UTC
+_Context: operator: the "American-style" language is still wishy-washy — it should clearly talk in OTM/ITM situation-perspective terms; then the zones are clear._
+
+> american style language is still wishy washy asswipe dogshit
+> ruckery
+> it should be clearly just talkinm otm itm tea situation perspective then. exones clear

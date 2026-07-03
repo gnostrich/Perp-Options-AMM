@@ -519,7 +519,7 @@ plausibility, not a proof.
     \draw[->,gray] (axis cs:78,0.56) to[bend right=20] (axis cs:68,0.36);
   \end{axis}
 \end{tikzpicture}
-\caption{The American rule: out-of-the-money the mark follows the
+\caption{The three zones: out-of-the-money the mark follows the
 \emph{continuation} curve; at the free boundary
 $S^{\ast}=K\,g_{\mathrm{loc}}/(g_{\mathrm{loc}}+1)$ it joins the \emph{intrinsic}
 payoff with matching value \emph{and} slope (a $C^{1}$ ``seam''). Drawn for $m=1$
@@ -529,10 +529,22 @@ weld is \tfp{}\textsuperscript{L5,L6} (Appendix~\ref{app:lean}).}
 \label{fig:seam}
 \end{figure}
 
-This is the paper's core construction: exercise is priced by an
-\emph{early-exercise free boundary}---a price level \emph{solved for}, not
-fixed in advance---so the strike is an ordinary interior point of the value
-curve, not a cliff.
+This is the paper's core construction, told from the holder's situation. A
+put at strike $K$ splits spot into three zones (Figure~\ref{fig:seam}):
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Out-of-the-money} ($S>K$): waiting; the mark follows the
+    power law of Eq.~\eqref{eq:mark}.
+  \item \textbf{In-the-money, still waiting} ($S^{\ast}<S\le K$): the
+    \emph{same} power law continues through the strike---the strike is an
+    ordinary interior point, nothing happens there.
+  \item \textbf{Exercised} ($S\le S^{\ast}$): the mark \emph{is} the payoff
+    line $1-S/K$, which joins the waiting curve tangentially at $S^{\ast}$.
+\end{itemize}
+The zone edge $S^{\ast}$ is an \emph{early-exercise free boundary}---a price
+level \emph{solved for}, not fixed in advance---and it sits \emph{past} the
+strike. In every zone the holder may close at the quoted mark, and the quoted
+mark is never below the payoff\textsuperscript{L6}; calls mirror by
+reflection.
 
 \subsection{The construction}
 While the holder waits, the position is worth its \emph{continuation value}
@@ -712,7 +724,7 @@ mechanism-design task as much as a proof task.
 A single Balancer pool with one dynamic weight---run as a state-transition system
 whose conservation law is applied at each trade's own point, and whose trades
 \emph{skew} the curve---prices the entire out-of-the-money perpetual-option
-continuum in closed form. The exercise rule is American: a closed-form
+continuum in closed form. Exercise is zoned by a closed-form
 smooth-pasting boundary
 $S^{\ast}=K\,m\gamma/(m\gamma+1)$ with a smooth seam and no new parameters,
 \tfp{}\textsuperscript{L4,L5,L6} and tied to the Merton problem,
