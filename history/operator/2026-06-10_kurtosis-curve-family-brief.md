@@ -3121,3 +3121,9 @@ _Context: on the FLAG-CURVE fork, operator orders a research run: benchmark the 
 _Context: on the FLAG-CURVE fork + no-worse research, operator steers to the charge-back resolution: if there's a natural way to quantify round-trip profit and charge it back without changing mechanics, that's ideal — i.e., the R-D family (live-(b) mechanics untouched; settlement-layer charge)._
 
 > if theres a natural way to quantify round trip profit and charge it back without chnaging mechanics thats probably ideal
+
+
+## Entry 414 — 2026-07-03 UTC
+_Context: operator confirms their read of the counterfactual charge-back: keep a record of "immediate roundtrip p/l" and adjust it on closure._
+
+> so this kind of makes sense, you're basically saying keep a record of 'immediate roundtrip p/l' and adjust that on closure or something
