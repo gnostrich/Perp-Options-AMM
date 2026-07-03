@@ -3127,3 +3127,9 @@ _Context: on the FLAG-CURVE fork + no-worse research, operator steers to the cha
 _Context: operator confirms their read of the counterfactual charge-back: keep a record of "immediate roundtrip p/l" and adjust it on closure._
 
 > so this kind of makes sense, you're basically saying keep a record of 'immediate roundtrip p/l' and adjust that on closure or something
+
+
+## Entry 415 — 2026-07-03 UTC
+_Context: operator accepts the counterfactual charge-back design "for now"; flags NOT-yet-thought-through: LP attacks, other-wallet (multi-wallet/sybil) attacks — keep in notes as TBD; orders a research run benchmarking against Curve etc. dynamic AMMs on the attack/defense surface, then a take-stock of the defenses to implement. Close-(b) build HOLDS behind that take-stock._
+
+> i think this makes sense for now, i havent though through lp attacks. other wallet attacks or whatever but keep this in notes tbd, do a rsearch run benchmarkeing ahgainst curve etc dynaimc amms and then we take stock of the defenses to be implemented
