@@ -2983,3 +2983,7 @@ _Context: operator refines the funding geometry: the comparison may equivalently
 _Context: operator rules between the two funding reads: the SAME-SLOPE-on-both-curves read is the right one; the same-ray read would violate the ATM point._
 
 > the same slkope on both is the right ont the other woulr violate the atm point
+
+
+## Entry 387 — 2026-07-02 UTC
+> give the tex file
