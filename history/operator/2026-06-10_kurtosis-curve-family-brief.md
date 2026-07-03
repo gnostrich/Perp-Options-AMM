@@ -3033,3 +3033,7 @@ _Context: operator, on the 93277a2d build: (1) says the AMM-is-bookkeeping-only 
 _Context: operator on the 650b2397 build: (1) "how a trade runs" is good and must move EARLY into the main body (after AMM construction) to delete ambiguity; (2) remove "server-side" from the abstract; (3) do a global diagram QC — they won't check figures; (4) remove the "where waiting ends" title and cutesy dogshit like it; (5) "American generalisation" in contributions is braindead — the paper is standalone, generalising nothing._
 
 > i thnk how a trade runs is good and ought to be in the main body (maybe after AMM construction ort somthtine) early on so that ambiguity is MOTHERFUKING DELETED YOU FUCK; and also remove server side motherfuck fro the goddamn abstravt you fuck; an do a global diagram QC im not chwcking that ; remove where wiating ends and fucking dogshit like that before i delete everything im enranged;  in contrinbutions you say amercan genrrcilsiation its dfuckinbg braindead what the fuck are you generalsig  you uck, this has no link to any prev paper its standlone for fuck sake
+
+
+## Entry 397 — 2026-07-02 UTC
+> meantime now ehatds the common fucking thread?
