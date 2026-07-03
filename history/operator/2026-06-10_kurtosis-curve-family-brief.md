@@ -3173,3 +3173,7 @@ _Context: operator clarifies entry 420 — they meant evaluating relative to ent
 _Context: operator approves the entry-liquidity framing ("smooth!"), orders it noted, and asks for a recap of the TBDs._
 
 > smooth! ok note this and recap the tbds
+
+
+## Entry 423 — 2026-07-03 UTC
+> got to simplify these for me gang
