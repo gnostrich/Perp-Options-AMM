@@ -3099,3 +3099,9 @@ _Context: operator gives the build go for ruling (b): fix the HTML — close as 
 _Context: alongside the close-(b) build go, operator orders a global audit for consistency/staleness across the repo._
 
 > and do a global audit for consistency etc staleness whatever
+
+
+## Entry 409 — 2026-07-02 UTC
+_Context: operator: no overnight pacing — keep going, earlier is better. Manager tightens the loop: active monitoring, each stage fired the moment its input lands._
+
+> no overnight keep going  earlier better
