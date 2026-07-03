@@ -1,5 +1,51 @@
 # MEMORY — research-lead
 
+### CLOSE-AS-FIRST-CLASS-TRADE DESIGN SPEC delivered (operator RULING entry 405 "its to be b") — 2026-07-03
+Deliverable: `specs/SPEC_close_first_class_trade_2026-07-03.md` — DESIGN-COMPLETE, NOT splice-ready (design
+first, per brief). READ-ONLY on engine, no Aristotle (obligations queued only), no git. Supersedes WHEN BUILT
+the frozen-arc `revertArc` close (build `0e0a0062`, spec SPEC_tradepoint_conservation §1.4) + the LOCKED
+two-case settlement. All numbers Node-vm vs REAL HEAD `0e0a0062`; harnesses scratchpad `closeb/h1..h6.js`.
+Under (b): dy_close=−dy_open=∓N·K_tx (frozen), dx live via tradeUpdateAt, ρ_close=(K_tx/oNow)/mode_live.
+- **MR1 x-drain:** live-registered close is a ONE-SIGNED drainable bias (pool LOSES x in ALL 9 cases; ∝dy²;
+  compounds — 30 cyc @50% depth: pool value 1.6M→800k, dies cyc 13). Same leak sits between any two opposite
+  OPENS (latent in shipped open path). dy is POOL-INTERNAL (trader paid option-layer L0·raw_net·carvedEq, ≈0
+  on zero-move cycle) ⇒ drain = pure LP value destruction, not direct trader steal. Neutralizer PINNED =
+  POOL-VALUE FLOOR (credit shortfall / A15-family close haircut) → pool value held EXACTLY, honest closes
+  untouched (floor binds only leaking direction).
+- **MR2 ITM close continuity — WIN, demonstrated:** tradeUpdateAt continuous through ρ=1, no wing-lock, no
+  branch. OLD two-case flips both-reversed→settled at pool-mark boundary (oracle≈83900) with trader_payout
+  JUMP=221.38 on $50 step (skeptic +0.016·eq·L0 class, ref≈640); (b) same step = 1.24 (max (b) step whole
+  sweep=1.32). Branch jump DISSOLVES ~180×. Zero (b)-close rejections across full ITM sweep.
+- **MR3 no-free-money:** exact round-trip GONE by design (only frozen arc=(a) restores reserves). Replacement
+  P-CYCLE = pool value non-decreasing over any open-close cycle (holds exactly w/ floor). CM6-v2 RETIRE
+  (its neg-control asserts live-leaks-so-use-arc — inverted under b); ADD CM6-v3 (pool no-free-lunch + neg
+  control un-floored leaks + γ-ratchet bound); CM8-v2 SURVIVES; NEW CM12 branch-continuity. Gate plan in §3.
+- **MR4 division of labour + CENTRAL HAZARD:** proceeds stay option-layer (kept). Floor is FREE to honest
+  traders BECAUSE dx never reaches trader (pool-integrity, not payout — resolves value-axis collision). BUT
+  **γ=w/(1−w) is live and prices EVERY strike's mark/funding/seam; the drain ratchets w. MEASURED: pool-value
+  floor holds value EXACTLY yet w still ratchets 0.5→0.935 (γ 1→14.4) over 30 cyc.** ⇒ pure (b)+floor leaves
+  the SHARED CURVE STEEPNESS manipulable by free cycling — a NEW vector (a)'s arc didn't have (arc removed
+  own dwA). **FLAG-CURVE = the one operator-tier decision.** Only un-winding the leg's own w-increment dwA
+  kills it. Options: R-A (recommended) = live-dx reserves + restore own dwA (imports only scalar dwA, keeps
+  live reserves + no ITM branch = "mostly b"); R-B = floor+escalating close fee (bounds, reopens div-of-labour);
+  R-C = accept ratchet+rely on arb/funding (weakest, contradicts static-steepness doctrine). PIN=R-A.
+- **MR5 depth:** (b) close CAN fail depth guard (worse than blocked open — trapped). PINNED default enabled by
+  decoupling = best-effort reserve leg + FULL option-layer settle (payout independent of swap completing).
+  FLAG-DEPTH alternatives (hard reject / partial / escrow) = operator choice.
+- **MR6 migration:** open path unchanged; band already stores K_tx + arc{dxA,dyA,dwA,oOpen}; R-A consumes K_tx
+  + dwA ⇒ legacy `0e0a0062` bands close cleanly, no fallback branch. CM6-v2→CM6-v3; DIFF/inventory: close goes
+  exact-round-trip→live-floor, residual now on ALL closes not just ITM.
+- **MR7 paper:** submitted `f8b37a71` is (b)-compatible on OTM legs but states two-case ITM-cash at 4 sites —
+  exact revision sentences pinned in spec §7 (lines ~294-298 journey, ~755-758 limitations, ~766-769 incentive,
+  ~845-849 settlement annex; ~743 already b-honest). Operator/paper-owned edits, flagged not made (paper submitted).
+- **QUEUED LEAN (not submitted, no-Aristotle order):** CL1 proceeds-continuity across ρ=1; CL2 P-CYCLE pool
+  no-free-lunch w/ floor; CL3 γ-ratchet bound (naive b → w→1; R-A → w_close=w_pre_open); CL4 depth best-effort
+  well-posedness. SPEC_tradepoint frozen-arc/CM6-v2 obligations SUPERSEDED on b build; open-law (CM8-v2) carries.
+- **2 operator FLAGs up:** FLAG-CURVE (R-A/R-B/R-C — operator-tier, PIN R-A) + FLAG-DEPTH (best-effort settle vs
+  reject/partial/escrow — PIN best-effort). Everything else pinned w/ default. R6 scope-gate + itemized go BEFORE build.
+
+---
+
 ### TRADE-POINT CONSERVATION SPEC delivered (operator entry 339; FLAG-A/inventory-#16 fix) — 2026-07-02
 Deliverable: `specs/SPEC_tradepoint_conservation_2026-07-02.md` — splice-ready for the intern; READ-ONLY on
 engine, no Aristotle, no git. Everything measured in Node vm vs REAL HEAD (`9fdde1de`); harnesses in session
