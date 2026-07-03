@@ -3001,3 +3001,7 @@ _Context: operator: the "American-style" language is still wishy-washy — it sh
 _Context: operator orders: remove the "static" steepness-knob framing (it could move realtime in updated versions); and make clear the AMM is bookkeeping / state-updating and slippage calc only — the economic stuff is the option pricing._
 
 > emeove static steepness knob because we could move it realrime in updated versions ; and hav eti make motherfuckonf clear amm is bookkeeping / state updation and slippage calc only and economic stuff is the goddamn option pricig thing
+
+
+## Entry 390 — 2026-07-02 UTC
+> rekove solve cu stays comditional dogshit from abstract
