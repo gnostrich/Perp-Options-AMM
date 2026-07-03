@@ -67,11 +67,14 @@ trade executes where its ray meets the pool curve, and it \emph{skews the
 curve} at that point: the weight of the Balancer invariant is updated per
 trade, so the pool carries its trading history as a stored skew.
 
-That stored skew is the pricing state. From the single state $(x,y,w)$ the
-mechanism reads the value of \emph{every} out-of-the-money call and put in
-closed form---no premium object, no expiry, no per-strike order book---with an
-exact American early-exercise boundary, one volatility knob for the
-whole book, and a Lean-verified core. The conditions are stated plainly
+That stored skew is the pricing state, and the division of labour is strict
+throughout: \emph{the pool only bookkeeps}---it stores the state $(x,y,w)$,
+updates it per trade, and prices slippage---while \emph{every economic
+quantity is the option-pricing layer} reading that state. From the single
+state the mechanism reads the value of \emph{every} out-of-the-money call and
+put in closed form---no premium object, no expiry, no per-strike order
+book---with an exact American early-exercise boundary, one volatility knob for
+the whole book, and a Lean-verified core. The conditions are stated plainly
 throughout: what is verified in Lean, what is an engine measurement, and where
 solvency stays conditional.
 
@@ -590,7 +593,10 @@ option wing keeps growing past $1$, as it should.
 \subsection{A worked example (illustrative numbers)}
 A fully worked put-leg example ($\gamma=2$, $K=\$100$, both $m=1$ and $m=3$
 columns, each evaluated at \emph{its own} boundary) is tabulated in
-Appendix~\ref{app:spec}. At a glance: the boundary~\eqref{eq:boundary} sits at
+Appendix~\ref{app:spec}. Every number in it is a \emph{mark}---the value of
+one escrow unit read at that spot, as spot moves through the zones; nothing is
+bought or sold in the table (a position of notional $q$ at spot $S$ is worth
+$q\cdot\mathrm{mark}(S)$). At a glance: the boundary~\eqref{eq:boundary} sits at
 $S^{\ast}=\$66.67$ for $m=1$ (boundary mark $1/3$) and rises to $\$85.71$ for
 $m=3$ (mark $1/7$); the at-the-money marks are $0.148$ and $0.057$; below
 $S^{\ast}$ the mark is simply intrinsic, $1-S/K$. The numbers are
@@ -803,43 +809,46 @@ price; a leg crossing that boundary settles at a value continuous across it (the
 closed form above), so there is no cliff-edge intrinsic grab at the boundary.
 Trust in the reference feed is an explicit assumption.
 
-\subsection{Execution mechanics}\label{sec:exec}
-Five design laws pin execution down; they are specification-level statements of
-the shipped design, not Lean-verified results.
+\subsection{Execution: how a trade actually runs}\label{sec:exec}
+The life of a position, in the order a trader lives it. Throughout, remember
+the division of labour: the \emph{pricing layer} decides every economic
+number; the \emph{pool} only bookkeeps the flows and charges the slippage.
+These are specification-level statements of the shipped design, not
+Lean-verified results.
 \begin{enumerate}[leftmargin=2em,itemsep=1pt]
-  \item \textbf{Quantity bridge.} A band's bought-leg size is set by the pricing
-    formula, not by pool proceeds:
-    $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$, both values read from
-    the sequenced pool state (the bought leg is priced on the pool as the sold
-    leg left it)---so $V_{\mathrm{buy}}=V_{\mathrm{sell}}$ exactly and slippage
-    enters only through the sequenced prices. The pool is never a premium
-    counterparty.
-  \item \textbf{Pool-swap law.} Each leg's pool movement is premium-free:
-    $\Delta y=\pm N\,K_{\mathrm{tx}}$ (notional times the transaction strike).
-    Option premium never enters the pool, and a band's two legs move the pool
-    in the \emph{same} direction.
-  \item \textbf{Two-strike rule.} Settlement is at the trader's \emph{chosen}
-    strike; the financing swap executes at the lens transaction strike
-    $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$
-    (Section~\ref{sec:lens}), \emph{frozen} at open as a dollar strike and
-    reused verbatim for every leg reversed on the pool at close, so those
-    swaps round-trip the reserves exactly; an in-the-money leg is settled to
-    cash instead---no pool swap---per the two-case rule of
-    Appendix~\ref{sec:settlement}.
-  \item \textbf{Payout law.} A closing position pays
-    $L_{0}\times(\text{net result})\times(\text{its carved equity})$; the
-    counterparty is the position's own \emph{club}---the pooled equity of the
-    side it was carved from, at leverage $L_{0}$ frozen at open---and a drained
-    club pays nothing: positive payouts stop once club equity reaches zero.
-  \item \textbf{Live steepness.} $\gamma=w/(1-w)$ is read from the \emph{live}
-    pool at every use---it moves as trades skew the curve; the knob $m$ is
-    never moved by trades.
+  \item \textbf{You open.} You hold a perpetual future and pick a strike. A
+    slice of your perp is \emph{carved}---its notional, equity, and entry
+    mark frozen as your escrow. Your band's sold leg is valued by the pricing
+    layer, and the bought leg's size is that value divided by the bought
+    leg's per-unit price: $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$,
+    an option-price \emph{ratio}. Premium never touches the pool; slippage
+    enters because the second leg is priced on the pool as the first leg left
+    it. A small fee ($0.01\%$ of notional) is paid from club equity---never
+    into the pool.
+  \item \textbf{The pool bookkeeps your open.} Each leg moves the pool by
+    $\Delta y=\pm N\,K_{\mathrm{tx}}$---notional times the \emph{transaction
+    strike} $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$
+    (Section~\ref{sec:lens}), frozen at open as a dollar number. If your cash
+    leg exceeds the pool's usable depth, the trade is rejected outright with
+    the numbers---never silently capped.
+  \item \textbf{You hold.} Funding is metered by the slope-deviation read of
+    Section~\ref{sec:funding}; the curve's steepness $\gamma=w/(1-w)$ is
+    read \emph{live} at every step (it moves as trades skew the curve; the
+    knob $m$ is never moved by trades).
+  \item \textbf{You close.} Settlement is at the strike \emph{you chose}.
+    Each leg still on the pool reverses its opening swap at the \emph{same}
+    frozen $K_{\mathrm{tx}}$---the reserves round-trip exactly. A leg past
+    its boundary has left the pool's world: it settles to cash at its mark,
+    no pool swap (the two-case rule of Appendix~\ref{sec:settlement}).
+  \item \textbf{You get paid.} Your legs net in perp units; the net converts
+    to cash at your carved slice's closing equity, scaled by $L_{0}$:
+    payout $=L_{0}\times(\text{net result})\times(\text{carved equity})$.
+    The counterparty is your own side's \emph{club} (its pooled equity,
+    $L_{0}$ frozen at open); a drained club pays nothing---positive payouts
+    stop at zero club equity.
 \end{enumerate}
-Three smaller mechanics complete the picture: liquidity provision resizes the
-pool \emph{isotropically}---price and skew untouched, not a trade; a cash leg
-exceeding the pool's usable depth is rejected outright with the numbers, never
-silently capped; and the open fee ($0.01\%$ of notional) is paid from club
-equity, never into the pool.
+One background mechanic: liquidity provision resizes the pool
+\emph{isotropically}---price and skew untouched; it is not a trade.
 
 \subsection{Replication scope: $|\Gamma|\le1$ exact, $|\Gamma|>1$ approximate}
 Let $\Gamma$ be the \emph{hedge ratio}---a position's price-sensitivity to spot.
@@ -896,7 +905,11 @@ Lean-verified result); the cash transfer it meters remains
 implementation-level (Section~\ref{sec:continuum}).
 
 \subsection{Worked example (illustrative numbers), in full}
-The values are \emph{illustrative}---chosen for arithmetic clarity, not calibrated
+Every cell below is a \emph{mark}: the value of \emph{one escrow unit} read
+at that spot---the read as spot moves through the zones of
+Section~\ref{sec:american}. No transaction occurs in this table; a position
+of notional $q$ is worth $q\cdot\mathrm{mark}$ at each spot. The values are
+\emph{illustrative}---chosen for arithmetic clarity, not calibrated
 to any market and not a validation of anything. Take a put leg with $\gamma=2$,
 $K=\$100$, $m=1$ ($g_{\mathrm{loc}}=2$). The boundary~\eqref{eq:boundary} sits at
 $S^{\ast}=100\cdot\tfrac23=\$66.67$, below the strike, with mark

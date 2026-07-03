@@ -3013,3 +3013,9 @@ _Context: operator orders: remove the "static" steepness-knob framing (it could 
 
 ## Entry 392 — 2026-07-02 UTC
 > give the tex when ready
+
+
+## Entry 393 — 2026-07-02 UTC
+_Context: operator, on the 93277a2d build: (1) says the AMM-is-bookkeeping-only order was ignored — must be unmistakable; (2) the worked example's 1/3-type numbers read like amounts of a whole transaction when they are per-unit marks across ITM/OTM zones; (3) execution mechanics is worded cryptically — rewrite it through how a human actually interacts._
+
+> motherfucker straight ignoreeds my messge "and hav eti make motherfuckonf clear amm is bookkeeping / state updation and slippage calc only and economic stuff is the goddamn option pricig thing"; separatrely youb stil talk of mark in 1 3 whatevrr motherfvjuckgk. numbers in the example, the worked exampe may be wrt ITM OTM but you make it look like its for a whole goddamn transaction. frlow ... dont you think the goddamn exewcution mevhanics is worded motherfucking cryptically you dog; fucking thing through thow a human interacts and think you fuck
