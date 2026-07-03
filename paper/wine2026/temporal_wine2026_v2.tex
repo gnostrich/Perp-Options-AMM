@@ -50,7 +50,7 @@ a trade does not slide a point along the curve but \emph{skews} the curve
 instead. The stored skew is the pricing state: from one pool state we read
 every out-of-the-money call and put in closed form, with an exact
 \emph{American} early-exercise level and a smooth join between waiting and
-exercising. One static knob, set from the asset's volatility, fixes the whole
+exercising. One knob, set from the asset's volatility, fixes the whole
 book's steepness. The core results are verified in Lean (by Harmonic's
 Aristotle prover, compiled server-side, not re-run locally); solvency stays
 conditional on a funding source shown necessary but not discharged.
@@ -71,7 +71,7 @@ trade, so the pool carries its trading history as a stored skew.
 That stored skew is the pricing state. From the single state $(x,y,w)$ the
 mechanism reads the value of \emph{every} out-of-the-money call and put in
 closed form---no premium object, no expiry, no per-strike order book---with an
-exact American early-exercise boundary, one static volatility knob for the
+exact American early-exercise boundary, one volatility knob for the
 whole book, and a Lean-verified core. The conditions are stated plainly
 throughout: what is verified in Lean, what is an engine measurement, and where
 solvency stays conditional.
@@ -96,9 +96,9 @@ Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
         curve's convexity exponent, $m$ the knob below), with a smooth
         value-and-slope join and no new parameters, tied to the classical
         perpetual-American (Merton) problem (Section~\ref{sec:american});
-  \item a single static, \emph{volatility-calibrated} steepness knob $m$ that
-        sets the option-value steepness uniformly across strikes
-        (Section~\ref{sec:lens});
+  \item a single \emph{volatility-calibrated} steepness knob $m$ that sets
+        the option-value steepness uniformly across strikes---trades never
+        move it (Section~\ref{sec:lens});
 \end{enumerate}
 together with an honest formal-verification ledger (Appendix~\ref{sec:frontier})
 stating exactly what is verified in Lean, under what label, and where the open
@@ -240,6 +240,16 @@ $w'=11/21$---not the global recompute $\alpha/x'=22/43$ (pre-trade $\alpha=xw$
 over the new reserve $x'$). The pool invariant, the trade
 law~\eqref{eq:tradeupdate}, and the trade/rebase commutation are verified in
 Lean\textsuperscript{L1,L2} (Appendix~\ref{app:lean}).
+
+\paragraph{Division of labour.}
+The pool is the \emph{bookkeeping} layer and nothing more: it stores the
+state $(x,y,w)$, updates it per trade by~\eqref{eq:tradeupdate}, and---because
+each read walks the live curve---prices \emph{slippage}. Every economic
+quantity is set by the \emph{option-pricing} layer of
+Section~\ref{sec:continuum} reading that state: position values, trade sizing
+(a bought leg is sized by the ratio of option prices, never by pool proceeds),
+and payouts. The pool never holds premium and is never a counterparty
+(Appendix~\ref{sec:exec}).
 
 
 % ===========================================================================
@@ -465,9 +475,10 @@ centre, and $\theta_{\mathrm{tx}}$ the ray the trade lands on. Steepness and
 outward placement move in the \emph{same} direction with $m$.
 
 \subsection{Lens properties}
-The lens is \emph{vol-calibrated at setup and static under trading}: curve
-geometry chosen for the asset's volatility (a more volatile asset takes a
-\emph{lower} setting; Section~\ref{sec:idea}), not a trader-measured statistic.
+The lens is \emph{vol-calibrated}: curve geometry chosen for the asset's
+volatility (a more volatile asset takes a \emph{lower} setting;
+Section~\ref{sec:idea}), not a trader-measured statistic---trades never move
+$m$ (re-calibration is a governance action, not a market one).
 It leaves the \textbf{pool flow unchanged}---trade rule, oracle-arbitrage map, and
 rebase are the plain Balancer dynamics; $x,y,w$ move exactly as in
 Section~\ref{sec:warp}. It is applied as a forward read to everything \emph{read}
@@ -712,7 +723,7 @@ equilibrium analysis; it states the mechanism's built-in pressure toward balance
 
 \paragraph{Mechanism design: open.}
 Incentive compatibility of the funding schedule, strategic behaviour near the
-exercise boundary $S^{\ast}$ and around the static knob $m$, the participation
+exercise boundary $S^{\ast}$ and around the knob $m$, the participation
 rationality of liquidity providers, and a welfare comparison against order-book
 alternatives are explicitly open future work. They are where the formal spine
 meets the market: the conditional-solvency hypotheses of
@@ -878,8 +889,8 @@ the shipped design, not Lean-verified results.
     side it was carved from, at leverage $L_{0}$ frozen at open---and a drained
     club pays nothing: positive payouts stop once club equity reaches zero.
   \item \textbf{Live steepness.} $\gamma=w/(1-w)$ is read from the \emph{live}
-    pool at every use---it moves as trades skew the curve; only the knob $m$
-    is static.
+    pool at every use---it moves as trades skew the curve; the knob $m$ is
+    never moved by trades.
 \end{enumerate}
 Three smaller mechanics complete the picture: liquidity provision resizes the
 pool \emph{isotropically}---price and skew untouched, not a trade; a cash leg
