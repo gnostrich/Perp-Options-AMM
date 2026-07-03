@@ -248,9 +248,8 @@ The pool is the \emph{bookkeeping} layer and nothing more: it stores the
 state $(x,y,w)$, updates it per trade by~\eqref{eq:tradeupdate}, and---because
 each read walks the live curve---prices \emph{slippage}. Every economic
 quantity is set by the \emph{option-pricing} layer of
-Section~\ref{sec:continuum} reading that state: position values, trade sizing
-(a bought leg is sized by the ratio of option prices, never by pool proceeds),
-and payouts. The pool never holds premium and is never a counterparty
+Section~\ref{sec:continuum} reading that state: position values, trade
+sizing, payouts. The pool never holds premium and is never a counterparty
 (Section~\ref{sec:exec}).
 
 
@@ -265,17 +264,21 @@ Lean-verified results.
 \begin{enumerate}[leftmargin=2em,itemsep=1pt]
   \item \textbf{You open.} You hold a perpetual future and pick a strike. A
     slice of your perp is \emph{carved}---its notional, equity, and entry
-    mark frozen as your escrow. Your band's sold leg is valued by the pricing
-    layer, and the bought leg's size is that value divided by the bought
-    leg's per-unit price: $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$,
-    an option-price \emph{ratio}. Premium never touches the pool; slippage
-    enters because the second leg is priced on the pool as the first leg left
-    it. A small fee ($0.01\%$ of notional) is paid from club equity---never
-    into the pool.
+    mark frozen as your escrow. Your position is a \emph{band}: two option
+    legs on opposite wings, one sold and one bought. The sold leg is valued
+    by the pricing layer, and the bought leg's size (notional) is that value
+    divided by the bought leg's per-unit price:
+    $N_{\mathrm{buy}}=V_{\mathrm{sell}}/v_{\mathrm{buy}}$, an option-price
+    \emph{ratio}. Premium never touches the pool; slippage enters because the
+    second leg is priced on the pool as the first leg left it. A small fee
+    ($0.01\%$ of notional) is paid from your side's \emph{club}---its pooled
+    equity, your counterparty in step~5---never into the pool.
   \item \textbf{The pool bookkeeps your open.} Each leg moves the pool by
     $\Delta y=\pm N\,K_{\mathrm{tx}}$---notional times the \emph{transaction
-    strike} $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$
-    (Section~\ref{sec:lens}), frozen at open as a dollar number. If your cash
+    strike} in dollars, from
+    $\theta_{\mathrm{tx}}=\mathrm{mode}\cdot(\mathrm{chosen}/\mathrm{mode})^{m}$,
+    where the \emph{mode} is the pool's at-the-money ray and $m$ the vol knob
+    of Section~\ref{sec:lens}; $K_{\mathrm{tx}}$ is frozen at open. If your cash
     leg exceeds the pool's usable depth, the trade is rejected outright with
     the numbers---never silently capped.
   \item \textbf{You hold.} Funding is metered by the slope-deviation read of
@@ -288,11 +291,11 @@ Lean-verified results.
     its boundary has left the pool's world: it settles to cash at its mark,
     no pool swap (the two-case rule of Appendix~\ref{sec:settlement}).
   \item \textbf{You get paid.} Your legs net in perp units; the net converts
-    to cash at your carved slice's closing equity, scaled by $L_{0}$:
+    to cash at your carved slice's closing equity, scaled by $L_{0}$ (the
+    product's leverage factor, frozen at open):
     payout $=L_{0}\times(\text{net result})\times(\text{carved equity})$.
-    The counterparty is your own side's \emph{club} (its pooled equity,
-    $L_{0}$ frozen at open); a drained club pays nothing---positive payouts
-    stop at zero club equity.
+    The counterparty is your club (step~1); a drained club pays
+    nothing---positive payouts stop at zero club equity.
 \end{enumerate}
 One background mechanic: liquidity provision resizes the pool
 \emph{isotropically}---price and skew untouched; it is not a trade.
@@ -623,16 +626,13 @@ $s_{N}^{\ast}$ and $c$. The solution is closed form:
 \end{equation}
 where $g_{\mathrm{loc}}=m\gamma$ is the lensed steepness. The boundary therefore
 \emph{moves with the lens}, reducing to the base form
-$S^{\ast}=K\gamma/(\gamma+1)$ only at $m=1$. The mark reaches its cap of $1$ only
-at \emph{full} exercise, not at the boundary (Figure~\ref{fig:seam}). $S^{\ast}$
-is the \emph{optimal-exercise} (pricing) boundary, not a forced trigger: exercise
-is the holder's right at any time (on the engine, settlement is a trader-invoked
-close, never an auto-exercise); $S^{\ast}$ is where a rational holder would
-exercise and what the valuation assumes---where the ratio intrinsic/continuation
-hits $1$, past the strike, not at the money. The continuation runs \emph{through}
-the old strike ray, so the strike becomes an ordinary interior point; on the
-bounded (spread) wing the intrinsic $1-S/K$ caps at $1$, while a single uncapped
-option wing keeps growing past $1$, as it should.
+$S^{\ast}=K\gamma/(\gamma+1)$ only at $m=1$. The mark reaches its cap of $1$
+only at \emph{full} exercise, not at the boundary (Figure~\ref{fig:seam}).
+$S^{\ast}$ is a \emph{pricing} boundary, not a forced trigger---it is where a
+rational holder would exercise and what the valuation assumes (settlement is
+always holder-invoked, never automatic); on the bounded (spread) wing the
+intrinsic $1-S/K$ caps at $1$, while a single uncapped option wing keeps
+growing past $1$, as it should.
 
 \subsection{A worked example (illustrative numbers)}
 A fully worked put-leg example ($\gamma=2$, $K=\$100$, both $m=1$ and $m=3$
@@ -668,25 +668,21 @@ placeholder obligation, not a discharged premise.
 The boundary also ties to the classical perpetual-American (Merton) problem. Here
 $r$ is the risk-free rate and $\sigma$ the underlying's return volatility ($r$
 distinct from the rebase factor); $\gamma$ is the \emph{characteristic root} of
-the underlying's log-price process. The roots in play are those of the
-\emph{zero-net-carry} pricing ODE $\tfrac{\sigma^{2}}{2}S^{2}V''(S)-rV(S)=0$---the
-absent first-order ($SV'$) term \emph{is} the symmetric pairing, distinguishing it
-from the standard no-dividend Black--Scholes--Merton ODE; substituting $V=S^{\rho}$
-gives $\rho(\rho-1)=2r/\sigma^{2}$, from which~\eqref{eq:merton} can be
-re-derived. Under the \emph{symmetric pairing}---put root $-\gamma$, call root
-$\gamma+1$, equivalently zero net carry between the legs, so the roots sum to
-$1$---the product-of-roots (Vieta) relation reads
+the underlying's log-price process. The roots are those of the
+\emph{zero-net-carry} pricing ODE
+$\tfrac{\sigma^{2}}{2}S^{2}V''(S)-rV(S)=0$ (no first-order term---that
+absence \emph{is} the symmetric pairing: put root $-\gamma$, call root
+$\gamma+1$, roots summing to $1$), and the product-of-roots (Vieta) relation
+reads
 \begin{equation}
   \gamma(\gamma+1)=2r/\sigma^{2},
   \qquad\text{in the regime }r>\sigma^{2},
   \label{eq:merton}
 \end{equation}
 the convention encoded by our Lean-verified Vieta sum/product
-relations\textsuperscript{L8}.
-(The classical no-dividend Black--Scholes--Merton slice keeps the single decaying
-root, giving the \emph{linear} $\gamma=2r/\sigma^{2}$; we do not use that slice.) On the symmetric pairing $S^{\ast}$ is the Merton
-boundary, with the Gaussian-slice limit \tfp{}
-(\tfp{}\textsuperscript{L8}) and the generalized-hyperbolic / Bessel-K distributional layer carried as
+relations\textsuperscript{L8}. On the symmetric pairing $S^{\ast}$ is the Merton
+boundary, with the Gaussian-slice limit \tfp{}\textsuperscript{L8}, and the
+generalized-hyperbolic / Bessel-K distributional layer carried as
 named hypotheses---exact on the log-normal (Gaussian) slice, conditional beyond it.
 This distributional tie is stated at the base characteristic root $\gamma$ (the
 unlensed $m=1$ slice); the lens then transports the \emph{engine} boundary to
@@ -1109,8 +1105,8 @@ work.
 \subsection{The whole exchange as a single object (research direction)}
 A partial result unifies the entire exchange---storage, flow, funding port,
 settlement, dollar pipe---as one passive object whose solvency reads as
-passivity-under-admissible-inputs. The \emph{internal} half is \tfp{}
-(\tfp{}\textsuperscript{L13}): the system is passive because its geometry is
+passivity-under-admissible-inputs. The \emph{internal} half is
+\tfp{}\textsuperscript{L13}: the system is passive because its geometry is
 positive-semidefinite. The \emph{external}/solvency half stays \emph{open},
 keeping the coverage premise undischarged and honoring the no-floor
 theorem\textsuperscript{L12}; we present the single object as a conjecture /

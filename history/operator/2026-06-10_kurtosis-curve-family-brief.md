@@ -3037,3 +3037,9 @@ _Context: operator on the 650b2397 build: (1) "how a trade runs" is good and mus
 
 ## Entry 397 — 2026-07-02 UTC
 > meantime now ehatds the common fucking thread?
+
+
+## Entry 398 — 2026-07-02 UTC
+_Context: final pass ordered: unintroduced-concept/jargon/simple-English-next-to-notation check; small debulk (1–2 paragraphs over 12pp before annexes); general check — operator cannot QC further._
+
+> ok do one check for unintroduced stuff etc. like talking od something without explaning it, is sipleenelgih there next to the notation etc. jargon whrre itts not required that kind of stuff and i need a small debulking because we're running 1-2 paragtaphs over 12 pages before annex starts, and yes generally please just fucking chekc it i really cant QC more theres no time
