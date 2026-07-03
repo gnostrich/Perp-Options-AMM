@@ -14,10 +14,11 @@ echo "blob line-md5 multiset (want ab663f5c26f2a461c5b0ef1421d0ad74 c505b08ad0e4
 
 # ── v28 POLAR-LENS dispatch (Stage 1 read layer / Stage 2 write-settle) ──
 # A lens build exports markLensed/gLoc (off the plain v24 base; no ghCalibrate,
-# no wField). Gate it with lens_selfcheck.js [HARD GATE]: the Stage-1 read checks
-# (14) plus the Stage-2 write/settle checks (8) when the build carries the lensed
-# settlement signatures (markEff 4-arg). SKIPs the Stage-2 block on a Stage-1-only
-# build. Routed BEFORE the (W) branch since lens builds also lack ghCalibrate.
+# no wField). Gate it with lens_selfcheck.js [HARD GATE]: the CM-series checks
+# (24 as of the trade-point HEAD 0e0a0062 - CM1-CM11 incl. CM4-v2 linear seams,
+# CM10 value>=intrinsic, CM11 wing power-law, CM8-v2 trade-point exhibit +
+# routing negative-control, CM6-v2 frozen-arc; the .js is the authoritative
+# list). SKIPs Stage-2-class checks on a read-only build. Routed BEFORE the (W) branch since lens builds also lack ghCalibrate.
 if grep -q "function markLensed" "$HEAD" && ! grep -q "function wField" "$HEAD"; then
   echo ""
   echo "================ v28 polar-lens build -> lens_selfcheck.js [HARD GATE] ================"

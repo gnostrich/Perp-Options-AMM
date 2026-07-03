@@ -85,3 +85,17 @@ American lift it reads the waiting value, ~0.15"). Discovering a semantic change
 chart is a process failure (the June barrier→American mark semantics were under-disclosed; operator
 grievance entry 330/331). This duty is conversational — it does NOT mean adding disclosure prose to
 papers.
+
+
+## ADDENDUM 2026-07-03 (entries 385/386/389/405 — post-submission rulings)
+- **Funding read RULED SAME-SLOPE (entries 385/386):** the comparison is **same slope to same slope
+  across the two curves, at different ray angles** — the dual of the entry-308 like-ray read, same
+  intent — anchored so the ATM point is respected (deviation vanishes there). Operator ruling (386
+  verbatim): "the same slkope on both is the right ont the other woulr violate the atm point."
+  Supersedes the like-ray phrasing in ADDENDUM 308 and the funding line of ADDENDUM 311; the
+  trichotomy is otherwise intact (mark = one ray/one curve; rebase = re-zoom).
+- **Entry 405:** the "settled-to-cash, no AMM tx" close picture is RULED-SUPERSEDED-pending-build —
+  close = a second first-class trade on the live curve; the translation-row text stands as the
+  description of the shipped engine only.
+- **Entry 389:** drop the "set once/static" framing for the steepness dial — it could move realtime
+  in updated versions; trades still never move it.

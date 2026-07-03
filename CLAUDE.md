@@ -1,8 +1,8 @@
 # CLAUDE.md — Temporal (GH branch) · shared, always-loaded truth
 
 **Temporal Exchange** is a single-file HTML simulator for a DeFi options-AMM whose invariant prices
-`value ∝ S^(−γ)` (γ>1) across a continuum of perpetual-option strikes, on a **generalized-hyperbolic
-(GH)** reserve curve. The deliverable is one HTML file; a CTO (external human) propagates the math to
+`value ∝ S^(−γ)` (γ>1) across a continuum of perpetual-option strikes, on a **plain Balancer pool read
+through a constant slope-multiplier lens (v28; the GH line is demoted, retained)**. The deliverable is one HTML file; a CTO (external human) propagates the math to
 a Go backend separately. `INIT.md` is the bootstrap/architecture spec that produced this repo.
 
 ## 0. The motive (operator, 2026-06-10 — keep this in frame; it gets lost otherwise)
@@ -27,12 +27,12 @@ decision is always the operator's. Full checklist: `docs/feature_inventory.md`.
    individually conserved; w=α/x derived; paper line 33: "Trades skew the AMM curve instead of
    moving the reserves point along it"). Standing UNIMPLEMENTED requirement (inventory item 16) —
    today's engine moves a point on a fixed curve and does NOT implement the paper's core trade
-   mechanic; no design note may imply otherwise. Build target sequenced AFTER the pivot.
+   mechanic; no design note may imply otherwise. Build target sequenced AFTER the pivot. **⚠ BUILT 2026-07-02 (entries 339 ruling / 377 go): IMPLEMENTED-PROVISIONAL at HEAD `0e0a0062`** — live trade path = `tradeUpdateAt` at T=ray∩curve, α_T/β_T locally conserved, w′=11/21 exhibit exact; pending operator ratification of the 5 spec pinned defaults (-TP339-RATIFY). The 'moves a point on a fixed curve' sentence is the HISTORICAL pre-build state, retained as record.
 3. **Kurtosis = "steepness / flatness of the curve, we set it so the curve is appropriate for
    pricing perpetual american style options for an asset of some vol, and it isn't / doesn't have
    to be changed by trades."** The knob is the curve's geometry, vol-calibrated at setup, static
    under trading — NOT a trader-measured statistic (the moment-coupling at β=1 is therefore not a
-   defect of the knob as the operator defines it).
+   defect of the knob as the operator defines it). (Entry 389, 2026-07-02: the 'static' FRAMING is retired — the knob could move realtime in updated versions; what stands is that trades don't change it.)
 
 ## 1. The store is the filesystem (not a chat ledger)
 The old multi-chat world re-emitted a `TEMPORAL-CONTEXT-LEDGER` snapshot every reply. **Obsolete.**
@@ -55,7 +55,7 @@ Here the repository is the durable store:
 - **intern** — HTML/engine implementation; surgical, blob-safe edits.
 - **tester** — live Playwright browser + Node oracle; evidence with FLAG verdicts. Owns the
   behavioral diff ledger (`engine/builds/DIFF_LEDGER.md`) — **the operator's inventory of record**:
-  every build verification appends a feature-keyed entry (inventory #1–#15 + explicit "none
+  every build verification appends a feature-keyed entry (inventory #1–#16 + explicit "none
   beyond") AND updates the rolling feature-state table; HEAD promotion is gated on the entry
   existing with its feature mapping.
 - **paper** — AfT/WINE/FMBC drafting from locked decisions.
@@ -169,7 +169,7 @@ inheritance); warp∘rebase-commute + φ-anchor/funding lemmas are OPEN [needs-A
 - **ITM → American smooth-pasting** (v26b): continuation `c·sNorm` runs PAST the strike to the free
   boundary `sNorm* = θ·((γ+1)/γ)^γ` (price `S* = K·γ/(γ+1)`, `c = 1/((γ+1)·sNorm*)`), then intrinsic.
   Closed form, no new params. Funding = slope-deviation ratio vs the w=½ anchor at the strike ray —
-  orthogonal to intrinsic, untouched by the ITM change. **Operator-ruled entry 232 (2026-06-13):
+  orthogonal to intrinsic, untouched by the ITM change. ⚖ Entry 386 (2026-07-02): the funding comparison is read SAME-SLOPE on both curves (pool vs anchor, different ray angles — the dual of the like-ray read, same intent); the same-ray phrasing here is the superseded presentation. Mechanism (slope-deviation vs the w=½ anchor) unchanged. **Operator-ruled entry 232 (2026-06-13):
   funding is evaluated THROUGH THE LENS — the slope-deviation uses the lensed exponent ±g_loc = ±m·γ
   (and a lens-aware mark), so the kurtosis knob `m` re-scales the funding rate BY DESIGN. The
   *mechanism* (slope-deviation vs the w=½ anchor) is what's "unchanged" in the motive; it is a
@@ -266,7 +266,7 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   in their return → the manager proceeds (procedural) or asks the operator (`AskUserQuestion`).
 
 ## 8. Repo map
-- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `7015c22c…` = **display slice 2026-07-02** of `9fdde1de` [entries 298/301]: chart-2 rewired to the TRUE V=max read — both wings drawn OTM→ITM crossing at ATM (the X), pool-quoted continuation SOLID vs escrow-parity tail DASHED (screen-space dash after -B301-DASH fix, coverage 0.49), **%→$ toggle** (fraction view saturates ≤1.05; dollar view = fraction×K with 1.25×S clamp), markers re-anchored to the plotted V, peak-at-1 tent RETIRED (m visible via wing steepness + seams marching + crossing falling), -B289 vol caption fixed (MORE volatile ⇒ LOWER m). Draw-layer + caption only — engine+state script blocks BYTE-IDENTICAL to 9fdde1de (tester node-compared); gates 16+5; acceptance 28/29→PASS + targeted re-check 17/17 ×2 byte-stable. Prior `9fdde1de…` = **PKG-ITM v2 LINEAR re-seam 2026-07-02** of `dd6fb955`, operator entries 286/287, go 298: `markLensed` power continuation welded C¹ onto the **LINEAR intrinsic** — put seam ray `θ·g/(g+1)` (dollar `S*=K·g/(g+1)`, 0.667K at g=2), call seam `θ·(g+1)/g`; boundary fraction `1/(g+1)`; past the seam the arm IS intrinsic `1−S/K` / `1−K/S`. Replaces the power-form intrinsic whose measured seam sat at 0.444K and whose mark dipped BELOW intrinsic from S/K≈0.80 down (entry-286 live sweep). One-function splice; pool fns + tx-map + gLoc + all callers byte-unchanged; `V=max(mark,intrinsic)` holds identically (O2 `value_ge_intrinsic`, trusted-from-prover; O1 `paste_value_lin`/`paste_slope_lin`/`paste_unique` = the seam, manager-audited). Gates `lens_selfcheck` **16 PASS [HARD]** (CM4-v2 seams + C¹ output probe + CM10 value≥intrinsic sign table + CM11 wing power-law; negative-controlled — old build fails exactly the 4 new checks) + `a16_atm_gate` **5 PASS [HARD]**. Tester live acceptance PASS ×2 byte-stable: every paper worked-example cell |Δ|=0.0 at 4dp DOM-read, belowIntrinsic EMPTY, seam measured 0.667K/0.857K, 17/17 UI smoke. Pre-fix power-arm build RETAINED as `temporal_mvp_v28_lens_powerarm.html` (`dd6fb955`, the revert twin). Known-OPEN: -B289 UI vol-caption contradicts the reversed paper vol-direction (part-2); (b) display slice queued; funding-semantics extension operator-gated. Prior `dd6fb955…` = chart-2 Option-C 2026-06-22 of `9f1e625b`: chart-2 "MARK ACROSS STRIKES" plots the normalized steepness SHAPE `(mode/θ)^(m·γ)` (mode peak=1, wings steepen with m; draw-layer only; resolves entries 226+266). Prior `9f1e625b…` = chart-caption depiction
+- `engine/builds/HEAD_temporal_mvp_v28_lens.html` — **canonical HEAD** (md5 `0e0a0062…` = **TRADE-POINT CONSERVATION 2026-07-02** (operator entry 339, go 377) + caption/comment slice of `e148c9b7`: live trade path = `tradeUpdateAt` at T=ray∩curve (paper Trade Formula; exhibit w′=11/21), frozen-ARC close `revertArc` [⚖ RULED-SUPERSEDED-pending-build by entry 405 — close to become a first-class trade on the live curve], trade-point depth guard w·y·ρ^w, per-leg preview animation; SPOT trio byte-identical to v24; inventory #16 IMPLEMENTED-PROVISIONAL pending operator ratification of the 5 spec pinned defaults (-TP339-RATIFY); gates lens_selfcheck **24** (CM8 retired → CM8-v2/CM6-v2, negative-controlled) + a16 **5**; tester acceptance 14/14×2 + smoke 17/17×2 + slice recheck 11/11×2; revert twin `temporal_mvp_v28_lens_reservepoint.html` (=`7015c22c`). Prior `7015c22c…` = **display slice 2026-07-02** of `9fdde1de` [entries 298/301]: chart-2 rewired to the TRUE V=max read — both wings drawn OTM→ITM crossing at ATM (the X), pool-quoted continuation SOLID vs escrow-parity tail DASHED (screen-space dash after -B301-DASH fix, coverage 0.49), **%→$ toggle** (fraction view saturates ≤1.05; dollar view = fraction×K with 1.25×S clamp), markers re-anchored to the plotted V, peak-at-1 tent RETIRED (m visible via wing steepness + seams marching + crossing falling), -B289 vol caption fixed (MORE volatile ⇒ LOWER m). Draw-layer + caption only — engine+state script blocks BYTE-IDENTICAL to 9fdde1de (tester node-compared); gates 16+5; acceptance 28/29→PASS + targeted re-check 17/17 ×2 byte-stable. Prior `9fdde1de…` = **PKG-ITM v2 LINEAR re-seam 2026-07-02** of `dd6fb955`, operator entries 286/287, go 298: `markLensed` power continuation welded C¹ onto the **LINEAR intrinsic** — put seam ray `θ·g/(g+1)` (dollar `S*=K·g/(g+1)`, 0.667K at g=2), call seam `θ·(g+1)/g`; boundary fraction `1/(g+1)`; past the seam the arm IS intrinsic `1−S/K` / `1−K/S`. Replaces the power-form intrinsic whose measured seam sat at 0.444K and whose mark dipped BELOW intrinsic from S/K≈0.80 down (entry-286 live sweep). One-function splice; pool fns + tx-map + gLoc + all callers byte-unchanged; `V=max(mark,intrinsic)` holds identically (O2 `value_ge_intrinsic`, trusted-from-prover; O1 `paste_value_lin`/`paste_slope_lin`/`paste_unique` = the seam, manager-audited). Gates `lens_selfcheck` **16 PASS [HARD]** (CM4-v2 seams + C¹ output probe + CM10 value≥intrinsic sign table + CM11 wing power-law; negative-controlled — old build fails exactly the 4 new checks) + `a16_atm_gate` **5 PASS [HARD]**. Tester live acceptance PASS ×2 byte-stable: every paper worked-example cell |Δ|=0.0 at 4dp DOM-read, belowIntrinsic EMPTY, seam measured 0.667K/0.857K, 17/17 UI smoke. Pre-fix power-arm build RETAINED as `temporal_mvp_v28_lens_powerarm.html` (`dd6fb955`, the revert twin). Known-OPEN: -B289 UI vol-caption contradicts the reversed paper vol-direction (part-2); (b) display slice queued; funding-semantics extension operator-gated. Prior `dd6fb955…` = chart-2 Option-C 2026-06-22 of `9f1e625b`: chart-2 "MARK ACROSS STRIKES" plots the normalized steepness SHAPE `(mode/θ)^(m·γ)` (mode peak=1, wings steepen with m; draw-layer only; resolves entries 226+266). Prior `9f1e625b…` = chart-caption depiction
   fix 2026-06-14 of `80f050e2` [legend/caption corrected: mark=1 is the full-exercise cap not the mode, mode peak
   <1 = the smooth-paste value; 2 text lines, behaviorally identical, gates 13+5 green]; `80f050e2` = comment-cleanup
   of `8f897edc` per operator entry 234, behaviorally identical: dead √-kernel comments→constant-m + gate-detector
@@ -278,11 +278,12 @@ Do **not** go looking for `gh` or MCP GitHub tools — use these calls.
   This **REPLACES the position-dependent `√(τ²+u²)` elbow-rounding lens** (which coupled steepness
   and outward-trade-push with OPPOSITE signs — the root of the multi-day τ-direction conflict; a
   constant multiplier couples them the SAME direction, dissolving it). **The AMM pool curve is
-  still unchanged plain v24** (`tradeUpdate`/`arbitrageToOracle`/`rebase` byte-identical to v24;
-  x,y,w move). Everything **read** (pricing, option chart, settlement, funding, portfolio value)
+  still unchanged plain v24** (the SPOT trio `tradeUpdate`/`arbitrageToOracle`/`rebase` stays
+  byte-identical to v24; **since `0e0a0062` the LIVE trade path routes through `tradeUpdateAt` at
+  the trade point — x,y,w AND α,β move off-ATM**). Everything **read** (pricing, option chart, settlement, funding, portfolio value)
   AND **written** (trades, settle-at-chosen-strike) goes through the ONE shared helper
   (`gLoc`/`markLensed`) — single-basis, forward-read only (the lens is never inverted; pool stays
-  plain Balancer). Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` at the chosen strike. Gates =
+  plain Balancer). Settlement = smooth-paste `S*=K·g_loc/(g_loc+1)` at the chosen strike. ⚖ Entry 405 (2026-07-02): the CLOSE protocol (frozen-arc reversal + two-case ITM-to-cash branch) is RULED-SUPERSEDED-pending-build — close is to be a FIRST-CLASS TRADE on the live curve (b); the S* seam math itself is unaffected. Engine ships the old protocol until the (b) build lands (spec in flight, go entry 407). Gates =
   `engine/verify/lens_selfcheck.js` (**13 PASS [HARD]** — rewritten CM1–CM9: g_loc=m·γ constant,
   m=1=plain, wings power-law m·γ no-floor, frozen tx round-trip + no-free-money, polarity-lock
   steeper⇒further, pool byte-identical, no dead √-kernel) + `engine/verify/a16_atm_gate.js`

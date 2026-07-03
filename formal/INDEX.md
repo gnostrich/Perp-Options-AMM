@@ -1,5 +1,19 @@
 # formal/INDEX.md — canonical provenance map over all Aristotle-generated results
 
+> **⚠ SPOT-LAW RE-SCOPE (2026-07-02, HEAD `0e0a0062` trade-point build) [manager, entry-408 audit]:**
+> `trade_dx`/`trade_rebase_commute`/pool-spine (MonolithConstM), `trade_conserves`/`trade_no_spontaneous_storage`
+> (PHUnification), L1 TrajectoryDomain, and L7 EngineBridge `bridge_tradeUpdate_*` prove the SPOT-anchored
+> trade operator — retained byte-identical in HEAD but NO LONGER the live trade path (live = `tradeUpdateAt`
+> at T=ray∩curve; ρ=1 reduces to spot, gate-verified 1.5e-16). Trade-point Lean queue (local-pair
+> conservation/w′ identity, ρ=1 reduction, fixed-ρ rebase commutation, frozen-arc exactness — the last now
+> ⚖ entry-405-superseded-pending-build) = pending-submit (research-lead).
+>
+> **Missing-by-name rows (skeptic 2026-07-02 finding):** `reserves_have_no_floor` (SEAM run) — with a convex
+> obligation O=p², reserve value is unbounded below; the solvency floor cannot come from reserves
+> ("convexity must be funded"); ✅ GROUNDED; `formal/MANAGER_VERIFICATION.md` + seam archive. `cpmm` /
+> `expPool` — the two discharged AMMCurve instances (equal-weight Balancer frontier; exponential), every
+> gate field proven; ✅ GROUNDED; `MANAGER_VERIFICATION.md` + curve-gate archive.
+
 _PROMOTED 2026-06-10 from `aristotle_runs/INDEX_DRAFT.md` (research-lead draft 2026-06-09;
 promotion operator-greenlit 2026-06-10). One row per headline result → meaning → honest depth →
 the real returned `.lean` archive → run. **Maintenance:** research-lead adds/updates rows at each
@@ -325,6 +339,6 @@ Tendsto Φ→1 SUPERSEDED (constant exponent, no limit needed).
 - **Kähler variable-J integrability** — CONJECTURAL; needs upstream Mathlib differential geometry.
 - **Courant all-four single bracket** — OBSTRUCTION proved (not a Dirac structure). SETTLED, not open.
 - **C3 spec-mark ↔ engine-barrier link** — the reflection arrow is a proved identity; the link to the
-  live engine is the residual modeling premise (**engine-faithfulness pivot, HELD**).
+  live engine is the residual modeling premise (**engine-faithfulness pivot — UN-HELD + executed 2026-06-10, faith gates built; GH line since demoted**).
 - **"verified" label** — env-blocked (no local Lean toolchain reachable); everything stays
   trusted-from-prover until a canonical local build is possible.
