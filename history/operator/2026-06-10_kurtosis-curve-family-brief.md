@@ -3133,3 +3133,9 @@ _Context: operator confirms their read of the counterfactual charge-back: keep a
 _Context: operator accepts the counterfactual charge-back design "for now"; flags NOT-yet-thought-through: LP attacks, other-wallet (multi-wallet/sybil) attacks — keep in notes as TBD; orders a research run benchmarking against Curve etc. dynamic AMMs on the attack/defense surface, then a take-stock of the defenses to implement. Close-(b) build HOLDS behind that take-stock._
 
 > i think this makes sense for now, i havent though through lp attacks. other wallet attacks or whatever but keep this in notes tbd, do a rsearch run benchmarkeing ahgainst curve etc dynaimc amms and then we take stock of the defenses to be implemented
+
+
+## Entry 416 — 2026-07-03 UTC
+_Context: operator probes the LP-attack family concretely: someone puts in big liquidity, does a huge trade, then pulls LP and exits._
+
+> ok so if someone puts in big lquidity does a huge trade and then pulls LP and exits that kind of thing
