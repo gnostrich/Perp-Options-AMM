@@ -1051,8 +1051,9 @@ theorem value_ge_intrinsic (g K S : R) (hg : 0 < g)
     (hK : 0 < K) (hS : 0 < S) :
     max (1 - S / K) 0 <= Vp g K S                           -- L6
 \end{verbatim}
-Full formal statements and the complete Lean proofs are available from the
-authors on request.
+Full formal statements, the complete Lean proofs, and a complete working
+implementation of the mechanism (a self-contained simulator) are available
+from the authors on request.
 
 % ===========================================================================
 \section{Annex: formal verification and the open frontier}\label{sec:frontier}
@@ -1070,7 +1071,9 @@ proofs were not re-run against a local kernel; the label states the provenance
 as it is. We distinguish \emph{grounded} results (no load-bearing carried
 hypothesis) from \emph{carried} results (conditional on named, undischarged
 structure-field hypotheses---never on \texttt{axiom}s). \textbf{The actual
-Lean proofs are available on request} (anonymized artifact repository); two
+Lean proofs are available on request} (anonymized artifact repository), and so
+is a \textbf{complete working implementation}---a self-contained simulator of
+the full mechanism; two
 representative statements are reproduced verbatim in
 Appendix~\ref{app:lean}.
 
