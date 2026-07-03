@@ -3167,3 +3167,9 @@ _Context: operator checks their read of the fix: "loosely evaluate slippage as p
 _Context: operator clarifies entry 420 — they meant evaluating relative to entry LIQUIDITY (the resize-invariance fix)._
 
 > sorry tldr but meant entry liquidity
+
+
+## Entry 422 — 2026-07-03 UTC
+_Context: operator approves the entry-liquidity framing ("smooth!"), orders it noted, and asks for a recap of the TBDs._
+
+> smooth! ok note this and recap the tbds

@@ -519,3 +519,11 @@ signs/floors are solid.
 `0e0a0062` engine extract (`engine.js`); external claims = training-knowledge **[TK]**, unverified (no web).
 No git, no engine edits, no Aristotle (none needed). Design-stage: close-(b) build HOLDS behind this take-stock
 (operator entries 415/416/418).
+
+---
+## OPERATOR GLOSS (entry 421/422, canonical simple-English for item ③ resize-invariance)
+"Evaluate slippage as per ENTRY LIQUIDITY": the receipt remembers the position's footprint
+relative to the liquidity at entry and is re-scaled to today's liquidity when the bill is
+computed (same shape as the existing oracle-rebase scaling). LP moves between open and close
+can neither shrink nor inflate the bill. Operator: "smooth!" — this phrasing is the canonical
+gloss for the build item and the eventual paper sentence.
