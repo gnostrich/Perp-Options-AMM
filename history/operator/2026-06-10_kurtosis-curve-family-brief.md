@@ -3177,3 +3177,9 @@ _Context: operator approves the entry-liquidity framing ("smooth!"), orders it n
 
 ## Entry 423 — 2026-07-03 UTC
 > got to simplify these for me gang
+
+
+## Entry 424 — 2026-07-03 UTC
+_Context: operator parks the close-(b)+receipt/charge fix — keep it in notes, dedicated file, don't lose it; asks what else is pending. Build go NOT given; -TP339-RATIFY remains the one operator question outstanding._
+
+> keep this fix in notes for now— dont lose it maybe make a separate file or whatever; apart from this whats pending?
