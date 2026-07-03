@@ -1,0 +1,20 @@
+=== FUNDING P/L COLUMN LIVE run A  build md5 4bc939ec6fb3dda8d1e5b37bfd3bc0cf ===
+PASS F1 header th "Funding P/L" with disclosure title  title="Funding P/L (signed: + = line received, − = line paid). Line P/L shown includes accrued funding; cash at close settles e…"
+PASS F2 pf-units-note visible + includes-accrued/ex-funding sentence  visible=true text="Every row above a TOTAL carries CARVED-PERP units (stage 2). The single dollar figure is the TOTAL row's settlement cell — the one stage-2 → stage-3 equity multiply. Effective stri…"
+PASS F4 two opposite bands open (crowded long + contrarian short)  [{"id":"B1","sold_wing":"call","bought_wing":"put","soldK":120000,"boughtK":48000},{"id":"B2","sold_wing":"put","bought_wing":"call","soldK":60000,"boughtK":100000}]
+PRE-TICK  t=0 oracle=88000 B1: funding=-0.000000 P/L=−$4.50  |  B2: funding=-0.000000 P/L=$5.53
+PASS F5 funding column renders on EVERY band line (band + components + total), numeric  B1: band=-0.000000 comps=[-0.000000,-0.000000] total=-0.000000  B2: band=-0.000000 comps=[-0.000000,-0.000000] total=-0.000000
+PASS F3 Total dollar-cell tooltip names the funding term  title="band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/…"
+PASS F5b pre-tick funding cells are exactly 0 (no ticks yet)  B1: cell=-0.000000 stored=0  B2: cell=-0.000000 stored=0
+POST-TICK t=24 oracle=88000 B1: funding=-0.000469 P/L=−$45.75  |  B2: funding=0.000531 P/L=$52.25
+PASS F6a exactly one payer (funding cell NEGATIVE) + one receiver (POSITIVE) on screen  B1: funding=-0.000469  B2: funding=0.000531
+PASS F6b PAYER displayed P/L FALLS vs pre-tick  B1: P/L $-4.50 → $-45.75 (Δ -41.25), funding cell -0.000469
+PASS F6c RECEIVER displayed P/L RISES vs pre-tick  B2: P/L $5.53 → $52.25 (Δ 46.72), funding cell 0.000531
+PASS F7 sign pin: displayed cell == −Σ stored trader-pays (6dp)  B1: cell=-0.000469 −stored=-0.00046876  B2: cell=0.000531 −stored=0.00053090
+PASS F7b P/L delta == funding cell × oracle (funding-inclusive line P/L)  B1: ΔP/L=-41.25 cell×oracle=-41.27  B2: ΔP/L=46.72 cell×oracle=46.73
+PASS F7c band funding cell == Σ component funding cells  B1: comps=[-0.000234,-0.000235] band=-0.000469  B2: comps=[0.000264,0.000267] band=0.000531
+PASS F8 perps table untouched by ticks + no Funding column in perps header  header=[#|Side|Notional ($)|Margin ($)|Entry mark|P&L (live)|Equity (live)|Eff. leverage|Club|] tbody pre==post: true
+PASS F9 every chart state renders non-blank  {"curve":14852,"pricing":12596,"trajectory":7232,"payoff":111134}
+PASS F10 zero console errors / pageerrors / dialogs  errors=0 [] dialogs=0
+PASS F11 build md5 unchanged (read-only)  4bc939ec6fb3dda8d1e5b37bfd3bc0cf → 4bc939ec6fb3dda8d1e5b37bfd3bc0cf
+=== RESULT run A: 16/16 PASS ===

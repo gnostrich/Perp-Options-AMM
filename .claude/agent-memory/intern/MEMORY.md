@@ -1,6 +1,47 @@
 # MEMORY — intern
-_Last updated: 2026-07-02 (CAPTION/COMMENT slice promoted to HEAD `0e0a0062`; handed to manager;
-no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-03 (FUNDING-P/L column slice promoted to HEAD `4bc939ec`; handed to
+manager; no git). Rewrite changed bits at task end._
+
+## Done — FUNDING-P/L COLUMN (entry 425, PROMOTED TO HEAD 2026-07-03, handed to manager)
+Operator entry 425 ("funding is column adds to p/l in portfolio for position line wise"); skeptic
+R6 scope-gate #2 (2026-07-03 section of `VERDICT_R6_overnight_scope_gate_2026-07-02.md`) CLEARED
+w/ conditions — ALL honored. HEAD `0e0a0062…` → **`4bc939ec6fb3dda8d1e5b37bfd3bc0cf`**. Display/
+read layer ONLY: engine + state `<script>` blocks BYTE-IDENTICAL to 0e0a0062 (node-compared);
+stored funding ledger + `fundingTick` + `closeBand` untouched. Splice
+`engine/splices/splice_funding_pnl.py` (work copy in session scratchpad, 6 anchored regions
+sliced by line range, count==1 each, blobs never through).
+- **Item 1 (no duplicate column):** bands-table funding cells PRE-EXISTED at band (Σ legs,
+  old L4662), component (L4688), Total (L4703) — verified complete, no column added. renderBands
+  reads `leg.funding_*` directly; no new export needed (skeptic predicted both).
+- **Item 2 (sign pin):** ledger is TRADER-PAYS (`trader_pays = side_sign·f`, positive = line
+  PAID). Column now displays the SIGNED P/L effect = **−Σ stored** (+ received / − paid) at all
+  3 row levels (band `bandFundingPnl = −bandFundingStored`, component `−c.funding`, total).
+  Line P/L: Total dollar cell = `L₀·raw_net·equityAtClose + bandFundingPnl·oracleLive` —
+  funding's $ conversion is the ledger's OWN law (fundingTick log: inflow × oracle), NOT the
+  stage-2→3 equity multiply (funding accrues on absolute N, not per carved-equity unit; folding
+  into raw_net pre-multiply would scale funding by L₀·equity — wrong law).
+- **Item 3 (disclosure, gate condition):** header `<th>` title + visible pf-units-note sentence +
+  Total-cell tooltip all state: displayed P/L INCLUDES accrued funding; close cash settles
+  EX-funding until the transfer layer (parked part-2) ships. `closeBand` verified funding-term-
+  free myself (full-file grep: zero funding tokens in L2040–2332). Header label → "Funding P/L".
+- **Sign self-check (mandatory, PASS):** `engine/evidence/check_funding_pnl_2026-07-03.js` —
+  node vm on the promoted HEAD, replica of the displayed formula; 2 opposite bands (call-spread-
+  sold vs put-spread-sold), setOracle 88k, 24×fundingTick(1h): payer band stored **+0.08355** ⇒
+  column −0.08355 ⇒ displayed P/L −573.37 → **−7925.82 FALLS**; receiver stored −0.14061 ⇒
+  +1347.43 → +13720.97 rises. Pre-tick both stored exactly 0.
+- **FILE-SAFETY:** blobs `ab663f5c`@74 / `c505b08a`@1060 canonical before+after; 3 scripts parse
+  (778/453/1941, maxline 509); IIFE intact; surgical diff = exactly the 6 regions (2 HTML
+  header/caption + 4 in ui script); hook no block. **GATES:** run_all exit 0 on work copy AND
+  promoted HEAD — lens_selfcheck **24 PASS**, a16 **5 PASS**, monolith 8/8 report-green.
+  run_all.sh line-8 pin rewritten → `4bc939ec…` (honest slice description, priors retained
+  in-line). BUILD_LINEAGE HEAD row re-keyed + CHANGELOG_v28_lens entry appended.
+- **vm harness gotchas (reusable):** `const Engine/Store` are context-lexical — fetch via
+  `vm.runInContext('({Engine,Store})',ctx)`, not `ctx.Engine`. `openBand` takes DOLLAR strikes
+  ({inner,outer}; oracle 80k ⇒ call 104k/128k); the first band moves pool spot (→1.3634) so a
+  second band's call strikes must sit further out (128k/160k) or the OTM check rejects.
+- **Open for manager:** git (sole actor). **Open for tester:** live pass — Funding P/L column
+  signs flip vs old display (payer shows negative), Total P/L moves by −Σfunding·oracle on tick,
+  header/units-note/tooltip disclosure text renders, perps table untouched, no console errors.
 
 ## Done — CAPTION/COMMENT SLICE (PROMOTED TO HEAD 2026-07-02, second slice of the trade-point campaign)
 Strings/comments ONLY, ZERO behavior. HEAD `e148c9b734abdff522c31c56be41fb66` →

@@ -97,3 +97,22 @@ v28 correction paragraph beneath it preserved (skeptic condition; CTO port sourc
 item 4 / 325-F** (operator entry 336): chart-2 unit toggle button "% of escrow unit" →
 "fraction of escrow unit" + caption "% view"→"Fraction view" — the axis draws fractions
 (0.25/0.50/…), not percent; DOM ids (`pricing-unit-pct`) and all values/axes untouched.
+
+## 2026-07-03 — FUNDING-P/L column (operator entry 425) — md5 `0e0a0062` → `4bc939ec`
+Display/read layer ONLY (6 surgical regions; engine + state `<script>` blocks byte-identical to
+`0e0a0062`, node-compared; gates lens 24 + a16 5 green; blobs canonical). Authority: entry 425
+("funding is column adds to p/l in portfolio for position line wise"); skeptic R6 scope-gate #2
+CLEARED with conditions, all honored. (1) **No duplicate column** — the bands-table funding cells
+pre-existed at band (Σ legs), component, and Total rows; verified, kept. (2) **Sign pin
+(trader-pays ledger):** `fundingTick` stores `trader_pays = side_sign·f` (positive = the line PAID
+the pool), so the displayed column is now the SIGNED P/L effect = **−Σ stored accruals**
+(+ = line received, − = line paid) at all three row levels; stored ledger and `fundingTick`
+untouched. (3) **Line P/L funding-inclusive:** Total-row dollar cell = L₀·raw_net·equityAtClose
+**+ fundingP/L × oracle** — the funding ledger's own $ conversion (the fundingTick log law), NOT
+the stage-2→3 equity multiply (funding accrues on absolute N, not per unit of carved equity).
+Sign self-check (node vm, both-direction bands, 24×1h ticks at oracle 88k): payer band stored
++0.08355 ⇒ column −0.08355 ⇒ displayed P/L −573.37 → −7925.82 **FALLS**; receiver band stored
+−0.14061 ⇒ column +0.14061 ⇒ +1347.43 → +13720.97 rises. (4) **Disclosure (gate condition):**
+column header title, table units-note, and Total-cell tooltip all state: displayed P/L INCLUDES
+accrued funding; cash at close settles EX-funding until the funding transfer layer (parked
+part-2) ships — `closeBand` verified funding-term-free. Header label "Funding" → "Funding P/L".

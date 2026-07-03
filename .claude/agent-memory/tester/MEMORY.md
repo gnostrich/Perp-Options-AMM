@@ -1,5 +1,38 @@
 # MEMORY — tester
-_Last updated: 2026-07-02 (latest), after the CAPTION/COMMENT SLICE quick recheck on WORKING-TREE build `0e0a006277a1c2215a3244d510691697` (string/comment-only slice on `e148c9b7`; -TP339-CAPTION folded + R6 items 3/4). **VERDICT = PASS 11/11 ×2 byte-stable; rolling -TP339-CAPTION → RESOLVED(evidence)-in-`0e0a0062`; ledger one-line entry appended.** Prior: TRADE-POINT CONSERVATION acceptance `e148c9b7` = PASS (14/14 ×2 + smoke 17/17 ×2)._
+_Last updated: 2026-07-03, after the FUNDING-P/L COLUMN promoted-HEAD pass on `4bc939ec6fb3dda8d1e5b37bfd3bc0cf` (operator entry 425; display slice on ratified `0e0a0062`). **VERDICT = PASS — live 16/16 ×2 byte-stable + standing smoke 17/17 ×2 + gates 24+5; ledger `### 4bc939ec` entry + row #9 + -TP339-RATIFY→RESOLVED + NEW -FPNL-NEGZERO (cosmetic).** Prior: caption slice `0e0a0062` = PASS 11/11 ×2._
+
+## ★★★★★ MOST RECENT — FUNDING P/L COLUMN promoted-HEAD pass, `4bc939ec` = 16/16 PASS ×2 + smoke 17/17 ×2 (entry 425; R6 gate #2)
+Display/read-layer slice on ratified `0e0a0062`. I independently node-compared script blocks: engine (47,866 b) +
+state (24,041 b) BYTE-IDENTICAL to committed 0e0a0062; full file delta = exactly the 6 spliced regions (header th,
+units-note, renderBands funding calc, band/comp/total cells) — supports "none beyond #9". Harness
+`engine/verify/pw_funding_pnl_live.mjs` (A/B); evidence `evidence/funding_pnl_column/` (RESULT A==B byte-identical
+modulo label; bands pre/post-tick PNGs = the on-screen proof).
+- **ON-SCREEN behavior (2 opposite bands: long B1 sold-call$120k/bought-put$48k + short B2 sold-put$60k/bought-call$100k,
+  N=0.03 each; oracle→88000 via #kpi-oracle; 24×#btn-tick):** PAYER B1 funding cell **−0.000469** (negative on screen),
+  P/L −$4.50→−$45.75 FALLS; RECEIVER B2 **+0.000531**, P/L $5.53→$52.25 RISES. Sign pin: cell==−Σ stored trader-pays (6dp);
+  ΔP/L==cell×oracle (−41.25 vs −41.27 / +46.72 vs +46.73, 6dp rounding); band cell==Σ comp cells. Disclosure th title +
+  visible pf-units-note + $-cell tooltip all rendered. Perps table untouched by ticks (tbody innerText pre==post, no
+  Funding column). Node payer-falls harness (`engine/evidence/check_funding_pnl_2026-07-03.js`) reproduced on the
+  promoted md5: payer col −0.08355060 / P/L −573→−7926; receiver +0.14060850 / +1347→+13721.
+- **SIGN INVERSION vs pre-425 display = INTENDED (recorded, not regression):** old column printed raw stored
+  trader-pays (payer POSITIVE, never in $P/L); new negates + adds fundingP/L×oracle into dollarFigure. That IS the R6 fix.
+- **NEW cosmetic -FPNL-NEGZERO (OPEN, non-gating):** zero accrued funding renders `-0.000000` (JS −0 through fmtNum)
+  pre-tick on all funding cells. Intern one-liner candidate (v===0?0:v).
+- Gates tester-re-run: run_all exit 0, lens_selfcheck 24/24 + a16 5/5 HARD, monolith 8/8 report-only, integrity pin
+  keyed `4bc939ec`, blobs canonical. Standing smoke = `pw_funding_standing_smoke.mjs` (evidence-redirected copy of
+  pw_tradepoint_standing_smoke, checks byte-inherited) 17/17 ×2, RESULT run1==run2 byte-identical. md5 unchanged pre/post.
+- ★ HARNESS GOTCHAS (new, permanent): (1) the portfolio bands table lives on the PORTFOLIO PAGE — click
+  `.page-nav-link[data-page="portfolio"]` THEN `.tab[data-subtab-pf="bands"]`, else pf-units-note offsetParent=null
+  (page-portfolio display:none; the subtab click alone is not enough). (2) fmtUSD renders Unicode MINUS U+2212 — a
+  parseFloat on `−$4.50` gives NaN; normalize \u2212→'-' before parsing DOM dollars. (3) full-pixel nonBlank census
+  (i+=4, alpha>0) matches the standing-smoke thresholds; my every-4th-pixel sampling undershoots 4× (trajectory 1575
+  vs threshold 2000 false-FAIL). (4) `grep -c pf-units-note` counts the CSS selector too — there is exactly ONE div.
+- Ledger: `### 4bc939ec` entry appended (feature map #9 + none beyond; OPERATOR-VOICE entry 425 verbatim "trade poont
+  ok, funding is column adds to p/l in portfolio for position line wise…; do needful" RULED+DELIVERED; entry 232
+  standing/unaffected); table header re-keyed to HEAD `4bc939ec`; row #9 updated; -TP339-RATIFY → RESOLVED-by-RULING
+  (entry 425); -CLOSE405 untouched (OPEN, parked per entry 424); -FPNL-NEGZERO added to reconciliation list.
+- Did NOT git (manager commits). OPEN handed to manager: -FPNL-NEGZERO cosmetic; -CLOSE405 build parked; -B295 items
+  3/4 (funding transfer layer part-2) still parked; -B289 part-2 app list.
 
 ## ★★★★★ MOST RECENT — CAPTION/COMMENT SLICE recheck, build `0e0a0062` = 11/11 PASS ×2 (closes -TP339-CAPTION)
 String/comment-only slice on `e148c9b7`. Harness `engine/verify/pw_caption_slice_recheck.mjs` (A/B); evidence
@@ -314,7 +347,7 @@ TWO canvases: canvas-curve (chart-1 pool) / canvas-pricing (chart-2 option/value
 
 ## File-safety canon
 Blob line md5s `ab663f5c…` (webp L74) / `c505b08a…` (svg L1060 on the v28 lens line); 3 `<script>` parse. Key off line-md5, not line number.
-Latest WORKING-TREE `e148c9b7…` (TRADE-POINT conservation, entry 339; revert twin reservepoint = `7015c22c…` display slice; engine spot trio byte-identical, tradeUpdateAt/revertArc NEW). Prior: `9fdde1de…` PKG-ITM v2; slice `a6ca02f3…`; powerarm `dd6fb955…`; constmult `8f897edc…`; invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
+Latest PROMOTED HEAD `4bc939ec…` (funding-P/L column, entry 425, on ratified `0e0a0062…` = trade-point conservation + caption slice; engine+state byte-identical to 0e0a0062). Prior `e148c9b7…` (TRADE-POINT conservation, entry 339; revert twin reservepoint = `7015c22c…` display slice; engine spot trio byte-identical, tradeUpdateAt/revertArc NEW). Prior: `9fdde1de…` PKG-ITM v2; slice `a6ca02f3…`; powerarm `dd6fb955…`; constmult `8f897edc…`; invtx `5fea0e8d…`, A14 `de28c937…`, contwarp `4378bc11…`,
 lens HEAD `7e1ae39b…`, FINAL `989752294…`; v27 `928cde1c…`; v26c `6cc73563…`.
 
 ## Environment quick-ref

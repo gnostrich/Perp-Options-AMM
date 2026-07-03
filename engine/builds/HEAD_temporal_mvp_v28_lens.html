@@ -1520,7 +1520,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <th>Attrib P&L / Eff strike</th>
               <th>Equity@close / Mark</th>
               <th>Value (carved-perp)</th>
-              <th>Funding</th>
+              <th title="Funding P/L (signed: + = line received, − = line paid). Line P/L shown includes accrued funding; cash at close settles ex-funding until the transfer layer ships.">Funding P/L</th>
               <th>L₀ · Club · Status</th>
               <th></th>
             </tr>
@@ -1534,6 +1534,10 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           single dollar figure is the TOTAL row's settlement cell — the one
           stage-2 → stage-3 equity multiply. Effective strike = original
           strike (OTM) or perp mark (ITM); regime is perp-mark-decided.
+          Funding column = signed P/L effect (+ received, − paid; the
+          ledger stores trader-pays, the display negates). Line P/L shown
+          INCLUDES accrued funding; cash at close settles EX-funding until
+          the funding transfer layer ships.
         </div>
       </div>
     </div>
@@ -4636,9 +4640,25 @@ function renderBands() {
     const Y = comps.filter(c => c.legLabel === 'BOUGHT').reduce((a, c) => a + c.value, 0);
     const bandValue = X + Y;
     const raw_net   = Y - X;
-    const bandFunding  = comps.reduce((a, c) => a + c.funding, 0);
-    // The SINGLE dollar figure (stage 3): one equity multiply, then L₀.
-    const dollarFigure = b.entry.L0 * raw_net * equityAtClose;
+    // Funding P/L (operator entry 425). The stored ledger convention is
+    // TRADER-PAYS (fundingTick: trader_pays = side_sign·f; positive stored
+    // accrual = this line PAID the pool), so the DISPLAYED signed P/L
+    // effect is the NEGATED sum: + = line received funding, − = line
+    // paid. Display-layer convention only — the stored ledger and
+    // fundingTick are untouched.
+    const bandFundingStored = comps.reduce((a, c) => a + c.funding, 0);
+    const bandFundingPnl    = -bandFundingStored;
+    // Dollar leg of the funding P/L uses the funding ledger's own existing
+    // $ conversion (the fundingTick log line: inflow × oracle) — NOT the
+    // stage-2→3 equity multiply, because funding accrues on absolute N,
+    // not per unit of carved equity.
+    const fundingPnlUsd     = bandFundingPnl * oracleLive;
+    // The dollar figure: the one stage-2→3 equity multiply, PLUS the
+    // signed funding accrual (entry 425: funding adds to the line P/L).
+    // DISCLOSURE: displayed P/L is funding-INCLUSIVE; close-time cash
+    // settles EX-funding until the funding transfer layer (parked part-2)
+    // ships — closeBand carries no funding term.
+    const dollarFigure = b.entry.L0 * raw_net * equityAtClose + fundingPnlUsd;
 
     // ── Band row — level-1 summary; origin-perp columns hang here ─────
     const statusBadge = closed
@@ -4659,7 +4679,7 @@ function renderBands() {
         <td title="attributable P&L — carvedNotional · (perpMark − entryPerpMark) / entryPerpMark; dimensionally [USD]">${fmtUSD(attribPnL, 2)}</td>
         <td title="carved equity at closure = entry equity + attributable P&L">${fmtUSD(equityAtClose, 2)}</td>
         <td title="band value = Σ component values (carved-perp units)">${fmtNum(bandValue, 6)}</td>
-        <td title="aggregate funding (carved-perp units)">${fmtNum(bandFunding, 6)}</td>
+        <td title="funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)">${fmtNum(bandFundingPnl, 6)}</td>
         <td>${fmtNum(b.entry.L0, 2)}× · ${b.entry.perp_club_id} · ${statusBadge}</td>
         <td>${closeBtn}</td>
       </tr>`;
@@ -4685,7 +4705,7 @@ function renderBands() {
           </td>
           <td title="mark — the fraction, from the pool-curve query">${fmtNum(c.m, 4)}</td>
           <td title="component value = N · mark (carved-perp units)">${fmtNum(c.value, 6)}</td>
-          <td title="per-component funding (signed, carved-perp units)">${fmtNum(c.funding, 6)}</td>
+          <td title="per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)">${fmtNum(-c.funding, 6)}</td>
           <td></td>
           <td></td>
         </tr>`;
@@ -4700,8 +4720,8 @@ function renderBands() {
         <td title="raw_net = Y − X (carved-perp units)">raw ${fmtNum(raw_net, 6)}</td>
         <td></td>
         <td></td>
-        <td title="total funding (carved-perp units)">${fmtNum(bandFunding, 6)}</td>
-        <td class="pf-dollar-cell" title="band P&L at close (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply">${fmtUSD(dollarFigure, 2)}</td>
+        <td title="total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell">${fmtNum(bandFundingPnl, 6)}</td>
+        <td class="pf-dollar-cell" title="band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships">${fmtUSD(dollarFigure, 2)}</td>
         <td></td>
       </tr>`;
   }
