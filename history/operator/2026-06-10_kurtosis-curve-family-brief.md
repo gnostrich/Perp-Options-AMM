@@ -3087,3 +3087,9 @@ _Context: operator RULES the close-semantics question: option (b) — close is a
 _Context: operator asks whether the submitted paper is aligned with ruling (b)._
 
 > also i think paper is aligned with with b riht
+
+
+## Entry 407 — 2026-07-02 UTC
+_Context: operator gives the build go for ruling (b): fix the HTML — close as a first-class trade on the live curve. Manager arms the chain behind the in-flight spec: spec lands → R6 scope-gate → intern build → gates → manager verification → tester live acceptance → push only if all green; STOP-ON-RED. Named contingency: if the spec's x-drain analysis shows naive-(b) is a drainable bias needing a new economic component, that fork is operator-tier and the build halts there with options presented instead of invented economics._
+
+> ok fix the HTML for b
