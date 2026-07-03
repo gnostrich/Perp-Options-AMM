@@ -19,7 +19,23 @@ replacement property + CM6-v2 gate fate, division-of-labour tension, close-depth
 paper revision sentences. THEN R6 scope-gate → itemized operator go → build. Story table ed.15 row 15.
 -TP339-RATIFY still open (5 defaults; partially mooted for the close half by 405 — re-scope at spec).
 
-🧭 **OVERNIGHT ENGINE CAMPAIGN 2026-07-02 night (entry 377 blanket go) — CURRENT STATE:**
+🧭 **2026-07-03 DAY STATE (entries 402–425) — CURRENT:**
+**HEAD = `4bc939ec` on main (`7699189d`) = FUNDING P/L COLUMN (entry 425 "do needful"; R6 gate #2
+sign-pin honored: column = −stored trader-pays; disclosure ×3; ladder full green, tester PASS ×2;
+cosmetic -FPNL-NEGZERO queued) on ratified TRADE-POINT `0e0a0062` (entry 425 "trade poont ok" =
+-TP339-RATIFY RESOLVED; register C2 VERIFIED).** Paper SUBMITTED 2nd-submission `f8b37a71`.
+**CLOSE-(b)+receipt/charge fix: PARKED (entry 424) — preserved complete in
+`specs/FIX_close_b_receipt_charge_PARKED_2026-07-03.md`** (ruling chain 405/407/412/414/421;
+4-item scope: live close everywhere, counterfactual charge both sides, ENTRY-LIQUIDITY receipt
+scaling [operator gloss "smooth!"], pool-value floor; research runs 1–4 in
+`notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`: sybil floor $546k, bystander=0
+structural, LP-resize + exit-without-close leaks found+mitigated in scope, perp-basis parallel;
+fires on operator go). Entry-408 staleness audit APPLIED (39 findings; commit-before-write mistake
+×2 owned+corrected). Queue: Lean submissions (trade-point + CL1–CL4, Aristotle free per operator),
+325-C supplement, paper-agent memory truth-up, -FPNL-NEGZERO one-liner, funding transfer part-2
+(operator-gated), perp-layer dials (EMA/rate-limit/clamp — calibration campaign).
+
+🧭 **OVERNIGHT ENGINE CAMPAIGN 2026-07-02 night (entry 377 blanket go) — prior arc:**
 **HEAD = `0e0a0062` on main (`ecb9c444`) = TRADE-POINT CONSERVATION (entry 339) + caption/comment/label
 slice.** Ladder all green: R6 scope-gate (4 CLEARED; skeptic caught my K_tx-first misstatement) → intern
 build e148c9b7 (tradeUpdateAt/revertArc per spec; exhibit 11/21 Δ=0; SPOT trio byte-id v24; CM8 retired,
