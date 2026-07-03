@@ -3005,3 +3005,7 @@ _Context: operator orders: remove the "static" steepness-knob framing (it could 
 
 ## Entry 390 — 2026-07-02 UTC
 > rekove solve cu stays comditional dogshit from abstract
+
+
+## Entry 391 — 2026-07-02 UTC
+> and do an overally ordering / flow check on things through and through including annexure
