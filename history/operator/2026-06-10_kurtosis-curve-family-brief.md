@@ -3155,3 +3155,9 @@ _Context: operator: continue research to figure out the best mitigation; FYI cal
 
 ## Entry 419 — 2026-07-03 UTC
 > simple english tldr?
+
+
+## Entry 420 — 2026-07-03 UTC
+_Context: operator checks their read of the fix: "loosely evaluate slippage as per entry pool or something". Manager corrects the nuance: entry supplies the recorded FLOWS (the yardstick), not the entry pool's prices; both sides of the charge are evaluated on TODAY's pool._
+
+> so the fix is to loosely evaluate slippage as per entry pool or something
