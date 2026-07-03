@@ -519,3 +519,37 @@ failed. The mode-gloss residual is flagged as a non-blocking note in the same ja
 operator just corrected; manager's call whether to spend the two words before commit.
 
 — skeptic (micro-gate, ~3 min; re-derivations: 2 tangent slopes, 3 incidence checks, baseline md5)
+
+---
+
+# VERDICT — FULL REGRESSION + CONFLATION SWEEP (operator entry 400)
+**Artifact:** `paper/wine2026/temporal_wine2026_v2.tex`, md5 `9b4b96a3f992174361aee13a6232c51b` (confirmed).
+**Ground truth read:** transcript entries 378–399 verbatim (`history/operator/2026-06-10_kurtosis-curve-family-brief.md`), STORY_TABLE ed.14, operator_mental_model addenda 307/308/311.
+**Attack performed:** independent recomputation of eq:mark ATM (4/27 = 0.148148 at g=2), all 8 worked-example cells (0.231/0.183/0.148/0.103; 0.143@85.71/0.200/0.107/0.057/0.019 — all exact at 3dp), fig:funding equal-slope points (anchor (1.0954,1.9170) ray 1.7500; pool (1.3120,1.5307) ray 1.1667, both at slope 1.75 — exact), fig:read intersections ((1.1640,1.8042), (0.9349,2.2462), mode (1.4491,1.4491) — exact), fig:warp T-incidence (exact); banned-string greps incl. multiline doubled-tfp; first-render-order re-derivation for all R8 terms.
+
+## VERDICT: FLAG — 5 hits (3 exact regression-list hits, 2 minor). Everything else survived.
+
+**FLAG-1 (R6 doubled-tfp) — lines 658–659.** `(\tfp{} for generic $g$; \tfp{}\textsuperscript{L4})` renders "(verified in Lean for generic g; verified in Lean^L4)" — a doubled-tfp artifact. The task's own grep window (`.{0,15}`) misses it only because the two macros straddle a newline ~18 chars apart. Minimal fix: `(\tfp{} for generic $g$\textsuperscript{L4})`.
+
+**FLAG-2 (R6 doubled-tfp) — lines 705–707.** The sentence opens `---\tfp{} both in the curve's own coordinate\textsuperscript{L4} and, ..., in the dollar frame\textsuperscript{L5} (\tfp{})---`: the trailing `(\tfp{})` restates the provenance the same sentence already opened with. Minimal fix: delete ` (\tfp{})`.
+
+**FLAG-3 (R1 vocabulary) — line 548.** Rendered prose: "one exponent per wing cannot **bend** differently across strikes" (pricing-ceiling paragraph, §lens). "bend" is on the banned list for rendered prose; only TikZ `to[bend ...]` syntax is exempt, and this is not that. Minimal fix: "one exponent per wing cannot produce strike-dependent curvature" (or "...cannot change across strikes").
+
+**FLAG-4 (R3 residue, minor) — lines 289–290 (§How a trade runs, step 3).** "Funding is metered by the **slope-deviation** read of Section~\ref{sec:funding}". Under entry 386 the deviation is the RAY-ANGLE gap at matched slope; "slope-deviation" is the pre-386 compound in which the deviation is *in slope* (the same-ray read the operator ruled would violate the ATM point). §3.4 prose, fig:funding caption, the mark-fence, and the annex-Σ prose all tell the 386 story correctly — this fifth site is the one leak. Minimal fix: "metered by the same-slope funding read of Section~\ref{sec:funding}" (or just "the funding read of").
+
+**FLAG-5 (C3-adjacent wing scope, minor) — lines 93–94 (contribution 3) and 791 (conclusion).** `S^*=K\,m\gamma/(m\gamma+1)` is stated as THE early-exercise boundary with no wing qualifier at both sites. That is the PUT form; the call boundary is `K(m\gamma+1)/(m\gamma)`, and the put/call scoping ("calls mirror by reflection") first appears only in §American, after the contribution. As printed, a reader applying the formula to a call gets a boundary on the wrong side of K. Minimal fix: two words — "(put form; calls mirror)" at contribution 3, "put boundary" in the conclusion.
+
+## Survived attack (checked, not narrated)
+- **R2 PASS:** mark = one ray/one curve throughout; no mode in the mark definition or eq:mark; the two-curve fence sentence present and correct; the only two-object read is funding.
+- **R3 PASS at the 4 named sites:** §3.4 prose ("same slope located on both curves... gap between the two ray angles... respects the at-the-money point"), fig:funding drawing+caption (equal-slope tangents drawn and numerically exact), mark-fence ("the same slope located on the pool curve and on the anchor curve"), annex rate-law prose (Σ prose stays curve-vs-anchor; no same-ray resurrection). Sole leak = FLAG-4.
+- **R4 PASS:** step 2 = "the booking strike is YOUR strike passed through the lens — equal to your chosen strike at m=1"; §lens tx-map anchored on "the trader's ray"; fig:read caption "the swap executes further out, on the lens ray... frozen at open". Nowhere reads as at-mode.
+- **R5 PASS:** no AMM-101 ("two-asset slice of Balancer's family" is scoping to the n-asset family, not definitional); zero "static"; zero "American generalisation" (only "generalized-hyperbolic", a distribution name); no cutesy titles; zero barrier/prior-paper/withdrawn strings; "server-side" absent from the abstract (comment + provenance annex only, allowed).
+- **R6 rest PASS:** \tfp renders "verified in Lean"; zero trusted-from-prover strings; "not re-run against a local kernel" hedge present in the provenance annex; on-request sentence (Lean proofs + complete working implementation) present at BOTH sites (app:lean close + frontier §1).
+- **R7 PASS:** both worked-example sites carry marks-not-transactions ("nothing is bought or sold in the table" §6.2; "No transaction occurs in this table" annex); three-zones framing present in §American; "where waiting ends" absent.
+- **R8 PASS (re-derived render order):** band(267), club(274), mode(285 — glossed in step 2, now BEFORE fig:read: the prior mode-gloss residual from the §3.2 micro-gate is CLOSED), m(98), γ(97), g=mγ(338), g_loc(632; fig:seam caption self-defines), K_tx(280–286), L₀(299), escrow(267)/escrow unit(342), carry(400), smooth pasting(96, tangent/no-kink; abstract uses plain "smooth join").
+- **C1/C2/C4/C5/C6 PASS:** mark-vs-funding reads fenced; chosen-strike-settles vs frozen-K_tx-books kept distinct at every site (steps 2/4, §lens, fig:read, settlement annex); every perp-unit→dollar crossing names the conversion (closing equity × L₀); K vs K_tx never blurred; division-of-labour stated in intro + §2 + §3 header, "pool prices that protection" (abstract) and "the pool is the option market" read as the exempt mechanism-shorthand with the strict split stated in the same section.
+- **Numbers EXACT:** eq:mark ATM 0.148 (=4/27) at g=2; all table cells; fig:funding 1.75-slope points; fig:read intersections. Recomputed independently, not trusted from comments.
+
+**Bottom line:** the 386/399 rulings are correctly encoded; the story survived. Five mechanical hits, all one-splice fixes (FLAGs 1–3 are exact regression-list violations and should be fixed before ship; 4–5 are two-word accuracy patches). No conflation of the six pairs found beyond FLAG-4/5.
+
+— skeptic (full sweep under entry-400 deadline; re-derivations: 13 numeric checks, 9 grep families, R8 render-order walk)

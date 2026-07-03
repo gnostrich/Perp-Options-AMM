@@ -3938,3 +3938,13 @@ about prose get spot-checked, they drift.
 - Pattern (recurring): manager edits that DELETE framing prose keep dropping the definitional
   gloss riding inside it (this time "mode"; entry-382 round it was smooth pasting). When auditing
   deletions, always ask: what term was defined ONLY inside the deleted sentence?
+
+## 2026-07-03 — entry-400 FULL REGRESSION+CONFLATION SWEEP, wine2026 v2 (md5 9b4b96a3)
+**Verdict: FLAG ×5** (appended to notes/skeptic/VERDICT_airtight_pass_2026-07-02.md, entry-400 block):
+1. R6 doubled-tfp L658-9 "(\tfp for generic g; \tfp^L4)" — task's 15-char grep missed it across a newline.
+2. R6 doubled-tfp L705-7 trailing "(\tfp{})" after a sentence already opened with \tfp.
+3. R1 "bend" in rendered prose L548 (pricing-ceiling paragraph).
+4. R3 residue L289-90: step-3 "slope-deviation read" = pre-386 vocabulary (deviation-in-slope) — sole leak; the 4 named funding sites all tell the 386 same-slope story correctly.
+5. Wing-scope: S*=Kmγ/(mγ+1) unqualified at contribution-3 (L94) + conclusion (L791) — put form only; call is K(mγ+1)/mγ, scoping appears only later in §American.
+**Survived (settled, don't re-attack):** eq:mark ATM 0.148=4/27; all 8 worked-example cells exact; fig:funding equal-slope points (1.0954,1.9170)/(1.3120,1.5307) rays 1.75/1.1667 exact; fig:read+fig:warp incidences exact; R2/R4/R5/R7/R8 clean; prior mode-gloss residual (§3.2 micro-gate) now CLOSED (gloss at step 2 L285 precedes fig:read).
+**Pattern note:** doubled-provenance macros keep slipping in where a sentence hedges twice ("\tfp for generic g; \tfp^Ln") — the team's own grep windows are too narrow to catch multiline doubles; always grep -Pzo across newlines. Also: legacy compound nouns ("slope-deviation") survive ruling flips even when every framed prose site is fixed — sweep for the VOCABULARY of the superseded frame, not just its story.

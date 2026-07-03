@@ -3053,3 +3053,7 @@ _Context: operator, reading the compiled journey step 2 (an earlier render): the
 
 ## Entry 400 — 2026-07-02 UTC
 > do MOTHERFUCKING REGRESSIN CNFLATION CHECKS FUCK
+
+
+## Entry 401 — 2026-07-02 UTC
+> and one more diagram QC again
