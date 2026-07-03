@@ -3063,3 +3063,9 @@ _Context: operator, reading the compiled journey step 2 (an earlier render): the
 _Context: paper submitted (second submission, final md5 f8b37a71). Operator turns to the HTML: asks for a simple status update on what's pending and a diff vs the previous version._
 
 > ok i think paper is done and submitted for now, on the HTML can you help me out with a simple status update on whats pending and a diff wrt the prev version?
+
+
+## Entry 403 — 2026-07-02 UTC
+_Context: operator asks about pending item 2 (close branch-jump): they don't remember asking for it; how does reversal work after state changes from other trades; and whether the extended chart-2 / curve-native payoff work means there could be no separate per-position ITM settlement branch at all._
+
+> explain 2. i dont remember asking for this and how do you reverse after state changes form other trades etc.? the is the extended chart 2 thing now sort of making  payoffs curve native so no separate ITM settlement thing on a per posisiton basis...?
