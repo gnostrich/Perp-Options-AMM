@@ -264,6 +264,121 @@ counterfactual charge-back exposure** (measured where noted, else reasoned) → 
 
 ---
 
-**Provenance:** measured = `scratchpad/closeb/h8_cf.js` on HEAD `0e0a0062` engine extract (`engine.js`);
-external claims = training-knowledge **[TK]**, unverified (no web). No git, no engine edits, no Aristotle
-(none needed). Design-stage: close-(b) build HOLDS behind this take-stock (operator entry 415).
+## PART 3 — LP-SELF-DEALING (operator entry 416; RESEARCH RUN #3) — 2026-07-03
+
+Operator (verbatim): *"ok so if someone puts in big lquidity does a huge trade and then pulls LP and
+exits that kind of thing"*. The LP-self-dealing variant. Manager hypothesis under test: attacker becomes
+an f-fraction LP → runs the ratchet cycle → the charge credit is booked to the LP set (which includes the
+attacker at fraction f) → they recover f of their own charge → effective floor ≈ (1−f)·floor, so f=0.9
+would drop the $546k floor toward ~$55k. Aggravator cited: LP add/remove is an isotropic resize (`liquidity(D)`,
+HEAD L2544) with NO fee and NO delay, so the LP round-trip is itself free.
+
+Measured in `scratchpad/closeb/h9_lp.js` + `h9b_lp.js`, HEAD `0e0a0062` engine extract. LP add/remove modelled
+as the engine's `liquidity(D)` isotropic scale of `x,y,α,β` (V=2y, λ=D/V, w & price invariant).
+
+### HEADLINE: the manager's pro-rata-self-credit hypothesis is REFUTED — but a DIFFERENT, real leak exists.
+
+**(1) Pro-rata self-credit under the shipped pool-credit floor = ZERO recovery.** Net cost to push γ 1→1.5
+(w 0.5→0.60), charge credited to pool reserves (the floor):
+
+| f | fixed-pool net cost | / honest floor | capital-add net cost | / honest floor |
+|---|--------------------:|---------------:|---------------------:|---------------:|
+| 0   | 594 362 | 1.09× | 594 362 | 1.09× |
+| 0.5 | 594 362 | 1.09× | 1 188 724 | 2.18× |
+| 0.9 | 594 362 | 1.09× | 5 943 619 | **10.88×** |
+
+- **LP recovery = 0 in every case.** Fixed-pool (attacker owns f of the existing $1.6M): net cost is
+  **INVARIANT to f** (~$594k, the sybil floor at perFrac=0.05). Capital-add (attacker deposits to reach
+  fraction f of an enlarged pool): net cost gets **WORSE**, scaling ~1/(1−f), because inflating the pool
+  inflates the gross charge proportionally while recovery stays zero. Self-dealing is **counterproductive**.
+- **(1c) WHY — no excess to skim (measured):** the pool-credit floor RESTORES the pool to its pre-cycle
+  value **exactly** — drain = $16 734.36, charge = $16 734.36, overshoot vs pre-cycle = **$0**. The charge
+  plugs a real hole; it does not hand LP shares any surplus. "Recover f of your own charge" is illusory
+  because the charge equals the drain to the cent (same structural fact as the sybil floor and the
+  bystander-cancellation in Part 1) — there is nothing extra distributed to shares to recover.
+- **(2) Pull LP after the cycle:** attacker deposits $14.4M (f=0.9), runs a paid cycle, withdraws. LP
+  round-trip returns **capital only** ($14.4M→$14.4M); the charge is NOT recovered; net = −charge. Honest
+  LP pool ($1.6M) **unharmed**. The isotropic resize-down does not leak the charge.
+
+### THE REAL LEAK — TIMING, not pro-rata credit: resize the pool BETWEEN open and close.
+
+The counterfactual charge is computed via `revertArc` (engine L160-167), which subtracts the leg's stored
+**absolute** arc flows `dxA·rr, dyA` from the current reserves, adjusting **only** by the oracle rebase
+factor `rr = oNow/oOpen`. **It has zero awareness of an intervening LP isotropic resize.** So if the pool is
+scaled by an LP add/withdraw between a leg's open and its close, the stored absolute arc no longer matches
+the resized pool, and the counterfactual differential `charge = V[receipt] − V[live]` is mis-computed.
+
+**(3)/(VECTOR A) — add LP deep → open → PULL LP → close (measured, `h9b_lp.js`):**
+
+| f pulled | attacker net ($) | honest-LP Δ ($) | close charge ($) |
+|----------|-----------------:|----------------:|-----------------:|
+| 0    | −7 414   | 0        | +7 414 (honest close) |
+| 0.3  | +8 838   | −15 211  | +6 373 (undercharged) |
+| 0.5  | +33 720  | −35 492  | +1 772 (undercharged) |
+| 0.9  | +583 619 | −319 429 | **−264 190 (charge goes NEGATIVE — the "charge" PAYS the closer)** |
+
+- Pulling LP between open and close drives the close charge **down and, at large pulls, NEGATIVE** — the
+  attacker escapes paying for the drain their live close causes AND is paid by the mis-scaled receipt, while
+  the real drain is dumped on the remaining (honest) LPs. **This is a genuine new vector — but its mechanism
+  is the arc-vs-pool-size mismatch in the charge formula, NOT the pro-rata self-credit the manager posited.**
+- HONEST CAVEAT on Vector A magnitudes: attacker-gain ($584k) exceeds honest-loss ($319k) because the
+  net-worth accounting isn't fully closed (the negative-charge credit and the isotropic pulls move value the
+  simple `o·x+y` tally doesn't perfectly partition) — treat the **dollar magnitudes as indicative**; the
+  **sign and the negative-charge break are solid** (charge crosses zero at f≈0.5–0.9, directly from L164).
+
+**(VECTOR B) — add LP → open (warp w) → PULL LP → EXIT, never close (measured):** attacker deposits $14.4M
+(f=0.9), opens a big leg warping w 0.50→0.41, pulls their LP, exits. The **charge is levied only at CLOSE**,
+so an attacker who never closes leaves w **warped with NO charge at all** — the griefing/blast-radius vector
+(whole option book reprices via g_loc=m·γ) is entirely uncharged if you simply don't close. (The exit cash
+figure is NOT reliable here — the option-layer open premium isn't tracked in this pool-value harness — but
+the *uncharged persistent warp* is solid and is the sharper concern than any cash extraction.)
+
+### (4) MITIGATIONS — ranked (measured or reasoned, one line each)
+
+The measured leak is **timing/resize-invariance**, so the ranking INVERTS the brief's anticipated shortlist:
+the mitigations that target the (refuted) pro-rata self-credit — (a) sink, (e) exclude-own-share — do NOT
+address the real leak, and (a) actively breaks the floor.
+
+1. **[TOP — MUST, code fix] Make the charge resize-invariant.** Either (i) scale the stored arc `dxA, dyA`
+   by the cumulative LP resize factor since open (exactly as `rr` already scales `dxA` for oracle rebase;
+   `dwA` needs no scaling — w is scale-invariant), OR (ii) **lock LP while the depositor has any open leg**
+   (mitigation (b) in leg-lifetime form). Directly kills Vectors A and B-with-close. (i) is the cleaner one-
+   line engine fix; (ii) is the policy form. *Reasoned from L164; the fix mirrors the existing `rr` handling.*
+2. **[MUST — already pinned] Charge the OPEN, or freeze w on exit-without-close (Vector B).** Charge is
+   close-only today, so open-warp-then-exit leaves an uncharged warped curve. Needs either an open-side
+   charge/bond or forcing legs to be closed/liquidatable before LP exit. *Measured: open never charges.*
+3. **(d) LP entry/exit fee.** Taxes the currently-free LP round-trip that Vectors A/B rely on; partial and
+   size-dependent (a determined attacker eats a small fee for a large warp). SHOULD, not sufficient alone.
+4. **(b) LP withdrawal delay ≥ window (generic form).** Subsumed by #1(ii) when the window ≥ max open-leg
+   lifetime; as a blanket delay it also blunts JIT (#2 in Part 2). Adds LP UX friction. SHOULD.
+5. **(c) Charge-credit vesting.** Targets the pro-rata self-credit, which is **already ~0** under pool-credit
+   — solves a non-problem here. Low value. DEFER.
+6. **(a) Route charge to a non-LP sink (insurance/club fund).** Kills self-credit (already ~0) AND **breaks
+   P-CYCLE**: measured, sink policy leaves the pool drained ($1.6M→$1.225M over the schedule; P-CYCLE FAILS)
+   while pool-credit holds it exactly at $1.6M. So a sink requires a separate backstop to refund the pool the
+   drain — reintroducing the floor by another name. **REJECT for the stated goal** (doesn't fix the timing
+   leak; costs the floor). *Measured, `h9_lp.js` (4a).*
+7. **(e) Exclude-own-share (identity-based).** Targets the refuted self-credit AND is sybil-weak (attacker
+   splits the LP stake across wallets — an excluded wallet is just a fresh identity). **REJECT.** *Reasoned.*
+
+### SHORTLIST DELTA (MUST tier changes — Part 2 shortlist updated):
+
+- **NEW MUST:** *charge resize-invariance* (scale the stored arc by the cumulative LP factor, OR lock LP
+  while legs are open). This is the real LP-self-dealing defense; without it the deep-open/pull/shallow-close
+  play drives the close charge negative and drains honest LPs (Vector A).
+- **NEW MUST (or promote):** *charge the open / freeze-w-on-exit* so open-warp-then-exit-without-close
+  (Vector B) can't leave an uncharged warped curve.
+- **DEMOTE/REJECT:** the Part-2 "open-time LP snapshot for the charge credit" (MUST #3) was premised on
+  JIT-LP diluting a *distributed* credit — but under pool-credit the credit restores reserves (no
+  distribution to dilute) and Part 3 (1c)/(2) show self-credit recovery is already zero. The snapshot is
+  **not needed against self-dealing**; keep it only if the LP-accounting layer ever *distributes* the charge
+  as a dividend (an alternative design), where it would matter again. Route to the LP-accounting TBD.
+- **TBD — operator:** whether to fix resize-invariance in-arc (code) or by LP-lock (policy); whether to
+  charge the open. Both are close-(b)-build design decisions; close-(b) still HOLDS behind this take-stock.
+
+---
+
+**Provenance:** measured = `scratchpad/closeb/h8_cf.js`, `h9_lp.js`, `h9b_lp.js` on HEAD `0e0a0062` engine
+extract (`engine.js`); external claims = training-knowledge **[TK]**, unverified (no web). No git, no engine
+edits, no Aristotle (none needed). Design-stage: close-(b) build HOLDS behind this take-stock (operator
+entries 415/416).

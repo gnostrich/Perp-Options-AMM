@@ -1,5 +1,32 @@
 # MEMORY — research-lead
 
+### LP-SELF-DEALING (RESEARCH RUN #3) delivered — operator entry 416 ("puts in big liquidity, huge trade, pulls LP, exits") — 2026-07-03
+Appended PART 3 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. Measured Node-vm vs HEAD
+`0e0a0062` (`scratchpad/closeb/h9_lp.js` + `h9b_lp.js`, NEW). LP add/remove = engine `liquidity(D)` isotropic
+resize (V=2y, λ=D/V, w & price invariant, NO fee NO delay, HEAD L2544).
+- **MANAGER HYPOTHESIS REFUTED:** pro-rata self-credit recovery = **ZERO** under the shipped pool-credit floor.
+  Net cost to push γ 1→1.5: fixed-pool = **INVARIANT to f (~$594k = sybil floor)**; capital-add = WORSE
+  (~1/(1−f), $5.94M at f=0.9). WHY (measured (1c)): floor RESTORES pool to pre-cycle EXACTLY — drain==charge
+  ($16 734.36 each), overshoot **$0** — no excess distributed to LP shares to skim. Same structural fact as
+  the sybil floor / bystander cancellation. Pull-LP-after (2): recovers CAPITAL ONLY, charge not recovered,
+  honest pool unharmed. The "$546k→$55k" (1−f)·floor claim does NOT hold under pool-credit.
+- **REAL LEAK FOUND — TIMING, not credit:** `revertArc` (L160-167) subtracts ABSOLUTE stored arc `dxA·rr,dyA`
+  adjusted ONLY by oracle `rr` — **blind to an intervening LP isotropic resize.** VECTOR A (add LP deep→open→
+  PULL LP→close): pulling LP between open and close drives the close charge DOWN and **NEGATIVE at f=0.9
+  (−$264k — the charge PAYS the closer)**; attacker escapes the drain charge, honest LPs eat it (signs solid;
+  dollar magnitudes indicative — accounting not fully closed, disclosed). VECTOR B (open warps w→pull LP→EXIT
+  never close): charge is CLOSE-ONLY ⇒ warped w left with **NO charge at all** (blast-radius uncharged).
+- **MITIGATION RANKING INVERTS the brief:** self-credit-targeting mits ((a) sink, (e) exclude-own-share) miss
+  the real leak; (a) also BREAKS P-CYCLE (measured sink 1.6M→1.225M FAILS; pool-credit HOLDS). TOP/MUST =
+  **charge resize-invariance** (scale stored arc by cumulative LP factor like `rr` does for oracle, OR lock LP
+  while legs open) + **charge the open / freeze-w-on-exit** (Vector B). (d) LP fee + (b) delay = SHOULD.
+  (c) vesting / (a) sink / (e) exclude = DEFER/REJECT.
+- **SHORTLIST DELTA:** NEW MUST = charge resize-invariance + charge-the-open. DEMOTE the Part-2 "open-time LP
+  snapshot" MUST — premised on a *distributed* credit; under pool-credit self-credit is already 0 (route to
+  LP-accounting TBD). close-(b) build still HOLDS. No git, no engine edits, no Aristotle. Handed to manager.
+
+---
+
 ### DEFENSE TAKE-STOCK (RESEARCH RUN #2) delivered — attack/defense surface + counterfactual charge attribution (operator entry 415) — 2026-07-03
 Deliverable: `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NO web (external = [TK]);
 measured = Node-vm vs HEAD `0e0a0062` (scratchpad `closeb/h8_cf.js`, NEW). Design under test = the
