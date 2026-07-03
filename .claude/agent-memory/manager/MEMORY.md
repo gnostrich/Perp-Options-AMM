@@ -2,6 +2,23 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **POST-SUBMISSION RULINGS 2026-07-02 latest (entries 402–406) — READ FIRST:**
+**WINE 2026 SUBMITTED (2nd submission): final tex md5 `f8b37a71` on main** — night arc entries 378–401:
+operator's v6 baseline + skew-only vocab + one-ray-one-curve mark + SAME-SLOPE funding ruling (386, fig
+redrawn) + zones (388) + de-static (389) + division-of-labour in intro (393) + journey section in BODY
+§3 (396) + at-strike booking language (399) + Lean-by-Harmonic-Aristotle labels w/ identifiers + 2
+statements + implementation-on-request (394) + annex reorder + 2 new figures + 3-layer diagram QC + full
+regression/conflation sweep (400, 5 FLAGs fixed incl. S* put-form qualifier). Paper describes close as
+live at-strike reversal + (a)'s two-case ITM rule at 4 sites (revision list in flight).
+**⚖ OPERATOR RULING entry 405: CLOSE = FIRST-CLASS TRADE ON THE LIVE CURVE (option b)** — one tx logic
+open/close, curve-native, NO frozen-arc un-booking, NO ITM-to-cash branch. SUPERSEDES (when built)
+tonight's frozen-arc close + the LOCKED two-case protocol. research-lead spec IN FLIGHT
+(`specs/SPEC_close_first_class_trade_2026-07-03.md`): must resolve systematic x-drain (9-case leak →
+honest slippage or drainable bias?), crossed-ray ITM close (branch-jump must dissolve), no-free-money
+replacement property + CM6-v2 gate fate, division-of-labour tension, close-depth semantics, migration,
+paper revision sentences. THEN R6 scope-gate → itemized operator go → build. Story table ed.15 row 15.
+-TP339-RATIFY still open (5 defaults; partially mooted for the close half by 405 — re-scope at spec).
+
 🧭 **OVERNIGHT ENGINE CAMPAIGN 2026-07-02 night (entry 377 blanket go) — CURRENT STATE:**
 **HEAD = `0e0a0062` on main (`ecb9c444`) = TRADE-POINT CONSERVATION (entry 339) + caption/comment/label
 slice.** Ladder all green: R6 scope-gate (4 CLEARED; skeptic caught my K_tx-first misstatement) → intern

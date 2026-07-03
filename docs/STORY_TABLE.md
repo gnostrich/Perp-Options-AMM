@@ -1,6 +1,6 @@
 # THE STORY TABLE — the whole system, one table (operator protocol, entry 312)
 _Reprint IN FULL on every change — never a diff. Operator's geometry (entries 304/307/308/311).
-Edition 14, 2026-07-02 (entry 359: NEW station 17 — perp-units→cash conversion, ordered into
+Edition 15, 2026-07-02 (entry 405: row 15 = close RULED first-class-trade (b), spec ordered; entry 359: NEW station 17 — perp-units→cash conversion, ordered into
 both table and paper; prior: entry 339 row-3 ORDERED-BUILD; entry 338 lifecycle FLOW; paper may
 CLUB the small mechanics)._
 
@@ -20,7 +20,7 @@ CLUB the small mechanics)._
 | 12 | **Opening — the fee** | 0.01% of notional, from club equity into a fee bucket — never the pool. | ✅ code / 📄 absent (clubbable) |
 | 13 | **Holding — funding** | SAME ray on TWO curves (pool vs anchor), like ray to like ray; the slope DEVIATION is the factor; zero on-anchor; ITM naturally ZERO (parity has no warp-sensitivity); perp-layer funding EXTERNAL by ruling. ⚠ FLAG-C: the engine METERS the rate to a per-leg ledger — no cash moves between sides yet (transfer = part-2 build); "crowded pays" = the rate's sign. → operator | ⚠ wording/hedge call |
 | 14 | **Closing — the seam** | the payoff line is the TANGENT to the waiting curve; step off at S*=K·g/(g+1) ($66.67 at g=2); value ≥ payoff everywhere (theorem + gate + measured). | ✅ live |
-| 15 | **Closing — settlement** | your right, never forced; OTM close walks the curve (the bend's toll = slippage); ITM close = the straight tail, no toll, parity cash. | ✅ |
+| 15 | **Closing — settlement** | ⚖ RULED (entry 405): close is to be a FIRST-CLASS TRADE on the live curve — one tx logic open and close, curve-native, NO separate ITM-to-cash branch. Engine ships design (a) (frozen-arc + two-case, tonight's build); redesign spec ORDERED. Hazards for the spec: systematic x-drain (9-case table), crossed-ray trade definition, no-free-money gate fate, club/payout interaction, paper's two-case sentences (revision item). | 🔨 ORDERED-DESIGN |
 | 16 | **Paying — the vault (carve)** | your ITM win is paid from your carved slice, frozen at open; whole-system solvency CONDITIONAL on the funding port (theorem-honest). | 🔒 |
 | 17 | **Paying — units→cash** | the mark is a fraction of ONE escrow unit ⇒ a leg of notional q is worth q·mark PERP UNITS; legs net in perp units; dollars enter only at the very end — the net × the carved slice's CLOSING equity (its dollar worth at the reference price then) × L₀. One doorway from perp-land to cash-land, and it's at the exit. | ✅ code / 📄 added (entry 359) |
 | 18 | **Paying — the club & L₀** | payout = L₀ × raw net × your carved equity; the CLUB is the (L₀−1) counterparty; a drained club pays a winner nothing (the floor). | ✅ code / 📄 carve-only (clubbable) |

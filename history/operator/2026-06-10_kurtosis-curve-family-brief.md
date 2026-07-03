@@ -3081,3 +3081,9 @@ _Context: operator probes whether the branch-jump, the frozen-arc reversal, and 
 _Context: operator RULES the close-semantics question: option (b) — close is a second first-class trade on the live curve (curve-native; one tx logic open and close; no frozen-arc un-booking, no separate ITM-to-cash branch). Design ruling; build still requires spec → R6 scope-gate → itemized go. Manager flags: the just-submitted paper describes (a) — divergence to manage in revision; the spec's 9-case systematic x-drain finding becomes the central hazard to resolve under (b)._
 
 > its to be b
+
+
+## Entry 406 — 2026-07-02 UTC
+_Context: operator asks whether the submitted paper is aligned with ruling (b)._
+
+> also i think paper is aligned with with b riht
