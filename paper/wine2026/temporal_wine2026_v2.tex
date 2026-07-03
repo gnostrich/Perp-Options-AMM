@@ -91,7 +91,8 @@ Angeris--Evans--Chitra~\cite{angeris-replicating}. What is new is:
         settlement---that reads a continuum of option values from one pool state
         (Section~\ref{sec:continuum}; settlement in Appendix~\ref{app:properties});
   \item an \emph{exact American exercise rule}: a closed-form early-exercise
-        boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$, where the exercised
+        boundary $S^{\ast}=K\,m\gamma/(m\gamma+1)$ (put form; calls mirror),
+        where the exercised
         payoff line joins the waiting-value curve \emph{tangentially}---same
         value, same slope, no kink (``smooth pasting'') (base form
         $K\gamma/(\gamma+1)$ at $m=1$; $K$ the dollar strike, $\gamma>1$ the
@@ -286,7 +287,7 @@ Lean-verified results.
     dollar value $K_{\mathrm{tx}}$ is frozen at open. If your cash
     leg exceeds the pool's usable depth, the trade is rejected outright with
     the numbers---never silently capped.
-  \item \textbf{You hold.} Funding is metered by the slope-deviation read of
+  \item \textbf{You hold.} Funding is metered by the same-slope funding read of
     Section~\ref{sec:funding}; the curve's steepness $\gamma=w/(1-w)$ is
     read \emph{live} at every step (it moves as trades skew the curve; the
     knob $m$ is never moved by trades).
@@ -545,7 +546,7 @@ $g_{\mathrm{loc}}=m\gamma$ facts are \tfp{}\textsuperscript{L3}.
 The cross-strike surface is governed by two shape numbers---the tail steepness
 $m\gamma$ and the skew $w$---one power-law exponent per wing. It can match a
 surface's \emph{level} and \emph{skew} but not strike-dependent \emph{smile
-curvature}: one exponent per wing cannot bend differently across strikes. This is
+curvature}: one exponent per wing cannot produce strike-dependent curvature. This is
 the single-pool rigidity that buys the closed form (Appendix~\ref{sec:frontier}).
 Whether a single-exponent tail is adequate for a given real asset is an
 \emph{empirical} question; a backtest would speak only to tail adequacy and would
@@ -655,8 +656,7 @@ market and not a validation of anything.
 \subsection{Why this is the American boundary, and the Merton tie}
 The smooth-paste solution is not an arbitrary $C^{1}$ join: it is the
 \emph{unique} solution of the value-and-slope system at any steepness $g$---hence
-at $g_{\mathrm{loc}}=m\gamma$ (\tfp{} for generic $g$;
-\tfp{}\textsuperscript{L4}). The pasted object of Figure~\ref{fig:seam}---the
+at $g_{\mathrm{loc}}=m\gamma$ (\tfp{} for generic $g$\textsuperscript{L4}). The pasted object of Figure~\ref{fig:seam}---the
 power continuation welded onto the \emph{linear} exercised payoff in the dollar
 frame---is \tfp{}\textsuperscript{L5,L6} as well: value and
 slope match at $S^{\ast}$ for every $g>0$; the welded value function is
@@ -704,7 +704,7 @@ deployment---full discussion in Appendix~\ref{app:spec}.
 At the boundary the value- and slope-match hold for every $g>0$, hence at
 $g=m\gamma$---\tfp{} both in the curve's own coordinate\textsuperscript{L4}
 and, for the welded linear seam of Figure~\ref{fig:seam}, in the dollar
-frame\textsuperscript{L5} (\tfp{})---and the out-of-the-money$\to$in-the-money
+frame\textsuperscript{L5}---and the out-of-the-money$\to$in-the-money
 crossover lands at the dollar strike $K$ for all $\gamma$
 (\tfp{}\textsuperscript{L4}). On the live engine, the shipped implementation
 reproduces the worked-example table cell-for-cell to four decimal places, read off
@@ -788,7 +788,8 @@ whose conservation law is applied at each trade's own point, and whose trades
 \emph{skew} the curve---prices the entire out-of-the-money perpetual-option
 continuum in closed form. Exercise is zoned by a closed-form
 smooth-pasting boundary
-$S^{\ast}=K\,m\gamma/(m\gamma+1)$ with a smooth seam and no new parameters,
+$S^{\ast}=K\,m\gamma/(m\gamma+1)$ (put form; calls mirror) with a smooth
+seam and no new parameters,
 \tfp{}\textsuperscript{L4,L5,L6} and tied to the Merton problem,
 plus a constant slope-multiplier lens $m$ acting as a vol-calibrated knob while
 leaving the pool flow unchanged. On internal arbitrage we claim only what is
