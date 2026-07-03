@@ -3057,3 +3057,9 @@ _Context: operator, reading the compiled journey step 2 (an earlier render): the
 
 ## Entry 401 — 2026-07-02 UTC
 > and one more diagram QC again
+
+
+## Entry 402 — 2026-07-02 UTC
+_Context: paper submitted (second submission, final md5 f8b37a71). Operator turns to the HTML: asks for a simple status update on what's pending and a diff vs the previous version._
+
+> ok i think paper is done and submitted for now, on the HTML can you help me out with a simple status update on whats pending and a diff wrt the prev version?
