@@ -3023,3 +3023,7 @@ _Context: operator, on the 93277a2d build: (1) says the AMM-is-bookkeeping-only 
 
 ## Entry 394 — 2026-07-02 UTC
 > aso along with wherever you mentin the lean workinghs abvailable on request you can also mention there's a whole working implemnertation a lso ready on request
+
+
+## Entry 395 — 2026-07-02 UTC
+> gie the goddamn file
