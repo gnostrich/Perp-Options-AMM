@@ -3161,3 +3161,9 @@ _Context: operator: continue research to figure out the best mitigation; FYI cal
 _Context: operator checks their read of the fix: "loosely evaluate slippage as per entry pool or something". Manager corrects the nuance: entry supplies the recorded FLOWS (the yardstick), not the entry pool's prices; both sides of the charge are evaluated on TODAY's pool._
 
 > so the fix is to loosely evaluate slippage as per entry pool or something
+
+
+## Entry 421 — 2026-07-03 UTC
+_Context: operator clarifies entry 420 — they meant evaluating relative to entry LIQUIDITY (the resize-invariance fix)._
+
+> sorry tldr but meant entry liquidity
