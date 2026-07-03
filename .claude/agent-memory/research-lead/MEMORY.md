@@ -1,5 +1,35 @@
 # MEMORY — research-lead
 
+### NO-WORSE-THAN-CURVE research run delivered (operator entry 411, FLAG-CURVE decision input) — 2026-07-03
+Deliverable: `notes/research/NOWORSE_roundtrip_vs_dynamic_amms_2026-07-03.md`. NO web (all external
+claims labelled [TK] training-knowledge); measured = Node-vm vs HEAD `0e0a0062` (scratchpad
+`closeb/h7_rd.js`, new). Q1-Q4 per design (UniV2/V3, Balancer static+LBP, Curve v2, QuantAMM/TFMM,
+our (a)/naive-(b)/(b)+floor/R-A).
+- **VERDICT V1 (value):** naive-(b) un-floored = WORSE than EVERY listed AMM (zero-move round trip
+  destroys pool value; no accepted design has that — LVR is a moves-loss, not this). WITH floor =
+  comparable-in-kind to Curve v2 (non-decreasing exact; Curve adds fee revenue). Floor MANDATORY.
+- **VERDICT V2 (ratchet):** WORSE-IN-KIND vs Curve v2, twice: (1) ungated where Curve triple-gates
+  (EMA tether + xcp_profit keep-half profit gate + step limit) — floor is NOT a profit gate
+  (measured: value exact while w 0.5→0.935); charged-to-closer floor taxes motion only incidentally
+  and 8.2× cheaper/unit-w at attack size ($1.84M) than retail ($15.0M); (2) blast radius: our w
+  reprices the whole third-party option book (g_loc=m·γ) — no listed AMM has that surface at all.
+- **R-D DEFINED (new, minimal Curve-parity, weaker than R-A):** live close + floor + PROFIT-GATED
+  dwA persistence: dw_net persists only if V_now−V_hwm ≥ φ·|dw_net|·V_hwm, else w:=w_pre_open
+  (lean unwound, reserves stay live; reuses stored dwA + ONE new scalar V_hwm). MEASURED (φ=1):
+  free cycler w pinned 0.5000 EXACT (surplus≈0 — pool has no fee income, funding ledger-only) ≡ R-A
+  vs zero-surplus attacker; paying attacker γ→14.4 costs $1,264,088 into the $1.6M pool (≈$2.9M/
+  unit-w, size-independent). Gate delta = CM6-v3.4 replacement (zero-surplus exactness + threshold
+  probe + floor-only negative control). Entry-411 rule satisfiable at R-D, NOT below.
+- **Residual honest:** R-D parity is pool-axes only; Q3 (book repricing by PAID motion) needs R-A
+  or book-scaled φ — operator/product call. Ordering handed up: R-A ≥ R-D(book-φ) > R-D(pool-φ) >
+  floor-only > naive-(b). FLAG-CURVE option set now {R-A, R-D, R-B, R-C}.
+- **RETRACTION:** h6_floor.js 'frozenW' row was a MIS-implementation of R-A (removed open's
+  increment only, left close's — gave bogus w→0.857 retail drift); h7_rd.js R-A (w_close:=w_pre_open
+  per CL3) supersedes: w 0.5000 exact, value exact, 30/30. Do not cite old frozenW numbers.
+No git, no engine edits, no Aristotle (none needed). Handed to manager for skeptic gate + operator.
+
+---
+
 ### CLOSE-AS-FIRST-CLASS-TRADE DESIGN SPEC delivered (operator RULING entry 405 "its to be b") — 2026-07-03
 Deliverable: `specs/SPEC_close_first_class_trade_2026-07-03.md` — DESIGN-COMPLETE, NOT splice-ready (design
 first, per brief). READ-ONLY on engine, no Aristotle (obligations queued only), no git. Supersedes WHEN BUILT
