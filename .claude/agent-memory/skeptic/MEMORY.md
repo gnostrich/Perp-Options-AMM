@@ -3897,3 +3897,22 @@ about prose get spot-checked, they drift.
   ratification of the operator-tier pins.
 - SETTLED (don't re-attack): defaults 1–4 match spec pins; R3 clean (no new controls); item-4
   citation = entry 336 verbatim.
+
+## 2026-07-03 — FOCUSED GATE on manager fix pass over OPERATOR'S OWN v6 tex (entries 378/379): CLEAR-TO-SHIP once two words fixed.
+- Verdict appended to notes/skeptic/VERDICT_airtight_pass_2026-07-02.md (final block).
+- ALL math re-derived clean: eq:mark ≡ Lean contP (ATM 4/27); fig:read/fig:funding/fig:warp
+  geometry exact (funding slopes 1.4583 vs 2.1875 = 1.5×, both curves through (1.2,1.75));
+  trade exhibit −5/22, 11/21 vs naive 22/43; 10 worked-example cells; Vieta/regime algebra.
+- Two verbatim Lean statements = source exact (PasteLin.lean L40-41, ValueGeIntrinsic.lean
+  L55-56). All 24 annex identifiers exist in compiled artifacts. INDEX.md gap (not paper
+  defect): reserves_have_no_floor + expPool not indexed by name there — post-deadline tidy.
+- All 5 hedges survived (not-re-run ×3, Snell placeholder, conditional solvency, L1-row
+  existence hedge, design-target sentence). Double-blind clean (Harmonic naming = operator
+  order; zero author strings; "warp" only in label keys). Refs/cites/envs balanced.
+- FLAG-OVERSELL (minor): word-unification claimed complete but L183 prose "``bending'' picture"
+  and L168 "tilts pricing" survive (L480 smile-"bend" = different referent, noted only).
+  Pattern re-confirmed: manager "eliminated X everywhere" claims need a grep, they miss
+  quoted/adjacent-synonym uses.
+- NO LaTeX compiler in env — verdict explicitly NOT a compile check; manager must compile.
+- SETTLED (don't re-attack): v2 tex figure arithmetic, worked-example table, annex identifier
+  column, the two verbatim statements.

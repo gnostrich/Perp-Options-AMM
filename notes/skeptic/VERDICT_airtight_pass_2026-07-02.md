@@ -362,3 +362,94 @@ this submission.
 
 — skeptic (re-derivations this turn: engine L1711–15 + L2282–2290 read at source; 10 table cells
 recomputed; ref/label/cite cross-check mechanical; story-table walked station-by-station)
+
+================================================================================
+# VERDICT — FOCUSED GATE on the manager's fix pass over the OPERATOR'S OWN v6 tex
+# Artifact: paper/wine2026/temporal_wine2026_v2.tex (uncommitted working copy, 1150 lines)
+# Basis: operator entries 378/379 read VERBATIM at history/operator/2026-06-10_kurtosis-curve-family-brief.md L2938–2947
+# Date: 2026-07-03 · skeptic
+================================================================================
+
+## (a) Formulas and numbers — ALL RE-DERIVED, ALL CORRECT.
+- **eq:mark vs Lean:** paper (1/(g+1))(S*/S)^g ≡ contP = (1/(g+1))(S/S*)^(−g)
+  (PasteLin.lean L21) — identical. ATM at g=2: (1/3)(2/3)² = 4/27 = 0.148 ✓. Case split
+  (waiting S≥S* / exercised S<S*) agrees with Lean Vp at the seam since both arms equal
+  1/(g+1) there (paste_value_lin).
+- **fig:read:** chosen ray 1.55x ∩ 2.1/x = (1.1640, 1.8042) ✓; mode (√2.1,√2.1)=(1.449,1.449) ✓;
+  θ_tx = 1.55² = 2.4025 (mode=1, m=2) ✓; tx point (0.9349, 2.2462) ✓. Caption "geometry exact
+  for the drawn curve" is true.
+- **fig:funding:** 2.1/1.2 = 1.75 and 2.3004/1.2^1.5 = 1.75003 — both curves through (1.2,1.75) ✓;
+  ray 1.75/1.2 = 1.4583 ✓; anchor slope 2.1/1.2² = 1.4583, skewed slope 1.5·2.3004/1.2^2.5 = 2.1875
+  (= 1.5× anchor, exactly the w=0.6 ⇒ p=1.5 relation) ✓; tangent segments centered at x=1.2 with
+  those slopes ✓.
+- **fig:warp:** T=(1.164,1.804) on ray, base, and skewed curve (2.2146/1.164^1.35 = 1.804) ✓;
+  skew arrow at x=2: 1.05 → 2.2146/2^1.35 = 0.869 ✓.
+- **eq:tradeupdate exhibit:** from (10,10,½), θ=4 ⇒ T=(5,20); Δx = −25/110 = −5/22;
+  w' = (5/2)/(105/22) = 11/21; naive recompute 5/(215/22) = 22/43 — all exact ✓.
+- **Worked example (all 10 cells recomputed):** m=1: 0.333/0.231/0.183/0.148/0.103;
+  m=3: 0.143 @ 85.71 / 0.200 (intrinsic, 80<85.71) / 0.107 / 0.057 / 0.019 — all match to 3dp ✓.
+- **Merton algebra:** (−γ)(−γ−1)=γ(γ+1)=2r/σ²; roots sum −γ+(γ+1)=1; γ>1 ⇔ r>σ² ✓.
+- **The two verbatim Lean statements match source exactly** (mod the declared ASCII set):
+  paste_value_lin = PasteLin.lean L40–41; value_ge_intrinsic = ValueGeIntrinsic.lean L55–56,
+  including hypothesis lists ✓.
+- **Lean-identifiers column:** every one of the 24 names in L1–L13 exists as a real declaration in
+  the compiled artifacts (MONOLITH_CONSTM, LENSKERNEL, MERTON_tie, O1/O2, R2, C1/C2/C3,
+  AIRTIGHT_T1a/b, PH_UNIFICATION, Seam/AMMCurve). Note for the manager, NOT a paper defect:
+  `reserves_have_no_floor` and `expPool` are absent from formal/INDEX.md by name (INDEX lists that
+  line as `gh_no_floor_grounded` etc.) — an INDEX.md coverage gap to tidy post-deadline.
+
+## (b) Hedge survival — ALL FIVE PRESENT.
+1. Never-re-run-locally: abstract L55, provenance subsection L747 ("not re-run against a local
+   kernel"), annex header L894 — three sitings ✓.
+2. Deterministic-vs-Snell: body §American L587–589 ("named but not formalised — a placeholder
+   obligation") + L7 row L930–931 ✓.
+3. Conditional solvency: abstract, contributions, dedicated frontier subsection ("assumptions,
+   not claims"), conclusion ✓.
+4. Existence-lemma hedge: moved into annex row L1 (L906–907, "report complete at the prover but
+   are not folded to this bar and are not counted") — survived the fold ✓.
+5. "Design target" value-law sentence: §lens Definition L448–450 ("enforces it by definition of
+   the mark, and a derivation … remains open") ✓.
+
+## (c) Word unification — **FLAG-OVERSELL (minor, two words):** claimed "re-lean/bend/lean
+eliminated"; two prose residuals survive.
+- **L183:** "the ``bending'' picture is a re-description of a weight change" — the banned word,
+  in prose, naming exactly the trade-changes-the-curve action the operator ordered be called
+  *skew* only (entry 378: "bend lean motherfuck -- trades skew thr goddamn curve").
+- **L168:** "pushing $w$ off $\tfrac12$ \emph{tilts} pricing toward one asset" — the SAME
+  sentence already glosses w as "how the curve \emph{skews} between the assets"; "tilts" is the
+  word-diversity residue for the same concept, one line apart.
+- Noted, not flagged: L480 "one exponent per wing cannot bend differently across strikes" —
+  smile-curvature, a genuinely different referent; TikZ `to[bend left=...]` is syntax, not prose.
+- No lowercase "lean"/"re-lean" prose residuals; "lensed" and Lean-the-prover only ✓.
+Two-word fix; does not block anything else in this verdict.
+
+## (d) Double-blind — PASS.
+"Harmonic's Aristotle" is the operator's explicit order (entry 378 verbatim) — not flagged.
+No author-identifying string anywhere: grep for rohan/gnostrich/gmail/github.com/Perp-Options
+and for "Temporal"/"temporal" prose = zero hits ("warp" survives only inside invisible label keys
+sec:warp/fig:warp); \author{} empty, running head "Anonymous submission to WINE 2026", no
+pdfauthor metadata, drafting disclosure says "the authors" only ✓.
+
+## (e) Label/ref + structural — PASS (with one honest environment limit).
+All \ref/\eqref targets resolve; all \cite ↔ \bibitem paired both directions; superscripts
+L1–L13 all used and all have rows; \begin/\end balanced per environment; brace delta 0.
+**No LaTeX compiler exists in this environment** — I could NOT compile; structural checks above
+are grep-mechanical, not a pdflatex pass. Manager must compile before resubmission and not cite
+this verdict as a compile check.
+
+## Orders 1–8 walked (completeness): premise fix in caption/intro/abstract ("the stored skew is
+the pricing state…") with the "IS the option position" phrase gone (grep zero) ✓ · mark section
+ray-first with explicit map ✓ · "What machine-checking covers" subsection gone, superscripts
+inline ✓ · "Rebasing: the frame tracks the market" ✓ · "Lens properties" ✓ · \tfp = "verified in
+Lean", provenance subsection + available-on-request stated twice ✓ · annex renamed with
+identifiers column + two verbatim statements ✓ · both new figures present, geometry exact ✓.
+
+## VERDICT: **CLEAR-TO-SHIP once the two-word (c) residuals are addressed** (L183 "bending",
+L168 "tilts") — everything load-bearing (math, hedges, Lean fidelity, anonymity, structure)
+passed attack. Attack record: strongest claim = the two "verbatim-ish" Lean statements and the
+"geometry exact" figure captions; I re-derived every number and diffed both statements against
+the .lean sources — the attack failed everywhere.
+
+— skeptic (re-derivations this turn: 10 table cells + 4 figure geometries + trade exhibit in
+rational arithmetic; PasteLin.lean/ValueGeIntrinsic.lean read at source; 24 identifiers grepped
+into compiled artifacts; ref/cite/env checks mechanical)
