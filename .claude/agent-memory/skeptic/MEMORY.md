@@ -3948,3 +3948,18 @@ about prose get spot-checked, they drift.
 5. Wing-scope: S*=Kmγ/(mγ+1) unqualified at contribution-3 (L94) + conclusion (L791) — put form only; call is K(mγ+1)/mγ, scoping appears only later in §American.
 **Survived (settled, don't re-attack):** eq:mark ATM 0.148=4/27; all 8 worked-example cells exact; fig:funding equal-slope points (1.0954,1.9170)/(1.3120,1.5307) rays 1.75/1.1667 exact; fig:read+fig:warp incidences exact; R2/R4/R5/R7/R8 clean; prior mode-gloss residual (§3.2 micro-gate) now CLOSED (gloss at step 2 L285 precedes fig:read).
 **Pattern note:** doubled-provenance macros keep slipping in where a sentence hedges twice ("\tfp for generic g; \tfp^Ln") — the team's own grep windows are too narrow to catch multiline doubles; always grep -Pzo across newlines. Also: legacy compound nouns ("slope-deviation") survive ruling flips even when every framed prose site is fixed — sweep for the VOCABULARY of the superseded frame, not just its story.
+
+## 2026-07-03 — R6 scope-gate #2: entry-425 funding-column dispatch — CLEARED w/ 3 conditions
+Verdict appended to notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md (new dated
+section). All 4 items CLEARED; entry-425 verbatim confirmed (transcript L3191). Conditions:
+(1) portfolio bands table ALREADY has funding cells (HEAD L4662/4688/4703) — item 1 is
+"ensure", not "add a second column"; real delta = P/L inclusion. (2) SIGN TRAP: ledger
+`leg.funding_*` stores TRADER-PAYS (`side_sign·f`, "net trader → pool") — literal "P/L +
+funding column" inverts the sign; dispatch must pin −Σ or flip column convention + sign check.
+(3) Display≠settlement mismatch is real (closeBand pays NO funding — verified) — ruled reading
+A (display) over payout reading (words "column/in portfolio/line wise" are table vocabulary;
+payout collides with parked close-(b), entry 405); mismatch must be DISCLOSED in morning
+report/tooltip, not built. Pattern note: manager gloss "crowded side accrues negative" was
+neither operator language nor code convention — recurring habit of paraphrasing sign laws
+instead of quoting the code's own convention; keep checking stored-accumulator polarity
+whenever a ledger gets surfaced into P/L.

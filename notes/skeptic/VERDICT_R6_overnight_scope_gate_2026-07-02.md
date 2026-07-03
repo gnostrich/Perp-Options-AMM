@@ -104,3 +104,76 @@ manager's stated chain has them.
 — skeptic (transcript entries read at the verbatim layer this turn; spec read in full; engine
 L1622/L1975–90/L2093–2107 read at HEAD source; spec commit e579709 confirmed in git; no edits to
 engine, spec, or transcript)
+
+---
+
+# R6 scope-gate #2 — 2026-07-03 — entry-425 funding-column dispatch
+
+Artifact: manager's itemized scope for the entry-425 build ("trade poont ok, funding is column
+adds to p/l in portfolio for position line wise…; do needful" — verbatim confirmed at
+history/operator/2026-06-10_kurtosis-curve-family-brief.md L3191 this turn). Ratification half
+already booked; this gate covers the funding-column build only. Engine read at HEAD source this
+turn: fundingTick L2775–2800, fundingPerStrike L2345, renderBands L4540–4710, closeBand region.
+
+## Item 1 — funding column per position line: CLEARED (with a redundancy note).
+Citation-backed: "funding is column … in portfolio … position line wise". Ledger exists and is
+per-leg (`fundingTick` accrues into `leg.funding_inner/funding_outer`). NOTE the dispatch should
+carry: at HEAD the Portfolio bands table ALREADY renders funding cells at band level ("aggregate
+funding", L4662), component level (L4688), and Total row (L4703). Item 1 is therefore mostly
+"ensure/keep", not "add" — the intern must not add a SECOND funding column; the live delta of
+this build is item 2. Also: the scope's "whatever export is needed to surface the ledger" is a
+no-op — renderBands already reads `leg.funding_*` directly (L4553–4554); no new export needed.
+Harmless, not an invention.
+
+## Item 2 — line P/L includes funding: CLEARED, with one sign-polarity pin required.
+Citation-backed: "adds to p/l in portfolio for position line wise". On the check-2 question:
+taking the sign FROM THE EXISTING RATE LAW is the faithful default, not an invention — the
+operator ordered surfacing the EXISTING accrual, and inventing a new sign law is what would need
+operator words. BUT the manager's gloss "crowded side accrues negative" is neither the operator's
+language nor the code's own convention; the code's convention (comment + log, verified) is
+TRADER-PAYS: `trader_pays = side_sign·f; leg['funding_'+sk] += trader_pays; pool_inflow +=
+trader_pays` ("net trader → pool"). Positive stored accrual = trader PAID the pool = P/L DOWN.
+So a literal "line P/L = existing P/L + funding column" with the column as currently stored/
+displayed (trader-pays-positive) INVERTS the sign — paying funding would raise P/L. The dispatch
+must pin one of: (a) P/L contribution = −Σ(leg funding_inner+funding_outer) with the column left
+in trader-pays convention, or (b) flip the column to trader-receipt convention and add it
+straight — one choice, stated in the dispatch, gated by a sign check (advance time with a known
+crowded side; the payer's line P/L must FALL). Condition, not a block.
+
+## Item 3 — out-of-scope list (display vs payout): CLEARED — reading A (display) is what the
+words support; NOT AMBIGUOUS. Steelman of both readings, as asked:
+- **Reading A (display):** "column", "in portfolio", "position line wise" are all table
+  vocabulary — a payout is not a column and does not live "in portfolio". The sentence is about
+  the portfolio table's per-line figure.
+- **Reading B (payout), steelmanned:** "p/l" could mean realized money, and a display-only add
+  creates display≠settlement — the portfolio will show a funding-inclusive P/L while `closeBand`
+  pays funding-exclusive cash (verified: no funding term anywhere in the close path). Showing
+  money the close doesn't deliver is exactly the promised-cash-mismatch class I flag.
+Ruling: A. B's build target (funding into close cash) is additionally BLOCKED-by-collision
+today: the close protocol is RULED-SUPERSEDED-pending-build (entry 405, close becomes a
+first-class trade under the parked close-(b) rebuild) — netting funding into a payout path that
+is itself scheduled for replacement would reopen a parked decision under "do needful". The
+correct disposal of B's steelman is DISCLOSURE, not build: the morning report (and ideally the
+P/L cell tooltip) must NAME the mismatch — "displayed line P/L includes funding accrual; close
+cash does not yet (funding cash transfer = parked FLAG-C part-2 / close-(b))" — so the operator
+is deciding on a labelled state, not a silent one. Cash-transfer, settlement math, engine-block
+pricing, new knobs: all correctly excluded.
+
+## Item 4 — R3 / no knob: CLEARED.
+One new display behavior (funding folded into the line P/L figure) on an existing column; no new
+user-facing control; all existing controls kept, none driven. Perps table untouched is correct —
+`fundingTick` loops BANDS only; perps accrue no funding, so "position line wise" = band lines.
+
+## Cross-check summary
+(1) Both items citation-backed by entry-425's verbatim words — PASS. (2) Zero unrequested items;
+sign-from-existing-law = faithful default, with the polarity pin above — PASS-with-condition.
+(3) Out-of-scope list correct; display reading ruled, mismatch must be disclosed — PASS.
+(4) No knob — PASS.
+
+**Verdict: CLEARED to dispatch** — conditions riding the clear: no duplicate column (item 1
+note); explicit trader-pays polarity pin + sign check (item 2); display≠settlement mismatch
+named in morning report/tooltip (item 3). Standard chain (file-safety gate, tester live pass,
+STOP-ON-RED) binds as always.
+
+— skeptic (entry 425 read verbatim this turn; engine read at HEAD source L2345/2775–2800/
+4502–4710; no edits outside this verdict file + own memory)
