@@ -3151,3 +3151,7 @@ _Context: operator: LP attacks can go through other wallets (identity-based defe
 _Context: operator: continue research to figure out the best mitigation; FYI calibration — the parallel is perps and spot manipulation; whole-book manipulation isn't unique to Temporal either._
 
 > ok continue research and let's figure out the best mitigation... but yeah FYI I think a parallel is perps and spot maniupuatlin etc.  like i dont think whole book manipulation is also unique
+
+
+## Entry 419 — 2026-07-03 UTC
+> simple english tldr?
