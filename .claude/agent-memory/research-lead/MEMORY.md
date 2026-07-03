@@ -1,5 +1,37 @@
 # MEMORY — research-lead
 
+### BEST-MITIGATION / PERP-VENUE SYNTHESIS (RESEARCH RUN #4) delivered — operator entry 418 ("figure out the best mitigation... parallel is perps and spot manipulation... whole book manipulation isnt unique") — 2026-07-03
+Appended PART 4 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NEW measure `scratchpad/closeb/h10_perp.js`
+(vm vs HEAD `0e0a0062`). Converges the close-(b) defense set as the operator's take-stock closing input. NO git/engine/Aristotle.
+- **PERP MAP (operator thesis CONFIRMED, stated precisely):** the LEVEL is already anchored = rebase re-centers the
+  mode to oracle (index anchoring); it is NOT the manipulable quantity. The manipulable RESIDUAL = the SKEW/steepness
+  `w`→γ=w/(1−w)→g_loc=m·γ around the anchored mode = the perp mark-vs-index BASIS. MEASURED w-is-the-residual (h10-C):
+  isotropic LP pull preserves w exactly; arbitrageToOracle moves the reserve point back to oracle but leaves w=0.5027
+  (skew SURVIVES a reserve arb — arb fixes the level not the skew). So the warp is real + not self-correcting like a
+  mispriced level.
+- **(ii) EMA/TWAP-banded read-γ = the single most transferable perp defense (MEASURED h10-A/B):** read-γ=EMA(w),
+  λ=2/(N+1). TRANSIENT 1-step push 0.5→0.7: read-γ peaks 1.20(N=8)/1.07(N=24) vs instant 2.33 — "prices nothing until
+  it persists". Blast radius (7-strike put book) at push w=0.70: **20.6% instant → 6.1%(N=8) → 2.3%(N=24)**, cut ~λ.
+  Does NOT cover PERSISTENT warp (fully priced in 19/55 steps) — EMA neutralises transient only, forces the attacker
+  to MAINTAIN the push (the perp property). Honest funding responds with the SAME lag = the UX↔resistance dial.
+- **(i)+(ii) ORTHOGONAL (h10-E):** charge floor to ratchet w 0.5→0.60 = **$546,324.77 EMA-independent** (matches run #2
+  floor). (i) prices the PERSISTENT move (reserve value differential); (ii)+rate-limit cap the RATE/blast-speed.
+- **HYBRID SINK re-examined (h10-D) — SOUND only with a PENALTY basis:** pool-first-to-floor + excess-to-fund HOLDS
+  P-CYCLE at every κ (minPool = poolStart exactly). BUT κ=1 (bare counterfactual charge) → fund collects **$0**
+  (charge==drain, no overshoot — run#3 (1c) fact). Fund accrues only with surcharge κ>1: κ=1.5→$297,181; κ=2.0→$594,362,
+  pool still whole. Insurance fund = sound design ONLY with explicit surcharge, not from the round-trip charge.
+- **THE RECOMMENDATION (itemized build-scope delta):** ship in close-(b) build NOW = items **1–4** MUST tier
+  (pool-value floor + counterfactual charge + **charge resize-invariance** (Part-3 Vector A) + **charge-the-open/
+  freeze-w-on-exit** (Vector B)) — closes every MEASURED free/negative vector. NEXT campaign SHOULD = items **5–7**
+  (EMA-banded read-γ + per-window w-rate-limit + funding clamp) = the perp rate-bounding layer, property (b) "push
+  slowly + expensively", honest cost = bounded lag only, needs calibration numbers not new math. DEFER item **8**
+  (penalty-funded insurance fund, κ>1 economics). Criteria (a)-(d) all met: (c) honest cost≈0 (charge is pool-
+  integrity not payout, MR4); (d) division of labour intact (each item a separate seam, curve stays locked v24).
+- **TBD-operator:** window N, Δw/window, κ = calibration/product; read-layer (ii)/(iii)/(iv) effects reasoned+
+  partially-measured (engine has no EMA state — build-time vm test flagged). close-(b) build HOLDS. Handed to manager.
+
+---
+
 ### LP-SELF-DEALING (RESEARCH RUN #3) delivered — operator entry 416 ("puts in big liquidity, huge trade, pulls LP, exits") — 2026-07-03
 Appended PART 3 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. Measured Node-vm vs HEAD
 `0e0a0062` (`scratchpad/closeb/h9_lp.js` + `h9b_lp.js`, NEW). LP add/remove = engine `liquidity(D)` isotropic

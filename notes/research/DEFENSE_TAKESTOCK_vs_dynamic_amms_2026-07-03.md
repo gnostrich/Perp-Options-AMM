@@ -378,7 +378,144 @@ address the real leak, and (a) actively breaks the floor.
 
 ---
 
-**Provenance:** measured = `scratchpad/closeb/h8_cf.js`, `h9_lp.js`, `h9b_lp.js` on HEAD `0e0a0062` engine
-extract (`engine.js`); external claims = training-knowledge **[TK]**, unverified (no web). No git, no engine
-edits, no Aristotle (none needed). Design-stage: close-(b) build HOLDS behind this take-stock (operator
-entries 415/416).
+## PART 4 — BEST MITIGATION (perp-venue synthesis) — operator entry 418 (RESEARCH RUN #4) — 2026-07-03
+
+Operator (verbatim, entry 418): *"ok continue research and let's figure out the best mitigation... but yeah
+FYI I think a parallel is perps and spot maniupuatlin etc. like i dont think whole book manipulation is also
+unique"*. Plus entry 417: *"lp attacks can go thru other wallets... none of this seem sunique to temppral"*.
+
+The framing to honor **and test**: whole-book repricing is NOT unique — perp venues live with it (mark-price
+manipulation reprices every open position; spot manipulation moves the index → funding/liquidations;
+Mango-class attacks). Their standard defense stack **[TK]**: external index anchoring, EMA/TWAP marks,
+funding-rate clamps, position/OI limits, insurance funds, liquidation buffers. This part maps that stack onto
+ours and converges on the minimal composed recommendation. New measurements: `scratchpad/closeb/h10_perp.js`.
+
+### 4.1 — The perp-venue map: what we already have, and what the manipulable residual actually is
+
+Stating this precisely (the operator's item 1):
+
+- **The LEVEL is already anchored — this is our "index anchoring".** `rebase` re-centers the pool MODE to the
+  external oracle (`setOracle` → `arbitrageToOracle`; the reserve point is arbed to oracle). In steady state
+  the price level is **not** the manipulable quantity — it is pinned to the external index exactly as a perp's
+  index anchor pins the fair price. An attacker cannot durably move the *level*; arb + rebase restore it.
+- **The manipulable residual is the SKEW / STEEPNESS, not the level.** What a trade *does* move and can leave
+  moved is `w` (hence `γ = w/(1−w)`, and `g_loc = m·γ` at every strike). This is the **exact analog of a perp's
+  mark-vs-index basis**: the index (mode/level) is anchored, but the *shape* the venue prices against (here the
+  curve steepness that reprices the whole option book; there the mark that reprices every position) is the soft,
+  pushable quantity. **Measured invariances confirming w is the residual (h10-C):** an isotropic LP pull
+  preserves `w` exactly; an `arbitrageToOracle` moves the reserve point back to oracle but leaves `w` at 0.5027
+  (i.e. the lean/skew SURVIVES a reserve arb — arb fixes the level, not the skew). So the residual is real and
+  is not self-correcting the way a mispriced *level* is.
+- **Consequence for the analogy:** our defense job is precisely the perp venue's — anchor the level (done via
+  rebase), then make the *basis/skew* (a) expensive to push (charge), (b) slow to translate into book repricing
+  (EMA/TWAP + rate limit), (c) backstopped if it ever does damage (fund). We already have (a)'s foundation
+  (charge + floor). The perp parallel tells us what to add for (b) and (c).
+
+### 4.2 — The unified candidate set (measured where vm-testable)
+
+**(i) Counterfactual charge family** (entry 415; Parts 1–3) — *"you pay for the basis you create."*
+- Effect (measured, Parts 1–2): exact own-drain attribution, bystander-clean, sybil-resistant with a hard
+  floor ≈ $546k per 0.1-of-`w` (0.34× pool). Re-confirmed EMA-independent (h10-E: floor = **$546 324.77**,
+  identical whether or not the read layer smooths — the charge is a *reserve value differential*, orthogonal to
+  the read-γ). Perp analog: the funding/settlement you owe for the basis you opened.
+- Does NOT cover: **Vector B** (open-warp then exit WITHOUT closing — charge is close-only, so a persistent
+  warp established and abandoned is uncharged, Part 3); and **timing/resize** mis-scaling (Part 3 Vector A).
+- Cost: the close-(b) build already carries it (floor pinned). Resize-invariance + charge-the-open are the two
+  Part-3 MUST deltas on top.
+
+**(ii) EMA/TWAP-banded γ for the READ layer** (funding, settlement marks) = perp-venue mark smoothing.
+- Effect (measured, h10-A/B): read-γ = EMA of `w` over a window `N` (λ=2/(N+1)). A **transient** one-step
+  `w`-push 0.5→0.7 moves read-γ to only **1.20** (N=8) / **1.07** (N=24) vs the instant **2.33** — it "prices
+  nothing until it persists". Blast-radius damping (h10-B): a single push to w=0.70 reprices the 7-strike put
+  book **20.6% instant → 6.1% (N=8) → 2.3% (N=24)** — cut by ~λ. **This is the single most transferable
+  perp-venue defense**: a momentary manipulation reprices the third-party book by only a fraction λ of the
+  instant effect.
+- Does NOT cover (measured, h10-A/C): a **persistent** warp is eventually fully priced (read-γ reaches 1% of
+  true in 19 steps at N=8, 55 at N=24). EMA neutralizes the *transient*, not the *sustained*. So EMA does NOT by
+  itself make Vector B (a durable abandoned warp) harmless — it only buys time and forces the attacker to
+  *maintain* the push against mean-reversion/arb (the perp property: you can hold the mark off-index only by
+  continuously paying).
+- Interaction with honest funding responsiveness (measured, h10-A): the SAME lag applies to genuine `w`-moves —
+  honest funding responds `N`-windows slowly. This is a real, bounded cost of (ii): a UX/responsiveness ↔
+  manipulation-resistance dial (perp venues accept exactly this trade-off in their TWAP window choice).
+
+**(iii) Per-window `w`-motion rate limit** = price-band / OI-limit analog.
+- Effect (reasoned + h10-C): caps how FAST the skew can be established regardless of payment; combined with (ii)
+  it bounds the *rate* at which even a paying attacker can translate a push into book repricing. This is the
+  literal perp price-band: you can move the mark, but only so far per window, so a large repricing takes many
+  windows and is arbable/fundable in between.
+- Does NOT cover: the *eventual* level of a determined paying attacker (only its speed). Caps a legitimate large
+  trader too (same UX cost as a perp price-band).
+- Cost: low (a per-window Δw clamp on the trade path).
+
+**(iv) Funding clamp** = perp funding-rate cap.
+- Effect (reasoned): bounds the funding a manipulated skew can extract/impose per window. Since our funding reads
+  `g_loc = m·γ` through the lens (CLAUDE.md entry 232), an EMA-banded read-γ (ii) already *softens* the funding
+  response; a hard clamp on the per-window funding magnitude is the belt-and-suspenders cap. Low cost.
+- Does NOT cover: settlement seams (funding clamp is funding-only); those ride on (ii).
+
+**(v) Insurance-fund sink — re-examined as a HYBRID** (charge credits pool up to the floor, EXCESS to a fund).
+- Run #3 showed naive route-ALL-to-sink **breaks P-CYCLE** (pool drains $1.6M→$1.225M). **Re-examined (h10-D):**
+  the hybrid (pool-first-to-floor, remainder-to-fund) **is sound — P-CYCLE HOLDS at every κ** (minPool = pool
+  start exactly). BUT under the *bare* counterfactual charge (κ=1) the **fund collects $0**, because charge ==
+  drain exactly (run #3 (1c) fact — no overshoot to skim). The fund only accrues if the levy carries a
+  **penalty basis κ>1**: at κ=1.5 the fund collects **$297 181** over the ratchet while the pool stays whole; at
+  κ=2.0, **$594 362**. So: an insurance fund funded by the manipulation levy is a **sound design only with an
+  explicit surcharge**, not from the round-trip charge itself. That surcharge is also a second deterrent knob.
+- Cost: medium (fund accounting + a κ decision — a product/economics call, since κ>1 taxes honest closes too
+  unless scoped to flagged manipulation).
+
+### 4.3 — THE RECOMMENDATION: the minimal composed stack
+
+Target properties, and how the stack achieves each:
+
+- **(a) No free or negative-cost attack in any measured vector.** cycles/sybil (Part 1(d): floor, no free
+  ratchet) + LP-resize timing (Part 3 Vector A: **charge resize-invariance**) + exit-without-close (Part 3
+  Vector B: **charge-the-open / freeze-w-on-exit**). All three are already the Part-3 MUST tier.
+- **(b) Bounded third-party repricing RATE even for a PAYING attacker** — the perp-venue property. Achieved by
+  **(ii) EMA-banded read-γ** (measured: transient blast radius cut to ~λ) **+ (iii) per-window w-rate-limit**
+  (caps the speed of a sustained push). Neither changes the *cost* (that's (i)); together they make book
+  repricing slow and arbable, exactly like a perp price-band + TWAP mark.
+- **(c) Honest-trader cost ≈ 0.** The charge is **pool-integrity, not payout** — `dx` never reaches the trader
+  (prior MR4, `SPEC_close_first_class_trade` §MR4); a genuine directional close pays only its true settlement.
+  EMA (ii) + rate-limit (iii) cost honest traders only a *bounded response lag* (h10-A), the same trade-off perp
+  venues already accept. κ=1 keeps the fund neutral so no honest surcharge unless a penalty is later scoped.
+- **(d) Division of labour intact.** (i) lives at the settlement/close layer (reserves), (ii)/(iv) at the read
+  layer (funding/mark), (iii) at the trade path — each is a separate seam, none reaches into the pool curve
+  (which stays locked plain-v24 per entries 229/231). No item deforms the invariant.
+
+**Itemized build-scope delta — what enters the close-(b) build NOW vs the next campaign:**
+
+| # | Item | Perp analog | Tier | In close-(b) build NOW? |
+|---|------|-------------|------|---|
+| 1 | Pool-value floor (charge restores drain) | index/insurance backstop | MUST | **YES — already pinned** |
+| 2 | Counterfactual charge = round-trip differential | funding on the basis you create | MUST | **YES — entry-415 design** |
+| 3 | Charge **resize-invariance** (scale stored arc by cumulative LP factor, as `rr` does for oracle) | position-vs-collateral accounting | MUST | **YES — the real Part-3 leak (Vector A); one-line-class engine fix** |
+| 4 | Charge-the-open / freeze-`w`-on-exit-without-close | can't leave the mark pushed and walk | MUST | **YES — closes Vector B (else warp is uncharged)** |
+| 5 | **EMA/TWAP-banded read-γ** (funding + settlement marks) | TWAP mark smoothing | SHOULD | **NEXT campaign** — highest-value (b)-property item; needs a window `N` calibration + stateful EMA. Recommend adopting the design now, building next. |
+| 6 | Per-window `w`-motion rate-limit | price-band / OI-limit | SHOULD | **NEXT campaign** — pairs with #5; low code cost, needs a Δw/window number (product). |
+| 7 | Funding-rate clamp | funding cap | SHOULD | **NEXT campaign** — cheap belt-and-suspenders once #5 lands. |
+| 8 | Insurance fund via **penalty surcharge κ>1** (hybrid, pool-first) | insurance fund | DEFER | **NEXT campaign / product** — sound only with κ>1 (h10-D); κ is an economics decision. Not needed for (a)–(d); a second deterrent, not a gap-filler. |
+
+**One-word summary for the operator:** the close-(b) build should ship **items 1–4** (the MUST tier — floor +
+counterfactual charge + resize-invariance + charge-the-open); these alone close every *measured* free/negative
+vector. Items **5–7** (EMA-banded read-γ + w-rate-limit + funding clamp) are the perp-venue *rate-bounding*
+layer — they deliver property (b) "you can push the basis but only slowly and expensively", cost honest traders
+only a bounded lag, and are the recommended **next campaign** (they need calibration numbers, not new math).
+Item **8** (penalty-funded insurance fund) is a further-out product option, sound only with an explicit
+surcharge. **The operator's thesis holds: whole-book repricing is not unique — and the perp playbook (anchor
+the level, smooth+band the basis, charge for persistence, backstop with a fund) maps cleanly onto our warp,
+with the level already anchored by rebase and the basis = the `w`-skew.**
+
+Residual honest caveats: (ii)/(iii)/(iv) effects for the *read* layer are **reasoned + partially measured**
+(h10-A/B model the EMA on the `w`→γ→book-mark chain; the live engine has no EMA state yet — flagged for a
+build-time vm test). The `N`/Δw-per-window/κ numbers are **calibration decisions [TBD — operator/product]**,
+not math verdicts. Dollar magnitudes in Part 3 Vector A stay indicative (accounting not fully closed);
+signs/floors are solid.
+
+---
+
+**Provenance:** measured = `scratchpad/closeb/h8_cf.js`, `h9_lp.js`, `h9b_lp.js`, `h10_perp.js` on HEAD
+`0e0a0062` engine extract (`engine.js`); external claims = training-knowledge **[TK]**, unverified (no web).
+No git, no engine edits, no Aristotle (none needed). Design-stage: close-(b) build HOLDS behind this take-stock
+(operator entries 415/416/418).
