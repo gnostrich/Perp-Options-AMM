@@ -3318,3 +3318,9 @@ _Context: operator's near-final read on funding: it would take a FORCED sign inv
 _Context: operator clarifies their two actual questions (simple english requested): (1) does the ITM swap across the mode do a REVERSE tx because it has to happen on the other side to respect the skew-direction rule — operator thinks YES; (2) IF yes, then the funding-sign-flip would have SOME rationale, but that still doesn't justify the strange NON-MONOTONIC funding while VALUE is MONOTONIC in the money — which is why operator says funding zero ITM._
 
 > sipe snelguhs? i was asking 1 is the itm swap thing across mode doing a reverse tx since it has to happen on other side t respect the skew directon thing (i think yes) and it yes thenn2 . the fundig sign flip thing would have some rationale but that doest justify the strange behavooiur of non monotonic funding while value i monitinc in the monet which makes me say fuding zero imt
+
+
+## Entry 448 — 2026-07-07 UTC
+_Context: operator asks for a recap of (a) the changes to be made and (b) the clarifications reached on how each part of a position closes when ITM._
+
+> now recap the chanegs to be made and the clariftications we made on positon coosing of each part when itm
