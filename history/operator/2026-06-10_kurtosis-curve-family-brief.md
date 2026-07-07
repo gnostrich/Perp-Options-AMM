@@ -3294,3 +3294,9 @@ _Context: operator presses on the funding-sign-flip-moot claim: unclear where th
 _Context: operator corrects/refines the funding-sign geometry: the MODE is actually where funding becomes zero and its direction inverts — correct when viewed in the same-slope pool-vs-anchor read (the entry-386 view). I.e., the funding-sign crossover IS at the mode (same-slope point where pool and anchor coincide), not unrelated to it._
 
 > oh wait the mode is actually where the funding thing becomes zero and then its direction inverts there that is correct --- when viewing the relative pool vs anchor wrt the 'ray at same slpe' view
+
+
+## Entry 444 — 2026-07-07 UTC
+_Context: operator reasons toward the decisive test: with the raw sign-change funding you'd have an inversion at the mode; if you NEUTRALISE that sign change you'd get a go-to-zero-then-increase-again shape (which they flag as sus); and the extrinsic keeps going UP as we cross toward ATM. Operator's intuition: a non-monotonic funding profile seems suspicious overall — this is the discriminating question to actually measure._
+
+> so this is what will tell us the truth now: you'd have a sign chnage, if you neutralise that youd have a go to zero and then ahgain increase thng (sus), and the extrinsic keeps goiong up as we cross i guess? so non monotonic funding seems sus overall ...
