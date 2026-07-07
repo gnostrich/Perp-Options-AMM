@@ -527,3 +527,106 @@ relative to the liquidity at entry and is re-scaled to today's liquidity when th
 computed (same shape as the existing oracle-rebase scaling). LP moves between open and close
 can neither shrink nor inflate the bill. Operator: "smooth!" — this phrasing is the canonical
 gloss for the build item and the eventual paper sentence.
+
+---
+
+## PART 5 — Is the resize-blindness a REAL exploit on the CURRENTLY SHIPPED design (a)? (operator entry 428) — 2026-07-07
+
+Run #3 (Part 3) found `revertArc` (engine L160-167) subtracts **absolute** stored arc flows `dxA·rr, dyA`,
+oracle-scaled only, LP-resize-blind — but quantified the damage in the close-**(b)** *counterfactual-charge*
+context. The take-stock's one unquantified box: does that resize-blindness create a real exploit on the
+**CURRENTLY SHIPPED design (a)** — the FROZEN-ARC close, HEAD `4bc939ec` (funding-column slice on ratified
+`0e0a0062`; engine blocks identical to `0e0a0062`)? Measured Node-vm vs HEAD engine extract,
+`scratchpad/closeb/h11_a.js` + `h11b_patch.js`. In (a), `revertArc` **IS** the close (it directly sets the
+pool reserves) — there is no charge differential, so the leak is a **direct reserve mis-restoration**, cleaner
+and sharper than the (b) charge case.
+
+### HEADLINE: YES — a real, clean, SIGNED, conserved exploit exists on shipped (a), and it is a LIVE reachable path.
+
+The play (**ORDER 1**): *add LP ×(1+λ) → open a band at the trade point → PULL your LP → close.* The close
+(`revertArc`) reverses the **absolute** arc on a pool the pull has shrunk, so the reversal is dumped on the
+now-honest-only pool. **Full wallet accounting (λ=1, φ=0.5, depth 0.3, put ray chosen=0.7):**
+
+| leg | attacker cashflow ($) |
+|-----|----------------------:|
+| LP add | −1 600 000 |
+| trade paid @open | −321 795.92 |
+| LP withdraw @pull | +1 760 897.96 |
+| trade received @close (frozen arc) | +321 795.92 |
+| **ATTACKER NET** | **+160 897.96** |
+| **honest-LP final vs V0** | **−160 897.96** |
+
+- **The attacker's TRADE nets exactly ZERO** — the frozen arc refunds the trader exactly `(dxA,dyA)` at close
+  regardless of pool size (that is the "frozen" guarantee, and it *survives* the LP interference). So the
+  attacker's **only** P&L channel is the LP round-trip, and it is **pure profit = φ·ΔV_open**, extracted
+  1-for-1 from honest LPs. This is not the (b) accounting-not-closed caveat: here **honestLoss + attackerGain
+  = 0 to machine precision** (measured), a clean conserved transfer.
+
+### The four asks, answered
+
+1. **Pool reserve/value mis-restoration (who gains).** Honest LPs end **short by exactly φ·ΔV_open**, where
+   φ=λ/(1+λ) is the attacker's LP fraction and ΔV_open = the open-trade slippage that transiently sits in the
+   pool (o·dxA+dyA). The gain goes to the **attacker's LP claim** (pulled before the reversal). NOT to the
+   trader payout (trade nets 0), NOT to `w`. It is a reserve-**value** transfer, honest-LP → attacker-LP.
+2. **`w` mis-restoration.** **ZERO in every case measured.** `w` restores exactly because `dwA` is an
+   *absolute* increment and `w` is *scale-invariant* under isotropic LP resize (α/x is unchanged by ×f). So
+   the lean/steepness is NOT the leak channel on (a) — the entire leak is in the reserve dollar value. (This
+   is the opposite of the free-cycler γ-ratchet, which lives in `w`; that one is untouched here.)
+3. **Signed / exploitable vs symmetric noise.** **SIGNED and exploitable.** ORDER 1 (add→open→pull→close) =
+   honest lose, attacker gain, for any genuine open (real trades pay positive slippage ΔV_open>0, so honest
+   loss for put ray chosen=0.5/0.7 depth 0.1–0.3 = −$35 492 … −$282 857). ORDER 2 (open→add→close→pull) is the
+   **inverse**: attacker *donates* (honest +$32k…+$129k), so the attacker simply chooses ORDER 1. Off-mark
+   directions (chosen=1.3) flip ΔV_open<0, but the attacker just picks a slippage-positive direction. Not
+   noise — a directional, conserved transfer the attacker steers.
+4. **Magnitude at realistic sizes.** λ=1, **small retail band (depth 0.03)**: transfer = **$9 273/cycle =
+   0.58% of the $1.6M pool**. λ=1, aggressive band (depth 0.3): **$160 898/cycle = ~10% of pool**. It is
+   **repeatable and compounds** — 8 order-1 cycles at depth 0.1 drain the honest pool **8.36%** ($1.60M →
+   $1.466M) with $133 705 to the attacker. Bounded per-cycle only by the depth guard (`w·y·ρ^w`) and by
+   λ (φ→1 as λ→∞, but λ=4 already *traps* the close: arc > shrunken pool ⇒ honest reject, so extraction
+   saturates near φ≈0.8).
+
+### LIVE-REACHABILITY (the decisive fact for "patch now?")
+
+- LP deposit/withdraw are **live user buttons** in shipped HEAD (`btn-lp-deposit`/`btn-lp-withdraw` → live
+  `Store.liquidity(D)`, HTML L2968-2989). `liquidity()` (L2548) has **NO open-band guard** — the only check
+  is λ>−1 (can't zero the pool). So *deposit → open → withdraw → close* is a fully unguarded, reachable
+  sequence on the shipped build.
+- **BUT** the shipped artifact is a **single-user personal simulator** — the "attacker" and the "honest LPs"
+  are the same wallet, so there is **no in-sim victim**. The exploit bites only in a **multi-party pool**,
+  which is exactly what the **CTO propagates to the Go backend**. → The real risk is the CTO porting (a)'s
+  resize-blind frozen-arc close into a shared-LP production pool **before close-(b) lands.**
+
+### Minimal patch candidate (item ③, portable to (a) NOW)
+
+- **Same fix as parked item ③** (scale the stored arc by the cumulative LP factor `F` since open, exactly as
+  `rr` already scales for oracle rebase). **Measured: PATCHED `revertArc` restores honest LPs EXACTLY
+  (honestΔ=0) at every λ.** `dwA` needs no scaling (w scale-invariant — consistent with ask #2).
+- **Nuance (disclosed):** in (a) the patch *moves* the shortfall onto the closing **trader's** refund
+  (F·arc instead of full arc). When the attacker IS the LP-mover (the exploit) this removes **all** profit.
+  But an **honest** trader whose pool was resized by *other* LPs mid-leg would be under-refunded F·arc — a
+  new, smaller, non-exploit unfairness. → The **clean standalone form for (a) is LP-LOCK (mitigation ii):**
+  a ~2-line guard in `liquidity()` — *reject a withdrawal (D<0) while any band is open* — structurally
+  eliminates the interleave, keeps `revertArc` exact, refunds the trader the full frozen arc. No arc-math,
+  no per-leg cumulative-factor state; the arc-scaling form is the right one for close-(b) where per-leg
+  charge state already exists.
+
+### Worth patching (a) before CTO handover, vs waiting for close-(b)?
+
+- **Case for waiting:** close-(b) **replaces `revertArc` entirely** (spec `SPEC_close_first_class_trade`,
+  operator go entry 407); item ③ is already a close-(b) **MUST**; the sim has no in-sim victim; a splice to
+  (a) is engine-touching (serialized + file-safety gate) on a mechanism about to be deleted.
+- **Case for patching now:** it is a *live, unguarded, reachable* path on shipped HEAD, and if the CTO ports
+  (a)'s close to a multi-party pool ahead of close-(b), it becomes a real production drain. The **LP-lock
+  guard is a cheap standalone** (2 lines in `liquidity()`, no arc/close touch) that closes the whole class
+  immediately.
+- **RESEARCH-LEAD RECOMMENDATION (flag, not decide — sequencing is operator-tier):** the highest-value,
+  lowest-risk action is a **DOCUMENTED CTO-handover warning** ("(a)'s frozen-arc close is LP-resize-blind;
+  do not port to a shared-LP pool without item ③ OR an LP-lock-while-band-open guard") **plus** an optional
+  **LP-lock guard** on (a) as a cheap belt-and-braces. Whether to actually splice (a) now (engine-touching)
+  is an operator/sequencing call — flagged, not taken.
+
+**Provenance:** measured `scratchpad/closeb/h11_a.js` + `h11b_patch.js` vs HEAD engine extract; live-path facts
+from HEAD `HEAD_temporal_mvp_v28_lens.html` L2548 (`liquidity` no open-band guard) + L2968-2989 (live LP
+buttons) + L160-167 (`revertArc` absolute-arc). No git, no engine edits, no Aristotle. This closes the one
+unquantified exploit box on the entry-428 take-stock: **the resize-blindness IS a real, live, signed exploit
+on shipped (a); leak = φ·ΔV_open in reserve value, w untouched; fix = item ③ / LP-lock.**

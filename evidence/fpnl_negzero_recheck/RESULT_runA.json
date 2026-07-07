@@ -1,0 +1,221 @@
+{
+  "build": "513425747b23b74cb07c0fda4959825b",
+  "checks": [
+    {
+      "n": "Z1a fresh bands: every funding cell renders exactly \"0.000000\" (band+comp+total)",
+      "p": true,
+      "d": "B1 band-row=\"0.000000\"  B1 comp-0 (SOLD call · )=\"0.000000\"  B1 comp-1 (BOUGHT put ·)=\"0.000000\"  B1 total-row=\"0.000000\"  B2 band-row=\"0.000000\"  B2 comp-0 (SOLD put · i)=\"0.000000\"  B2 comp-1 (BOUGHT call )=\"0.000000\"  B2 total-row=\"0.000000\""
+    },
+    {
+      "n": "Z1b NO minus sign (ASCII or U+2212) in any pre-tick funding cell",
+      "p": true,
+      "d": "minus-bearing: []"
+    },
+    {
+      "n": "Z2 stored ledger truly 0 pre-tick",
+      "p": true,
+      "d": "B1: stored=0  B2: stored=0"
+    },
+    {
+      "n": "Z1c post-oracle-move pre-tick: still exactly \"0.000000\", no minus, on all 8 cells",
+      "p": true,
+      "d": "B1 band-row=\"0.000000\"  B1 comp-0 (SOLD call · )=\"0.000000\"  B1 comp-1 (BOUGHT put ·)=\"0.000000\"  B1 total-row=\"0.000000\"  B2 band-row=\"0.000000\"  B2 comp-0 (SOLD put · i)=\"0.000000\"  B2 comp-1 (BOUGHT call )=\"0.000000\"  B2 total-row=\"0.000000\""
+    },
+    {
+      "n": "Z3 post-tick: exactly one PAYER (negative cell) + one RECEIVER (positive)",
+      "p": true,
+      "d": "B1: funding=-0.000469  B2: funding=0.000531"
+    },
+    {
+      "n": "Z3b payer cell text carries a minus on screen",
+      "p": true,
+      "d": "\"-0.000469\""
+    },
+    {
+      "n": "Z4a payer cell −0.000469 / receiver +0.000531 (6dp, == 4bc939ec pass)",
+      "p": true,
+      "d": "payer=-0.000469 recv=0.000531"
+    },
+    {
+      "n": "Z4b payer P/L −$4.50→−$45.75 FALLS; receiver $5.53→$52.25 RISES (±$0.02, == 4bc939ec)",
+      "p": true,
+      "d": "payer $-4.5→$-45.75  recv $5.53→$52.25"
+    },
+    {
+      "n": "Z5 sign pin: displayed cell == −Σ stored trader-pays (6dp)",
+      "p": true,
+      "d": "B1: cell=-0.000469 −stored=-0.00046876  B2: cell=0.000531 −stored=0.00053090"
+    },
+    {
+      "n": "Z5b band funding cell == Σ component funding cells",
+      "p": true,
+      "d": "B1: comps=[-0.000234,-0.000235] band=-0.000469  B2: comps=[0.000264,0.000267] band=0.000531"
+    },
+    {
+      "n": "Z6 zero console errors / pageerrors / dialogs",
+      "p": true,
+      "d": "errors=0 [] dialogs=0"
+    },
+    {
+      "n": "Z7 build md5 unchanged (read-only)",
+      "p": true,
+      "d": "513425747b23b74cb07c0fda4959825b → 513425747b23b74cb07c0fda4959825b"
+    }
+  ],
+  "rows": [
+    {
+      "id": "B1",
+      "preF": 0,
+      "postF": -0.000469,
+      "preP": -4.5,
+      "postP": -45.75,
+      "stored": 0.0004687561969025729
+    },
+    {
+      "id": "B2",
+      "preF": 0,
+      "postF": 0.000531,
+      "preP": 5.53,
+      "postP": 52.25,
+      "stored": -0.000530896264283913
+    }
+  ],
+  "fresh": {
+    "B1": {
+      "bandFundingCell": "0.000000",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD call · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT put · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "0.000000",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "$0.04",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    },
+    "B2": {
+      "bandFundingCell": "0.000000",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD put · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT call · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "0.000000",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "$0.17",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    }
+  },
+  "pre": {
+    "B1": {
+      "bandFundingCell": "0.000000",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD call · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT put · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "0.000000",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "−$4.50",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    },
+    "B2": {
+      "bandFundingCell": "0.000000",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD put · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT call · inner",
+          "cell": "0.000000",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "0.000000",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "$5.53",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    }
+  },
+  "post": {
+    "B1": {
+      "bandFundingCell": "-0.000469",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD call · inner",
+          "cell": "-0.000234",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT put · inner",
+          "cell": "-0.000235",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "-0.000469",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "−$45.75",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    },
+    "B2": {
+      "bandFundingCell": "0.000531",
+      "bandFundingTitle": "funding P/L = −Σ leg accruals (signed, carved-perp units; + = line received, − = line paid; its $ value is included in this band's Total P/L)",
+      "compFunding": [
+        {
+          "label": "SOLD put · inner",
+          "cell": "0.000264",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        },
+        {
+          "label": "BOUGHT call · inner",
+          "cell": "0.000267",
+          "title": "per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)"
+        }
+      ],
+      "total": {
+        "fundingCell": "0.000531",
+        "fundingTitle": "total funding P/L (signed, carved-perp units); $ value = × live oracle, included in the P/L cell",
+        "dollarCell": "$52.25",
+        "dollarTitle": "band P&L (Δ vs entry, not walk-away cash) = L₀ · raw_net · carved equity at closure — the single stage-2→3 equity multiply — PLUS funding P/L × oracle. INCLUDES accrued funding; cash at close settles ex-funding until the funding transfer layer ships"
+      }
+    }
+  }
+}

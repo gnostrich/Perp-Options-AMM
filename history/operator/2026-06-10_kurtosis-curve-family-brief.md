@@ -3221,3 +3221,9 @@ _Context: operator orders the attacks fix built NOW and asks for a plain re-expl
 _Context: operator holds the build: brainstorming only first (the entry-430 "done now" is paused; explainer requested before any dispatch)._
 
 > brainstomrin only first
+
+
+## Entry 432 — 2026-07-07 UTC
+_Context: operator asks to close the loop clearly; specifically, when explaining close-as-a-trade, cover how it works OTM and ITM._
+
+> try to close the loop clearly. when talking of the closing being a trade talk of how it works otm and itm
