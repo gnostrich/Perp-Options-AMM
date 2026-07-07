@@ -3239,3 +3239,10 @@ _Context: operator has an insight on ITM close-as-a-trade. Proposes: (1) get sel
 _Context: operator recaps the ITM-close thesis as two claims and asks for critical evaluation: (1) no obstruction on the actual option-price-based exchange; (2) as long as the bookkeeping trade on the AMM layer is directionality-consistent for both legs, WHERE it happens should not be a hindrance._
 
 > so recapping, this way, 1. no obstruction on the actual option price based exchange; 2. as long as the bookkeeeping trade on AMM layer is directionality-like for both legs, wherever it happens should not be a hindrance. ... evaluate this critically and revertto me
+
+
+## Entry 435 — 2026-07-07 UTC
+_Context: operator confirms the layer split — the value layer IS the option/chart-2 layer where the smooth-pasted values live, so no mixing with the AMM swap layer; asks (1) any other issues, and (2) re-confirms the verify is running / to verify claim 2's safety-vs-definition split._
+
+> 1. value layer is the otion thins or graph 2 whre th epasted thins lives so not mixing;.. any other issues
+> 2. ? /verify
