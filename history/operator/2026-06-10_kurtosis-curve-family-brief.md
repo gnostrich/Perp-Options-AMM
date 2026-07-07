@@ -3189,3 +3189,7 @@ _Context: operator parks the close-(b)+receipt/charge fix — keep it in notes, 
 _Context: operator RATIFIES the trade-point build ("trade poont ok" — -TP339-RATIFY resolved) and orders a funding build: funding as a per-position-line COLUMN in the portfolio that adds into that line's P/L; "do needful". Manager scope-read: surface the EXISTING per-leg funding ledger as a portfolio column + include it in the line's displayed P/L; NO cash transfer between clubs (part-2 stays parked); no new knobs._
 
 > trade poont ok, funding is column adds to p/l in portfolio for position line wise…; do needful
+
+
+## Entry 426 — 2026-07-03 UTC
+> can you check if pushed / in sync on main?
