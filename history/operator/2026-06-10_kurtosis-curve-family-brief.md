@@ -3360,3 +3360,9 @@ _Context: operator's key distinction: a SMALL arb leak is plugable (fine), but i
 _Context: operator's architectural correction — the AMM tx does NOT conserve value (nor need to); the option-price layer conserves value and determines the trader's actual exchange. So the measured "leak" may be a misattribution (pool reserves repricing ≠ trader extraction; research-lead's own analysis said payout is decoupled/option-value-only AND that the trader extracts the swap — contradiction). Operator authorizes: verify (trace the trader's REAL realized cash open→close: option-value-only vs option-value+swap-residual) or do the needful edits._
 
 > ok donwhta you need if you want to verify otherwise do the needful edits
+
+
+## Entry 455 — 2026-07-07 UTC
+_Context: leak retracted (misattribution; update-1 clean of the alleged exploit; only a bounded ~$200 non-extractable self-drain survives). Operator un-halts: go on with the build (update-1 clean sell-back close + funding-on-option-part; charge-back parked)._
+
+> yes go on
