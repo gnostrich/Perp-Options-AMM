@@ -3330,3 +3330,9 @@ _Context: operator asks for a recap of (a) the changes to be made and (b) the cl
 _Context: operator asks to also recap/capture the settlement-accounting model: each leg's escrow units are tallied at close and settlement is done accordingly (the escrow-unit ledger → net → cash conversion)._
 
 > and recap that each leg escrow units tallied at close and settlement is accordingly .... ?
+
+
+## Entry 450 — 2026-07-07 UTC
+_Context: operator responds on the pending list. (1) asks to clarify the parked exploit fixes (close slippage per opening liquidity + anything more) and whether they're missing something; (2) GREEN-LIGHTS the close-(b) build ("yes"); (3) rules funding base = on each constituent perpetual option's value ["fundig on each constituent perpetual optinos value"], and asks what the deep-ITM wording question was._
+
+> 1. clarify  the exploit fixs that were parked (close slippage as per opening liquiditty of something more), ut clarify for me if im missing someting); 2. yes; 3. fundig on each constituent perpetual optinos value; whats deep itm wording?
