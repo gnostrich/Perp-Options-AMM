@@ -3348,3 +3348,9 @@ _Context: operator resolves the three items. (1) the exploit-fix/charge-back saf
 _Context: operator sequences the builds: FIRST update = the fully theoretically-clean close (sell-back mechanics + funding-on-option-part), drain harmless-in-sim & documented; SECOND update (next) = the known-exploit patch (charge-back safety). Asks if any of the manager's questions went unanswered, simple english._
 
 > we build the fully theoretically clean thing as the first uodate ; then the next is the known0-explit  patch ... anything else simple englasug if i didnt answer all your qs
+
+
+## Entry 453 — 2026-07-07 UTC
+_Context: operator's key distinction: a SMALL arb leak is plugable (fine), but if the drain is OBSCENE/unbounded it points to a STRUCTURAL problem in the close design, not something a patch fixes. Orders a verify to determine which._
+
+> if its small arb leak i get it can be plugged, but if youre saying its obscene it points to structural issues /verify
