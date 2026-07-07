@@ -1,5 +1,37 @@
 # MEMORY — research-lead
 
+### FUNDING-PROFILE DECISIVE MEASUREMENT (operator entries 438–444) — sign inversion is at the POOL ANCHOR not the leg ATM; shipped is NOT entry-386 same-slope — 2026-07-07
+Measured the REAL shipped funding fn against the OTM→ATM→ITM put sweep (HEAD `51342574` engine blocks=`0e0a0062`;
+vm-extract, no web/git/Aristotle). Harness `scratchpad/funding/{engine_block.js, sweeps}`. Report returned INLINE
+to manager; persist as `notes/research/VERIFY_funding_profile_2026-07-07.md`.
+Shipped fn `fundingPerStrike` (HTML L2349-2357): `f = kappa · (±g) · N · mark · (S−1)/S · dt`, put wing gamma=**−g**
+(FIXED by identity), mark=`markLensed(put,θ,mode,g)`∈(0,1] (>0), `S = poolMark(state,oracle,oi)/oracle`.
+- **CRUX #1 — oracle CANCELS in S:** poolMark=getMP_raw·(oracle/oi) ⇒ S=getMP_raw/oi, independent of live oracle
+  (measured: S=1.0000 at every oracle on a frozen pool). ⇒ dragging spot alone leaves S=1 ⇒ funding **IDENTICALLY ZERO**
+  the whole sweep on an equilibrium pool. Funding is a POOL-disequilibrium quantity, not a per-leg-moneyness one.
+- **CRUX #2 — does the put sign invert at ATM? Depends on flow, and the zero is at the ANCHOR not the mode:**
+  (a) frozen pool (drag oracle only): S const ⇒ **sign FIXED, NO inversion**; magnitude ∝ mark = MONOTONE rising
+  OTM(→0)→ITM (saturates at kappa·g·(S−1)/S as mark→1, i.e. funds full intrinsic forever). (b) arb-each-step (the
+  realistic UI flow — hint tells you to Run Arbitrage): getMP_raw→oracle ⇒ **S=oracle/oi tracks spot** ⇒ sign flips at
+  **oracle=oi (DEPLOY price)**, magnitude NON-MONOTONE (zero at anchor, rises both ways = the operator's "sus" shape).
+  The flip coincides with the put's ATM ONLY when strike==deploy price (measured: K=80000=oi flips at ATM; K=100000≠oi
+  flips at spot=80000=ITM θ=1.25, NOT at the put ATM spot=100000). So the inversion is a POOL-ANCHOR event, not a
+  per-leg mode event. Manager's two conclusions were each half-right and conflated: ±g wing sign IS identity-fixed;
+  the (S−1) factor DOES flip — at the anchor.
+- **#3 extrinsic base (mark−max(intrinsic,0)):** frozen pool ⇒ CLEAN SINGLE HUMP peaking ~ATM, fades to 0 deep OTM
+  AND exactly 0 deep ITM (past smooth-paste seam θ*=mode·(g+1)/g extrinsic≡0). Fixes the "funds full intrinsic forever"
+  tail. BUT arb-each-step ⇒ still non-monotone (double-hump straddling the anchor zero). Operator's entry-444 guess
+  "extrinsic keeps going up as we cross" is WRONG per numbers — extrinsic is a HUMP that fades ITM.
+- **#4 same-ray vs same-slope:** shipped = [same-RAY mark at θ] × [GLOBAL pool-anchor gap (S−1)]. It does NOT compute
+  the entry-386/443 same-slope per-strike pool-vs-anchor read. Modeled the same-slope view (dev=θ/mode−1, zero+flip at
+  mode): reproduces EXACTLY the operator's sus shapes — sign inverts at the mode, |f| dips to 0 at ATM then rises both
+  ways, blows up deep ITM (no saturation). So adopting entry-386 literally INTRODUCES the suspicious inversion.
+- **VERDICT vs smell test:** clean monotone-magnitude+sensible-sign profile exists ONLY for frozen-pool same-ray FULL
+  mark (but funds full intrinsic forever) or frozen-pool EXTRINSIC (single hump, the physically-nicest). Under the
+  realistic drag+arb flow BOTH bases go non-monotone with the sign-flip at the deploy anchor. **OPERATOR-TIER CHOICE
+  EXPOSED:** (i) should funding key off the pool anchor=deploy price (shipped) or per-leg moneyness/ATM? (ii) full-mark
+  vs extrinsic base? (iii) entry-386 same-slope is NOT what ships and would add the sus inversion. No git/engine/Aristotle.
+
 ### ESCROW-DENOMINATION VERIFY (operator entries 436/437) — CLEAN across wings + rebase; ONE protocol seam + ONE denomination CHOICE — 2026-07-07
 Verified operator's value-denomination model against REAL engine (HEAD `28b647e9` WT HTML; engine blocks = `0e0a0062`).
 vm-measured, no web/Aristotle/git. Harnesses `scratchpad/escrow/{h1_unit,h2_close,h3_sym,h4_cross,h4b,h4c,h5_gauge,h6_roundtrip,h7_ceiling}.js`
