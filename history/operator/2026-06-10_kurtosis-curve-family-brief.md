@@ -3354,3 +3354,9 @@ _Context: operator sequences the builds: FIRST update = the fully theoretically-
 _Context: operator's key distinction: a SMALL arb leak is plugable (fine), but if the drain is OBSCENE/unbounded it points to a STRUCTURAL problem in the close design, not something a patch fixes. Orders a verify to determine which._
 
 > if its small arb leak i get it can be plugged, but if youre saying its obscene it points to structural issues /verify
+
+
+## Entry 454 — 2026-07-07 UTC
+_Context: operator's architectural correction — the AMM tx does NOT conserve value (nor need to); the option-price layer conserves value and determines the trader's actual exchange. So the measured "leak" may be a misattribution (pool reserves repricing ≠ trader extraction; research-lead's own analysis said payout is decoupled/option-value-only AND that the trader extracts the swap — contradiction). Operator authorizes: verify (trace the trader's REAL realized cash open→close: option-value-only vs option-value+swap-residual) or do the needful edits._
+
+> ok donwhta you need if you want to verify otherwise do the needful edits
