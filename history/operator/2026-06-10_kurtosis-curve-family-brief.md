@@ -3324,3 +3324,9 @@ _Context: operator clarifies their two actual questions (simple english requeste
 _Context: operator asks for a recap of (a) the changes to be made and (b) the clarifications reached on how each part of a position closes when ITM._
 
 > now recap the chanegs to be made and the clariftications we made on positon coosing of each part when itm
+
+
+## Entry 449 — 2026-07-07 UTC
+_Context: operator asks to also recap/capture the settlement-accounting model: each leg's escrow units are tallied at close and settlement is done accordingly (the escrow-unit ledger → net → cash conversion)._
+
+> and recap that each leg escrow units tallied at close and settlement is accordingly .... ?
