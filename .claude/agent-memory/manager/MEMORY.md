@@ -19,7 +19,29 @@ replacement property + CM6-v2 gate fate, division-of-labour tension, close-depth
 paper revision sentences. THEN R6 scope-gate → itemized operator go → build. Story table ed.15 row 15.
 -TP339-RATIFY still open (5 defaults; partially mooted for the close half by 405 — re-scope at spec).
 
-🧭 **2026-07-03 DAY STATE (entries 402–425) — CURRENT:**
+🧭 **2026-07-07 STATE (entries 427–455) — CURRENT:**
+**HEAD = `bb2f8230` on main (`3eee88fb`) = UPDATE-1 CLEAN SELL-BACK CLOSE + funding-on-extrinsic**
+(operator entry 455 go). closeBand = ONE path, both legs reverse live via tradeUpdateAt (two-case
+cash-settle removed; revertArc+arc DORMANT for update-2); payout locked from legPrice(s0) BEFORE the
+swap ⇒ NON-EXTRACTABLE by construction (credit wrapper/state block byte-identical). Funding weight →
+extrinsic (mark−parity): hump@ATM, ZERO past S*, sign kept. Gates 24→31 (CM6-v2 no-free-money RETIRED
+loud; CM6-v3 documents bounded non-extractable drain; CM12 seam-kill; FE), a16 5. Chain: research-lead
+spec → R6 gate (HALT-class FLAG-OVERSELL) → **the great drain saga**: skeptic flagged "harmless ∝dy²"
+unproven → structural verify said UNBOUNDED/extractable → **operator (entry 454) ruled AMM-tx-doesn't-
+conserve-value/option-price-does** → cashflow verify RETRACTED the leak as MISATTRIBUTION (pool reprice
+credited to NO wallet; IL-like recover; bounded ~$29/N² residual) → skeptic HALT-LIFTED → intern build →
+my verify (non-extraction structural + funding hump) → tester PASS 10/10×2 + 17/17. Twin
+`temporal_mvp_v28_lens_twocaseclose.html`=`51342574`. CTO note written
+`notes/CTO_CHANGELOG_UPDATE1_clean_close_2026-07-07.md` (corrected characterization + parked update-2).
+**UPDATE-2 (charge-back/floor + LP/multi-wallet defenses) = PARKED** (entries 451/452;
+`specs/FIX_close_b_receipt_charge_PARKED_2026-07-03.md`, `DEFENSE_TAKESTOCK...`) — needed before multi-party,
+NOT an exploit patch (leak retracted). Design record `specs/DESIGN_itm_close_and_funding_2026-07-07.md`.
+LESSON (mine, owned): I amplified a false alarm — reassured "harmless" twice unproven, then over-corrected
+to "obscene structural"; operator's architectural instinct cut through it. Verify cash-flows, not reserve
+reprices, before calling extraction. Queue: Lean submissions, paper-agent memory, file-safety hook
+over-broad-grep false-positive (matches '0 FAIL'/'FAILS'), CTO handover of bb2f8230.
+
+🧭 **2026-07-03 DAY STATE (entries 402–425) — prior:**
 **HEAD = `4bc939ec` on main (`7699189d`) = FUNDING P/L COLUMN (entry 425 "do needful"; R6 gate #2
 sign-pin honored: column = −stored trader-pays; disclosure ×3; ladder full green, tester PASS ×2;
 cosmetic -FPNL-NEGZERO queued) on ratified TRADE-POINT `0e0a0062` (entry 425 "trade poont ok" =
