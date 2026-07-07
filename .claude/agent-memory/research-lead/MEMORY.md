@@ -1,5 +1,36 @@
 # MEMORY — research-lead
 
+### SPEC_update1_clean_close DELIVERED (operator entry 452 GREEN-LIT, update 1 of 2) — splice-ready, engine-measured — 2026-07-07
+Wrote `specs/SPEC_update1_clean_close_2026-07-07.md` — the fully theoretically-clean sell-back close +
+funding-on-option-part, WITHOUT the charge-back/floor (that = update 2, parked entry 451). Read-only on engine,
+no Aristotle (it's a BUILD spec, not a proof), no git. Target HEAD `51342574` (engine blocks=`0e0a0062`).
+Every number MEASURED vs live engine (`scratchpad/drain.js`, funding extrinsic table re-confirmed).
+- **Close (item 1):** replace `closeBand` two-case branch (L2208–2268) with ONE path — value BOTH legs at a
+  single pre-close snapshot `s0` via `legPrice`; move pool via `tradeUpdateAt(s, dyRev, rho_close)` for EVERY leg,
+  `rho_close=(K_tx/oNow)/getSNorm(s)`. Remove `revertArc` from live path (keep fn + arc storage for update 2).
+  Wing-lock: KEEP the `if(!soldITM)/if(!boughtITM)` exemption exactly (ITM ray legitimately crosses mode; do NOT
+  wing-lock ITM legs). soldITM/boughtITM now gate ONLY the wing-lock, not a value/pool branch. Both legs move pool
+  SAME direction on close (sign algebra holds through ρ=1). DELETE dead `rrSold/rrBought`.
+- **Value (item 2):** UNCHANGED denomination; single-snapshot valuation is the only value-layer change (kills the
+  45% branch seam). `settled_cash_leg=null, live_leg='both'` — close-log L2771 already handles falsy → "both legs".
+- **Funding (item 3):** ONE change in `fundingPerStrike` L2353/2356: weight `markLensed` → `ext = markLensed −
+  max(intrinsic,0)`. Intrinsic arm (funding var mapping sNorm←mode, theta←strike_theta): put `max(0,1−mode/strike_theta)`,
+  call `max(0,1−strike_theta/mode)`. KEEP `±g·(S−1)/S` EXACTLY. MEASURED: extrinsic = single hump @ATM=0.1481, 0 past S*,
+  matches VERIFY_funding table exactly (re-confirmed in-engine).
+- **Drain (item 6) MEASURED on new live close** (default pool, m=2, no move): Δy=0 EXACT, Δx<0 one-signed at EVERY
+  moneyness (call θ=1.3/2.0, put θ=0.8, put-buy θ=0.7), Δx∝dy² (Δx/dyRev²≈−1.47e-11→−1.43e-11). ≈−6.6e-4 at N=0.05
+  call/sell θ=1.3. Harmless self-drain in sim; LP leak in multi-party ⇒ CTO note "parked TBD" + update-2 floor fixes it.
+- **Gates (item 7):** CM6-v2 RETIRE (its round-trip + negative control both invert under live close) → CM6-v3
+  (asserts drain: Δy=0, Δx<0 all-moneyness, Δx∝dy², drain-present neg-control; NOT no-free-money). NEW CM12 (payout
+  continuity across old OTM/ITM boundary — 45%→~0). NEW funding-extrinsic check (0 past S*, hump @ATM, sign unchanged).
+  SURVIVORS confirmed: CM8-v2, CM1–5/7/9–11, a16 5/5 (a16 touches only ATM smooth-paste value).
+- **Migration (item 8):** legacy bands live-close via same path (Ksold/Kbought fall back K_tx→K_inner→inner·oForK);
+  no fallback branch; retires the old at-strike `tradeUpdate` legacy reversal.
+- **FLAGs (operator-tier):** F1 drain ships un-neutralized in update 1 by operator sequencing (CTO note parked TBD).
+  F2 no other semantics change (escrow denomination already operator-confirmed under sell-back). No exercise path.
+- **Status:** spec handed to manager. Downstream = intern splice → file-safety gate → tester → skeptic R6 scope-gate →
+  manager verification. NOT a proof obligation; no queue item at Aristotle touched.
+
 ### FUNDING-PROFILE DECISIVE MEASUREMENT (operator entries 438–444) — sign inversion is at the POOL ANCHOR not the leg ATM; shipped is NOT entry-386 same-slope — 2026-07-07
 Measured the REAL shipped funding fn against the OTM→ATM→ITM put sweep (HEAD `51342574` engine blocks=`0e0a0062`;
 vm-extract, no web/git/Aristotle). Harness `scratchpad/funding/{engine_block.js, sweeps}`. Report returned INLINE
