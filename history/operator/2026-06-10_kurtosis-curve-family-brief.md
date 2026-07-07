@@ -3306,3 +3306,9 @@ _Context: operator reasons toward the decisive test: with the raw sign-change fu
 _Context: operator, not waiting on the measurement: leaning toward NO funding ITM (funding OTM-only), because the non-monotonicity of funding magnitude itself (rising toward ATM then having to fall/invert) seems off. A design lean, not yet a ruling._
 
 > this doesnt need us to wait thoigh, i'm leaning toward no funding ITM because the non monotonicity of funding magnitude itself seems off
+
+
+## Entry 446 — 2026-07-07 UTC
+_Context: operator's near-final read on funding: it would take a FORCED sign inversion to keep the funding sign from flipping at the mode; unsure whether that forced inversion is the same spirit as us inverting the transaction directionality at the mode crossing. Overall leaning: all OK as discussed, with NO funding ITM. Asks the manager to say if he differs._
+
+> it would take a forced sign inversion to make the funding sign not flip; i'm not sure ig this is in the dame spitrit a (if) us inverting the transacton directionality whwne it crosses the mod; overall leaning toward all ok as disuvsses nonfundig ITYM, but lmk if you differ
