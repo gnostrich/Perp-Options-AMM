@@ -3276,3 +3276,9 @@ _Context: operator argues the funding-carryover question: it's a PERPETUAL optio
 _Context: operator crystallizes the one remaining funding question: whether funding should accrue on the full ITM value at all, or only on the extrinsic / time-value portion._
 
 > but i think you;re asking whether the funding should accrue on the ITM value  at all or only on the portion that's the extrinsic / time value
+
+
+## Entry 441 — 2026-07-07 UTC
+_Context: operator on funding base: does the smooth-paste construction already give a clean intrinsic/extrinsic split of the ITM value? If so it solves the funding-base problem. Also self-corrects: funding may NOT actually change sign crossing the mode (walks back the earlier sign-flip assumption), and floats that funding might be OTM-only. Flags uncertainty on this part; says everything else discussed seems ok._
+
+> with the whole pasting thing we did, do we have a breakup of intrinsic / extirnsic componet of the vslue when ITM? if we do then I think it solves the problem? but yeah correct me if im wrong where funding is actually not necessariyl changing signs when crossing mode ... so we may also we well advised to have funding only OTM ... i'm not 100% clear on ths part, egerything else we spoke of seems ok thoigh t
