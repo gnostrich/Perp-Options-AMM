@@ -1,5 +1,37 @@
 # MEMORY — research-lead
 
+### DECISIVE VERIFY — update-1 close drain is OBSCENE/STRUCTURAL but SPEC-FIXABLE (operator entry 453) — 2026-07-07
+Answered the operator's four numbers vs REAL engine (HEAD blocks `0e0a0062` = engine md5 `1f0bccdd`; confirmed
+byte-identical between WT HEAD and pinned `head_0e0a0062.html` — the Jul-7 funding-P/L build touched only display
+blocks). vm-extract; no web/git/engine/Aristotle. Harnesses `scratchpad/{verify_structural,verify2,verify3_root,big_k,rebase_move}.js`.
+Report returned INLINE to manager; persist as `notes/research/VERIFY_drain_structural_2026-07-07.md`.
+- **Framing:** the drain lives PURELY in the pool-reserve/swap layer (option payout `raw_net` marks are decoupled).
+  Δy=0 EXACT on every round trip ⇒ pool value change (honest numéraire = mark asset at external oracle,
+  Vmkt=x·oC+y) = Δx·oC, and trader swap-P&L = −ΔVmkt to ~1e-10 (verified identity). The poolMark basis (Vpool)
+  gives the OPPOSITE sign and is MISLEADING (round trip shifts w, corrupting the internal marginal) — Vmkt is honest.
+- **Q1 (value vs reshuffle):** REAL zero-sum VALUE TRANSFER pool↔trader, not a reshuffle. At k=1 (no move) small,
+  one-signed: −$208 call/sell, −$135 put/sell (0.013% V0=$1.6M) — matches spec self-drain (Δx∝N², my N=0.1 = 4× spec N=0.05 ✓).
+- **Q2 (bounded?):** UNBOUNDED. Superlinear in the price move (between ∝(k−1) and ∝(k−1)²; NOT ∝dy²—that holds ONLY at k=1).
+  ΔVmkt reaches 0.94% pool @k=2, 5.8% @k=4, 124% @k=16, $41B @k=1000. NO saturation (tradeUpdateAt keeps accepting to
+  extreme trade points). Robust to move mechanism: arb-move $5.8k@k=2/$14.5k@k=4; rebaseDn $7.5k/$23k; deep-ITM put same order.
+- **Q3 (extractable?):** YES, exactly. trader_pnl_swap = −ΔVmkt (sum ≈1e-10). Signed: pool LOSES (trader gains) when the
+  leg deepens OTM; pool GAINS (trader loses) when it goes ITM — but the trader controls leg + close-timing (free option on
+  the residual) + N, so the favorable side is farmable. The round trip leaves a residual Δx BTC at ZERO net cash = free
+  directional leverage bypassing premium/margin.
+- **Q4 (ROOT CAUSE) — SPEC-FIXABLE, the culprit is LIVE rho NOT frozen-K:** froze rho (reverse at open's stored `rho_tx`,
+  SAME frozen-K cash) ⇒ collapses to a tiny one-signed residual (−$8→−$17 across k, ∝dy²) — the drain the spec ADVERTISED.
+  `liveK` (cash at live strike) was WORSE ⇒ rules out cash sizing. OLD frozen-arc `revertArc` + matching rebase = Δx≡0 EXACT
+  at all k. So the blow-up is entirely from `rho_close=(K_tx/oNow)/getSNorm(s)` re-derived live, placing the reverse trade
+  point at a price divergent from the open. Spec §6 NAMED this mechanism but wrongly concluded small/one-signed/∝dy² (true
+  only at k=1). **FIX = better close-swap definition (freeze rho / replay stored arc), NOT the update-2 charge-back band-aid.**
+  Value-layer seam-kill (single-snapshot legPrice) is orthogonal and preserved either way.
+- **VERDICT to operator:** OBSCENE-STRUCTURAL as shipped (update-1 live-rho) — exceeds whole-pool value on large moves,
+  extractable, sign-controllable. BUT root is frozen-vs-live rho, so it's spec-fixable in update-1 by not going live on rho —
+  this changes the update-1/2 split (charge-back may be unnecessary for THIS leak). CAVEAT (operator-tier, flagged not decided):
+  frozen-rho places the ITM reverse on the OPEN's moneyness side; operator entry 447 wanted "the other side to respect skew
+  direction" — that placement/semantics choice is the operator's. Also: current SHIPPED HEAD close (frozen-arc+rebase) is
+  EXACTLY value-conserving; update-1 REGRESSES it to unbounded. No git/engine/Aristotle touched.
+
 ### SPEC_update1_clean_close DELIVERED (operator entry 452 GREEN-LIT, update 1 of 2) — splice-ready, engine-measured — 2026-07-07
 Wrote `specs/SPEC_update1_clean_close_2026-07-07.md` — the fully theoretically-clean sell-back close +
 funding-on-option-part, WITHOUT the charge-back/floor (that = update 2, parked entry 451). Read-only on engine,
