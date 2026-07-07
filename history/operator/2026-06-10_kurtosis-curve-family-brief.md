@@ -3252,3 +3252,9 @@ _Context: operator confirms the layer split — the value layer IS the option/ch
 _Context: operator, on the verified ITM-close insight: (1) wants a simple-English TLDR — in this design there'd be NO parking, positions traverse across 'mode'; (2) observes the ITM leg is worth more; and notes what's probably missing from a value standpoint: every leg exchanges for/at the ATM (the escrow unit = one full perp at ATM). Orders a take-stock now._
 
 > 1. simple english tldr, so in this care thered be no parking and things traverse across 'mode'; 2. the itm thing is worth more right; ... and what we are probably missing mentioning here from a value standpoint is that every leg exchanges for the ATM .... just take stock now
+
+
+## Entry 437 — 2026-07-07 UTC
+_Context: operator refines the value-denomination model: every piece exchanges for/at ATM, and we keep a record of the escrow units that remain; asks whether everything is consistent or any asymmetries are left._
+
+> so every piece exhanges for ITM and we keep record of the escrow units that remain if that makes sense... is everything consistent or any asymmetries left?
