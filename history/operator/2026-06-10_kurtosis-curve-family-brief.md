@@ -3300,3 +3300,9 @@ _Context: operator corrects/refines the funding-sign geometry: the MODE is actua
 _Context: operator reasons toward the decisive test: with the raw sign-change funding you'd have an inversion at the mode; if you NEUTRALISE that sign change you'd get a go-to-zero-then-increase-again shape (which they flag as sus); and the extrinsic keeps going UP as we cross toward ATM. Operator's intuition: a non-monotonic funding profile seems suspicious overall — this is the discriminating question to actually measure._
 
 > so this is what will tell us the truth now: you'd have a sign chnage, if you neutralise that youd have a go to zero and then ahgain increase thng (sus), and the extrinsic keeps goiong up as we cross i guess? so non monotonic funding seems sus overall ...
+
+
+## Entry 445 — 2026-07-07 UTC
+_Context: operator, not waiting on the measurement: leaning toward NO funding ITM (funding OTM-only), because the non-monotonicity of funding magnitude itself (rising toward ATM then having to fall/invert) seems off. A design lean, not yet a ruling._
+
+> this doesnt need us to wait thoigh, i'm leaning toward no funding ITM because the non monotonicity of funding magnitude itself seems off
