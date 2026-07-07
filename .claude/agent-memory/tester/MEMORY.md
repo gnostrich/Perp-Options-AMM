@@ -1,7 +1,27 @@
 # MEMORY — tester
-_Last updated: 2026-07-03, after the FUNDING-P/L COLUMN promoted-HEAD pass on `4bc939ec6fb3dda8d1e5b37bfd3bc0cf` (operator entry 425; display slice on ratified `0e0a0062`). **VERDICT = PASS — live 16/16 ×2 byte-stable + standing smoke 17/17 ×2 + gates 24+5; ledger `### 4bc939ec` entry + row #9 + -TP339-RATIFY→RESOLVED + NEW -FPNL-NEGZERO (cosmetic).** Prior: caption slice `0e0a0062` = PASS 11/11 ×2._
+_Last updated: 2026-07-07, after the -FPNL-NEGZERO quick live recheck on promoted HEAD `513425747b23b74cb07c0fda4959825b` (2-expression −0 display guard on `4bc939ec`). **VERDICT = PASS — targeted live 12/12 ×2 byte-stable + gates 24+5 re-run; ledger -FPNL-NEGZERO OPEN→RESOLVED(evidence)-in-`51342574` + `### 51342574` entry + row #9 + header re-key.** Prior: funding-P/L column `4bc939ec` = PASS 16/16 ×2._
 
-## ★★★★★ MOST RECENT — FUNDING P/L COLUMN promoted-HEAD pass, `4bc939ec` = 16/16 PASS ×2 + smoke 17/17 ×2 (entry 425; R6 gate #2)
+## ★★★★★ MOST RECENT — -FPNL-NEGZERO recheck, promoted HEAD `51342574` = 12/12 PASS ×2 (closes the 4bc939ec cosmetic)
+2-expression display fix: `bandFundingStored === 0 ? 0 : -bandFundingStored` (L4653, feeds band L4685 + total L4726
+cells) + `c.funding === 0 ? 0 : -c.funding` (component cell L4711), BEFORE fmtNum; fmtNum untouched. I independently
+diffed the full file vs committed `4bc939ec` (git show 7699189): delta = EXACTLY the 2 expressions + 3 comment lines
+⇒ engine+state byte-identical by construction. Harness `engine/verify/pw_fpnl_negzero_recheck.mjs` (A/B; readBandsDom/
+parseUSD/setup VERBATIM from pw_funding_pnl_live.mjs); evidence `evidence/fpnl_negzero_recheck/` (RESULT A==B
+byte-identical modulo label; fresh/pretick/posttick PNGs).
+- **ON-SCREEN:** all 8 pre-tick funding cells (band+2 comps+total × 2 opposite bands) render EXACTLY `0.000000`, no
+  minus (ASCII or U+2212), fresh AND after oracle→88000 pre-tick (was `-0.000000`). Post-tick 24×: payer B1 −0.000469
+  (minus RENDERS — guard doesn't eat real negatives), P/L −$4.50→−$45.75 falls; receiver B2 +0.000531, $5.53→$52.25
+  rises — byte-equal to the 4bc939ec pass; sign pin cell==−Σstored (6dp); band==Σcomps; 0 errors ×2; md5 unchanged.
+- Gates tester-re-run: run_all exit 0, lens 24/24 + a16 5/5 HARD, monolith 8/8 report-only, integrity pin keyed
+  `51342574` (manager pre-pinned), blobs canonical L74/L1060.
+- Ledger: rolling row -FPNL-NEGZERO → RESOLVED(evidence)-in-`51342574`; new `### 51342574` entry (feature #9 display
+  only, none beyond; UNDESIRABLE none); table header + row #9 re-keyed. OPERATOR-VOICE: no operator words on this fix
+  (tester-originated); entry-427 context = one of the agreed pre-CTO-handover fixes, now DONE; entries 429–431
+  (attacks/parked-close, entry 431 "brainstomrin only first" holds that build) untouched by this slice, still OPEN.
+- Did NOT git (manager commits). OPEN handed to manager: -CLOSE405 + attacks TBD (brainstorm-held per 431); -B295
+  items 3/4; -B289 part-2 app list.
+
+## ★★★★ Prior — FUNDING P/L COLUMN promoted-HEAD pass, `4bc939ec` = 16/16 PASS ×2 + smoke 17/17 ×2 (entry 425; R6 gate #2)
 Display/read-layer slice on ratified `0e0a0062`. I independently node-compared script blocks: engine (47,866 b) +
 state (24,041 b) BYTE-IDENTICAL to committed 0e0a0062; full file delta = exactly the 6 spliced regions (header th,
 units-note, renderBands funding calc, band/comp/total cells) — supports "none beyond #9". Harness

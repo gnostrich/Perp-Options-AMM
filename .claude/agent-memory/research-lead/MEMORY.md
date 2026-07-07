@@ -1,5 +1,38 @@
 # MEMORY — research-lead
 
+### RESIZE-BLINDNESS ON SHIPPED (a) — MICRO MEASUREMENT (RESEARCH RUN #5) delivered — operator entry 428 take-stock gap — 2026-07-07
+Appended PART 5 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NEW harnesses
+`scratchpad/closeb/h11_a.js` + `h11b_patch.js` (vm vs HEAD engine extract). Question: is `revertArc`'s
+LP-resize-blindness (run #3, quantified only in close-(b) CHARGE context) a real exploit on the CURRENT
+SHIPPED design (a) — frozen-arc close, HEAD `4bc939ec` (funding slice on `0e0a0062`; engine blocks identical)?
+- **VERDICT: YES — real, clean, SIGNED, CONSERVED, LIVE-reachable exploit on (a).** In (a) `revertArc` IS the
+  close (directly sets reserves; no charge), so the leak is a DIRECT reserve mis-restoration, sharper than (b).
+- **The play (ORDER 1):** add LP ×(1+λ) → open band at trade point → PULL LP → close. Full wallet accounting
+  (λ=1, φ=0.5, depth 0.3, put ray): attacker LP add −1.6M, trade paid @open −321 795.92, LP withdraw @pull
+  +1 760 897.96, trade recv @close (frozen arc) +321 795.92 ⇒ **ATTACKER NET +160 897.96 = honest-LP loss
+  −160 897.96 EXACTLY.** Trade nets ZERO (frozen arc refunds exact arc regardless of pool size); the ONLY P&L
+  channel is the LP round-trip = **pure profit φ·ΔV_open**, 1-for-1 from honest LPs. honestLoss+attackerGain=0
+  to machine precision (clean transfer — NOT the (b) accounting-open caveat).
+- **4 asks:** (1) mis-restoration = honest SHORT by φ·ΔV_open, gain → attacker LP claim (not trader payout,
+  not w). (2) **w mis-restoration = ZERO** always (dwA absolute + w scale-invariant under isotropic resize);
+  leak is 100% reserve VALUE, not w. (3) SIGNED/exploitable: ORDER 1 honest-lose; ORDER 2 (open→add→close→pull)
+  is the inverse (attacker donates) so attacker picks ORDER 1; not noise. (4) magnitude: small band (depth
+  0.03,λ=1) = $9 273/cyc = 0.58% pool; aggressive (depth 0.3) = $160 898 = ~10% pool; REPEATABLE/COMPOUNDS
+  (8 cyc depth 0.1 → honest pool −8.36%); saturates φ≈0.8 (λ=4 traps close, arc>shrunk pool).
+- **LIVE-REACHABLE:** LP deposit/withdraw are live buttons (HEAD L2968-2989 → Store.liquidity); `liquidity()`
+  L2548 has NO open-band guard (only λ>−1). BUT shipped artifact is single-USER sim ⇒ no in-sim victim; real
+  risk = CTO porting (a)'s resize-blind close to a MULTI-PARTY Go pool before close-(b) lands.
+- **PATCH:** item ③ (scale arc by cumulative LP factor F) — MEASURED patched revertArc restores honest EXACTLY
+  (honestΔ=0) at every λ. Nuance: in (a) it shifts shortfall onto trader's frozen refund (F·arc) — fine when
+  attacker==LP-mover (kills all profit), but under-refunds an HONEST trader resized by others ⇒ **clean (a)
+  standalone form = LP-LOCK (mitigation ii): ~2-line guard in liquidity() rejecting D<0 while any band open.**
+  Arc-scaling form is right for close-(b) (per-leg charge state already exists).
+- **RECOMMENDATION (flag, not decide — sequencing is operator-tier):** DOCUMENTED CTO-handover warning + optional
+  cheap LP-lock guard on (a); whether to splice (a) now (engine-touching) = operator call. close-(b) still HOLDS.
+No git, no engine edits, no Aristotle. Handed to manager.
+
+---
+
 ### BEST-MITIGATION / PERP-VENUE SYNTHESIS (RESEARCH RUN #4) delivered — operator entry 418 ("figure out the best mitigation... parallel is perps and spot manipulation... whole book manipulation isnt unique") — 2026-07-03
 Appended PART 4 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NEW measure `scratchpad/closeb/h10_perp.js`
 (vm vs HEAD `0e0a0062`). Converges the close-(b) defense set as the operator's take-stock closing input. NO git/engine/Aristotle.
