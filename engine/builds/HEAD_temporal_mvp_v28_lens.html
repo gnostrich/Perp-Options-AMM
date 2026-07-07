@@ -4647,7 +4647,10 @@ function renderBands() {
     // paid. Display-layer convention only — the stored ledger and
     // fundingTick are untouched.
     const bandFundingStored = comps.reduce((a, c) => a + c.funding, 0);
-    const bandFundingPnl    = -bandFundingStored;
+    // -FPNL-NEGZERO (2026-07-07): normalize JS negative zero — a fresh
+    // band has stored 0, and -0 renders "-0.000000" through
+    // toLocaleString/fmtNum. Display guard only; ledger untouched.
+    const bandFundingPnl    = bandFundingStored === 0 ? 0 : -bandFundingStored;
     // Dollar leg of the funding P/L uses the funding ledger's own existing
     // $ conversion (the fundingTick log line: inflow × oracle) — NOT the
     // stage-2→3 equity multiply, because funding accrues on absolute N,
@@ -4705,7 +4708,7 @@ function renderBands() {
           </td>
           <td title="mark — the fraction, from the pool-curve query">${fmtNum(c.m, 4)}</td>
           <td title="component value = N · mark (carved-perp units)">${fmtNum(c.value, 6)}</td>
-          <td title="per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)">${fmtNum(-c.funding, 6)}</td>
+          <td title="per-component funding P/L (signed, carved-perp units; + = received, − = paid; ledger stores trader-pays, display negates)">${fmtNum(c.funding === 0 ? 0 : -c.funding, 6)}</td>
           <td></td>
           <td></td>
         </tr>`;
