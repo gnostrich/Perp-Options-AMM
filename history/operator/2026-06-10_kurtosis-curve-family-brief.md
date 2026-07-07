@@ -3336,3 +3336,9 @@ _Context: operator asks to also recap/capture the settlement-accounting model: e
 _Context: operator responds on the pending list. (1) asks to clarify the parked exploit fixes (close slippage per opening liquidity + anything more) and whether they're missing something; (2) GREEN-LIGHTS the close-(b) build ("yes"); (3) rules funding base = on each constituent perpetual option's value ["fundig on each constituent perpetual optinos value"], and asks what the deep-ITM wording question was._
 
 > 1. clarify  the exploit fixs that were parked (close slippage as per opening liquiditty of something more), ut clarify for me if im missing someting); 2. yes; 3. fundig on each constituent perpetual optinos value; whats deep itm wording?
+
+
+## Entry 451 — 2026-07-07 UTC
+_Context: operator resolves the three items. (1) the exploit-fix/charge-back safety STAYS PARKED — put in the CTO note as parked TBD, not implemented yet. (2) deep-ITM wording = moot / no change except the sell-back model, we're good. (3) funding = option-part value, OTM only (i.e. extrinsic, zero ITM confirmed). Asks if any more doubts, simple english._
+
+> 1. stay parked and keep in CTO note as parked tbd not implemented yet; 2. this. moot / no chage except the sell back model then we good; 3. option part value when OTM ... any more doibts simple snelgihs?
