@@ -315,3 +315,107 @@ live pass, STOP-ON-RED) binds as always.
 
 — skeptic (entries 445–452 read verbatim this turn; engine read at HEAD; drain re-derived
 independently, drain_attack.js/drain_real.js; no edits outside this verdict file + own memory)
+
+---
+
+# HALT-LIFT DECISION — update-1 drain FLAG-OVERSELL — 2026-07-07
+
+_Skeptic own-eyes check of the evidence tendered to lift the halt-class FLAG-OVERSELL raised
+above. Code read at HEAD `51342574` (blocks `0e0a0062`) THIS turn: closeBand wrapper L2735-2773,
+Engine.closeBand value/pool/credit block L2208-2328, openBand carve L2720-2733, fundingTick
+L2779-2800. Operator transcript entries 452-455 read verbatim. Evidence reviewed:
+`notes/research/VERIFY_trader_cashflow_2026-07-07.md` (+ the retracted
+`VERIFY_drain_structural_2026-07-07.md` head). Not taken on faith — code-path re-traced;
+reversibility mechanism reasoned through._
+
+## Q1 — does the cashflow trace satisfy my FLAG-OVERSELL? YES on the load-bearing (extraction) limb.
+
+My flag had two limbs: (1) the spec's "Δx<0 one-signed ∝dy² tiny" is measured only in the
+no-oracle-move regime and the sign/magnitude behave otherwise when the oracle moves; (2)
+self-drain-vs-**extractable** was UNRESOLVED. Limb (2) — the limb that gated the operator's
+authorization to PARK the fix — is now RESOLVED, and I confirmed the load-bearing claim with my
+own eyes, NOT on the retraction's word:
+- The trader-credit path is exactly two writes: `club.equity += carvedEquityAtClosure` (L2753,
+  a perp-mark P&L on the carved slice, L2306-2309 — reads `perpMark`, never a reserve) and the
+  band `overlay.trader_payout = L0·raw_net·carvedEquityAtClosure` (L2317/2762-2767), explicitly
+  **NOT folded into equity** (comment L2759). `raw_net = Y − X` (L2274) with X,Y = `legPrice().V`
+  = lensed **option values**. The swap `(dx,dy)` is absorbed into `state.pool = r.finalState`
+  (L2744) and credited to NO wallet. **No code path assigns the trader the swap dx/dy.**
+  Extraction is impossible by construction — the research-lead's claim (b) is code-true.
+- This holds for **update-1**, not just current HEAD: the spec replaces only the value/pool block
+  (L2208-2268) and `fundingPerStrike`; the credit wrapper (L2744-2767) and `raw_net = Y−X` are
+  UNCHANGED (spec §2 "Job 2 UNCHANGED"). So the tradeUpdateAt swap still lands in `finalState →
+  state.pool`, the trader still gets option-value + perp-P&L only. Non-extraction is a structural
+  property update-1 inherits, not an empirical measurement that could regress.
+- Reversibility mechanism checked (reasoned, not re-run): `rho_close=(K_tx/oNow)/getSNorm(s)`;
+  if price returns to oOpen before close with no intervening trades, oNow≈oOpen and s≈post-open,
+  so rho_close≈rho_open and tradeUpdateAt reverses to a second-order ∝dy² residual independent of
+  the excursion — consistent with the research-lead's fixed ~$200-on-return table (§4). The large
+  elevated-close numbers ($25k/$123k/$2.0M) are mark-to-elevated-oracle IL that recovers, and —
+  critically — even at an elevated close they are NOT credited to the trader (same code-path
+  reason). So "unbounded extractable transfer" was a genuine misattribution. My flag is
+  SATISFIED on harm/extraction.
+
+**BUT limb (1) is NOT rescued by this evidence, and the spec text still carries the wrong words.**
+The retraction disproves *extraction*; it does not make Δx "one-signed at every moneyness." The
+research-lead's own §4 shows Δx sign/magnitude track the oracle move (that is exactly limb 1).
+The pool-side reprice is best described as IL-like (recovers on return) + a bounded ~$200 (∝N²)
+non-recoverable residual — NOT "one-signed ∝dy² tiny/harmless at every moneyness."
+
+## Q2 — is the spec clean-to-build with the drain re-characterized? NOT YET IN THE SPEC TEXT.
+
+The spec `SPEC_update1_clean_close_2026-07-07.md` **as it stands** (§6 and CM6-v3.2/v3.3, read
+this turn) STILL asserts "Δx < 0, one-signed, at EVERY moneyness (OTM and ITM alike)", "∝dy² ⇒
+tiny", "Harmless … self-drain, no counterparty credited". It documents NEITHER the retracted
+"unbounded" framing NOR the corrected one — it is the pre-flag framing I originally broke. The
+"no counterparty credited" line is now GROUNDED by the code-path trace (good, keep it); but
+"one-signed at every moneyness" is still false in the oracle-moved regime, and CM6-v3.2's grid
+sweeps θ_chosen at FIXED oracle — the artificial regime where one-signedness happens to hold —
+then asserts it globally. That is the same green-wash my original flag named. The spec must be
+revised to the research-note characterization BEFORE §6/CM6-v3/CTO-note text is encoded as truth.
+
+## Q3 — the three build-brief conditions:
+- (a) funding sign-keep as "unchanged-default build-call" (not operator-ruled): ACCEPTABLE —
+  matches my prior ruling (item 3 relabel + one-line operator confirm; entry 451 "no change
+  except the sell back model" gives cover).
+- (b) CM6-v3 honestly documents the bounded self-drain, no no-free-money green-wash: REQUIRED and
+  accepted — AND it must additionally NOT green-wash "one-signed" (scope that claim to
+  oForK=orc/no-move) and must record the CM6-v2 no-free-money RETIREMENT loudly in the gate header
+  + DIFF_LEDGER (my prior condition (b), still binding).
+- (c) CTO-note owner=manager + trigger=update-1 merge: ACCEPTED — discharges my prior
+  FLAG-OMISSION (c), provided the note carries the CORRECTED characterization (non-extractable,
+  code-path-verified; IL-like recovering + bounded ~$200 ∝N² residual; sign/magnitude of transient
+  Δx track the oracle move), NOT "one-signed ∝dy² harmless" and NOT "unbounded extractable".
+
+## Provenance note (not a blocking FLAG-PROCESS)
+Entry 454 verbatim is "ok donwhta you need if you want to verify otherwise do the needful edits" —
+it authorizes the verify/edit; it does NOT itself state the "AMM-tx-doesn't-conserve-value /
+option-price-conserves" MODEL. That model is the manager's context-note gloss. It is not invented
+— it traces to operator entries 434/435 (layer split: value = option/chart, not the AMM swap
+layer) which I cited in my own R6 gate — so the attribution is defensible. The genuine un-halt is
+entry 455 "yes go on" (verbatim confirmed), issued after being told the leak was retracted. Process
+is sound (manager produced evidence + operator un-halt AND routed the independent-check to me
+rather than lifting unilaterally). I note the 454 gloss for honesty; it does not block.
+
+## VERDICT: HALT-LIFTED — CLEAR-TO-BUILD.
+The extraction/harm limb of my FLAG-OVERSELL — the limb that gated parking the fix — is SATISFIED,
+verified at the code path with my own eyes and structurally inherited by update-1. The operator has
+un-halted (entry 455). The code splice (sell-back close + extrinsic funding weight) proceeds.
+
+**Two documentation conditions ride the build (unchanged in force from my 2026-07-02 verdict — they
+were always the actual target of the held claim; the splice never was):**
+(A) Before §6/CM6-v3/DIFF_LEDGER/CTO-note text enters shared truth, the drain characterization must
+be rewritten from the stale "Δx<0 one-signed ∝dy² tiny/harmless at every moneyness" to the
+verified one: pool-reserve reprice credited to NO wallet (non-extractable, code-path-verified,
+holds for update-1 by construction) + IL-like recovering + bounded ~$200 (∝N²) non-recoverable
+residual; the transient Δx sign/magnitude track the oracle move (NOT one-signed). CM6-v3.2's
+one-signedness assertion must be scoped to the no-move regime, not asserted globally.
+(B) CTO note = an actual owned (manager), triggered (update-1 merge) artifact carrying (A)'s
+characterization, and the CM6-v2 no-free-money retirement recorded loudly in the gate header +
+DIFF_LEDGER.
+These are documentation/gate-wording conditions on encoding-as-truth, halt-class for those
+artifacts only; they do not block the intern splice, which is CLEAR to proceed. Standard chain
+(file-safety gate, tester live acceptance, STOP-ON-RED) binds as always.
+
+— skeptic (HEAD engine read at source L2208-2328/2735-2800 this turn; transcript 452-455 verbatim;
+cashflow trace code-path independently confirmed; no edits outside this verdict file + own memory)
