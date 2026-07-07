@@ -3963,3 +3963,35 @@ report/tooltip, not built. Pattern note: manager gloss "crowded side accrues neg
 neither operator language nor code convention — recurring habit of paraphrasing sign laws
 instead of quoting the code's own convention; keep checking stored-accumulator polarity
 whenever a ledger gets surfaced into P/L.
+
+## 2026-07-07 — R6 scope-gate #3: UPDATE-1 clean-close build (SPEC_update1_clean_close). CONDITIONALLY CLEARED; 1 FLAG-OVERSELL (drain) + 1 FLAG-OMISSION (CTO note) halt-class
+Biggest close-path change in the project. Verdict appended to
+notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md (new dated section). Operator go 450
+"yes"/452 "clean thing first, known-explit patch next"; funding 451 "option part value when OTM".
+Items 1,2,4,5,6 CLEARED; item 3 weight CLEARED but SIGN-KEPT citation (446/447/451) MISATTRIBUTED
+— those rule the WEIGHT/zero-ITM, not the ±g·(S−1)/S sign; sign-keep = unchanged-default build-
+call, relabel + 1-line operator confirm (not "operator-ruled"). Item 7 CLEARED-on-scope.
+**HEADLINE (my kind of catch):** the drain characterization "Δx<0 one-signed ∝dy² harmless self-
+drain" is measured ONLY in the no-oracle-move regime (drain.js sweeps moneyness via θ_chosen at
+FIXED oracle). But oForK=oNow=oracleLive (closeBand L2158/2124), so an ITM close — the WHOLE POINT
+of update 1 — is reached by the oracle MOVING. I re-derived (scratchpad drain_attack.js): once
+close oracle ≠ open oracle, Δx sign FLIPS and magnitude grows ~20-40× (call/sell θ=1.3: −2.6e-3 at
+1× → +9.4e-2 at 2×). "One-signed" is FALSE in the realistic case; not ∝dy²-tiny, scales with the
+price move. Did NOT over-claim a confirmed exploit (arb-consistent counterfactual = update-2's
+receipt, not available). Held: CM6-v3.2's "assert Δx<0 one-signed" hard gate + CTO-note/F1 "harmless
+self-drain" must be re-characterized for the oracle-moved regime before entering shared truth.
+FLAG-OMISSION: operator MANDATED the CTO note (451) but spec assigns NO owner/trigger/file — parked
+liability with no owner = silent-ship-to-backend risk; needs an actual owned+triggered artifact.
+Risk (a): update 1 REINTRODUCES a drain HEAD 0e0a0062 doesn't have (frozen-arc = exact) + retires
+CM6-v2 no-free-money gate — operator authorized (452) but the leak-REGRESSION direction (vs current
+exact close) must be one loud sentence in dispatch/DIFF_LEDGER, not buried. Risk (b): CM6-v3 (gate
+that ASSERTS a leak) is honest+neg-controlled IF the no-free-money RETIREMENT is loudly recorded so
+"all green" doesn't read as safety. Un-itemized: §8 retires legacy at-strike close fallback (rides
+item 1, honest but acknowledge). No new knob (R3 pass).
+**Pattern (recurring, log it):** team validates a safety/sign claim in a CONVENIENT regime (here:
+no oracle move) and generalizes the confident wording ("one-signed at EVERY moneyness") to the
+regime that actually matters (oracle-moved / ITM). Same class as the δ-direction and the entry-425
+sign-paraphrase habit — ALWAYS re-derive sign/one-signedness in the regime the feature is FOR, not
+the regime the harness defaults to. Also recurring: manager dispatch citations attached to the
+nearest operator "yes" rather than the entry that actually rules the specific sub-claim (item-3
+sign here; the entry-425 sign-gloss last time).

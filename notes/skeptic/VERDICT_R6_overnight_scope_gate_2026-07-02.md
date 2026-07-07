@@ -177,3 +177,141 @@ STOP-ON-RED) binds as always.
 
 — skeptic (entry 425 read verbatim this turn; engine read at HEAD source L2345/2775–2800/
 4502–4710; no edits outside this verdict file + own memory)
+
+---
+
+# R6 SCOPE-GATE — UPDATE-1 clean-close build (`SPEC_update1_clean_close_2026-07-07.md`) — 2026-07-07
+
+_Skeptic pre-dispatch gate on the biggest close-path change in the project. Operator go read
+VERBATIM (entries 450 "yes" / 452 "we build the fully theoretically clean thing as the first
+uodate ; then the next is the known0-explit patch"; funding 451 "option part value when OTM";
+charge-back 451 "stay parked and keep in CTO note as parked tbd not implemented"). Engine read at
+HEAD `51342574`/`0e0a0062` blocks; drain re-derived independently
+(`scratchpad .../drain_attack.js`, `.../drain_real.js`)._
+
+## Itemized scope verdicts
+
+**Item 1 (close = single live-trade path, every leg via tradeUpdateAt; two-case removed; revertArc
+dormant) — CLEARED.** Citation-backed: 405 (close = first-class trade b, CLAUDE.md), 452 (build-1
+go), 447 verbatim ("is the itm swap thing across mode doing a reverse tx since it has to happen on
+other side to respect the skew directon thing (i think yes)") backs every-leg-incl-ITM live
+reversal. Wing-lock exemption for ITM legs (§1.4) is engine-faithful (soldITM/boughtITM already
+exempt). No invented mechanics.
+
+**Item 2 (value/settlement denomination UNCHANGED) — CLEARED.** 449 ("each leg escrow units tallied
+at close and settlement is accordingly"), 451 ("moot / no chage except the sell back model then we
+good"). Job 2 byte-unchanged; matches motive line 4 (everything else unchanged). Escrow
+denomination not reopened.
+
+**Item 3 (funding weight full-mark → extrinsic) — WEIGHT CLEARED; SIGN-KEPT = AMBIGUOUS (citation
+misattributed).** The WEIGHT change (extrinsic = mark − max(intrinsic,0), zero ITM) is squarely
+operator-ruled: 450 ("fundig on each constituent perpetual optinos value"), 451 ("option part value
+when OTM"), 447 (funding zero ITM to avoid non-monotonic funding while value is monotonic). The
+**"pool-imbalance SIGN KEPT" is NOT what entries 446/447/451 rule** — those entries rule the
+weight/zero-ITM, not the ±g·(S−1)/S sign. Keeping the shipped sign is a defensible "everything
+unchanged" build default AND is consistent with the operator's final resolution (extrinsic → 0 at/
+past the mode makes the sign-flip debate moot, exactly as 442/447 concluded), so it does not need
+a hard operator sign-off — BUT the manager's scope line cites it as operator-ruled and the spec
+§3.2 actively REJECTS the entry-386 same-slope read, an alternative the operator called "correct"
+for the zero/inversion geometry in entry 443. Rule: surface the sign as an UNCHANGED-DEFAULT
+build-call (not "operator-ruled"), with a one-line operator confirm ("no change to OTM funding
+sign") — do not present entries 446/447/451 as backing the sign. The spec's own label ("the shipped
+sign", §3.2) is honest; the manager's dispatch line ("sign KEPT [cite 446/447/451]") is the drift.
+
+**Item 4 (arc receipt stored-but-dormant) — CLEARED.** 451 parks charge-back; keeping arc stored/
+dormant for update 2 with zero re-plumbing is the faithful mechanism.
+
+**Item 5 (depth at close best-effort) — CLEARED, stronger cite available.** Behavior CHANGES (null
+reversal no longer returns ok:false; leg's pool move skipped, settlement still full). Operator-
+backed beyond the "FLAG-DEPTH pin": 434 ("as long as the bookkeeeping trade on AMM layer is
+directionality-like for both legs, wherever it happens should not be a hindrance") + 435 (layer
+split: value layer = option/chart, not the AMM swap layer). Cite those.
+
+**Item 6 (drain DOCUMENTED not fixed) — CLEARED as sequencing; but the drain CHARACTERIZATION is
+FLAGGED (see below).** 452/451 authorize parking the fix. The update-1/2 seam is real.
+
+**Item 7 (gates CM6-v2 → CM6-v3, new CM12, funding-ext; survivors) — CLEARED on scope, CONDITION on
+CM6-v3 honesty (see risk (b) + the drain flag).** CM12 (continuity, kills the 45% seam) and the
+funding-extrinsic gate are honest, negative-controlled improvements.
+
+## Three-point cross-check
+(1) Every item citation-backed — PASS **except item 3's sign** (misattributed, ruled above).
+(2) Zero manager-INVENTED items — PASS, with two notes: (i) item 3's sign-keep is an unchanged-
+default, not an operator ruling (label it so); (ii) §8 retires the legacy `tradeUpdate(s,dyRev)`
+at-strike close fallback (legacy bands now also live-close + incur the drain) — this rides on item
+1's "every leg" and is honestly stated in §8, but it is an un-itemized behavior change; acknowledge
+it explicitly in the dispatch, don't let it ride silently.
+(3) Control inventory (R3) — PASS. No new/removed user-facing knob or button; close path + funding
+weight are behavior only; the "[both legs reversed on AMM]" log line and optional depth log are
+display, not control.
+
+## Build-specific risk findings
+
+**(a) SAFETY REGRESSION visibility — CLEARED-WITH-CONDITION.** Update 1 REPLACES a leak-free close
+(frozen-arc `revertArc`, exact Δx=0 round-trip) with a leaky one (documented Δx≠0 drain) AND retires
+CM6-v2 (the no-free-money gate). The operator DID authorize the trade knowingly: 450 references the
+parked "close slippage as per opening liquiditty", 451 parks it to the CTO note, 452 sequences
+"clean thing first, known-exploit patch next". The spec is internally honest (§6 root-cause, F1).
+CONDITION: the operator's mental model is "building toward clean", but the leak dimension moves
+BACKWARD from the current exact close — the dispatch/DIFF_LEDGER must state in one plain sentence
+that HEAD `0e0a0062` closes with ZERO drain (frozen-arc) and update 1 REINTRODUCES a drain for
+continuity, restored only in update 2. Not a block (entry 452 is a genuine explicit go), but this
+regression-direction sentence must be loud, not buried in §6.
+
+**(b) CM6-v3 honesty — CLEARED-AS-HONEST, CONDITION on visibility.** A gate that ASSERTS a known
+leak exists is unusual but legitimate here: it is negative-controlled (|Δx|>1e-6; a build that
+silently restored the exact close FAILS), and it explicitly does NOT assert no-free-money (deferred
+to update 2). It is a characterization gate, not a green-wash — PROVIDED the RETIREMENT of CM6-v2's
+no-free-money assertion is recorded loudly in the gate-file header AND the DIFF_LEDGER, so a future
+reader who sees "all HARD, all green" is not misled into thinking no-free-money is still gated. It
+is NOT. BUT see the drain flag — CM6-v3.2 as specced ("assert Δx<0 one-signed") pins a property I
+broke below; that sub-check must be reworded before it is built.
+
+**(c) CTO-note obligation — FLAG-OMISSION (no owner, no trigger).** The operator explicitly mandated
+the CTO note (451 "keep in CTO note as parked tbd not implemented"). The spec says the drain "MUST
+be flagged … (CTO / UPDATE 2)" and "state verbatim in the CTO note" (§6, F1) but assigns NO owner,
+NO trigger, and NO target file/location. This is precisely the failure mode where a parked
+liability ships silently to the backend. Before the splice merges, the CTO note must be an actual
+written artifact with an owner (manager) and a definite trigger (the update-1 merge), not a prose
+"must". Halt-class for the CTO-note deliverable, not for the code splice — but the code must not be
+promoted to shared truth as "safe/parked" until the note exists.
+
+## FLAG-OVERSELL — the drain characterization ("Δx<0, one-signed, ∝dy², harmless self-drain") is
+## validated ONLY in the no-oracle-move regime and BREAKS in the realistic / ITM regime.
+
+The spec §6 + acceptance-anchor 4 + CM6-v3.2/v3.3 assert the drain is **"Δx < 0, one-signed, at
+EVERY moneyness (OTM and ITM alike)"**, **"∝ dy² … tiny (~0.0066% of x reserves)"**, and
+**"harmless … self-drain, no counterparty credited"** — and CM6-v3.2 hard-gates one-signedness.
+I reproduced the no-move measurement exactly (drain.js: Δy=0, Δx<0, Δx/dy²≈−1.45e-11 constant).
+**But that harness sweeps moneyness via `θ_chosen` at a FIXED oracle=orc.** In the engine,
+`oForK = oNow = oracleLive` (closeBand L2158/2124) and `rho_close = (K_tx/oNow)/getSNorm(s)` — so a
+leg becomes ITM by the ORACLE MOVING (spot crossing the strike), which is the entire point of
+update 1's ITM close. Re-derived with the close oracle diverged from the open oracle (drain_attack.js,
+N=0.1): the sign of Δx **flips** and magnitude grows ~20–40× — e.g. call/sell θ=1.3 gives Δx=−2.6e-3
+at oNow=1× but Δx=+2.2e-3 at 1.05× and +9.4e-2 at 2×; put/sell θ=0.8 gives Δx=+3.4e-3 at 0.95× and
+−1.7e-3 at 1×. So **"one-signed" is false once the close oracle ≠ open oracle**, and the magnitude
+is not the reassuring ∝dy²-tiny number — it scales with the price move, unbounded. Whether the
+net-of-arbitrage leak is a benign self-drain or a two-signed, trader-EXTRACTABLE amount is UNRESOLVED
+(my arbitraged-cycle probe drain_real.js needs update-2's clean counterfactual to isolate cleanly —
+I do not over-claim an exploit). What I DO assert: the confident one-signed/harmless/tiny framing
+that (i) underpins the operator's authorization to PARK, (ii) becomes CM6-v3.2's hard gate, and
+(iii) is destined for the operator-mandated CTO note, **outruns its evidence** — it is measured only
+in the artificial no-oracle-move regime and demonstrably fails the moment the oracle moves, which is
+the normal case and specifically the ITM case this build exists to serve. This is the δ-direction /
+sign-confidence failure class my charter names. REQUIRED before dispatch encodes it as truth:
+(1) reword CM6-v3.2 to NOT assert global one-signedness (it holds only at oForK=orc); (2) the CTO
+note + F1 must characterize the drain in the ORACLE-MOVED regime (sign, magnitude vs price move,
+self-drain-vs-extractable) — not the no-move number — before it is called "harmless self-drain".
+
+## VERDICT: CONDITIONALLY CLEARED to splice — items 1,2,4,5,6 CLEARED; item 3 CLEARED-on-weight /
+sign relabel; item 7 CLEARED-on-scope. **Two halt-class conditions ride the clear and bind the
+manager (§2.1) before the flagged claims enter shared truth (gate files / DIFF_LEDGER / CTO note):**
+(A) the drain-characterization FLAG-OVERSELL — CM6-v3.2 reworded + CTO-note/F1 re-characterized for
+the oracle-moved regime; (B) the CTO-note FLAG-OMISSION — an actual owned, triggered artifact.
+The code SPLICE itself (sell-back close + extrinsic funding weight) may proceed in parallel; what is
+HELD is promoting the drain as "one-signed / harmless" into any durable record. Item-3 sign =
+relabel to unchanged-default + one-line operator confirm. Standard chain (file-safety gate, tester
+live pass, STOP-ON-RED) binds as always.
+
+— skeptic (entries 445–452 read verbatim this turn; engine read at HEAD; drain re-derived
+independently, drain_attack.js/drain_real.js; no edits outside this verdict file + own memory)
