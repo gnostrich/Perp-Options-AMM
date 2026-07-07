@@ -3288,3 +3288,9 @@ _Context: operator on funding base: does the smooth-paste construction already g
 _Context: operator presses on the funding-sign-flip-moot claim: unclear where the crossover happens wrt the ANCHOR curve, and what that has to do with the extrinsic — asks for the actual relation between the funding crossover point (vs anchor) and the extrinsic-zero point._
 
 > explain this: "Once funding rides on the extrinsic, the sign-flip debate at the crossing becomes moot — because the extrinsic is ~zero right where the crossing happens. There's nothing to flip the sign of. So you were correct: funding doesn't need a sign-flip; the earlier sign-flip was solving a problem that only existed when funding was on the full value." ... i'm not sure yet where the crossover happens wrt the anchor curve and what that has to do with the extsinsic like wjhatys the relation
+
+
+## Entry 443 — 2026-07-07 UTC
+_Context: operator corrects/refines the funding-sign geometry: the MODE is actually where funding becomes zero and its direction inverts — correct when viewed in the same-slope pool-vs-anchor read (the entry-386 view). I.e., the funding-sign crossover IS at the mode (same-slope point where pool and anchor coincide), not unrelated to it._
+
+> oh wait the mode is actually where the funding thing becomes zero and then its direction inverts there that is correct --- when viewing the relative pool vs anchor wrt the 'ray at same slpe' view
