@@ -3264,3 +3264,9 @@ _Context: operator refines the value-denomination model: every piece exchanges f
 _Context: operator advances the model: all options expressed in terms of the underlying (escrow unit); since it's bookkeeping-only and directionality-respecting, crossing 'mode' is fine for SETTLEMENT. Open question: should FUNDING also carry over across the crossing — operator thinks YES but with the SIGN FLIPPED so it stays same-direction funding. And believes rebase changes nothing. Asks manager to check._
 
 > we're expressing all options in terms of the underlying (escrow unit), in this model since this is bookkeeping only and directionality respecting, this crossing 'mode' should be ok for settlement purpose; what idk is whether even funding shoul dcarry over then (i thnk it shoud) qbut jnust sign flipped so it remains the same direction funding ... and wrt rebase i dont think anything changes right
+
+
+## Entry 439 — 2026-07-07 UTC
+_Context: operator argues the funding-carryover question: it's a PERPETUAL option, so it should accrue funding as premium as long as it's held — ITM or OTM alike (the counter-argument to funding→0-ITM); and since the model already has sign-flips across the OTM/ITM crossing, funding carrying over follows the same way. Asks manager to engage._
+
+> 1. on funding its a perpetual option, so it should accrue funding as premium as long as its held whethr itm or otm is the other agrument, and since we have sign flips across otm or whatever this also sort pf foloows? ....
