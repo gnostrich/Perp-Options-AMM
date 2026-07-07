@@ -1,6 +1,32 @@
 # MEMORY — intern
-_Last updated: 2026-07-03 (FUNDING-P/L column slice promoted to HEAD `4bc939ec`; handed to
+_Last updated: 2026-07-07 (-FPNL-NEGZERO one-liner promoted to HEAD `51342574`; handed to
 manager; no git). Rewrite changed bits at task end._
+
+## Done — -FPNL-NEGZERO negative-zero display fix (PROMOTED TO HEAD 2026-07-07, handed to manager)
+Tester finding -FPNL-NEGZERO (DIFF_LEDGER `4bc939ec` reconciliation list, row ~L1855, status
+OPEN — tester's to flip). Operator context: LAST agreed fix before CTO handover (entry 427).
+HEAD `4bc939ec…` → **`513425747b23b74cb07c0fda4959825b`**. Display layer ONLY, 2-line diff;
+engine + state script blocks byte-identical (only ui block touched, and only 2 expressions).
+- **Root cause:** funding cells negate the trader-pays ledger for display; fresh band ⇒ stored
+  0 ⇒ `-0` ⇒ `(-0).toLocaleString('en-US',{minimumFractionDigits:6})` = `"-0.000000"` via fmtNum.
+- **Fix (local guards, fmtNum untouched — other columns rely on it):** L4650
+  `bandFundingPnl = bandFundingStored === 0 ? 0 : -bandFundingStored` (+3 comment lines; feeds
+  band-row L4682 AND Total-row L4723 cells) and component cell (was L4708)
+  `fmtNum(c.funding === 0 ? 0 : -c.funding, 6)`. `=== 0` keeps NaN loud (falls through).
+- **Splice** `scratchpad/splice_fpnl_negzero.py` (work copy, 2 anchors count==1, blobs never
+  through). **Self-check** `engine/evidence/check_fpnl_negzero_2026-07-07.js` — extracts the
+  LIVE fmtNum + cell expressions from the target build (regex keyed on the unique tooltip text
+  "display negates)\">", no retyping) and renders: old HEAD pre-tick `-0.000000` ×12 (negative
+  control, rc=1); new HEAD pre-tick `0.000000` ×12; post-tick payer `-0.083551`, receiver
+  `0.140608` (entry-425 sign pin intact, same numbers as the 2026-07-03 check).
+- **FILE-SAFETY:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical before+after; 3 scripts parse
+  (778/453/1944); IIFE intact; surgical diff = exactly the 2 regions; hook no block. **GATES:**
+  run_all exit 0 on work copy AND promoted HEAD — lens **24 PASS**, a16 **5 PASS**, monolith 8/8
+  report-green. run_all.sh line-8 pin rewritten → `51342574…`; BUILD_LINEAGE HEAD row re-keyed;
+  CHANGELOG_v28_lens entry appended.
+- **Open for manager:** git (sole actor). **Open for tester:** trivial live re-check — fresh band
+  funding cells show `0.000000` (no minus) at band/component/Total rows; after funding ticks the
+  payer cell renders negative as before; flip the DIFF_LEDGER -FPNL-NEGZERO row OPEN→fixed.
 
 ## Done — FUNDING-P/L COLUMN (entry 425, PROMOTED TO HEAD 2026-07-03, handed to manager)
 Operator entry 425 ("funding is column adds to p/l in portfolio for position line wise"); skeptic

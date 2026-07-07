@@ -116,3 +116,18 @@ Sign self-check (node vm, both-direction bands, 24×1h ticks at oracle 88k): pay
 column header title, table units-note, and Total-cell tooltip all state: displayed P/L INCLUDES
 accrued funding; cash at close settles EX-funding until the funding transfer layer (parked
 part-2) ships — `closeBand` verified funding-term-free. Header label "Funding" → "Funding P/L".
+
+## 2026-07-07 — -FPNL-NEGZERO display fix (tester finding) — md5 `4bc939ec` → `51342574`
+Display layer ONLY (2-line diff; engine + state `<script>` blocks byte-identical to `4bc939ec`;
+gates lens 24 + a16 5 green; blobs canonical). Tester finding -FPNL-NEGZERO (DIFF_LEDGER
+`4bc939ec` reconciliation list): with zero accrued funding the negated funding cells rendered
+`-0.000000` — JS negative zero (`-0`) through `fmtNum`/`toLocaleString` — on freshly opened
+bands. Fix = local negative-zero guard at the display negation sites, BEFORE fmtNum:
+`bandFundingPnl = bandFundingStored === 0 ? 0 : -bandFundingStored` (feeds the band-row AND
+Total-row cells) and the component cell `fmtNum(c.funding === 0 ? 0 : -c.funding, 6)`. `fmtNum`
+itself untouched (global change rejected — other columns rely on its behavior); NaN stays loud
+(`=== 0` is false for NaN). Self-check `engine/evidence/check_fpnl_negzero_2026-07-07.js`
+(extracts the live expressions + fmtNum from the build): pre-tick all funding cells `0.000000`
+(old HEAD renders `-0.000000` — negative control); post-tick payer `-0.083551` / receiver
+`0.140608` — the entry-425 sign pin unbroken. Operator context: last agreed fix before the CTO
+handover (entry 427).
