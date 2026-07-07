@@ -1,5 +1,43 @@
 # MEMORY — research-lead
 
+### ESCROW-DENOMINATION VERIFY (operator entries 436/437) — CLEAN across wings + rebase; ONE protocol seam + ONE denomination CHOICE — 2026-07-07
+Verified operator's value-denomination model against REAL engine (HEAD `28b647e9` WT HTML; engine blocks = `0e0a0062`).
+vm-measured, no web/Aristotle/git. Harnesses `scratchpad/escrow/{h1_unit,h2_close,h3_sym,h4_cross,h4b,h4c,h5_gauge,h6_roundtrip,h7_ceiling}.js`
+(vm vs extracted Engine). Report returned INLINE to manager (no report .md written; persist as
+`notes/research/VERIFY_escrow_denomination_2026-07-07.md`). Frame: default pool w=½ ⇒ getSNorm=1; strike ray θ=K/oracle;
+markLensed(wing,θ,sNorm,g) is a pure fn of ρ=sNorm/θ; test g=m·γ=2 (m=2).
+- **(1) Escrow unit is WING-DEPENDENT in classical $, symmetric in escrow $.** Put intrinsic arm mark=1−sNorm/θ=(K−S)/K
+  = intrinsic/**K** (unit=strike, cash); call arm mark=1−θ/sNorm=(S−K)/S = intrinsic/**S** (unit=spot, asset). mark∈(0,1),
+  sup=1 approached asymptotically (measured 0.99899/0.99900), NEVER exceeds 1 (solvency ceiling ≤1 escrow unit/contract;
+  v24 mark() hard-capped =1, markLensed approaches via linear arm). ATM θ=1 mark=0.1481 both wings (=g^g/(g+1)^(g+1)).
+- **(2) CRUX (manager's flag) reconciled with numbers.** 1 escrow unit does NOT convert to K, NOT to S — it converts to
+  **carvedEquityAtClosure** (one carved-perp equity, $), applied UNIFORMLY to both wings in closeBand (raw_net=Y−X escrow
+  units × carvedEquity × L0). Engine NEVER pays classical dollar intrinsic. mark_put=intrinsic/K is the mark's fraction-of-
+  strike STRUCTURE, not the payout. At ATM K=S=oracle ⇒ both wings' full-exercise = one perp = consistent anchor (where the
+  unit is DEFINED). Measured deep-ITM put (θ up to 8.75): engine pays escrow-value × perp-equity, wholly decoupled from
+  N·(K−S) classical intrinsic (5000…31000 $). = a self-contained normalized denomination, internally consistent.
+- **(3) CALL/PUT reflection EXACT.** markLensed('put',θ,sNorm)=markLensed('call',θ,θ²/sNorm) to 1e-17. Matched reflected pair
+  (put Kp ↔ call Kc=oracle²/Kp): escrow marks EQUAL (0.333/0.333…0.9/0.9) while classical intrinsics DIVERGE (put K−S unbounded
+  vs call S−K bounded by S). Escrow denomination MAKES wings symmetric (the design goal, C3) — the asymmetry only appears if you
+  insist on per-wing classical dollars, which the engine deliberately does not.
+- **(4) OTM/ITM traverse: escrow MARKS clean, but the shipped two-case CLOSE PROTOCOL has a VALUE SEAM.** X (put) continuous
+  through ρ=1. But at the branch flip (both-live → put-settled-to-cash, oNew≈74833) raw_net JUMPS +1.18e-2 = **45.4% of |raw_net|**,
+  entirely on the live/OTM leg **Y** (call priced at DIFFERENT pool state across the branch: after-put-reversal vs un-moved pool).
+  = the VALUE-layer twin of the directionality finding (swap clean, value seamed under (a)); close-(b) live-close single-branch
+  dissolves it (parked-spec MR2, ~180× smaller). Marks are pure state fns ⇒ path-independent; residual round-trip pool drift =
+  the KNOWN x-drain/arb-fixed-point, a pool-layer thing NOT a denomination leak.
+- **(5) ATM reference movement = gauge-invariant COUNT, honest repricing VALUE.** Rebase: count N invariant. Rebase ALONE keeps
+  w=½ ⇒ sNorm(ATM) invariant; mark reprices purely from θ=K/oracle = honest moneyness P&L. Rebase+arb re-equilibrates (w drifts,
+  β invariant/α scales) and re-marks via ρ=sNorm/θ — still honest (pool re-marks to new oracle). Mark = pure fn of current
+  (K,oracle,pool) ⇒ path-independent, no hysteresis. Reference moving = correct repricing, NOT a leak.
+- **BOTTOM LINE to operator:** denomination is CONSISTENT across wings (reflection-exact) + across OTM/ITM (marks continuous) +
+  across rebase (count-invariant, honest repricing). TWO residuals: **(i) the value seam at the two-case close branch (45% of
+  raw_net) — a PROTOCOL defect, close-(b) fixes it, orthogonal to denomination; (ii) escrow→$ pays uniform carvedEquity not
+  per-wing classical intrinsic — a DENOMINATION CHOICE (operator-tier: confirm deep-ITM payout is intended-symmetric-escrow, not
+  classical K−S / S−K).** No git/engine/Aristotle. Handed to manager.
+
+---
+
 ### ITM-CLOSE DIRECTIONALITY VERIFY (operator entry 433) — the ρ>1 crossed-wing gap IS dissolved; leak-free is NOT — 2026-07-07
 Verified operator's close-(b) mechanic against REAL engine (HEAD `bf7380c` WT HTML; engine blocks = `0e0a0062`).
 vm-measured, no web. Harnesses `scratchpad/closeb/{h_dir,h_residual,h_residual2,h_clean,h_band}.js` (vm vs extracted Engine).
