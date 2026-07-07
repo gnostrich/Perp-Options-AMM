@@ -1,6 +1,66 @@
 # MEMORY — intern
-_Last updated: 2026-07-07 (-FPNL-NEGZERO one-liner promoted to HEAD `51342574`; handed to
-manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-07 (UPDATE-1 unified sell-back close + funding-on-extrinsic promoted to HEAD
+`bb2f8230`; handed to manager; no git). Rewrite changed bits at task end._
+
+## Done — UPDATE 1: unified sell-back close + funding-on-extrinsic (PROMOTED TO HEAD 2026-07-07, handed to manager)
+Spec `specs/SPEC_update1_clean_close_2026-07-07.md` (operator entries 450/452; skeptic HALT-LIFTED
+CLEAR-TO-BUILD, `notes/skeptic/VERDICT_R6_overnight_scope_gate_2026-07-02.md`). Brief flagged the
+spec's §6/gate DRAIN wording as STALE — used the CORRECTED characterization (IL-like + bounded
+self-drain, Δx tracks oracle, NOT "one-signed everywhere/unbounded"). HEAD `51342574` →
+**`bb2f82309887a822bd4a60e52aa5fb06`**. **Revert twin created FIRST: `temporal_mvp_v28_lens_twocaseclose.html` = 513425747** (byte-copy of pre-build HEAD).
+- **Splice `scratchpad/splice_update1.py`** (work copy `scratchpad/work_update1.html`; 8 anchors
+  sliced by line range, count==1 each, blobs never through). ALL 8 edits are in the ENGINE
+  `<script>` block (block#1). ui block#2 (holds the credit wrapper) + block#3 BYTE-IDENTICAL to the
+  twin (node-compared) — item-2 requirement (credit wrapper byte-unchanged) satisfied by proof.
+- **closeBand (item 1):** replaced the two-case value/pool block (was L2208-2268) with ONE
+  sell-back path — `const s0=s; X=legPrice(s0,sold…).V; Y=legPrice(s0,bought…).V` (both at the
+  snapshot, no moneyness branch), then BOTH legs `tradeUpdateAt(s, dyRev{Sold,Bought}, rho{Sold,
+  Bought})`, `rho = (K{sold,bought}/oForK)/getSNorm(s)`, best-effort `if(s_after) s=s_after`.
+  DELETED rrSold/rrBought (dead). KEPT soldITM/boughtITM + wing-lock exemption + both-ITM guard +
+  Ksold/Kbought/dyRev* EXACTLY. Rewrote the closeBand header + reversal doc comments + the revertArc
+  comment ("KEPT for UPDATE-2 charge-back; live close uses tradeUpdateAt"). revertArc + openBand arc
+  storage LEFT IN (dormant).
+- **fundingPerStrike (item 3):** `m = markLensed(…)` → `mk = markLensed(…); intr = call?max(0,1−
+  strike/mode):max(0,1−mode/strike); ext = mk − intr;` and `return kappa*gamma*N*ext*(S−1)/S*dt`
+  (was `*m*`). ±g·(S−1)/S sign + S<=0 guard byte-unchanged. Rewrote the behaviour comment.
+- **MEASURED (reproduces spec §6/§3.3 exactly):** drain call/sell θ=1.3 N=0.05 Δx=−6.615e-4 (~−$53),
+  θ=2.0 −1.22e-3, put/sell θ=0.8 −4.16e-4, put/buy θ=0.7 −3.68e-4; Δx/dyRev² −1.467e-11→−1.434e-11
+  (∝dy²); Δy=0 exact all cases. Oracle-tracking: Δx@0.85×=−8.0e-3, @1.0×=−6.6e-4, @1.15×=+6.7e-3
+  (FLIPS sign — IL-like, one-signed only at fixed oracle). Funding ext: mode 3.0→0.0165, 1.0(ATM)→
+  0.1481 (hump), 0.667(=S*)→0.0000, 0.25→0.0000. Old two-case seam jump 5.672e-2 (~87% of raw_net)
+  at the neither→sold branch switch (collar, rb≈0.53); NEW closeBand continuous there (Δ=1.4e-17).
+- **GATES (`verify/lens_selfcheck.js` — CM6-v2 block L280-394 replaced):** header LOUDLY states
+  CM6-v2 no-free-money/round-trip RETIRED (skeptic condition A). **CM6-v3** (.1 shipped closeBand
+  Δy=0 exact — discriminates settle-to-cash; .2 fixed-oracle self-drain Δx<0 OTM+ITM, scoped
+  no-move; .3 Δx∝dy²; .4 Δx tracks oracle/sign-flips — IL-like; .5 neg-ctrl drain-present +
+  closeBand routesLive via tradeUpdateAt NOT revertArc; .6 credit-wrapper byte-unchanged),
+  **CM12** (.1 NEW raw_net continuous — step scales with granularity ratio 3.95; .2 neg-ctrl in-gate
+  OLD-reconstruction JUMPS/floors, matches twin 5.672e-2), **FE** (.1 ext=0 past S*; .2 hump at ATM;
+  .3 source ±g·(S−1)/S w/ ext + call/put opposite sign; .4 neg-ctrl old full-mark nonzero past S*).
+  **Result 24→31 PASS 0 FAIL.** Also updated the CM6-v2 header-reference in `monolith_consistency.js`
+  (report-only) → CM6-v3.
+- **NEGATIVE CONTROLS (teeth confirmed):** the retained OLD twin build scores **24 PASS / 7 FAIL**
+  — exactly CM6-v3.1 (Δy≠0 settle-to-cash), CM6-v3.5 (routesLive=false, old uses revertArc),
+  CM12.1 (old jumps), CM12.2, FE.1/3/4 (full-mark funding). CM6-v3.2/3.3/3.4/3.6 correctly PASS on
+  both (they characterize the reversal LAW + the unchanged credit wrapper, not the close-path).
+- **FILE-SAFETY:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical before+after; 3 scripts parse
+  (748/453/1944, max line 509); IIFE intact; surgical diff = exactly the 8 engine regions; ui/3rd
+  blocks byte-identical to twin. run_all.sh line-8 md5 pin → `bb2f8230…` (+ count 24→31); the two
+  "24" count comments in run_all updated. BUILD_LINEAGE HEAD row + CHANGELOG_v28_lens entry appended.
+- **⚠ FILE-SAFETY HOOK false-positive (PRE-EXISTING, NOT my regression — same as constmult/R-218
+  memory):** the hook's line-104 `grep -Eq 'FAIL|…'` matches the literal `"0 FAIL"` in the success
+  summaries (and "FAILS" in check names) ⇒ it BLOCKS (exit 2) even though run_all RC=0 and real
+  `^FAIL` verdict count = 0. My workflow used Bash splice+cp (NOT the Edit/Write tool on HTML) so the
+  real PostToolUse hook never fired during the build; I only reproduced the FP by invoking the hook
+  manually. Reported as a finding, NOT patched (manager's guardrail, out of intern scope).
+- **Open for manager:** git (sole actor); operator-tier FLAG carried in spec §10 F1 — the drain
+  ships UN-neutralized in UPDATE 1 by operator sequencing (entry 452); harmless self-drain in the
+  single-user sim, a real LP-value leak in the multi-party backend, fixed by UPDATE 2 (parked, entry
+  451) — must be in the CTO note as "parked TBD". **Open for tester:** live pass — open a collar
+  band, close it: BOTH legs reverse on the AMM (close-log "[both legs reversed on AMM]"), no
+  settle-to-cash; chart-1 reserves do NOT round-trip exactly (small x-drain BY DESIGN); a matched
+  open→close is payout-continuous across the OTM/ITM crossing (no 45% jump); funding readout is a
+  hump peaking at ATM, ZERO for deep-ITM strikes; 17/17 UI smoke.
 
 ## Done — -FPNL-NEGZERO negative-zero display fix (PROMOTED TO HEAD 2026-07-07, handed to manager)
 Tester finding -FPNL-NEGZERO (DIFF_LEDGER `4bc939ec` reconciliation list, row ~L1855, status

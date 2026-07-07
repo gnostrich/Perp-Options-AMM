@@ -15,6 +15,17 @@
 //   The three (steeper g_loc, further θ_tx, transact-where-it-looks) co-move
 //   with m in the SAME direction.
 //
+//
+// ⚠ UPDATE 1 (2026-07-07, SPEC_update1_clean_close): CM6-v2 (frozen-arc round-trip +
+//   no-free-money) is **RETIRED**. The unified sell-back close is a POOL-REPRICE close
+//   with NO exact round trip: *** CM6-v2's no-free-money / exact-round-trip assertions
+//   are RETIRED; no-free-money returns in UPDATE 2 with the counterfactual floor. ***
+//   Replaced by CM6-v3 (documents the drain: Δy=0 exact; a fixed-oracle one-signed
+//   self-drain ∝dy² that TRACKS THE ORACLE — IL-like, NOT one-signed once price moves;
+//   credit wrapper byte-unchanged ⇒ non-extractable by construction), CM12 (payout
+//   continuity — the retired two-case 45%-class seam dissolves), and the FE funding
+//   extrinsic-weight checks (zero past S*, hump at ATM, ±g·(S−1)/S sign unchanged).
+//
 // Usage: node lens_selfcheck.js [path-to-html]   (default: canonical v28-lens HEAD).
 // SKIP-as-pass on a build without gLoc/markLensed (non-lens build).
 // On the OLD √-lens HEAD (no constant-multiplier token) the CM block SKIPs but the
@@ -277,119 +288,240 @@ if (hasTradeMap) {
   chk('(CM5) trade map present', false, 'NO theta_tx in engine — constant-multiplier build must carry the trade map');
 }
 
-// ── (CM6-v2) FROZEN-ARC round trip (trade-point law close; operator entry 339;
-//    spec SPEC_tradepoint_conservation_2026-07-02 §1.4/§3.1). Replaces CM6's
-//    K_tx-only reversal check: the open now moves the pool via tradeUpdateAt, so
-//    an exact round trip REQUIRES the frozen arc {dxA,dyA,dwA,oOpen} (every live
-//    re-registration leaks — spec §1.4 leak table; sub-check 4 proves it here). ──
-if (hasTradeMap) {
-  const sA = mkPool(10, 800000, 0.5);   // beta=400000 depth, mode getSNorm=1
-  const orc = 80000, mKnob = 2;          // m=2 ⇒ θ_tx further out
-  const wOf = (st) => st.alpha / st.x;
-  // fail LOUD-and-complete (never throw) on a build without the trade-point law
-  const hasArcLaw = typeof E.revertArc === 'function' && typeof E.tradeUpdateAt === 'function';
-  const mkBand = (c, r) => ({ sold_wing: c.sw, bought_wing: c.bw,
-    sold:   { inner: c.si, outer: NaN, K_inner: c.si * orc, K_outer: NaN, K_tx: r.leg1.K_tx, arc: r.leg1.arc, N: r.N_sell },
-    bought: { inner: c.bi, outer: NaN, K_inner: c.bi * orc, K_outer: NaN, K_tx: r.leg2.K_tx, arc: r.leg2.arc, N: r.N_buy },
-    entry: { pool: sA, oracle: orc, L0: 1 },
-    carved: { carvedNotional: 0, carvedEntryEquity: 1, entryPerpMark: orc } });
-  const cases = [ { sw: 'call', bw: 'call', si: 1.1, bi: 1.2 },
-                  { sw: 'put',  bw: 'put',  si: 0.9, bi: 0.85 } ];
-  // (1) band open→close through closeBand→revertArc restores x, y AND w (≤1e-9)
+// ── (CM6-v3) UNIFIED SELL-BACK close — the DRAIN documented as an ACCEPTED property
+//    (UPDATE 1, SPEC_update1_clean_close_2026-07-07 §6/§7.1). RETIRES CM6-v2
+//    (frozen-arc round-trip + no-free-money): the live close is a POOL-REPRICE close,
+//    there is NO exact round trip. *** CM6-v2's no-free-money / exact-round-trip
+//    assertions are RETIRED; no-free-money returns in UPDATE 2 with the counterfactual
+//    floor. *** CM6-v3 pins the VERIFIED characterization: Δy = 0 exact; a FIXED-ORACLE
+//    (no-move) one-signed self-drain ∝dy² (~$53 at N=0.05 on the exhibit pool, bounded
+//    for typical N, ∝N²); the TRANSIENT Δx TRACKS THE ORACLE MOVE (IL-like — NOT
+//    one-signed once the oracle moves, so one-signedness is scoped to the no-move
+//    regime); and the swap is a pool-internal reprice credited to NO wallet (the
+//    equity/overlay credit wrapper is byte-unchanged ⇒ non-extractable BY CONSTRUCTION).
+if (hasTradeMap && typeof E.tradeUpdateAt === 'function') {
+  const sA = mkPool(10, 800000, 0.5);
+  const orc = 80000, mKnob = 2;
+  // leg-level round trip = EXACTLY what the live close does per leg: open at o0,
+  // reverse dy = −(open dy) at rho_close = (K_tx/oNow)/getSNorm(pool_now).
+  const rt = (side, wing, th, N, o0, o1) => {
+    const open = E.executeLeg(sA, side, wing, th, NaN, N, o0, mKnob);
+    if (!open || open.rejected || !open.arc) return null;
+    const rho = (open.K_tx / o1) / E.getSNorm(open.newState);
+    const rev = E.tradeUpdateAt(open.newState, -open.arc.dyA, rho);
+    if (!rev) return null;
+    return { dX: rev.x - sA.x, dY: rev.y - sA.y, dyRev: open.arc.dyA };
+  };
+  const legGrid = [['sell','call',1.3],['sell','call',2.0],['sell','put',0.8],['buy','put',0.7]];
+
+  // (CM6-v3.1) Δy = 0 EXACT on the SHIPPED closeBand round trip (both legs reversed at
+  //   the frozen dollar tx-strike). DISCRIMINATES the retired settle-to-cash close,
+  //   which leaves the settled leg's dy on the pool ⇒ Δy≠0.
   {
-    let maxErr = 0, lines = [];
-    for (const c of cases) {
-      const sold = { K_inner: c.si * orc, K_outer: NaN, inner: c.si, outer: NaN };
-      const bought = { K_inner: c.bi * orc, K_outer: NaN, inner: c.bi, outer: NaN };
+    const mkBandCase = (c) => {
+      const sold = { K_inner:c.si*orc, K_outer:NaN, inner:c.si, outer:NaN };
+      const bought = { K_inner:c.bi*orc, K_outer:NaN, inner:c.bi, outer:NaN };
       const r = E.executeBand(sA, c.sw, c.bw, sold, bought, 1, orc, orc, mKnob);
-      if (!r.ok) { maxErr = Infinity; lines.push(c.sw + '/' + c.bw + ' open FAIL: ' + r.reason); continue; }
-      const cl = E.closeBand(r.finalState, mkBand(c, r), { equity: 1e12 }, orc, orc, orc, mKnob);
-      if (!cl.ok) { maxErr = Infinity; lines.push(c.sw + '/' + c.bw + ' close FAIL: ' + cl.reason); continue; }
-      const ex = Math.abs(cl.finalState.x - sA.x), ey = Math.abs(cl.finalState.y - sA.y),
-            ew = Math.abs(wOf(cl.finalState) - wOf(sA));
-      maxErr = Math.max(maxErr, ex, ey, ew);
-      lines.push(c.sw + '/' + c.bw + ' x-err=' + ex.toExponential(2) + ' y-err=' + ey.toExponential(2) + ' w-err=' + ew.toExponential(2));
+      if (!r || !r.ok) return null;
+      const band = { sold_wing:c.sw, bought_wing:c.bw,
+        sold:{inner:c.si,outer:NaN,K_inner:c.si*orc,K_outer:NaN,K_tx:r.leg1.K_tx,arc:r.leg1.arc,N:r.N_sell},
+        bought:{inner:c.bi,outer:NaN,K_inner:c.bi*orc,K_outer:NaN,K_tx:r.leg2.K_tx,arc:r.leg2.arc,N:r.N_buy},
+        entry:{pool:sA,oracle:orc,L0:1}, carved:{carvedNotional:0,carvedEntryEquity:1,entryPerpMark:orc} };
+      const cl = E.closeBand(r.finalState, band, {equity:1e12}, orc, orc, orc, mKnob);
+      return cl.ok ? { dY: cl.finalState.y - sA.y, dX: cl.finalState.x - sA.x } : null;
+    };
+    let maxDy = 0, lines = [];
+    for (const c of [{sw:'put',bw:'call',si:0.9,bi:1.1},{sw:'call',bw:'put',si:1.1,bi:0.9},{sw:'put',bw:'call',si:0.8,bi:1.25}]) {
+      const rr = mkBandCase(c);
+      if (!rr) { maxDy = Infinity; lines.push(c.sw+'/'+c.bw+' null'); continue; }
+      maxDy = Math.max(maxDy, Math.abs(rr.dY));
+      lines.push(c.sw+'/'+c.bw+' Δy='+rr.dY.toExponential(2)+' Δx='+rr.dX.toExponential(2));
     }
-    chk('(CM6-v2.1) band open→close via frozen-arc revertArc restores x, y AND w (≤1e-9)',
-        maxErr <= 1e-9, lines.join(' | '));
+    chk('(CM6-v3.1) SHIPPED closeBand round trip: Δy = 0 EXACT (both legs reversed; the retired settle-to-cash close leaves Δy≠0)',
+        maxDy <= 1e-6, lines.join(' | '));
   }
-  // (2) single-leg open + revertArc restores (x, y, w) ≤1e-12 (incl. a cash-out leg)
+  // (CM6-v3.2) FIXED-ORACLE self-drain: Δx < 0 one-signed across OTM+ITM strikes.
+  //   Scope: NO-MOVE regime only (CM6-v3.4 shows Δx flips sign once the oracle moves).
   {
-    let maxErr = hasArcLaw ? 0 : Infinity, lines = hasArcLaw ? [] : ['revertArc/tradeUpdateAt MISSING'];
-    for (const [wing, ls, th] of hasArcLaw ? [['call', 'sell', 1.3], ['put', 'buy', 0.8], ['put', 'sell', 0.9]] : []) {
-      const open = E.executeLeg(sA, ls, wing, th, NaN, 1, orc, mKnob);
-      if (!open || open.rejected || !open.arc) { maxErr = Infinity; lines.push(wing + '/' + ls + ' open FAIL (no arc)'); continue; }
-      const back = E.revertArc(open.newState, open.arc, 1);
-      if (!back) { maxErr = Infinity; lines.push(wing + '/' + ls + ' revertArc null'); continue; }
-      const e = Math.max(Math.abs(back.x - sA.x), Math.abs(back.y - sA.y), Math.abs(wOf(back) - wOf(sA)));
-      maxErr = Math.max(maxErr, e);
-      lines.push(wing + '/' + ls + ' err=' + e.toExponential(2));
+    let ok = true, lines = [];
+    for (const [side,wing,th] of legGrid) for (const N of [0.02,0.05,0.08]) {
+      const r = rt(side,wing,th,N,orc,orc);
+      if (!r) { ok = false; lines.push(side+'/'+wing+' null'); continue; }
+      if (!(r.dX < 0)) ok = false;
+      if (N === 0.05) lines.push(side+'/'+wing+' θ='+th+' Δx='+r.dX.toExponential(2));
     }
-    chk('(CM6-v2.2) single-leg open + revertArc restores (x, y, w) ≤1e-12',
-        maxErr <= 1e-12, lines.join(' | '));
-  }
-  // (3) open → rebase(r) → close == rebase(s₀, r), r ∈ {0.8, 1.25} (rel ≤1e-9):
-  //     leg-level arc close (rr = r) AND the full closeBand path (per-wing case
-  //     chosen so the rebase does not flip the leg regime: r=0.8 → call band,
-  //     r=1.25 → put band; rrArc inside closeBand = oNow/oOpen = r).
-  {
-    let maxRel = hasArcLaw ? 0 : Infinity, lines = hasArcLaw ? [] : ['revertArc/tradeUpdateAt MISSING'];
-    for (const rb of hasArcLaw ? [0.8, 1.25] : []) {
-      for (const [wing, ls, th] of [['call', 'sell', 1.3], ['put', 'sell', 0.9]]) {
-        const open = E.executeLeg(sA, ls, wing, th, NaN, 1, orc, mKnob);
-        const back = E.revertArc(E.rebase(open.newState, rb), open.arc, rb);
-        const tgt = E.rebase(sA, rb);
-        let rel = 0;
-        for (const k of ['x', 'y', 'alpha', 'beta']) rel = Math.max(rel, Math.abs(back[k] - tgt[k]) / Math.max(1, Math.abs(tgt[k])));
-        maxRel = Math.max(maxRel, rel);
-        lines.push('leg ' + wing + ' r=' + rb + ' rel=' + rel.toExponential(2));
-      }
-      const c = (rb < 1) ? cases[0] : cases[1];   // keep both legs OTM after the rebase
-      const sold = { K_inner: c.si * orc, K_outer: NaN, inner: c.si, outer: NaN };
-      const bought = { K_inner: c.bi * orc, K_outer: NaN, inner: c.bi, outer: NaN };
-      const r = E.executeBand(sA, c.sw, c.bw, sold, bought, 1, orc, orc, mKnob);
-      const cl = E.closeBand(E.rebase(r.finalState, rb), mkBand(c, r), { equity: 1e12 }, orc * rb, orc * rb, orc, mKnob);
-      if (!cl.ok) { maxRel = Infinity; lines.push('band r=' + rb + ' close FAIL: ' + cl.reason); continue; }
-      const tgt = E.rebase(sA, rb);
-      let rel = 0;
-      for (const k of ['x', 'y', 'alpha', 'beta']) rel = Math.max(rel, Math.abs(cl.finalState[k] - tgt[k]) / Math.max(1, Math.abs(tgt[k])));
-      maxRel = Math.max(maxRel, rel);
-      lines.push('band ' + c.sw + ' r=' + rb + ' rel=' + rel.toExponential(2));
-    }
-    chk('(CM6-v2.3) open → rebase(r) → close == rebase(s₀,r), r∈{0.8,1.25} (rel ≤1e-9; leg AND closeBand paths)',
-        maxRel <= 1e-9, lines.join(' | '));
-  }
-  // (4) NEGATIVE CONTROL — a live sNorm-re-registered reversal on the exhibit
-  //     LEAKS pool x (|residual| > 1e-3): proves the frozen arc is load-bearing
-  //     and catches a future "simplification" back to live re-anchoring.
-  {
-    const s0 = { x: 10, y: 10, alpha: 5, beta: 5 };
-    const post = hasArcLaw ? E.tradeUpdateAt(s0, 1, 4) : null;        // exhibit open (θ_tx ray ρ=4)
-    const modeLive = post ? E.getSNorm(post) : NaN;                   // live mode AFTER the trade
-    const rev = post ? E.tradeUpdateAt(post, -1, 4 / modeLive) : null; // live re-registration ρ_c = θ_tx/mode_live
-    const resid = rev ? Math.abs(rev.x - s0.x) : NaN;
-    chk('(CM6-v2.4) negative control: LIVE re-registered reversal leaks |x-residual| > 1e-3 on the exhibit (arc freeze is load-bearing)',
-        resid > 1e-3, 'x-residual=' + (rev ? (rev.x - s0.x).toExponential(3) : 'null/missing') + ' (spec-measured −2.78e-2)');
-  }
-  // (5) no-free-money: the closing trader's OWN flow pairs net to zero exactly —
-  //     Σ own dy == 0 AND Σ own dx == 0 — immediately AND with one intervening
-  //     spot trade (others' moves are KEPT: w_close = w_live − own dwA only).
-  {
-    let ok = hasArcLaw, lines = hasArcLaw ? [] : ['revertArc/tradeUpdateAt MISSING'];
-    for (const interDy of hasArcLaw ? [0, 5000] : []) {
-      const open = E.executeLeg(sA, 'sell', 'call', 1.3, NaN, 1, orc, mKnob);
-      const mid = interDy === 0 ? open.newState : E.tradeUpdate(open.newState, interDy);  // intervening SPOT trade
-      const back = E.revertArc(mid, open.arc, 1);
-      const sumDx = open.arc.dxA + (back.x - mid.x);     // own open dx + own close dx
-      const sumDy = open.arc.dyA + (back.y - mid.y);     // own open dy + own close dy
-      const tolX = 1e-12 * Math.max(1, Math.abs(open.arc.dxA));
-      const tolY = 1e-12 * Math.max(1, Math.abs(open.arc.dyA));
-      const wKept = Math.abs((wOf(back) + open.arc.dwA) - wOf(mid)) <= 1e-12;  // removed OWN increment only
-      if (!(Math.abs(sumDx) <= tolX && Math.abs(sumDy) <= tolY && wKept)) ok = false;
-      lines.push('interDy=' + interDy + ' ΣownDx=' + sumDx.toExponential(2) + ' ΣownDy=' + sumDy.toExponential(2) + ' ownΔw-only=' + wKept);
-    }
-    chk('(CM6-v2.5) no-free-money: Σ own dx == 0 AND Σ own dy == 0 exactly, incl. one intervening spot trade',
+    chk('(CM6-v3.2) fixed-oracle (no-move) self-drain: Δx < 0 one-signed at every strike (OTM & ITM) — one-signedness SCOPED to the no-move regime',
         ok, lines.join(' | '));
+  }
+  // (CM6-v3.3) Δx ∝ dy² : Δx/dyRev² near-constant across N (measured −1.47e-11→−1.43e-11).
+  {
+    let ratios = [], ok = true;
+    for (const N of [0.01,0.02,0.04,0.08]) { const r = rt('sell','call',1.3,N,orc,orc); if (!r){ok=false;continue;} ratios.push(r.dX/(r.dyRev*r.dyRev)); }
+    const mn = Math.min(...ratios), mx = Math.max(...ratios);
+    ok = ok && ratios.length === 4 && ratios.every(v=>v<0) && Math.abs((mx-mn)/mn) < 0.05;
+    chk('(CM6-v3.3) Δx ∝ dy²: Δx/dyRev² near-constant (<5%) across N∈{.01..08} — the ∝N² self-drain',
+        ok, 'ratios=' + ratios.map(v=>v.toExponential(3)).join(',') + ' spread=' + (Math.abs((mx-mn)/mn)).toExponential(2));
+  }
+  // (CM6-v3.4) transient Δx TRACKS THE ORACLE (IL-like; NOT one-signed once oracle moves):
+  //   monotone increasing in the close oracle o1 and SIGN-FLIPS across o1=o0.
+  {
+    const dn = rt('sell','call',1.3,0.05,orc,orc*0.85);
+    const at = rt('sell','call',1.3,0.05,orc,orc);
+    const up = rt('sell','call',1.3,0.05,orc,orc*1.15);
+    const ok = dn && at && up && dn.dX < at.dX && at.dX < up.dX && dn.dX < 0 && up.dX > 0;
+    chk('(CM6-v3.4) transient Δx TRACKS the oracle (IL-like): monotone↑ in o1, sign FLIPS across o1=o0 (down<0, up>0) ⇒ one-signedness is fixed-oracle-ONLY',
+        ok, (dn&&up) ? ('Δx@0.85×='+dn.dX.toExponential(2)+' @1.0×='+at.dX.toExponential(2)+' @1.15×='+up.dX.toExponential(2)) : 'null');
+  }
+  // (CM6-v3.5) NEGATIVE CONTROL — the drain is PRESENT and the SHIPPED closeBand routes
+  //   the reversal via tradeUpdateAt (NOT the exact frozen-arc revertArc). A build that
+  //   restored the exact revertArc close drives Δx→0 (and Δy≠0 via settle-to-cash) and
+  //   FAILS here.
+  {
+    const r = rt('sell','call',1.3,0.05,orc,orc);
+    const present = r && Math.abs(r.dX) > 1e-6;
+    const cbSrc = grabFn(engineBody, 'closeBand') || '';
+    const routesLive = /tradeUpdateAt\(s,\s*dyRev/.test(cbSrc) && !/revertArc\(/.test(cbSrc);
+    chk('(CM6-v3.5) negative control: fixed-oracle drain PRESENT |Δx|>1e-6 AND closeBand routes reversal via tradeUpdateAt (NOT exact revertArc)',
+        present && routesLive, (r ? ('|Δx|='+Math.abs(r.dX).toExponential(3)+' ($'+(r.dX*orc).toFixed(1)+' at N=0.05)') : 'null') + ' routesLive=' + routesLive);
+  }
+  // (CM6-v3.6) credit wrapper byte-unchanged ⇒ the close swap is credited to NO wallet
+  //   (non-extractable by construction). Checks the state-block equity/overlay lines.
+  {
+    const c1 = t.includes('+= retEquity;') && t.includes('club.totalNotional += retNotional;');
+    const c2 = t.includes('trader_payout: r.trader_payout, club_delta: r.club_delta,');
+    const c3 = t.includes('carvedEquityAtClosure: r.carvedEquityAtClosure,');
+    chk('(CM6-v3.6) credit wrapper byte-unchanged (equity/overlay credit paths present) ⇒ close swap is a pool reprice credited to NO wallet',
+        c1 && c2 && c3, 'equity+=retEquity=' + c1 + ' overlay-payout/club=' + c2 + ' overlay-carvedEq=' + c3);
+  }
+}
+
+// ── (CM12) PAYOUT CONTINUITY across the RETIRED two-case OTM/ITM branch boundary
+//    (UPDATE 1, SPEC_update1 §7.2). The unified close values BOTH legs at ONE
+//    pre-close snapshot s0 (via legPrice), with NO moneyness branch ⇒ raw_net is a
+//    CONTINUOUS function of the pool mode. The old two-case protocol priced the 2nd
+//    leg at a pool MOVED by the 1st leg's reversal (neither-ITM branch) but at the
+//    UNMOVED pool (one-ITM branch) — a jump at the branch boundary (measured
+//    5.672e-2 = ~87% of |raw_net| on the collar exhibit; the "221→1.24 / 45%" seam).
+if (typeof E.closeBand === 'function' && typeof E.tradeUpdateAt === 'function') {
+  const orc = 80000, mKnob = 2, tau = mKnob;
+  const base = mkPool(10, 800000, 0.5);
+  const c = { sw:'put', bw:'call', si:0.9, bi:1.1 };            // collar
+  const sold   = { K_inner:c.si*orc, K_outer:NaN, inner:c.si, outer:NaN };
+  const bought = { K_inner:c.bi*orc, K_outer:NaN, inner:c.bi, outer:NaN };
+  const r = E.executeBand(base, c.sw, c.bw, sold, bought, 1, orc, orc, mKnob);
+  const band = { sold_wing:c.sw, bought_wing:c.bw,
+    sold:{inner:c.si,outer:NaN,K_inner:c.si*orc,K_outer:NaN,K_tx:r.leg1.K_tx,arc:r.leg1.arc,N:r.N_sell},
+    bought:{inner:c.bi,outer:NaN,K_inner:c.bi*orc,K_outer:NaN,K_tx:r.leg2.K_tx,arc:r.leg2.arc,N:r.N_buy},
+    entry:{pool:base,oracle:orc,L0:1}, carved:{carvedNotional:0,carvedEntryEquity:1,entryPerpMark:orc} };
+  // NEW: raw_net from the shipped unified closeBand, varying the pool mode via w.
+  const newRaw = (w) => { const st = mkPool(r.finalState.x, r.finalState.y, w);
+    const cl = E.closeBand(st, band, {equity:1e12}, orc, orc, orc, mKnob); return cl.ok ? cl.raw_net : NaN; };
+  // OLD (retired) two-case protocol, reconstructed in-gate from the SAME engine
+  // primitives (legValueUnified + pool-MOVED legPrice for the 2nd leg). Verified
+  // == the retained twin's closeBand at the crossing (jump 5.672e-2).
+  const oldRaw = (w) => {
+    const st = mkPool(r.finalState.x, r.finalState.y, w);
+    const sNorm0 = E.getSNorm(st);
+    const soldITM = E.legIsITM('put', band.sold, sNorm0), boughtITM = E.legIsITM('call', band.bought, sNorm0);
+    let X, Y;
+    if (soldITM) { X = E.legValueUnified(st,'put',band.sold,tau); Y = E.legPrice(st,'call',band.bought.inner,band.bought.outer,band.bought.N,tau).V; }
+    else if (boughtITM) { Y = E.legValueUnified(st,'call',band.bought,tau); X = E.legPrice(st,'put',band.sold.inner,band.sold.outer,band.sold.N,tau).V; }
+    else {
+      X = E.legPrice(st,'put',band.sold.inner,band.sold.outer,band.sold.N,tau).V;
+      const dyRevSold = -((-1)*(+1)*band.sold.N*(band.sold.K_tx));
+      const s2 = band.sold.arc ? E.revertArc(st, band.sold.arc, 1) : E.tradeUpdate(st, dyRevSold);
+      Y = E.legPrice(s2||st,'call',band.bought.inner,band.bought.outer,band.bought.N,tau).V;
+    }
+    return Y - X;
+  };
+  const maxStep = (fn, w0, w1, steps) => { let prev=null, mx=0; for (let i=0;i<=steps;i++){ const w=w0+(w1-w0)*i/steps; const v=fn(w); if(prev!==null&&isFinite(v)) mx=Math.max(mx,Math.abs(v-prev)); if(isFinite(v)) prev=v; } return mx; };
+  const w0=0.35, w1=0.65;
+  const nCoarse = maxStep(newRaw,w0,w1,60),  nFine = maxStep(newRaw,w0,w1,240);
+  const oCoarse = maxStep(oldRaw,w0,w1,60),  oFine = maxStep(oldRaw,w0,w1,240);
+  // (CM12.1) unified close raw_net CONTINUOUS: the max adjacent step SHRINKS with
+  //   granularity (no jump floor). Refine 4× ⇒ step shrinks (coarse/fine ≥ 3).
+  {
+    const ratio = nCoarse / Math.max(nFine, 1e-300);
+    chk('(CM12.1) unified close raw_net CONTINUOUS across the crossing: max step shrinks with granularity (coarse/fine ≥ 3, no jump floor)',
+        ratio >= 3, 'nCoarse='+nCoarse.toExponential(2)+' nFine='+nFine.toExponential(2)+' ratio='+ratio.toFixed(2));
+  }
+  // (CM12.2) NEGATIVE CONTROL: the retired two-case raw JUMPS at the branch boundary
+  //   — its max step FLOORS (does not shrink with granularity) and is ≫ the unified
+  //   build's step. Proves the seam existed; the single-snapshot valuation removed it.
+  {
+    const ratio = oCoarse / Math.max(oFine, 1e-300);
+    const floors = ratio < 1.5;
+    const bigger = oFine > 3 * nFine;
+    chk('(CM12.2) negative control: the RETIRED two-case raw JUMPS at the branch boundary (step FLOORS, ≥3× the unified step) — the removed 45%-class seam',
+        floors && bigger, 'oCoarse='+oCoarse.toExponential(2)+' oFine='+oFine.toExponential(2)+' floorRatio='+ratio.toFixed(2)+' oFine/nFine='+(oFine/Math.max(nFine,1e-300)).toFixed(1));
+  }
+}
+
+// ── (FE) FUNDING WEIGHT = EXTRINSIC (markLensed − max(intrinsic,0)) — UPDATE 1 §3.
+//    Zero past S* (⇒ funding ZERO ITM), a single hump peaking at ATM, and the shipped
+//    ±g·(S−1)/S pool-imbalance SIGN unchanged (ONLY the weight changed). Negative-
+//    controlled against the old full-mark funding (non-zero intrinsic forever).
+if (typeof E.fundingPerStrike === 'function') {
+  const orc = 80000, mKnob = 2, kappa = 0.01, N = 1, dt = 1;
+  const sf = mkPool(10, 90000, 0.6);                    // S = poolMark/oracle ≠ 1
+  const mo = E.getSNorm(sf), gg = E.gLoc(sf, mo, mKnob);
+  const Sf = E.poolMark(sf, orc, orc) / orc;
+  const extOf = (wing, strike) => {
+    const mk = E.markLensed(wing, strike, mo, gg);
+    const intr = wing==='call' ? Math.max(0,1-strike/mo) : Math.max(0,1-mo/strike);
+    return mk - intr;
+  };
+  // funding coord (markLensed sNorm←mode, theta←strike): put ITM ⟺ strike ≥ mode·(g+1)/g,
+  // call ITM ⟺ strike ≤ mode·g/(g+1). "Past S*" ⇒ extrinsic ≡ 0.
+  // (FE.1) extrinsic = 0 past S* both wings ⇒ funding ZERO ITM.
+  {
+    let ok = true, lines = [];
+    const putITM  = [mo*(gg+1)/gg*1.05, mo*(gg+1)/gg*1.5, mo*3];
+    const callITM = [mo*gg/(gg+1)*0.95, mo*gg/(gg+1)*0.6, mo*0.2];
+    for (const st of putITM) {
+      if (Math.abs(extOf('put', st)) > 1e-12) { ok=false; lines.push('put ext@'+st.toFixed(3)); }
+      if (Math.abs(E.fundingPerStrike(sf, st, 'put', N, dt, kappa, orc, orc, mKnob)) > 1e-12) { ok=false; lines.push('put f@'+st.toFixed(3)); }
+    }
+    for (const st of callITM) {
+      if (Math.abs(extOf('call', st)) > 1e-12) { ok=false; lines.push('call ext@'+st.toFixed(3)); }
+      if (Math.abs(E.fundingPerStrike(sf, st, 'call', N, dt, kappa, orc, orc, mKnob)) > 1e-12) { ok=false; lines.push('call f@'+st.toFixed(3)); }
+    }
+    chk('(FE.1) funding extrinsic weight = markLensed − max(intrinsic,0) = 0 (≤1e-12) past S* both wings ⇒ funding ZERO ITM',
+        ok, ok ? ('S='+Sf.toFixed(4)+' g='+gg.toFixed(2)+' all ext=0 & f=0 past S*') : lines.join(' '));
+  }
+  // (FE.2) single hump peaking at ATM (strike = mode), monotone up OTM→ATM, down ATM→S*.
+  {
+    let peak = -Infinity, peakAt = 0, prof = [];
+    for (const mult of [0.4,0.7,0.9,1.0,1.1,1.3,1.5,2.0]) { const e = extOf('put', mo*mult); prof.push([mult,e]); if (e>peak){peak=e;peakAt=mult;} }
+    const upOk   = prof.filter(p=>p[0]<=1.0).every((p,i,a)=> i===0 || p[1] >= a[i-1][1]-1e-12);
+    const downOk = prof.filter(p=>p[0]>=1.0 && p[0] <= (gg+1)/gg).every((p,i,a)=> i===0 || p[1] <= a[i-1][1]+1e-12);
+    const ok = Math.abs(peakAt-1.0) < 1e-9 && upOk && downOk;
+    chk('(FE.2) extrinsic profile = single hump peaking at ATM (strike=mode), monotone up OTM→ATM, down ATM→S*',
+        ok, 'peakAt='+peakAt+' peak='+peak.toFixed(4)+' upMono='+upOk+' downMono='+downOk);
+  }
+  // (FE.3) shipped SIGN / pool term UNCHANGED: source ±g·(S−1)/S with weight = ext,
+  //   and numeric sign(f) = sign(±g·(S−1)) (call & put opposite; call = sign(g·(S−1))).
+  {
+    const fsrc = grabFn(engineBody, 'fundingPerStrike') || '';
+    const srcOk = /gamma\s*\*\s*N\s*\*\s*ext\s*\*\s*\(S\s*-\s*1\)\s*\/\s*S/.test(fsrc)
+               && /gamma\s*=\s*\(wing\s*===\s*'call'\)\s*\?\s*\+g\s*:\s*-g/.test(fsrc)
+               && /const\s+ext\s*=\s*mk\s*-\s*intr\s*;/.test(fsrc);
+    const fc = E.fundingPerStrike(sf, mo, 'call', N, dt, kappa, orc, orc, mKnob);   // ATM, ext>0
+    const fp = E.fundingPerStrike(sf, mo, 'put',  N, dt, kappa, orc, orc, mKnob);
+    const opposite = fc * fp < 0;
+    const signOk = Math.sign(fc) === Math.sign(gg * (Sf - 1));
+    chk('(FE.3) SIGN / pool term UNCHANGED: source ±g·(S−1)/S with weight=ext; sign(f_call)=sign(g·(S−1)), call & put opposite',
+        srcOk && opposite && signOk, 'src=' + srcOk + ' opposite=' + opposite + ' signOk=' + signOk + ' (S=' + Sf.toFixed(4) + ' fc=' + fc.toExponential(2) + ' fp=' + fp.toExponential(2) + ')');
+  }
+  // (FE.4) NEGATIVE CONTROL: OLD full-mark funding is NON-zero past S* (funds intrinsic
+  //   forever) while the NEW extrinsic funding = 0 there.
+  {
+    const st = mo*(gg+1)/gg*1.3;                        // past put seam (ITM)
+    const mk = E.markLensed('put', st, mo, gg);         // full mark (≈ intrinsic, nonzero)
+    const oldF = kappa * (-gg) * N * mk * (Sf - 1) / Sf * dt;
+    const newF = E.fundingPerStrike(sf, st, 'put', N, dt, kappa, orc, orc, mKnob);
+    chk('(FE.4) negative control: OLD full-mark funding NON-zero past S* (funds intrinsic forever) while NEW = 0',
+        Math.abs(oldF) > 1e-9 && Math.abs(newF) <= 1e-12, 'oldF=' + oldF.toExponential(3) + ' newF=' + newF.toExponential(3) + ' fullMark=' + mk.toFixed(4));
   }
 }
 

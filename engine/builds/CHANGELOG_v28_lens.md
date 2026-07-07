@@ -131,3 +131,45 @@ itself untouched (global change rejected — other columns rely on its behavior)
 (old HEAD renders `-0.000000` — negative control); post-tick payer `-0.083551` / receiver
 `0.140608` — the entry-425 sign pin unbroken. Operator context: last agreed fix before the CTO
 handover (entry 427).
+
+## 2026-07-07 — UPDATE 1: unified sell-back close + funding-on-extrinsic — md5 `51342574` → `bb2f8230`
+Spec `specs/SPEC_update1_clean_close_2026-07-07.md` (operator entries 450/452 "yes go on"; skeptic
+HALT-LIFTED CLEAR-TO-BUILD). ONLY the engine `<script>` block changed (net −30 lines); the ui +
+3rd script blocks are BYTE-IDENTICAL to `51342574` (node-compared) — in particular the equity/
+overlay credit wrapper (`club.equity += retEquity`, `b.overlay = {trader_payout, club_delta, …}`)
+is untouched, which is what makes the close swap non-extractable by construction.
+
+**(1) Close = one unified sell-back path (was a two-case branch).** `closeBand`'s
+settle-to-cash-vs-both-live branch is retired. VALUE: both legs are sold back at today's lensed
+mark, read at ONE pre-close pool snapshot `s0` via `legPrice` (no moneyness branch) ⇒ `raw_net` is
+a continuous function of moneyness. POOL: every leg does a LIVE reverse trade via `tradeUpdateAt(s,
+dyRev, rho_close)`, `rho_close = (K_tx/oNow)/getSNorm(s)`, best-effort (a leg that can't fit the
+pool is skipped; the option value/payout still settles). `dyRev = −(open dy)` at the frozen dollar
+tx-strike ⇒ **Δy round-trips EXACT**; **Δx** is a documented **pool-internal reprice DRAIN ∝dy²**
+credited to NO wallet (~53 USD at N=0.05 on the exhibit pool). The drain TRACKS the oracle move
+(IL-like) — one-signed ONLY in the fixed-oracle/no-move regime; it flips sign once the oracle
+moves. `revertArc` + the openBand arc storage are KEPT but DORMANT (UPDATE-2 charge-back). The
+settlement denomination (raw_net = Y−X, L0·raw_net·carvedEquityAtClosure) is UNCHANGED.
+
+**(2) Funding weight full-mark → extrinsic.** `fundingPerStrike` weight is now
+`ext = markLensed − max(intrinsic parity, 0)` (put `max(0,1−mode/strike)`, call
+`max(0,1−strike/mode)`) instead of the full `markLensed`. Result: funding is ZERO past the
+smooth-paste seam S* (zero deep ITM), a single hump peaking at ATM (0.1481 for put θ=1, g=2),
+fading to 0 both ways. The `±g·(S−1)/S` pool-imbalance SIGN and the `S<=0` guard are byte-unchanged
+— only the weight changed.
+
+**Gates: lens_selfcheck 24 → 31 PASS [HARD].** CM6-v2 (frozen-arc round-trip + no-free-money)
+**RETIRED** — it encoded the removed close; the unified close is a pool-reprice close with no exact
+round trip, and no-free-money returns in UPDATE 2 with the counterfactual floor. Replaced by
+**CM6-v3** (Δy=0 exact via the shipped closeBand; fixed-oracle one-signed self-drain across OTM+ITM
+strikes; Δx∝dy²; transient Δx tracks the oracle / IL-like — NOT one-signed once price moves; credit
+wrapper byte-unchanged; drain-present + `routesLive` negative controls), **CM12** (payout
+continuity — the retired two-case ~45%/87%-class seam dissolves; in-gate reconstruction of the old
+two-case raw matches the retained twin's jump 5.672e-2), and the **FE** funding-extrinsic checks
+(zero past S*, hump at ATM, sign/pool-term unchanged, old full-mark negative control). All
+negative-controlled: the retained OLD build scores **24 PASS / 7 FAIL** on exactly these
+discriminators. a16 5 PASS unchanged; monolith 8/8 report-green; run_all RC=0 on work copy AND
+promoted HEAD. Revert twin `temporal_mvp_v28_lens_twocaseclose.html` = `51342574`.
+⚠ The file-safety hook still false-positives on `"0 FAIL"` success-summary strings (pre-existing
+line-104 over-broad grep, out of intern scope) — the real `^FAIL` verdict count is 0.
+Manager verification + tester live pass PENDING.

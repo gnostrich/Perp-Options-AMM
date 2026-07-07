@@ -1745,10 +1745,10 @@ const Engine = (function() {
   }
 
   // Frozen-arc close (R-218 extended: freeze the ARC, not just the strike). arc =
-  // {dxA, dyA, dwA, oOpen} captured at open; rr = oracle_now/arc.oOpen. Exact inverse
-  // of the leg's own open flows + lean increment (machine-exact round trip). KEPT for
-  // UPDATE-2 charge-back; the live close no longer calls it — it uses tradeUpdateAt
-  // (SPEC_update1 §1/§4). Honest reject on infeasible.
+  // {dxA, dyA, dwA, oOpen} captured at open; rr = oracle_now/arc.oOpen (rebase
+  // scales x-amounts). Exact inverse of the leg's own open flows + lean increment;
+  // machine-exact round trip; intervening trades' moves are kept. Honest reject
+  // on infeasible.
   function revertArc(s, arc, rr) {
     if (!arc || !isFinite(arc.dxA) || !isFinite(arc.dyA) || !isFinite(arc.dwA)) return null;
     const r = (isFinite(rr) && rr > 0) ? rr : 1;
@@ -2075,30 +2075,31 @@ const Engine = (function() {
                            : sNorm <= leg.inner + 1e-9;
   }
 
-  // Close band — UNIFIED SELL-BACK settlement protocol (UPDATE 1,
-  // SPEC_update1_clean_close_2026-07-07; operator entries 450/452). The old
-  // two-case branch (one leg settle-to-cash vs both live) is RETIRED. Value and
-  // pool footprint are now DECOUPLED:
-  //   • VALUE — sell BOTH legs back at today's lensed mark, read at ONE
-  //     pre-close pool snapshot s0 (before any reversal swap). ITM legs tally
-  //     identically because markLensed = linear parity past S*; there is NO
-  //     settle-to-cash leg and NO moneyness branch ⇒ raw_net is a CONTINUOUS
-  //     function of moneyness (the old 45% OTM/ITM seam is gone — gate CM12).
-  //   • POOL — EVERY leg does a LIVE reverse trade via the trade-point law
-  //     tradeUpdateAt, BEST-EFFORT (a leg that cannot fit the pool is skipped;
-  //     the option value/payout still settles — §5). dy_close = −(open dy) at the
-  //     FROZEN dollar tx-strike ⇒ Δy round-trips EXACT; Δx carries a documented
-  //     pool-internal reprice (IL-like + bounded ∝dy² self-drain, §Drain/CM6-v3)
-  //     credited to NO wallet — the equity/overlay credit wrapper is byte-
-  //     unchanged ⇒ non-extractable by construction. No-free-money returns in
-  //     UPDATE 2 with the floor.
+  // Close band — two-case, two-job settlement protocol (LOCKED).
   //
-  // TWO JOBS still stand (do not collapse): Job 1 = per-leg WORTH (stage-2
-  // carved-perp units, via legPrice); Job 2 = carved-perp units → DOLLARS
-  // (stage 3) via the carved slice's equity at closure — the ONE stage-2→3
-  // multiply on raw_net, UNCHANGED. s0 is read once, up front, so the pool-move
-  // order is immaterial to the payout. The frozen-arc receipt (arc, revertArc)
-  // stays STORED but DORMANT for UPDATE 2's charge-back.
+  // TWO CASES (exhaustive by cross-wing geometry — legs are on OPPOSITE
+  // wings, so spot cannot be ITM on both at once):
+  //   • NEITHER ITM  — both legs are live AMM positions, both reversed on
+  //                    the AMM (one composite-ray swap each).
+  //   • EXACTLY ONE  — the ITM leg is SETTLED-TO-CASH (valued, paid, no
+  //     ITM          AMM transaction); the OTM leg is reversed on the AMM.
+  //   ("both ITM" is a geometric impossibility — guarded below.)
+  //
+  // TWO JOBS (do not collapse):
+  //   • Job 1 — what is a leg WORTH?  Barrier mark capped at 1, N-scaled
+  //             ⇒ a value in carved-perp UNITS (stage 2). Pure live
+  //             quantity; the carve-time references do NOT enter Job 1.
+  //   • Job 2 — convert carved-perp units → DOLLARS (stage 3) via the
+  //             carved slice's equity at closure. Exactly ONE such
+  //             multiply, in the tail, on raw_net.
+  //
+  // THREE-STAGE UNIT CHAIN:  stage 1 bare fraction → stage 2 N·mark-ish
+  //   (carved-perp units) → stage 3 dollars. Every per-leg value stops at
+  //   stage 2; the single carved-equity multiply is the only stage-2→3 hop.
+  //
+  // PRIMARY SEQUENCING RULE: value the settled-to-cash leg BEFORE any AMM
+  //   swap perturbs the pool (sNorm0 is read once, up front). Reverse-
+  //   order-of-open is the Case-1 corollary of this same rule.
   function closeBand(state, band, club, livePerpMark, oracleLive, oracle_initial, tau) {
     let s = { ...state };
     const sold_wing   = band.sold_wing   || band.wing;   // back-compat
@@ -2135,19 +2136,25 @@ const Engine = (function() {
     };
     band = { ...band, sold: liveRay(band.sold), bought: liveRay(band.bought) };
 
-    // ── LIVE SELL-BACK close reversal (UPDATE 1, SPEC_update1 §1.2). Each leg
-    // reverses on the AMM as a REAL trade on today's curve via the trade-point
-    // law tradeUpdateAt(s, dyRev, rho_close), rho_close re-derived LIVE =
-    // (K_tx/oNow)/getSNorm(s). dy_close = −(open dy) at the FROZEN dollar
-    // tx-strike (Ksold/Kbought) ⇒ Δy round-trips EXACT; Δx carries the documented
-    // one-signed (fixed-oracle regime) drain ∝dy² — a pool-internal reprice NOT
-    // credited to any wallet (SPEC_update1 §6 / gate CM6-v3). The lensed premium
-    // X/Y below is UNCHANGED (trader-valuation basis, entry 96); only the reversal
-    // law changed. Ksold/Kbought stay K_tx-FIRST (K_inner → inner·oForK only for
-    // legacy pre-tx bands); a legacy band now ALSO live-closes via tradeUpdateAt
-    // (§8 — the old at-strike tradeUpdate fallback is retired). The frozen-arc
-    // receipt (revertArc, band.*.arc) is kept but DORMANT: the live close no
-    // longer calls it (UPDATE 2 charge-back will).
+    // ── FROZEN-ARC close reversal (trade-point law, operator entry 339;
+    // extends R-218's frozen-K_tx doctrine: freeze the ARC, not just the
+    // strike). The OPEN leg moved the pool through tradeUpdateAt at the
+    // frozen tx-ray; each leg stored arc = {dxA, dyA, dwA, oOpen} — its own
+    // reserve flows AND its own lean increment. The close applies the exact
+    // inverse (x″ = x − dxA·rr, y″ = y − dyA, w″ = w − dwA; rr = oNow/oOpen
+    // scales the x-flow because rebase scales x-amounts) ⇒ the pool round-
+    // trips machine-exact and intervening trades' moves are KEPT (w″ removes
+    // only this leg's own increment). dy_close = −arc.dyA equals −(open dy)
+    // at the frozen K_tx identically — the dollar-frozen reversal doctrine is
+    // unchanged; it now carries the x-flow and the w-increment too. The
+    // lensed premium X/Y below is UNCHANGED and STILL the trader-valuation
+    // basis (entry 96); only the pool swap changed law.
+    // R-218 (kept): a live-mode re-registration at close would NOT cancel
+    // (skeptic $1395; every live rule leaks — spec §1.4 table). Ksold/Kbought
+    // below stay K_tx-FIRST for the LEGACY fallback (bands saved before this
+    // build carry no arc): those close via today's at-strike tradeUpdate
+    // reversal at the frozen K_tx, K_inner only for pre-R-218 bands — no new
+    // leak vector.
     const oForK   = (oNow > 0) ? oNow : 1;
     const Ksold   = (isFinite(band.sold.K_tx)   && band.sold.K_tx   > 0) ? band.sold.K_tx
                   : (isFinite(band.sold.K_inner)   && band.sold.K_inner   > 0) ? band.sold.K_inner   : band.sold.inner   * oForK;
@@ -2158,6 +2165,9 @@ const Engine = (function() {
     // reversal dy = −(open dy): sold open legSign +1, bought open legSign −1.
     const dyRevSold   = -(wsSold   * (+1) * band.sold.N   * Ksold);
     const dyRevBought = -(wsBought * (-1) * band.bought.N * Kbought);
+    // Frozen-arc rebase factor rr = oracle_now / oracle_at_open, per leg.
+    const rrSold   = (band.sold.arc   && band.sold.arc.oOpen   > 0) ? oForK / band.sold.arc.oOpen   : 1;
+    const rrBought = (band.bought.arc && band.bought.arc.oOpen > 0) ? oForK / band.bought.arc.oOpen : 1;
 
     // (1) Which leg, if any, is ITM — POOL-MARK-referenced (Item 2):
     // live sNorm vs the leg's live θ, same-layer test companion of
@@ -2195,35 +2205,66 @@ const Engine = (function() {
       return { ok: false, reason: 'Both legs ITM — violates cross-wing geometry.' };
     }
 
-    // ── VALUE — single pre-close snapshot, BOTH legs, NO moneyness branch ──
-    // Sell each leg back at TODAY's lensed mark (escrow units) at the ONE
-    // pre-close pool state s0. legPrice reads getSNorm(s0); ITM legs tally
-    // identically (markLensed = linear parity past S*). No settle-to-cash
-    // path, no two-case branch ⇒ raw_net is continuous in moneyness (CM12).
-    const s0 = s;                                    // snapshot BEFORE any reversal swap
-    const px_s = legPrice(s0, sold_wing,   band.sold.inner,   band.sold.outer,   band.sold.N,   tau);
-    const px_b = legPrice(s0, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
-    const X = px_s.V, m_s = px_s.m_star;
-    const Y = px_b.V, m_b = px_b.m_star;
-    const settled_cash_leg = null;                   // sell-back model: no leg settles to cash
-    const live_leg = 'both';                         // every leg is a live reverse trade
+    // X = sold-leg value, Y = bought-leg value (carved-perp units).
+    // The ITM leg is priced by the unified formula at the entry-state
+    // spot and is NOT pushed through the AMM. The OTM (live) leg is
+    // reversed on the AMM with a single tradeUpdate.
+    let X, Y, m_s, m_b;
+    let settled_cash_leg = null;   // 'sold' | 'bought' | null
+    let live_leg = null;           // 'sold' | 'bought' | null
 
-    // ── POOL — every leg a LIVE reverse trade via the trade-point law
-    // (tradeUpdateAt), BEST-EFFORT. dy_close = −(open dy) at the FROZEN dollar
-    // tx-strike (Ksold/Kbought) ⇒ Δy round-trips EXACT; rho_close is re-derived
-    // LIVE at today's state = (K_tx/oNow)/getSNorm(pool_now), so Δx carries the
-    // documented pool-internal-reprice drain (§Drain / CM6-v3). A leg whose
-    // reversal cannot fit the pool (tradeUpdateAt → null) is SKIPPED (pool
-    // best-effort) — the option value/payout above still settles (§5).
-    {
-      const rhoSold = (Ksold / oForK) / getSNorm(s);
-      const s_after_X = tradeUpdateAt(s, dyRevSold, rhoSold);
-      if (s_after_X) s = s_after_X;                  // else best-effort: this leg's pool move skipped
-    }
-    {
-      const rhoBought = (Kbought / oForK) / getSNorm(s);
-      const s_after_Y = tradeUpdateAt(s, dyRevBought, rhoBought);
-      if (s_after_Y) s = s_after_Y;
+    if (soldITM) {
+      // Sold leg ITM → settle-to-cash, no AMM transaction.
+      // Settled-to-cash (W3) — LENSED at the RECIPROCAL sNorm mode getSNorm(s)
+      // (MUST-APPLY-A: convert to the reciprocal coordinate before the lens;
+      // sNorm0 stays for the regime/leg-pick test ONLY). Read at the pre-AMM
+      // pool s, before any reversal swap perturbs it.
+      X = legValueUnified(s, sold_wing, band.sold, tau);
+      m_s = markEff(s, sold_wing, band.sold.inner, tau);
+      settled_cash_leg = 'sold';
+      // Bought leg is the live OTM leg → reverse on AMM (LENSED legPrice,
+      // same reciprocal coordinate — both legs move together, §11.4-C).
+      const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
+      Y = px_b.V; m_b = px_b.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
+      // Pool reversal — FROZEN ARC (exact inverse of own flows + lean increment);
+      // legacy pre-arc band falls back to today's K_tx-first at-strike reversal.
+      const s_after_Y = band.bought.arc ? revertArc(s, band.bought.arc, rrBought)
+                                        : tradeUpdate(s, dyRevBought);
+      if (!s_after_Y) return { ok: false, reason: band.bought.arc ? 'Bought-leg close infeasible (arc reversal).' : 'Bought-leg (live) close singular.' };
+      s = s_after_Y;
+      live_leg = 'bought';
+    } else if (boughtITM) {
+      // Bought leg ITM → settle-to-cash, no AMM transaction.
+      // Settled-to-cash (W3) — LENSED at getSNorm(s) (MUST-APPLY-A).
+      Y = legValueUnified(s, bought_wing, band.bought, tau);
+      m_b = markEff(s, bought_wing, band.bought.inner, tau);
+      settled_cash_leg = 'bought';
+      // Sold leg is the live OTM leg → reverse on AMM (LENSED legPrice).
+      const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
+      X = px_s.V; m_s = px_s.m_star;   // lensed VALUE (entry-96 basis), NOT the pool move
+      // Pool reversal — FROZEN ARC; legacy pre-arc band → today's K_tx-first path.
+      const s_after_X = band.sold.arc ? revertArc(s, band.sold.arc, rrSold)
+                                      : tradeUpdate(s, dyRevSold);
+      if (!s_after_X) return { ok: false, reason: band.sold.arc ? 'Sold-leg close infeasible (arc reversal).' : 'Sold-leg (live) close singular.' };
+      s = s_after_X;
+      live_leg = 'sold';
+    } else {
+      // (a) Neither leg ITM — both live, both reversed on the AMM AT-STRIKE.
+      // X/Y stay the lensed VALUE (entry-96 basis); the pool moves by the
+      // at-strike reversal dy = −(open dy) per leg ⇒ reserves restore exact.
+      const px_s = legPrice(s, sold_wing, band.sold.inner, band.sold.outer, band.sold.N, tau);
+      X = px_s.V; m_s = px_s.m_star;
+      const s_after_X = band.sold.arc ? revertArc(s, band.sold.arc, rrSold)
+                                      : tradeUpdate(s, dyRevSold);   // FROZEN ARC; legacy → K_tx-first
+      if (!s_after_X) return { ok: false, reason: band.sold.arc ? 'Sold-leg close infeasible (arc reversal).' : 'Sold-leg close singular.' };
+      s = s_after_X;
+
+      const px_b = legPrice(s, bought_wing, band.bought.inner, band.bought.outer, band.bought.N, tau);
+      Y = px_b.V; m_b = px_b.m_star;
+      const s_after_Y = band.bought.arc ? revertArc(s, band.bought.arc, rrBought)
+                                        : tradeUpdate(s, dyRevBought);   // FROZEN ARC; legacy → K_tx-first
+      if (!s_after_Y) return { ok: false, reason: band.bought.arc ? 'Bought-leg close infeasible (arc reversal).' : 'Bought-leg close singular.' };
+      s = s_after_Y;
     }
 
     // ── raw_net — stage 2 ─────────────────────────────────────────────
@@ -2294,36 +2335,25 @@ const Engine = (function() {
     };
   }
 
-  // Funding per strike — LENSED, EXTRINSIC weight (v28 Stage 1, P2; UPDATE 1
-  // 2026-07-07, SPEC_update1 §3). v24's hardcoded ±2 exponent is the signed
-  // strike-local lensed exponent ±g_loc(K); the consumed WEIGHT is now the
-  // EXTRINSIC (option-part) value = markLensed − max(intrinsic parity, 0) (was
-  // the full markLensed). S, (S−1)/S, κ, N, dt, the S<=0 guard and the call/put
-  // SIGN ±g·(S−1)/S are UNCHANGED — ONLY the weight changed.
+  // Funding per strike — LENSED (v28 Stage 1, P2). v24's hardcoded ±2 exponent
+  // is swapped for the signed strike-local lensed exponent ±g_loc(K); the
+  // consumed mark is the lens-aware markLensed. S, (S−1)/S, κ, N, dt, the S<=0
+  // guard and the call/put SIGN are UNCHANGED.
   //   MUST-APPLY-1: g_loc and the lensed mark are read in the SINGLE sNorm
   //   coordinate against the LIVE sNorm mode (strike_theta vs getSNorm(state)) —
   //   NOT against the price-coord spot S (that would re-open the ln γ trap).
-  // Behaviour: the extrinsic weight is a single hump peaking at ATM (strike =
-  // mode), fading to 0 both ways and EXACTLY 0 past the smooth-paste seam S* ⇒
-  // funding is ZERO deep ITM (was: full mark funded intrinsic forever). The
-  // pool-imbalance factor (S−1)/S still zeroes at the w=½ anchor (S→1); the
-  // kurtosis knob m re-scales the rate by design (entries 232/233).
+  // Behaviour (constant-m, operator entries 232/233): g_loc = m·γ is CONSTANT at
+  // every strike — NO ATM flat-top, NO wing-ramp. Funding = slope/ray-divergence
+  // from the w=½ anchor THROUGH THE LENS; it zeroes at the anchor (S→1, ray
+  // coincides), NOT at ATM. The kurtosis knob m re-scales the rate by design.
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial, tau) {
     const S = (oracle > 0 && oracle_initial > 0) ? poolMark(state, oracle, oracle_initial) / oracle : getSNorm(state);
     const mode = getSNorm(state);                       // single sNorm mode (MUST-APPLY-1)
     const g = gLoc(state, strike_theta, tau);           // = m·γ (constant), γ LIVE; tau carries the multiplier m
-    const mk = markLensed(wing, strike_theta, mode, g); // lens-aware mark, sNorm coord
-    // EXTRINSIC weight = mark − max(intrinsic parity arm, 0). Zero past S* (ITM)
-    // ⇒ funding ZERO ITM; clean single hump peaking at ATM, fading to 0 both ways.
-    // markLensed's sNorm ← funding's `mode`; markLensed's theta ← `strike_theta`:
-    //   put  parity = max(0, 1 − mode/strike_theta)   [markLensed put:  1 − sNorm/theta]
-    //   call parity = max(0, 1 − strike_theta/mode)   [markLensed call: 1 − theta/sNorm]
-    const intr = (wing === 'call') ? Math.max(0, 1 - strike_theta / mode)
-                                   : Math.max(0, 1 - mode / strike_theta);
-    const ext = mk - intr;                              // extrinsic (option-part) weight
+    const m = markLensed(wing, strike_theta, mode, g);  // lens-aware mark, sNorm coord
     const gamma = (wing === 'call') ? +g : -g;          // ±g_loc replaces ±2
     if (S <= 0) return 0;
-    return kappa * gamma * N * ext * (S - 1) / S * dt;
+    return kappa * gamma * N * m * (S - 1) / S * dt;
   }
 
   return {

@@ -105,7 +105,7 @@ console.log('══════════════════════�
   line(2, 'invariant (post-trade; Casimirs conserved) — SPOT LAW ONLY', 'C1 invariant / trade_conserves (SPOT)', 'tradeUpdate (spot) output', 'NEW',
     casOk && invOk,
     'SPOT tradeUpdate D∈{1234,−2000,50000}: Casimir α,β conserved=' + casOk + '; post-trade (x−α)(y−β)=αβ rel≤1e-9=' + invOk + (worst ? ' worst=' + worst : '') +
-    '  ⚠SCOPE: describes the SPOT law only — the LIVE trade path (tradeUpdateAt, entry 339) moves α,β BY DESIGN (that is the fix, not a break; gated HARD by CM8-v2/CM6-v2)');
+    '  ⚠SCOPE: describes the SPOT law only — the LIVE trade path (tradeUpdateAt, entry 339) moves α,β BY DESIGN (that is the fix, not a break; gated HARD by CM8-v2; close is a pool reprice, CM6-v3)');
 }
 
 // ── (3) R_psd: μ″ = 2(t−β)/(αβ) ≥ 0 on t ≥ β ─────────────────────────────────
