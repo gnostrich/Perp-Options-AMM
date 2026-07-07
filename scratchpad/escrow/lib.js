@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('fs'), vm=require('vm'), path=require('path');
+const file=path.join('/home/user/Perp-Options-AMM/engine/builds/HEAD_temporal_mvp_v28_lens.html');
+const t=fs.readFileSync(file,'utf8');
+const m=/<script id="engine">([\s\S]*?)<\/script>/.exec(t);
+const ctx={Math,isFinite,console};
+vm.createContext(ctx);
+vm.runInContext(m[1]+'\n;this.__E=Engine;',ctx);
+const E=ctx.__E;
+module.exports={E};

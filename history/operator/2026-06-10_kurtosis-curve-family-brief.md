@@ -3258,3 +3258,9 @@ _Context: operator, on the verified ITM-close insight: (1) wants a simple-Englis
 _Context: operator refines the value-denomination model: every piece exchanges for/at ATM, and we keep a record of the escrow units that remain; asks whether everything is consistent or any asymmetries are left._
 
 > so every piece exhanges for ITM and we keep record of the escrow units that remain if that makes sense... is everything consistent or any asymmetries left?
+
+
+## Entry 438 — 2026-07-07 UTC
+_Context: operator advances the model: all options expressed in terms of the underlying (escrow unit); since it's bookkeeping-only and directionality-respecting, crossing 'mode' is fine for SETTLEMENT. Open question: should FUNDING also carry over across the crossing — operator thinks YES but with the SIGN FLIPPED so it stays same-direction funding. And believes rebase changes nothing. Asks manager to check._
+
+> we're expressing all options in terms of the underlying (escrow unit), in this model since this is bookkeeping only and directionality respecting, this crossing 'mode' should be ok for settlement purpose; what idk is whether even funding shoul dcarry over then (i thnk it shoud) qbut jnust sign flipped so it remains the same direction funding ... and wrt rebase i dont think anything changes right
