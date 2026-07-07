@@ -3193,3 +3193,9 @@ _Context: operator RATIFIES the trade-point build ("trade poont ok" — -TP339-R
 
 ## Entry 426 — 2026-07-03 UTC
 > can you check if pushed / in sync on main?
+
+
+## Entry 427 — 2026-07-03 UTC
+_Context: operator uploads the CTO's current HTML version; orders a feature-level simple-English changelog/diff between that version and our latest, including the agreed-but-not-yet-done fixes (handover to CTO happens after those fixes)._
+
+> ok so for your context our CTO has the attached version right now. what you need to do is a feature level simple english understandable changelog / diff between the version attached and the current latest you have (including the fixes we agreed to do on that not yet done, because i'll give it to him after those fixes)
