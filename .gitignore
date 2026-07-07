@@ -4,3 +4,6 @@ engine/node_modules/
 # Dexter's Lab runtime state (registry/ledger/reviews/drafts/spend) — local only,
 # never committed (lab confidentiality rule: reviewed-paper outputs stay under lab_home)
 dexters-lab/lab_home/
+
+# ephemeral vm research harnesses (findings persist in notes/research/*.md)
+scratchpad/
