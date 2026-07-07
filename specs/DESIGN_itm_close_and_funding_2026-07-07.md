@@ -13,6 +13,20 @@ Three parts, DIFFERENT behavior at the mode crossing — by design:
 | **Funding** | ZERO ITM (option-part/extrinsic gone; underlying's cost = perp layer, external per entry 320). | STOPS at the money |
 One-liner: swap + value ride across the mode; funding stops at the money. No leg pulled off the pool.
 
+## A.1 Settlement accounting — escrow-unit tally at close (each leg)
+At close, settlement = tally each leg in ESCROW UNITS → net → convert to cash ONCE:
+1. **Tally each leg** = today's mark × leg notional (escrow units) — i.e. sell each leg back at today's
+   price (sell-back model). ITM legs tally identically (mark = parity in escrow units) — no exercise path.
+2. **Net:** `raw_net = Y − X` (bought-leg value − sold-leg value), escrow units.
+3. **Convert once:** `payout = L₀ · raw_net · carvedEquityAtClosure` (escrow→USD at the carved slice's
+   closing equity × leverage). Dollars enter ONLY here (engine `closeBand` L2317; measured
+   `VERIFY_escrow_denomination`). Paid from the position's own club.
+Properties: all legs stay in ONE common underlying unit (ATM-referenced) until the last step ⇒
+nettable/comparable; wings symmetric (reflection-exact); no special ITM accounting.
+Kept SEPARATE at settlement (division of labour): (i) OPTION VALUE → escrow tally → cash (trader
+economics); (ii) POOL-FOOTPRINT CHARGE (receipt/charge-back drain fix) → separate deduction for what the
+round trip did to the pool — does NOT touch the escrow value tally.
+
 ## B. Changes to be made
 **Close-(b) (parked build, enriched):**
 1. Close = live reverse trade EVERY leg (OTM+ITM) — no two-case, no cash-settle, no frozen-arc un-booking.
