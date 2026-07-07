@@ -3246,3 +3246,9 @@ _Context: operator confirms the layer split — the value layer IS the option/ch
 
 > 1. value layer is the otion thins or graph 2 whre th epasted thins lives so not mixing;.. any other issues
 > 2. ? /verify
+
+
+## Entry 436 — 2026-07-07 UTC
+_Context: operator, on the verified ITM-close insight: (1) wants a simple-English TLDR — in this design there'd be NO parking, positions traverse across 'mode'; (2) observes the ITM leg is worth more; and notes what's probably missing from a value standpoint: every leg exchanges for/at the ATM (the escrow unit = one full perp at ATM). Orders a take-stock now._
+
+> 1. simple english tldr, so in this care thered be no parking and things traverse across 'mode'; 2. the itm thing is worth more right; ... and what we are probably missing mentioning here from a value standpoint is that every leg exchanges for the ATM .... just take stock now
