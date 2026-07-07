@@ -3215,3 +3215,9 @@ _Context: operator asks for a take-stock of TBDs on the latest version, exploit 
 _Context: operator orders the attacks fix built NOW and asks for a plain re-explanation of what "parked close" is and what the alternative was._
 
 > the attacks fix is to be done now; i dont undersgtand whaat parked close is anjdwhat the alternative wqs ...
+
+
+## Entry 431 — 2026-07-07 UTC
+_Context: operator holds the build: brainstorming only first (the entry-430 "done now" is paused; explainer requested before any dispatch)._
+
+> brainstomrin only first
