@@ -3282,3 +3282,9 @@ _Context: operator crystallizes the one remaining funding question: whether fund
 _Context: operator on funding base: does the smooth-paste construction already give a clean intrinsic/extrinsic split of the ITM value? If so it solves the funding-base problem. Also self-corrects: funding may NOT actually change sign crossing the mode (walks back the earlier sign-flip assumption), and floats that funding might be OTM-only. Flags uncertainty on this part; says everything else discussed seems ok._
 
 > with the whole pasting thing we did, do we have a breakup of intrinsic / extirnsic componet of the vslue when ITM? if we do then I think it solves the problem? but yeah correct me if im wrong where funding is actually not necessariyl changing signs when crossing mode ... so we may also we well advised to have funding only OTM ... i'm not 100% clear on ths part, egerything else we spoke of seems ok thoigh t
+
+
+## Entry 442 — 2026-07-07 UTC
+_Context: operator presses on the funding-sign-flip-moot claim: unclear where the crossover happens wrt the ANCHOR curve, and what that has to do with the extrinsic — asks for the actual relation between the funding crossover point (vs anchor) and the extrinsic-zero point._
+
+> explain this: "Once funding rides on the extrinsic, the sign-flip debate at the crossing becomes moot — because the extrinsic is ~zero right where the crossing happens. There's nothing to flip the sign of. So you were correct: funding doesn't need a sign-flip; the earlier sign-flip was solving a problem that only existed when funding was on the full value." ... i'm not sure yet where the crossover happens wrt the anchor curve and what that has to do with the extsinsic like wjhatys the relation
