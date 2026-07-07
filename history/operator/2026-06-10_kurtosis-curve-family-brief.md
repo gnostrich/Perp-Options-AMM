@@ -3342,3 +3342,9 @@ _Context: operator responds on the pending list. (1) asks to clarify the parked 
 _Context: operator resolves the three items. (1) the exploit-fix/charge-back safety STAYS PARKED — put in the CTO note as parked TBD, not implemented yet. (2) deep-ITM wording = moot / no change except the sell-back model, we're good. (3) funding = option-part value, OTM only (i.e. extrinsic, zero ITM confirmed). Asks if any more doubts, simple english._
 
 > 1. stay parked and keep in CTO note as parked tbd not implemented yet; 2. this. moot / no chage except the sell back model then we good; 3. option part value when OTM ... any more doibts simple snelgihs?
+
+
+## Entry 452 — 2026-07-07 UTC
+_Context: operator sequences the builds: FIRST update = the fully theoretically-clean close (sell-back mechanics + funding-on-option-part), drain harmless-in-sim & documented; SECOND update (next) = the known-exploit patch (charge-back safety). Asks if any of the manager's questions went unanswered, simple english._
+
+> we build the fully theoretically clean thing as the first uodate ; then the next is the known0-explit  patch ... anything else simple englasug if i didnt answer all your qs
