@@ -1,6 +1,42 @@
 # MEMORY — research-lead
 
+### CORRECTION — trader cashflow trace RETRACTS the "extractable/unbounded leak" (operator entry 454) — 2026-07-07
+**SUPERSEDES/CORRECTS the entry below (`VERIFY_drain_structural_2026-07-07.md`).** Operator caught a real
+contradiction in my drain note: I claimed BOTH (a) option payout decoupled/option-value-only AND (b)
+trader_pnl_swap=−ΔVmkt fully extractable. (b) is a PHANTOM. Traced the REAL Store accounting (HEAD
+`51342574`, blocks `0e0a0062`; vm-extract Store+Engine; harnesses `scratchpad/trader_cashflow.js`,
+`scratchpad/reversibility.js`). Deliverable returned INLINE to manager; persist as
+`notes/research/VERIFY_trader_cashflow_2026-07-07.md`.
+- **Trader NEVER receives the AMM swap (dx,dy).** Open (`openBand` L2612): trader pays ONLY the fee
+  (fee_usd→`state.fees_accrued`, NOT pool); carved bundle relocates club→band (still trader-owned); the
+  swap `state.pool=result.finalState` (L2663) is POOL-INTERNAL. Close (`closeBand` L2735 / `Engine.closeBand`
+  L2103): trader credited ONLY (layer1) `club.equity += carvedEquityAtClosure` (perp-slice return, L2753)
+  and (layer2) `band.overlay.trader_payout = L0·raw_net·carvedEquityAtClosure` (L2762-4) which is EXPLICITLY
+  **not** added to equity. Both option/perp-VALUE-layer. The reversal swap `state.pool=r.finalState` (L2744)
+  is POOL-INTERNAL. `X,Y` are lensed VALUE ("NOT the pool move", L2228/2244). NO code line credits the trader
+  the swap reserves.
+- **No residual BTC.** club = {equity,totalNotional,perpIds,carvedNotional,carvedEquity} (all USD; L2426) —
+  NO reserve field. My prior "trader holds residual Δx BTC" is FALSE; Δx is pure pool delta, no trader entry.
+- **MEASURED (Store, cross-wing sell-call/buy-put, N=0.1):** trader Δclub.equity=$1000/$3000/$9000/$25000 at
+  k=1/1.25/2/4 = the LONG carved-perp directional P&L (`setOracle` sets perpMark=oracle, L2504); overlay
+  trader_payout=$11/$3/$23/$70. POOL ΔVmkt across close=−$1664/+$4883/+$22078/+$106730 — **fully decoupled**
+  from trader cash. The $106730 is pool repricing, NOT trader gain.
+- **Reversibility (A vs B):** price up to kUp then RETURN to deploy before close → pool residual vs no-band
+  counterfactual = FIXED −$273 (revertArc/shipped) / +$146 (liveRho/update-1) **independent of kUp=2/4/16**.
+  The big "unbounded" ΔVmkt only exists when price STAYS elevated at close (marked-to-elevated-oracle) and
+  RECOVERS on price return. ⇒ (A) impermanent-loss-like repricing, non-extractable; NOT (B) persistent loss,
+  NOT unbounded. Even update-1 liveRho: residual is a fixed ~$150 self-drain, does NOT scale with excursion.
+- **VERDICT:** operator's architecture is CORRECT as built — AMM tx does not conserve value (reserves reprice
+  IL-like, nobody extracts); option/perp-value layer conserves value and sets the trader's realized exchange.
+  My prior "OBSCENE/unbounded extractable leak" was a MISATTRIBUTION: I marked pool repricing (dx,dy@oracle)
+  as trader extraction and skipped the reversibility check. **RETRACTED.** What SURVIVES: a tiny fixed ~$200
+  self-drain per round trip (∝N², the spec's advertised harmless self-drain) — real but bounded & non-scaling.
+  Update-1 is CLEAN of the exploit I alleged. No git/engine/Aristotle touched.
+
 ### DECISIVE VERIFY — update-1 close drain is OBSCENE/STRUCTURAL but SPEC-FIXABLE (operator entry 453) — 2026-07-07
+**⚠ CORRECTED/SUPERSEDED by the entry above (operator entry 454): the "extractable/unbounded" framing is a
+misattribution — trader realizes option/perp value only, pool ΔVmkt is non-extractable IL-like repricing that
+recovers on price return. The Q1 "tiny self-drain" survives; Q2/Q3 "unbounded/extractable" are RETRACTED.**
 Answered the operator's four numbers vs REAL engine (HEAD blocks `0e0a0062` = engine md5 `1f0bccdd`; confirmed
 byte-identical between WT HEAD and pinned `head_0e0a0062.html` — the Jul-7 funding-P/L build touched only display
 blocks). vm-extract; no web/git/engine/Aristotle. Harnesses `scratchpad/{verify_structural,verify2,verify3_root,big_k,rebase_move}.js`.

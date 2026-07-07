@@ -1,3 +1,9 @@
+# ⚠ Q2/Q3 RETRACTED 2026-07-07 — see `VERIFY_trader_cashflow_2026-07-07.md`
+# The "unbounded / fully-extractable" verdict below was a MISATTRIBUTION (marked pool reserve
+# REPRICING at the oracle as TRADER extraction; the engine credits the trader option/perp VALUE
+# ONLY — no swap dx/dy reaches any wallet). Reversibility check shows IL-like recovery, fixed
+# ~$200 residual. Q1/Q4 (value-transfer framing / live-rho mechanism) also superseded. Kept for record.
+
 # VERIFY — update-1 close drain: STRUCTURAL-AS-SHIPPED but SPEC-FIXABLE (operator entry 453)
 _research-lead 2026-07-07; real engine HEAD blocks `0e0a0062` (engine md5 1f0bccdd, byte-identical WT vs
 pinned); vm-extract only; no web/git/engine/Aristotle. Manager persisted. Harnesses scratchpad/ (gitignored)._
