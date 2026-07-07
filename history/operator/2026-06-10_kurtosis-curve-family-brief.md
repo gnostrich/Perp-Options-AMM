@@ -3227,3 +3227,9 @@ _Context: operator holds the build: brainstorming only first (the entry-430 "don
 _Context: operator asks to close the loop clearly; specifically, when explaining close-as-a-trade, cover how it works OTM and ITM._
 
 > try to close the loop clearly. when talking of the closing being a trade talk of how it works otm and itm
+
+
+## Entry 433 — 2026-07-07 UTC
+_Context: operator has an insight on ITM close-as-a-trade. Proposes: (1) get sell-q from buy-q the SAME way as at open — query option prices on the extended (chart-2 / second-graph) value curves — this part they get; (2) on the AMM layer the transaction happens on the other side of the curve, and this needs a DIRECTIONALITY CHECK (both legs of a band always trade skewing the curve in the SAME direction); slippage calculated as usual. Orders the manager to dig in and verify this against the engine._
+
+> oh wait you may be onto something... you're saying we do the same thing to get sell q from buy q where you query option prices on the extended curves you'll see in the second graph, and then on the AMM layer you'd do the transaction on other side of the curve, the first part i think i get, the second part you'd have to have a directionality check (both legs always do a trade skewing the curve in the same direction) ... and slippage is calculated etc... can you dig in and verify this /verify
