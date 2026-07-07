@@ -1,0 +1,280 @@
+{
+  "run": "B",
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "bb2f82309887a822bd4a60e52aa5fb06",
+  "checks": [
+    {
+      "n": "A1 load: 0 pageerrors + Engine/Store + exports (tradeUpdateAt/closeBand/fundingPerStrike) + all chart states render",
+      "p": true
+    },
+    {
+      "n": "A2 unified close OTM (both legs OTM): settled_cash_leg=null, live_leg=both, log \"both legs reversed on AMM\"",
+      "p": true
+    },
+    {
+      "n": "A3 genuinely-ITM leg (engine poolMark/oracle regime) STILL reverses on the AMM — no cash-settle",
+      "p": true
+    },
+    {
+      "n": "A4 x-drain BY DESIGN: Δx<0 small+bounded (<$5k, <0.1% of pool.x), Δy≈0 (round-trips) — intended delta",
+      "p": true
+    },
+    {
+      "n": "A5 payout continuity OTM→ITM: HEAD unified close CONTINUOUS at the put crossing (crossStep ≤ 3× median step)",
+      "p": true
+    },
+    {
+      "n": "A5b LIVE branch delta: HEAD keeps ALL legs on the AMM (null throughout); the retired two-case twin settles a leg to CASH on the ITM side — seam present in twin, removed in HEAD",
+      "p": true
+    },
+    {
+      "n": "A6 funding = extrinsic hump peaking at ATM (strike=mode) + EXACTLY 0 deep-ITM both wings; call/put opposite sign",
+      "p": true
+    },
+    {
+      "n": "A6b DOM: portfolio bands funding column present + numeric; perps table has NO Funding column & unchanged by ticks",
+      "p": true
+    },
+    {
+      "n": "A7 zero console/pageerrors overall",
+      "p": true
+    },
+    {
+      "n": "A8 build md5 unchanged (read-only)",
+      "p": true
+    }
+  ],
+  "headSweep": [
+    {
+      "o": 56000,
+      "sNorm0": 0.9999999999999998,
+      "boughtPutITM": false,
+      "raw_net": 0.0012883398625564732,
+      "settled": null
+    },
+    {
+      "o": 52000,
+      "sNorm0": 0.9999999999999993,
+      "boughtPutITM": false,
+      "raw_net": 0.0015611841551049425,
+      "settled": null
+    },
+    {
+      "o": 50000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.0017059222870174462,
+      "settled": null
+    },
+    {
+      "o": 49000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.0017805300683170922,
+      "settled": null
+    },
+    {
+      "o": 48500,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.001818415281006974,
+      "settled": null
+    },
+    {
+      "o": 48000,
+      "sNorm0": 0.9999999999999989,
+      "boughtPutITM": true,
+      "raw_net": 0.0018566966599925868,
+      "settled": null
+    },
+    {
+      "o": 47500,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.0018953808533152755,
+      "settled": null
+    },
+    {
+      "o": 47000,
+      "sNorm0": 1.0000000000000007,
+      "boughtPutITM": true,
+      "raw_net": 0.001934474661799948,
+      "settled": null
+    },
+    {
+      "o": 46000,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.002013919119351906,
+      "settled": null
+    },
+    {
+      "o": 44000,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.002178040728749803,
+      "settled": null
+    },
+    {
+      "o": 40000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": true,
+      "raw_net": 0.0025290126679125384,
+      "settled": null
+    }
+  ],
+  "twinSweep": [
+    {
+      "o": 56000,
+      "sNorm0": 0.9999999999999998,
+      "boughtPutITM": false,
+      "raw_net": 0.0012907375069751421,
+      "settled": null
+    },
+    {
+      "o": 52000,
+      "sNorm0": 0.9999999999999993,
+      "boughtPutITM": false,
+      "raw_net": 0.001563320945590432,
+      "settled": null
+    },
+    {
+      "o": 50000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.0017079146188887146,
+      "settled": null
+    },
+    {
+      "o": 49000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.0017824463752634028,
+      "settled": null
+    },
+    {
+      "o": 48500,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": false,
+      "raw_net": 0.0018202925874759648,
+      "settled": null
+    },
+    {
+      "o": 48000,
+      "sNorm0": 0.9999999999999989,
+      "boughtPutITM": true,
+      "raw_net": 0.0018566966599925868,
+      "settled": "bought"
+    },
+    {
+      "o": 47500,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.0018953808533152755,
+      "settled": "bought"
+    },
+    {
+      "o": 47000,
+      "sNorm0": 1.0000000000000007,
+      "boughtPutITM": true,
+      "raw_net": 0.001934474661799948,
+      "settled": "bought"
+    },
+    {
+      "o": 46000,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.002013919119351906,
+      "settled": "bought"
+    },
+    {
+      "o": 44000,
+      "sNorm0": 0.9999999999999997,
+      "boughtPutITM": true,
+      "raw_net": 0.002178040728749803,
+      "settled": "bought"
+    },
+    {
+      "o": 40000,
+      "sNorm0": 1.0000000000000002,
+      "boughtPutITM": true,
+      "raw_net": 0.0025290126679125384,
+      "settled": "bought"
+    }
+  ],
+  "fund": {
+    "mode": 2.666666666666667,
+    "S": 0.14062499999999997,
+    "w": 0.2727272727272727,
+    "m": 6,
+    "g": 2.2499999999999996,
+    "callSeam": 0.6923076923076923,
+    "putSeam": 1.4444444444444446,
+    "callLadder": [
+      {
+        "f": 0.3,
+        "theta": 0.8,
+        "val": 0
+      },
+      {
+        "f": 0.55,
+        "theta": 1.46667,
+        "val": 0
+      },
+      {
+        "f": 0.75,
+        "theta": 2,
+        "val": -0.0019199190374347057
+      },
+      {
+        "f": 0.9,
+        "theta": 2.4,
+        "val": -0.01938962831248833
+      },
+      {
+        "f": 1,
+        "theta": 2.66667,
+        "val": -0.036993245652331176
+      },
+      {
+        "f": 1.15,
+        "theta": 3.06667,
+        "val": -0.02701172350621192
+      }
+    ],
+    "putLadder": [
+      {
+        "f": 0.9,
+        "theta": 2.4,
+        "val": 0.02918556348481953
+      },
+      {
+        "f": 1,
+        "theta": 2.66667,
+        "val": 0.03699324565233117
+      },
+      {
+        "f": 1.15,
+        "theta": 3.06667,
+        "val": 0.014793630101448832
+      },
+      {
+        "f": 1.35,
+        "theta": 3.6,
+        "val": 0.0013767584097639674
+      },
+      {
+        "f": 1.8,
+        "theta": 4.8,
+        "val": 0
+      },
+      {
+        "f": 3,
+        "theta": 8,
+        "val": 0
+      }
+    ]
+  },
+  "errors": [],
+  "dialogs": []
+}
