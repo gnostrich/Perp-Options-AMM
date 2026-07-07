@@ -1,5 +1,39 @@
 # MEMORY — research-lead
 
+### ITM-CLOSE DIRECTIONALITY VERIFY (operator entry 433) — the ρ>1 crossed-wing gap IS dissolved; leak-free is NOT — 2026-07-07
+Verified operator's close-(b) mechanic against REAL engine (HEAD `bf7380c` WT HTML; engine blocks = `0e0a0062`).
+vm-measured, no web. Harnesses `scratchpad/closeb/{h_dir,h_residual,h_residual2,h_clean,h_band}.js` (vm vs extracted Engine).
+Report returned INLINE to manager (system-constraint: no report .md written; manager to persist as
+`notes/research/VERIFY_itm_close_directionality_2026-07-07.md` if wanted). Frame: default pool w=0.5 ⇒ getSNorm(mode)=1,
+mp_raw=OI ⇒ priceSpot=1, theta=K/oracle; rho_tx=(theta/mode)^m crosses 1 EXACTLY at ATM (oNow=K). g=m·γ=2 at deploy;
+put smooth-paste seam θ*=(g+1)/g=1.5.
+- **PART 1 (value from option-price ratio) — CONFIRMED exact.** OPEN: `executeBand` L1982 `N_buy = V_sell/denom`,
+  denom=`legPrice(...,1,tau).V` = per-unit LENSED markLensed value (the extended chart-2 curves); V_sell=leg1.V=N·(markLensed
+  marks). NOT pool proceeds (comment L1838-1840 explicit: V "no longer sizes the pool swap dy", only value + N_buy).
+  markLensed defined & CONTINUOUS ITM; past θ*=1.5 it EQUALS put parity 1−S/K EXACT (measured 0.3333/0.4118/0.5/0.6 at
+  θ=1.5/1.7/2.0/2.5, mark−par=0.0000). So close-sizing-from-value works ITM (mark=parity, well-defined). **Today's engine
+  does NOT do this** — closeBand reverses stored flows (frozen-arc `revertArc`)/cash-settles ITM leg; sizing-from-value is a
+  NEW coherent (b)-design, not current code.
+- **PART 2 (directionality) — CORE INSIGHT CONFIRMED, gap DISSOLVED.** dy-sign law = wingSign·legSign (call+1/put−1 · sell+1/
+  buy−1). Swept put close (buy-put) moneyness θ 0.7→1→2.5 (OTM→ATM→deep-ITM): dy=+, dx=−, dw=+ at EVERY point, NO flip
+  through ρ=1. The "which wing the trade point sits on" (sign of a=ln θ/mode) IS the thing that flips at ρ=1 (θ<mode→θ>mode).
+  ⇒ defining the close by SKEW DIRECTION (sign dy/dw) is continuous & unambiguous through the crossing; "which wing" is
+  correctly NOT the definition. Band-level: collar OPEN (sell-put+buy-call) both dy=− (same dir); CLOSE (buy-put+sell-call)
+  both dy=+ (same dir, opposite to open) — the operator's "both legs same direction" check is ALREADY the engine invariant
+  (L1826-1836). Slippage = standard curvature integral |Δy|−p₀|Δx| (L1998-2011), no moneyness branch, no ITM penalty — the
+  only trader-facing cost. CONFIRMED.
+- **BUT "zero residual / no leak" — NO (unchanged known finding).** Faithful (b) round-trip (dy frozen=−open, dx live via
+  tradeUpdateAt): Δy=0 EXACT but Δx<0, one-signed pool loss, ∝dy² (drain/dy²→const as N→0), present at EVERY moneyness
+  (OTM & ITM alike — NOT a crossed-wing artifact). = the SAME MR1 x-drain; frozen-arc (a) close Δval=0 exact. Small relative
+  for tiny trades (0.0001% of parity value at N=0.05) but compounds (prior run #1: 30cyc@50% → pool dies). Neutralizer stays
+  the pool-value FLOOR (already pinned MR1/run#2 sybil-floor). Directionality and the x-drain are ORTHOGONAL.
+- **BOTTOM LINE to operator:** "close = value-sized q + same-direction-skew swap on today's curve + normal slippage" is a
+  COMPLETE, directionally-coherent (b) definition that DISSOLVES the ρ>1 crossed-wing problem (supersedes my earlier "open
+  corner"/crossed-ray flag) and feeds the parked close-(b) spec. It is NOT leak-free by itself: the pre-existing x-drain
+  (∝dy², all-moneyness, one-signed) remains and still needs the floor. No git, no engine edits, no Aristotle. Handed to manager.
+
+---
+
 ### RESIZE-BLINDNESS ON SHIPPED (a) — MICRO MEASUREMENT (RESEARCH RUN #5) delivered — operator entry 428 take-stock gap — 2026-07-07
 Appended PART 5 to `notes/research/DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. NEW harnesses
 `scratchpad/closeb/h11_a.js` + `h11b_patch.js` (vm vs HEAD engine extract). Question: is `revertArc`'s
