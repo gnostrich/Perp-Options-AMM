@@ -3270,3 +3270,9 @@ _Context: operator advances the model: all options expressed in terms of the und
 _Context: operator argues the funding-carryover question: it's a PERPETUAL option, so it should accrue funding as premium as long as it's held — ITM or OTM alike (the counter-argument to funding→0-ITM); and since the model already has sign-flips across the OTM/ITM crossing, funding carrying over follows the same way. Asks manager to engage._
 
 > 1. on funding its a perpetual option, so it should accrue funding as premium as long as its held whethr itm or otm is the other agrument, and since we have sign flips across otm or whatever this also sort pf foloows? ....
+
+
+## Entry 440 — 2026-07-07 UTC
+_Context: operator crystallizes the one remaining funding question: whether funding should accrue on the full ITM value at all, or only on the extrinsic / time-value portion._
+
+> but i think you;re asking whether the funding should accrue on the ITM value  at all or only on the portion that's the extrinsic / time value
