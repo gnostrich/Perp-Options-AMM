@@ -3209,3 +3209,9 @@ _Context: operator asks for a take-stock of TBDs on the latest version, exploit 
 
 ## Entry 429 — 2026-07-07 UTC
 > simple engkish tldr i smell coflation and confusion
+
+
+## Entry 430 — 2026-07-07 UTC
+_Context: operator orders the attacks fix built NOW and asks for a plain re-explanation of what "parked close" is and what the alternative was._
+
+> the attacks fix is to be done now; i dont undersgtand whaat parked close is anjdwhat the alternative wqs ...
