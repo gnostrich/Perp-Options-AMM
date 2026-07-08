@@ -1,6 +1,6 @@
 {
   "build": "HEAD_temporal_mvp_v28_lens.html",
-  "md5": "abd35f4bbd59be4fde0565e5981bda71",
+  "md5": "5ce1a76c7b75ec3763fda6df9538a841",
   "checks": [
     {
       "n": "S1 boot: chart-1 renders",
@@ -85,7 +85,7 @@
     {
       "n": "S14 build md5 unchanged (read-only)",
       "p": true,
-      "d": "abd35f4bbd59be4fde0565e5981bda71 → abd35f4bbd59be4fde0565e5981bda71"
+      "d": "5ce1a76c7b75ec3763fda6df9538a841 → 5ce1a76c7b75ec3763fda6df9538a841"
     }
   ],
   "errors": [],

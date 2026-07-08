@@ -1,0 +1,46 @@
+{
+  "run": "B",
+  "checks": {
+    "header_text": "Funding (ray dev; TBD)",
+    "header_title": "Funding (same-slope ray deviation from the anchor curve; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.",
+    "C1a_header": true,
+    "C1b_tooltip_prefix": true,
+    "units_note_has_SKEW_DEVIATION": true,
+    "units_note_no_LEAN": true,
+    "units_note_snippet": "\n          Every row above a TOTAL carries CARVED-PERP units (stage 2). The\n          single dollar figure is the TOTAL row's settlement cell — the one\n          stage-2 → stage-3 equity multiply. Effective strike = orig",
+    "visible_lean_all": [],
+    "visible_funding_lean": [],
+    "C1d_no_visible_funding_lean": true,
+    "attr_funding_lean": [],
+    "C1e_no_attr_funding_lean": true,
+    "m_knob": {
+      "m1": {
+        "g": 1,
+        "mark": 0.25
+      },
+      "m3": {
+        "g": 3,
+        "mark": 0.10546875000000001
+      },
+      "m6": {
+        "g": 6,
+        "mark": 0.056652779514852265
+      },
+      "setM3": 3,
+      "setM1": 1
+    },
+    "C3_m_steepens": true,
+    "trade_exhibit": {
+      "x": 9.772727272727273,
+      "y": 11,
+      "w": 0.5238095238095238
+    },
+    "C3b_trade_skews": true,
+    "canvas_census": {
+      "canvas-curve": 10058,
+      "canvas-pricing": 11434
+    }
+  },
+  "errors": [],
+  "overall": true
+}
