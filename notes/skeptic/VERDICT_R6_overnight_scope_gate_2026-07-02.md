@@ -419,3 +419,112 @@ artifacts only; they do not block the intern splice, which is CLEAR to proceed. 
 
 — skeptic (HEAD engine read at source L2208-2328/2735-2800 this turn; transcript 452-455 verbatim;
 cashflow trace code-path independently confirmed; no edits outside this verdict file + own memory)
+
+---
+
+# R6 SCOPE-GATE (fast) — funding same-slope deviation build — 2026-07-08
+
+**Artifact:** `notes/research/SPEC_funding_sameslope_2026-07-07.md` + the itemized intern scope
+(swap `fundingPerStrike` weight → same-slope `dev`, retire FE.2/FE.3, add FS.1–FS.6).
+**Sources read this turn:** operator transcript entries 458–462 VERBATIM
+(`history/operator/2026-06-10_kurtosis-curve-family-brief.md` L3383–3411); spec full; shipped
+`fundingPerStrike` at HEAD `bb2f8230` L2311–2327 (read with my own eyes). Deviation closed form
+**independently re-derived** (below).
+
+## Independent re-derivation of the deviation (attack on the central claim)
+Pool value `v∝ρ^(−g)`, `g=m·γ`; anchor `v∝ρ^(−g_a)`, `g_a=m·1=m`. Same-slope σ: `ρ_p=(g/σ)^{1/(g+1)}`,
+`ρ_a=(g_a/σ)^{1/(g_a+1)}`. Reading each curve at the pool's own strike ρ (σ=pool slope there) gives
+`ρ_p=ρ` and `ρ_a=(g_a/g)^{1/(g_a+1)}·ρ^{(g+1)/(g_a+1)}`, so
+`D̃=ρ_p/ρ_a=(g/g_a)^{1/(g_a+1)}·ρ^{(g_a−g)/(g_a+1)}`. Anchoring out the ATM prefactor ⇒
+`D̃=ρ^c`, `c=(g_a−g)/(g_a+1)=(m−mγ)/(m+1)=m(1−γ)/(m+1)`. **Matches spec §1 line 41/45 exactly.**
+Signatures verified: ρ=1 ⇒ 0; w=½ ⇒ γ=1 ⇒ c=0 ⇒ 0 ∀strike; grows in |w−½| and |ln ρ|. Claim SURVIVES.
+
+Shipped formula confirmed at source: `return kappa*gamma*N*ext*(S-1)/S*dt`, `ext=mk−intr` (source
+comment literally: "single hump peaking at ATM"), `S=poolMark/oracle`. The regression decomposition
+in spec §3 is accurate: `ext` peaks at ATM (contradicts entry-458 target of 0-at-money — a forced
+removal), `(S−1)/S` is the pool-vs-ORACLE gap (one global scalar, nonzero on a symmetric pool).
+
+## Per-item verdict
+**Item 1 (weight → dev, OTM-gated, ±g sign kept) — CLEARED, with one condition on drop-(S−1) below.**
+- Dropping `ext` is not optional: `ext` peaks at ATM, which directly violates the operator's
+  entry-458 confirmed target (0 at the money). Forced by 458, in scope.
+- `dev` closed form re-derived and correct. OTM-gate (`intr>0?0:dev`) correct: put ITM ⟺ θ>mode,
+  matched to `markLensed` parity arms.
+- Keeping `±g=±m·γ` (not merely a sign — it carries the m·γ MAGNITUDE) is the existing untouched
+  scaffolding, so not a new decision; but note spec F2 (m then enters twice ⇒ funding ~m²). The
+  displayed value is therefore `±(m·γ)·dev`, NOT the bare deviation — a labeling constraint (Item 2).
+
+**Item 2 (output = deviation as labeled placeholder; NO cap/HL formula) — CLEARED WITH CONDITION.**
+- No capped/HL formula added: respects entry-462 deferral. Good.
+- CONDITION (honesty): the shipped placeholder magnitude is `κ·±g·N·dev·dt`, not the pure deviation.
+  The loud comment + the UI/label must say "placeholder funding — same-slope deviation ×
+  current scaffolding; actual funding formula (Hyperliquid premium→rate + cap) TBD (update-2)".
+  It must NOT be labeled "the deviation" as if the displayed number equals `dev`. The UI label must
+  actually RENDER (tester-confirmed live) — a code-comment alone is not honest disclosure when a
+  half-built funding number is on screen. The spec provides the code comment but does NOT specify the
+  UI label; the intern must add it and the tester must confirm it renders.
+
+**Item 3 (retire FE.2/FE.3, add FS.1–FS.6; killer FS.2b) — CLEARED.**
+- FS.2b genuinely rejects BOTH prior regressions (check (e), verified against the spec's measured
+  negative controls + my read of the shipped fn): on a w=½ pool with S≠1, same-slope `dev=0` ⇒
+  funding 0; `ext` there = 0.0015/0.013/0.037 (nonzero ⇒ FAILS), moneyness `proxy=|ln(θ/mode)|` =
+  2.30/1.20/0.69 (nonzero ⇒ FAILS), and the shipped fn itself = 2.64/7.33/14.4 (nonzero — the
+  regression, caught). The fixture correctly uses orc≠oi so S≠1 (else vacuous). Retiring FE.2
+  (hump-peaks-ATM) and FE.3 (±g·(S−1)/S·ext) is correct — those checks ENCODE the regression.
+- FORWARD-COMPAT NOTE (not a block): FS.1/2/4 assert on the fundingPerStrike OUTPUT = 0. That tracks
+  `dev=0` only because the surrounding scaffolding is nonzero this build. When update-2's HL formula
+  wraps `dev` (esp. if it carries an interest-rate term, HL funding = premium + clamp(interest−premium)),
+  output=0 will NO LONGER track dev=0, and the tempting move will be to WEAKEN FS.2b so the new formula
+  passes — reopening the exact regression door. The robust lock should test the deviation
+  SUB-expression, not the funding output. Flag it now so update-2 cannot silently soften FS.2b.
+
+**Item 4 (closeBand UNTOUCHED) — CLEARED.** Consistent with entry-458 "close mechanics unaffected".
+
+## THE drop-(S−1) RULING (the one genuine ambiguity)
+**Ruling: (i) IN SCOPE for the placeholder OUTPUT — but the FINAL-funding oracle-coupling decision
+(spec F1) stays OPEN / operator-tier and must NOT be recorded as settled.**
+
+Reasoning. `(S−1)/S` is the pool-vs-ORACLE premium — definitionally NOT the pool-vs-anchor deviation
+the operator defined in entry 459 ("same slope across both curves ... ray angles ... angle ratio").
+Entry 462 makes our deviation the PROXY that FEEDS the deferred Hyperliquid formula ("with the proxy
+whstevr i said"). In HL funding the premium is exactly the rate-formula input; so `(S−1)/S` is the
+OLD premium proxy occupying the SAME slot the deviation now takes — keeping both would multiply two
+different premium proxies, which is incoherent, and would make the "deviation" placeholder actually
+`dev × (pool-vs-oracle premium)`, i.e. NOT the deviation. The DEFERRED piece (462) is the premium→rate
+TRANSFORM (the HL cap), not the premium INPUT; "get the deviation right" produces that input, and
+`(S−1)/S` was the wrong input. So dropping it from the deviation placeholder does not touch the
+deferred formula.
+
+BUT the itemized scope calls `(S−1)/S` flatly "the regression" and self-adopts its removal, while the
+spec's OWN author flagged removal as **F1 = operator-tier funding semantics, "do not self-adopt"**
+(Gate 2 / CLAUDE.md §7 lists funding semantics as operator-escalate). Both keep and drop pass the gate
+(spec F1), so nothing technical forces it. The reconciliation: dropping `(S−1)/S` from THIS
+deviation-only placeholder OUTPUT is fine (it is not the deviation, and the placeholder is reversible
+in update-2), **but the manager/intern must NOT encode "final funding is oracle-independent" as a
+resolved design decision.** Whether the FINAL funding rate couples to the pool-vs-oracle premium is
+the F1 question and rides update-2's HL formula — it must be surfaced to the operator and left OPEN in
+CLAUDE.md / changelog / memory. If any artifact records oracle-independence as settled semantics, that
+specific claim is **BLOCKED** pending operator ratification (F1). Drop the term; keep the decision open.
+
+## Other scope checks
+- (a) Citations: item-2 cites entry-462 verbatim — solid. Items 1 & 3 cite "460 'real same-slope' /
+  'lock so it can't regress'": those phrases live in the manager's CONTEXT NOTES, not the operator's
+  VERBATIM entry 460 (verbatim 460 = "this is a regression happpened around 20-30 times"). The
+  substantive same-slope DEFINITION is entry **459** (verbatim, solid); the lock is well-motivated by
+  the 20–30× regression flag. Grounding is real; citation precision is loose — cite 459 for the
+  same-slope method. Minor note, not a block, no misrepresentation of operator intent.
+- (c) Honesty of placeholder: CLEARED conditional on the Item-2 label condition (must render live,
+  must not claim the number equals `dev`).
+- (d) Control inventory (R3): the splice swaps a weight inside one function and adds no UI control.
+  The cap is deferred ⇒ NO cap knob this build — CONFIRMED, and the intern must not add one. CLEARED.
+- (e) FS.2b rejects both regressions — CONFIRMED above.
+
+## Net
+Items 1/2/3/4 CLEARED (1 and 2 carry the stated conditions). drop-(S−1): (i) in-scope for the
+placeholder output; F1 (final oracle-coupling) stays OPEN/operator-tier — do not record as settled.
+Intern splice is CLEAR to proceed under: (Item-2) live-rendered honest placeholder label; (Item-3
+fwd-note) FS.2b must not be softened in update-2; (drop-(S−1)) no "oracle-independent funding"
+recorded as final. Standard chain binds (file-safety gate, tester live acceptance, STOP-ON-RED).
+
+— skeptic (deviation closed form independently re-derived; shipped fundingPerStrike read at source
+L2311–2327; transcript 458–462 verbatim; no edits outside this verdict file + own memory)
