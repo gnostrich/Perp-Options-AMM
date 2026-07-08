@@ -3366,3 +3366,9 @@ _Context: operator's architectural correction — the AMM tx does NOT conserve v
 _Context: leak retracted (misattribution; update-1 clean of the alleged exploit; only a bounded ~$200 non-extractable self-drain survives). Operator un-halts: go on with the build (update-1 clean sell-back close + funding-on-option-part; charge-back parked)._
 
 > yes go on
+
+
+## Entry 456 — 2026-07-07 UTC
+_Context: update-1 done. Operator asks for the latest HTML + an accompanying reasonably-formatted changelog file (pdf/whatever) with the requested changelog (the CTO handover: 80f050e2 → current)._
+
+> ok done? then give latest html and accompanying reasonably formatted pdf / whatever file with the requested changelog

@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page{margin:18mm 16mm}
+body{font:13px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;max-width:760px;margin:0 auto}
+h1{font-size:21px;border-bottom:3px solid #2b6cb0;padding-bottom:6px;margin-bottom:2px}
+h2{font-size:16px;color:#2b6cb0;margin-top:26px;border-bottom:1px solid #cbd5e0;padding-bottom:3px}
+h3{font-size:13.5px;margin-top:16px;margin-bottom:4px}
+.sub{color:#555;font-size:11.5px;margin-top:2px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12px}
+th,td{border:1px solid #cbd5e0;padding:5px 7px;text-align:left;vertical-align:top}
+th{background:#edf2f7;font-weight:600}
+td.port{white-space:nowrap;font-weight:600;color:#2b6cb0;text-align:center}
+code{background:#f0f4f8;padding:0 3px;border-radius:3px;font:11.5px SFMono-Regular,Consolas,monospace}
+.box{border-left:4px solid #dd6b20;background:#fffaf0;padding:8px 12px;margin:10px 0;font-size:12px}
+.box.red{border-color:#c53030;background:#fff5f5}
+.box.grn{border-color:#2f855a;background:#f0fff4}
+.small{font-size:11px;color:#555}
+ul{margin:4px 0 4px 0;padding-left:20px} li{margin:2px 0}
+</style></head><body>
+
+<h1>Temporal Exchange — Engine Changelog for the CTO / Go backend</h1>
+<p class="sub">From your build <code>md5 80f050e2</code> (2026-06-14) &rarr; current HEAD <code>md5 bb2f8230</code> (2026-07-07).
+Feature-level, with a <b>Port</b> column = does the Go backend need a math/logic change, or is it display-only.</p>
+
+<div class="box grn"><b>How to read this:</b> everything under "Core math" and "Close &amp; settlement" changes the numbers your backend must reproduce.
+"Display only" rows are UI — port only if you mirror the front-end. The gate suite <code>engine/verify/lens_selfcheck.js</code>
+(31 checks) doubles as your acceptance tests — every anchor number below is asserted there.</div>
+
+<h2>1. Core math (port these first)</h2>
+<table>
+<tr><th>#</th><th>Change</th><th>Plain English</th><th class="port">Port</th></tr>
+<tr><td>1</td><td><b>ITM option value rebuilt (linear smooth-paste, "PKG-ITM v2")</b></td>
+<td>Your build's in-the-money values were wrong: the value curve dipped <i>below</i> the exercised payoff from ~S/K 0.80 down, and the exercise boundary sat at 0.444K instead of the correct 0.667K (γ=2 put). Now the waiting-value power curve is welded <i>tangentially</i> (same value &amp; slope) onto the LINEAR payoff line. Put boundary <code>S*=K·g/(g+1)</code>, call <code>K·(g+1)/g</code>, <code>g=m·γ</code>; boundary value <code>1/(g+1)</code>; past it the value IS the payoff line. Guarantee (machine-checked + hard gate): quoted value never below the exercised payoff. Test anchors: γ=2,K=$100,m=1 &rarr; S*=$66.67, boundary ⅓, ATM 0.148; m=3 &rarr; S*=$85.71, boundary 1/7, ATM 0.057.</td><td class="port">YES</td></tr>
+<tr><td>2</td><td><b>Trades conserve at the TRADE POINT</b></td>
+<td>Your build applied conservation at the reserve point (a repeated spec regression). Now a trade executes where the strike ray meets the curve: <code>x_T=x·ρ^(w−1), y_T=y·ρ^w</code> (ρ = tx-ray/mode); the local pair <code>α_T=w·x_T, β_T=(1−w)·y_T</code> is conserved; <code>Δx=−α_T·β_T·Δy/((y_T−β_T)(y_T+Δy−β_T))</code>; new <code>w′=α_T/(x_T+Δx)</code>. Anchor: (x,y,w)=(10,10,½), ray θ=4, Δy=1 &rarr; Δx=−5/22, x′=215/22, <b>w′=11/21</b> exactly (not 22/43, not 6/11). Spot swaps (ρ=1) reduce exactly to your old formula — spot/arb/rebase code byte-identical. Consequence: α,β genuinely move on off-ATM trades by design.</td><td class="port">YES</td></tr>
+<tr><td>3</td><td><b>Vol knob: constant slope-multiplier <code>m</code></b> (if not already in your line)</td>
+<td>Single scalar knob: lensed option-value steepness <code>g_loc = m·γ</code>, constant at every strike (m=1 = plain curve; bigger m = steeper everywhere + trade lands further out via <code>θ_tx=mode·(chosen/mode)^m</code>). Read and written through one shared helper; pool stays plain Balancer.</td><td class="port">YES</td></tr>
+</table>
+
+<h2>2. Close &amp; settlement — NEW in update-1 (2026-07-07)</h2>
+<table>
+<tr><th>#</th><th>Change</th><th>Plain English</th><th class="port">Port</th></tr>
+<tr><td>4</td><td><b>Close is ONE path — a sell-back trade for every leg</b></td>
+<td>The old close had two branches: OTM legs reversed on the AMM, ITM legs were pulled off and cash-settled — a seam that made total payout JUMP ~45–87% at the OTM→ITM boundary. Now EVERY leg closes as a live reverse trade on today's curve (<code>tradeUpdateAt</code>), ITM included, no cash-settle branch. Payout is continuous across the strike (measured: crossing step 0.48× median = no jump). The trader is credited option/perp VALUE only (<code>L0·raw_net·carvedEquity</code>, raw_net = option values locked <i>before</i> the swap) — the AMM swap is pool-internal bookkeeping, never credited to a wallet.</td><td class="port">YES</td></tr>
+<tr><td>5</td><td><b>Funding charged on the option-part (extrinsic), not full value</b></td>
+<td>Funding weight <code>mark</code> &rarr; <code>mark − intrinsic</code> (intrinsic = parity arm: put <code>max(0,1−mode/θ)</code>, call <code>max(0,1−θ/mode)</code>). Funding becomes a single hump peaking at-the-money and <b>exactly zero past the free boundary S*</b> (deep ITM). Reason: an ITM option is mostly the underlying, funded by the perp layer — don't double-charge. The pool-imbalance sign <code>±g·(S−1)/S</code> is unchanged. Note: on an equilibrium pool a pure spot move gives zero funding (oracle cancels); funding responds to pool disequilibrium.</td><td class="port">YES</td></tr>
+</table>
+
+<div class="box red"><b>⛔ Residual x-drain — READ before multi-party launch.</b>
+The new close does NOT round-trip pool reserves exactly (the old close did). A round trip leaves a small underlying shortfall (<code>Δx&lt;0, Δy=0</code> exact). Verified characterization:
+<ul>
+<li><b>Non-extractable by construction</b> — the trader gets option value only; no code path credits the swap's dx/dy to any wallet (credit path byte-identical across the change).</li>
+<li><b>Impermanent-loss-like / recovering</b> — if price leaves and returns, the residual recovers to a fixed small value independent of the excursion.</li>
+<li><b>Bounded, ∝notional²</b> (e.g. −$29 on a test band). Harmless in a single-user sim; a small LP-vs-cycler asymmetry in a multi-party pool.</li>
+</ul>
+<b>PARKED — UPDATE-2 (not implemented):</b> a no-free-money floor + counterfactual charge-back neutralizes this and restores the exact no-free-money guarantee. <b>Implement it before shipping this close to a shared/multi-party pool.</b> Design: <code>specs/FIX_close_b_receipt_charge_PARKED_2026-07-03.md</code>.</div>
+
+<h2>3. Display-only (no Go port unless you mirror the UI)</h2>
+<table>
+<tr><th>#</th><th>Change</th><th>Plain English</th></tr>
+<tr><td>6</td><td>Chart-2 true-value X wings + %/$ toggle</td><td>Both wings drawn OTM→ITM crossing at ATM; pool-quoted continuation solid, escrow-parity tail dashed; fraction/dollar toggle. Old peak-at-1 tent retired.</td></tr>
+<tr><td>7</td><td>Vol-direction caption fix</td><td>MORE volatile asset ⇒ LOWER m (fatter wings). Your build said the opposite.</td></tr>
+<tr><td>8</td><td>m clamped to [1,6]</td><td>Out-of-range m silently drove the lens out of range; now clamps with write-back.</td></tr>
+<tr><td>9</td><td>Funding P/L column per position line</td><td>Portfolio shows accrued funding as a SIGNED P/L number (negative = line paid). Line P/L = base + funding×oracle. Ledger stores "trader pays" as positive — display negates it (get this sign right). Disclosure shown: displayed P/L includes accrued funding; cash at close settles ex-funding until the funding transfer layer ships.</td></tr>
+<tr><td>10</td><td>Caption/label truth-ups</td><td>Invariant-Watch states the trade-point law (α/β move off-ATM by design); "% of escrow unit" → "fraction of escrow unit"; band preview animates the actual per-leg path.</td></tr>
+</table>
+
+<h2>4. Verification you can lean on</h2>
+<ul>
+<li><b>Gates <code>engine/verify/lens_selfcheck.js</code> — 31 hard checks</b> (+ <code>a16_atm_gate.js</code> 5). Every anchor number above is asserted; each check is negative-controlled (a sabotaged engine fails exactly the intended check). Use them as your Go acceptance tests.</li>
+<li><b>CM6-v2 retired:</b> the old "exact round-trip / no-free-money" gate is gone (the new close is a pool-reprice close). No-free-money returns with the parked update-2 floor.</li>
+<li><b>Formal (Lean, via Harmonic's Aristotle; artifacts on request):</b> value ≥ payoff, the seam weld + uniqueness, trade/rebase commutation.</li>
+</ul>
+
+<h2>5. Ruled but NOT in this handover (so nothing surprises you)</h2>
+<ul>
+<li>Update-2: charge-back / no-free-money floor + LP &amp; multi-wallet defenses (parked — needed before multi-party).</li>
+<li>Funding cash transfer between clubs (rate law exists; transfer layer is future).</li>
+<li>Read-layer smoothing (EMA-banded γ) + skew rate-limit (calibration campaign, future).</li>
+</ul>
+
+<p class="small">Latest engine file: <code>engine/builds/HEAD_temporal_mvp_v28_lens.html</code> (md5 <code>bb2f8230</code>). Prior close retained as the revert twin <code>temporal_mvp_v28_lens_twocaseclose.html</code> (<code>51342574</code>). Generated 2026-07-07.</p>
+</body></html>
