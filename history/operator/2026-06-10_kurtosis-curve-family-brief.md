@@ -3372,3 +3372,9 @@ _Context: leak retracted (misattribution; update-1 clean of the alleged exploit;
 _Context: update-1 done. Operator asks for the latest HTML + an accompanying reasonably-formatted changelog file (pdf/whatever) with the requested changelog (the CTO handover: 80f050e2 → current)._
 
 > ok done? then give latest html and accompanying reasonably formatted pdf / whatever file with the requested changelog
+
+
+## Entry 457 — 2026-07-07 UTC
+_Context: operator: the CTO changelog must be much simpler English (he won't understand it); and a technical catch — isn't funding-on-extrinsic moot since it's zero ITM anyway and OTM is only extrinsic? Manager: OTM unchanged (operator right), but NOT moot — old build funded full value forever ITM; extrinsic is what makes it fade to zero ITM (+ smooth vs seam). Rewriting changelog plain._
+
+> changelog has to be simpler English; he;s not going to understand shit fro ths and isnt funding chardeg on extrinsic or hwatevrr moot because its zero itm anyway and otm is only extrinsic?
