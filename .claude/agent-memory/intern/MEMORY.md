@@ -1,6 +1,40 @@
 # MEMORY — intern
-_Last updated: 2026-07-08 (REBASE anti-regression LOCK — gate-only .js edit on HEAD `abd35f4b`;
-HTML md5 UNCHANGED; handed to manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-08 (VOCAB relabel TEXT-ONLY on HEAD — lean→skew/deviation scrub; HTML md5
+`abd35f4b`→`d8947fb1`; handed to manager; no git). Rewrite changed bits at task end._
+
+## Done — VOCAB relabel (lean→skew/deviation) TEXT-ONLY (promoted to HEAD 2026-07-08, handed to manager)
+Operator entry 474 (rejects "lean") / entry 476 (go "1 fix"). Reference `docs/VOCABULARY.md`. PURE
+vocabulary scrub — ZERO logic/numeric/signature change. HEAD `abd35f4bbd59be4fde0565e5981bda71` →
+**`d8947fb193b0310173ce59aac8958c29`**. Splice `scratchpad/splice_vocab.py` on work copy
+`scratchpad/work_vocab.html` — 10 ASCII substring edits (all inside comments/labels), each count==1;
+blobs never through. Diff = exactly 8 hunks, all comment/label text; every executable token
+(`w_new`, `aT`, `xT`, `dx`, `Math.abs(c*Math.log(...))`) BYTE-IDENTICAL.
+- **VISIBLE (gating):** L1523 header text `Funding (lean; TBD)`→`Funding (skew dev; TBD)` + tooltip
+  `Funding (same-slope lean; formula TBD, update-2)`→`Funding (same-slope ray deviation / curve skew;
+  formula TBD, update-2)`; L1538 units-note caption `LEAN (deviation)`→`SKEW DEVIATION`.
+- **COMMENTS:** L1727 `the new lean is read`→`the new skew (w) is read`; L1744 `// lean at displaced
+  T`→`// skew (w) at displaced T`; L1751 `lean increment`→`skew increment`; L2306 `Same-slope
+  LEAN/deviation ONLY`→`Same-slope ray-deviation ONLY`; L2313 `POOL-LEAN signature`→`POOL-SKEW
+  signature`; L2314 `the standing lean, read per strike`→`the standing skew, read per strike`;
+  L2325 `// OTM-only lean weight`→`// OTM-only deviation weight`.
+- **NOT touched (correctly):** `Lean identities`/`Lean model`/`.lean` (prover), `clean`/`cleanly`,
+  `SPEC_update1_clean_close`, `leg`.
+- **FILE-SAFETY:** blobs `ab663f5c`@74/`c505b08a`@1060 canonical before+after; 3 scripts parse
+  (747/453/1944, max script line 509); IIFE intact; surgical diff = 8 intended hunks only.
+- **GATES:** `cd engine && sh verify/run_all.sh` RC=0 — lens_selfcheck **41 PASS**, a16 **5 PASS**,
+  blob multiset canonical, monolith 8/8 report-green. `bash engine/verify/vocab_gate.sh`: HEAD
+  `[engine-visible] clean` + no `[engine-comments]` advisory note (HEAD engine fully clean).
+- **⚠ run_all.sh md5 pin STILL `abd35f4b` (EXPECTED mismatch)** — manager re-pins to `d8947fb1`.
+- **⚠ handover snapshot `handover/temporal_mvp_v28_lens_abd35f4b.html` is the OLD build** (md5
+  abd35f4b, pre-relabel) — vocab_gate FAILs on it (deliverable-prose), OUT OF MY SCOPE. Manager
+  re-snapshots the handover copy from the new HEAD at promotion.
+- **Open for manager:** git (sole actor); re-pin run_all.sh line-8 md5 → `d8947fb1`; re-snapshot the
+  handover deliverable copy (then vocab_gate goes fully green). **Open for tester:** trivial live
+  re-check — Funding column header reads "Funding (skew dev; TBD)", tooltip + units-note "SKEW
+  DEVIATION" render; behavior identical.
+
+---
+
 
 ## Done — REBASE anti-regression LOCK (GATE-ONLY, .js edit; HTML UNCHANGED, handed to manager 2026-07-08)
 Operator entry 466 (40+ historical rebase regressions ⇒ permanent lock). Source: research-lead

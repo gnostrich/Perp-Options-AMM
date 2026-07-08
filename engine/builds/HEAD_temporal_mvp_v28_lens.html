@@ -1520,7 +1520,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <th>Attrib P&L / Eff strike</th>
               <th>Equity@close / Mark</th>
               <th>Value (carved-perp)</th>
-              <th title="Funding (same-slope lean; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.">Funding (lean; TBD)</th>
+              <th title="Funding (same-slope ray deviation from the anchor curve; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.">Funding (ray dev; TBD)</th>
               <th>L₀ · Club · Status</th>
               <th></th>
             </tr>
@@ -1535,7 +1535,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           stage-2 → stage-3 equity multiply. Effective strike = original
           strike (OTM) or perp mark (ITM); regime is perp-mark-decided.
           Funding column is a PLACEHOLDER — the same-slope pool-vs-anchor
-          LEAN (deviation) carrying the ±g sign/scale, NOT the final funding
+          SKEW DEVIATION carrying the ±g sign/scale, NOT the final funding
           number; the funding formula is TBD (update-2). Signed P/L effect
           (+ received, − paid; ledger stores trader-pays, display negates).
           Line P/L shown INCLUDES this placeholder accrual; cash at close
@@ -1724,7 +1724,7 @@ const Engine = (function() {
   // 14/16/339; inventory #16 anchoring fix). rho = theta_tx/mode — the strike's
   // moneyness ratio (rho=1 ⇒ spot ⇒ reduces EXACTLY to tradeUpdate). The
   // conservation law is applied AT the trade point T = ray∩curve with the LOCAL
-  // pair α_T,β_T; flows are drawn from the ACTUAL reserves; the new lean is read
+  // pair α_T,β_T; flows are drawn from the ACTUAL reserves; the new skew (w) is read
   // at the displaced trade point. Global α,β genuinely move (by design — paper
   // §2.3). Exhibit: (10,10,½), rho=4, dy=+1 ⇒ Δx=−5/22, w′=11/21.
   function tradeUpdateAt(s, dy, rho) {
@@ -1741,14 +1741,14 @@ const Engine = (function() {
     const dx = -aT * bT * dy / denom;                       // translated-CP flow AT T
     const x_new = s.x + dx, y_new = s.y + dy;               // ACTUAL reserves move
     if (!isFinite(x_new) || !isFinite(y_new) || x_new <= 0 || y_new <= 0) return null;
-    const w_new = aT / (xT + dx);                           // lean at displaced T
+    const w_new = aT / (xT + dx);                           // skew (w) at displaced T
     if (!(w_new > 0 && w_new < 1)) return null;
     return { x: x_new, y: y_new, alpha: x_new * w_new, beta: y_new * (1 - w_new) };
   }
 
   // Frozen-arc close (R-218 extended: freeze the ARC, not just the strike). arc =
   // {dxA, dyA, dwA, oOpen} captured at open; rr = oracle_now/arc.oOpen. Exact inverse
-  // of the leg's own open flows + lean increment (machine-exact round trip). KEPT for
+  // of the leg's own open flows + skew increment (machine-exact round trip). KEPT for
   // UPDATE-2 charge-back; the live close no longer calls it — it uses tradeUpdateAt
   // (SPEC_update1 §1/§4). Honest reject on infeasible.
   function revertArc(s, arc, rr) {
@@ -2303,15 +2303,15 @@ const Engine = (function() {
   //   funded a symmetric w=½ pool (the recurring ~20–30× regression). The (S−1) term is
   //   the REGRESSION removed from the placeholder — NOT "final funding / oracle-independent
   //   decided" (that stays operator-tier OPEN, F1, rides UPDATE-2).
-  //   *** THIS IS NOT THE FINAL FUNDING FORMULA. *** Same-slope LEAN/deviation ONLY; the
+  //   *** THIS IS NOT THE FINAL FUNDING FORMULA. *** Same-slope ray-deviation ONLY; the
   //   funding formula (cap / HL / interest) is DEFERRED to UPDATE-2 (operator entry 462).
   //   NO cap, NO new knob added here (R3).
   //   Geometry: fix a slope; read the ray each curve attains it at; deviation = anchored
   //   ray-ratio D̃ = ρ^c, c = (g_a − g)/(g_a + 1); ρ = strike_theta/mode. Weight = |ln D̃|
   //   = |c·lnρ|.  g = gLoc = m·γ (pool, γ LIVE); g_a = m (anchor w=½, γ=1); tau carries m.
   //     ZERO at ATM (ρ=1) — respects the ATM point (entry 386)
-  //     ZERO ∀ strikes when w=½ (g=g_a ⇒ c=0) — POOL-LEAN signature, NOT moneyness (killer)
-  //     grows with |w−½| and |lnρ| — the standing lean, read per strike (entry 232: m re-scales)
+  //     ZERO ∀ strikes when w=½ (g=g_a ⇒ c=0) — POOL-SKEW signature, NOT moneyness (killer)
+  //     grows with |w−½| and |lnρ| — the standing skew, read per strike (entry 232: m re-scales)
   //   Signed by the wing ±g (call +, put −) — KEPT sign/scale, placeholder direction. OTM-gated
   //   (intr>0 ⇒ ITM ⇒ 0). oracle/oracle_initial kept in the sig for ABI/back-compat, unused.
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial, tau) {
@@ -2322,7 +2322,7 @@ const Engine = (function() {
     const intr = (wing === 'call') ? Math.max(0, 1 - strike_theta / mode)
                                    : Math.max(0, 1 - mode / strike_theta);   // intr>0 ⟺ ITM
     const dev = (intr > 0 || !(mode > 0) || !(strike_theta > 0)) ? 0
-              : Math.abs(c * Math.log(strike_theta / mode));                  // OTM-only lean weight
+              : Math.abs(c * Math.log(strike_theta / mode));                  // OTM-only deviation weight
     const gamma = (wing === 'call') ? +g : -g;            // ±g_loc: wing sign + m-scale (KEPT)
     return kappa * gamma * N * dev * dt;                  // (S−1)/S and ext REMOVED (§3); OTM-gated
   }

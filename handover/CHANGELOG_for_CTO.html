@@ -20,9 +20,9 @@ ul{margin:4px 0;padding-left:20px} li{margin:3px 0}
 </style></head><body>
 
 <h1>What changed in the engine since your version</h1>
-<p class="sub">Your version: <code>80f050e2</code> (14 Jun). Current: <code>abd35f4b</code> (7 Jul).
+<p class="sub">Your version: <code>80f050e2</code> (14 Jun). Current: <code>5ce1a76c</code> (8 Jul).
 Below is what changed, in plain terms, with the numbers your Go code should reproduce.
-The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every number here — run your port against it.</p>
+The file <code>engine/verify/lens_selfcheck.js</code> (41 checks) tests every number here — run your port against it.</p>
 
 <div class="box grn"><b>Tag key:</b> <span class="tag">PORT</span> = changes the numbers, you must implement it.
 <span class="tag ui">UI</span> = front-end only, skip unless you mirror the display.</div>
@@ -49,7 +49,7 @@ The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every nu
 
 <div class="item big"><span class="hd">5. Funding is being reworked — this version ships the correct DEVIATION (the input), not the final funding number yet.</span> <span class="tag">PORT</span>
 <div class="do">Your version's funding was wrong: it charged funding even on a perfectly <b>balanced</b> pool. Fixed to the correct measure — <b>the ray deviation between the pool curve and a balanced (anchor) curve, at your strike</b>. Concretely: take the slope of the live pool curve at the strike, find where the balanced (symmetric) curve has that <b>same slope</b>, and compare the two ray angles — that is the <b>curve skew / ray deviation</b>. It is <b>zero when the pool is balanced, zero at-the-money, zero in-the-money</b>, and grows the more the pool curve is skewed — a smooth out-of-the-money lobe.</div>
-<div class="num"><b>Purpose — same as a perp's funding:</b> it is a tether. The <b>pool-curve ray angle plays the role of the "mark", the anchor-curve ray angle plays the role of the "oracle"</b>; funding pushes the crowded side to pull the skew back toward balanced — exactly how perp funding pulls the mark back to the index. <b>This deviation is the INPUT</b> (the mark-vs-oracle gap), <b>not the funding rate itself.</b> The actual rate = plug this deviation into a capped funding formula (Hyperliquid-style) — that formula, <b>including its cap, is coming in the NEXT update</b> with the safety patch. So this version shows the deviation as a placeholder (the UI column is labeled <code>Funding (skew dev; TBD)</code>).<br>
+<div class="num"><b>Intended purpose — the same as a perp's funding</b> (a tether / imbalance signal, not a volatility premium). In the planned formula the <b>pool-curve ray angle is the "mark" and the anchor-curve ray angle is the "oracle"</b>, so this deviation is the mark-vs-oracle gap that the funding rate will be computed from. <b>This deviation is the INPUT only</b> — <b>not the funding rate, and not the cash transfer</b>; both the rate formula (Hyperliquid-style, with a cap) and the actual funding transfer are the <b>NEXT update</b>. So this version shows the deviation as a placeholder (the UI column is labeled <code>Funding (ray dev; TBD)</code>).<br>
 <b>Port now:</b> the deviation <code>dev = |c·ln(strike/mode)|</code>, <code>c = (g_anchor − g)/(g_anchor + 1)</code>, <code>g = m·γ</code> (pool), <code>g_anchor = m</code> (balanced), gated to zero in-the-money. <b>Port next update:</b> the deviation→rate formula + cap. Sign (who pays) is the wing sign, unchanged. <b>Test:</b> on a balanced pool this must read zero at every strike — that's the check that catches the old bug.</div></div>
 
 <div class="box red"><b>⚠ Warning — read before you run this on a real shared pool.</b>
@@ -82,5 +82,5 @@ The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every nu
 <li>Smoothing of the funding/price reads over time (a later tuning pass).</li>
 </ul>
 
-<p class="small">Latest engine file: <code>engine/builds/HEAD_temporal_mvp_v28_lens.html</code> (md5 <code>abd35f4b</code>). The previous close is kept as a backup: <code>temporal_mvp_v28_lens_twocaseclose.html</code>. Generated 7 Jul 2026.</p>
+<p class="small">Latest engine file: <code>engine/builds/HEAD_temporal_mvp_v28_lens.html</code> (md5 <code>5ce1a76c</code>; this dir: <code>temporal_mvp_v28_lens_5ce1a76c.html</code>). The previous close is kept as a backup: <code>temporal_mvp_v28_lens_twocaseclose.html</code>. Generated 8 Jul 2026.</p>
 </body></html>

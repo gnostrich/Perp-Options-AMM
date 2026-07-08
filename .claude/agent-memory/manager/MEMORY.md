@@ -2,6 +2,24 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **⚡ VOCAB SCRUB + funding-purpose (entries 474/476, 2026-07-08) — HEAD now `5ce1a76c` (was abd35f4b):**
+Operator rejected the term "lean" (entry 474); built a controlled-vocab GATE (`docs/VOCABULARY.md` +
+`engine/verify/vocab_gate.sh`, wired into run_all as HARD gate, POSIX-sh). Endorsed: curve SKEWS; funding
+input = RAY DEVIATION from the anchor curve at same-slope points. Banned = lean family + "curvature knob"
+(NOT "kurtosis knob" = operator-endorsed). Engine relabel (intern, TEXT-ONLY, blobs canonical): header
+`Funding (lean; TBD)`→`Funding (ray dev; TBD)`, tooltip, units-note "SKEW DEVIATION", 7 comments; gates
+**41+5 green**, vocab_gate PASS (HEAD + handover snapshot + prose clean; 108 advisory internal hits to
+clean over time). CTO pkg re-synced: `handover/temporal_mvp_v28_lens_5ce1a76c.html` + changelog de-lean'd +
+PDF regen (md5 `c550f7e4`, 102685b). **SKEPTIC (run a021db57) issued 3 FLAGs, ALL addressed:** (1) stale
+abd35f4b handover snapshot → re-snapshotted; (2a) my `skew dev` was a NEW portmanteau → relabeled `ray dev`;
+(2b) gate engine/handover comment inconsistency → `check_engine_file` unifies HEAD+snapshot; (3) FLAG-OVERSELL:
+I loaded operator's "same purpose as perps" into a settled tether MECHANISM + wrongly implied vol-premium
+"ruled out" → TEMPERED CTO note + UPDATE2 D2 (tether = operator's stated INTENT; rate+transfer TBD; premium
+reading NOT dead). **Funding-purpose (entry 476 item 2): CORROBORATED not resolved** — tether/imbalance
+intent, consistent w/ shipped direction; formula still TBD update-2. TESTER (run a588353c) live UI re-check
+RUNNING (header renders "ray dev", behavior byte-identical claim). Revert twin twocaseclose=`51342574`.
+This turn on feature branch `claude/exciting-archimedes-txs2wx`.
+
 🧭 **✅ ENTRY 468 ANSWERED (per-lean funding vs vol):** operator idiot-check — "per unit of lean, funding changes
 more for the LESS volatile assets, correct?" → YES. Re-derived: funding-per-lean coeff `|c|=m(γ−1)/(m+1)`;
 `d|c|/dm=(γ−1)/(m+1)²>0` for γ>1, so less-vol⇒higher-m⇒bigger |c|, SATURATING toward γ−1. Node-verified table

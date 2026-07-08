@@ -15,13 +15,17 @@ formula (Hyperliquid-style; the same-slope angles are the mark/oracle proxy).
 **OPEN DECISIONS (operator):**
 - **D1 formula shape.** Proposal: `rate = clamp( κ · (±sign) · dev , ±cap )`, or an HL-style
   premium(+interest) form. → NEED the specific mapping.
-- **D2 (F1) oracle coupling. ✅ ANSWERED (operator entry 476, 2026-07-08): "same purpose as with
-  perps."** Funding is a **tether / imbalance-correction**, identical in purpose to a perp's funding.
-  Proxy (entry-476 D1): **pool-curve ray angle = "mark", anchor-curve ray angle = "oracle"**; the
-  same-slope ray deviation IS the mark-vs-oracle gap, so **no separate external-oracle coupling term**
-  — the anchor plays the oracle role. This **CONFIRMS the shipped deviation direction** (more skew ⇒
-  larger deviation ⇒ more funding pulling the crowded side back); a vol-risk-premium reading (which
-  would invert the direction) is **ruled out**. No engine change.
+- **D2 (F1) oracle coupling. ◐ CORROBORATED, not fully resolved (operator entry 476, 2026-07-08:
+  "same purpose as with perps").** Operator states funding's PURPOSE = same as a perp's (a tether /
+  imbalance signal). Proxy (from the earlier D1 answer): **pool-curve ray angle = "mark", anchor-curve
+  ray angle = "oracle"**, so the same-slope ray deviation is the mark-vs-oracle gap — consistent with
+  no separate external-oracle term. This is **consistent with the shipped deviation direction** (more
+  skew ⇒ larger deviation). **SKEPTIC FLAG-OVERSELL (2026-07-08, appended unedited below):** entry-476
+  *corroborates* the tether reading, it does not *formalise the mechanism* — the transfer is unbuilt,
+  and a vol/premium reading is NOT dead (operator earlier: funding is a "premium as long as it's held";
+  the entry-468 lower-vol-more-sensitivity is a pricing artifact a pure tether doesn't predict). So:
+  tether is the operator's stated intent; the rate formula + transfer are TBD; do not encode
+  "premium reading ruled out" as settled. No engine change either way.
 - **D3 (F2) m-scaling.** m enters the deviation (via c) already; also via the ±g sign (=±mγ)?
   → single-m or m². (Operator D3 leans single-m via the deviation; shipped placeholder is m² — strip
   or let the formula resolve it.)
