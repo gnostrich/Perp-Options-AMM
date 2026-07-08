@@ -3396,3 +3396,9 @@ _Context: operator (1) asks to confirm the funding deviation is computed by the 
 _Context: operator rules (A) — build the ACTUAL same-slope pool-vs-anchor ray-angle-ratio deviation, not the moneyness proxy; and flags this is a RECURRING REGRESSION (~20-30 times) — the funding deviation keeps drifting from the same-slope method. Manager: build the real same-slope deviation + a HARD GATE that locks it so it can't regress again._
 
 > simple english -- this is a regression happpened around 20-30 times
+
+
+## Entry 461 — 2026-07-07 UTC
+_Context: operator warns the context window is running low; orders the manager to push everything to main and retain whatever context is needed so nothing is lost across a compaction._
+
+> also note the context window is running low so push to main retain ehatevr context you need so we dont lose asnytng

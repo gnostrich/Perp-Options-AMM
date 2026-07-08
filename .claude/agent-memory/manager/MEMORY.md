@@ -2,6 +2,40 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **PRE-COMPACTION ROLLUP 2026-07-07 (entries 427–461) — READ THIS FIRST, LIVE STATE:**
+- **HEAD = `bb2f8230` on main** (`85a9d28f`+ later) = UPDATE-1 clean sell-back close (both legs reverse
+  live via tradeUpdateAt, two-case cash-settle removed, revertArc/arc DORMANT for update-2; payout locked
+  from legPrice(s0) BEFORE swap ⇒ NON-EXTRACTABLE; gates 24→31). Twin `temporal_mvp_v28_lens_twocaseclose.html`=`51342574`.
+- **⚡ LIVE CAMPAIGN — FUNDING SAME-SLOPE FIX (operator RULED, entries 458/459/460):** update-1 shipped the
+  WRONG funding (weight=extrinsic `mark−intrinsic`, PEAKS at ATM, funds near-ITM sliver). Operator TARGET
+  (entry 458 confirmed): funding lives ONLY OTM, ZERO at ATM + ZERO ITM, fades smoothly at the ATM edge.
+  Operator RULED (460, "regression ~20-30×"): must be the REAL same-slope pool-vs-anchor ray-angle-ratio
+  deviation (entry 386/443/459 method: pool slope at strike → where anchor w=½ hits same slope → ratio of
+  the two ray angles; ZERO on unleaned w=½ pool, grows with lean), NOT the moneyness proxy (θ/mode) that
+  research-lead's `DERIVE_funding_otm_only_2026-07-07.md` first offered. **IN FLIGHT:** research-lead
+  deriving the real same-slope D(θ,w) + splice for `fundingPerStrike` (L2316-2326) + a HARD ANTI-REGRESSION
+  GATE (killer check (b): funding=0 on symmetric w=½ pool at OTM strikes — only the true same-slope passes;
+  mark-weight & proxy both fail). Likely root of the recurring regression = the shipped `(S−1)/S`×mark
+  magnitude structure standing in for the per-strike same-slope. THEN: intern build (funding only, closeBand
+  UNTOUCHED) → my verify → tester → push → CORRECT the CTO changelog (currently describes the WRONG extrinsic
+  funding — HELD, do not ship to CTO until funding fixed). Deliverable: `notes/research/SPEC_funding_sameslope_2026-07-07.md`.
+- **THE LEAK SAGA — RESOLVED/RETRACTED:** the "unbounded extractable drain" was a MISATTRIBUTION (pool
+  reserve REPRICE credited to NO wallet; trader gets option/perp VALUE only, code paths L2751-2767). Operator
+  (454) ruled AMM-tx-doesn't-conserve-value/option-price-does — CORRECT as built. `VERIFY_trader_cashflow_2026-07-07.md`
+  is the definitive note; `VERIFY_drain_structural_2026-07-07.md` Q2/Q3 RETRACTED. Update-1 clean of the
+  alleged exploit; only a bounded ~$29/N² non-extractable IL-like self-drain survives. LESSON (owned): I
+  amplified a false alarm (reassured "harmless" 2× unproven, then over-corrected to "obscene structural").
+- **PARKED (operator sequencing 451/452):** UPDATE-2 = charge-back/floor + LP/multi-wallet defenses (needed
+  before multi-party, NOT an exploit patch — leak retracted). Specs: `FIX_close_b_receipt_charge_PARKED_2026-07-03.md`,
+  `DEFENSE_TAKESTOCK_vs_dynamic_amms_2026-07-03.md`. Also parked: funding cash transfer (part-2), read-smoothing (EMA).
+- **CTO HANDOVER:** `handover/temporal_mvp_v28_lens_bb2f8230.html` + `handover/CHANGELOG_for_CTO.pdf`/.html
+  (plain-English, 2pp) on main. ⚠ changelog's FUNDING item is WRONG (extrinsic) — fix after the same-slope build.
+  CTO's current version = `80f050e2` (June 14). Changelog covers 80f050e2→bb2f8230.
+- **Design record:** `specs/DESIGN_itm_close_and_funding_2026-07-07.md` (ITM close per-part behavior +
+  settlement escrow-tally + change list). **Consolidated verifies** in `notes/research/VERIFY_*_2026-07-07.md`.
+- Paper SUBMITTED (`f8b37a71`); trade-point RATIFIED (entry 425); funding P/L column live. Queue: Lean
+  submissions, paper-agent memory, file-safety hook over-broad-grep false-positive (matches '0 FAIL'/'FAILS').
+
 🧭 **POST-SUBMISSION RULINGS 2026-07-02 latest (entries 402–406) — READ FIRST:**
 **WINE 2026 SUBMITTED (2nd submission): final tex md5 `f8b37a71` on main** — night arc entries 378–401:
 operator's v6 baseline + skew-only vocab + one-ray-one-curve mark + SAME-SLOPE funding ruling (386, fig
