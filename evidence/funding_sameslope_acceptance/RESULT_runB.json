@@ -1,0 +1,79 @@
+{
+  "build": "HEAD_temporal_mvp_v28_lens.html",
+  "md5": "abd35f4bbd59be4fde0565e5981bda71",
+  "run": "B",
+  "label": {
+    "header": "Funding (lean; TBD)",
+    "title": "Funding (same-slope lean; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.",
+    "noteText": "Every row above a TOTAL carries CARVED-PERP units (stage 2). The single dollar figure is the TOTAL row's settlement cell — the one stage-2 → stage-3 equity multiply. Effective strike = original strike (OTM) or perp mark (ITM); regime is perp-mark-decided. Funding column is a PLACEHOLDER — the same-slope pool-vs-anchor LEAN (deviation) carrying the ±g sign/scale, NOT the final funding number; the funding formula is TBD (update-2). Signed P/L effect (+ received, − paid; ledger stores trader-pays, display negates). Line P/L shown INCLUDES this placeholder accrual; cash at close settles EX-funding until the funding transfer layer ships.",
+    "noteVisible": true
+  },
+  "checks": [
+    {
+      "n": "A1 load: Engine+Store objects, fundingPerStrike present, chart-1 renders",
+      "p": true,
+      "d": "Engine=object Store=object fundingPerStrike=function closeBand=function getSNorm=function curveNonBlank=10056"
+    },
+    {
+      "n": "A2a header th reads exactly \"Funding (lean; TBD)\" (not \"Funding P/L\")",
+      "p": true,
+      "d": "header=\"Funding (lean; TBD)\""
+    },
+    {
+      "n": "A2b full-title disclosure on hover carries PLACEHOLDER / same-slope pool-vs-anchor / formula TBD, update-2",
+      "p": true,
+      "d": "title=\"Funding (same-slope lean; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.\""
+    },
+    {
+      "n": "A2c units-note carries the PLACEHOLDER same-slope LEAN (deviation)…formula TBD (update-2) sentence, VISIBLE",
+      "p": true,
+      "d": "noteVisible=true note=\"Every row above a TOTAL carries CARVED-PERP units (stage 2). The single dollar figure is the TOTAL row's settlement cell — the one stage-2 → stage-3 equity multiply. Effective strike = original strike (OTM) or perp mark (ITM); regime is perp-mark-decided. Funding column is a PLACEHOLDER — the same-slope pool-vs-anchor LEAN (deviation) carrying the ±g sign/scale, NOT the final funding number; the funding formula is TBD (update-2). Signed P/L effect (+ received, − paid; ledger stores trader-pays, display negates). Line P/L shown INCLUDES this placeholder accrual; cash at close settles EX-funding until the funding transfer layer ships.\""
+    },
+    {
+      "n": "A3a LEANED pool mode = getSNorm (NOT 1.0)",
+      "p": true,
+      "d": "w=0.3 mode(getSNorm)=2.333333 gamma=0.428571 g_loc=2.571429"
+    },
+    {
+      "n": "A3b LEANED: funding = 0 at the money (rho=1)",
+      "p": true,
+      "d": "call@ATM=0 put@ATM=0"
+    },
+    {
+      "n": "A3c LEANED: OTM lobe nonzero — call +g, put -g (opposite sign)",
+      "p": true,
+      "d": "callOTM=[6.145e-2,2.810e-1,8.730e-1,1.746e+0] putOTM=[-6.460e-2,-2.810e-1,-8.730e-1,-1.746e+0]"
+    },
+    {
+      "n": "A3d LEANED: OTM lobe FADES to zero toward the money (monotone)",
+      "p": true,
+      "d": "call 1.746e+0>8.730e-1>2.810e-1>6.145e-2 | put |.| 1.746e+0>8.730e-1>2.810e-1>6.460e-2"
+    },
+    {
+      "n": "A3e LEANED: ZERO in-the-money (both wings)",
+      "p": true,
+      "d": "callITM=[0.00e+0,0.00e+0,0.00e+0,0.00e+0] putITM=[0.00e+0,0.00e+0,0.00e+0,0.00e+0]"
+    },
+    {
+      "n": "A3f SYMMETRIC pool (w=1/2): funding = 0 at EVERY strike, both wings, m=6 AND m=3 (lean signature)",
+      "p": true,
+      "d": "mode=1 sample call/put @rho2.0 m6=(0,0) @rho0.5 m6=(0,0)"
+    },
+    {
+      "n": "A4 perps table has NO Funding column and #perps-tbody unchanged across 3 ticks",
+      "p": true,
+      "d": "perpsHeaders=[# | Side | Notional ($) | Margin ($) | Entry mark | P&L (live) | Equity (live) | Eff. leverage | Club | ] tbodyStable=true"
+    },
+    {
+      "n": "A5 zero pageerrors / console errors",
+      "p": true,
+      "d": "errors=0 []"
+    },
+    {
+      "n": "A6 build md5 unchanged (read-only)",
+      "p": true,
+      "d": "abd35f4bbd59be4fde0565e5981bda71 → abd35f4bbd59be4fde0565e5981bda71"
+    }
+  ],
+  "errors": []
+}
