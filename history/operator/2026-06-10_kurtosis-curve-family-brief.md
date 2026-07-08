@@ -3444,3 +3444,9 @@ _Context: operator accepts the deviation-direction resolution with the magnify/m
 _Context: operator's idiot-check on the reading direction — sanity-testing whether, per unit of lean, funding moves more for less-volatile assets. Manager re-derives |c|=m(γ−1)/(m+1) and confirms YES._
 
 > so the way i'd see it is that per unit of lean funding would change more for the less volatile assets -- is that correct/
+
+
+## Entry 469 — 2026-07-08 UTC
+_Context: operator asks for a simple-English explanation of update-2 WS2 (charge-back) and WS3 (multi-party hardening) in their own frame — closing trades with slippage relative to opening liquidity — and what WS3 does that's distinct from the earlier points._
+
+> explain ws2 and ws3 in simple english like how i think of it in terms of closing trades with slippage wrt opening lkquidity or something; and idk what multi party hardening does particularly thats differene form the prev points...
