@@ -3480,3 +3480,9 @@ _Context: operator asks for a plain-English take-stock of the whole state._
 _Context: operator rejects the term "lean" (unendorsed). Correct vocabulary: the curve SKEWS, and there is a RAY DEVIATION from the anchor curve measured at each SAME-SLOPE POINT across pool and anchor curves. Unendorsed / redundant / duplicative terminology is a conflation cause; operator wants a GATE for it. Then take stock again._
 
 > lean is a term i dont endorse.. curve skews, and theres a ray deviation from anchor curve as per each same slope point across pool and anchor curves --- using terms like lean or anything i dont endorse or redundant / duplicative  terminoloy / vocabulaty  is a likely cause for conflations; i want a gate for this kind of stuff... now take stokc aain
+
+
+## Entry 475 — 2026-07-08 UTC
+_Context: operator asks for a simple-English take-stock and notes they've spent several turns trying to steer this right._
+
+> siple englsh and take stock .... you notice i've been tryin gto get this alogn right... been a few turns now
