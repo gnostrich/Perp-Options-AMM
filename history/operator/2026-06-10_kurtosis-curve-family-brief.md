@@ -3498,3 +3498,9 @@ _Context: operator (1) authorizes the "lean"→skew/ray-deviation cleanup pass; 
 _Context: operator asks for a simple-English wrap of the session._
 
 > simoke english wrap please
+
+
+## Entry 478 — 2026-07-08 UTC
+_Context: operator asks for the latest HTML + PDF for the CTO. Manager provides commit-pinned links + md5s (HEAD 5ce1a76c, PDF c550f7e4)._
+
+> ok give latest html and pdf for cto
