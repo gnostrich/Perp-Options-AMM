@@ -3414,3 +3414,9 @@ _Context: operator scopes this build precisely: DON'T plug in a funding formula 
 _Context: operator impatient with the next update / TBDs not being properly specified (scattered across notes). Manager consolidates everything deferred into one UPDATE-2 spec with the open decisions in one place._
 
 > looks ok but im getting a little impatient with the lack of the next upfdate / tbds being properly specified etc.
+
+
+## Entry 464 — 2026-07-07 UTC
+_Context: operator corrects the manager's scoping — the m-direction (steeper = more or less divergence) affects the DEVIATION (current scope, shipped), NOT the deferred funding formula. So it must be settled NOW, not at update-2. Manager: fire the rigorous derivation of the true same-slope deviation's m-direction, with the operator's "denser slope per ray angle" argument explicitly in it; fix the shipped deviation if the direction is wrong._
+
+> it affects deviatin not the funding formula ... we're working uptil deviation right now
