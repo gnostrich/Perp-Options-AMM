@@ -3438,3 +3438,9 @@ _Context: operator accepts the angular-deviation resolution (grows-with-steepnes
 _Context: operator accepts the deviation-direction resolution with the magnify/minify framing (steeper magnifies, less steep minifies), noting it's ultimately an interpretation/reading choice. Manager affirms: correct — the magnify-with-steepness behavior is the direct consequence of the through-the-lens reading (operator's own entry-232 ruling); geometry gives the gap, the lens-reading makes m scale it. Thread CLOSED._
 
 > ok so steeper is magnifying things and less steep is 'minifying' it if thats the case its fine, ultimately this is also an interpretation / reading choice
+
+
+## Entry 468 — 2026-07-08 UTC
+_Context: operator's idiot-check on the reading direction — sanity-testing whether, per unit of lean, funding moves more for less-volatile assets. Manager re-derives |c|=m(γ−1)/(m+1) and confirms YES._
+
+> so the way i'd see it is that per unit of lean funding would change more for the less volatile assets -- is that correct/
