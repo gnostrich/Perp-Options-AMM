@@ -3450,3 +3450,9 @@ _Context: operator's idiot-check on the reading direction — sanity-testing whe
 _Context: operator asks for a simple-English explanation of update-2 WS2 (charge-back) and WS3 (multi-party hardening) in their own frame — closing trades with slippage relative to opening liquidity — and what WS3 does that's distinct from the earlier points._
 
 > explain ws2 and ws3 in simple english like how i think of it in terms of closing trades with slippage wrt opening lkquidity or something; and idk what multi party hardening does particularly thats differene form the prev points...
+
+
+## Entry 470 — 2026-07-08 UTC
+_Context: operator challenges the manager's WS2/WS3 split — WS3 is nothing different from WS2's defenses — and tells the manager to take a minute to think._
+
+> imo ws3  is nothing different from the defenses in ws2, take. aminute to think
