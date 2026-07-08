@@ -3456,3 +3456,15 @@ _Context: operator asks for a simple-English explanation of update-2 WS2 (charge
 _Context: operator challenges the manager's WS2/WS3 split — WS3 is nothing different from WS2's defenses — and tells the manager to take a minute to think._
 
 > imo ws3  is nothing different from the defenses in ws2, take. aminute to think
+
+
+## Entry 471 — 2026-07-08 UTC
+_Context: operator argues a funding exploit would be an order of magnitude less capital-efficient than a reserve exploit. Manager re-derives the mechanism and agrees (structurally weaker; exact multiple unverified pending κ/cap)._
+
+> i think a funding explot would be an order of magnitude less capital efficient wouldnt it
+
+
+## Entry 472 — 2026-07-08 UTC
+_Context: operator adds that a funding exploit must also contend with potentially complete slippage (moving the mark incurs the reserve/round-trip slippage cost). Manager agrees — reinforces the capital-inefficiency argument._
+
+> and it would have to contend with potentially complete slippage
