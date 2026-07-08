@@ -173,3 +173,39 @@ promoted HEAD. Revert twin `temporal_mvp_v28_lens_twocaseclose.html` = `51342574
 ⚠ The file-safety hook still false-positives on `"0 FAIL"` success-summary strings (pre-existing
 line-104 over-broad grep, out of intern scope) — the real `^FAIL` verdict count is 0.
 Manager verification + tester live pass PENDING.
+
+## 2026-07-08 — FUNDING: same-slope pool-vs-anchor DEVIATION (placeholder, deviation-only) — md5 `bb2f8230` → `abd35f4b`
+Spec `notes/research/SPEC_funding_sameslope_2026-07-07.md` (operator entries 460/462, RULED 460;
+R6 scope-gate CLEARED). ONLY `fundingPerStrike` (engine `<script>`) + 2 UI disclosure strings
+changed; **closeBand UNTOUCHED**; pool fns byte-identical to v24 (gate-verified).
+
+**The fix (structural, not a weight swap).** The old funding magnitude `ext·(S−1)/S` was a
+**regression**: `ext = markLensed − max(intrinsic,0)` is a moneyness/value weight that PEAKS at ATM,
+and `(S−1)/S` is the pool-vs-**oracle** gap (one global scalar, nonzero on a symmetric pool whenever
+the oracle drifts). Neither is the pool-vs-anchor lean — the shipped formula **funded a symmetric
+w=½ pool** (measured 2.64/7.33/14.4 on a w=½/S≠1 fixture). This was the recurring ~20–30× regression.
+Replaced by the **REAL same-slope pool-vs-anchor ray-angle-ratio deviation**:
+`dev = |c·ln(θ/mode)|`, `c = (g_a−g)/(g_a+1)`, `g = gLoc = m·γ` (pool, γ LIVE), `g_a = m` (anchor
+w=½, γ=1). OTM-gated (`intr>0 ⇒ 0`). Signatures: **0 at ATM** (ρ=1), **0 ∀OTM on a w=½ pool** (c=0 —
+the pool-lean signature), positive OTM lobe growing with `|w−½|` and `|lnρ|`. The `±g` wing sign +
+m-scale is KEPT. Measured OTM lobe (w=0.7, m=2, κ=N=dt=1, put): −8.91 / −6.04 / −3.16 / −1.48 / −0.29
+→ 0 at ATM; 0 all ITM both wings.
+
+**PLACEHOLDER — deviation only.** This is the same-slope LEAN, NOT the final funding number. The
+funding FORMULA (cap / HL / interest) is DEFERRED to UPDATE-2 (operator entry 462): **no cap, no new
+knob** added. Removing `(S−1)` is framed as "regression removed from the placeholder" — **NOT**
+"final funding / oracle-independence decided" (operator-tier OPEN, F1). UI: the Funding column header
++ units-note are re-labelled **"Funding (lean; TBD)"** with live-rendered placeholder disclosure
+("same-slope lean; formula TBD, update-2").
+
+**Gates: lens_selfcheck 31 → 35 PASS [HARD].** RETIRED **FE.2** (extrinsic hump-at-ATM) and **FE.3**
+(source ±g·(S−1)/S weight=ext) — they encoded the regression. KEPT FE.1 (funding=0 ITM) + FE.4 (neg
+ctrl vs old full-mark). ADDED **FS.1–FS.6** (same-slope), negative-controlled in-gate: **FS.2/b is
+the anti-regression KILLER** (funding=0 on a symmetric w=½ pool at every OTM strike, S≠1). The old
+`ext` weight FAILS FS.1 (ext(ATM)=0.148>0); the moneyness proxy `|ln(θ/mode)|` FAILS FS.2b
+(nonzero on w=½ OTM); FS.6 asserts both regressions rejected on one fixture set. Teeth confirmed:
+the retained OLD build (`temporal_mvp_v28_lens_twocaseclose.html`) scores **23 PASS / 12 FAIL** —
+all 6 FS checks red. a16 5 PASS; monolith 8/8 report-green; run_all RC=0 on work copy AND promoted HEAD.
+⚠ The file-safety hook still false-positives on `"0 FAIL"` success-summary strings (pre-existing
+line-104 over-broad grep, out of intern scope) — real `^FAIL` verdict count is 0, run_all RC=0.
+Manager verification + tester live pass PENDING.

@@ -1520,7 +1520,7 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
               <th>Attrib P&L / Eff strike</th>
               <th>Equity@close / Mark</th>
               <th>Value (carved-perp)</th>
-              <th title="Funding P/L (signed: + = line received, − = line paid). Line P/L shown includes accrued funding; cash at close settles ex-funding until the transfer layer ships.">Funding P/L</th>
+              <th title="Funding (same-slope lean; formula TBD, update-2). PLACEHOLDER: the same-slope pool-vs-anchor deviation carrying the ±g sign/scale — NOT the final funding number. Signed: + = line received, − = line paid. Line P/L shown includes this placeholder accrual; cash at close settles ex-funding until the transfer layer ships.">Funding (lean; TBD)</th>
               <th>L₀ · Club · Status</th>
               <th></th>
             </tr>
@@ -1534,10 +1534,12 @@ Conceptual: Temporal paper §AMM Mechanics + rebasing_logic_note.md.
           single dollar figure is the TOTAL row's settlement cell — the one
           stage-2 → stage-3 equity multiply. Effective strike = original
           strike (OTM) or perp mark (ITM); regime is perp-mark-decided.
-          Funding column = signed P/L effect (+ received, − paid; the
-          ledger stores trader-pays, the display negates). Line P/L shown
-          INCLUDES accrued funding; cash at close settles EX-funding until
-          the funding transfer layer ships.
+          Funding column is a PLACEHOLDER — the same-slope pool-vs-anchor
+          LEAN (deviation) carrying the ±g sign/scale, NOT the final funding
+          number; the funding formula is TBD (update-2). Signed P/L effect
+          (+ received, − paid; ledger stores trader-pays, display negates).
+          Line P/L shown INCLUDES this placeholder accrual; cash at close
+          settles EX-funding until the funding transfer layer ships.
         </div>
       </div>
     </div>
@@ -2294,36 +2296,35 @@ const Engine = (function() {
     };
   }
 
-  // Funding per strike — LENSED, EXTRINSIC weight (v28 Stage 1, P2; UPDATE 1
-  // 2026-07-07, SPEC_update1 §3). v24's hardcoded ±2 exponent is the signed
-  // strike-local lensed exponent ±g_loc(K); the consumed WEIGHT is now the
-  // EXTRINSIC (option-part) value = markLensed − max(intrinsic parity, 0) (was
-  // the full markLensed). S, (S−1)/S, κ, N, dt, the S<=0 guard and the call/put
-  // SIGN ±g·(S−1)/S are UNCHANGED — ONLY the weight changed.
-  //   MUST-APPLY-1: g_loc and the lensed mark are read in the SINGLE sNorm
-  //   coordinate against the LIVE sNorm mode (strike_theta vs getSNorm(state)) —
-  //   NOT against the price-coord spot S (that would re-open the ln γ trap).
-  // Behaviour: the extrinsic weight is a single hump peaking at ATM (strike =
-  // mode), fading to 0 both ways and EXACTLY 0 past the smooth-paste seam S* ⇒
-  // funding is ZERO deep ITM (was: full mark funded intrinsic forever). The
-  // pool-imbalance factor (S−1)/S still zeroes at the w=½ anchor (S→1); the
-  // kurtosis knob m re-scales the rate by design (entries 232/233).
+  // ⚠⚠ FUNDING = SAME-SLOPE POOL-vs-ANCHOR DEVIATION — PLACEHOLDER (deviation only).
+  //   The REAL same-slope pool-vs-anchor ray-angle-ratio deviation (operator entries
+  //   386/443/459, RULED 460; SPEC_funding_sameslope_2026-07-07 §4). It REPLACES the old
+  //   ext·(S−1)/S magnitude — a moneyness/value weight × the pool-vs-ORACLE gap, which
+  //   funded a symmetric w=½ pool (the recurring ~20–30× regression). The (S−1) term is
+  //   the REGRESSION removed from the placeholder — NOT "final funding / oracle-independent
+  //   decided" (that stays operator-tier OPEN, F1, rides UPDATE-2).
+  //   *** THIS IS NOT THE FINAL FUNDING FORMULA. *** Same-slope LEAN/deviation ONLY; the
+  //   funding formula (cap / HL / interest) is DEFERRED to UPDATE-2 (operator entry 462).
+  //   NO cap, NO new knob added here (R3).
+  //   Geometry: fix a slope; read the ray each curve attains it at; deviation = anchored
+  //   ray-ratio D̃ = ρ^c, c = (g_a − g)/(g_a + 1); ρ = strike_theta/mode. Weight = |ln D̃|
+  //   = |c·lnρ|.  g = gLoc = m·γ (pool, γ LIVE); g_a = m (anchor w=½, γ=1); tau carries m.
+  //     ZERO at ATM (ρ=1) — respects the ATM point (entry 386)
+  //     ZERO ∀ strikes when w=½ (g=g_a ⇒ c=0) — POOL-LEAN signature, NOT moneyness (killer)
+  //     grows with |w−½| and |lnρ| — the standing lean, read per strike (entry 232: m re-scales)
+  //   Signed by the wing ±g (call +, put −) — KEPT sign/scale, placeholder direction. OTM-gated
+  //   (intr>0 ⇒ ITM ⇒ 0). oracle/oracle_initial kept in the sig for ABI/back-compat, unused.
   function fundingPerStrike(state, strike_theta, wing, N, dt, kappa, oracle, oracle_initial, tau) {
-    const S = (oracle > 0 && oracle_initial > 0) ? poolMark(state, oracle, oracle_initial) / oracle : getSNorm(state);
-    const mode = getSNorm(state);                       // single sNorm mode (MUST-APPLY-1)
-    const g = gLoc(state, strike_theta, tau);           // = m·γ (constant), γ LIVE; tau carries the multiplier m
-    const mk = markLensed(wing, strike_theta, mode, g); // lens-aware mark, sNorm coord
-    // EXTRINSIC weight = mark − max(intrinsic parity arm, 0). Zero past S* (ITM)
-    // ⇒ funding ZERO ITM; clean single hump peaking at ATM, fading to 0 both ways.
-    // markLensed's sNorm ← funding's `mode`; markLensed's theta ← `strike_theta`:
-    //   put  parity = max(0, 1 − mode/strike_theta)   [markLensed put:  1 − sNorm/theta]
-    //   call parity = max(0, 1 − strike_theta/mode)   [markLensed call: 1 − theta/sNorm]
+    const mode = getSNorm(state);                         // single sNorm mode (MUST-APPLY-1)
+    const g  = gLoc(state, strike_theta, tau);            // pool lensed steepness m·γ, γ LIVE; tau = m
+    const gA = tau;                                       // ANCHOR (w=½) lensed steepness = m·1 = m
+    const c  = (gA + 1 !== 0) ? (gA - g) / (gA + 1) : 0;  // anchored same-slope ray-ratio exponent
     const intr = (wing === 'call') ? Math.max(0, 1 - strike_theta / mode)
-                                   : Math.max(0, 1 - mode / strike_theta);
-    const ext = mk - intr;                              // extrinsic (option-part) weight
-    const gamma = (wing === 'call') ? +g : -g;          // ±g_loc replaces ±2
-    if (S <= 0) return 0;
-    return kappa * gamma * N * ext * (S - 1) / S * dt;
+                                   : Math.max(0, 1 - mode / strike_theta);   // intr>0 ⟺ ITM
+    const dev = (intr > 0 || !(mode > 0) || !(strike_theta > 0)) ? 0
+              : Math.abs(c * Math.log(strike_theta / mode));                  // OTM-only lean weight
+    const gamma = (wing === 'call') ? +g : -g;            // ±g_loc: wing sign + m-scale (KEPT)
+    return kappa * gamma * N * dev * dt;                  // (S−1)/S and ext REMOVED (§3); OTM-gated
   }
 
   return {

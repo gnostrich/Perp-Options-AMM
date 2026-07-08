@@ -457,10 +457,12 @@ if (typeof E.closeBand === 'function' && typeof E.tradeUpdateAt === 'function') 
   }
 }
 
-// ── (FE) FUNDING WEIGHT = EXTRINSIC (markLensed − max(intrinsic,0)) — UPDATE 1 §3.
-//    Zero past S* (⇒ funding ZERO ITM), a single hump peaking at ATM, and the shipped
-//    ±g·(S−1)/S pool-imbalance SIGN unchanged (ONLY the weight changed). Negative-
-//    controlled against the old full-mark funding (non-zero intrinsic forever).
+// ── (FE) FUNDING — retained ITM-zero + old-full-mark negative control (§3).
+//    ⚠ 2026-07-08 (SPEC_funding_sameslope §5): the funding WEIGHT is now the SAME-SLOPE
+//    pool-vs-anchor DEVIATION (placeholder, deviation-only; formula TBD update-2), NOT the
+//    extrinsic hump. FE.2 (hump-at-ATM) and FE.3 (source ±g·(S−1)/S weight=ext) are RETIRED
+//    (they encoded the regression) → see FS.1 / FS.5 below. FE.1 (funding=0 ITM) and FE.4
+//    (neg-ctrl vs old full-mark) survive: same-slope dev is OTM-gated so funding is still 0 ITM.
 if (typeof E.fundingPerStrike === 'function') {
   const orc = 80000, mKnob = 2, kappa = 0.01, N = 1, dt = 1;
   const sf = mkPool(10, 90000, 0.6);                    // S = poolMark/oracle ≠ 1
@@ -489,30 +491,12 @@ if (typeof E.fundingPerStrike === 'function') {
     chk('(FE.1) funding extrinsic weight = markLensed − max(intrinsic,0) = 0 (≤1e-12) past S* both wings ⇒ funding ZERO ITM',
         ok, ok ? ('S='+Sf.toFixed(4)+' g='+gg.toFixed(2)+' all ext=0 & f=0 past S*') : lines.join(' '));
   }
-  // (FE.2) single hump peaking at ATM (strike = mode), monotone up OTM→ATM, down ATM→S*.
-  {
-    let peak = -Infinity, peakAt = 0, prof = [];
-    for (const mult of [0.4,0.7,0.9,1.0,1.1,1.3,1.5,2.0]) { const e = extOf('put', mo*mult); prof.push([mult,e]); if (e>peak){peak=e;peakAt=mult;} }
-    const upOk   = prof.filter(p=>p[0]<=1.0).every((p,i,a)=> i===0 || p[1] >= a[i-1][1]-1e-12);
-    const downOk = prof.filter(p=>p[0]>=1.0 && p[0] <= (gg+1)/gg).every((p,i,a)=> i===0 || p[1] <= a[i-1][1]+1e-12);
-    const ok = Math.abs(peakAt-1.0) < 1e-9 && upOk && downOk;
-    chk('(FE.2) extrinsic profile = single hump peaking at ATM (strike=mode), monotone up OTM→ATM, down ATM→S*',
-        ok, 'peakAt='+peakAt+' peak='+peak.toFixed(4)+' upMono='+upOk+' downMono='+downOk);
-  }
-  // (FE.3) shipped SIGN / pool term UNCHANGED: source ±g·(S−1)/S with weight = ext,
-  //   and numeric sign(f) = sign(±g·(S−1)) (call & put opposite; call = sign(g·(S−1))).
-  {
-    const fsrc = grabFn(engineBody, 'fundingPerStrike') || '';
-    const srcOk = /gamma\s*\*\s*N\s*\*\s*ext\s*\*\s*\(S\s*-\s*1\)\s*\/\s*S/.test(fsrc)
-               && /gamma\s*=\s*\(wing\s*===\s*'call'\)\s*\?\s*\+g\s*:\s*-g/.test(fsrc)
-               && /const\s+ext\s*=\s*mk\s*-\s*intr\s*;/.test(fsrc);
-    const fc = E.fundingPerStrike(sf, mo, 'call', N, dt, kappa, orc, orc, mKnob);   // ATM, ext>0
-    const fp = E.fundingPerStrike(sf, mo, 'put',  N, dt, kappa, orc, orc, mKnob);
-    const opposite = fc * fp < 0;
-    const signOk = Math.sign(fc) === Math.sign(gg * (Sf - 1));
-    chk('(FE.3) SIGN / pool term UNCHANGED: source ±g·(S−1)/S with weight=ext; sign(f_call)=sign(g·(S−1)), call & put opposite',
-        srcOk && opposite && signOk, 'src=' + srcOk + ' opposite=' + opposite + ' signOk=' + signOk + ' (S=' + Sf.toFixed(4) + ' fc=' + fc.toExponential(2) + ' fp=' + fp.toExponential(2) + ')');
-  }
+  // (FE.2) RETIRED 2026-07-08 (SPEC_funding_sameslope §5): the "extrinsic hump peaks
+  //   at ATM" shape ENCODES the regression — same-slope funding is ZERO at ATM (dev=0).
+  //   The anti-regression shape is now asserted by FS.1 (funding=0 at ATM) below.
+  // (FE.3) RETIRED 2026-07-08 (SPEC_funding_sameslope §5): the source ±g·(S−1)/S weight=ext
+  //   lock asserted the CONFOUNDED structure (pool-vs-oracle gap × moneyness/value weight).
+  //   Replaced by FS.5 (source-token lock for the same-slope deviation weight) below.
   // (FE.4) NEGATIVE CONTROL: OLD full-mark funding is NON-zero past S* (funds intrinsic
   //   forever) while the NEW extrinsic funding = 0 there.
   {
@@ -523,6 +507,76 @@ if (typeof E.fundingPerStrike === 'function') {
     chk('(FE.4) negative control: OLD full-mark funding NON-zero past S* (funds intrinsic forever) while NEW = 0',
         Math.abs(oldF) > 1e-9 && Math.abs(newF) <= 1e-12, 'oldF=' + oldF.toExponential(3) + ' newF=' + newF.toExponential(3) + ' fullMark=' + mk.toFixed(4));
   }
+}
+
+// ── (FS) FUNDING = SAME-SLOPE POOL-vs-ANCHOR DEVIATION (SPEC_funding_sameslope §5, RULED 460).
+//    dev = |c·ln(θ/mode)|, c = (g_a−g)/(g_a+1); g = m·γ (pool), g_a = m (anchor w=½). The
+//    unique fingerprint: ZERO at ATM (fails the mark/ext family) AND ZERO on a w=½ pool at
+//    every OTM strike (fails the moneyness-proxy family). Negative-controlled in-gate against
+//    BOTH regressions (extW = shipped ext weight; proxyW = |ln(θ/mode)| moneyness proxy).
+//    FS.2/b is the anti-regression anchor (funding=0 on a symmetric pool at OTM, S≠1).
+if (typeof E.fundingPerStrike === 'function') {
+  const m = 2, kappa = 1, N = 1, dt = 1;
+  const orc = 125000, oi = 100000;                       // DRIFTED oracle ⇒ S = getMP_raw/oi ≠ 1 (essential)
+  const md   = (s) => E.getSNorm(s);
+  // negative-control weights (what the regression keeps drifting to):
+  const extW   = (s,th,wg) => { const g=E.gLoc(s,th,m), mk=E.markLensed(wg,th,md(s),g);
+      const it=(wg==='call')?Math.max(0,1-th/md(s)):Math.max(0,1-md(s)/th); return Math.max(0,mk-it); };
+  const proxyW = (s,th)    => Math.abs(Math.log(th/md(s)));      // moneyness proxy θ/mode
+  const F = (s,th,wg) => E.fundingPerStrike(s,th,wg,N,dt,kappa,orc,oi,m);
+
+  // (FS.1 = property a) funding = 0 at ATM (strike = mode) for ALL w. A mark/ext weight FAILS (peaks at ATM).
+  { let ok=true, det=[];
+    for (const w of [0.5,0.6,0.7,0.8]) { const s=mkPool(10,100000,w), mo=md(s);
+      if (Math.abs(F(s,mo,'put'))>1e-12 || Math.abs(F(s,mo,'call'))>1e-12) { ok=false; det.push('w='+w); }
+      // negative control: shipped ext weight is NONZERO at ATM (would fund the money)
+      if (!(extW(s,mo,'put')>1e-9)) det.push('NCa-broke@'+w); }
+    chk('(FS.1/a) funding = 0 at ATM ∀w [same-slope; ext/mark weight FAILS: ext(ATM)>0]', ok, det.join(' ')||'0 ∀w'); }
+
+  // (FS.2 = property b) KILLER — funding = 0 on UNLEANED w=½ pool at EVERY OTM strike, WITH S≠1.
+  //   A moneyness proxy FAILS (θ/mode≠1 OTM even at w=½); the shipped ext·(S−1)/S FAILS (nonzero).
+  { const s=mkPool(10,100000,0.5); let ok=true, det=[];
+    for (const th of [0.1,0.3,0.5,0.7,0.9]) {            // all OTM for the put on a w=½ pool (mode=1)
+      if (Math.abs(F(s,th,'put'))>1e-12) { ok=false; det.push('f@'+th); }
+      if (!(proxyW(s,th)>1e-9))  det.push('NCproxy-broke@'+th);   // proxy must be NONZERO here (it fails b)
+      if (!(extW(s,th,'put')>1e-9)) det.push('NCext-broke@'+th); }
+    chk('(FS.2/b) KILLER: funding = 0 on w=½ pool ∀OTM with S≠1 [pool-lean signature; proxy & ext both FAIL b]',
+        ok, det.join(' ')||('S='+(E.poolMark(s,orc,oi)/orc).toExponential(2)+' all f=0')); }
+
+  // (FS.3 = property c) magnitude grows strictly with |w−½| at FIXED MONEYNESS ρ (θ = ρ·mode), both wings.
+  { let ok=true, prevP=-1, prevC=-1, det=[];
+    for (const w of [0.5,0.55,0.6,0.65,0.7,0.75,0.8]) { const s=mkPool(10,100000,w), mo=md(s);
+      const fp=Math.abs(F(s,0.5*mo,'put')), fc=Math.abs(F(s,2*mo,'call'));   // ρ=0.5 put OTM, ρ=2 call OTM
+      if (fp<prevP-1e-12 || fc<prevC-1e-12) { ok=false; det.push('nonmono@'+w); } prevP=fp; prevC=fc; }
+    chk('(FS.3/c) funding magnitude strictly ↑ with |w−½| at fixed moneyness (put ρ=0.5, call ρ=2)', ok, det.join(' ')||'monotone'); }
+
+  // (FS.4 = property d) funding = 0 ITM, both wings, leaned pool. (Subsumes/retains FE.1.)
+  { const s=mkPool(10,100000,0.7), mo=md(s); let ok=true, det=[];
+    for (const mult of [1.2,1.5,3.0]) if (Math.abs(F(s,mo*mult,'put'))>1e-12){ok=false;det.push('put@'+mult);}   // θ>mode ITM put
+    for (const mult of [0.8,0.5,0.2]) if (Math.abs(F(s,mo*mult,'call'))>1e-12){ok=false;det.push('call@'+mult);} // θ<mode ITM call
+    chk('(FS.4/d) funding = 0 ∀ITM both wings (leaned pool)', ok, det.join(' ')||'0 ITM'); }
+
+  // (FS.5) SOURCE-TOKEN LOCK — weight IS the same-slope deviation, NOT ext, NOT (S−1)/S.
+  //   Guards a silent revert of the WEIGHT even if numbers happen to line up on a fixture.
+  { const src = grabFn(engineBody, 'fundingPerStrike') || '';
+    const hasDev  = /\(\s*gA\s*-\s*g\s*\)\s*\/\s*\(\s*gA\s*\+\s*1\s*\)/.test(src)      // c = (g_a−g)/(g_a+1)
+                 && /Math\.abs\(\s*c\s*\*\s*Math\.log\(\s*strike_theta\s*\/\s*mode\s*\)\s*\)/.test(src)
+                 && /gA\s*=\s*tau/.test(src);
+    const noExtWt = !/\*\s*ext\s*\*/.test(src);                                        // ext weight GONE
+    const noPoolOracleWt = !/ext\s*\*\s*\(\s*S\s*-\s*1\s*\)/.test(src);                // ext·(S−1) GONE
+    chk('(FS.5) source lock: weight = |c·ln(θ/mode)|, c=(g_a−g)/(g_a+1); NOT ext, NOT ext·(S−1)/S',
+        hasDev && noExtWt && noPoolOracleWt, 'dev='+hasDev+' noExt='+noExtWt+' noPoolOracle='+noPoolOracleWt); }
+
+  // (FS.6) COMBINED FINGERPRINT — (a)+(b) TOGETHER reject BOTH regressions, on ONE fixture set.
+  //   mark/ext weight: FAILS (a) [ext(ATM)>0].   moneyness proxy: FAILS (b) [proxy(OTM,w=½)>0].
+  //   same-slope: passes both. This is the unique fingerprint.
+  { const sSym=mkPool(10,100000,0.5), moS=md(sSym);
+    const markFailsA  = extW(sSym,moS,'put') > 1e-9;          // mark/ext nonzero at ATM  ⇒ can't be same-slope
+    const proxyFailsB = proxyW(sSym,0.5) > 1e-9;              // proxy nonzero on w=½ OTM ⇒ can't be same-slope
+    const sameSlopePassesBoth = Math.abs(F(sSym,moS,'put'))<=1e-12 && Math.abs(F(sSym,0.5,'put'))<=1e-12;
+    chk('(FS.6) combined fingerprint: mark-weight FAILS(a), proxy-weight FAILS(b), same-slope PASSES both',
+        markFailsA && proxyFailsB && sameSlopePassesBoth,
+        'markFailsA='+markFailsA+' proxyFailsB='+proxyFailsB+' sameSlopeOK='+sameSlopePassesBoth); }
 }
 
 // ── (CM7) THE THREE CO-MOVE WITH m, SAME DIRECTION (locks a future polarity flip = FAIL) ──

@@ -38,7 +38,7 @@ line layer canonical.)
 
 ## Quick integrity check (any build)
 ```sh
-md5sum builds/HEAD_temporal_mvp_v28_lens.html             # expect 7e1ae39baa00fda087033174cfc652b8 (989752294 FINAL + 1-line live-slippage-refresh wire on the tau handler) (v24 plain-Balancer pool + polar lens; cleanup batch C1-C9; pool fns byte-identical to v24)
+md5sum builds/HEAD_temporal_mvp_v28_lens.html             # expect abd35f4bbd59be4fde0565e5981bda71 (FUNDING same-slope pool-vs-anchor DEVIATION placeholder 2026-07-08; deviation-only, formula TBD update-2; closeBand untouched; pool fns byte-identical to v24; gates lens 35 + a16 5)
 sed -n '74p'   builds/HEAD_temporal_mvp_v28_lens.html | md5sum   # expect ab663f5c...
 sed -n '1060p' builds/HEAD_temporal_mvp_v28_lens.html | md5sum   # expect c505b08a... (run_all's blob check is line-agnostic — two longest lines, md5 multiset)
 ```

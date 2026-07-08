@@ -1,6 +1,54 @@
 # MEMORY — intern
-_Last updated: 2026-07-07 (UPDATE-1 unified sell-back close + funding-on-extrinsic promoted to HEAD
-`bb2f8230`; handed to manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-08 (FUNDING same-slope DEVIATION placeholder promoted to HEAD `abd35f4b`;
+handed to manager; no git). Rewrite changed bits at task end._
+
+## Done — FUNDING same-slope pool-vs-anchor DEVIATION (deviation-only PLACEHOLDER; PROMOTED TO HEAD 2026-07-08, handed to manager)
+Spec `notes/research/SPEC_funding_sameslope_2026-07-07.md` (operator entries 460/462, RULED 460; R6
+scope-gate CLEARED). HEAD `bb2f8230` → **`abd35f4bbd59be4fde0565e5981bda71`**. **closeBand UNTOUCHED.**
+Splice `scratchpad/splice_funding.py` on work copy `scratchpad/work_funding.html` (3 anchors count==1,
+blobs never through); FS block added to `verify/lens_selfcheck.js` via Edit.
+- **Engine (fundingPerStrike, was L2311-2327):** old magnitude `κ·(±g)·N·ext·(S−1)/S·dt` REPLACED by
+  `κ·(±g)·N·dev·dt`, `dev = (intr>0 ? 0 : |c·ln(θ/mode)|)`, `c = (gA−g)/(gA+1)`, `g = gLoc(state,θ,tau)
+  = m·γ`, `gA = tau` (=m, anchor w=½). `±g` wing sign/scale KEPT; `ext`, `S`, `(S−1)/S`, `poolMark`,
+  `S<=0` guard all GONE. Fn body matches spec §4 verbatim (FS.5 source-lock keys on exact tokens
+  `gA = tau`, `(gA - g) / (gA + 1)`, `Math.abs(c * Math.log(strike_theta / mode))`). Loud placeholder
+  comment: NOT final funding, formula (cap/HL/interest) DEFERRED to UPDATE-2 (entry 462), no cap/no new
+  knob, (S−1) removal = "regression removed from placeholder" NOT "oracle-independence decided" (F1 open).
+- **UI placeholder label (live-rendered, gate condition):** L1523 `<th>` text `Funding P/L` →
+  **`Funding (lean; TBD)`** + title "Funding (same-slope lean; formula TBD, update-2). PLACEHOLDER…";
+  units-note funding sentence → "Funding column is a PLACEHOLDER — the same-slope pool-vs-anchor LEAN
+  (deviation)… formula is TBD (update-2)."
+- **MEASURED (`scratchpad/negctrl_funding.js`):** (a) dev=0 at ATM ∀w∈{.5..8} both wings; (b) dev=0 on
+  symmetric w=½ pool at OTM θ∈{.1..9} with S=0.10≠1; (c) OTM lobe (w=0.7,m=2,put,κ=N=dt=1) −8.91/−6.04/
+  −3.16/−1.48/−0.29→0 (matches spec §4); (d) 0 ITM both wings; (e) neg-ctrls fire — old ext(ATM)=0.148
+  FAILS FS.1, proxy|ln(0.5)|=0.693 FAILS FS.2b, shipped old ext·(S−1)/S recon on w=½ OTM = 0.027/0.24/
+  0.667 (the funded-symmetric-pool regression, caught).
+- **GATES (`verify/lens_selfcheck.js`):** RETIRED **FE.2** (hump-at-ATM) + **FE.3** (source ±g·(S−1)/S
+  weight=ext) — they encoded the regression; KEPT FE.1 (funding=0 ITM) + FE.4 (neg-ctrl vs old full-mark).
+  ADDED **FS.1–FS.6** per spec §5 (FS.2/b = anti-regression KILLER = 0 on symmetric pool OTM). CM8-v2/
+  CM6-v3/CM12/CM1-5/7/9-11 + a16 5/5 SURVIVE. **31 → 35 PASS 0 FAIL.** Teeth: new gate on old twin
+  `temporal_mvp_v28_lens_twocaseclose.html` = **23 PASS / 12 FAIL** (all 6 FS red).
+- **FILE-SAFETY:** blobs `ab663f5c`@74 / `c505b08a`@1060 canonical before+after; 3 scripts parse
+  (747/453/1944, max script line 509); IIFE intact; diff = exactly 3 regions (L1523 th, L1537-40 note,
+  L2297-2327 fn). run_all RC=0 on work copy AND promoted HEAD (lens 35 + a16 5 + monolith 8/8 report).
+  run_all.sh line-8 md5 pin → `abd35f4b…` + the two "31" count comments → 35. BUILD_LINEAGE quick-check
+  md5 re-keyed + CHANGELOG_v28_lens entry appended. ⚠ Fixed a self-inflicted near-miss: my run_all
+  line-8 description initially contained inner double-quotes ('Funding (lean; TBD)') that broke the
+  `echo -n "..."` shell quoting (RC=2 "Syntax error"); switched to single quotes → RC=0. Caught by
+  running run_all, not shipped.
+- **⚠ FILE-SAFETY HOOK false-positive (PRE-EXISTING, NOT my regression):** hook line-104
+  `grep -Eq 'FAIL|…'` matches the literal "0 FAIL" in success summaries ⇒ BLOCKS (exit 2) even though
+  run_all RC=0 and real `^FAIL` count = 0. Same standing bug flagged in UPDATE-1/constmult/R-218.
+  Reported, NOT patched (manager's guardrail, out of intern scope). My splice used Bash cp (not Edit/Write
+  on HTML) so the real PostToolUse hook didn't fire on the build; reproduced only by manual invocation.
+- **Open for manager:** git (sole actor). Operator-tier flags carried in spec §3: **F1** ((S−1) removal
+  = funding-oracle-independent is operator-tier, ships as placeholder framing only, NOT decided), F2
+  (m enters both ±g and dev ⇒ ~m² scaling), F3 (deep-OTM unbounded-logarithmic). **Open for tester:**
+  live pass — Funding column header reads "Funding (lean; TBD)", units-note placeholder disclosure
+  renders; open a leaned band, funding readout is an OTM lobe (nonzero OTM, 0 at ATM, 0 deep-ITM), and
+  ZERO on a symmetric-ish w=½ band; 17/17 UI smoke.
+
+---
 
 ## Done — UPDATE 1: unified sell-back close + funding-on-extrinsic (PROMOTED TO HEAD 2026-07-07, handed to manager)
 Spec `specs/SPEC_update1_clean_close_2026-07-07.md` (operator entries 450/452; skeptic HALT-LIFTED
