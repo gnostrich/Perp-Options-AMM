@@ -1,6 +1,27 @@
 # MEMORY — research-lead
 
-### DERIVE — funding weight CORRECTION → OTM-ONLY LEAN (operator entry 458) — 2026-07-08
+### SPEC — funding = REAL same-slope pool-vs-anchor ray-ratio (operator RULED entry 460) — 2026-07-08 [SUPERSEDES the entry-458 candidate block below]
+Operator RULED (460): funding deviation = the ACTUAL same-slope pool-vs-anchor construction, NOT the
+moneyness proxy (θ/mode) — and it's a RECURRING REGRESSION (~20–30×). Derived + measured vs REAL engine
+HEAD `bb2f8230` (vm-extract; scratchpad `probe.js`/`negctrl.js`/`propc.js`; no web/git/engine/Aristotle).
+Deliverable **`notes/research/SPEC_funding_sameslope_2026-07-07.md`**.
+- **CLOSED FORM:** `dev = |c·ln(θ/mode)|`, **`c = (g_a−g)/(g_a+1) = m(1−γ)/(m+1)`**, `g=gLoc=m·γ` (pool),
+  `g_a=m` (anchor w=½, γ=1). Through-the-lens (entry 232). Signatures: **0 @ATM** (ρ=1), **≡0 ∀strikes on w=½**
+  (c=0 — the POOL-LEAN signature, NOT moneyness), grows with |w−½| & |ln ρ| & m. Deep-OTM UNBOUNDED-log (determined).
+- **Regression root = STRUCTURAL (said so, item 3):** shipped `ext·(S−1)/S` keys off pool-vs-ORACLE gap (S) + a
+  moneyness/value weight — neither is the pool-vs-anchor lean. Measured: shipped funds a **w=½ pool** (S≠1) =
+  2.64/7.33/14.4 → **fails killer-b**. Target: **replace ext·(S−1)/S with `dev`; keep ±g, κ, N, dt.**
+- **Splice** (replaces L2311–2327): compute `mode,g,gA=tau,c=(gA-g)/(gA+1),intr`; `dev=(intr>0?0:|c·ln(θ/mode)|)`;
+  `return κ·(±g)·N·dev·dt` — **(S−1)/S & ext REMOVED**. Variant retaining (S−1)/S given (gate passes either way).
+- **THE LOCK:** retire FE.2 (hump-@ATM) + FE.3 (±g·(S−1)/S source) — they ENCODE the regression. Add FS.1–FS.6:
+  (a) f=0 @ATM ∀w [ext FAILS], **(b) KILLER f=0 on w=½ ∀OTM with S≠1 [proxy & ext FAIL]**, (c) ↑ with |w−½| at
+  fixed ρ, (d) 0 ITM, (5) source-token lock on the dev formula, (6) combined fingerprint (mark fails a, proxy
+  fails b, same-slope passes both). Negative controls MEASURED to fire. FS.2/b = the anti-regression anchor.
+- **Operator-tier FLAGS (via manager, funding semantics):** F1 remove (S−1)/S [recommended, structural]; F2 m
+  double-counts (±g & dev) ⇒ ~m² scale; F3 deep-OTM unbounded-log. **closeBand UNTOUCHED.** Label: derived/measured
+  research-lead, NOT yet gated in a build.
+
+### DERIVE — funding weight CORRECTION → OTM-ONLY LEAN (operator entry 458) — 2026-07-08 [⛔ SUPERSEDED by the same-slope SPEC above: entry 460 rules the ACTUAL same-slope construction, NOT the (c) 1−ρᵍ moneyness proxy]
 Update-1 funding weight `ext = markLensed−intrinsic` is the WRONG shape: measured it **PEAKS @ATM**
 (put ext(ATM)=0.1481=profile max) and funds the near-ITM sliver (ext>0 for mode<θ<S*=1.5·mode). Operator
 target: funding **0 @ATM · 0 ∀ITM · >0 OTM · →0 at ATM edge** = the curve's lean/deviation, restricted OTM.
