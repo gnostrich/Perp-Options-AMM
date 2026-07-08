@@ -1,5 +1,25 @@
 # MEMORY — research-lead
 
+### DERIVE — funding weight CORRECTION → OTM-ONLY LEAN (operator entry 458) — 2026-07-08
+Update-1 funding weight `ext = markLensed−intrinsic` is the WRONG shape: measured it **PEAKS @ATM**
+(put ext(ATM)=0.1481=profile max) and funds the near-ITM sliver (ext>0 for mode<θ<S*=1.5·mode). Operator
+target: funding **0 @ATM · 0 ∀ITM · >0 OTM · →0 at ATM edge** = the curve's lean/deviation, restricted OTM.
+Measured vs REAL engine (vm-extract HEAD block `bb2f8230`; scratchpad `funding_probe.js`/`funding_confirm.js`;
+no web/git/engine/Aristotle). Deliverable `notes/research/DERIVE_funding_otm_only_2026-07-07.md`.
+- **OTM/ITM pinned:** funding evals each strike at spot=mode=getSNorm. **`intr>0` ⟺ ITM exactly, both wings**
+  (put ITM=θ>mode, call ITM=θ<mode) — reuse the shipped `intr` as the free ITM gate; ATM self-zeroes via dev=0.
+- **Candidates (all hit 0/0/+/0, no seam, no hump straddling ATM):** (a) `|ln(θ/mode)|` monotone but UNBOUNDED;
+  (b) `|ln|·mark` bounded FADING lobe; (c) `1−ρ_otmᵍ` bounded MONOTONE plateau [ρ_otm=(put)θ/mode /(call)mode/θ].
+  All C0 (corner @ATM, value→0, not a seam); C1 needs squared dev (ln²) — recommend accept C0.
+- **Sign UNCHANGED and must be:** `±g·(S−1)/S` holds all sign (±g wing-fixed, (S−1)/S global anchor). Weight is
+  nonneg magnitude → swap can't flip sign (verified real fn, S=1.25: put −, call +, ITM/ATM=0). Per-strike
+  zero-@ATM comes ONLY from the WEIGHT (W(mode)=0); shipped ext peaks there → the whole fix is a magnitude swap.
+- **PROPOSED splice** (`fundingPerStrike` L2316–2326, keep `intr`, drop `ext`): PRIMARY **(c)**
+  `rhoOTM=(wing==='call')?mode/strike_theta:strike_theta/mode; W=(intr>0)?0:(1-Math.pow(rhoOTM,g));`
+  then `κ·(±g)·N·W·(S−1)/S·dt` unchanged. Measured put OTM lobe → cap 0.4, plateaus; call mirror; ATM+ITM hard 0.
+- **OPEN operator sub-decision (flagged, not decided):** deep-OTM = (c) grows-and-caps [recommended] vs (b)
+  fades vs (a) unbounded. **closeBand untouched** (close mechanics unaffected, entry 458). Corrects update-1 funding.
+
 ### CORRECTION — trader cashflow trace RETRACTS the "extractable/unbounded leak" (operator entry 454) — 2026-07-07
 **SUPERSEDES/CORRECTS the entry below (`VERIFY_drain_structural_2026-07-07.md`).** Operator caught a real
 contradiction in my drain note: I claimed BOTH (a) option payout decoupled/option-value-only AND (b)
