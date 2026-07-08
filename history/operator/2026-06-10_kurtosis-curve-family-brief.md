@@ -3474,3 +3474,9 @@ _Context: operator adds that a funding exploit must also contend with potentiall
 _Context: operator asks for a plain-English take-stock of the whole state._
 
 > siple englsh take stock again once
+
+
+## Entry 474 — 2026-07-08 UTC
+_Context: operator rejects the term "lean" (unendorsed). Correct vocabulary: the curve SKEWS, and there is a RAY DEVIATION from the anchor curve measured at each SAME-SLOPE POINT across pool and anchor curves. Unendorsed / redundant / duplicative terminology is a conflation cause; operator wants a GATE for it. Then take stock again._
+
+> lean is a term i dont endorse.. curve skews, and theres a ray deviation from anchor curve as per each same slope point across pool and anchor curves --- using terms like lean or anything i dont endorse or redundant / duplicative  terminoloy / vocabulaty  is a likely cause for conflations; i want a gate for this kind of stuff... now take stokc aain
