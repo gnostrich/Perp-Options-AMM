@@ -20,7 +20,7 @@ ul{margin:4px 0;padding-left:20px} li{margin:3px 0}
 </style></head><body>
 
 <h1>What changed in the engine since your version</h1>
-<p class="sub">Your version: <code>80f050e2</code> (14 Jun). Current: <code>bb2f8230</code> (7 Jul).
+<p class="sub">Your version: <code>80f050e2</code> (14 Jun). Current: <code>abd35f4b</code> (7 Jul).
 Below is what changed, in plain terms, with the numbers your Go code should reproduce.
 The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every number here — run your port against it.</p>
 
@@ -47,9 +47,10 @@ The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every nu
 <div class="do">Before, closing had <b>two cases</b>: normal (out-of-money) legs traded back through the pool, but in-the-money legs were cashed out separately — and the two didn't line up, so a trader's payout could <b>jump by roughly half</b> right at the strike. Now <b>every</b> leg, in or out of the money, just sells back through the pool the same way. The payout moves <b>smoothly</b> across the strike — no jump.</div>
 <div class="num"><b>Key point for your accounting:</b> what the trader is <b>paid</b> = the option's value, calculated <i>before</i> the pool trade. The pool trade itself is just bookkeeping — it never pays the trader anything extra. (This is what makes it impossible to game — see the warning below.)</div></div>
 
-<div class="item big"><span class="hd">5. Funding now only charges the "time-value" part of an option.</span> <span class="tag">PORT</span>
-<div class="do"><b>Out-of-the-money: nothing changes</b> (an out-of-money option is all time-value anyway). <b>In-the-money: funding now fades to zero.</b> Your version kept charging funding on the <i>full</i> value deep in-the-money — which is wrong, because a deep in-the-money option is basically just the underlying, and the perpetual-future layer already funds that (you'd be charging twice). Net shape: a gentle hump, biggest at-the-money, fading to zero as it goes in-the-money.</div>
-<div class="num"><b>How:</b> change the funding weight from the option's value to <code>value − exercise-value</code> (the "exercise-value" is 0 when out-of-money, so out-of-money is unchanged). The direction of funding (who pays whom) is unchanged.</div></div>
+<div class="item big"><span class="hd">5. Funding is being reworked — this version ships the correct DEVIATION (the input), not the final funding number yet.</span> <span class="tag">PORT</span>
+<div class="do">Your version's funding was wrong: it charged funding even on a perfectly <b>balanced</b> pool. Fixed to the correct measure — <b>how far the pool has LEANED away from balanced, at your strike</b>. This "lean" is: take the slope of the live pool curve at the strike, find where a balanced (symmetric) curve has that same slope, and compare the two ray angles. It is <b>zero when the pool is balanced, zero at-the-money, zero in-the-money</b>, and grows the more the pool has leaned — a smooth out-of-the-money lobe.</div>
+<div class="num"><b>This lean is the INPUT (a "premium", like a perp's mark-vs-oracle gap), not the funding rate itself.</b> The actual funding rate = plug this lean into a capped funding formula (Hyperliquid-style) — that formula, <b>including its cap, is coming in the NEXT update</b> with the safety patch. So this version shows the lean as a placeholder (the UI column is labeled <code>Funding (lean; TBD)</code>).<br>
+<b>Port now:</b> the lean/deviation <code>dev = |c·ln(strike/mode)|</code>, <code>c = (g_anchor − g)/(g_anchor + 1)</code>, <code>g = m·γ</code> (pool), <code>g_anchor = m</code> (balanced), gated to zero in-the-money. <b>Port next update:</b> the lean→rate formula + cap. Sign (who pays) is the wing sign, unchanged. <b>Test:</b> on a balanced pool this must read zero at every strike — that's the check that catches the old bug.</div></div>
 
 <div class="box red"><b>⚠ Warning — read before you run this on a real shared pool.</b>
 <div style="margin-top:5px">The new close does <b>not</b> perfectly restore the pool. After a position opens and closes, the pool ends up with a <b>tiny bit less</b> than it started.</div>
@@ -81,5 +82,5 @@ The file <code>engine/verify/lens_selfcheck.js</code> (31 checks) tests every nu
 <li>Smoothing of the funding/price reads over time (a later tuning pass).</li>
 </ul>
 
-<p class="small">Latest engine file: <code>engine/builds/HEAD_temporal_mvp_v28_lens.html</code> (md5 <code>bb2f8230</code>). The previous close is kept as a backup: <code>temporal_mvp_v28_lens_twocaseclose.html</code>. Generated 7 Jul 2026.</p>
+<p class="small">Latest engine file: <code>engine/builds/HEAD_temporal_mvp_v28_lens.html</code> (md5 <code>abd35f4b</code>). The previous close is kept as a backup: <code>temporal_mvp_v28_lens_twocaseclose.html</code>. Generated 7 Jul 2026.</p>
 </body></html>

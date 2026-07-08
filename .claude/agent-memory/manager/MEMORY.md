@@ -3,7 +3,7 @@
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
 🧭 **PRE-COMPACTION ROLLUP 2026-07-07 (entries 427–461) — READ THIS FIRST, LIVE STATE:**
-- **HEAD = `bb2f8230` on main** (`85a9d28f`+ later) = UPDATE-1 clean sell-back close (both legs reverse
+- **HEAD = `abd35f4b` on main** = update-1 close + FUNDING SAME-SLOPE DEVIATION (entry 460/462): fundingPerStrike magnitude = `dev=|c·ln(θ/mode)|` c=(gA−g)/(gA+1), OTM-gated, ZERO@ATM/ITM/on-symmetric-w½-pool (the anti-regression signature; recurring ~20-30× regression CAUGHT+LOCKED via gate FS.2b); +-g sign kept; PLACEHOLDER (label 'Funding (lean; TBD)'), actual funding FORMULA (HL-capped premium→rate, angles as mark/oracle proxy) + F1 oracle-independence = DEFERRED to update-2. Gates 31→35 (FE.2/FE.3 retired). Tester PASS. CTO changelog funding item CORRECTED to match (handover/, PDF regenerated, HTML=abd35f4b). Prior close-only HEAD `bb2f8230` (`85a9d28f`+ later) = UPDATE-1 clean sell-back close (both legs reverse
   live via tradeUpdateAt, two-case cash-settle removed, revertArc/arc DORMANT for update-2; payout locked
   from legPrice(s0) BEFORE swap ⇒ NON-EXTRACTABLE; gates 24→31). Twin `temporal_mvp_v28_lens_twocaseclose.html`=`51342574`.
 - **⚡ LIVE CAMPAIGN — FUNDING SAME-SLOPE FIX (operator RULED, entries 458/459/460):** update-1 shipped the
