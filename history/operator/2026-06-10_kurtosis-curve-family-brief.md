@@ -3492,3 +3492,9 @@ _Context: operator asks for a simple-English take-stock and notes they've spent 
 _Context: operator (1) authorizes the "lean"→skew/ray-deviation cleanup pass; (2) answers the open economic question — funding's purpose is the SAME as with perps (tether/imbalance-correction), which confirms the shipped direction; and asks what remains unanswered/pending._
 
 > 1 fix; 2 same purpose as with perps ...  anything unansweree pending?
+
+
+## Entry 477 — 2026-07-08 UTC
+_Context: operator asks for a simple-English wrap of the session._
+
+> simoke english wrap please
