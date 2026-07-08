@@ -1,5 +1,26 @@
 # MEMORY — research-lead
 
+### VERIFY — m-direction of the same-slope DEVIATION, SETTLED (operator entry 464) — 2026-07-08
+Operator 464: the m-direction (steeper m ⇒ MORE or LESS divergence) is a property of the SHIPPED `dev` (current
+scope, HEAD `abd35f4b`), NOT the deferred funding formula — settle now with math+measurement. Deliverable
+**`notes/research/VERIFY_deviation_mdirection_2026-07-07.md`** (harness scratchpad `mdir.js`; vm-extract real
+engine L1611–2340; no web/git/engine/Aristotle).
+- **VERDICT: steeper m ⇒ MORE divergence. SHIPPED `dev` m-direction is CORRECT — NO FIX, no splice.**
+- **FULL same-slope ray-ratio (every term):** `D̃(ρ)=γ^{1/(m+1)}·ρ^c`, `c=(g_a−g)/(g_a+1)=m(1−γ)/(m+1)`. The
+  prefactor `γ^{1/(m+1)}=(g/g_a)^{1/(g_a+1)}` (manager's suspected dropped term) is **REAL** — verified vs a
+  from-scratch bisection solve of the same-slope condition (matches closed form to 6dp).
+- **The shipped `|c·ln ρ|` drops the prefactor, and the drop is FORCED:** prefactor (a) does NOT change the
+  m-direction (ρ-independent ATM offset; c carries all moneyness), (b) BREAKS dev=0 @ATM — full dev@ATM=
+  `lnγ/(m+1)>0` (0.42/0.28/0.17 at m=1/2/4) — so ATM-zero ruling (386/443/458) MANDATES removing it, (c) does
+  NOT break the w=½ zero (γ=1 ⇒ pref=1 & c=0). So shipped is right AS IS.
+- **m-sweep at fixed OTM ρ=0.5 (measured):** shipped 0.462→0.616→0.739→0.906 (m=1→50), full-raw 0.886→0.899→
+  0.923 — **both monotone UP.** `|c|=m(γ−1)/(m+1)`, d/dm[m/(m+1)]>0 ∀m ⇒ universal in γ>1, every OTM strike.
+- **Operator's "denser slope ⇒ less" is REAL but LOSES:** it IS the `(m+1)` denominator (anchor slope-density
+  exponent g_a+1); exponent-gap `g−g_a=m(γ−1)` (numerator) grows linearly, denominator m+1 ⇒ |c|→(γ−1) from
+  below. Density effect BOUNDS/saturates the growth, does NOT reverse it. (Intuition holds only for the ATM
+  prefactor which falls with m — the term we're required to discard.)
+- Scope: DEVIATION only (entry 464); funding FORMULA still deferred to UPDATE-2 (462/463). closeBand untouched.
+
 ### SPEC — funding = REAL same-slope pool-vs-anchor ray-ratio (operator RULED entry 460) — 2026-07-08 [SUPERSEDES the entry-458 candidate block below]
 Operator RULED (460): funding deviation = the ACTUAL same-slope pool-vs-anchor construction, NOT the
 moneyness proxy (θ/mode) — and it's a RECURRING REGRESSION (~20–30×). Derived + measured vs REAL engine
