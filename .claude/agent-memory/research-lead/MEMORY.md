@@ -1,5 +1,34 @@
 # MEMORY — research-lead
 
+### VERIFY + LOCK-DESIGN — REBASE gauge-invariance, RIGOROUS (operator entry 466) — 2026-07-08
+Engine HEAD `abd35f4b` (vm-extract live `<script id="engine">`; no web/git/engine/Aristotle). Deliverable
+**`notes/research/VERIFY_rebase_rigorous_2026-07-07.md`** (harnesses scratchpad `measure_rebase.js`/`measure_close*.js`/`neg_controls.js`/`neg2.js`/`neg3.js`).
+- **Code transform (L1765):** `rebase(s,r)={x:r·x, y, alpha:r·alpha, beta}` — pool ONLY. w/k/mp/θ effects are
+  DERIVED: w inv, `k→r^w·k`, `getMP_raw→/r`; θ→θ/r happens because strikes are stored as **dollar K** and
+  θ=K/oracle is derived (setOracle L2467 does `rebase`⊕`oracle→r·oracle`⊕`baseline_alpha*=r`).
+- **VERDICT: rebase is a CLEAN gauge move — NO residual, NO broken invariant.** All measured to machine-eps:
+  getW/getSNorm(mode)/gLoc/poolMark INVARIANT (2–4e-16); getMP_raw→1/r, getDepth→r^w exact; mark & funding
+  `dev` (frozen stored ray, as `fundingTick` calls it) INVARIANT 8.9e-16; **closeBand raw_net/X/Y INVARIANT
+  0–4e-15 when the dollar strike is carried through (K→r·K)**; trade/rebase commute 2–4e-16 (SPOT **and** live
+  `tradeUpdateAt` at fixed ρ); group law/identity/inverse hold.
+- **Operator's dev question ANSWERED:** the mode does NOT move under rebase (getSNorm=(1−w)/w, w rebase-inv);
+  shipped funding uses the FROZEN stored ray ⇒ dev exactly invariant. dev=|c·ln(θ/mode)|, c=(g_a−g)/(g_a+1)
+  depends only on w ⇒ pure pool-lean, correctly rebase-silent. This IS the geometry link (funding=shape-keyed,
+  shape=rebase-inv). The "closeBand moves under bare rebase" (resid ~170×) is **CORRECT repricing** of a real
+  oracle move (fixed-$K option goes ITM), proven a non-leak by the strikes-carried-through=0 test.
+- **⚠ CRITICAL GAP:** `faith_rebase.js` **SKIPs on v28** (no ghCalibrate — written for demoted GH v26c). The only
+  live rebase coverage is a **source byte-identity** check in lens_selfcheck — NO behavioral gauge gate exists.
+  This is how the 40+ regression recurs. β-class (β scaled wrong) SLIPS ALL intrinsic reads (getW/getSNorm/mp/
+  depth never read β) — only field-exact or trade-commute catches it.
+- **THE LOCK (splice-ready, all neg-controlled & validated):** RB.1 pool-intrinsic degrees; **RB.2 field-exact
+  bookkeeping [mandatory — β-class killer]**; RB.3 carried-strike invariance (θ→θ/r pin); RB.4 group/identity/
+  inverse; RB.5 trade-commute (SPOT+tradeUpdateAt); **RB.6 funding rebase-silence + KILLER f=0 on w=½ pool
+  ∀OTM** (a moneyness-weighted funding scores 2.0e-2≠0 → fires; the 20-30× regression class). Killer pair =
+  RB.2+RB.6(ii). Mutants M1/M2/M4/M5 fire RB.1/2/3/4; M3(β) fires RB.2/RB.5. REAL passes all six.
+- Scope: VERIFY+GATE-DESIGN, NO engine edit — **intern lands RB.* into `lens_selfcheck.js`**. Flag to operator
+  (via manager): note↔engine convention gap (note §2 = θ-fixed/K-slides; engine = K-fixed/θ derived); funding
+  frozen-ray vs close live-ray asymmetry rides UPDATE-2 funding semantics.
+
 ### VERIFY — m-direction of the same-slope DEVIATION, SETTLED (operator entry 464) — 2026-07-08
 Operator 464: the m-direction (steeper m ⇒ MORE or LESS divergence) is a property of the SHIPPED `dev` (current
 scope, HEAD `abd35f4b`), NOT the deferred funding formula — settle now with math+measurement. Deliverable

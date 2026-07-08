@@ -2,6 +2,17 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **✅ REBASE VERIFIED CLEAN + LOCK LANDING (entry 466):** rebase = clean gauge move, ALL residuals machine-eps
+(marks/values/moneyness/poolMark/**funding dev**/closeBand raw_net invariant; trade-commute for SPOT + live
+tradeUpdateAt; group/identity/inverse hold). The DEVIATION is rebase-invariant (mode doesn't move: w invariant,
+getSNorm=(1−w)/w; dev depends only on w). No residual, no broken invariant — NOT currently regressed. **ROOT of the
+40+ regressions = NO behavioral gate:** `faith_rebase.js` SKIPs on v28 (written for demoted GH); only a source
+byte-identity check existed. FIX = land RB.1-6 lock into lens_selfcheck.js (killer pair RB.2 field-exact β-class +
+RB.6 funding-zero-on-symmetric-pool; mutant-validated). Intern landing now → verify → tester → push. Doc escalations
+(operator-tier, non-blocking): (1) note↔engine convention gap (rebasing_logic_note §2 says θ-fixed/dollar-K-slides;
+engine ships dollar-K-locked/θ-derived — same physics, pin the framing); (2) funding frozen-ray vs close live-ray
+asymmetry (rides update-2 formula). `VERIFY_rebase_rigorous_2026-07-07.md`.
+
 🧭 **⚡ NEXT (entry 466): RIGOROUS REBASE CHECK** — operator: rebase is RELATED to the same-slope/deviation
 geometry and had **40+ historical regressions**; wants a rigorous verification. NOT yet dispatched (fire after
 this turn). Scope to define: rebase = gauge move (x→rx, α→rα, β/y/w invariant, θ→θ/r, k→r^w k; fires on each
