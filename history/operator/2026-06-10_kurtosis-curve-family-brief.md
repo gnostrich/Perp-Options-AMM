@@ -3408,3 +3408,9 @@ _Context: operator warns the context window is running low; orders the manager t
 _Context: operator scopes this build precisely: DON'T plug in a funding formula yet — just get the DEVIATION right (the same-slope pool-vs-anchor ray-angle-ratio). The actual funding formula (Hyperliquid-style premium→rate with cap, our angles as the mark/oracle proxy) is TBD, deferred to the NEXT update alongside the exploit patch (update-2). So this build = deviation only + the anti-regression lock; funding formula parked with update-2._
 
 > dont plug in a formula yet, just get deviation right and note the actual funding formula tbd with hyperliquid funding formula with the proxy whstevr i said tbd in hext update with the exploit patch
+
+
+## Entry 463 — 2026-07-07 UTC
+_Context: operator impatient with the next update / TBDs not being properly specified (scattered across notes). Manager consolidates everything deferred into one UPDATE-2 spec with the open decisions in one place._
+
+> looks ok but im getting a little impatient with the lack of the next upfdate / tbds being properly specified etc.
