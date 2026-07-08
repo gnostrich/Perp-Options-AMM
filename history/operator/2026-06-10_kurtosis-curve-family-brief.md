@@ -3390,3 +3390,9 @@ _Context: operator CONFIRMS the funding target: funding lives only OTM, zero at 
 _Context: operator (1) asks to confirm the funding deviation is computed by the same-slope-across-both-curves method: find where each curve (pool, anchor) attains the same slope, read off the two ray angles, and use their angle ratio as the deviation; (2) asks for a simple-English recap of what else the manager did / is doing._
 
 > 1. also confirm that deviation used in calculating funding comes from works by comparing the same slope across both curves and finding the correspionding ray angles and their angle ratio; 2. simple engkish on what else you did / are doing
+
+
+## Entry 460 — 2026-07-07 UTC
+_Context: operator rules (A) — build the ACTUAL same-slope pool-vs-anchor ray-angle-ratio deviation, not the moneyness proxy; and flags this is a RECURRING REGRESSION (~20-30 times) — the funding deviation keeps drifting from the same-slope method. Manager: build the real same-slope deviation + a HARD GATE that locks it so it can't regress again._
+
+> simple english -- this is a regression happpened around 20-30 times
