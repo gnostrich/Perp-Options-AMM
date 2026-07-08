@@ -3420,3 +3420,9 @@ _Context: operator impatient with the next update / TBDs not being properly spec
 _Context: operator corrects the manager's scoping — the m-direction (steeper = more or less divergence) affects the DEVIATION (current scope, shipped), NOT the deferred funding formula. So it must be settled NOW, not at update-2. Manager: fire the rigorous derivation of the true same-slope deviation's m-direction, with the operator's "denser slope per ray angle" argument explicitly in it; fix the shipped deviation if the direction is wrong._
 
 > it affects deviatin not the funding formula ... we're working uptil deviation right now
+
+
+## Entry 465 — 2026-07-07 UTC
+_Context: operator clarifies "steeper" = something that steepens the curve / more kurtosis, NOT necessarily the raw knob value (in case the knob is inverted vs kurtosis); and rules the deviation m-direction issue must be RESOLVED BEFORE the CTO handoff. Manager: m aligns with kurtosis (constant-m lens: m=1 plain, bigger m = steeper = more kurtosis) so no inversion, but the derivation will report in physical steepness terms; CTO handoff HELD pending resolution._
+
+> oh also when i say steeper i mean something that steepens the curve like 'more kurtosis' not the actual numeric value of the knob (incase its the opposire), but hyeah overal take stock of this isse to be revoled before cto handoff

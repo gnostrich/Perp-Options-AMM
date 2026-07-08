@@ -2,6 +2,15 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **⚠ CTO HANDOFF HELD (entry 465) — deviation m-direction unresolved:** the shipped funding deviation
+`dev=|c·ln(θ/mode)|` grows with m; operator's "denser-slope" argument says steeper should give LESS
+divergence — CONFLICT. Rigorous derivation IN FLIGHT (research-lead, `VERIFY_deviation_mdirection_2026-07-07.md`):
+checks if the shipped dev dropped an m-dependent prefactor that flips the direction / breaks the ATM/symmetric
+zeros. "Steeper" = MORE KURTOSIS = higher m (constant-m lens: m=1 plain, bigger=steeper; aligned, no inversion).
+BOUNDED: only the m-SCALING is in question; the SHAPE (0@ATM/ITM/balanced, OTM lobe) is verified correct.
+Resolution: if shipped right → confirm + RELEASE CTO handoff; if wrong → fix dev (verify→tester→push) → THEN handoff.
+DO NOT release the CTO handover package until this resolves.
+
 🧭 **PRE-COMPACTION ROLLUP 2026-07-07 (entries 427–461) — READ THIS FIRST, LIVE STATE:**
 - **HEAD = `abd35f4b` on main** = update-1 close + FUNDING SAME-SLOPE DEVIATION (entry 460/462): fundingPerStrike magnitude = `dev=|c·ln(θ/mode)|` c=(gA−g)/(gA+1), OTM-gated, ZERO@ATM/ITM/on-symmetric-w½-pool (the anti-regression signature; recurring ~20-30× regression CAUGHT+LOCKED via gate FS.2b); +-g sign kept; PLACEHOLDER (label 'Funding (lean; TBD)'), actual funding FORMULA (HL-capped premium→rate, angles as mark/oracle proxy) + F1 oracle-independence = DEFERRED to update-2. Gates 31→35 (FE.2/FE.3 retired). Tester PASS. CTO changelog funding item CORRECTED to match (handover/, PDF regenerated, HTML=abd35f4b). Prior close-only HEAD `bb2f8230` (`85a9d28f`+ later) = UPDATE-1 clean sell-back close (both legs reverse
   live via tradeUpdateAt, two-case cash-settle removed, revertArc/arc DORMANT for update-2; payout locked
