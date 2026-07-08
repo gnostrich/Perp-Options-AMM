@@ -3468,3 +3468,9 @@ _Context: operator argues a funding exploit would be an order of magnitude less 
 _Context: operator adds that a funding exploit must also contend with potentially complete slippage (moving the mark incurs the reserve/round-trip slippage cost). Manager agrees — reinforces the capital-inefficiency argument._
 
 > and it would have to contend with potentially complete slippage
+
+
+## Entry 473 — 2026-07-08 UTC
+_Context: operator asks for a plain-English take-stock of the whole state._
+
+> siple englsh take stock again once
