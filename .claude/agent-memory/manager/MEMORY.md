@@ -2,6 +2,15 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **✅ ENTRY 468 ANSWERED (per-lean funding vs vol):** operator idiot-check — "per unit of lean, funding changes
+more for the LESS volatile assets, correct?" → YES. Re-derived: funding-per-lean coeff `|c|=m(γ−1)/(m+1)`;
+`d|c|/dm=(γ−1)/(m+1)²>0` for γ>1, so less-vol⇒higher-m⇒bigger |c|, SATURATING toward γ−1. Node-verified table
+(γ=2: m=8→0.889, m=1→0.5, m=0.5→0.333). Transcribed (entry 468) + committed + pushed. Relayed the one open economic
+call it points at: this is the IMBALANCE-CORRECTION reading; a vol-risk-premium reading would want the opposite —
+that meaning-choice pins update-2's HL funding formula, still operator's to make. RB lock (41 gates, md5 abd35f4b
+unchanged) already landed+pushed. NOTE: this turn pushed to feature branch `claude/exciting-archimedes-txs2wx`
+per session git directive (not main).
+
 🧭 **✅ REBASE VERIFIED CLEAN + LOCK LANDING (entry 466):** rebase = clean gauge move, ALL residuals machine-eps
 (marks/values/moneyness/poolMark/**funding dev**/closeBand raw_net invariant; trade-commute for SPOT + live
 tradeUpdateAt; group/identity/inverse hold). The DEVIATION is rebase-invariant (mode doesn't move: w invariant,
