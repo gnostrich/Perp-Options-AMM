@@ -3378,3 +3378,9 @@ _Context: update-1 done. Operator asks for the latest HTML + an accompanying rea
 _Context: operator: the CTO changelog must be much simpler English (he won't understand it); and a technical catch — isn't funding-on-extrinsic moot since it's zero ITM anyway and OTM is only extrinsic? Manager: OTM unchanged (operator right), but NOT moot — old build funded full value forever ITM; extrinsic is what makes it fade to zero ITM (+ smooth vs seam). Rewriting changelog plain._
 
 > changelog has to be simpler English; he;s not going to understand shit fro ths and isnt funding chardeg on extrinsic or hwatevrr moot because its zero itm anyway and otm is only extrinsic?
+
+
+## Entry 458 — 2026-07-07 UTC
+_Context: operator CONFIRMS the funding target: funding lives only OTM, zero at the money AND zero ITM, fading smoothly to zero at the ATM edge. This is a DIFFERENT shape from the shipped update-1 extrinsic weight (which peaks at ATM + funds the near-ITM sliver) — a real build bug in the funding piece. Manager: re-derive the correct weight, fix funding only (close mechanics unaffected), re-gate+tester, rewrite changelog._
+
+> One confirm before I fix it: is that target right — funding lives only out-of-the-money, zero at the money and zero in-the-money, fading smoothly to zero at the ATM edge? YES
