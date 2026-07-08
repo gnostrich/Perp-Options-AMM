@@ -3384,3 +3384,9 @@ _Context: operator: the CTO changelog must be much simpler English (he won't und
 _Context: operator CONFIRMS the funding target: funding lives only OTM, zero at the money AND zero ITM, fading smoothly to zero at the ATM edge. This is a DIFFERENT shape from the shipped update-1 extrinsic weight (which peaks at ATM + funds the near-ITM sliver) — a real build bug in the funding piece. Manager: re-derive the correct weight, fix funding only (close mechanics unaffected), re-gate+tester, rewrite changelog._
 
 > One confirm before I fix it: is that target right — funding lives only out-of-the-money, zero at the money and zero in-the-money, fading smoothly to zero at the ATM edge? YES
+
+
+## Entry 459 — 2026-07-07 UTC
+_Context: operator (1) asks to confirm the funding deviation is computed by the same-slope-across-both-curves method: find where each curve (pool, anchor) attains the same slope, read off the two ray angles, and use their angle ratio as the deviation; (2) asks for a simple-English recap of what else the manager did / is doing._
+
+> 1. also confirm that deviation used in calculating funding comes from works by comparing the same slope across both curves and finding the correspionding ray angles and their angle ratio; 2. simple engkish on what else you did / are doing
