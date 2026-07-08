@@ -3402,3 +3402,9 @@ _Context: operator rules (A) — build the ACTUAL same-slope pool-vs-anchor ray-
 _Context: operator warns the context window is running low; orders the manager to push everything to main and retain whatever context is needed so nothing is lost across a compaction._
 
 > also note the context window is running low so push to main retain ehatevr context you need so we dont lose asnytng
+
+
+## Entry 462 — 2026-07-07 UTC
+_Context: operator scopes this build precisely: DON'T plug in a funding formula yet — just get the DEVIATION right (the same-slope pool-vs-anchor ray-angle-ratio). The actual funding formula (Hyperliquid-style premium→rate with cap, our angles as the mark/oracle proxy) is TBD, deferred to the NEXT update alongside the exploit patch (update-2). So this build = deviation only + the anti-regression lock; funding formula parked with update-2._
+
+> dont plug in a formula yet, just get deviation right and note the actual funding formula tbd with hyperliquid funding formula with the proxy whstevr i said tbd in hext update with the exploit patch
