@@ -15,12 +15,18 @@ formula (Hyperliquid-style; the same-slope angles are the mark/oracle proxy).
 **OPEN DECISIONS (operator):**
 - **D1 formula shape.** Proposal: `rate = clamp( κ · (±sign) · dev , ±cap )`, or an HL-style
   premium(+interest) form. → NEED the specific mapping.
-- **D2 (F1) oracle coupling.** Final funding = purely the lean (no pool-vs-oracle term, current
-  placeholder), OR also couple to the pool-vs-oracle gap? → yes/no.
+- **D2 (F1) oracle coupling. ✅ ANSWERED (operator entry 476, 2026-07-08): "same purpose as with
+  perps."** Funding is a **tether / imbalance-correction**, identical in purpose to a perp's funding.
+  Proxy (entry-476 D1): **pool-curve ray angle = "mark", anchor-curve ray angle = "oracle"**; the
+  same-slope ray deviation IS the mark-vs-oracle gap, so **no separate external-oracle coupling term**
+  — the anchor plays the oracle role. This **CONFIRMS the shipped deviation direction** (more skew ⇒
+  larger deviation ⇒ more funding pulling the crowded side back); a vol-risk-premium reading (which
+  would invert the direction) is **ruled out**. No engine change.
 - **D3 (F2) m-scaling.** m enters the deviation (via c) already; also via the ±g sign (=±mγ)?
-  → single-m or m².
-- **D4 (F3) cap.** deep-OTM lean grows logarithmically; the formula's cap bounds it. → cap value:
-  fixed knob (new control — R3) or derived? 
+  → single-m or m². (Operator D3 leans single-m via the deviation; shipped placeholder is m² — strip
+  or let the formula resolve it.)
+- **D4 (F3) cap.** deep-OTM ray deviation grows logarithmically; the formula's cap bounds it. → cap
+  value: fixed knob (new control — R3) or derived? 
 Gate: the FS.2b anti-regression lock (zero on balanced pool) MUST survive the formula wrapping —
 do not soften it when an interest term is added.
 

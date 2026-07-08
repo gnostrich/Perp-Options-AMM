@@ -3486,3 +3486,9 @@ _Context: operator rejects the term "lean" (unendorsed). Correct vocabulary: the
 _Context: operator asks for a simple-English take-stock and notes they've spent several turns trying to steer this right._
 
 > siple englsh and take stock .... you notice i've been tryin gto get this alogn right... been a few turns now
+
+
+## Entry 476 — 2026-07-08 UTC
+_Context: operator (1) authorizes the "lean"→skew/ray-deviation cleanup pass; (2) answers the open economic question — funding's purpose is the SAME as with perps (tether/imbalance-correction), which confirms the shipped direction; and asks what remains unanswered/pending._
+
+> 1 fix; 2 same purpose as with perps ...  anything unansweree pending?
