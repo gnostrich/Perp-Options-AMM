@@ -760,5 +760,174 @@ if (hasTradeMap) {
       maxRel < 1e-12, 'maxRelErr=' + maxRel.toExponential(2) + (worst ? ' worst=' + worst : ''));
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+//  (RB) REBASE anti-regression LOCK — operator entry 466 (40+ historical rebase
+//  regressions ⇒ a PERMANENT behavioral gate). Design + measured residuals:
+//  research-lead notes/research/VERIFY_rebase_rigorous_2026-07-07.md §4 (splice-ready,
+//  mutant-validated). NO engine change — the live rebase is verified CLEAN; this LOCKS it.
+//
+//  Live map (engine line ~1765):  rebase(s, r) = { x: s.x·r, y: s.y, alpha: s.alpha·r, beta: s.beta }
+//  ⇒ x→r·x, α→r·α, y & β invariant (r = S_new/S_old). It is a CLEAN GAUGE MOVE: every
+//  normalized/economic quantity is rebase-invariant to machine-eps, the price coordinate
+//  scales 1/r and depth scales r^w exactly, it commutes with BOTH trade laws, group/
+//  identity/inverse hold, and funding is rebase-silent (dev is shape-keyed, w invariant).
+//
+//  WHY THIS GATE EXISTS: faith_rebase.js SKIPs on v28 (it was written for the GH ghCalibrate
+//  build) — so before this lock the ONLY live rebase coverage was a source byte-identity check
+//  (fragile: any behavior-preserving refactor reds it, any byte-preserving behavior break passes).
+//  RB.* replaces that hole with SIX behavioral, NEGATIVE-CONTROLLED checks.
+//
+//  The four scalar-transform regression modes (rebasing note §3) + additive + moneyness-funding,
+//  reproduced in-gate as PURE mutant transforms (the engine is never mutated):
+//    M1 y→r·y (y wrongly scaled)   M2 drop α-scale   M3 β→r·β (β wrongly scaled)
+//    M4 x-unscaled                 M5 additive not × (x→x+r, α→α+r)
+//  ⚠ The β-class (M3) SLIPS every pool-intrinsic read (getW/getSNorm/getMP_raw/getDepth never
+//    read β) ⇒ RB.2 (field bit-exact) and RB.5 (trade-commute) are the MANDATORY β-killers.
+//  ⚠ RB.6(ii) is the symmetric-pool-funding KILLER: the recurring ~20–30× regression funds a
+//    w=½ pool via a moneyness/value or (S−1) weight; the pool-lean c=(g_a−g)/(g_a+1) forces the
+//    correct zero. Each RB.k PASSES iff the REAL rebase is clean AND the note-mapped mutant FIRES
+//    (so a green RB line simultaneously proves real-clean and that the negative control has teeth).
+if (typeof E.rebase === 'function') {
+  const RTOL = 1e-12;                                     // measured worst 1.7e-15 ⇒ ~3 orders headroom
+  const mkP = (w, x, o) => { const y = o * (1 - w) * x / w; return { x, y, alpha: w * x, beta: (1 - w) * y }; };
+  const GW = [0.5, 0.6, 0.42], GR = [0.5, 0.8, 1.1, 2, 5], GM = [1, 2, 3], GO = [80000, 120000];
+  const OI = 100000, Nf = 1, dtf = 1, kf = 1;
+  const rrel = (a, b) => Math.abs(a - b) / Math.max(1e-300, Math.abs(b));
+  const rfield = (a, b) => Math.max(rrel(a.x, b.x), rrel(a.y, b.y), rrel(a.alpha, b.alpha), rrel(a.beta, b.beta));
+
+  const rbReal = (s, r) => E.rebase(s, r);
+  const rbM1 = (s, r) => ({ x: s.x * r, y: s.y * r, alpha: s.alpha * r, beta: s.beta });   // y wrongly scaled
+  const rbM2 = (s, r) => ({ x: s.x * r, y: s.y, alpha: s.alpha, beta: s.beta });           // α not scaled
+  const rbM3 = (s, r) => ({ x: s.x * r, y: s.y, alpha: s.alpha * r, beta: s.beta * r });   // β wrongly scaled
+  const rbM4 = (s, r) => ({ x: s.x, y: s.y, alpha: s.alpha * r, beta: s.beta });           // x not scaled
+  const rbM5 = (s, r) => ({ x: s.x + r, y: s.y, alpha: s.alpha + r, beta: s.beta });       // additive not ×
+
+  // property predicates (true = the invariant HOLDS for rebase fn `rb`)
+  const p1 = (rb) => {                                    // pool-intrinsic gauge degrees
+    for (const w of GW) for (const o of GO) for (const r of GR) {
+      const s = mkP(w, 10, o), sr = rb(s, r);
+      if (rrel(E.getW(sr), E.getW(s)) > RTOL) return false;                                 // deg 0
+      if (rrel(E.getSNorm(sr), E.getSNorm(s)) > RTOL) return false;                         // deg 0 (mode)
+      if (rrel(E.getMP_raw(sr) * r, E.getMP_raw(s)) > RTOL) return false;                   // scales 1/r
+      if (rrel(E.getDepth(sr) / Math.pow(r, E.getW(s)), E.getDepth(s)) > RTOL) return false;// scales r^w
+      if (rrel(E.poolMark(sr, r * o, OI), E.poolMark(s, o, OI)) > RTOL) return false;       // paired-oracle invariant
+    }
+    return true;
+  };
+  const p2 = (rb) => {                                    // bookkeeping BIT-EXACT (β-class killer)
+    for (const w of GW) for (const o of GO) for (const r of GR) {
+      const s = mkP(w, 10, o), sr = rb(s, r);
+      if (!(sr.x === s.x * r && sr.y === s.y && sr.alpha === s.alpha * r && sr.beta === s.beta)) return false;
+    }
+    return true;
+  };
+  const p3 = (rb) => {                                    // carried-strike invariance (θ→θ/r killer)
+    for (const w of GW) for (const o of GO) for (const r of GR) for (const m2 of GM) {
+      const s = mkP(w, 10, o), sr = rb(s, r);
+      const moS = E.getSNorm(s), moSr = E.getSNorm(sr);
+      for (const kfac of [0.7, 1.0, 1.3]) for (const wing of ['call', 'put']) {
+        const K = kfac * o, rayS = K / o, raySr = (r * K) / (r * o);                        // dollar strike carried K→r·K
+        const vS = E.markLensed(wing, rayS, moS, E.gLoc(s, rayS, m2));
+        const vSr = E.markLensed(wing, raySr, moSr, E.gLoc(sr, raySr, m2));
+        if (rrel(vSr, vS) > RTOL) return false;
+      }
+    }
+    return true;
+  };
+  const p4 = (rb) => {                                    // group / identity / inverse
+    for (const w of GW) for (const o of GO) {
+      const s = mkP(w, 10, o), id = rb(s, 1);
+      if (!(id.x === s.x && id.y === s.y && id.alpha === s.alpha && id.beta === s.beta)) return false;
+      for (const r1 of GR) {
+        if (rfield(rb(rb(s, r1), 1 / r1), s) > RTOL) return false;                          // inverse
+        for (const r2 of GR) if (rfield(rb(rb(s, r1), r2), rb(s, r1 * r2)) > RTOL) return false; // group law
+      }
+    }
+    return true;
+  };
+  const p5 = (rb) => {                                    // trade/rebase commute (SPOT + live tradeUpdateAt)
+    for (const w of GW) for (const o of GO) for (const r of GR) {
+      const s = mkP(w, 10, o);
+      for (const dy of [5000, -3000, 20000]) {
+        const a1 = E.tradeUpdate(s, dy);
+        if (a1) { const A = rb(a1, r), B = E.tradeUpdate(rb(s, r), dy); if (!B) return false; if (rfield(A, B) > RTOL) return false; }
+      }
+      for (const rho of [1, 2, 0.5]) for (const dy of [5000, -3000, 20000]) {
+        const a1 = E.tradeUpdateAt(s, dy, rho);
+        if (a1) { const A = rb(a1, r), B = E.tradeUpdateAt(rb(s, r), dy, rho); if (!B) return false; if (rfield(A, B) > RTOL) return false; }
+      }
+    }
+    return true;
+  };
+  const p6inv = (rb) => {                                 // funding rebase-silence, FROZEN stored ray (fundingTick)
+    for (const w of GW) for (const o of GO) for (const r of GR) for (const m2 of GM) {
+      const s = mkP(w, 10, o), sr = rb(s, r);
+      for (const th of [0.3, 0.7, 1.3, 2.5]) for (const wing of ['call', 'put']) {
+        const fS = E.fundingPerStrike(s, th, wing, Nf, dtf, kf, o, OI, m2);
+        const fSr = E.fundingPerStrike(sr, th, wing, Nf, dtf, kf, r * o, OI, m2);           // θ frozen, oracle→r·o
+        if (rrel(fSr, fS) > RTOL) return false;
+      }
+    }
+    return true;
+  };
+  // funding killers (do not depend on rebase): symmetric-pool-is-zero + ATM-is-zero
+  const rb6kill = () => {
+    for (const o of GO) for (const m2 of GM) { const s = mkP(0.5, 10, o);
+      for (const th of [0.1, 0.3, 0.7, 1.3, 2.5]) for (const wing of ['call', 'put'])
+        if (Math.abs(E.fundingPerStrike(s, th, wing, Nf, dtf, kf, o, OI, m2)) > RTOL) return false; }
+    return true;
+  };
+  const rb6atm = () => {
+    for (const w of GW) for (const o of GO) for (const m2 of GM) { const s = mkP(w, 10, o), mo = E.getSNorm(s);
+      for (const wing of ['call', 'put'])
+        if (Math.abs(E.fundingPerStrike(s, mo, wing, Nf, dtf, kf, o, OI, m2)) > RTOL) return false; }
+    return true;
+  };
+  // moneyness-funding regression (weight |ln ρ| WITHOUT the pool-lean c factor) — NONZERO on the
+  // symmetric pool OTM ⇒ the RB.6(ii) killer has teeth (the correct dev = |c·lnρ| is 0 at w=½, c=0).
+  const rb6ncFires = () => { const s = mkP(0.5, 10, 100000), mo = E.getSNorm(s);
+    for (const th of [0.1, 0.3, 0.7, 1.3, 2.5]) {
+      const g = E.gLoc(s, th, 2), intr = Math.max(0, 1 - mo / th);
+      const dev = (intr > 0 || !(mo > 0) || !(th > 0)) ? 0 : Math.abs(Math.log(th / mo));
+      if (Math.abs(kf * (-g) * Nf * dev * dtf) > 1e-9) return true;
+    }
+    return false;
+  };
+
+  // ── (RB.1) pool-intrinsic gauge degrees invariant (w/mode deg 0; getMP_raw 1/r; depth r^w; poolMark) ──
+  chk('(RB.1) pool-intrinsic gauge degrees: getW/getSNorm/poolMark invariant, getMP_raw·r & getDepth/r^w invariant (NC: M1/M2/M4/M5 fire; M3 β-class SLIPS — caught by RB.2/RB.5)',
+      p1(rbReal) && !p1(rbM1) && !p1(rbM2) && !p1(rbM4) && !p1(rbM5),
+      'real=' + p1(rbReal) + ' fires M1=' + !p1(rbM1) + ' M2=' + !p1(rbM2) + ' M4=' + !p1(rbM4) + ' M5=' + !p1(rbM5) + ' M3slips=' + p1(rbM3));
+
+  // ── (RB.2) bookkeeping BIT-EXACT (the β-class killer — mandatory) ──
+  chk('(RB.2) bookkeeping bit-exact: sr.x===x·r ∧ sr.y===y ∧ sr.α===α·r ∧ sr.β===β (β-class KILLER; NC: M1/M2/M3 all fire)',
+      p2(rbReal) && !p2(rbM1) && !p2(rbM2) && !p2(rbM3),
+      'real=' + p2(rbReal) + ' fires M1=' + !p2(rbM1) + ' M2=' + !p2(rbM2) + ' M3(β)=' + !p2(rbM3));
+
+  // ── (RB.3) carried-strike invariance (dollar K→r·K under the reframe ⇒ mark invariant) ──
+  chk('(RB.3) carried-strike (K→r·K) markLensed invariant both wings, K∈{0.7,1,1.3}·o (θ→θ/r killer; NC: M4/M5 fire)',
+      p3(rbReal) && !p3(rbM4) && !p3(rbM5),
+      'real=' + p3(rbReal) + ' fires M4=' + !p3(rbM4) + ' M5=' + !p3(rbM5));
+
+  // ── (RB.4) group / identity / inverse ──
+  chk('(RB.4) group rebase(rebase(s,r1),r2)=rebase(s,r1·r2), rebase(s,1)===s, rebase(rebase(s,r),1/r)=s (NC: M5 additive fires)',
+      p4(rbReal) && !p4(rbM5),
+      'real=' + p4(rbReal) + ' fires M5=' + !p4(rbM5));
+
+  // ── (RB.5) trade/rebase commute — SPOT tradeUpdate AND live tradeUpdateAt (β-class second net) ──
+  chk('(RB.5) rebase∘tradeUpdate = tradeUpdate∘rebase AND same for tradeUpdateAt(·,dy,ρ) fixed ρ (β-class KILLER via β in hyperbola; NC: M3 fires)',
+      p5(rbReal) && !p5(rbM3),
+      'real=' + p5(rbReal) + ' fires M3(β)=' + !p5(rbM3));
+
+  // ── (RB.6) funding rebase-silence + the symmetric-pool KILLER + ATM-zero ──
+  if (typeof E.fundingPerStrike === 'function') {
+    chk('(RB.6) funding rebase-silent (frozen stored ray) ∧ =0 on w=½ pool ∀OTM (KILLER) ∧ =0 at ATM (NC: moneyness weight ≠0 on w=½ OTM; M4 breaks silence)',
+        p6inv(rbReal) && rb6kill() && rb6atm() && rb6ncFires() && !p6inv(rbM4),
+        'silence=' + p6inv(rbReal) + ' w½-zero=' + rb6kill() + ' atm-zero=' + rb6atm() + ' moneyness-NC-fires=' + rb6ncFires() + ' silence-M4-fires=' + !p6inv(rbM4));
+  } else {
+    chk('(RB.6) funding rebase-silence + symmetric-pool killer', false, 'fundingPerStrike MISSING on a lens build');
+  }
+}
+
 console.log('=== lens_selfcheck: ' + pass + ' PASS, ' + fail + ' FAIL ===');
 process.exit(fail === 0 ? 0 : 1);

@@ -20,8 +20,7 @@ oracle update); must be (a) gauge-invariant (normalized quantities incl. the new
 unchanged under rebase), (b) commutes with trades (L2, proven), (c) does not break dev=0@ATM / OTM lobe / the
 FS anti-regression gate. Design a HARD anti-regression LOCK like the funding FS.2b (40+ regressions ⇒ it needs
 a permanent gate). Pointer: `notes/skeptic/` + `engine/verify/faith_rebase.js` (existing rebase gate) +
-rebasing_logic_note. **Angular-deviation (entry 466 accepted): pure ray-angle ratio GROWS with steepness,
-saturating; verified closed-form + bisection; shipped dev consistent.**
+rebasing_logic_note. **Angular-deviation CLOSED (entries 466/467): pure ray-angle ratio GROWS with steepness (steeper=magnify, less-steep=minify), saturating; verified closed-form + bisection; shipped dev consistent. Operator accepted; the magnify-with-m is the direct consequence of the through-the-lens reading (entry-232 ruling) — geometry gives the gap, lens-reading makes m scale it. NO fix; thread done.**
 
 🧭 **✅ DEVIATION m-DIRECTION RESOLVED (entry 464/465, VERIFY_deviation_mdirection_2026-07-07.md):**
 shipped `dev=|c·ln(θ/mode)|` is CORRECT — steeper m (=more kurtosis; aligned) ⇒ MORE divergence,
