@@ -209,3 +209,33 @@ all 6 FS checks red. a16 5 PASS; monolith 8/8 report-green; run_all RC=0 on work
 ⚠ The file-safety hook still false-positives on `"0 FAIL"` success-summary strings (pre-existing
 line-104 over-broad grep, out of intern scope) — real `^FAIL` verdict count is 0, run_all RC=0.
 Manager verification + tester live pass PENDING.
+
+## 2026-07-08 — REBASE anti-regression LOCK (gate-only; operator entry 466) — md5 `abd35f4b` UNCHANGED
+**Engine HTML byte-identical** (md5 `abd35f4b…`, blobs `ab663f5c`/`c505b08a` canonical). This edit adds
+**hard behavioral checks to `verify/lens_selfcheck.js` ONLY** — the live `Engine.rebase` is verified CLEAN
+(research-lead `notes/research/VERIFY_rebase_rigorous_2026-07-07.md`, 40+ historical rebase regressions);
+this LOCKS it so it cannot silently regress. Closes the gap that `faith_rebase.js` SKIPs on v28 (GH-only),
+leaving only a fragile source byte-identity check as live rebase coverage.
+
+**Gates: lens_selfcheck 35 → 41 PASS [HARD].** ADDED **RB.1–RB.6**, each negative-controlled in-gate
+against 5 pure transform mutants (M1 y-scaled, M2 drop-α, M3 β-scaled, M4 x-unscaled, M5 additive) +
+a moneyness-funding mutant — the engine is never mutated:
+- **RB.1** pool-intrinsic gauge degrees (getW/getSNorm/poolMark invariant, getMP_raw·r & getDepth/r^w
+  invariant). NC: M1/M2/M4/M5 fire; **M3 β-class SLIPS** (intrinsic reads never touch β — documented).
+- **RB.2** bookkeeping **bit-exact** (`sr.x===x·r ∧ sr.y===y ∧ sr.α===α·r ∧ sr.β===β`) — the **β-class
+  KILLER** (mandatory; M3 β-scaled slips every intrinsic read but fails bit-exact). NC: M1/M2/M3 all fire.
+- **RB.3** carried-strike invariance (dollar K→r·K under the reframe ⇒ markLensed invariant, θ→θ/r killer).
+  NC: M4/M5 fire.
+- **RB.4** group `rebase(rebase(s,r1),r2)=rebase(s,r1·r2)`, identity `rebase(s,1)===s`, inverse
+  `rebase(rebase(s,r),1/r)=s`. NC: M5 additive fires.
+- **RB.5** trade/rebase commute — SPOT `tradeUpdate` AND the live `tradeUpdateAt(·,dy,ρ)` (fixed ρ). Second
+  β-class net (β enters the hyperbola). NC: M3 fires.
+- **RB.6** funding rebase-silence (frozen stored ray, the way `fundingTick` calls it) ∧ **=0 on a symmetric
+  w=½ pool at every OTM strike (the KILLER — the recurring ~20–30× funded-symmetric-pool regression) ∧ =0 at
+  ATM**. NC: a moneyness weight `|ln ρ|` (no pool-lean `c=(g_a−g)/(g_a+1)` factor) is nonzero on the w=½ pool
+  OTM → fires the killer; M4 breaks rebase-silence. The correct dev=|c·lnρ| is 0 at w=½ (c=0).
+
+Each RB.k PASSES iff the REAL rebase is clean AND the note-mapped mutant fires — a green line simultaneously
+proves real-clean and that the negative control has teeth. Grid w∈{0.5,0.6,0.42}, r∈{0.5,0.8,1.1,2,5},
+m∈{1,2,3}, o∈{80k,120k}, TOL=1e-12 (measured worst residual 1.7e-15). a16 5 PASS; run_all RC=0; HTML md5
+UNCHANGED. Manager verification + tester (no UI change; gate-only) PENDING.

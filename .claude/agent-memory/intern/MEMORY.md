@@ -1,6 +1,48 @@
 # MEMORY — intern
-_Last updated: 2026-07-08 (FUNDING same-slope DEVIATION placeholder promoted to HEAD `abd35f4b`;
-handed to manager; no git). Rewrite changed bits at task end._
+_Last updated: 2026-07-08 (REBASE anti-regression LOCK — gate-only .js edit on HEAD `abd35f4b`;
+HTML md5 UNCHANGED; handed to manager; no git). Rewrite changed bits at task end._
+
+## Done — REBASE anti-regression LOCK (GATE-ONLY, .js edit; HTML UNCHANGED, handed to manager 2026-07-08)
+Operator entry 466 (40+ historical rebase regressions ⇒ permanent lock). Source: research-lead
+`notes/research/VERIFY_rebase_rigorous_2026-07-07.md` §4 (splice-ready, mutant-validated; live
+`Engine.rebase` verified CLEAN). **NO engine HTML edit** — added RB.1–RB.6 to
+`engine/verify/lens_selfcheck.js` ONLY (Edit tool, not a splice — it's a .js verifier, not the HTML).
+**HTML md5 `abd35f4bbd59be4fde0565e5981bda71` UNCHANGED before+after** (blobs `ab663f5c`/`c505b08a`
+canonical, confirmed via run_all integrity print). Files touched: `verify/lens_selfcheck.js`,
+`verify/run_all.sh` (count strings), `builds/CHANGELOG_v28_lens.md`.
+- **RB block inserted after CM11** (inside the isConstMult-gated region, before final console.log).
+  Pure-fn mutants built in-gate (engine NEVER mutated): M1 y-scaled `{x·r,y·r,α·r,β}`, M2 drop-α
+  `{x·r,y,α,β}`, M3 β-scaled `{x·r,y,α·r,β·r}`, M4 x-unscaled `{x,y,α·r,β}`, M5 additive
+  `{x+r,y,α+r,β}`. Grid w∈{.5,.6,.42}, r∈{.5,.8,1.1,2,5}, m∈{1,2,3}, o∈{80k,120k}, TOL=1e-12.
+  Each RB.k PASSES iff **real rebase clean AND the note-mapped mutant fires** (green line = both).
+- **RB.1** pool-intrinsic degrees (getW/getSNorm/poolMark invariant, getMP_raw·r & getDepth/r^w).
+  NC fires M1/M2/M4/M5; **M3 β-class SLIPS** (intrinsic reads never touch β — documented in-line).
+- **RB.2** bookkeeping **bit-exact** `sr.x===x·r ∧ sr.y===y ∧ sr.α===α·r ∧ sr.β===β` — **β-KILLER**
+  (mandatory). NC fires M1/M2/M3.
+- **RB.3** carried-strike K→r·K ⇒ markLensed invariant (θ→θ/r killer). NC fires M4/M5.
+- **RB.4** group/identity(`rebase(s,1)===s`)/inverse. NC fires M5.
+- **RB.5** trade/rebase commute — SPOT `tradeUpdate` AND live `tradeUpdateAt(·,dy,ρ)` fixed ρ
+  (β second net, β in hyperbola). NC fires M3.
+- **RB.6** funding rebase-silence (frozen stored ray) ∧ **=0 on w=½ pool ∀OTM (KILLER, the ~20–30×
+  regression) ∧ =0 at ATM**. NC: moneyness weight `|ln ρ|` (no pool-lean `c=(g_a−g)/(g_a+1)`) nonzero
+  on w=½ OTM → fires killer; M4 breaks silence.
+- **MUTANT MATRIX (scratchpad `rb_probe.js`, reproduced in-gate) — REAL passes all 6 clean:**
+  RB.1 fires M1/M2/M4/M5 (M3 slips); RB.2 fires ALL; RB.3 fires M2/M4/M5; RB.4 fires only M5;
+  RB.5 fires ALL (β-class M3 caught); RB.6 killer+atm clean, moneyness-NC fires, M4 breaks silence.
+- **GATES:** `sh engine/verify/run_all.sh` RC=0 — **lens_selfcheck 35 → 41 PASS 0 FAIL**, a16
+  **5 PASS**, blob line-md5 multiset canonical, monolith report-green. run_all.sh: line-8 md5 PIN
+  STAYS `abd35f4b` (HTML untouched); 3 current lens-count strings 35→41 (line-8 desc, L18 CM-series
+  comment, L43 HARD-gate bar) + RB note appended; historical 24/31/35 refs left as record.
+  CHANGELOG_v28_lens entry appended.
+- **⚠ git plumbing note for manager:** the environment snapshotted the working tree — `git show
+  HEAD:…/lens_selfcheck.js` already == disk (empty diff on lens_selfcheck.js/run_all.sh; only
+  CHANGELOG shows ` M` in `git status`). Verify the real diff before your own commit. NOT an intern
+  git action (manager sole git actor).
+- **Open for manager:** git (sole actor). **Open for tester:** NO UI change — gate-only. Optional:
+  confirm run_all still green on the promoted HEAD; no behavioral re-test needed.
+
+---
+
 
 ## Done — FUNDING same-slope pool-vs-anchor DEVIATION (deviation-only PLACEHOLDER; PROMOTED TO HEAD 2026-07-08, handed to manager)
 Spec `notes/research/SPEC_funding_sameslope_2026-07-07.md` (operator entries 460/462, RULED 460; R6
