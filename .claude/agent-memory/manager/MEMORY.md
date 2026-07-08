@@ -2,6 +2,16 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **⚡ NEXT (entry 466): RIGOROUS REBASE CHECK** — operator: rebase is RELATED to the same-slope/deviation
+geometry and had **40+ historical regressions**; wants a rigorous verification. NOT yet dispatched (fire after
+this turn). Scope to define: rebase = gauge move (x→rx, α→rα, β/y/w invariant, θ→θ/r, k→r^w k; fires on each
+oracle update); must be (a) gauge-invariant (normalized quantities incl. the new same-slope deviation + funding
+unchanged under rebase), (b) commutes with trades (L2, proven), (c) does not break dev=0@ATM / OTM lobe / the
+FS anti-regression gate. Design a HARD anti-regression LOCK like the funding FS.2b (40+ regressions ⇒ it needs
+a permanent gate). Pointer: `notes/skeptic/` + `engine/verify/faith_rebase.js` (existing rebase gate) +
+rebasing_logic_note. **Angular-deviation (entry 466 accepted): pure ray-angle ratio GROWS with steepness,
+saturating; verified closed-form + bisection; shipped dev consistent.**
+
 🧭 **✅ DEVIATION m-DIRECTION RESOLVED (entry 464/465, VERIFY_deviation_mdirection_2026-07-07.md):**
 shipped `dev=|c·ln(θ/mode)|` is CORRECT — steeper m (=more kurtosis; aligned) ⇒ MORE divergence,
 saturating toward ceiling (γ−1). Full same-slope ray-ratio = γ^(1/(m+1))·ρ^c; the dropped prefactor

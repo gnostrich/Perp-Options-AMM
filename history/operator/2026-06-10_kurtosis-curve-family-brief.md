@@ -3426,3 +3426,9 @@ _Context: operator corrects the manager's scoping — the m-direction (steeper =
 _Context: operator clarifies "steeper" = something that steepens the curve / more kurtosis, NOT necessarily the raw knob value (in case the knob is inverted vs kurtosis); and rules the deviation m-direction issue must be RESOLVED BEFORE the CTO handoff. Manager: m aligns with kurtosis (constant-m lens: m=1 plain, bigger m = steeper = more kurtosis) so no inversion, but the derivation will report in physical steepness terms; CTO handoff HELD pending resolution._
 
 > oh also when i say steeper i mean something that steepens the curve like 'more kurtosis' not the actual numeric value of the knob (incase its the opposire), but hyeah overal take stock of this isse to be revoled before cto handoff
+
+
+## Entry 466 — 2026-07-07 UTC
+_Context: operator accepts the angular-deviation resolution (grows-with-steepness, saturating, verified 2 ways). Orders NEXT: a rigorous check on the REBASE (related to the same-slope/deviation geometry; had 40+ regressions historically). Reminder: reaching context limit — push + retain context._
+
+> also after this i want a rigorous check on the rebase thing because its related and we had 40+ regressions on that in the past; also reminder again reaching conextext limit to push / retain context
