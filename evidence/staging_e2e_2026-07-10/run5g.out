@@ -1,0 +1,10 @@
+unlocked; mm url chrome-extension://gadekpdjmpjjnnemgnhkbjgnjpdaakgh/home.html#/onboarding/metametrics
+APPC [log] Graph data WebSocket connected
+APPC [log] Hyperliquid mid price WebSocket connected
+APPC [log] Hyperliquid candle WebSocket connected
+clicked connect
+APPC [warning] MetaMask - RPC Error: User rejected the request. {code: 4001, message: User rejected the request., data: Objec
+FINAL connected: false
+rejected msgs: 1
+done
+EXIT 0

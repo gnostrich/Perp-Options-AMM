@@ -1,0 +1,13 @@
+unlocked
+after switch: {"notional":null,"lev":"1","liqShown":true,"liq":null,"connectArb":false,"btnDisabled":true,"depMaxWallet":"0.00"}
+leverage set to: 10
+perp vals: {"notional":null,"lev":"10","liqShown":true,"liq":null,"connectArb":false,"btnDisabled":true,"depMaxWallet":"0.00"}
+CREATE disabled? true
+PF a0: Page 1 of 0 pulse=259 claim=0 rows=0
+PF a1: Page 1 of 0 pulse=259 claim=0 rows=0
+PF a2: Page 1 of 0 pulse=259 claim=0 rows=0
+avail: null
+=== SUMMARY ===
+READBACK: false | POSTs: 9 | amm-timeout: 3 | rejected: 0
+done
+EXIT 0

@@ -1,0 +1,18 @@
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 end listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[log] [WebSocket] Subscribing to allMids for coin: BTC
+[log] [Loading] Starting load for resolution: 1d
+[log] [REST Fallback] Fetching candles: coin=BTC, interval=1d, startTime=2023-10-14T16:10:06.140Z, endTime=2026-07-10T16:10:06.140Z
+[log] Graph data WebSocket connected
+[log] Hyperliquid mid price WebSocket connected
+[log] [REST Fallback] Received 1001 candles
+[log] [WebSocket] Subscribing to candles: coin=BTC, interval=1d
+[log] Hyperliquid candle WebSocket connected
+[warning] Received incomplete market_data (missing AMM trees). Waiting for complete data...
+[warning] MetaMask - RPC Error: User rejected the request. {code: 4001, message: User rejected the request., data: Object, stack: Error: User rejected the request.
+    at u (chrome…gnjpdaakgh/5765.ae84dc0157a4803d1384.js:3:410026)}
+[error] Timeout: Did not receive complete AMM tree data after 10 seconds.

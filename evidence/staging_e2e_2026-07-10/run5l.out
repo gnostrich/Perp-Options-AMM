@@ -1,0 +1,14 @@
+unlocked
+vals pre-reload: {"notional":null,"entry":null,"liq":null,"chainId":"0xa4b1","btnDisabled":true,"connectArb":false,"depMax":"0.00"}
+vals post-reload: {"notional":null,"entry":null,"liq":null,"chainId":"0xa4b1","btnDisabled":true,"connectArb":false,"depMax":"0.00"}
+vals perp form: {"notional":null,"entry":null,"liq":null,"chainId":"0xa4b1","btnDisabled":true,"connectArb":false,"depMax":"0.00"}
+CREATE btn: {"dis":true}
+toasts: []
+PF a0: Page 1 of 0 pulse=259 claim=0 rows=0
+PF a1: Page 1 of 0 pulse=259 claim=0 rows=0
+PF a2: Page 1 of 0 pulse=259 claim=0 rows=0
+avail: null
+=== SUMMARY ===
+READBACK: false | perp POSTs: 15 | amm-timeout: 5
+done
+EXIT 0

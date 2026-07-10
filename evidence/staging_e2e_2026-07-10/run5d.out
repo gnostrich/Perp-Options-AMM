@@ -1,0 +1,17 @@
+unlocked: true
+WS OPEN wss://api.hyperliquid.xyz/ws
+WS OPEN wss://api.hyperliquid.xyz/ws
+title: Temporal
+disclaimer ^Agree$
+connect Connect Wallet
+MM popup: notification.html
+  [popup auto] s0 clicked=none u=onboarding
+=== SUMMARY ===
+sepolia-rollup CSP hits: 0
+staging-be ws OPENs: 0
+hyperliquid ws OPENs: 2
+AMM/timeout msgs: 2
+distinct WS OPEN: wss://api.hyperliquid.xyz/ws
+net sample: 200 GET https://app-staging.temporal.exchange/ || 200 GET https://app-staging.temporal.exchange/_next/static/media/1ccf8ef962b3f693-s.p.057aej8p_z_92.woff2 || 200 GET https://app-staging.temporal.exchange/_next/static/media/374a88ea0960b3d4-s.p.0sa4vsdykrttm.woff2 || 200 GET https://app-staging.temporal.exchange/_next/static/media/99e609270109b47d-s.p.16-z~2sp29ex6.woff2 || 200 GET https://app-staging.temporal.exchange/_next/static/media/23b7a97ae3b5c134-s.p.0o14nraug8u5s.woff2 || 200 GET https://app-staging.temporal.exchange/_next/static/chunks/0tjps74qz1ab4.css || 200 GET https://app-staging.temporal.exchange/_next/static/chunks/13u6~dowlosep.css || 200 GET https://app-staging.temporal.exchange/_next/static/media/dc0c65e819e3bb6c-s.p.0fsjs_bs5qvt7.woff2
+done-connect
+EXIT 0

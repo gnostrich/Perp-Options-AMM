@@ -1,0 +1,9 @@
+mm url: chrome-extension://gadekpdjmpjjnnemgnhkbjgnjpdaakgh/home.html#/onboarding/metametrics
+BUTTONS(4):
+   app-header-logo::
+   metametrics-checkbox::Gather basic usage data We’ll 
+   metametrics-data-collection-checkbox::Product updates We’ll use this
+   metametrics-i-agree::Continue
+CHECKBOXES: [null,null]
+done
+EXIT 0

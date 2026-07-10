@@ -1,0 +1,21 @@
+unlocked
+vals after connect: {"notional":null,"entry":null,"chainId":"0x1","btnDisabled":true,"connectArb":true}
+clicked Switch Network
+vals after switch: {"notional":null,"entry":null,"chainId":"0xa4b1","btnDisabled":true,"connectArb":true}
+vals perp form: {"notional":null,"entry":null,"chainId":"0xa4b1","btnDisabled":true,"connectArb":true}
+CREATE btn state: {"dis":true,"txt":"CREATE POSITION"}
+toasts: []
+PF attempt0: pageOf=Page 1 of 0 pulse=259 claim=0 perpsRowsNonEmpty=0
+PF attempt1: pageOf=Page 1 of 0 pulse=259 claim=0 perpsRowsNonEmpty=0
+PF attempt2: pageOf=Page 1 of 0 pulse=259 claim=0 perpsRowsNonEmpty=0
+READBACK: false
+avail: null
+=== SUMMARY ===
+approvedTags: []
+perp POSTs: 9 | rejected: 0 | amm-timeout: 4 | staging-be ws: 0
+  POST https://app-staging.temporal.exchange/ []
+  POST https://app-staging.temporal.exchange/ ["0x8f40d24c7c5df2bc49a0ee67f10b1727c2481f42"]
+  POST https://app-staging.temporal.exchange/ []
+  POST https://app-staging.temporal.exchange/ ["0x8F40D24c7C5Df2BC49a0Ee67f10B1727c2481F42"]
+done
+EXIT 0

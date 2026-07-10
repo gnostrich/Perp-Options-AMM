@@ -1,0 +1,14 @@
+unlocked
+WS OPEN wss://api.hyperliquid.xyz/ws
+WS OPEN wss://api.hyperliquid.xyz/ws
+after-connect header: TRANSACT PORTFOLIO DOCS REFER Connect to Arbitrum 0x8F40...1F42
+clicked network: Connect to Arbitrum
+after-switch header: TRANSACT PORTFOLIO DOCS REFER Connect to Arbitrum 0x8F40...1F42
+=== SUMMARY ===
+sepolia-rollup CSP: 0 | any-CSP-refused: 0
+staging-be ws OPEN: 0 | staging-be http hits: 0 | hl ws: 2 | amm-timeout: 3
+WS OPENs: wss://api.hyperliquid.xyz/ws
+staging-be NET sample: 
+arbitrum NET sample: 200 POST https://arb1.arbitrum.io/rpc || 200 POST https://arb1.arbitrum.io/rpc || 200 POST https://arb1.arbitrum.io/rpc || 200 POST https://arb1.arbitrum.io/rpc
+done
+EXIT 0

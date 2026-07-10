@@ -1,0 +1,21 @@
+import { launchWithMM, EXT_ID } from './run5_lib.mjs';
+import { onboard } from './run5_onboard.mjs';
+const OUT = process.cwd();
+const PROFILE = '/tmp/run5_profile_main';
+const ctx = await launchWithMM(PROFILE);
+await new Promise(r => setTimeout(r, 4000));
+console.log('SW:', ctx.serviceWorkers().map(w=>w.url()));
+let mm = ctx.pages().find(p => p.url().startsWith(`chrome-extension://${EXT_ID}`));
+if (!mm) mm = await ctx.newPage();
+await mm.goto(`chrome-extension://${EXT_ID}/home.html`, { waitUntil: 'domcontentloaded' }).catch(()=>{});
+await mm.waitForTimeout(2000);
+const ob = await onboard(mm, 'run5c');
+console.log('ONBOARD:', JSON.stringify(ob.log));
+console.log('srp', ob.srpEntered, 'pw', ob.pwEntered);
+await mm.waitForTimeout(1500);
+// force home
+await mm.goto(`chrome-extension://${EXT_ID}/home.html`, { waitUntil: 'domcontentloaded' }).catch(()=>{});
+await mm.waitForTimeout(2500);
+await mm.screenshot({ path: `${OUT}/run5c_00_mm_home.png` });
+await ctx.close();
+console.log('done-onboard');

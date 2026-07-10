@@ -1,0 +1,7 @@
+SW: [
+  'chrome-extension://gadekpdjmpjjnnemgnhkbjgnjpdaakgh/service-worker.js'
+]
+ONBOARD: ["i=0 acted=onboarding-import-wallet url=/onboarding/welcome","i=1 acted=srp-open-text url=/onboarding/import-with-recovery-phrase","i=2 acted=srp-single:srp-input-import__srp-note url=/onboarding/import-with-recovery-phrase","i=3 acted=srp-confirm:import-srp-confirm url=/onboarding/create-password","i=4 acted=password-set url=/onboarding/create-password","i=5 acted=none url=/onboarding/create-password","i=6 acted=none url=/onboarding/create-password","post-password done"]
+srp true pw true
+done-onboard
+EXIT 0

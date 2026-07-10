@@ -1,0 +1,12 @@
+unlocked
+WS OPEN wss://api.hyperliquid.xyz/ws
+WS OPEN wss://api.hyperliquid.xyz/ws
+clicked connect
+CONNECTED? true | header: TRANSACT PORTFOLIO DOCS REFER Connect to Arbitrum 0x8F40...1F42
+deposit MAX text: MAX: 0.00
+=== SUMMARY ===
+connected: true | user-rejected msgs: 0
+sepolia CSP: 0 | staging-be ws: 0 | hl ws: 2 | amm-timeout: 2
+WS OPENs: wss://api.hyperliquid.xyz/ws
+done-connect
+EXIT 0

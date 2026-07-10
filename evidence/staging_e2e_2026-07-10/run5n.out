@@ -1,0 +1,9 @@
+unlocked
+deposit-source info (HL Balance selected): {"maxes":["0.00"],"hl":"Hyperliquid Balance"}
+BANDS (no perp): {"maxBadge":"","slippage":"Slippage %","txfees":"Tx Fees %","sellProfits":false,"ammTimeout":false,"transactDisabled":true}
+OPTIONS PRICING canvases: []
+PORTFOLIO diag: {"pulse":259,"pageOf":"Page 1 of 0","noPositions":false,"failedFetch":false}
+portfolio NET failures: net::ERR_ABORTED https://app-staging.temporal.exchange/api/stream/market-data || net::ERR_ABORTED https://api.hyperliquid.xyz/info || net::ERR_ABORTED https://app-staging.temporal.exchange/portfolio || net::ERR_ABORTED https://app-staging.temporal.exchange/?_rsc=1j5fp
+=== amm-timeout total: 3 | sepolia-csp: 0
+done
+EXIT 0

@@ -1,0 +1,32 @@
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 end listeners added. Use emitter.setMaxListeners() to increase limit
+[log] [WebSocket] Subscribing to allMids for coin: BTC
+[log] [Loading] Starting load for resolution: 1d
+[log] [REST Fallback] Fetching candles: coin=BTC, interval=1d, startTime=2023-10-14T16:37:24.413Z, endTime=2026-07-10T16:37:24.413Z
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[log] Graph data WebSocket connected
+[log] Hyperliquid mid price WebSocket connected
+[log] [REST Fallback] Received 1001 candles
+[log] [WebSocket] Subscribing to candles: coin=BTC, interval=1d
+[log] Hyperliquid candle WebSocket connected
+[warning] Received incomplete market_data (missing AMM trees). Waiting for complete data...
+[log] Available quantities: {long: 0, short: 0}
+[error] Timeout: Did not receive complete AMM tree data after 10 seconds.
+[log] Hyperliquid mid price WebSocket disconnected
+[warning] WebSocket connection failed: Unable to connect to wss://api.hyperliquid.xyz/ws. Server may not be running or the endpoint is unreachable. (Close code: 1006)
+[log] Hyperliquid candle WebSocket disconnected
+[warning] WebSocket connection failed: Unable to connect to wss://api.hyperliquid.xyz/ws. Server may not be running or the endpoint is unreachable. (Close code: 1006)
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 end listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[log] [WebSocket] Subscribing to allMids for coin: BTC
+[log] Graph data WebSocket connected
+[log] User portfolio WebSocket connected
+[log] Hyperliquid mid price WebSocket connected
+[warning] Received incomplete market_data (missing AMM trees). Waiting for complete data...

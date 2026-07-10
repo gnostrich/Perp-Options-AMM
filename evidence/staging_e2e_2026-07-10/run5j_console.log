@@ -1,0 +1,18 @@
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added. Use emitter.setMaxListeners() to increase limit
+[warning] MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 end listeners added. Use emitter.setMaxListeners() to increase limit
+[log] [WebSocket] Subscribing to allMids for coin: BTC
+[log] [Loading] Starting load for resolution: 1d
+[log] [REST Fallback] Fetching candles: coin=BTC, interval=1d, startTime=2023-10-14T16:24:48.846Z, endTime=2026-07-10T16:24:48.846Z
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "app-init-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[warning] ObjectMultiplex - orphaned data for stream "background-liveness"
+[log] Graph data WebSocket connected
+[log] Hyperliquid mid price WebSocket connected
+[log] [REST Fallback] Received 1001 candles
+[log] [WebSocket] Subscribing to candles: coin=BTC, interval=1d
+[log] Hyperliquid candle WebSocket connected
+[warning] Received incomplete market_data (missing AMM trees). Waiting for complete data...
+[log] Available quantities: {long: 0, short: 0}
+[error] Timeout: Did not receive complete AMM tree data after 10 seconds.
+[warning] Received incomplete market_data (missing AMM trees). Waiting for complete data...
