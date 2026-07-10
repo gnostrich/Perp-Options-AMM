@@ -132,3 +132,9 @@ also keep your messages in this chat to the point prioritizing human readability
 yes please, test and compare whatver surface area you can access to the versopns i meitoned earlier in the image and if you cant access anything flag imediately .. mostly theres nothing that shoudlt work
 
 > Context (manager, one line): go to re-run with the input bug fixed; compare accessible surface to the Drive-image versions (H1 v24 / H2 Jun-15 / H3 5ce1a76c); flag any inaccessible surface immediately (operator expects nearly everything to work).
+
+## Entry 12 (2026-07-10)
+
+trade bands work apparantly once you’ve created perp (provides you sell < perp q available)
+
+> Context (manager, one line): key sequencing hint — TRADE BANDS is gated on an existing perp position (sell quantity < perp qty available); tester to create perp first, then exercise bands and finally capture the reference numbers.
