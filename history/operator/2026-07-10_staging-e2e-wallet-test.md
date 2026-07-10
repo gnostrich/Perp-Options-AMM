@@ -168,3 +168,9 @@ personally i think that the cto is right in saying theres no link / restriction 
 use the browser thing theres something u can use full access unhave
 
 > Context (manager, one line): operator points to a full-access browser path; manager to retry the live data layer without the MITM-proxy/fake-wallet constraints (direct ws + real browser).
+
+## Entry 18 (2026-07-10)
+
+yes and reminder to be resourceful
+
+> Context (manager, one line): go-ahead for round 5 + standing reminder to be resourceful; manager runs a parallel static probe of the app JS bundle (non-colliding) while the real-wallet browser run continues.
