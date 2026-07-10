@@ -138,3 +138,9 @@ yes please, test and compare whatver surface area you can access to the versopns
 trade bands work apparantly once you’ve created perp (provides you sell < perp q available)
 
 > Context (manager, one line): key sequencing hint — TRADE BANDS is gated on an existing perp position (sell quantity < perp qty available); tester to create perp first, then exercise bands and finally capture the reference numbers.
+
+## Entry 13 (2026-07-10)
+
+can you tabulate whats checked works doesnt work not checked etc
+
+> Context (manager, one line): consolidated status table across all 4 rounds requested.
