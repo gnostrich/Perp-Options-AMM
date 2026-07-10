@@ -7,3 +7,5 @@ dexters-lab/lab_home/
 
 # ephemeral vm research harnesses (findings persist in notes/research/*.md)
 scratchpad/
+evidence/staging_e2e_2026-07-10/node_modules/
+evidence/staging_e2e_2026-07-10/package-lock.json
