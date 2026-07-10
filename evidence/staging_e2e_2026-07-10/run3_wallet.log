@@ -1,0 +1,10 @@
+===== run3 (create-perp FIXED input) =====
+
+
+===== run3b (chain-accept + create) =====
+[page-rpc] eth_accounts []
+[page-rpc] eth_accounts []
+[page-rpc] eth_accounts []
+[page-rpc] wallet_switchEthereumChain [{"chainId":"0xa4b1"}]
+[page-rpc] eth_chainId []
+[page-rpc] eth_accounts []

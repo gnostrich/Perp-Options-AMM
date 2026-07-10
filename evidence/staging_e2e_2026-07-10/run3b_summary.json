@@ -1,0 +1,86 @@
+{
+  "addr": "0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34",
+  "results": [
+    {
+      "label": "L1_long12",
+      "dir": "long",
+      "dep": 12,
+      "vals": {
+        "depositVal": "12",
+        "notionalVal": null,
+        "entry": null,
+        "chainId": "0xa4b1",
+        "btnDisabled": true,
+        "connectArb": false
+      },
+      "toasts": [],
+      "postWin": [],
+      "walletWin": []
+    },
+    {
+      "label": "L2_long500",
+      "dir": "long",
+      "dep": 500,
+      "vals": {
+        "depositVal": "500",
+        "notionalVal": null,
+        "entry": null,
+        "chainId": "0xa4b1",
+        "btnDisabled": false,
+        "connectArb": false
+      },
+      "toasts": [
+        "Creating position on backend…",
+        "BTC-PERP position saved | Recorded successfully."
+      ],
+      "postWin": [
+        "REQ POST https://app-staging.temporal.exchange/ body=[{\"token\":\"BTC\",\"perpType\":\"LONG\",\"market\":\"BTC-PERP\",\"usdcAmount\":500.225,\"leverage\":10,\"markPrice\":64435.5,\"btcAmount\":0.077597,\"autoProtect\":true,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\"}]",
+        "RESP 200 https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"id\":\"PERP_1783684933301020796\",\"token\":\"BTC\",\"perpType\":\"LONG\",\"market\":\"BTC-PERP\",\"initialUsdMargin\":500.225,\"usdcAmount\":500.225,\"leverage\":10,\"initialLeverage\":10,\"markPrice\":64435.5,\"entryPrice\":64435.5,\"btcAmount\":0.077597,\"pnl\":0,\"positionValue\":500.225,\"usedQuantity\":0,\"fundingRate\":0,\"fundingAccrued\":0,\"lastFundingAt\":\"2026-07-10T12:02:13.301188908Z\",\"liquidationMargin\":125.05625,\"isLiquidated\":false,\"isClosed\":false,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\",\"created_at\":\"2026"
+      ],
+      "walletWin": []
+    },
+    {
+      "label": "S1_short500",
+      "dir": "short",
+      "dep": 500,
+      "vals": {
+        "depositVal": "500",
+        "notionalVal": null,
+        "entry": null,
+        "chainId": "0xa4b1",
+        "btnDisabled": false,
+        "connectArb": false
+      },
+      "toasts": [
+        "Creating position on backend…",
+        "BTC-PERP position saved | Recorded successfully."
+      ],
+      "postWin": [
+        "REQ POST https://app-staging.temporal.exchange/ body=[{\"token\":\"BTC\",\"perpType\":\"SHORT\",\"market\":\"BTC-PERP\",\"usdcAmount\":500.225,\"leverage\":10,\"markPrice\":64435.5,\"btcAmount\":0.077597,\"autoProtect\":true,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\"}]",
+        "RESP 200 https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"id\":\"PERP_1783684950650280749\",\"token\":\"BTC\",\"perpType\":\"SHORT\",\"market\":\"BTC-PERP\",\"initialUsdMargin\":500.225,\"usdcAmount\":500.225,\"leverage\":10,\"initialLeverage\":10,\"markPrice\":64435.5,\"entryPrice\":64435.5,\"btcAmount\":0.077597,\"pnl\":0,\"positionValue\":500.225,\"usedQuantity\":0,\"fundingRate\":0,\"fundingAccrued\":0,\"lastFundingAt\":\"2026-07-10T12:02:30.650407068Z\",\"liquidationMargin\":125.05625,\"isLiquidated\":false,\"isClosed\":false,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\",\"created_at\":\"202"
+      ],
+      "walletWin": []
+    }
+  ],
+  "pfData": {
+    "PERPS": {
+      "rows": []
+    },
+    "BANDS": {
+      "rows": []
+    },
+    "EARN": {
+      "rows": [
+        "0.001551 50.0000% $100.00 +$0.00 $100.00 1.00x CLAIM"
+      ]
+    }
+  },
+  "flags": {
+    "cspHits": 104,
+    "ammTimeout": 3,
+    "stagingBeWs": 0,
+    "hlWs": 3
+  },
+  "sendTx": 0,
+  "signs": 0
+}

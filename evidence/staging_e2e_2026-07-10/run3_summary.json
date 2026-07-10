@@ -1,0 +1,211 @@
+{
+  "addr": "0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34",
+  "results": [
+    {
+      "label": "L1_long12",
+      "dir": "long",
+      "dep": 12,
+      "enabled": false,
+      "notional": "NOTIONAL BTC AUTO-PROTECT Auto",
+      "entry": "Entry Price $ Liquidation Price Se",
+      "btnDisabled": true,
+      "toasts": [],
+      "postWin": [],
+      "walletWin": []
+    },
+    {
+      "label": "L2_long500",
+      "dir": "long",
+      "dep": 500,
+      "enabled": true,
+      "notional": "NOTIONAL BTC AUTO-PROTECT Auto",
+      "entry": "Entry Price $ Liquidation Price $",
+      "btnDisabled": false,
+      "toasts": [],
+      "postWin": [],
+      "walletWin": []
+    },
+    {
+      "label": "S1_short500",
+      "dir": "short",
+      "dep": 500,
+      "enabled": true,
+      "notional": "NOTIONAL BTC AUTO-PROTECT Auto",
+      "entry": "Entry Price $ Liquidation Price $",
+      "btnDisabled": false,
+      "toasts": [],
+      "postWin": [],
+      "walletWin": []
+    }
+  ],
+  "pfData": {
+    "PERPS": {
+      "heads": [
+        "ASSET",
+        "NOTIONAL (BTC)",
+        "NOTIONAL (USDC)",
+        "DIRECTION",
+        "ENTRY PRICE",
+        "MARK PRICE",
+        "INITIAL MARGIN",
+        "P/L",
+        "FUNDING",
+        "BANDS P/L",
+        "TRADER EQUITY",
+        "LEVERAGE",
+        "CLAIM",
+        "BUY / SELL",
+        "NOTIONAL (BTC)",
+        "DIRECTION",
+        "INTRINSIC VALUE",
+        "FUNDING",
+        "EXTRINSIC VALUE",
+        "POSITION VALUE",
+        "INITIAL INNER BOUND",
+        "INITIAL OUTER BOUND",
+        "RESIDUAL INNER BOUND",
+        "RESIDUAL OUTER BOUND",
+        "CLOSE",
+        "NOTIONAL (BTC)",
+        "POOL STAKE %",
+        "INITIAL MARGIN (USD)",
+        "P/L (USD)",
+        "LP EQUITY (USD)",
+        "LP LEVERAGE",
+        "CLAIM"
+      ],
+      "rows": []
+    },
+    "BANDS": {
+      "heads": [
+        "ASSET",
+        "NOTIONAL (BTC)",
+        "NOTIONAL (USDC)",
+        "DIRECTION",
+        "ENTRY PRICE",
+        "MARK PRICE",
+        "INITIAL MARGIN",
+        "P/L",
+        "FUNDING",
+        "BANDS P/L",
+        "TRADER EQUITY",
+        "LEVERAGE",
+        "CLAIM",
+        "BUY / SELL",
+        "NOTIONAL (BTC)",
+        "DIRECTION",
+        "INTRINSIC VALUE",
+        "FUNDING",
+        "EXTRINSIC VALUE",
+        "POSITION VALUE",
+        "INITIAL INNER BOUND",
+        "INITIAL OUTER BOUND",
+        "RESIDUAL INNER BOUND",
+        "RESIDUAL OUTER BOUND",
+        "CLOSE",
+        "NOTIONAL (BTC)",
+        "POOL STAKE %",
+        "INITIAL MARGIN (USD)",
+        "P/L (USD)",
+        "LP EQUITY (USD)",
+        "LP LEVERAGE",
+        "CLAIM"
+      ],
+      "rows": []
+    },
+    "EARN": {
+      "heads": [
+        "ASSET",
+        "NOTIONAL (BTC)",
+        "NOTIONAL (USDC)",
+        "DIRECTION",
+        "ENTRY PRICE",
+        "MARK PRICE",
+        "INITIAL MARGIN",
+        "P/L",
+        "FUNDING",
+        "BANDS P/L",
+        "TRADER EQUITY",
+        "LEVERAGE",
+        "CLAIM",
+        "BUY / SELL",
+        "NOTIONAL (BTC)",
+        "DIRECTION",
+        "INTRINSIC VALUE",
+        "FUNDING",
+        "EXTRINSIC VALUE",
+        "POSITION VALUE",
+        "INITIAL INNER BOUND",
+        "INITIAL OUTER BOUND",
+        "RESIDUAL INNER BOUND",
+        "RESIDUAL OUTER BOUND",
+        "CLOSE",
+        "NOTIONAL (BTC)",
+        "POOL STAKE %",
+        "INITIAL MARGIN (USD)",
+        "P/L (USD)",
+        "LP EQUITY (USD)",
+        "LP LEVERAGE",
+        "CLAIM"
+      ],
+      "rows": []
+    }
+  },
+  "closeOut": null,
+  "bandData": {
+    "quantity": "QUANTITY BTC Perp Long PRICE %",
+    "slippage": "Slippage %  % Tx Fees %  % TRA",
+    "txfees": "Tx Fees %  % TRANSACT PERP MAR"
+  },
+  "chartInfo": [
+    {
+      "w": 780,
+      "h": 628,
+      "nz": 48984
+    },
+    {
+      "w": 780,
+      "h": 628,
+      "nz": 187
+    },
+    {
+      "w": 72,
+      "h": 628,
+      "nz": 4522
+    },
+    {
+      "w": 72,
+      "h": 628,
+      "nz": 0
+    },
+    {
+      "w": 780,
+      "h": 28,
+      "nz": 2184
+    },
+    {
+      "w": 780,
+      "h": 28,
+      "nz": 0
+    },
+    {
+      "w": 72,
+      "h": 28,
+      "nz": 202
+    }
+  ],
+  "earnData": [
+    "--%",
+    "--%",
+    "--%",
+    "--%"
+  ],
+  "flags": {
+    "cspHits": 442,
+    "ammTimeout": 4,
+    "stagingBeWs": 0,
+    "hlWs": 5
+  },
+  "sendTx": 0,
+  "signs": 0
+}
