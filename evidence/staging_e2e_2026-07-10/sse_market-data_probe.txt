@@ -1,0 +1,9 @@
+: connected
+
+event: initial
+data: {"oracle_price":65000}
+
+: keep-alive
+
+: keep-alive
+

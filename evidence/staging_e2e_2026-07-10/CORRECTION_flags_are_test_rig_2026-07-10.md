@@ -30,3 +30,27 @@ operator's push prompted the direct reachability test that settled it: **our rig
   wallet block exactly those data paths — a sandbox limitation, not a staging defect.
 - Cleanest validations that dodge our sandbox entirely: (a) CTO runs `lens_selfcheck.js` (41 checks)
   against the Go engine directly; (b) a real-browser/real-MetaMask session (outside this proxy).
+
+## Static bundle probe (manager, resourceful pass 2026-07-10) — FLAG-2 was chasing the WRONG channel
+
+Pulled + un-minified the staging JS bundle (`app-staging.temporal.exchange/_next/static/...`). Findings:
+
+- **The AMM market data is NOT a `staging-be` websocket at all — it's a Server-Sent-Events stream:**
+  `new EventSource("/api/stream/market-data")` (a Next.js route on the app's own origin). So round 2–4's
+  "FLAG-2: staging-be ws never opens" was watching the wrong channel; that ws is unrelated to the AMM trees.
+- **The pricing curve is driven by `transformGraphData(e)`**, which returns null (→ the "incomplete
+  market_data (missing AMM trees)" warning → 10s timeout) unless the SSE message contains
+  `long_tree.nodes` and `short_tree.nodes`. Each node = `{strike, pt_asset}` → that IS the option-value-
+  per-strike curve (the reference numbers live here; frontend also computes innerBound/outerBound/
+  residual/totalPositionValue — vocabulary matches the handover).
+- **Direct curl test (no browser, no wallet):** `GET /api/stream/market-data` CONNECTS and streams
+  `event: initial data:{"oracle_price":65000}` — but after 25s emits **NO** `long_tree`/`short_tree`.
+  So the AMM trees are never pushed to a vanilla/unauthenticated connection — which is exactly the app's
+  own "waiting for complete data → timeout." Reproduced server-side, independent of our browser/proxy.
+
+**Interpretation (honest, still partial):** the SSE + oracle price work for anyone; the **AMM trees appear
+to be gated on session/wallet state** (the CTO video shows them rendering on a real MetaMask session).
+Most likely the backend only pushes the per-strike trees once a real wallet session (and possibly an
+active perp) is associated — consistent with bands being perp-gated. This is the exact hypothesis the
+round-5 real-MetaMask run tests. Net: FLAG-2 as "staging ws broken" is RETRACTED; open question narrows to
+"do the AMM trees stream once there's a real wallet session?"
