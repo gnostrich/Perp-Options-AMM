@@ -156,3 +156,9 @@ try a better tabulation that also compares whatever we were able to check with t
 tldr what parts couldn’t you chexk
 
 > Context (manager, one line): concise list of the unchecked/blocked surfaces.
+
+## Entry 16 (2026-07-10)
+
+personally i think that the cto is right in saying theres no link / restriction from any of the outward connections … idk what you’re running up against
+
+> Context (manager, one line): manager tested outward reachability directly — both endpoints reach from our env; concluded FLAG-1/FLAG-2 are our-test-rig artifacts (fake injected wallet + MITM egress proxy), NOT staging defects; correction owned to operator.
