@@ -162,3 +162,9 @@ tldr what parts couldn’t you chexk
 personally i think that the cto is right in saying theres no link / restriction from any of the outward connections … idk what you’re running up against
 
 > Context (manager, one line): manager tested outward reachability directly — both endpoints reach from our env; concluded FLAG-1/FLAG-2 are our-test-rig artifacts (fake injected wallet + MITM egress proxy), NOT staging defects; correction owned to operator.
+
+## Entry 17 (2026-07-10)
+
+use the browser thing theres something u can use full access unhave
+
+> Context (manager, one line): operator points to a full-access browser path; manager to retry the live data layer without the MITM-proxy/fake-wallet constraints (direct ws + real browser).
