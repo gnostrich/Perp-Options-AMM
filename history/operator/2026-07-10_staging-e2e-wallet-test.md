@@ -150,3 +150,9 @@ can you tabulate whats checked works doesnt work not checked etc
 try a better tabulation that also compares whatever we were able to check with the versions and says what works what doesnt as expected or whataver iygwim
 
 > Context (manager, one line): richer table — per feature: checked?, staging behavior, vs the handover versions, and as-expected verdict.
+
+## Entry 15 (2026-07-10)
+
+tldr what parts couldn’t you chexk
+
+> Context (manager, one line): concise list of the unchecked/blocked surfaces.
