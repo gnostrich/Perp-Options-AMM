@@ -69,3 +69,20 @@ Independently re-derived the load-bearing claims from the evidence before relay:
 
 Nothing overclaimed in the tester's text on my read; the one inference ("EARN not observable BECAUSE
 FLAG-2") is labelled "Consistent with" by the tester, not asserted as proven — honest.
+
+---
+
+## CORRECTION 2026-07-10 (manager, after CTO video — operator entry 9)
+
+**Round-2 verdict "CREATE PERP = BLOCKED" was WRONG. I own it.** The CTO's screen recording
+(`CTO_video_frame40/48_*.png`) shows a perp created at **zero balance** (MAX: 0.00, real MetaMask
+`0xCf77…F050`): typing DEPOSIT ≥ **12 USDC** (min) makes NOTIONAL compute and enables CREATE POSITION →
+toast **"BTC-PERP position saved / Recorded successfully."**
+
+- **Our miss:** our harness typed `500` into DEPOSIT but the app's NOTIONAL never recomputed (headless
+  input didn't trigger the React onChange), so the button stayed `disabled=true`. We then WRONGLY
+  inferred it was gated on the Hyperliquid clearinghouse balance ($0). The video disproves that gate.
+- **What the video CONFIRMS:** the perp saves as a **backend record** ("Recorded successfully") — same
+  mechanism as EARN, no wallet signature, no on-chain tx. That is exactly why zero funds work, and it
+  matches our broader round-2 characterization (staging tx = backend DB write, not a chain trade).
+- FLAG-1/FLAG-2 and the mainnet-endpoint observation are unaffected by this correction.
