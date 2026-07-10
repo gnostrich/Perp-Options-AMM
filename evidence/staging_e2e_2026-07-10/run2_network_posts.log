@@ -1,0 +1,5 @@
+REQ  POST https://api.hyperliquid.xyz/info body={"type":"candleSnapshot","req":{"coin":"BTC","interval":"1d","startTime":1697281487892,"endTime":1783681487892}}
+REQ  POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":0,"method":"eth_blockNumber"}
+REQ  POST https://api.hyperliquid.xyz/info body={"type":"clearinghouseState","user":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"}
+REQ  POST https://api.hyperliquid.xyz/info body={"type":"clearinghouseState","user":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"}
+REQ  POST https://api.hyperliquid.xyz/info body={"type":"candleSnapshot","req":{"coin":"BTC","interval":"1d","startTime":1697281560182,"endTime":1783681560182}}

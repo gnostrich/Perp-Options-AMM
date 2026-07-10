@@ -1,0 +1,129 @@
+{
+  "A_connect": {
+    "notes": [
+      "HTTP 200",
+      "disclaimer accepted=true",
+      "wallet chip=true activeTab=CREATE PERP",
+      "ConnectToArbitrum btn: text=\"Connect to Arbitrum\" disabled=false ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base font-base"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "walletRpc": [
+      "[page-rpc] eth_accounts params=[]",
+      "[page-rpc] eth_accounts params=[]",
+      "[page-rpc] eth_accounts params=[]"
+    ],
+    "backendPosts": [
+      "REQ  POST https://api.hyperliquid.xyz/info body={\"type\":\"candleSnapshot\",\"req\":{\"coin\":\"BTC\",\"interval\":\"1d\",\"startTime\":1697281487892,\"endTime\":1783681487892}}",
+      "REQ  POST https://arb1.arbitrum.io/rpc body={\"jsonrpc\":\"2.0\",\"id\":0,\"method\":\"eth_blockNumber\"}"
+    ]
+  },
+  "B_create_perp_hlbalance": {
+    "notes": [
+      "form: {\"dep\":\"DEPOSIT USDC MAX: — LEVERAGE 5\",\"lev\":\"5x\",\"notional\":\"NOTIONAL BTC AUTO-PROTECT Au\",\"entry\":\"Entry Price $ Liquidation Price Set Leve\",\"max\":\"MAX: — LEVERAGE 5x 1\"}",
+      "selected DEPOSIT FROM = Hyperliquid Balance",
+      "CREATE POSITION pre-click: text=\"CREATE POSITION\" disabled=false ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm f",
+      "CREATE POSITION clicked (trusted mouse)",
+      "toasts: []",
+      "body delta present=false; new err-ish lines: []"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Timeout: Did not receive complete AMM tree data after 10 seconds."
+    ],
+    "walletRpc": [],
+    "backendPosts": [
+      "REQ  POST https://api.hyperliquid.xyz/info body={\"type\":\"clearinghouseState\",\"user\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\"}",
+      "REQ  POST https://api.hyperliquid.xyz/info body={\"type\":\"clearinghouseState\",\"user\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\"}"
+    ]
+  },
+  "B2_create_perp_wallet": {
+    "notes": [
+      "selected DEPOSIT FROM = Wallet",
+      "CREATE POSITION pre-click: text=\"CREATE POSITION\" disabled=false ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm f",
+      "CREATE POSITION clicked (Wallet source)",
+      "toasts: []",
+      "new err-ish lines: []",
+      "no tx/sign/toast yet → clicking \"Connect to Arbitrum\" and retrying CREATE once",
+      "after ConnectToArbitrum: toasts=[] chipBtn=text=\"Connect to Arbitrum\" disabled=false ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base font-base",
+      "retry toasts: []"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "walletRpc": [],
+    "backendPosts": []
+  },
+  "C_portfolio": {
+    "notes": [
+      "PERPS rows: [\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\",\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\",\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\",\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\",\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\",\"\\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t | \\t\"]",
+      "BANDS rows: [\"\",\"\",\"\",\"\",\"\",\"\"]",
+      "close buttons: 0"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "walletRpc": [],
+    "backendPosts": []
+  },
+  "D_trade_bands": {
+    "notes": [
+      "activeTab=TRADE BANDS",
+      "bands state: {\"dollars\":[],\"pcts\":[],\"maxLine\":[\"MAX: — BTC\"],\"timeout\":false}",
+      "canvas census (OPTIONS PRICING view): []",
+      "inputs: [{\"ph\":\"Enter amount\",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"\",\"val\":\"1\",\"dis\":false,\"type\":\"range\"},{\"ph\":\"\",\"val\":\"wallet\",\"dis\":false,\"type\":\"radio\"},{\"ph\":\"\",\"val\":\"hl-balance\",\"dis\":false,\"type\":\"radio\"},{\"ph\":\"------\",\"val\":\"\",\"dis\":false,\"type\":\"text\"},{\"ph\":\"From - % \",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"To - % (Opt)\",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"From - % \",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"To - % (Opt)\",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"Enter amount\",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"\",\"val\":\"1\",\"dis\":false,\"type\":\"range\"}]",
+      "qty filled: {\"ph\":\"Enter amount\",\"now\":\"0.001\"}",
+      "TRANSACT pre-click: text=\"TRANSACT\" disabled=true ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm f",
+      "TRANSACT clicked (direction 1)",
+      "toasts: []",
+      "new lines: []",
+      "direction swap clicked at {\"x\":461,\"y\":375.640625}",
+      "TRANSACT clicked (direction 2)",
+      "toasts: []"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Timeout: Did not receive complete AMM tree data after 10 seconds."
+    ],
+    "walletRpc": [],
+    "backendPosts": [
+      "REQ  POST https://api.hyperliquid.xyz/info body={\"type\":\"candleSnapshot\",\"req\":{\"coin\":\"BTC\",\"interval\":\"1d\",\"startTime\":1697281560182,\"endTime\":1783681560182}}"
+    ]
+  },
+  "E_earn": {
+    "notes": [
+      "activeTab=TRADE BANDS",
+      "earn inputs: [{\"ph\":\"Enter amount\",\"val\":\"0.001\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"\",\"val\":\"1\",\"dis\":false,\"type\":\"range\"},{\"ph\":\"\",\"val\":\"wallet\",\"dis\":false,\"type\":\"radio\"},{\"ph\":\"\",\"val\":\"hl-balance\",\"dis\":false,\"type\":\"radio\"},{\"ph\":\"------\",\"val\":\"\",\"dis\":false,\"type\":\"text\"},{\"ph\":\"From - % \",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"To - % (Opt)\",\"val\":\"\",\"dis\":false,\"type\":\"number\"},{\"ph\":\"From - % \",\"val\":\"\",\"dis\":false,\"type\":\"number\"}]",
+      "earn amount filled: {\"ph\":\"Enter amount\",\"now\":\"100\"}",
+      "EARN TRANSACT pre-click: text=\"TRANSACT\" disabled=true ariaDisabled=null cls=inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm f",
+      "EARN TRANSACT clicked",
+      "toasts: []",
+      "new lines: []"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "walletRpc": [],
+    "backendPosts": []
+  },
+  "F_flag_recheck": {
+    "notes": [
+      "CSP-refused endpoints this round: [\"https://sepolia-rollup.arbitrum.io/rpc\",\"https://sepolia-rollup.arbitrum.io/rpc.\"]",
+      "sepolia-rollup mentions in errors: 728",
+      "ws.open set: [\"wss://api.hyperliquid.xyz/ws\"]",
+      "staging-be ws opened: false",
+      "AMM-tree timeout messages: 5",
+      "requestfailed classes: [\"GET https://app-staging.temporal.exchange/portfolio?_rsc=p37cr → net::ERR_ABORTED\",\"POST https://app-staging.temporal.exchange/ → net::ERR_ABORTED\",\"GET https://app-staging.temporal.exchange/portfolio?_rsc=bhhy8 → net::ERR_ABORTED\",\"GET https://app-staging.temporal.exchange/?_rsc=1lc2x → net::ERR_ABORTED\",\"GET https://app-staging.temporal.exchange/api/stream/market-data → net::ERR_ABORTED\",\"GET https://app-staging.temporal.exchange/api/stream/user-data?wallet=0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34&token=BTC&txLimit=20&txOffs\"]"
+    ],
+    "errors": [],
+    "walletRpc": [],
+    "backendPosts": []
+  }
+}
