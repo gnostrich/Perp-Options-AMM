@@ -1,9 +1,12 @@
 # Staging E2E report — app-staging.temporal.exchange — 2026-07-10
 
 **Provenance:** the section below the rule is the tester subagent's final report, QUOTED VERBATIM
-(run completed 2026-07-10 ~10:25; dispatched by the manager with the operator's brief verbatim —
-transcript: `history/operator/2026-07-10_staging-e2e-wallet-test.md`). The manager audit addendum
-at the bottom is the manager's own work, labelled as such. Committed by the manager (sole git actor).
+(run completed 2026-07-10 ~10:25 UTC, ~50 min, 82 tool uses; dispatched by the manager with the
+operator's brief verbatim — transcript: `history/operator/2026-07-10_staging-e2e-wallet-test.md`).
+**Manager attestation (§2.4a):** the block between the two horizontal rules is byte-identical to the
+tester's final return message; no edits, no omissions. The manager audit addendum at the bottom is
+the manager's own work, labelled as such. Committed by the manager (sole git actor).
+Skeptic gate: `notes/skeptic/VERDICT_staging_e2e_gate_2026-07-10.md` (verdict appended unedited).
 
 ---
 
@@ -62,6 +65,12 @@ Independently verified before accepting the report:
 5. **FUNDING column:** DOM dump (`e2e_summary.json`) shows PERPS headers incl. FUNDING
    ("funding col present: true") and FUNDING/INNER BOUND/OUTER BOUND ×2 (perps + bands). CONFIRMED.
 6. **Vocabulary:** zero whole-word "lean" hits across text/JSON evidence. CONFIRMED.
+
+7. **Scoping correction (skeptic gate (b)-3, tester text unedited above):** the tester's
+   "Consistent with reference: … perp mechanics self-consistent" item is re-scoped — the perp form's
+   self-consistency (500×16/64292≈0.1244) is an internal check of the Hyperliquid perp UI, NOT
+   consistency WITH the reference build (which has no perp-creation mechanics). The first three items
+   of that bullet (funding column, vocabulary terms, no "lean") are the reference-consistent ones.
 
 Caveat kept honest: FLAG-2's causal tail ("downstream of FLAG-1") is the tester's inference — plausible
 (the AMM-tree subscription may await a chain read that CSP kills) but not proven from outside; recorded

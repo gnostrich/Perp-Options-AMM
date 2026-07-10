@@ -53,13 +53,16 @@ Numbers below are the changelog/reference-build values (put, strike $100, γ=2 u
 
 **Which handed stage does staging's MATH match? UNDETERMINED from outside this run.** Every H1/H2/H3
 numeric discriminator (F1 ITM line, F2 w′ exhibit, F4 close continuity, F5 funding values) was
-unobservable because the two HIGH FLAGs blank out all AMM numbers (CSP-blocked RPC → AMM-tree timeout →
-options/bands/LP values never render) and the wallet was unfunded (no positions to read).
+unobservable because the two HIGH FLAGs blank out all AMM numbers — the CSP-blocked RPC (FLAG-1) and
+the never-firing staging-be subscription with its AMM-tree timeout (FLAG-2); whether FLAG-1 CAUSES
+FLAG-2 is a hypothesis, not established — and the wallet was unfunded (no positions to read).
 
 **What IS determinable:** the SURFACE tracks the recent handover — FUNDING column in perps+bands,
 INTRINSIC/EXTRINSIC/POSITION VALUE, INNER/OUTER BOUND, an OPTIONS PRICING chart tab, no "lean"
-vocabulary anywhere. That is at least H2-era and vocabulary-consistent with H3; nothing observed
-contradicts H3. **No math divergence claim is made in either direction.**
+vocabulary anywhere. The surface vocabulary is consistent with the recent handover, and nothing
+observed contradicts H3 — but no observed discriminator PINS a stage (the matrix has no
+present-in-H2-absent-in-H1 feature that staging displays). **No math divergence claim is made in
+either direction, and no stage claim beyond "vocabulary-consistent, undetermined."**
 
 **Recommended path to a decidable feature diff (for the operator → CTO):**
 1. Fix FLAG-1 (add the missing RPC host to CSP `connect-src`, or point the app at an allowlisted RPC)

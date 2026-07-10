@@ -2,6 +2,23 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **✅ STAGING E2E + FEATURE DIFF DONE 2026-07-10 (branch `claude/temporal-exchange-e2e-b4560k`; separate session from the rebase-lock thread):**
+operator brief (transcript `history/operator/2026-07-10_staging-e2e-wallet-test.md`, entries 1–4) = wallet + login + functional
+test of https://app-staging.temporal.exchange/ (CTO's Go/Next.js port, Hyperliquid-TESTNET on Arbitrum Sepolia) + entry-2
+feature-level diff vs the CTO-handed stages. Tester run (~50min): **wallet login WORKED** (injected EIP-6963 provider, throwaway
+key /tmp only chmod600, addr `0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34`), **CONNECT-ONLY** (both faucets gated); all tabs
+exercised, 16 screenshots. **FLAG-1 HIGH (manager-confirmed via live CSP header):** app calls `sepolia-rollup.arbitrum.io/rpc`,
+absent from its own CSP connect-src → all chain reads blocked. **FLAG-2 HIGH (manager-confirmed):** staging-be ws NEVER opened
+(only HL MAINNET ws; /health 200) → AMM-tree timeout → options/bands/LP values + OPTIONS PRICING chart blank. FLAG-3 LOW:
+disclaimer not persisted. **Feature diff `notes/FEATURE_DIFF_staging_vs_handover_2026-07-10.md`:** handed stages H1 v24 May-29 /
+H2 80f050e2 Jun-15 / H3 5ce1a76c Jul-8 (operator Drive screenshot = repo record, entry 3); staging MATH stage UNDETERMINED
+(all discriminators unobservable — FLAG-1/2 + unfunded), surface vocabulary-consistent (FUNDING col perps+bands DOM-verified,
+INTRINSIC/EXTRINSIC/INNER-OUTER BOUND, zero "lean"); path to decidable: fix FLAG-1/2, fund wallet, CTO runs lens_selfcheck 41.
+Skeptic gate `notes/skeptic/VERDICT_staging_e2e_gate_2026-07-10.md`: evidence CLEAR, 1 FLAG-OVERSELL (3 manager-synthesis
+sentences) — ALL CURED same turn (causal arrow → hypothesis; "at least H2-era" retracted; perp self-consistency re-scoped) +
+§2.4a attestation added per its demand. Evidence+REPORT.md (tester verbatim + audit addendum) committed `c8c6647`+cure commit.
+EARN = live LP-vault surface (TVL $500) → update-2 shared-pool warning becomes live the moment staging goes multi-party (relayed).
+
 🧭 **✅ REBASE VERIFIED CLEAN + LOCK LANDING (entry 466):** rebase = clean gauge move, ALL residuals machine-eps
 (marks/values/moneyness/poolMark/**funding dev**/closeBand raw_net invariant; trade-commute for SPOT + live
 tradeUpdateAt; group/identity/inverse hold). The DEVIATION is rebase-invariant (mode doesn't move: w invariant,
