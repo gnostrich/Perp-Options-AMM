@@ -54,3 +54,31 @@ Most likely the backend only pushes the per-strike trees once a real wallet sess
 active perp) is associated — consistent with bands being perp-gated. This is the exact hypothesis the
 round-5 real-MetaMask run tests. Net: FLAG-2 as "staging ws broken" is RETRACTED; open question narrows to
 "do the AMM trees stream once there's a real wallet session?"
+
+## CORRIGENDUM 2 (manager, after skeptic gate `notes/skeptic/VERDICT_staging_e2e_round5_2026-07-10.md`)
+
+Skeptic flagged three overclaims in my round-5 relay. Corrected:
+
+1. **FLAG-1 resolved — CLEAR** (stands). Minor: the "extension channel not a page fetch" mechanism above
+   is loose — the real MM's chain reads ARE page-layer POSTs to `arb1.arbitrum.io/rpc` (allowlisted), so
+   CSP never engages. Outcome unchanged.
+
+2. **AMM trees / FLAG-2 — corrected to "reproducible, cause UNRESOLVED" (was oversold as "wallet-
+   independent real backend gap").** What's solid: trees-missing reproduced across 6–7 real-wallet runs
+   AND via plain server-side curl → NOT our test rig. What I over-claimed: "wallet-independent" — the curl
+   was unauthenticated and we never reached the has-a-position state the CTO had (create was blocked), so
+   the "trees gated behind an active position/session" hypothesis is UNTESTED, not refuted.
+   **Also corrected: the CTO video does NOT show the per-strike AMM pricing curve.** Frame 65 = the
+   PORTFOLIO position table; frames 40/48 = the Hyperliquid candlestick chart. No captured frame shows the
+   AMM/options curve rendering anywhere — so we have NO evidence the per-strike curve renders on any
+   machine. Honest state: the AMM tree data does not stream to any session we could reach; whether it
+   streams for a funded/position-holding session is unknown.
+
+3. **CREATE PERP — corrected to "wallet/session-specific block, cause UNRESOLVED" (was oversold as
+   "balance-gated").** Real wallet at deposit 12 / MAX 0.00 → CREATE disabled (screenshot). BUT the CTO
+   video (frame 48) = deposit 12 / MAX 0.00 / button GREEN / "position saved" — SAME displayed balance,
+   opposite outcome → the block is wallet/session-specific, not a general "0 balance blocks create."
+   We only tested deposit 12 (the borderline min; frame 40 shows a 12-USDC minimum gate) with the real
+   wallet — the isolating test (real wallet, larger deposit) wasn't run. Correct create-proof citation is
+   round-4b (`usdcAmount:500.225, wallet_type:"temporal"` → 200 → "position saved" WHILE ammTimeout fired),
+   not round-3 (which never actually created).
