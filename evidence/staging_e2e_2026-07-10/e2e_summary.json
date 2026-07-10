@@ -1,0 +1,87 @@
+{
+  "landing": {
+    "notes": [
+      "HTTP 200",
+      "disclaimer AGREE (exact) clicked=true; url=https://app-staging.temporal.exchange/",
+      "wallet chip=true provider={\"accounts\":[\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\"],\"chainId\":\"0x66eee\"} activeTab=CREATE PERP"
+    ],
+    "errorCount": 92,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "create_perp_long": {
+    "notes": [
+      "entry=Entry Price $ Liquidation Price Set Leve | liq=Liquidation Price Set Leverage For Liquidation Price Hyperli",
+      "HLfees=Hyperliquid Tx Fees % | $ Temporal Tx Fees % | $ D | TMPfees=Temporal Tx Fees % | $ DEPOSIT FROM Wallet Hy | Executed on Hyperliquid  LONG/ | levTicks=[\"1x\",\"10x\",\"20x\",\"30x\",\"40x\"] createBtn=true"
+    ],
+    "errorCount": 23,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Timeout: Did not receive complete AMM tree data after 10 seconds."
+    ]
+  },
+  "leverage_notional": {
+    "notes": [
+      "leverage 1x → 16x; notional 'NOTIONAL BTC AUTO-PROTECT' → 'NOTIONAL BTC AUTO-PROTECT'; liq=Liquidation Price Set Leverage For Liquidation Price Hyperli"
+    ],
+    "errorCount": 18,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "create_perp_short": {
+    "notes": [
+      "entry=Entry Price $ Liquidation Price $ Hyperl | liq=Liquidation Price $ Hyperliquid Tx Fees % | $ Temporal Tx Fe",
+      "SHORT bg=[\"bg-[#4E0000]\"] LONG bg=[\"bg-[#222223]\",\"bg-[#1A1A1A]\"] (active side differs)"
+    ],
+    "errorCount": 10,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "trade_bands": {
+    "notes": [
+      "activeTab after switch=CREATE PERP",
+      "activeTab=CREATE PERP strike=false inner=false outer=false intrinsic=false extrinsic=false funding=false rayDev=false loadingOrError=false",
+      "dollars=[]"
+    ],
+    "errorCount": 66,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "earn": {
+    "notes": [
+      "activeTab after switch=CREATE PERP",
+      "activeTab=CREATE PERP apy=false deposit=true lp=false withdraw=false pcts=[] dollars=[]"
+    ],
+    "errorCount": 44,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "portfolio": {
+    "notes": [
+      "PNL: TOTAL PORTFOLIO PN | PERPS PNL $0.00 BA | BANDS PNL $0.00 EA | EARN PNL $0.00 1H  | noData=true",
+      "PERPS headers: [\"ASSET\",\"NOTIONAL (BTC)\",\"NOTIONAL (USDC)\",\"DIRECTION\",\"ENTRY PRICE\",\"MARK PRICE\",\"INITIAL MARGIN\",\"P/L\",\"FUNDING\",\"BANDS P/L\",\"TRADER EQUITY\",\"LEVERAGE\",\"CLAIM\"]",
+      "PERPS funding col present: true",
+      "BANDS(portfolio) headers: [\"BUY / SELL\",\"NOTIONAL (BTC)\",\"DIRECTION\",\"INTRINSIC VALUE\",\"FUNDING\",\"EXTRINSIC VALUE\",\"POSITION VALUE\",\"INITIAL INNER BOUND\",\"INITIAL OUTER BOUND\",\"RESIDUAL INNER BOUND\",\"RESIDUAL OUTER BOUND\",\"CLOSE\"]",
+      "BANDS funding col present: true",
+      "empty-state phrases: []; close word count=1",
+      "EARN(portfolio) headers slice: [\"NOTIONAL (BTC)\",\"POOL STAKE %\",\"INITIAL MARGIN (USD)\",\"P/L (USD)\",\"LP EQUITY (USD)\",\"LP LEVERAGE\",\"CLAIM\"]",
+      "close-position buttons: 0 (unfunded → no positions to close)"
+    ],
+    "errorCount": 4,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  }
+}

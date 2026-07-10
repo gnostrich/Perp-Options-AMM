@@ -1,0 +1,172 @@
+{
+  "title": "Temporal",
+  "url": "https://app-staging.temporal.exchange/",
+  "buttons": [
+    {
+      "tag": "BUTTON",
+      "text": "DOCS",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "REFER",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base font-base ring-offset-white transition-all gap-2 "
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Connect to Arbitrum",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base font-base ring-offset-white transition-all gap-2 "
+    },
+    {
+      "tag": "BUTTON",
+      "text": "0xc5A9...Ad34",
+      "cls": "z-20 flex items-center justify-center py-1.5 px-3 text-xs text-white bg-main border-2 border-border shadow-shadow hover:",
+      "id": "radix-_r_j_"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "CREATE PERP",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "radix-_R_9clbtb_-trigger-create-perp"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "TRADE BANDS",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "tour1-step2-trade-bands"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "EARN",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "radix-_R_9clbtb_-trigger-earn"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "LONG/BUY",
+      "cls": "flex-1 py-2 px-3 text-xs font-medium tracking-widest transition-colors bg-[#053D00] text-[#14E800]"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "SHORT/SELL",
+      "cls": "flex-1 py-2 px-3 text-xs font-medium tracking-widest transition-colors bg-[#222223] text-white hover:bg-[#1A1A1A] hover:"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "BTC",
+      "cls": "data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring f"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "on",
+      "cls": "peer size-4 shrink-0 outline-2 outline-border ring-offset-white focus-visible:outline-hidden focus-visible:ring-2 focus-"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "CREATE POSITION",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "1 Day",
+      "cls": "data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring f"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "FEEDBACK",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base font-base ring-offset-white transition-all gap-2 "
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "cls": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "DISAGREE",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "AGREE",
+      "cls": "inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-al"
+    }
+  ],
+  "links": [
+    {
+      "tag": "A",
+      "text": "",
+      "cls": "flex items-center gap-2",
+      "href": "https://temporal.exchange/"
+    },
+    {
+      "tag": "A",
+      "text": "TRANSACT",
+      "cls": "ibm_plex_mono_5593e5e5-module__2zR40q__className uppercase text-white text-base font-medium py-1.5 px-3 hover:bg-[#00222",
+      "href": "https://app-staging.temporal.exchange/"
+    },
+    {
+      "tag": "A",
+      "text": "PORTFOLIO",
+      "cls": "ibm_plex_mono_5593e5e5-module__2zR40q__className uppercase text-white text-base font-medium py-1.5 px-3 hover:bg-[#00222",
+      "href": "https://app-staging.temporal.exchange/portfolio"
+    },
+    {
+      "tag": "A",
+      "text": "DOCS",
+      "cls": "flex items-center gap-2 text-white text-xs",
+      "href": "https://docs.temporal.exchange/"
+    },
+    {
+      "tag": "A",
+      "text": "",
+      "cls": "",
+      "id": "tv-attr-logo",
+      "href": "https://www.tradingview.com/?utm_medium=lwc-link&utm_campaign=lwc-chart&utm_source=app-staging.temporal.exchange/"
+    }
+  ],
+  "inputs": [
+    {
+      "tag": "INPUT",
+      "text": "",
+      "cls": "file:text-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-w-0 r"
+    },
+    {
+      "tag": "INPUT",
+      "text": "1",
+      "cls": "absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+    }
+  ],
+  "tabs": [
+    {
+      "tag": "BUTTON",
+      "text": "CREATE PERP",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "radix-_R_9clbtb_-trigger-create-perp"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "TRADE BANDS",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "tour1-step2-trade-bands"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "EARN",
+      "cls": "dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
+      "id": "radix-_R_9clbtb_-trigger-earn"
+    }
+  ],
+  "headings": [],
+  "bodyText": "TRANSACT\nPORTFOLIO\nDOCS\nREFER\nConnect to Arbitrum\n0xc5A9...Ad34\nTRANSACT\nCREATE PERP\nTRADE BANDS\nEARN\n\nExecuted on Hyperliquid\n\nLONG/BUY\nSHORT/SELL\nDEPOSIT\nUSDC\nLEVERAGE\n1x\n10x\n20x\n30x\n40x\nNOTIONAL\nBTC\nAUTO-PROTECT\nAutomatically pushes away liquidation floor at the same leverage. Does not guarantee profits or prevent liquidation.\nEntry Price\n$\nLiquidation Price\nSet Leverage For Liquidation Price\nHyperliquid Tx Fees\n%\n|\n$\nTemporal Tx Fees\n%\n|\n$\nDEPOSIT FROM\nWallet\nHyperliquid Balance\nCREATE POSITION\n1 Day\n\t\n\t\n\n\t\n\t\nFEEDBACK\nDISCLAIMER\n\nDisclaimer: Experimental Application / 'Alpha'\n\nThis decentralized exchange is currently in testing and has not been audited. By connecting your wallet, you acknowledge and accept the following risks:\n\nSmart-contract vulnerabilities may exist.\nDisplayed prices, balances, and trade outcomes may be inaccurate or delayed.\nFunds connected to the platform may be at risk, including through unintended interactions.\nNo guarantees are made regarding uptime, data accuracy, or transaction outcomes.\n\nUse at your own risk. Do not trade with significant funds.\n\nDISAGREE\nAGREE"
+}

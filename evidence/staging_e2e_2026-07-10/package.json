@@ -1,0 +1,16 @@
+{
+  "name": "staging_e2e_2026-07-10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^6.17.0",
+    "playwright": "^1.61.1"
+  }
+}

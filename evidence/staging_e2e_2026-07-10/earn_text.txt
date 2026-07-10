@@ -1,0 +1,42 @@
+TRANSACT
+PORTFOLIO
+DOCS
+REFER
+Connect to Arbitrum
+0xc5A9...Ad34
+TRANSACT
+CREATE PERP
+TRADE BANDS
+EARN
+MARGIN
+USDC
+MAX: —
+LEVERAGE
+1x
+10x
+20x
+30x
+40x
+NOTIONAL
+BTC
+LP Levered Annual Percentage Rate (APR)
+--%
+POOL STATS
+Base Annual Percentage Rate (APR)
+--%
+Levered Annual Percentage Rate (APR)
+--%
+Annualized Fees
+--%
+TVL
+$500 | ₿0.007961
+Pool Leverage
+5.0x
+TRANSACT
+ 
+	
+	
+
+	
+	
+FEEDBACK

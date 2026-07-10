@@ -1,0 +1,17 @@
+[
+  {
+    "text": "CREATE PERP",
+    "id": "radix-_R_9clbtb_-trigger-create-perp",
+    "state": "active"
+  },
+  {
+    "text": "TRADE BANDS",
+    "id": "tour1-step2-trade-bands",
+    "state": "inactive"
+  },
+  {
+    "text": "EARN",
+    "id": "radix-_R_9clbtb_-trigger-earn",
+    "state": "inactive"
+  }
+]

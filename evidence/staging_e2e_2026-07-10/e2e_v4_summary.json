@@ -1,0 +1,76 @@
+{
+  "landing": {
+    "notes": [
+      "HTTP 200",
+      "dashboard reached=false",
+      "wallet chip=false provider={\"accounts\":[\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\"],\"chainId\":\"0x66eee\"}"
+    ],
+    "errorCount": 200,
+    "uniqueErrors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Failed to fetch perp quantities: TypeError: Failed to fetch\n    at D (https://app-staging.temporal.exchange/_next/static/chunks/0kjrpiszpkrb",
+      "Refused to connect to 'https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678129163&gcd=1",
+      "Fetch API cannot load https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678129163&gcd=13",
+      "Refused to connect to 'https://temporal.exchange/?_rsc=f1dk0' because it violates the following Content Security Policy directive: \"connect-"
+    ]
+  },
+  "create_perp_long": {
+    "notes": [
+      "entry=null | liq=null",
+      "HLfees=null | TMPfees=null | null | levTicks=[] createBtn=false"
+    ],
+    "errorCount": 157,
+    "uniqueErrors": [
+      "Refused to connect to 'https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678145601&gcd=1",
+      "Fetch API cannot load https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678145601&gcd=13",
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Refused to connect to 'https://temporal.exchange/' because it violates the following Content Security Policy directive: \"connect-src 'self' ",
+      "Fetch API cannot load https://temporal.exchange/. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "leverage_notional": {
+    "notes": [
+      "leverage null → undefined; notional 'null' → 'null'; liq=null"
+    ],
+    "errorCount": 0,
+    "uniqueErrors": []
+  },
+  "create_perp_short": {
+    "notes": [
+      "entry=null | liq=null"
+    ],
+    "errorCount": 0,
+    "uniqueErrors": []
+  },
+  "trade_bands": {
+    "notes": [
+      "strike=false band=false inner=false outer=false intrinsic=false extrinsic=false funding=false rayDev=false loadingState=false",
+      "dollars=[]"
+    ],
+    "errorCount": 151,
+    "uniqueErrors": [
+      "Refused to connect to 'https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678164010&gcd=1",
+      "Fetch API cannot load https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678164010&gcd=13",
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Refused to connect to 'https://temporal.exchange/' because it violates the following Content Security Policy directive: \"connect-src 'self' ",
+      "Fetch API cannot load https://temporal.exchange/. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  },
+  "earn": {
+    "notes": [
+      "apy=false deposit=false lp=false pcts=[] dollars=[]"
+    ],
+    "errorCount": 153,
+    "uniqueErrors": [
+      "Refused to connect to 'https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678184646&gcd=1",
+      "Fetch API cannot load https://www.google.com/g/collect?v=2&tid=G-JN63Q35Z7F&gtm=45je6781v9178223029za200zd9178223029&_p=1783678184646&gcd=13",
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Refused to connect to 'https://temporal.exchange/' because it violates the following Content Security Policy directive: \"connect-src 'self' ",
+      "Fetch API cannot load https://temporal.exchange/. Refused to connect because it violates the document's Content Security Policy."
+    ]
+  }
+}

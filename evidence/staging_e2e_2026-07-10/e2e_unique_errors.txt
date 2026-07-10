@@ -1,0 +1,9 @@
+console.error: Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: "connect-src 'self' ws://localhost:* w
+console.error: Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.
+requestfailed: GET https://app-staging.temporal.exchange/portfolio?_rsc=1r34m → net::ERR_ABORTED
+requestfailed: GET https://app-staging.temporal.exchange/?_rsc=p37cr → net::ERR_ABORTED
+requestfailed: POST https://app-staging.temporal.exchange/ → net::ERR_ABORTED
+ws.open: wss://api.hyperliquid.xyz/ws
+console.error: Timeout: Did not receive complete AMM tree data after 10 seconds.
+requestfailed: GET https://app-staging.temporal.exchange/portfolio?_rsc=bhhy8 → net::ERR_ABORTED
+ws.close: wss://api.hyperliquid.xyz/ws
