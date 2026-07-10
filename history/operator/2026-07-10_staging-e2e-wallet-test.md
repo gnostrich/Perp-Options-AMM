@@ -104,3 +104,9 @@ cto says "you don’t need funds to do a tx. In staging"
 status update?
 
 > Context (manager, one line): round-2 tx run in flight; progress relayed from working-dir artifacts.
+
+## Entry 8 (2026-07-10)
+
+status updoate?
+
+> Context (manager, one line): round-2 still in flight; progress relayed.
