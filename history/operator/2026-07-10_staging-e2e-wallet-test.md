@@ -110,3 +110,13 @@ status update?
 status updoate?
 
 > Context (manager, one line): round-2 still in flight; progress relayed.
+
+## Entry 9 (2026-07-10)
+
+[relayed from CTO Ayush Shaw, screenshot]: "claude is saying, you can't create perp
+i just shared the video with you
+with zero balance
+me and Jayraj tested it many times before handing it over"
+[+ attached screen recording: Screen_Recording_20260710_at_5.03.27_PM.mov]
+
+> Context (manager, one line): CTO disputes the round-2 CREATE PERP BLOCKED finding, provides a video of perp-create working at zero balance; manager to review the video frames and reconcile against our evidence.
