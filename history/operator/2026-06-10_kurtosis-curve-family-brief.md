@@ -3504,3 +3504,9 @@ _Context: operator asks for a simple-English wrap of the session._
 _Context: operator asks for the latest HTML + PDF for the CTO. Manager provides commit-pinned links + md5s (HEAD 5ce1a76c, PDF c550f7e4)._
 
 > ok give latest html and pdf for cto
+
+
+## Entry 479 — 2026-07-08 UTC
+_Context: operator asks the manager to have the tester/agents set up a MetaMask wallet, log in, and test the staged deployment at app-staging.temporal.exchange (no real money / tx). Manager probing feasibility (network reachability + wallet-extension support) before committing. NB: container was reclaimed/re-cloned earlier this turn; all prior work safe on origin, local re-synced to 77b5dc2._
+
+> can you get our tester /agents to setup a metamask wallet so it can log in and test out the version on staging (works without real money / tx) https://app-staging.temporal.exchange/

@@ -2,6 +2,10 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **⚠ CONTAINER RECLAIM mid-session 2026-07-08 (entry 479 turn):** the remote container was reclaimed/re-cloned during a long agent wait; local HEAD reverted to a5372aa and an earlier-quoted commit hash (77ebd89e) went stale locally. NO WORK LOST — all session commits safe on `origin/claude/exciting-archimedes-txs2wx` (tip 77b5dc2); local fast-forwarded back. Lesson: after long background-agent waits, re-verify `git fetch` + HEAD before trusting local state. `main` also moved to a5372aa (rebase lock); vocab scrub is on the feature branch only, NOT main.
+
+🧭 **🌐 STAGING E2E REQUEST (entry 479): app-staging.temporal.exchange — NETWORK-BLOCKED for browser here.** Operator asked to set up a MetaMask wallet + log in + test staging (no real money). Verified: app + all backend/RPC hosts (staging-be, hyperliquid-testnet, arbitrum-sepolia, metamask-sdk) reachable via CURL; playwright(global)+chromium present. BUT headless Chromium → staging = ERR_CONNECTION_RESET (sandbox proxy resets browser TLS even w/ proxy+cert-ignore; tester's Playwright only works file:// local). No MetaMask extension. VERDICT: can't run a wallet login from this sandbox as configured. Options given: (1) change env network policy to allow browser egress to *.temporal.exchange + RPC/SDK; (2) run outside sandbox (real browser + Synpress); (3) narrow scope. OPEN operator decisions: test-depth (connect-only vs place testnet trades → needs funded wallet); wallet/key handling (throwaway testnet key via secret, never operator's real seed). Awaiting operator.
+
 🧭 **⚡ VOCAB SCRUB + funding-purpose (entries 474/476, 2026-07-08) — HEAD now `5ce1a76c` (was abd35f4b):**
 Operator rejected the term "lean" (entry 474); built a controlled-vocab GATE (`docs/VOCABULARY.md` +
 `engine/verify/vocab_gate.sh`, wired into run_all as HARD gate, POSIX-sh). Endorsed: curve SKEWS; funding
