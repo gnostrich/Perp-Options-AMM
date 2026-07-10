@@ -120,3 +120,9 @@ me and Jayraj tested it many times before handing it over"
 [+ attached screen recording: Screen_Recording_20260710_at_5.03.27_PM.mov]
 
 > Context (manager, one line): CTO disputes the round-2 CREATE PERP BLOCKED finding, provides a video of perp-create working at zero balance; manager to review the video frames and reconcile against our evidence.
+
+## Entry 10 (2026-07-10)
+
+also keep your messages in this chat to the point prioritizing human readability and brevity for his ease of reading instead fo being verbose / jargon
+
+> Context (manager, one line): standing style directive — brief, plain, human-readable operator replies.
