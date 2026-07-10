@@ -98,3 +98,9 @@ simple english tldr what workedor didnt work and what do you need cto to do for 
 cto says "you don’t need funds to do a tx. In staging"
 
 > Context (manager, one line): reopens the transaction half of the E2E — tester re-dispatched to attempt live tx (perp create, band transact, close) with the unfunded throwaway wallet.
+
+## Entry 7 (2026-07-10)
+
+status update?
+
+> Context (manager, one line): round-2 tx run in flight; progress relayed from working-dir artifacts.
