@@ -1,0 +1,283 @@
+{
+  "addr": "0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34",
+  "step1": {
+    "form": {
+      "notionalVal": null,
+      "entry": null,
+      "chainId": "0xa4b1",
+      "btnDisabled": true,
+      "connectArb": false
+    },
+    "toasts": [],
+    "post": [],
+    "perpBtcQty": null
+  },
+  "step2": {
+    "perpsReadBack": true,
+    "perpRowData": {
+      "heads": [
+        "ASSET",
+        "NOTIONAL (BTC)",
+        "NOTIONAL (USDC)",
+        "DIRECTION",
+        "ENTRY PRICE",
+        "MARK PRICE",
+        "INITIAL MARGIN",
+        "P/L",
+        "FUNDING",
+        "BANDS P/L",
+        "TRADER EQUITY",
+        "LEVERAGE",
+        "CLAIM"
+      ],
+      "rows": [
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ]
+    },
+    "fundingVal": "",
+    "claimShows": false
+  },
+  "step3_bands": {
+    "preFill": null,
+    "filled": {
+      "inputs": [
+        {
+          "ph": "Enter amount",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "",
+          "val": "16",
+          "dis": false,
+          "type": "range",
+          "ro": false
+        },
+        {
+          "ph": "",
+          "val": "wallet",
+          "dis": false,
+          "type": "radio",
+          "ro": false
+        },
+        {
+          "ph": "",
+          "val": "hl-balance",
+          "dis": false,
+          "type": "radio",
+          "ro": false
+        },
+        {
+          "ph": "------",
+          "val": "",
+          "dis": false,
+          "type": "text",
+          "ro": false
+        },
+        {
+          "ph": "From - % ",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "To - % (Opt)",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "From - % ",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "To - % (Opt)",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "Enter amount",
+          "val": "",
+          "dis": false,
+          "type": "number",
+          "ro": false
+        },
+        {
+          "ph": "",
+          "val": "1",
+          "dis": false,
+          "type": "range",
+          "ro": false
+        }
+      ],
+      "sell": null,
+      "quantity": null,
+      "slippage": null,
+      "txfees": "Tx Fees % | $ Temporal Tx Fees % | $ DEP",
+      "notional": null,
+      "deposit": null,
+      "dollars": [],
+      "pcts": [],
+      "ammTimeout": false
+    },
+    "chartCensus": [
+      {
+        "w": 780,
+        "h": 628,
+        "nb": 48984
+      },
+      {
+        "w": 780,
+        "h": 628,
+        "nb": 187
+      },
+      {
+        "w": 72,
+        "h": 628,
+        "nb": 4522
+      },
+      {
+        "w": 72,
+        "h": 628,
+        "nb": 0
+      },
+      {
+        "w": 780,
+        "h": 28,
+        "nb": 2184
+      },
+      {
+        "w": 780,
+        "h": 28,
+        "nb": 0
+      },
+      {
+        "w": 72,
+        "h": 28,
+        "nb": 202
+      }
+    ],
+    "toasts": [],
+    "post": [
+      "REQ POST https://app-staging.temporal.exchange/ body=[]",
+      "RESP 200 POST https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"long\":0.077597,\"short\":0.077597}\n",
+      "REQ POST https://app-staging.temporal.exchange/ body=[]",
+      "RESP 200 POST https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"success\":true,\"data\":{\"fee_btc\":0,\"fee_dollar\":0,\"lp_leverage\":3,\"margin_btc\":0.003076923076923077,\"margin_dollar\":200,\"net_residual_value_btc\":0,\"net_residual_value_dollar\":0,\"notional_deposit_btc\":0.009512,\"notional_deposit_dollar\":600,\"notional_nav_btc\":0.009512,\"notional_nav_dollar\":600,\"pnl_btc\":0,\"pnl_dollar\":0,\"price_effect_btc\":0,\"price_effect_dollar\":0}}\n",
+      "RESP 200 POST https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:true\n"
+    ]
+  },
+  "step6_claim": null,
+  "flags": {
+    "cspHits": 346,
+    "cspEndpoints": [
+      "https://sepolia-rollup.arbitrum.io/rpc",
+      "https://sepolia-rollup.arbitrum.io/rpc."
+    ],
+    "ammTimeout": 6,
+    "stagingBeWs": false,
+    "wsOpens": [
+      "wss://api.hyperliquid.xyz/ws"
+    ],
+    "perpQtyFetchFail": 0
+  },
+  "sendTx": 0,
+  "signs": 0
+}

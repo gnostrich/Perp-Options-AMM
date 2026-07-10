@@ -1,0 +1,156 @@
+{
+  "addr": "0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34",
+  "step1": {
+    "form1": {
+      "notional": null,
+      "entry": null,
+      "liq": false,
+      "btnDis": false
+    },
+    "toasts": [
+      "Creating position on backend…",
+      "BTC-PERP position saved | Recorded successfully."
+    ],
+    "post": [
+      "REQ POST https://app-staging.temporal.exchange/ body=[{\"token\":\"BTC\",\"perpType\":\"LONG\",\"market\":\"BTC-PERP\",\"usdcAmount\":500.225,\"leverage\":40,\"markPrice\":64281.5,\"btcAmount\":0.311132,\"autoProtect\":true,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\"}]",
+      "RESP 200 POST https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"id\":\"PERP_1783684933301020796\",\"token\":\"BTC\",\"perpType\":\"LONG\",\"market\":\"BTC-PERP\",\"initialUsdMargin\":1000.45,\"usdcAmount\":1000.45,\"leverage\":9.190697608232776,\"initialLeverage\":24.988788196811434,\"markPrice\":64281.5,\"entryPrice\":64312.24105096352,\"btcAmount\":0.388729,\"pnl\":43.8035065,\"positionValue\":1044.2535065,\"usedQuantity\":0,\"fundingRate\":0,\"fundingAccrued\":0,\"lastFundingAt\":\"2026-07-10T12:02:13.301188Z\",\"liquidationMargin\":625.0008287875,\"isLiquidated\":false,\"isClosed\":false,\"userWallet\":\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\",\"wallet_type\":\"temporal\",\"created_at\":\"2026-07-10T12:02:13.301188Z\",\"updated_at\":\"2026-07-10T13:06:39.159560314Z\"}\n"
+    ]
+  },
+  "step3_bands": {
+    "qtyPost": [
+      "RESP 200 POST https://app-staging.temporal.exchange/ body=0:{\"a\":\"$@1\",\"f\":\"\",\"q\":\"\",\"i\":false,\"b\":\"QqfdfqfY2QLPxdVO4cpaa\"}\n1:{\"long\":0.077597,\"short\":0.077597}\n"
+    ],
+    "bandsState": {
+      "inputs": [
+        {
+          "ph": "Enter amount",
+          "val": "500",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "",
+          "val": "40",
+          "type": "range",
+          "dis": false
+        },
+        {
+          "ph": "",
+          "val": "wallet",
+          "type": "radio",
+          "dis": false
+        },
+        {
+          "ph": "",
+          "val": "hl-balance",
+          "type": "radio",
+          "dis": false
+        },
+        {
+          "ph": "------",
+          "val": "0.01",
+          "type": "text",
+          "dis": false
+        },
+        {
+          "ph": "From - % ",
+          "val": "5",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "To - % (Opt)",
+          "val": "50",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "From - % ",
+          "val": "",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "To - % (Opt)",
+          "val": "",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "Enter amount",
+          "val": "",
+          "type": "number",
+          "dis": false
+        },
+        {
+          "ph": "",
+          "val": "1",
+          "type": "range",
+          "dis": false
+        }
+      ],
+      "deposit": "Deposit: BTC Perp Long BTC Notional Slippage %  % ",
+      "notional": "BTC Notional Slippage %  % Tx ",
+      "slippage": "Slippage %  % Tx Fees %  % TRANSACT PERP",
+      "txfees": "Tx Fees %  % TRANSACT PERP MARK PRICING OPTIO",
+      "dollars": [],
+      "pcts": []
+    },
+    "bandPricePosts": [],
+    "chartCensus": [],
+    "transactBtn": "ABSENT",
+    "transactToasts": [],
+    "transactPost": []
+  },
+  "step2_readback": {
+    "heads": [
+      "ASSET",
+      "NOTIONAL (BTC)",
+      "NOTIONAL (USDC)",
+      "DIRECTION",
+      "ENTRY PRICE",
+      "MARK PRICE",
+      "INITIAL MARGIN",
+      "P/L",
+      "FUNDING",
+      "BANDS P/L",
+      "TRADER EQUITY",
+      "LEVERAGE",
+      "CLAIM"
+    ],
+    "rowsNonEmpty": 0,
+    "rowsTotal": 6,
+    "sampleRow": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "skeletonPulse": 259,
+    "pageLbl": "Page 1 of 0",
+    "claim": 0
+  },
+  "flags": {
+    "cspHits": 104,
+    "cspEndpoints": [
+      "https://sepolia-rollup.arbitrum.io/rpc",
+      "https://sepolia-rollup.arbitrum.io/rpc."
+    ],
+    "ammTimeout": 5,
+    "wsOpens": [
+      "wss://api.hyperliquid.xyz/ws"
+    ],
+    "perpQtyFail": 0
+  },
+  "sendTx": 0,
+  "signs": 0
+}
