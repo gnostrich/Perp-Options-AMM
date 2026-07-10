@@ -80,3 +80,9 @@ also as paert of this and when youre done dont interrup anyhting now: feature le
 fyi
 
 > Context (manager, one line): attached screenshot of the Google Drive folder "Temporal Upgrade: Closed Form" (owner = operator, shared with Ayush Shaw) — the CTO handover channel; contents: temporal_mvp_v28_lens_5ce1a76c.html (Jul 8, 507 KB), CHANGELOG_for_CTO (3).pdf (Jul 8, 100 KB), HEAD_temporal_mvp_v28_lens.html.txt (Jun 15, 491 KB), temporal v24 cto handoff.zip (May 29, 299 KB), temporal mvp v24 rebase fixed 2.html (May 29, 469 KB).
+
+## Entry 4 (2026-07-10)
+
+whats going on now? whats done whats left
+
+> Context (manager, one line): mid-audit of the completed tester run; status relayed.
