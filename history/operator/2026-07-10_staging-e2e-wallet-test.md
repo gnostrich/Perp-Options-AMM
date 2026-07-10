@@ -126,3 +126,9 @@ me and Jayraj tested it many times before handing it over"
 also keep your messages in this chat to the point prioritizing human readability and brevity for his ease of reading instead fo being verbose / jargon
 
 > Context (manager, one line): standing style directive — brief, plain, human-readable operator replies.
+
+## Entry 11 (2026-07-10)
+
+yes please, test and compare whatver surface area you can access to the versopns i meitoned earlier in the image and if you cant access anything flag imediately .. mostly theres nothing that shoudlt work
+
+> Context (manager, one line): go to re-run with the input bug fixed; compare accessible surface to the Drive-image versions (H1 v24 / H2 Jun-15 / H3 5ce1a76c); flag any inaccessible surface immediately (operator expects nearly everything to work).
