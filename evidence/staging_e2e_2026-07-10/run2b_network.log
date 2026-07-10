@@ -1,0 +1,521 @@
+2026-07-10T11:11:43.852Z REQ POST https://api.hyperliquid.xyz/info body={"type":"candleSnapshot","req":{"coin":"BTC","interval":"1d","startTime":1697281903813,"endTime":1783681903813}}
+2026-07-10T11:11:43.852Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":0,"method":"eth_blockNumber"}
+2026-07-10T11:11:43.852Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:11:43.951Z REQ POST https://metamask-sdk.api.cx.metamask.io/evt body={"id":"sdk","event":"sdk_use_extension","sdkVersion":"0.33.1","url":"https://app-staging.temporal.exchange","title":"wagmi","dappId":"app-staging.temporal.exchange","platform":"web-desktop","source":"wagmi","anonId":""}
+2026-07-10T11:11:43.977Z REQ GET https://app-staging.temporal.exchange/api/stream/market-data
+2026-07-10T11:11:44.018Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:11:44.145Z REQ POST https://mm-sdk-analytics.api.cx.metamask.io/v1/events body=[{"name":"sdk_initialized","sdk_version":"0.33.1","dapp_id":"app-staging.temporal.exchange","anon_id":"1c3284f3-cb01-4e3e-85e2-24407a106138","platform":"web-desktop","integration_type":"wagmi"}]
+2026-07-10T11:11:44.268Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:11:44.519Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:11:44.591Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":0,"result":"0x1cc04825"}
+
+2026-07-10T11:11:44.677Z REQ POST https://app-staging.temporal.exchange/ body=["0xc5a9a6570e8b8b584eedaa614f33259911e9ad34"]
+2026-07-10T11:11:44.710Z RESP 200 https://metamask-sdk.api.cx.metamask.io/evt body={"success":true}
+2026-07-10T11:11:44.767Z RESP 200 https://mm-sdk-analytics.api.cx.metamask.io/v1/events body={"message":"ok"}
+2026-07-10T11:11:44.977Z REQ POST https://app-staging.temporal.exchange/ body=["0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"]
+2026-07-10T11:11:45.188Z RESP 200 https://api.hyperliquid.xyz/info body=[{"t":1697241600000,"T":1697327999999,"s":"BTC","i":"1d","o":"26861.0","c":"26850.0","h":"26980.0","l":"26782.0","v":"50.50582","n":2233},{"t":1697328000000,"T":1697414399999,"s":"BTC","i":"1d","o":"26853.0","c":"27163.0","h":"27297.0","l":"26798.0","v":"60.82306","n":2361},{"t":1697414400000,"T":1697500799999,"s":"BTC","i":"1d","o":"27154.0","c":"28503.0","h":"30647.0","l":"27111.0","v":"388.71681","n":4015},{"t":1697500800000,"T":1697587199999,"s":"BTC","i":"1d","o":"28504.0","c":"28403.0","h":"28612.0","l":"28079.0","v":"81.60084","n":2286},{"t":1697587200000,"T":1697673599999,"s":"BTC","i":"1d","o":"28394.0","c":"28308.0","h":"29000.0","l":"28146.0","v":"128.28201","n":2361},{"t":1697673600000,"T":1697759999999,"s":"BTC","i":"1d","o":"28311.0","c":"28706.0","h":"28880.0","l":"28113.0",
+2026-07-10T11:11:57.801Z REQ POST https://metamask-sdk.api.cx.metamask.io/evt body={"id":"a68a7e18-e221-4a56-ab39-0eb0ef2af38b","event":"sdk_rpc_request","sdkVersion":"0.33.1","url":"https://app-staging.temporal.exchange","title":"wagmi","dappId":"app-staging.temporal.exchange","platform":"web-desktop","source":"wagmi","anonId":"","method":"wallet_switchEthereumChain","from":"extension"}
+2026-07-10T11:11:57.803Z REQ POST https://metamask-sdk.api.cx.metamask.io/evt body={"id":"a68a7e18-e221-4a56-ab39-0eb0ef2af38b","event":"sdk_rpc_request_done","sdkVersion":"0.33.1","url":"https://app-staging.temporal.exchange","title":"wagmi","dappId":"app-staging.temporal.exchange","platform":"web-desktop","source":"wagmi","anonId":"","method":"wallet_switchEthereumChain","from":"extension"}
+2026-07-10T11:11:57.811Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":54,"method":"eth_blockNumber"}
+2026-07-10T11:11:57.820Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":55,"method":"eth_call","params":[{"to":"0xca11bde05977b3631167028862be2a173976ca11","data":"0x82ad56cb000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e583100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002470a08231000000000000000000000000c5a9a6570e8b8b584eedaa614f33259911e9ad3400000000000000000000000000000000000000000000000000000000"},"latest"]}
+2026-07-10T11:11:57.916Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":54,"result":"0x1cc04859"}
+
+2026-07-10T11:11:57.917Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":55,"result":"0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000"}
+
+2026-07-10T11:11:57.943Z RESP 200 https://metamask-sdk.api.cx.metamask.io/evt body={"success":true}
+2026-07-10T11:11:57.960Z RESP 200 https://metamask-sdk.api.cx.metamask.io/evt body={"success":true}
+2026-07-10T11:11:58.420Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":58,"method":"eth_blockNumber"}
+2026-07-10T11:11:58.575Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":58,"result":"0x1cc0485e"}
+
+2026-07-10T11:11:59.076Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":60,"method":"eth_blockNumber"}
+2026-07-10T11:11:59.164Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":60,"result":"0x1cc04860"}
+
+2026-07-10T11:11:59.666Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":61,"method":"eth_blockNumber"}
+2026-07-10T11:11:59.817Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":61,"result":"0x1cc04862"}
+
+2026-07-10T11:12:00.319Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":62,"method":"eth_blockNumber"}
+2026-07-10T11:12:00.396Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":62,"result":"0x1cc04864"}
+
+2026-07-10T11:12:00.896Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":63,"method":"eth_blockNumber"}
+2026-07-10T11:12:00.982Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":63,"result":"0x1cc04866"}
+
+2026-07-10T11:12:01.484Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":64,"method":"eth_blockNumber"}
+2026-07-10T11:12:01.572Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":64,"result":"0x1cc0486a"}
+
+2026-07-10T11:12:02.073Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":65,"method":"eth_blockNumber"}
+2026-07-10T11:12:02.149Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":65,"result":"0x1cc0486c"}
+
+2026-07-10T11:12:02.650Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":66,"method":"eth_blockNumber"}
+2026-07-10T11:12:02.750Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":66,"result":"0x1cc0486e"}
+
+2026-07-10T11:12:03.251Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":67,"method":"eth_blockNumber"}
+2026-07-10T11:12:03.325Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":67,"result":"0x1cc04870"}
+
+2026-07-10T11:12:03.826Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":68,"method":"eth_blockNumber"}
+2026-07-10T11:12:03.912Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":68,"result":"0x1cc04872"}
+
+2026-07-10T11:12:04.414Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":69,"method":"eth_blockNumber"}
+2026-07-10T11:12:04.650Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":69,"result":"0x1cc04876"}
+
+2026-07-10T11:12:05.152Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":70,"method":"eth_blockNumber"}
+2026-07-10T11:12:05.262Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":70,"result":"0x1cc04879"}
+
+2026-07-10T11:12:05.763Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":71,"method":"eth_blockNumber"}
+2026-07-10T11:12:05.843Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":71,"result":"0x1cc0487b"}
+
+2026-07-10T11:12:06.344Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":72,"method":"eth_blockNumber"}
+2026-07-10T11:12:06.417Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":72,"result":"0x1cc0487d"}
+
+2026-07-10T11:12:06.918Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":73,"method":"eth_blockNumber"}
+2026-07-10T11:12:06.998Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":73,"result":"0x1cc0487f"}
+
+2026-07-10T11:12:07.499Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":74,"method":"eth_blockNumber"}
+2026-07-10T11:12:07.528Z REQ POST https://api.hyperliquid.xyz/info body={"type":"clearinghouseState","user":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"}
+2026-07-10T11:12:07.595Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":74,"result":"0x1cc04881"}
+
+2026-07-10T11:12:08.291Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":75,"method":"eth_blockNumber"}
+2026-07-10T11:12:08.381Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":75,"result":"0x1cc04885"}
+
+2026-07-10T11:12:08.513Z RESP 200 https://api.hyperliquid.xyz/info body={"marginSummary":{"accountValue":"0.0","totalNtlPos":"0.0","totalRawUsd":"0.0","totalMarginUsed":"0.0"},"crossMarginSummary":{"accountValue":"0.0","totalNtlPos":"0.0","totalRawUsd":"0.0","totalMarginUsed":"0.0"},"crossMaintenanceMarginUsed":"0.0","withdrawable":"0.0","assetPositions":[],"time":1783681928252}
+2026-07-10T11:12:09.015Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":76,"method":"eth_blockNumber"}
+2026-07-10T11:12:09.097Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":76,"result":"0x1cc04887"}
+
+2026-07-10T11:12:09.598Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":77,"method":"eth_blockNumber"}
+2026-07-10T11:12:09.681Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":77,"result":"0x1cc0488b"}
+
+2026-07-10T11:12:10.183Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":78,"method":"eth_blockNumber"}
+2026-07-10T11:12:10.275Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":78,"result":"0x1cc0488d"}
+
+2026-07-10T11:12:10.776Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":79,"method":"eth_blockNumber"}
+2026-07-10T11:12:10.895Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":79,"result":"0x1cc0488f"}
+
+2026-07-10T11:12:11.396Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":80,"method":"eth_blockNumber"}
+2026-07-10T11:12:11.484Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":80,"result":"0x1cc04891"}
+
+2026-07-10T11:12:11.985Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":81,"method":"eth_blockNumber"}
+2026-07-10T11:12:12.062Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":81,"result":"0x1cc04893"}
+
+2026-07-10T11:12:12.564Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":82,"method":"eth_blockNumber"}
+2026-07-10T11:12:12.655Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":82,"result":"0x1cc04895"}
+
+2026-07-10T11:12:13.320Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":83,"method":"eth_blockNumber"}
+2026-07-10T11:12:13.398Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":83,"result":"0x1cc04899"}
+
+2026-07-10T11:12:13.900Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":84,"method":"eth_blockNumber"}
+2026-07-10T11:12:14.009Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":84,"result":"0x1cc0489b"}
+
+2026-07-10T11:12:14.512Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":85,"method":"eth_blockNumber"}
+2026-07-10T11:12:14.622Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":85,"result":"0x1cc0489d"}
+
+2026-07-10T11:12:15.124Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":86,"method":"eth_blockNumber"}
+2026-07-10T11:12:15.210Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":86,"result":"0x1cc0489f"}
+
+2026-07-10T11:12:15.711Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":87,"method":"eth_blockNumber"}
+2026-07-10T11:12:15.804Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":87,"result":"0x1cc048a3"}
+
+2026-07-10T11:12:16.305Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":88,"method":"eth_blockNumber"}
+2026-07-10T11:12:16.385Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":88,"result":"0x1cc048a5"}
+
+2026-07-10T11:12:16.886Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":89,"method":"eth_blockNumber"}
+2026-07-10T11:12:16.964Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":89,"result":"0x1cc048a7"}
+
+2026-07-10T11:12:17.464Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":90,"method":"eth_blockNumber"}
+2026-07-10T11:12:17.538Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":90,"result":"0x1cc048a9"}
+
+2026-07-10T11:12:18.513Z REQ POST https://api.hyperliquid.xyz/info body={"type":"clearinghouseState","user":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"}
+2026-07-10T11:12:18.572Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":91,"method":"eth_blockNumber"}
+2026-07-10T11:12:18.694Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":91,"result":"0x1cc048ad"}
+
+2026-07-10T11:12:18.964Z RESP 200 https://api.hyperliquid.xyz/info body={"marginSummary":{"accountValue":"0.0","totalNtlPos":"0.0","totalRawUsd":"0.0","totalMarginUsed":"0.0"},"crossMarginSummary":{"accountValue":"0.0","totalNtlPos":"0.0","totalRawUsd":"0.0","totalMarginUsed":"0.0"},"crossMaintenanceMarginUsed":"0.0","withdrawable":"0.0","assetPositions":[],"time":1783681938684}
+2026-07-10T11:12:19.196Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":92,"method":"eth_blockNumber"}
+2026-07-10T11:12:19.278Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":92,"result":"0x1cc048af"}
+
+2026-07-10T11:12:19.778Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":93,"method":"eth_blockNumber"}
+2026-07-10T11:12:19.890Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":93,"result":"0x1cc048b3"}
+
+2026-07-10T11:12:20.398Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":94,"method":"eth_blockNumber"}
+2026-07-10T11:12:20.476Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":94,"result":"0x1cc048b5"}
+
+2026-07-10T11:12:20.977Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":95,"method":"eth_blockNumber"}
+2026-07-10T11:12:21.079Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":95,"result":"0x1cc048b7"}
+
+2026-07-10T11:12:21.580Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":96,"method":"eth_blockNumber"}
+2026-07-10T11:12:21.657Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":96,"result":"0x1cc048b9"}
+
+2026-07-10T11:12:22.158Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":97,"method":"eth_blockNumber"}
+2026-07-10T11:12:22.234Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":97,"result":"0x1cc048bb"}
+
+2026-07-10T11:12:22.735Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":98,"method":"eth_blockNumber"}
+2026-07-10T11:12:22.820Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":98,"result":"0x1cc048bc"}
+
+2026-07-10T11:12:23.419Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":99,"method":"eth_blockNumber"}
+2026-07-10T11:12:23.496Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":99,"result":"0x1cc048c1"}
+
+2026-07-10T11:12:23.997Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":100,"method":"eth_blockNumber"}
+2026-07-10T11:12:24.104Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":100,"result":"0x1cc048c3"}
+
+2026-07-10T11:12:24.606Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":101,"method":"eth_blockNumber"}
+2026-07-10T11:12:24.678Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":101,"result":"0x1cc048c5"}
+
+2026-07-10T11:12:25.180Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":102,"method":"eth_blockNumber"}
+2026-07-10T11:12:25.299Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":102,"result":"0x1cc048c7"}
+
+2026-07-10T11:12:25.800Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":103,"method":"eth_blockNumber"}
+2026-07-10T11:12:25.874Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":103,"result":"0x1cc048ca"}
+
+2026-07-10T11:12:26.375Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":104,"method":"eth_blockNumber"}
+2026-07-10T11:12:26.450Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":104,"result":"0x1cc048ce"}
+
+2026-07-10T11:12:26.888Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":105,"method":"eth_call","params":[{"to":"0xca11bde05977b3631167028862be2a173976ca11","data":"0x82ad56cb000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e583100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002470a08231000000000000000000000000c5a9a6570e8b8b584eedaa614f33259911e9ad3400000000000000000000000000000000000000000000000000000000"},"latest"]}
+2026-07-10T11:12:26.983Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":105,"result":"0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000"}
+
+2026-07-10T11:12:27.386Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":106,"method":"eth_blockNumber"}
+2026-07-10T11:12:27.479Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":106,"result":"0x1cc048d1"}
+
+2026-07-10T11:12:28.497Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":107,"method":"eth_blockNumber"}
+2026-07-10T11:12:28.627Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":107,"result":"0x1cc048d5"}
+
+2026-07-10T11:12:29.128Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":108,"method":"eth_blockNumber"}
+2026-07-10T11:12:29.204Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":108,"result":"0x1cc048d7"}
+
+2026-07-10T11:12:29.706Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":109,"method":"eth_blockNumber"}
+2026-07-10T11:12:29.784Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":109,"result":"0x1cc048da"}
+
+2026-07-10T11:12:30.286Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":110,"method":"eth_blockNumber"}
+2026-07-10T11:12:30.359Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":110,"result":"0x1cc048db"}
+
+2026-07-10T11:12:30.860Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":111,"method":"eth_blockNumber"}
+2026-07-10T11:12:30.941Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":111,"result":"0x1cc048de"}
+
+2026-07-10T11:12:31.443Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":112,"method":"eth_blockNumber"}
+2026-07-10T11:12:31.522Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":112,"result":"0x1cc048e2"}
+
+2026-07-10T11:12:32.023Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":113,"method":"eth_blockNumber"}
+2026-07-10T11:12:32.123Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":113,"result":"0x1cc048e4"}
+
+2026-07-10T11:12:32.624Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":114,"method":"eth_blockNumber"}
+2026-07-10T11:12:32.700Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":114,"result":"0x1cc048e6"}
+
+2026-07-10T11:12:33.201Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":115,"method":"eth_blockNumber"}
+2026-07-10T11:12:33.276Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":115,"result":"0x1cc048e8"}
+
+2026-07-10T11:12:33.777Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":116,"method":"eth_blockNumber"}
+2026-07-10T11:12:33.851Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":116,"result":"0x1cc048ea"}
+
+2026-07-10T11:12:34.353Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":117,"method":"eth_blockNumber"}
+2026-07-10T11:12:34.429Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":117,"result":"0x1cc048ec"}
+
+2026-07-10T11:12:34.930Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":118,"method":"eth_blockNumber"}
+2026-07-10T11:12:35.027Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":118,"result":"0x1cc048ef"}
+
+2026-07-10T11:12:35.530Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":119,"method":"eth_blockNumber"}
+2026-07-10T11:12:35.613Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":119,"result":"0x1cc048f0"}
+
+2026-07-10T11:12:36.114Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":120,"method":"eth_blockNumber"}
+2026-07-10T11:12:36.202Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":120,"result":"0x1cc048f1"}
+
+2026-07-10T11:12:36.703Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":121,"method":"eth_blockNumber"}
+2026-07-10T11:12:36.781Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":121,"result":"0x1cc048f2"}
+
+2026-07-10T11:12:37.283Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":122,"method":"eth_blockNumber"}
+2026-07-10T11:12:37.401Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":122,"result":"0x1cc048f2"}
+
+2026-07-10T11:12:37.902Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":123,"method":"eth_blockNumber"}
+2026-07-10T11:12:37.989Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":123,"result":"0x1cc048f2"}
+
+2026-07-10T11:12:38.490Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":124,"method":"eth_blockNumber"}
+2026-07-10T11:12:38.689Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":124,"result":"0x1cc048f6"}
+
+2026-07-10T11:12:39.191Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":125,"method":"eth_blockNumber"}
+2026-07-10T11:12:39.315Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":125,"result":"0x1cc04901"}
+
+2026-07-10T11:12:39.815Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":126,"method":"eth_blockNumber"}
+2026-07-10T11:12:39.931Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":126,"result":"0x1cc04902"}
+
+2026-07-10T11:12:40.433Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":127,"method":"eth_blockNumber"}
+2026-07-10T11:12:40.564Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":127,"result":"0x1cc04902"}
+
+2026-07-10T11:12:41.066Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":128,"method":"eth_blockNumber"}
+2026-07-10T11:12:41.145Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":128,"result":"0x1cc04909"}
+
+2026-07-10T11:12:41.736Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":129,"method":"eth_blockNumber"}
+2026-07-10T11:12:41.739Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":129,"result":"0x1cc0490b"}
+
+2026-07-10T11:12:42.278Z REQ POST https://app-staging.temporal.exchange/portfolio body=[{"wallet":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34","interval":"hour","section":"all","limit":60}]
+2026-07-10T11:12:42.284Z REQ GET https://app-staging.temporal.exchange/api/stream/user-data?wallet=0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34&token=BTC&txLimit=20&txOffset=0&perpLimit=20&perpOffset=0
+2026-07-10T11:12:55.422Z REQ POST https://api.hyperliquid.xyz/info body={"type":"candleSnapshot","req":{"coin":"BTC","interval":"1d","startTime":1697281975397,"endTime":1783681975397}}
+2026-07-10T11:12:55.422Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":130,"method":"eth_blockNumber"}
+2026-07-10T11:12:55.422Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:12:55.460Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":131,"method":"eth_call","params":[{"to":"0xca11bde05977b3631167028862be2a173976ca11","data":"0x82ad56cb000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e583100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002470a08231000000000000000000000000c5a9a6570e8b8b584eedaa614f33259911e9ad3400000000000000000000000000000000000000000000000000000000"},"latest"]}
+2026-07-10T11:12:55.460Z REQ GET https://app-staging.temporal.exchange/api/stream/market-data
+2026-07-10T11:12:55.500Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":130,"result":"0x1cc04941"}
+
+2026-07-10T11:12:55.549Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":131,"result":"0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000"}
+
+2026-07-10T11:12:55.564Z REQ POST https://app-staging.temporal.exchange/ body=["0xc5a9a6570e8b8b584eedaa614f33259911e9ad34"]
+2026-07-10T11:12:55.834Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:12:55.968Z REQ POST https://app-staging.temporal.exchange/ body=["0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34"]
+2026-07-10T11:12:56.268Z RESP 200 https://api.hyperliquid.xyz/info body=[{"t":1697241600000,"T":1697327999999,"s":"BTC","i":"1d","o":"26861.0","c":"26850.0","h":"26980.0","l":"26782.0","v":"50.50582","n":2233},{"t":1697328000000,"T":1697414399999,"s":"BTC","i":"1d","o":"26853.0","c":"27163.0","h":"27297.0","l":"26798.0","v":"60.82306","n":2361},{"t":1697414400000,"T":1697500799999,"s":"BTC","i":"1d","o":"27154.0","c":"28503.0","h":"30647.0","l":"27111.0","v":"388.71681","n":4015},{"t":1697500800000,"T":1697587199999,"s":"BTC","i":"1d","o":"28504.0","c":"28403.0","h":"28612.0","l":"28079.0","v":"81.60084","n":2286},{"t":1697587200000,"T":1697673599999,"s":"BTC","i":"1d","o":"28394.0","c":"28308.0","h":"29000.0","l":"28146.0","v":"128.28201","n":2361},{"t":1697673600000,"T":1697759999999,"s":"BTC","i":"1d","o":"28311.0","c":"28706.0","h":"28880.0","l":"28113.0",
+2026-07-10T11:12:56.494Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":132,"method":"eth_blockNumber"}
+2026-07-10T11:12:56.593Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":132,"result":"0x1cc04945"}
+
+2026-07-10T11:12:57.093Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":133,"method":"eth_blockNumber"}
+2026-07-10T11:12:57.173Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":133,"result":"0x1cc04947"}
+
+2026-07-10T11:12:57.674Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":134,"method":"eth_blockNumber"}
+2026-07-10T11:12:57.756Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":134,"result":"0x1cc04949"}
+
+2026-07-10T11:12:58.720Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":135,"method":"eth_blockNumber"}
+2026-07-10T11:12:58.812Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":135,"result":"0x1cc0494d"}
+
+2026-07-10T11:12:59.688Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":136,"method":"eth_blockNumber"}
+2026-07-10T11:12:59.765Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":136,"result":"0x1cc04951"}
+
+2026-07-10T11:13:00.266Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":137,"method":"eth_blockNumber"}
+2026-07-10T11:13:00.374Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":137,"result":"0x1cc04953"}
+
+2026-07-10T11:13:00.903Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":138,"method":"eth_blockNumber"}
+2026-07-10T11:13:00.984Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":138,"result":"0x1cc04957"}
+
+2026-07-10T11:13:01.486Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":139,"method":"eth_blockNumber"}
+2026-07-10T11:13:01.560Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":139,"result":"0x1cc04959"}
+
+2026-07-10T11:13:02.061Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":140,"method":"eth_blockNumber"}
+2026-07-10T11:13:02.134Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":140,"result":"0x1cc0495b"}
+
+2026-07-10T11:13:02.640Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":141,"method":"eth_blockNumber"}
+2026-07-10T11:13:02.712Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":141,"result":"0x1cc0495d"}
+
+2026-07-10T11:13:03.213Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":142,"method":"eth_blockNumber"}
+2026-07-10T11:13:03.348Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":142,"result":"0x1cc0495f"}
+
+2026-07-10T11:13:04.078Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":143,"method":"eth_blockNumber"}
+2026-07-10T11:13:04.157Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":143,"result":"0x1cc04963"}
+
+2026-07-10T11:13:04.658Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":144,"method":"eth_blockNumber"}
+2026-07-10T11:13:04.733Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":144,"result":"0x1cc04965"}
+
+2026-07-10T11:13:05.234Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":145,"method":"eth_blockNumber"}
+2026-07-10T11:13:05.311Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":145,"result":"0x1cc04966"}
+
+2026-07-10T11:13:05.632Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:13:05.812Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":146,"method":"eth_blockNumber"}
+2026-07-10T11:13:05.896Z REQ POST https://app-staging.temporal.exchange/ body=[]
+2026-07-10T11:13:05.898Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":146,"result":"0x1cc04969"}
+
+2026-07-10T11:13:06.398Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":147,"method":"eth_blockNumber"}
+2026-07-10T11:13:06.498Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":147,"result":"0x1cc0496d"}
+
+2026-07-10T11:13:06.998Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":148,"method":"eth_blockNumber"}
+2026-07-10T11:13:07.088Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":148,"result":"0x1cc0496f"}
+
+2026-07-10T11:13:07.590Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":149,"method":"eth_blockNumber"}
+2026-07-10T11:13:07.728Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":149,"result":"0x1cc04971"}
+
+2026-07-10T11:13:08.229Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":150,"method":"eth_blockNumber"}
+2026-07-10T11:13:08.300Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":150,"result":"0x1cc04974"}
+
+2026-07-10T11:13:08.801Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":151,"method":"eth_blockNumber"}
+2026-07-10T11:13:08.888Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":151,"result":"0x1cc04975"}
+
+2026-07-10T11:13:09.390Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":152,"method":"eth_blockNumber"}
+2026-07-10T11:13:09.474Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":152,"result":"0x1cc04978"}
+
+2026-07-10T11:13:09.976Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":153,"method":"eth_blockNumber"}
+2026-07-10T11:13:10.070Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":153,"result":"0x1cc0497b"}
+
+2026-07-10T11:13:10.571Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":154,"method":"eth_blockNumber"}
+2026-07-10T11:13:10.665Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":154,"result":"0x1cc0497d"}
+
+2026-07-10T11:13:11.166Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":155,"method":"eth_blockNumber"}
+2026-07-10T11:13:11.292Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":155,"result":"0x1cc04980"}
+
+2026-07-10T11:13:11.790Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":156,"method":"eth_blockNumber"}
+2026-07-10T11:13:11.877Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":156,"result":"0x1cc04982"}
+
+2026-07-10T11:13:12.379Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":157,"method":"eth_blockNumber"}
+2026-07-10T11:13:12.476Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":157,"result":"0x1cc04984"}
+
+2026-07-10T11:13:12.977Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":158,"method":"eth_blockNumber"}
+2026-07-10T11:13:13.068Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":158,"result":"0x1cc04988"}
+
+2026-07-10T11:13:13.569Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":159,"method":"eth_blockNumber"}
+2026-07-10T11:13:13.661Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":159,"result":"0x1cc0498a"}
+
+2026-07-10T11:13:14.163Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":160,"method":"eth_blockNumber"}
+2026-07-10T11:13:14.241Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":160,"result":"0x1cc0498b"}
+
+2026-07-10T11:13:14.742Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":161,"method":"eth_blockNumber"}
+2026-07-10T11:13:14.891Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":161,"result":"0x1cc0498e"}
+
+2026-07-10T11:13:15.392Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":162,"method":"eth_blockNumber"}
+2026-07-10T11:13:15.481Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":162,"result":"0x1cc04990"}
+
+2026-07-10T11:13:15.982Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":163,"method":"eth_blockNumber"}
+2026-07-10T11:13:16.237Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":163,"result":"0x1cc04994"}
+
+2026-07-10T11:13:16.737Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":164,"method":"eth_blockNumber"}
+2026-07-10T11:13:17.018Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":164,"result":"0x1cc04996"}
+
+2026-07-10T11:13:17.517Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":165,"method":"eth_blockNumber"}
+2026-07-10T11:13:17.631Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":165,"result":"0x1cc0499a"}
+
+2026-07-10T11:13:18.132Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":166,"method":"eth_blockNumber"}
+2026-07-10T11:13:18.215Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":166,"result":"0x1cc0499c"}
+
+2026-07-10T11:13:18.717Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":167,"method":"eth_blockNumber"}
+2026-07-10T11:13:18.796Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":167,"result":"0x1cc0499e"}
+
+2026-07-10T11:13:19.296Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":168,"method":"eth_blockNumber"}
+2026-07-10T11:13:19.376Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":168,"result":"0x1cc0499f"}
+
+2026-07-10T11:13:19.878Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":169,"method":"eth_blockNumber"}
+2026-07-10T11:13:19.972Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":169,"result":"0x1cc049a1"}
+
+2026-07-10T11:13:20.473Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":170,"method":"eth_blockNumber"}
+2026-07-10T11:13:20.550Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":170,"result":"0x1cc049a3"}
+
+2026-07-10T11:13:21.051Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":171,"method":"eth_blockNumber"}
+2026-07-10T11:13:21.152Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":171,"result":"0x1cc049a5"}
+
+2026-07-10T11:13:21.652Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":172,"method":"eth_blockNumber"}
+2026-07-10T11:13:21.732Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":172,"result":"0x1cc049aa"}
+
+2026-07-10T11:13:22.234Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":173,"method":"eth_blockNumber"}
+2026-07-10T11:13:22.364Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":173,"result":"0x1cc049ac"}
+
+2026-07-10T11:13:22.865Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":174,"method":"eth_blockNumber"}
+2026-07-10T11:13:22.945Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":174,"result":"0x1cc049ae"}
+
+2026-07-10T11:13:23.446Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":175,"method":"eth_blockNumber"}
+2026-07-10T11:13:23.532Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":175,"result":"0x1cc049b0"}
+
+2026-07-10T11:13:24.034Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":176,"method":"eth_blockNumber"}
+2026-07-10T11:13:24.119Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":176,"result":"0x1cc049b2"}
+
+2026-07-10T11:13:24.620Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":177,"method":"eth_blockNumber"}
+2026-07-10T11:13:24.694Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":177,"result":"0x1cc049b6"}
+
+2026-07-10T11:13:25.195Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":178,"method":"eth_blockNumber"}
+2026-07-10T11:13:25.279Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":178,"result":"0x1cc049b8"}
+
+2026-07-10T11:13:25.779Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":179,"method":"eth_blockNumber"}
+2026-07-10T11:13:25.853Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":179,"result":"0x1cc049ba"}
+
+2026-07-10T11:13:26.354Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":180,"method":"eth_blockNumber"}
+2026-07-10T11:13:26.480Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":180,"result":"0x1cc049bc"}
+
+2026-07-10T11:13:26.980Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":181,"method":"eth_blockNumber"}
+2026-07-10T11:13:27.092Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":181,"result":"0x1cc049be"}
+
+2026-07-10T11:13:27.591Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":182,"method":"eth_blockNumber"}
+2026-07-10T11:13:27.693Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":182,"result":"0x1cc049c0"}
+
+2026-07-10T11:13:27.694Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":183,"method":"eth_call","params":[{"to":"0xca11bde05977b3631167028862be2a173976ca11","data":"0x82ad56cb0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000100000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e583100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002470a08231000000000000000000000000c5a9a6570e8b8b584eedaa614f33259911e9ad3400000000000000000000000000000000000000000000000000000000000000000000000000000000af88d065e77
+2026-07-10T11:13:27.831Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":183,"result":"0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000
+2026-07-10T11:13:28.194Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":184,"method":"eth_blockNumber"}
+2026-07-10T11:13:28.285Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":184,"result":"0x1cc049c4"}
+
+2026-07-10T11:13:28.787Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":185,"method":"eth_blockNumber"}
+2026-07-10T11:13:28.972Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":185,"result":"0x1cc049c6"}
+
+2026-07-10T11:13:29.472Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":186,"method":"eth_blockNumber"}
+2026-07-10T11:13:29.627Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":186,"result":"0x1cc049c8"}
+
+2026-07-10T11:13:30.048Z REQ POST https://api.hyperliquid.xyz/info body={"type":"candleSnapshot","req":{"coin":"BTC","interval":"1d","startTime":1697282010037,"endTime":1783682010037}}
+2026-07-10T11:13:30.542Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":187,"method":"eth_blockNumber"}
+2026-07-10T11:13:30.659Z RESP 200 https://api.hyperliquid.xyz/info body=[{"t":1697241600000,"T":1697327999999,"s":"BTC","i":"1d","o":"26861.0","c":"26850.0","h":"26980.0","l":"26782.0","v":"50.50582","n":2233},{"t":1697328000000,"T":1697414399999,"s":"BTC","i":"1d","o":"26853.0","c":"27163.0","h":"27297.0","l":"26798.0","v":"60.82306","n":2361},{"t":1697414400000,"T":1697500799999,"s":"BTC","i":"1d","o":"27154.0","c":"28503.0","h":"30647.0","l":"27111.0","v":"388.71681","n":4015},{"t":1697500800000,"T":1697587199999,"s":"BTC","i":"1d","o":"28504.0","c":"28403.0","h":"28612.0","l":"28079.0","v":"81.60084","n":2286},{"t":1697587200000,"T":1697673599999,"s":"BTC","i":"1d","o":"28394.0","c":"28308.0","h":"29000.0","l":"28146.0","v":"128.28201","n":2361},{"t":1697673600000,"T":1697759999999,"s":"BTC","i":"1d","o":"28311.0","c":"28706.0","h":"28880.0","l":"28113.0",
+2026-07-10T11:13:30.680Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":187,"result":"0x1cc049cb"}
+
+2026-07-10T11:13:31.181Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":188,"method":"eth_blockNumber"}
+2026-07-10T11:13:31.266Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":188,"result":"0x1cc049ce"}
+
+2026-07-10T11:13:31.767Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":189,"method":"eth_blockNumber"}
+2026-07-10T11:13:31.840Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":189,"result":"0x1cc049d2"}
+
+2026-07-10T11:13:32.340Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":190,"method":"eth_blockNumber"}
+2026-07-10T11:13:32.427Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":190,"result":"0x1cc049d5"}
+
+2026-07-10T11:13:32.929Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":191,"method":"eth_blockNumber"}
+2026-07-10T11:13:33.029Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":191,"result":"0x1cc049d7"}
+
+2026-07-10T11:13:33.530Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":192,"method":"eth_blockNumber"}
+2026-07-10T11:13:33.614Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":192,"result":"0x1cc049d9"}
+
+2026-07-10T11:13:34.339Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":193,"method":"eth_blockNumber"}
+2026-07-10T11:13:34.418Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":193,"result":"0x1cc049dd"}
+
+2026-07-10T11:13:34.919Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":194,"method":"eth_blockNumber"}
+2026-07-10T11:13:35.032Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":194,"result":"0x1cc049df"}
+
+2026-07-10T11:13:35.533Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":195,"method":"eth_blockNumber"}
+2026-07-10T11:13:35.625Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":195,"result":"0x1cc049e0"}
+
+2026-07-10T11:13:36.127Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":196,"method":"eth_blockNumber"}
+2026-07-10T11:13:36.213Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":196,"result":"0x1cc049e3"}
+
+2026-07-10T11:13:36.712Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":197,"method":"eth_blockNumber"}
+2026-07-10T11:13:36.799Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":197,"result":"0x1cc049e5"}
+
+2026-07-10T11:13:37.300Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":198,"method":"eth_blockNumber"}
+2026-07-10T11:13:37.430Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":198,"result":"0x1cc049e7"}
+
+2026-07-10T11:13:37.931Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":199,"method":"eth_blockNumber"}
+2026-07-10T11:13:38.268Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":199,"result":"0x1cc049eb"}
+
+2026-07-10T11:13:38.705Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":200,"method":"eth_blockNumber"}
+2026-07-10T11:13:38.857Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":200,"result":"0x1cc049ed"}
+
+2026-07-10T11:13:39.358Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":201,"method":"eth_blockNumber"}
+2026-07-10T11:13:39.444Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":201,"result":"0x1cc049ef"}
+
+2026-07-10T11:13:39.806Z REQ POST https://app-staging.temporal.exchange/ body=[{"user_wallet":"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34","initial_deposit_dollar":100,"initial_deposit_btc":0.001551,"leverage":1,"is_transcat":true,"wallet_type":"temporal"}]
+2026-07-10T11:13:39.945Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":202,"method":"eth_blockNumber"}
+2026-07-10T11:13:40.030Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":202,"result":"0x1cc049f3"}
+
+2026-07-10T11:13:40.531Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":203,"method":"eth_blockNumber"}
+2026-07-10T11:13:40.849Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":203,"result":"0x1cc049f6"}
+
+2026-07-10T11:13:41.350Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":204,"method":"eth_blockNumber"}
+2026-07-10T11:13:41.448Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":204,"result":"0x1cc049f8"}
+
+2026-07-10T11:13:41.949Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":205,"method":"eth_blockNumber"}
+2026-07-10T11:13:42.083Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":205,"result":"0x1cc049fc"}
+
+2026-07-10T11:13:42.585Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":206,"method":"eth_blockNumber"}
+2026-07-10T11:13:42.732Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":206,"result":"0x1cc049fe"}
+
+2026-07-10T11:13:43.234Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":207,"method":"eth_blockNumber"}
+2026-07-10T11:13:43.417Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":207,"result":"0x1cc04a00"}
+
+2026-07-10T11:13:43.918Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":208,"method":"eth_blockNumber"}
+2026-07-10T11:13:44.005Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":208,"result":"0x1cc04a01"}
+
+2026-07-10T11:13:44.506Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":209,"method":"eth_blockNumber"}
+2026-07-10T11:13:44.603Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":209,"result":"0x1cc04a05"}
+
+2026-07-10T11:13:45.104Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":210,"method":"eth_blockNumber"}
+2026-07-10T11:13:45.179Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":210,"result":"0x1cc04a08"}
+
+2026-07-10T11:13:45.682Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":211,"method":"eth_blockNumber"}
+2026-07-10T11:13:45.774Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":211,"result":"0x1cc04a0a"}
+
+2026-07-10T11:13:46.275Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":212,"method":"eth_blockNumber"}
+2026-07-10T11:13:46.365Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":212,"result":"0x1cc04a0c"}
+
+2026-07-10T11:13:46.866Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":213,"method":"eth_blockNumber"}
+2026-07-10T11:13:46.941Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":213,"result":"0x1cc04a0c"}
+
+2026-07-10T11:13:47.444Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":214,"method":"eth_blockNumber"}
+2026-07-10T11:13:47.526Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":214,"result":"0x1cc04a10"}
+
+2026-07-10T11:13:47.527Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":215,"method":"eth_call","params":[{"to":"0xca11bde05977b3631167028862be2a173976ca11","data":"0x82ad56cb0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000100000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e583100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002470a08231000000000000000000000000c5a9a6570e8b8b584eedaa614f33259911e9ad3400000000000000000000000000000000000000000000000000000000000000000000000000000000af88d065e77
+2026-07-10T11:13:47.623Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":215,"result":"0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000
+2026-07-10T11:13:48.027Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":216,"method":"eth_blockNumber"}
+2026-07-10T11:13:48.130Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":216,"result":"0x1cc04a12"}
+
+2026-07-10T11:13:48.631Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":217,"method":"eth_blockNumber"}
+2026-07-10T11:13:48.801Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":217,"result":"0x1cc04a16"}
+
+2026-07-10T11:13:49.594Z REQ POST https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":218,"method":"eth_blockNumber"}
+2026-07-10T11:13:49.693Z RESP 200 https://arb1.arbitrum.io/rpc body={"jsonrpc":"2.0","id":218,"result":"0x1cc04a1a"}

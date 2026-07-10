@@ -1,0 +1,97 @@
+{
+  "A_connect_switch": {
+    "notes": [
+      "HTTP 200",
+      "disclaimer accepted=true",
+      "wallet chip=true activeTab=CREATE PERP",
+      "switch modal: OPEN",
+      "Switch Network clicked",
+      "ConnectToArbitrum btn after switch: ABSENT",
+      "page-side chainId now: 0xa4b1"
+    ],
+    "errors": [
+      "Refused to connect to 'https://sepolia-rollup.arbitrum.io/rpc' because it violates the following Content Security Policy directive: \"connect-src 'self' ws://loc",
+      "Fetch API cannot load https://sepolia-rollup.arbitrum.io/rpc. Refused to connect because it violates the document's Content Security Policy.",
+      "Timeout: Did not receive complete AMM tree data after 10 seconds."
+    ]
+  },
+  "B1_create_hlbalance": {
+    "notes": [
+      "DEPOSIT FROM radio value=hl-balance selected=true",
+      "form: {\"max\":null,\"notional\":\"NOTIONAL BTC AUTO-PROTECT \",\"entry\":\"Entry Price $ Liquidation Price \"}",
+      "CREATE pre-click: text=\"CREATE POSITION\" disabled=true cls=inline-flex items-center justify-center whitespace-nowrap ro",
+      "CREATE POSITION clicked",
+      "toasts: []",
+      "wallet rpc during click-window: []",
+      "net during click-window: [\"2026-07-10T11:12:08.381Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":75,\\\"result\\\":\\\"0x1cc04885\\\"}\\n\",\"2026-07-10T11:12:08.513Z RESP 200 https://api.hyperliquid.xyz/info body={\\\"marginSummary\\\":{\\\"accountValue\\\":\\\"0.0\\\",\\\"totalNtlPos\\\":\\\"0.0\\\",\\\"totalRawUsd\\\":\\\"0.0\\\",\\\"totalMarginUsed\\\":\\\"0.0\\\"},\\\"crossMarginSummary\\\":{\\\"accountValue\\\":\\\"0.0\\\",\\\"totalNtlPos\\\":\\\"0.0\\\",\\\"totalRawUsd\\\":\\\"0.0\\\",\\\"totalMarginUsed\\\":\\\"0.0\\\"},\\\"crossMaintenanceMarginUsed\\\":\\\"0.0\\\",\\\"withdrawable\\\":\\\"0.0\\\",\\\"assetPositions\\\":[],\\\"time\\\":1783681928252}\",\"2026-07-10T11:12:09.097Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":76,\\\"result\\\":\\\"0x1cc04887\\\"}\\n\",\"2026-07-10T11:12:09.681Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":77,\\\"result\\\":\\\"0x1cc0488b\\\"}\\n\",\"2026-07-10T11:12:10.275Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":78,\\\"result\\\":\\\"0x1cc0488d\\\"}\\n\",\"2026-07-10T11:12:10.895Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":79,\\\"result\\\":\\\"0x1cc0488f\\\"}\\n\",\"2026-07-10T11:12:11.484Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":80,\\\"result\\\":\\\"0x1cc04891\\\"}\\n\",\"2026-07-10T11:12:12.062Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":81,\\\"result\\\":\\\"0x1cc04893\\\"}\\n\",\"2026-07-10T11:12:12.655Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":82,\\\"result\\\":\\\"0x1cc04895\\\"}\\n\",\"2026-07-10T11:12:13.398Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":83,\\\"result\\\":\\\"0x1cc04899\\\"}\\n\",\"2026-07-10T11:12:14.009Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":84,\\\"result\\\":\\\"0x1cc0489b\\\"}\\n\",\"2026-07-10T11:12:14.622Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":85,\\\"result\\\":\\\"0x1cc0489d\\\"}\\n\",\"2026-07-10T11:12:15.210Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":86,\\\"result\\\":\\\"0x1cc0489f\\\"}\\n\",\"2026-07-10T11:12:15.804Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"result\\\":\\\"0x1cc048a3\\\"}\\n\",\"2026-07-10T11:12:16.385Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":88,\\\"result\\\":\\\"0x1cc048a5\\\"}\\n\"]",
+      "new lines: []"
+    ],
+    "errors": []
+  },
+  "B2_create_wallet": {
+    "notes": [
+      "DEPOSIT FROM radio value=wallet selected=true",
+      "form: {\"max\":\"MAX: 0.00 LEVE\",\"notional\":\"NOTIONAL BTC AUTO-PROTECT \",\"entry\":\"Entry Price $ Liquidation Price \"}",
+      "CREATE pre-click: text=\"CREATE POSITION\" disabled=true cls=inline-flex items-center justify-center whitespace-nowrap ro",
+      "CREATE POSITION clicked",
+      "toasts: []",
+      "wallet rpc during click-window: []",
+      "net during click-window: [\"2026-07-10T11:12:28.627Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":107,\\\"result\\\":\\\"0x1cc048d5\\\"}\\n\",\"2026-07-10T11:12:29.204Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":108,\\\"result\\\":\\\"0x1cc048d7\\\"}\\n\",\"2026-07-10T11:12:29.784Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":109,\\\"result\\\":\\\"0x1cc048da\\\"}\\n\",\"2026-07-10T11:12:30.359Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":110,\\\"result\\\":\\\"0x1cc048db\\\"}\\n\",\"2026-07-10T11:12:30.941Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":111,\\\"result\\\":\\\"0x1cc048de\\\"}\\n\",\"2026-07-10T11:12:31.522Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":112,\\\"result\\\":\\\"0x1cc048e2\\\"}\\n\",\"2026-07-10T11:12:32.123Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":113,\\\"result\\\":\\\"0x1cc048e4\\\"}\\n\",\"2026-07-10T11:12:32.700Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":114,\\\"result\\\":\\\"0x1cc048e6\\\"}\\n\",\"2026-07-10T11:12:33.276Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":115,\\\"result\\\":\\\"0x1cc048e8\\\"}\\n\",\"2026-07-10T11:12:33.851Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":116,\\\"result\\\":\\\"0x1cc048ea\\\"}\\n\",\"2026-07-10T11:12:34.429Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":117,\\\"result\\\":\\\"0x1cc048ec\\\"}\\n\",\"2026-07-10T11:12:35.027Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":118,\\\"result\\\":\\\"0x1cc048ef\\\"}\\n\",\"2026-07-10T11:12:35.613Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":119,\\\"result\\\":\\\"0x1cc048f0\\\"}\\n\",\"2026-07-10T11:12:36.202Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":120,\\\"result\\\":\\\"0x1cc048f1\\\"}\\n\",\"2026-07-10T11:12:36.781Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":121,\\\"result\\\":\\\"0x1cc048f2\\\"}\\n\"]",
+      "new lines: []"
+    ],
+    "errors": []
+  },
+  "C_portfolio": {
+    "notes": [
+      "PERPS rows: []",
+      "BANDS rows: []",
+      "EARN rows: [\"No results.\",\"No results.\",\"No results.\"]",
+      "close buttons: 0"
+    ],
+    "errors": []
+  },
+  "D_trade_bands": {
+    "notes": [
+      "activeTab=TRADE BANDS",
+      "panel inputs: []",
+      "fill SELL qty: null",
+      "fill BUY qty: null",
+      "bands readout: {\"slippage\":\"Slippage %\\n %\\nTx Fees %\\n %\\nTRANSACT\\nPERP\",\"fees\":\"Tx Fees %\\n %\\nTRANSACT\\nPERP MARK PRICING\",\"deposit\":\"Deposit:\\nBTC Perp Long\\nBTC Notional\\nSlippage %\\n %\\nTx Fees %\\n %\\nTRANS\"}",
+      "TRANSACT pre-click: text=\"TRANSACT\" disabled=true cls=inline-flex items-center justify-center whitespace-nowrap ro",
+      "TRANSACT clicked",
+      "toasts: []",
+      "wallet rpc window: []",
+      "net window: [\"2026-07-10T11:13:15.481Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":162,\\\"result\\\":\\\"0x1cc04990\\\"}\\n\",\"2026-07-10T11:13:16.237Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":163,\\\"result\\\":\\\"0x1cc04994\\\"}\\n\",\"2026-07-10T11:13:17.018Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":164,\\\"result\\\":\\\"0x1cc04996\\\"}\\n\",\"2026-07-10T11:13:17.631Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":165,\\\"result\\\":\\\"0x1cc0499a\\\"}\\n\",\"2026-07-10T11:13:18.215Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":166,\\\"result\\\":\\\"0x1cc0499c\\\"}\\n\",\"2026-07-10T11:13:18.796Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":167,\\\"result\\\":\\\"0x1cc0499e\\\"}\\n\",\"2026-07-10T11:13:19.376Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":168,\\\"result\\\":\\\"0x1cc0499f\\\"}\\n\",\"2026-07-10T11:13:19.972Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":169,\\\"result\\\":\\\"0x1cc049a1\\\"}\\n\",\"2026-07-10T11:13:20.550Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":170,\\\"result\\\":\\\"0x1cc049a3\\\"}\\n\",\"2026-07-10T11:13:21.152Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":171,\\\"result\\\":\\\"0x1cc049a5\\\"}\\n\",\"2026-07-10T11:13:21.732Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":172,\\\"result\\\":\\\"0x1cc049aa\\\"}\\n\",\"2026-07-10T11:13:22.364Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":173,\\\"result\\\":\\\"0x1cc049ac\\\"}\\n\"]",
+      "new lines: []",
+      "canvases in options view: 0",
+      "options panel text: \"SELL PROFITS ON\\nMAX: — BTC\\nQUANTITY\\nBTC Perp Long\\nPRICE\\n%\\nBUY PROFITS ON\\nQUANTITY\\nBTC Perp Short\\nPRICE (-VE)\\n%\\nDeposit:\\nBTC Perp Long\\nBTC Notional\\nSlippage %\\n %\\nTx Fees %\\n %\\nTRANSACT\""
+    ],
+    "errors": [
+      "Timeout: Did not receive complete AMM tree data after 10 seconds."
+    ]
+  },
+  "E_earn": {
+    "notes": [
+      "activeTab=EARN",
+      "earn active-panel inputs: [{\"ph\":\"Enter amount\",\"val\":\"\",\"type\":\"number\",\"dis\":false},{\"ph\":\"\",\"val\":\"1\",\"type\":\"range\",\"dis\":false}]",
+      "earn filled: {\"ph\":\"Enter amount\",\"now\":\"100\"}",
+      "earn state: {\"aprs\":[],\"tvl\":\"TVL\\n$500 | ₿0.007961\\nPool Leverage\\n5.0x\\nTRA\",\"dashes\":true}",
+      "EARN TRANSACT pre-click: text=\"TRANSACT\" disabled=false cls=inline-flex items-center justify-center whitespace-nowrap ro",
+      "EARN TRANSACT clicked",
+      "toasts: [\"Earn position created successfully!\"]",
+      "wallet rpc window: []",
+      "net window: [\"2026-07-10T11:13:39.806Z REQ POST https://app-staging.temporal.exchange/ body=[{\\\"user_wallet\\\":\\\"0xc5A9a6570e8B8B584EEdaa614F33259911E9Ad34\\\",\\\"initial_deposit_dollar\\\":100,\\\"initial_deposit_btc\\\":0.001551,\\\"leverage\\\":1,\\\"is_transcat\\\":true,\\\"wallet_type\\\":\\\"temporal\\\"}]\",\"2026-07-10T11:13:40.030Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":202,\\\"result\\\":\\\"0x1cc049f3\\\"}\\n\",\"2026-07-10T11:13:40.849Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":203,\\\"result\\\":\\\"0x1cc049f6\\\"}\\n\",\"2026-07-10T11:13:41.448Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":204,\\\"result\\\":\\\"0x1cc049f8\\\"}\\n\",\"2026-07-10T11:13:42.083Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":205,\\\"result\\\":\\\"0x1cc049fc\\\"}\\n\",\"2026-07-10T11:13:42.732Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":206,\\\"result\\\":\\\"0x1cc049fe\\\"}\\n\",\"2026-07-10T11:13:43.417Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":207,\\\"result\\\":\\\"0x1cc04a00\\\"}\\n\",\"2026-07-10T11:13:44.005Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":208,\\\"result\\\":\\\"0x1cc04a01\\\"}\\n\",\"2026-07-10T11:13:44.603Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":209,\\\"result\\\":\\\"0x1cc04a05\\\"}\\n\",\"2026-07-10T11:13:45.179Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":210,\\\"result\\\":\\\"0x1cc04a08\\\"}\\n\",\"2026-07-10T11:13:45.774Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":211,\\\"result\\\":\\\"0x1cc04a0a\\\"}\\n\",\"2026-07-10T11:13:46.365Z RESP 200 https://arb1.arbitrum.io/rpc body={\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":212,\\\"result\\\":\\\"0x1cc04a0c\\\"}\\n\"]"
+    ],
+    "errors": []
+  },
+  "F_flag_recheck": {
+    "notes": [
+      "sepolia-rollup CSP errors: 112",
+      "ws.open set: [\"wss://api.hyperliquid.xyz/ws\"]",
+      "staging-be ws opened: false",
+      "AMM-tree msgs: [\"Received incomplete market_data (missing AMM trees). Waiting for complete data...\",\"Timeout: Did not receive complete AMM tree data after 10 seconds.\"]",
+      "market-data stream requests: 2"
+    ],
+    "errors": []
+  }
+}

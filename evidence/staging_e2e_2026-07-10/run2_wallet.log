@@ -1,3 +1,25 @@
 [page-rpc] eth_accounts params=[]
 [page-rpc] eth_accounts params=[]
 [page-rpc] eth_accounts params=[]
+
+===== run2b (attempt B) =====
+[page-rpc] eth_accounts params=[]
+[page-rpc] eth_accounts params=[]
+[page-rpc] eth_accounts params=[]
+[page-rpc] wallet_switchEthereumChain params=[{"chainId":"0xa4b1"}]
+[page-rpc] wallet_switchEthereumChain ACCEPTED → 0xa4b1 (page-side claim only; node signer stays on Sepolia RPC)
+[page-rpc] eth_chainId params=[]
+[page-rpc] eth_accounts params=[]
+
+===== run2c (create-perp focus) =====
+[page-rpc] eth_accounts []
+[page-rpc] eth_accounts []
+[page-rpc] eth_accounts []
+[page-rpc] wallet_switchEthereumChain [{"chainId":"0xa4b1"}]
+[page-rpc] eth_chainId []
+[page-rpc] eth_accounts []
+
+===== run2d (perp no-switch) =====
+
+
+===== run2e (perp enabled click) =====
