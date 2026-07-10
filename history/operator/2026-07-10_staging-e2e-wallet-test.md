@@ -144,3 +144,9 @@ trade bands work apparantly once you’ve created perp (provides you sell < perp
 can you tabulate whats checked works doesnt work not checked etc
 
 > Context (manager, one line): consolidated status table across all 4 rounds requested.
+
+## Entry 14 (2026-07-10)
+
+try a better tabulation that also compares whatever we were able to check with the versions and says what works what doesnt as expected or whataver iygwim
+
+> Context (manager, one line): richer table — per feature: checked?, staging behavior, vs the handover versions, and as-expected verdict.
