@@ -68,3 +68,9 @@ console/network errors; a list of divergences from the reference build; and the
 throwaway wallet address used (NOT its key). If you have repo write access, commit
 the evidence + report under a new branch. Confirm at the end whether the wallet
 login itself worked and how far the trade flow got (connect-only vs full trade).
+
+## Entry 2 (2026-07-10)
+
+also as paert of this and when youre done dont interrup anyhting now: feature level diff / coparison vs most recent versions based on the chat / repo you'll see (handed to cto etc)
+
+> Context (manager, one line): received while the tester's staging E2E run was in flight; adds a feature-level staging-vs-reference comparison to the deliverable; tester run not interrupted.
