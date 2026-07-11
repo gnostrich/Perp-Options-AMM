@@ -174,3 +174,9 @@ use the browser thing theres something u can use full access unhave
 yes and reminder to be resourceful
 
 > Context (manager, one line): go-ahead for round 5 + standing reminder to be resourceful; manager runs a parallel static probe of the app JS bundle (non-colliding) while the real-wallet browser run continues.
+
+## Entry 19 (2026-07-10)
+
+simple english?
+
+> Context (manager, one line): plain-English restatement of the round-5 corrected findings.
