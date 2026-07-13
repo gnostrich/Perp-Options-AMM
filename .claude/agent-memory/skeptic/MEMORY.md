@@ -1,4 +1,5 @@
 # MEMORY — skeptic
+_2026-07-13: CLEAR-TO-RELAY on the manager's round-7 staging correction (`notes/skeptic/VERDICT_staging_e2e_round7_2026-07-10.md`) — re-ran harnesses (41/0 + 5/0), md5s + probe_law/resid myself; the walk-back of "staging=H3" is right (α/β conservation = spot law, not the H3 warp), not over/under-corrected; only nit = §2 ρ=2 α digit 5.0020→5.0026._
 _Updated 2026-06-10 after the formal-corpus truth-to-objective audit (verdict #8) + docs cold-storage
 logged (verdict #7). Earlier same day: CURVE_FAMILY PASS-1/PASS-2 (verdicts #5/#6), operator reply #2
 (scaffold-vs-gaslighting), Gudermannian gate (verdict #3), OPERATOR-DIRECT reply, STOCK-TAKE, paper-
