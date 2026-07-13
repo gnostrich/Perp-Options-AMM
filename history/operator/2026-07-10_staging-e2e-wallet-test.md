@@ -180,3 +180,9 @@ yes and reminder to be resourceful
 simple english?
 
 > Context (manager, one line): plain-English restatement of the round-5 corrected findings.
+
+## Entry 20 (2026-07-10)
+
+[attached CLAUDE_AMMV2_STAGING_TEST.md — backend-API SOP playbook, wallet-address-only, no signing] try with this sop, if it works, proceed to the comparison thing we'd discussed earlier
+
+> Context (manager, one line): CTO's backend-API SOP (direct curl to staging-be, PascalCase /api/transact, /complete-not-/close, autoProtect:false) — bypasses the browser/wallet layer; run it then do the reference comparison; SOP saved to evidence/.
