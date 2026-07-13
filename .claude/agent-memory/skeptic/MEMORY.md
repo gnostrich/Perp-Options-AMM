@@ -4029,3 +4029,16 @@ sign here; the entry-425 sign-gloss last time).
 
 ## Verdict — staging E2E round-5 reconciliation (2026-07-10) → `notes/skeptic/VERDICT_staging_e2e_round5_2026-07-10.md`
 Claim1 (CSP resolved w/ real MM) CLEAR (0 sepolia hits + arb1 200s verified). Claim2 SPLIT: CLEAR it's not our rig (trees-missing reproduced server-side via curl + real-wallet x7) but FLAG-OVERSELL on "wallet-independent backend gap" — contradicts mgr's own note ("session-gated"), and no CTO frame actually shows the AMM curve (frame65 = portfolio readback, not the curve). Claim3 FLAG-OVERSELL on "balance-gated": CTO frame48 shows MAX 0.00 → create SAVED (green), refuting a general balance gate; a 12-USDC minimum-deposit gate (frame40 banner) is ignored; run5 only tested deposit 12 (borderline), never the isolating 500; round-3 fake wallet ALSO disabled at 12 and never actually created (round-4b at 500 is the real create + the correct FLAG-2-ruled-out proof). Pattern: manager reaches for a clean single-cause label ("balance-gated") over a confound (min-deposit gate + session-specificity) and cites the weaker proof (round3) when a stronger one (round4b) sits in the same evidence.
+
+## Verdict — Round-6 staging backend-API reference comparison (2026-07-13)
+`notes/skeptic/VERDICT_staging_e2e_round6_2026-07-10.md`. Items 3/4/5 CLEAR (funding=0 honestly
+scoped directional; theta bounds VERIFIED as ±50% display caps not seams so declining g=m·γ is correct;
+band_detail vocab all present, no "lean"). **FLAG-OVERSELL items 1 & 2:** the conservation table's
+"after"/warped snapshot (x=9.97835,y=801840.40,w=0.501116) is in NO run6_api/ file — only
+amm_status_final.json (=balanced w=0.5 reset) is saved. "α/β delta=0.00e+00 / conserved exactly / close
+reverses the warp" not re-derivable from saved numbers; at printed precision β delta=+0.142. NOT
+FLAG-WRONG because two independent w′ derivations (from α and from β) agree to ~2e-7 → conservation
+plausibly held at full precision on an unsaved read. Pattern (recurring this session): manager labels a
+result "confirmed exact" while the load-bearing read was never persisted, and rounds display then claims
+delta-0 on hidden full precision. Also: multi-wallet shared-pool confound unmentioned for the
+specific-delta / close-reverses attribution.
