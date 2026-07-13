@@ -1,0 +1,44 @@
+lens_selfcheck CHECKING: HEAD_temporal_mvp_v28_lens.html
+=== constant slope-multiplier lens self-check :: HEAD_temporal_mvp_v28_lens.html ===
+PASS (P) pool tradeUpdate/arbitrageToOracle/rebase byte-identical to v24
+PASS (P-num) tradeUpdate numeric identical to v24  maxAbsDelta=0
+PASS (L4) arbitrageToOracle lens-free (plain Balancer, forward-read-only)
+PASS (CM1) g_loc = m·γ constant at every strike (no u-dependence); m=1 ⇒ g_loc=γ (plain curve)  maxAbsErr=0.00e+0 m1=γ-everywhere=true  
+PASS (CM2/A5) wings exact power-law exponent m·γ; markLensed monotone + bounded [0,1] (no floor/saturation)  wing-exp=true monotone=true bounded=true
+PASS (CM3) monotone / no-arb: value decays monotonically into the wing, bounded [0,1] (plain power-law m·γ)  monotone decay both bounded over m∈{1,1.5,2,3,4}
+PASS (CM4-v2) linear re-seam C⁰ at v2 seam (put θ·g/(g+1), call θ·(g+1)/g) machine-zero + boundary fraction 1/(g+1)  maxSeamGap=1.83e-10 call g=10.55
+PASS (CM4-v2-C1) one-sided slope quotients at the seam: put −1/θ, call g²/((g+1)²·θ), both sides (rel ≤1e-4)  maxRelErr=5.77e-6 put g=10.55 qL=-1.000000 qR=-0.999994 exp=-1.000000
+PASS (CM4-nan) markLensed NaN-free across both wings for g=m·γ  nonFinite=0
+PASS (CM5) trade map θ_tx = mode·(chosen/mode)^m (≤1e-9); m=1 ⇒ θ_tx = chosen  maxErr=2.84e-14 m1=θ_tx==chosen=true m=4 mult=4 θ_tx=97.103448 exp=97.103448
+PASS (CM6-v3.1) SHIPPED closeBand round trip: Δy = 0 EXACT (both legs reversed; the retired settle-to-cash close leaves Δy≠0)  put/call Δy=0.00e+0 Δx=-5.46e-1 | call/put Δy=0.00e+0 Δx=-1.97e-1 | put/call Δy=0.00e+0 Δx=-7.32e-1
+PASS (CM6-v3.2) fixed-oracle (no-move) self-drain: Δx < 0 one-signed at every strike (OTM & ITM) — one-signedness SCOPED to the no-move regime  sell/call θ=1.3 Δx=-6.62e-4 | sell/call θ=2 Δx=-1.22e-3 | sell/put θ=0.8 Δx=-4.16e-4 | buy/put θ=0.7 Δx=-3.68e-4
+PASS (CM6-v3.3) Δx ∝ dy²: Δx/dyRev² near-constant (<5%) across N∈{.01..08} — the ∝N² self-drain  ratios=-1.467e-11,-1.462e-11,-1.452e-11,-1.434e-11 spread=2.27e-2
+PASS (CM6-v3.4) transient Δx TRACKS the oracle (IL-like): monotone↑ in o1, sign FLIPS across o1=o0 (down<0, up>0) ⇒ one-signedness is fixed-oracle-ONLY  Δx@0.85×=-8.01e-3 @1.0×=-6.62e-4 @1.15×=6.70e-3
+PASS (CM6-v3.5) negative control: fixed-oracle drain PRESENT |Δx|>1e-6 AND closeBand routes reversal via tradeUpdateAt (NOT exact revertArc)  |Δx|=6.615e-4 ($-52.9 at N=0.05) routesLive=true
+PASS (CM6-v3.6) credit wrapper byte-unchanged (equity/overlay credit paths present) ⇒ close swap is a pool reprice credited to NO wallet  equity+=retEquity=true overlay-payout/club=true overlay-carvedEq=true
+PASS (CM12.1) unified close raw_net CONTINUOUS across the crossing: max step shrinks with granularity (coarse/fine ≥ 3, no jump floor)  nCoarse=1.69e-2 nFine=4.28e-3 ratio=3.95
+PASS (CM12.2) negative control: the RETIRED two-case raw JUMPS at the branch boundary (step FLOORS, ≥3× the unified step) — the removed 45%-class seam  oCoarse=4.75e-2 oFine=4.37e-2 floorRatio=1.09 oFine/nFine=10.2
+PASS (FE.1) funding extrinsic weight = markLensed − max(intrinsic,0) = 0 (≤1e-12) past S* both wings ⇒ funding ZERO ITM  S=0.1688 g=3.00 all ext=0 & f=0 past S*
+PASS (FE.4) negative control: OLD full-mark funding NON-zero past S* (funds intrinsic forever) while NEW = 0  oldF=6.252e-2 newF=0.000e+0 fullMark=0.4231
+PASS (FS.1/a) funding = 0 at ATM ∀w [same-slope; ext/mark weight FAILS: ext(ATM)>0]  0 ∀w
+PASS (FS.2/b) KILLER: funding = 0 on w=½ pool ∀OTM with S≠1 [pool-lean signature; proxy & ext both FAIL b]  S=1.00e-1 all f=0
+PASS (FS.3/c) funding magnitude strictly ↑ with |w−½| at fixed moneyness (put ρ=0.5, call ρ=2)  monotone
+PASS (FS.4/d) funding = 0 ∀ITM both wings (leaned pool)  0 ITM
+PASS (FS.5) source lock: weight = |c·ln(θ/mode)|, c=(g_a−g)/(g_a+1); NOT ext, NOT ext·(S−1)/S  dev=true noExt=true noPoolOracle=true
+PASS (FS.6) combined fingerprint: mark-weight FAILS(a), proxy-weight FAILS(b), same-slope PASSES both  markFailsA=true proxyFailsB=true sameSlopeOK=true
+PASS (CM7) the three co-move with m SAME direction: g_loc↑ AND θ_tx↑ (polarity LOCKED; a future flip FAILS)  m=1: g_loc=2.64 θ_tx=2.00× | m=2: g_loc=5.27 θ_tx=4.00× | m=3: g_loc=7.91 θ_tx=8.00× | m=4: g_loc=10.55 θ_tx=16.00× [steeper g_loc ⇒ further θ_tx, same sign]
+PASS (CM8-v2.1) SPOT trio byte-identical to v24 (tradeUpdate/arbitrageToOracle/rebase)  tradeUpdate:identical arbitrageToOracle:identical rebase:identical
+PASS (CM8-v2.2) exhibit 11/21 HARD: w′=11/21 (≤1e-15), x′=215/22 (≤1e-13), y′==11, Δx=−5/22 — NOT naive 22/43 / old 6/11  |w′−11/21|=0.00e+0 |x′−215/22|=0.00e+0 y′=11 |Δx+5/22|=6.38e-16 not-naive(22/43,6/11)=true
+PASS (CM8-v2.3) ρ=1 reduction ≡ tradeUpdate on a w×dy grid (rel ≤1e-12; spot trades unchanged)  maxRel=2.27e-16
+PASS (CM8-v2.4) local-pair conservation at T: (x_T+Δx)w′=α_T ∧ (y_T+dy)(1−w′)=β_T on the grid (rel ≤1e-12)  maxRel=4.52e-16 points=72
+PASS (CM8-v2.5) routing: executeLeg swaps via tradeUpdateAt(state, dy, ρ) and NOT tradeUpdate(state, dy)  tradeUpdateAt-call=true old-spot-call-absent=true
+PASS (CM9) NO dead √-lens kernel: gLoc has no hpTau/√(τ²+u²)/u-factor; hTau/hpTau dropped; markEff routes through gLoc  gLoc-clean=true hpTau/hTau-removed=true markEff-via-gLoc=true
+PASS (CM10) value ≥ intrinsic on the full grid (O2 witness, intrinsic recomputed in-gate): strict >0 in continuation, ==0 (≤1e-12) at/past the seam  points=208 minDiff=-5.55e-17
+PASS (CM11) OTM wing exact power-law: put V(2ρ)/V(ρ)=2^(−g), call =2^(+g) (g∈{2,6}, rel ≤1e-12)  maxRelErr=0.00e+0
+PASS (RB.1) pool-intrinsic gauge degrees: getW/getSNorm/poolMark invariant, getMP_raw·r & getDepth/r^w invariant (NC: M1/M2/M4/M5 fire; M3 β-class SLIPS — caught by RB.2/RB.5)  real=true fires M1=true M2=true M4=true M5=true M3slips=true
+PASS (RB.2) bookkeeping bit-exact: sr.x===x·r ∧ sr.y===y ∧ sr.α===α·r ∧ sr.β===β (β-class KILLER; NC: M1/M2/M3 all fire)  real=true fires M1=true M2=true M3(β)=true
+PASS (RB.3) carried-strike (K→r·K) markLensed invariant both wings, K∈{0.7,1,1.3}·o (θ→θ/r killer; NC: M4/M5 fire)  real=true fires M4=true M5=true
+PASS (RB.4) group rebase(rebase(s,r1),r2)=rebase(s,r1·r2), rebase(s,1)===s, rebase(rebase(s,r),1/r)=s (NC: M5 additive fires)  real=true fires M5=true
+PASS (RB.5) rebase∘tradeUpdate = tradeUpdate∘rebase AND same for tradeUpdateAt(·,dy,ρ) fixed ρ (β-class KILLER via β in hyperbola; NC: M3 fires)  real=true fires M3(β)=true
+PASS (RB.6) funding rebase-silent (frozen stored ray) ∧ =0 on w=½ pool ∀OTM (KILLER) ∧ =0 at ATM (NC: moneyness weight ≠0 on w=½ OTM; M4 breaks silence)  silence=true w½-zero=true atm-zero=true moneyness-NC-fires=true silence-M4-fires=true
+=== lens_selfcheck: 41 PASS, 0 FAIL ===

@@ -1,0 +1,8 @@
+a16_atm_gate CHECKING: HEAD_temporal_mvp_v28_lens.html
+=== A16 no-jump ATM position-value gate :: HEAD_temporal_mvp_v28_lens.html ===
+PASS (A16.1) NO-JUMP: window max-|Δ| scales with step (no floor) AND one-sided limits agree (gap→0∝ε, ratio≥5)  stepRatio[10.00,10.00] limGapRatioMin=10.00 over γ∈{1.5,2,3,4}×m∈{1,2,3}×{call,put} | ref(γ=2,m=2): call j(dS=5.0e-7)=3.29e-7 j(dS=5.0e-8)=3.29e-8 ratio=10.0 | limGap(ε=5.0e-6)=6.55e-6→(ε/10)=6.55e-7 ratio=10.0 ; put j(dS=5.0e-7)=3.29e-7 j(dS=5.0e-8)=3.29e-8 ratio=10.0 | limGap(ε=5.0e-6)=6.55e-6→(ε/10)=6.55e-7 ratio=10.0
+PASS (A16.2) CUSP RETIRED (constant-multiplier): continuous through ATM (call arm==put arm, C⁰); ATM value = 1/((g+1)·((g+1)/g)^g) < 1 (NO peak=1)  call arm==put arm at mode (C⁰), ATM value<1 = constant-g smooth-paste value, markEff agrees (≤1e-12)
+PASS (A16.3-struct) value path has NO regime branch: markEff returns markLensed unconditionally; pfComponents value=sign·N·markLensed; itm→effK(display) only  markEff-returns-lensed=true markEff-no-regime=true pf-value-uncond=true pf-m-lensed=true pf-itm→effK-only=true
+PASS (A16.3-numeric) ITM markEff < 1 (smooth-paste, NOT old flat saturation =1)  γ=1.5 call-ITM=0.7000 put-ITM=0.6667 | γ=2 call-ITM=0.7000 put-ITM=0.6667 | γ=3 call-ITM=0.7000 put-ITM=0.6667 | γ=4 call-ITM=0.7000 put-ITM=0.6667
+PASS (A16.4) cross-layer single-basis: pfComponents fraction == markEff across ATM; dollar mark LINEAR in markLensed  maxFracErr=0.00e+0  | N-linear(legValueUnified=N·m)=true
+=== a16_atm_gate: 5 PASS, 0 FAIL ===
