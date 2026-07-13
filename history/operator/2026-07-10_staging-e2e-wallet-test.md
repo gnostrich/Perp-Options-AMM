@@ -186,3 +186,9 @@ simple english?
 [attached CLAUDE_AMMV2_STAGING_TEST.md — backend-API SOP playbook, wallet-address-only, no signing] try with this sop, if it works, proceed to the comparison thing we'd discussed earlier
 
 > Context (manager, one line): CTO's backend-API SOP (direct curl to staging-be, PascalCase /api/transact, /complete-not-/close, autoProtect:false) — bypasses the browser/wallet layer; run it then do the reference comparison; SOP saved to evidence/.
+
+## Entry 21 (2026-07-10)
+
+did you get the part where i said test against my versions (and i'd attached SS of version names those also)?
+
+> Context (manager, one line): operator wants the comparison pinned to the NAMED handover versions (entry-3 Drive SS: H1 v24 May29 / H2 Jun15 / H3 5ce1a76c Jul8); manager maps the now-observable backend math to a specific version.
