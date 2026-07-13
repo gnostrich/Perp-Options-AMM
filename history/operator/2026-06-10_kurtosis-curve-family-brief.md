@@ -3516,3 +3516,21 @@ _Context: operator asks the manager to have the tester/agents set up a MetaMask 
 _Context: operator opts to run the staging E2E in another session with full access; asks the manager to write a spin-up prompt for a testing agent there._
 
 > just give a prompt for another session to spin up testing agent there and continue. easier. will have full access
+
+
+## Entry 481 — 2026-07-08 UTC
+_Context: operator asks the manager to build a complete zip package for the tester containing the reference versions + SOP + memo, airtight, because they don't buy the other session's current comparisons._
+
+> give an complete  zip for the tester containing the relevant versions to test against and the sop etc. so that it can do the coparison properly, i dont buy its current comparisions. make this package with its included memo etc. airtight
+
+
+## Entry 482 — 2026-07-08 UTC
+_Context: (mid-turn) operator shares screenshots of the other full-access session's staging comparison (staging = H3/5ce1a76c; skeptic-corrected to full-precision Δα=Δβ=0; "close reverses warp" scoped directional-not-proven; exact option-value constants BLOCKED — staging exposes per-band but no per-strike/curve endpoint)._
+
+> fyi
+
+
+## Entry 483 — 2026-07-08 UTC
+_Context: operator confirms the ask was a package FOR THE TESTER, not changes to this repo. Manager reverts the one repo change made (vocab_gate exclusion) and delivers only the zip artifact._
+
+> just to confirm, i asked for a package for the tester... not for anytung to chnage here
