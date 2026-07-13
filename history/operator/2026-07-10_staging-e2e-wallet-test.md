@@ -198,3 +198,9 @@ did you get the part where i said test against my versions (and i'd attached SS 
 [attached temporal_staging_test_kit.zip — golden MEMO_expected_values.md, harness (lens_selfcheck.js 41 + a16_atm_gate.js 5), GOLDEN_harness_output.txt, reference builds (5ce1a76c/twocaseclose/v24), reference_docs, SOP, charter] check agaist this
 
 > Context (manager, one line): operator provided the full staging test kit with golden values + acceptance harness + reference builds; manager to check staging against the golden memo (§1 option constants, §2 trade w′=11/21, §3 balanced-pool funding=0, §4 close) and reproduce the golden harness output.
+
+## Entry 23 (2026-07-10)
+
+simple english tldr ?
+
+> Context (manager, one line): plain-English TLDR of the kit-golden check + version-pin correction.
