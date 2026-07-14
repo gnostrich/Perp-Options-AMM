@@ -1,4 +1,5 @@
 # MEMORY — skeptic
+_2026-07-14: CLEAR-TO-RELAY on round-8 /api/amm/marks (`notes/skeptic/VERDICT_staging_e2e_round8_2026-07-10.md`) — re-ran marks_verify.js + own per-strike/multi-convention check: MAX Δ=0.000e+0 over 8 strikes REAL; sNorm=1 uniquely fits (alts=0.25) AND staging declares s_norm:1 (not cherry-pick); v24 has ZERO markLensed so "not v24" is under-argued not over; golden markLensed(put,1,1,2)=0.1481 reproduced; γ=1 config-question fair; no overclaim (H2/H3 left open). Nit: script's stray seam line mislabeled 0.0659 as golden 0.333, not cited in report._
 _2026-07-13: CLEAR-TO-RELAY on the manager's round-7 staging correction (`notes/skeptic/VERDICT_staging_e2e_round7_2026-07-10.md`) — re-ran harnesses (41/0 + 5/0), md5s + probe_law/resid myself; the walk-back of "staging=H3" is right (α/β conservation = spot law, not the H3 warp), not over/under-corrected; only nit = §2 ρ=2 α digit 5.0020→5.0026._
 _Updated 2026-06-10 after the formal-corpus truth-to-objective audit (verdict #8) + docs cold-storage
 logged (verdict #7). Earlier same day: CURVE_FAMILY PASS-1/PASS-2 (verdicts #5/#6), operator reply #2
