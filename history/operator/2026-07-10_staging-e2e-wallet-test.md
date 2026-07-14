@@ -204,3 +204,9 @@ did you get the part where i said test against my versions (and i'd attached SS 
 simple english tldr ?
 
 > Context (manager, one line): plain-English TLDR of the kit-golden check + version-pin correction.
+
+## Entry 24 (2026-07-10)
+
+[attached updated CLAUDE_AMMV2_STAGING_TEST.md — adds the /api/amm/marks endpoint: per-strike lensed option marks with engine/m/gamma/s_norm version fingerprint + k_usd/call_mark/put_mark grid; leg-MTM query]
+
+> Context (manager, one line): updated SOP exposes the per-strike curve endpoint the manager flagged as the single blocker — unblocks §1 option constants ($66.67/0.148/seams) + the version pin (engine=v28-lens + m + gamma). Manager to hit it and finish the golden comparison.
