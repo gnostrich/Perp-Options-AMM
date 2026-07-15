@@ -3564,3 +3564,9 @@ _Context: operator shares the band delta-hedging schedule (image: Trader Transac
 
 > [image: band hedging schedule — Long band inner 120k/outer 150k, Short band inner 90k/outer 60k; PLACE LIMIT/MARKET BUY/SELL at inner/outer, hedge wallets Long/Short, CANCEL+CLOSE hedges on position close]
 > does this account for the LP being delta hedged. on the delta hedged? assume that delta hedge is sort of fee neutral becuause some are maker some are taker (see attached hedging schedule for a feel) ... if not that delta hedge thing is there....
+
+
+## Entry 488 — 2026-07-08 UTC
+_Context: operator agrees hedge-leg funding is a valid channel but, for simplicity, leaves it neutral (0) like other channels; asks for disclaimers noting the simplifying assumptions as further work. Manager added a "Simplifying assumptions / further work" disclaimer to the xlsx READ_ME + NOTES; hedge_funding_APR stays 0._
+
+> this is a valid point... for simplicity i havent modeled that also assuming neutral or whatevr for similar reasons ... can put disclainers tfot. the simplifyinga ssumingtions to be done in furthe rwork
