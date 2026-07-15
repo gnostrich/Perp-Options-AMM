@@ -270,3 +270,9 @@ now can you finally do this "make this a simple english explanation for him also
 simple english will this take the current thing to that latest version? [sent ×3 for emphasis]
 
 > Context (manager, one line): operator wants a direct yes/no on whether following the sheet upgrades staging to the latest 5ce1a76c version; manager gives plain answer with the honest conditions.
+
+## Entry 35 (2026-07-10)
+
+give github link to open it online [×2]
+
+> Context (manager, one line): operator wants the GitHub URL to view the CTO upgrade deliverable online.
