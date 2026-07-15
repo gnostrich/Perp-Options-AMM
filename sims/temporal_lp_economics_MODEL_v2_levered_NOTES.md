@@ -40,3 +40,22 @@ Scenario turnover=1, σ=0.6: Temporal_net 18.5% → levered 31.0% → restaked 4
 ## Honesty labels (unchanged from v1)
 `funding_APR` and `protection_factor` are unproven placeholders; `LVR = σ²/8` is the CPMM baseline;
 reduced-form sketch, not a backtest. Promote out of `sims/` only on the operator's say-so.
+
+---
+
+## AUDIT OUTCOME (auditor = skeptic on Opus, 2026-07-08) + fixes applied
+**Arithmetic: clean** — auditor re-derived the full grid/scenario/fee=0 test independently; all match.
+Flags were on economic content, and are now addressed:
+
+| flag | fix applied |
+|---|---|
+| **Double-count:** `protection_factor` (LVR removed by warp+funding tether) overlaps `funding_APR` (funding as income) → same benefit twice | **`protection_factor` DEFAULT changed 0.5 → 0** (no assumed LVR reduction); note now says warp-only, don't also attribute the funding tether here |
+| **Funding one-sided:** hard-coded as strictly positive income | note now discloses `funding_APR` **can be negative** (LP on the paying side) |
+| **Optimistic defaults:** green headline grid was the hypothesis-on case | defaults now **conservative** (protection=0); READ_ME carries an AUDITED caveat; raise protection/funding to see hypothesis-on |
+| **Break-even framing:** boundary is levered-zero, ignores opportunity cost | grid note clarified: levered break-even (Temporal_net vs borrow), opportunity cost ignored |
+| Leverage / liquidation pairing (NIT) | already noted; liquidation not modeled (disclosed) |
+
+**Auditor bottom line:** SOUND-ENOUGH-FOR-BRAINSTORM; must not leave `sims/` read as proof LPs are
+net-positive — with defaults now conservative, the green reflects fees + the (editable) hypotheses, not
+a claimed mechanism. Conservative-default check: levered base @turnover=1, σ=0.6 = **+26.5%** (fees carry it);
+@turnover=0.25, σ=1.2 = **−27.1%** (leverage × full LVR wipes the LP in the bad corner — the honest picture).
