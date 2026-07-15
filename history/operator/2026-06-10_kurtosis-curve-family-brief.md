@@ -3534,3 +3534,14 @@ _Context: (mid-turn) operator shares screenshots of the other full-access sessio
 _Context: operator confirms the ask was a package FOR THE TESTER, not changes to this repo. Manager reverts the one repo change made (vocab_gate exclusion) and delivers only the zip artifact._
 
 > just to confirm, i asked for a package for the tester... not for anytung to chnage here
+
+
+## Entry 484 — 2026-07-08 UTC
+_Context: operator shares a WhatsApp screenshot (with varun verma) and requests a simulation of Temporal LP economics (yield vs trading-volume-per-$-notional and volatility), plus an HLP-margin additive layer; instructs (1) bring everything up to date on main incl the conversation (near compaction) and (2) keep it brainstorm-only in a sims/ folder, don't touch core. Manager stored `sims/BRAINSTORM_lp_economics_2026-07-08.md` (non-core, unreviewed) and is merging to main._
+
+> [image: WhatsApp with varun verma — "AMMs are grossly lossmaking. so how is this one going to make [money]"; "simulation on different regimes how does the base amm lp perform. how does the restaked lp perform."; scope = protected perps AMM, not clob-amm]
+> check out this discussion. tldr: we want to simulate temporal LP economics in terms of yield earned given trading volume per dollar pool notional and volatility conditions
+>
+> an additional layer is when instead of margining it with dollars you margin it with HLP (hyperliquid LP) — this should be a simple additive layer though
+>
+> note 2 things: 1. ensure everything up to date on main etc incl conversation because we close to compaction limit and 2. this is brainstorm only so store it in a sims folder or something don't screw up the core stuff
