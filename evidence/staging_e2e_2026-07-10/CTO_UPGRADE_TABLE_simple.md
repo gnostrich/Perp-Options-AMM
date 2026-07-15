@@ -121,3 +121,56 @@ today** (our live test). Code names are the reference single-file engine's funct
 funding), keep Factor 6 (spot law) byte-identical, pass Factor 8 (41+5 harness) against your Go engine, and
 hold the shared pool until update-2 (Factor 9). Staging is already the right engine and its spot math +
 pricing check out at γ=1; Factors 1/2/4/5 only become visible — and verifiable — once γ>1.
+
+---
+
+# APPENDIX — COMPLETE code-level diff (80f050e2 → 5ce1a76c), all 3 script blocks
+*(Added after the operator flagged the factor table wasn't the full delta. This is the ground-truth
+function/line diff of the two builds — `temporal_mvp_v28_lens_constmult` (=80f050e2 behaviour) vs the kit's
+`5ce1a76c`. It supersedes any impression that the 5 PORT items were everything.)*
+
+**The build has THREE `<script>` blocks; all three changed:**
+
+### 1. `engine` block — 6 functions (232 changed lines)
+| Fn | Change | Factor | In my table? |
+|---|---|---|---|
+| `markLensed` | CHANGED (ITM linear re-seam) | 1 | ✅ |
+| `tradeUpdateAt` | **ADDED** (trade-point law) | 2 | ✅ |
+| `executeLeg` (+ its alias `executeCompositeLeg`, same fn) | CHANGED (routes swap via `tradeUpdateAt`) | 2 | ✅ |
+| `closeBand` | CHANGED (one-rule clean close) | 4 | ✅ |
+| `revertArc` | **ADDED** (frozen-arc reversal helper for close; dormant in update-1) | 4 | ❌ **was missing** |
+| `fundingPerStrike` | CHANGED (ray-deviation funding) | 5 | ✅ |
+| `gLoc`, `tradeUpdate`, `executeBand`, `legPrice`, `markEff`, `rebase`, `arbitrageToOracle`, +16 others | **UNCHANGED** | — | (confirms Factors 3 & 6 are no-op deltas) |
+
+### 2. `state` block — 2 behavioral changes (4 lines) — **I MISSED THESE**
+| Change | What | Backend-relevant? |
+|---|---|---|
+| `setM(t)` now `Math.min(6, Math.max(1, t))` | **m is clamped to [1,6]** (was any t>0) | **YES** — a real input-validation constraint your Go must enforce |
+| leg `arc: {dxA,dyA,dwA,oOpen}` stored on open | **frozen-arc storage** feeding `revertArc`/close (entry 339) | part of the close accounting (Factor 4) |
+
+### 3. `ui` block — ~240 changed lines — **I never enumerated these** (mostly frontend; changelog tags them UI-skip for a backend port)
+| UI feature | Note | Backend-relevant? |
+|---|---|---|
+| Chart-2: true option-value wings both sides, crossing at ATM (66→89 refs) | display of the value curve | no (but the numbers come from `markLensed`) |
+| **%/$ (fraction/dollar) toggle** (32→41 refs) | display units toggle | no |
+| **Signed funding column** in portfolio (17→42 refs) | shows funding value; **negative = the line paid** | partly — your API already returns the funding field; the SIGN convention matters |
+| Vol caption fix (state comment): **MORE volatile ⇒ LOWER m** | calibration guidance | no (guidance) |
+| m input clamp 1–6 (mirrors `setM`) | UI enforcement of the [1,6] clamp | mirror of the state change above |
+| caption fixes | text | no |
+
+## Corrections to my earlier deliverable (owned)
+1. **Missed `revertArc`** (engine, close helper) — now in Factor 4.
+2. **Missed the m-clamp [1,6]** (`setM` state change) — a genuine backend validation constraint. **NEW required item.**
+3. **Missed the frozen-arc `arc` storage** (state) — close machinery.
+4. **Never enumerated the UI block** (~240 lines: chart-2 wings, %/$ toggle, signed funding column, captions) — mostly frontend-skip for a Go backend, but they ARE part of the 80f050e2→5ce1a76c delta and are now listed.
+
+## Is THIS all of it? (method, so you can trust the completeness)
+This is the exhaustive diff of the two builds' three script blocks (function-body `toString()` for the
+engine; line diff for state/ui). Every changed/added/removed function is listed; 23 engine functions are
+byte-unchanged. **Caveat:** the "current" side is `80f050e2` (the CTO's stated baseline per the changelog),
+NOT staging's actual deployed source — I could not read staging's Go code, so this is the reference-HTML
+delta the Go port must reflect, not a diff of staging's binary.
+
+## NEW required item for the CTO (beyond the 5)
+**Enforce the steepness clamp m ∈ [1, 6]** (backend `setM` equivalent). Rejecting/clamping m outside [1,6]
+is part of the 8-Jul build; without it the curve can be driven to invalid steepness.
