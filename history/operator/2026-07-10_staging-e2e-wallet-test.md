@@ -246,3 +246,9 @@ give that i want an upgrade to the next version july8th one we'd want to tgive C
 make this a simple english explanation for him also referencing in a dedicated column the i. parts of the codebase or whatver; so you'd have ii. column with simple english explanation, iii. math / formula, iv. example if applicable... and comprring this across the current build and the desired one; you could have row group comprison on each factor is that makes sense ...  iygim, incase i'm missing something feel free to add here
 
 > Context (manager, one line): reformat the CTO upgrade into a per-factor reference table — columns: code part / plain English / math / example, compared current-build vs desired (5ce1a76c); manager may add missing factors.
+
+## Entry 31 (2026-07-10)
+
+thats not all the difference. be very careful
+
+> Context (manager, one line): the 5 changelog items are NOT the complete delta; manager to do a real code-level function-by-function diff of the current build (80f050e2) vs desired (5ce1a76c) to enumerate ALL differences.
