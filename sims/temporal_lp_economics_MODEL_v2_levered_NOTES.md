@@ -74,3 +74,18 @@ Question: does the model account for the LP being delta-hedged (hedge assumed ~f
   themselves (separate from LVR, either sign). Default 0. Sensitivity: +2% hedge funding → +4% levered net.
 - **Caveat (unproven):** that Temporal's specific band-hedge schedule achieves clean delta-neutrality with
   LVR as the exact residual, plus discrete-rebalance tracking error, are assumptions — not validated here.
+
+---
+
+## SIMPLIFYING ASSUMPTIONS — to be addressed in FURTHER WORK (operator entry 488)
+For simplicity, several channels are assumed neutral/off in this brainstorm sketch:
+1. **Hedge-leg funding = neutral** (`hedge_funding_APR = 0`) — real HL hedge funding is ± and unmodeled.
+2. **Delta hedge clean & fee-neutral** — no tracking error / discrete-rebalance slippage; `hedge_fee_cost = 0`.
+3. `funding_APR` = placeholder for the undecided update-2 funding formula.
+4. `protection_factor = 0` (no assumed warp LVR-reduction; unproven if raised).
+5. `LVR = σ²/8` = 50/50 CPMM baseline; Temporal is warped ⇒ approximation.
+6. Liquidation of the levered leg not modeled.
+7. HLP additive; tail-correlation off at default.
+8. Reduced-form annualized sketch, not a path-dependent backtest.
+**Further work:** realistic HL hedge-leg funding; tracking error & discrete rebalancing; derive funding
+from the update-2 formula; validate `protection_factor`; liquidation + HLP tail-correlation; Monte-Carlo.
