@@ -103,3 +103,17 @@ from the update-2 formula; validate `protection_factor`; liquidation + HLP tail-
   the auditor flagged that a read-lens cannot reduce a pool-level adversarial cost — hence off by default.
 - **To make the curve shape actually change the vol cost, the POOL curve/invariant must change** (operator-
   tier; not in this design). A true `m`-dependent LVR derivation is **further work**.
+
+---
+
+## ⚠ FAITHFULNESS GAP (operator entry 490) — this sim is a PROXY, not the actual perp-options AMM
+Operator: "it's a perp options amm... not spot balancer — is the sim faithful to the actual thing?" **No.**
+- This is a **generic spot-AMM-LP** model. A perp-options AMM LP is an **option SELLER**: it earns **option
+  PREMIUM** (at implied vol) + funding + fees, and its **vol cost = the GAMMA bleed of the option book**
+  ≈ ½·Γ·σ²·S², where Γ is set by the **curve shape (γ, m)** and the open option notional — **not** `σ²/8`.
+- So `m` **does** drive the vol cost (it sets the book's gamma). My earlier "m is just a read lens, vol cost
+  unchanged" was the mechanical spot-Balancer view, not the LP's economic exposure — **corrected**.
+- Right: the `σ²` scaling. Wrong/missing: the `1/8` coefficient (plain-pool artifact), an explicit **premium
+  income** line, and the **γ/m/notional** dependence of the gamma cost.
+- **Faithful rebuild (pending operator go):** premium(IV) − realized gamma cost(RV, from the actual γ/m curve)
+  + funding + fees − hedge; LP = option seller; pull the real option-value curve from the engine read-only.

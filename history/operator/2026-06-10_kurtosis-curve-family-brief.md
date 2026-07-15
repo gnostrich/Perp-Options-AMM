@@ -3576,3 +3576,9 @@ _Context: operator agrees hedge-leg funding is a valid channel but, for simplici
 _Context: operator asks for the normal (blob) GitHub link and a simple-English explanation of how the volatility cost was modeled for this AMM given it has a curve-shape setting. Manager: vol cost = standard LVR σ²/8; the m curve-shape knob is a READ lens over a plain-Balancer pool so it does NOT lower the pool-level LVR in the current design (protection_factor off/unproven, auditor-aligned); m-dependent LVR = further work._
 
 > give normal github link, also explain simple sngligh how you modelled volatility cost for this AMM since its different from traditional ones; it has a setting for the curve shape etc.
+
+
+## Entry 490 — 2026-07-08 UTC
+_Context: operator pushes back — it's a perp OPTIONS AMM, not spot Balancer — asking whether the sim is faithful to the actual thing. Manager concedes: NO, the sim is a generic spot-AMM-LP proxy; a faithful model = LP as option seller (premium at IV − gamma bleed at RV, coefficient set by curve shape γ/m + notional, not σ²/8; + funding/fees − hedge). Corrected the prior "m doesn't affect vol cost" claim (it does, via the book's gamma). Recorded the faithfulness gap in xlsx READ_ME + NOTES; proposed a faithful rebuild pending operator go + confirmation the LP is the option seller._
+
+> but its a perp options amm right, if you look at the thing its not spot balancer... so i was askiinf if the sim is faithful to the actual thing
