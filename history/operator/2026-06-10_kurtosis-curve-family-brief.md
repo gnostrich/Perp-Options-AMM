@@ -3545,3 +3545,9 @@ _Context: operator shares a WhatsApp screenshot (with varun verma) and requests 
 > an additional layer is when instead of margining it with dollars you margin it with HLP (hyperliquid LP) — this should be a simple additive layer though
 >
 > note 2 things: 1. ensure everything up to date on main etc incl conversation because we close to compaction limit and 2. this is brainstorm only so store it in a sims folder or something don't screw up the core stuff
+
+
+## Entry 485 — 2026-07-08 UTC
+_Context: operator, answering the manager's 4 sim questions, specifies the deliverable = a spreadsheet with editable, transparently disclosed, editable assumptions (so funding-rate/fees/HLP-treatment become editable inputs rather than pre-decided). Manager built `sims/temporal_lp_economics_MODEL_v1.xlsx` + notes; non-core._
+
+> assuming its a spreadsheet, make editable, transparently disclosed and editable assumptions
