@@ -216,3 +216,9 @@ simple english tldr ?
 [screenshot: two Drive files — temporal_mvp_v28_lens_5ce1a76c.html (uploaded Jul 8) and HEAD_temporal_mvp_v28_lens.html.txt (created Jun 15)] inline w first or second one?
 
 > Context (manager, one line): operator asks which reference build to inline/port into staging — the Jul-8 5ce1a76c (H3, latest) or the Jun-15 HEAD (H2, older).
+
+## Entry 26 (2026-07-10)
+
+ok did you check systemacitcally and comprehensively with compositions of actions just to make sure they're aligned completely and not superficially --- including code checks also ..
+
+> Context (manager, one line): operator asks whether the alignment check was systematic/comprehensive incl. compositions of actions and code checks; manager gives honest coverage map (it was NOT) + proposes the full campaign.
