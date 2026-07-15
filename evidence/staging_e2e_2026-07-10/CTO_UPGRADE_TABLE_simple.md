@@ -54,10 +54,10 @@ today** (our live test). Code names are the reference single-file engine's funct
 
 ---
 
-### Factor 4 — Close a position (one rule) · `closeBand`, checks `CM6/CM12` · **PORT**
+### Factor 4 — Close a position (one rule) · `closeBand`, checks `CM6-v3/CM12` · **PORT**
 | i. Code | ii. Plain English | iii. Math | iv. Example |
 |---|---|---|---|
-| `closeBand(...)` (both legs reverse live via `tradeUpdateAt`); no two-case branch | Old close had two cases (OTM legs traded back, ITM legs cashed separately) that didn't line up — payout could **jump ~½** at the strike. New: every leg sells back to the pool the same way; **smooth, no jump**. | trader is paid the **option value computed BEFORE the pool trade** (`legPrice(s0)`); the pool swap is bookkeeping only, pays the trader nothing extra | close an ITM-adjacent leg: payout continuous across the strike (no half-payout jump) |
+| `closeBand(...)` (both legs reverse live via `tradeUpdateAt`, check `CM6-v3`); no two-case branch | Old close had two cases (OTM legs traded back, ITM legs cashed separately) that didn't line up — payout could **jump ~½** at the strike. New: every leg sells back to the pool the same way; **smooth, no jump**. | trader is paid the **option value computed BEFORE the pool trade** (`legPrice(s0)`); the pool swap is bookkeeping only, pays the trader nothing extra | close an ITM-adjacent leg: payout continuous across the strike (no half-payout jump) |
 
 | | Current (14-Jun) | Desired (8-Jul) | **Staging now** |
 |---|---|---|---|
