@@ -89,3 +89,17 @@ For simplicity, several channels are assumed neutral/off in this brainstorm sket
 8. Reduced-form annualized sketch, not a path-dependent backtest.
 **Further work:** realistic HL hedge-leg funding; tracking error & discrete rebalancing; derive funding
 from the update-2 formula; validate `protection_factor`; liquidation + HLP tail-correlation; Monte-Carlo.
+
+---
+
+## HOW THE VOLATILITY COST IS MODELED (operator entry 489)
+- **Volatility cost = LVR = σ²/8 per year** — the standard 50/50 CPMM/Balancer result: arbitrageurs pick
+  off the pool as the price moves; it scales with σ². This is what the sim uses.
+- **The curve-shape knob `m` does NOT lower it in the current design.** Per the locked architecture the
+  underlying POOL that arbitrageurs trade is **plain Balancer** (the SPOT trio is byte-identical to v24);
+  `m` is a forward READ lens on pricing/option-value/settlement, not a change to the traded pool. LVR comes
+  from that underlying pool, so the vol cost is the standard AMM cost.
+- `protection_factor` (default **0**, off) is a placeholder for any warp effect on LVR and is **unproven**;
+  the auditor flagged that a read-lens cannot reduce a pool-level adversarial cost — hence off by default.
+- **To make the curve shape actually change the vol cost, the POOL curve/invariant must change** (operator-
+  tier; not in this design). A true `m`-dependent LVR derivation is **further work**.

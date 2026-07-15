@@ -3570,3 +3570,9 @@ _Context: operator shares the band delta-hedging schedule (image: Trader Transac
 _Context: operator agrees hedge-leg funding is a valid channel but, for simplicity, leaves it neutral (0) like other channels; asks for disclaimers noting the simplifying assumptions as further work. Manager added a "Simplifying assumptions / further work" disclaimer to the xlsx READ_ME + NOTES; hedge_funding_APR stays 0._
 
 > this is a valid point... for simplicity i havent modeled that also assuming neutral or whatevr for similar reasons ... can put disclainers tfot. the simplifyinga ssumingtions to be done in furthe rwork
+
+
+## Entry 489 — 2026-07-08 UTC
+_Context: operator asks for the normal (blob) GitHub link and a simple-English explanation of how the volatility cost was modeled for this AMM given it has a curve-shape setting. Manager: vol cost = standard LVR σ²/8; the m curve-shape knob is a READ lens over a plain-Balancer pool so it does NOT lower the pool-level LVR in the current design (protection_factor off/unproven, auditor-aligned); m-dependent LVR = further work._
+
+> give normal github link, also explain simple sngligh how you modelled volatility cost for this AMM since its different from traditional ones; it has a setting for the curve shape etc.
