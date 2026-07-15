@@ -3606,3 +3606,9 @@ _Context: operator asks (1) a simple-English explanation of the v3 options-selle
 _Context: operator says run the auditor on v3. Manager dispatched the skeptic (Opus) with a PREMISE-CHALLENGING brief — attack whether the options-seller/VRP framing is faithful at all + whether G·book coefficient and the VRP-vs-funding potential double-count hold, not just internal arithmetic._
 
 > yeah sure run the auditor /agents
+
+
+## Entry 495 — 2026-07-08 UTC
+_Context: operator asks where the leverage part is in v4. Manager: it is present as `book_per_equity` (+ borrow_APR) — the leverage on the Temporal/options side, HLP un-levered per entry 486 — but the rename obscured it; renamed back to `LP_leverage` for clarity._
+
+> wheres the leverage part?

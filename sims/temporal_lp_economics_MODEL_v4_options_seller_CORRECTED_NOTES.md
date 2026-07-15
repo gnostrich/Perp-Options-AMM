@@ -25,9 +25,13 @@ LP profits when **realized vol < the vol it calibrated the curve to**; loses in 
 
 ## STILL OPEN (do not over-read magnitudes)
 - The **carry magnitude** `book·G·σ_cal²` assumes funding = the theoretical fair carry; the **actual funding
-  law is update-2 (undecided)**. `book` normalization is load-bearing. Magnitudes ILLUSTRATIVE.
+  law is update-2 (undecided)**. `LP_leverage` normalization is load-bearing. Magnitudes ILLUSTRATIVE.
 - `σ_cal > RV` is an operator calibration/flow bet, not an automatic VRP. Reduced-form sketch, not a backtest.
 
 ## Recurring pattern the auditor logged (worth heeding)
 Each revision fixed the prior proxy but adopted a NEW familiar-instrument proxy (spot AMM → dated-option
 seller). The faithful object is the **perpetual** option where **premium IS funding** — v4 finally models that.
+
+
+## LEVERAGE (operator entry 495)
+The leverage knob is **`LP_leverage`** (renamed from `book_per_equity`): option value short per $ of equity — 1.0x = unlevered. It multiplies `options_net` and fees, with `borrow_APR` financing the `(L−1)` leg. **HLP stays additive at margin, NOT levered** (entry 486). Verified: at σ_cal=70%, RV=60%, m=1 → 1.0x base +57%, 2.0x base +108% (options edge ×2 minus financing); HLP adds a flat +10% either way.
