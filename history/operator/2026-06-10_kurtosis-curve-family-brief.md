@@ -3594,3 +3594,9 @@ _Context: operator clarifies the faithfulness question was ORTHOGONAL to the sha
 _Context: operator gives the go to build the faithful options-seller model. Manager built `sims/temporal_lp_economics_MODEL_v3_options_seller.xlsx`: LP sells the option book, delta-hedged ⇒ short-vol; edge = variance risk premium VRP=book·G·(IV²−RV²), G=γ(γ+1)/2; + fees + funding − financing − hedge; + HLP. Verified; green where IV>RV, red in vol spikes. Coefficient/normalization flagged as load-bearing + not yet auditor-checked._
 
 > yes yes keep going
+
+
+## Entry 493 — 2026-07-08 UTC
+_Context: operator asks (1) a simple-English explanation of the v3 options-seller model and (2) why the auditor didn't catch the faithfulness correction the operator himself made (spot-proxy vs options-AMM). Manager: insurance-seller analogy; and owns that the auditor was given a spot-AMM-framed brief (audit internals), never tasked to challenge the premise — a briefing error by the manager, not an auditor miss; lesson logged._
+
+> 1. simple english explanation? 2. why didn;t the auditor catch the prev correton i made?
