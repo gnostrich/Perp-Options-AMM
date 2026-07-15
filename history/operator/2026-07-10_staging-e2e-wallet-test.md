@@ -258,3 +258,9 @@ thats not all the difference. be very careful
 [attached CHANGELOG_for_CTO_3_1.pdf] for your reference
 
 > Context (manager, one line): operator re-sent the handover changelog PDF (same as kit reference_docs/CHANGELOG_for_CTO); manager cross-checks it against the code-level diff.
+
+## Entry 33 (2026-07-10)
+
+now can you finally do this "make this a simple english explanation for him also referencing in a dedicated column the i. parts of the codebase or whatver; so you'd have ii. column with simple english explanation, iii. math / formula, iv. example if applicable... and comprring this across the current build and the desired one; you could have row group comprison on each factor is that makes sense ...  iygim, incase i'm missing something feel free to add here"
+
+> Context (manager, one line): produce the SINGLE complete per-factor table (code/english/math/example x current-vs-desired) now grounded in the full verified code diff (all engine + state + UI deltas), superseding the partial table.
