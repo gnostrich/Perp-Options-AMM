@@ -234,3 +234,9 @@ yes just do it and dont always wait for me to confirm it wastes time
 do the thing, diff with the most recent version based on whast i sent and come through with a summary of things that need to be changed etc.
 
 > Context (manager, one line): deliverable = comprehensive diff of staging vs the most-recent version (5ce1a76c/H3) + an actionable "what needs to change" summary for the CTO.
+
+## Entry 29 (2026-07-10)
+
+give that i want an upgrade to the next version july8th one we'd want to tgive CTO instructions accordingly
+
+> Context (manager, one line): deliverable = CTO instruction sheet to upgrade staging to the July-8 5ce1a76c (H3) version — engine deltas (H2→H3 per changelog) + config (γ=2) + endpoint + acceptance harness/golden.
