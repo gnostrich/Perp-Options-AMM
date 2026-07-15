@@ -228,3 +228,9 @@ ok did you check systemacitcally and comprehensively with compositions of action
 yes just do it and dont always wait for me to confirm it wastes time
 
 > Context (manager, one line): GO for the comprehensive/compositional alignment campaign + standing directive to act autonomously without per-step confirmation (execution autonomy; strategic/irreversible still escalate).
+
+## Entry 28 (2026-07-10)
+
+do the thing, diff with the most recent version based on whast i sent and come through with a summary of things that need to be changed etc.
+
+> Context (manager, one line): deliverable = comprehensive diff of staging vs the most-recent version (5ce1a76c/H3) + an actionable "what needs to change" summary for the CTO.
