@@ -4030,3 +4030,20 @@ Non-core spreadsheet (LP-yield reduced form, varun-verma objection). Grid re-der
 3. HLP additive w/ default tail_haircut=0 + funding-overlap caveat (brainstorm L60) unrepresented.
 Break-even FLAG: grid green/red = levered-zero (Temporal_net=3% at L=2), NOT the brainstorm's Temporal_net≥0; also ignores opp cost.
 PATTERN (team blind-spot): optimistic values baked into DEFAULTS so headline grid = hypothesis-on; honesty labels present in footnotes but defaults tell the rosy story. Recurring: "labeled unproven" used as license to default it ON. Also recurring: read-lens vs pool-curve conflation (kurtosis m can't reduce pool-level LVR while pool is plain v24) — same class as the price-vs-slope gotcha.
+
+## Verdict (2026-07-15) — sims v3 options-seller economics model
+FLAG (premise still subtly wrong; NOT faithful-enough as written). Arithmetic clean (reproduced
+grid + gamma bleed re-derived: Γ=g(g+1)V/S², bleed=V·[g(g+1)/2]·σ² so the ½ IS correctly in G).
+Three real holes: (1) DOUBLE-COUNT recurrence (v2 class): `book·G·IV²` premium leg and separate
+`funding_APR` are the SAME perpetual carry — a perpetual has no upfront premium, the only long→short
+flow is funding; hidden only by funding_APR default 0. (2) m-OMISSION (motive #3): G uses γ(γ+1)/2,
+should be g_loc=mγ → (mγ)(mγ+1)/2; m absent entirely; contradicts model's own v2 entry-490 correction
+(at m=2, G=10 not 3). (3) "IV" has no clearing mechanism in a static-calibration perpetual AMM — IV>RV
+is an operator calibration/flow bet, not an automatic VRP. Faithful form: ONE carry line = funding,
+carrying m: net = fees + funding_carry − book·(mγ)(mγ+1)/2·RV². 
+PATTERN: team keeps modeling Temporal as the nearest FAMILIAR instrument (v1/v2 spot AMM →
+σ²/8; v3 dated-option variance seller → upfront-premium VRP) instead of the actual PERPETUAL
+option (premium leg = funding). Each rev fixes the prior proxy but adopts a new one. Also: the
+"optimistic hypothesis-on default" pattern (green corner = operator picks the favorable input)
+recurs from v2. Provenance NIT: operator entries 490/491/492 seen only via v2 NOTES synthesis,
+not a history/operator/ verbatim file.
