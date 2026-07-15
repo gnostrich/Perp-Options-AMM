@@ -210,3 +210,9 @@ simple english tldr ?
 [attached updated CLAUDE_AMMV2_STAGING_TEST.md — adds the /api/amm/marks endpoint: per-strike lensed option marks with engine/m/gamma/s_norm version fingerprint + k_usd/call_mark/put_mark grid; leg-MTM query]
 
 > Context (manager, one line): updated SOP exposes the per-strike curve endpoint the manager flagged as the single blocker — unblocks §1 option constants ($66.67/0.148/seams) + the version pin (engine=v28-lens + m + gamma). Manager to hit it and finish the golden comparison.
+
+## Entry 25 (2026-07-10)
+
+[screenshot: two Drive files — temporal_mvp_v28_lens_5ce1a76c.html (uploaded Jul 8) and HEAD_temporal_mvp_v28_lens.html.txt (created Jun 15)] inline w first or second one?
+
+> Context (manager, one line): operator asks which reference build to inline/port into staging — the Jul-8 5ce1a76c (H3, latest) or the Jun-15 HEAD (H2, older).
