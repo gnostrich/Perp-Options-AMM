@@ -3582,3 +3582,9 @@ _Context: operator asks for the normal (blob) GitHub link and a simple-English e
 _Context: operator pushes back — it's a perp OPTIONS AMM, not spot Balancer — asking whether the sim is faithful to the actual thing. Manager concedes: NO, the sim is a generic spot-AMM-LP proxy; a faithful model = LP as option seller (premium at IV − gamma bleed at RV, coefficient set by curve shape γ/m + notional, not σ²/8; + funding/fees − hedge). Corrected the prior "m doesn't affect vol cost" claim (it does, via the book's gamma). Recorded the faithfulness gap in xlsx READ_ME + NOTES; proposed a faithful rebuild pending operator go + confirmation the LP is the option seller._
 
 > but its a perp options amm right, if you look at the thing its not spot balancer... so i was askiinf if the sim is faithful to the actual thing
+
+
+## Entry 491 — 2026-07-08 UTC
+_Context: operator clarifies the faithfulness question was ORTHOGONAL to the shape/steepness (m) discussion — manager over-coupled them. Manager restates cleanly: the sim is unfaithful because it's a SPOT-AMM proxy, not an OPTIONS-AMM (LP sells options → premium income + short-gamma vol cost + hedge), independent of m; softened the xlsx/NOTES to drop the m tangent._
+
+> this question was orthogonal to the shape / steepness thing

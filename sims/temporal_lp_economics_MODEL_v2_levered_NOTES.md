@@ -117,3 +117,8 @@ Operator: "it's a perp options amm... not spot balancer — is the sim faithful 
   income** line, and the **γ/m/notional** dependence of the gamma cost.
 - **Faithful rebuild (pending operator go):** premium(IV) − realized gamma cost(RV, from the actual γ/m curve)
   + funding + fees − hedge; LP = option seller; pull the real option-value curve from the engine read-only.
+
+**Clarification (operator entry 491):** the faithfulness gap is **orthogonal to the shape/steepness knob.**
+The core issue is structural: a perp-options AMM LP **sells options** → its economics are **premium income
+− a short-gamma (options) vol cost** + funding + fees − hedge; the sim used a spot proxy (`σ²/8` + generic
+fees, no premium). The γ/m dependence of the gamma coefficient is a secondary detail, not the point.
