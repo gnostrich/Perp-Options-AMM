@@ -3557,3 +3557,10 @@ _Context: operator, answering the manager's 4 sim questions, specifies the deliv
 _Context: operator asks to (1) throw an auditor agent at the LP-economics model, (2) add LP leverage + levered yield (leverage on the Temporal part only, NOT the HLP part which is additive at margin), (3) get a formatting agent — all agents on Opus 4.8 or lower. Manager built v2 (levered), dispatched skeptic-as-auditor (opus) + a formatting agent (sonnet)._
 
 > looks cool, 1. can you throw an auditor /agents at it, 2. bring in LP leverage and LP levered yield (leverage works on temporal part not on HLP part which is additive and at margin level); 3. get a formatting agent --- all /agents on 4.8 opus or lower
+
+
+## Entry 487 — 2026-07-08 UTC
+_Context: operator shares the band delta-hedging schedule (image: Trader Transaction; Long/Short × Band Sold/Bought; inner/outer band prices; limit/market hedge orders on Hyperliquid; hedge wallets Long/Short) and asks whether the LP-economics model accounts for the LP being delta-hedged, assuming the hedge is ~fee-neutral (mix of maker/taker). Manager: LVR is by definition the delta-hedged residual, so the model already represents a hedged LP; made it explicit + added hedge_fee_cost (0, fee-neutral) and hedge_funding_APR (HL hedge-leg funding, ±) inputs; numbers unchanged at defaults._
+
+> [image: band hedging schedule — Long band inner 120k/outer 150k, Short band inner 90k/outer 60k; PLACE LIMIT/MARKET BUY/SELL at inner/outer, hedge wallets Long/Short, CANCEL+CLOSE hedges on position close]
+> does this account for the LP being delta hedged. on the delta hedged? assume that delta hedge is sort of fee neutral becuause some are maker some are taker (see attached hedging schedule for a feel) ... if not that delta hedge thing is there....

@@ -59,3 +59,18 @@ Flags were on economic content, and are now addressed:
 net-positive — with defaults now conservative, the green reflects fees + the (editable) hypotheses, not
 a claimed mechanism. Conservative-default check: levered base @turnover=1, σ=0.6 = **+26.5%** (fees carry it);
 @turnover=0.25, σ=1.2 = **−27.1%** (leverage × full LVR wipes the LP in the bad corner — the honest picture).
+
+---
+
+## DELTA-HEDGE (operator entry 487 — band hedging schedule)
+Question: does the model account for the LP being delta-hedged (hedge assumed ~fee-neutral)?
+**Answer: yes, implicitly — now made explicit.**
+- **LVR = σ²/8 IS the delta-hedged LP's residual loss** (standard result, Milionis–Moallemi–Roughgarden):
+  delta-hedging removes price-DIRECTION P&L but not LVR (you still rebalance at stale pool prices). The
+  model has no directional term and carries −LVR, so it already represents a delta-hedged LP.
+- **Fee-neutral hedge** (some maker, some taker ≈ net 0): captured by `hedge_fee_cost` (default 0). Numbers
+  unchanged vs pre-hedge (verified: 26.5% / −27.1% at the two check cells).
+- **New channel made explicit:** `hedge_funding_APR` — funding earned(+)/paid(−) on the HL hedge legs
+  themselves (separate from LVR, either sign). Default 0. Sensitivity: +2% hedge funding → +4% levered net.
+- **Caveat (unproven):** that Temporal's specific band-hedge schedule achieves clean delta-neutrality with
+  LVR as the exact residual, plus discrete-rebalance tracking error, are assumptions — not validated here.
