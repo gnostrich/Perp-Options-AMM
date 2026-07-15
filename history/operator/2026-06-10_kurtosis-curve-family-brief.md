@@ -3588,3 +3588,9 @@ _Context: operator pushes back — it's a perp OPTIONS AMM, not spot Balancer �
 _Context: operator clarifies the faithfulness question was ORTHOGONAL to the shape/steepness (m) discussion — manager over-coupled them. Manager restates cleanly: the sim is unfaithful because it's a SPOT-AMM proxy, not an OPTIONS-AMM (LP sells options → premium income + short-gamma vol cost + hedge), independent of m; softened the xlsx/NOTES to drop the m tangent._
 
 > this question was orthogonal to the shape / steepness thing
+
+
+## Entry 492 — 2026-07-08 UTC
+_Context: operator gives the go to build the faithful options-seller model. Manager built `sims/temporal_lp_economics_MODEL_v3_options_seller.xlsx`: LP sells the option book, delta-hedged ⇒ short-vol; edge = variance risk premium VRP=book·G·(IV²−RV²), G=γ(γ+1)/2; + fees + funding − financing − hedge; + HLP. Verified; green where IV>RV, red in vol spikes. Coefficient/normalization flagged as load-bearing + not yet auditor-checked._
+
+> yes yes keep going
