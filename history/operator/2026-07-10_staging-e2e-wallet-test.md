@@ -252,3 +252,9 @@ make this a simple english explanation for him also referencing in a dedicated c
 thats not all the difference. be very careful
 
 > Context (manager, one line): the 5 changelog items are NOT the complete delta; manager to do a real code-level function-by-function diff of the current build (80f050e2) vs desired (5ce1a76c) to enumerate ALL differences.
+
+## Entry 32 (2026-07-10)
+
+[attached CHANGELOG_for_CTO_3_1.pdf] for your reference
+
+> Context (manager, one line): operator re-sent the handover changelog PDF (same as kit reference_docs/CHANGELOG_for_CTO); manager cross-checks it against the code-level diff.
