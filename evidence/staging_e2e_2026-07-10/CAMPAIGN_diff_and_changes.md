@@ -8,9 +8,9 @@ Evidence: `campaign/` (marks_40.json, battery.jsonl, trade_battery.log, phase1/2
 |---|---|---|---|
 | A1 | **Engine version** | `/api/amm/marks` fingerprint | `engine:"v28-lens"` — the lens line; the v24 build has zero `markLensed`, so it cannot emit this |
 | A2 | **Option pricing (call+put, 40 strikes θ∈[0.5,1.5])** | staging marks vs reference `markLensed(wing,θ,s_norm,g)` | MAX |Δ| = **5.6e-17** (call 0), **0** value<intrinsic violations |
-| A3 | **Trade → pool update (5 band types: long/short, near/far-OTM, barrier-only)** | staging Δpool vs reference `tradeUpdate` | each = reference **spot law** to ≤**1.8e-15**; α,β conserved |
-| A4 | **Input validation** | staging vs reference OTM check | staging's reject string **byte-identical** to reference `executeBand` reason (`"…not OTM on <wing> wing…"`) |
-| A5 | **Round-trip open→close** | pool before-open vs after-close | returns **exactly** (Δx=Δy=Δα=Δβ=Δw = 0.000e+0); clean reversal, no leak |
+| A3 | **Trade → pool update (4 EXECUTED bands: sell long default/far-OTM/barrier + sell short; a 5th `buy_long` was REJECTED — see A4)** | staging Δpool vs reference `tradeUpdate` | each of the 4 = reference **spot law** to ≤**1.8e-15**; α,β conserved |
+| A4 | **Input validation** | the `buy_long` attempt (bad strike) rejected by staging vs reference OTM check | staging's reject string **byte-identical** to reference `executeBand` reason (`"…not OTM on <wing> wing…"`). (This is the same op excluded from A3 — a rejected input, counted once, here.) |
+| A5 | **Round-trip open→close** | pool before-open vs after-close | pool read returns to before-open (Δx=Δy=Δα=Δβ=Δw = 0.000e+0 at display precision). **Scoped honestly (skeptic):** Δα=Δβ=0 is trivial (globals never move on a spot trade); Δx/Δy are display-rounded on a **shared multi-wallet pool**, and staging never established a persisted off-ATM warp to reverse — so this is **directional, not proof** of a clean reversal. Also: the reference's shipped frozen-arc close zeroes the round-trip, but the pending update-2/entry-405 first-class-trade close expects a **tiny ~size² drain** — against which a hard 0 could itself be a divergence. Not settled here. |
 
 ## ⚠ CANNOT VERIFY YET — blocked, mostly by the γ=1 config
 | # | What | Why blocked |
@@ -39,7 +39,14 @@ Evidence: `campaign/` (marks_40.json, battery.jsonl, trade_battery.log, phase1/2
 5. **[after γ=2] Re-run the funding + ITM-seam + round-trip-charge-back checks** — all degenerate/moot at
    γ=1; only meaningful once γ>1.
 
-## Net
-Everything **reachable at γ=1 is exactly aligned** (engine, option pricing, spot-trade law, validation,
-clean round-trip) — the port is faithful where measurable. The gaps are **not observed divergences**;
-they're **untestable-at-γ=1**. The single highest-leverage change is **set γ=2**, then re-run the campaign.
+## Net (corrected per skeptic gate)
+The **tested subset** aligns to machine precision (engine, option pricing, spot-trade pool law, validation)
+— faithful where measured. **No divergence was OBSERVED in that subset**, but several behaviors remain
+**unverified and could still diverge** — do not read this as "no divergences." The blockers have THREE
+distinct causes, not one:
+- **γ=1 config** blocks B1/B2/B3 (kurtosis, funding, ITM seams) — fixed by setting γ=2.
+- **No staging source** blocks B5 (code-level) — needs the CTO.
+- **Simply not run** blocks B6 (multi-band / partial-close / rebase compositions — testable at γ=1) and
+  B4 (the trade-point-warp discriminator is **unresolved**, a divergence there is NOT ruled out).
+The single highest-leverage change is **set γ=2**; but it does not, by itself, make the check
+comprehensive — the compositions and the code-level pass still have to be run.
