@@ -3600,3 +3600,9 @@ _Context: operator gives the go to build the faithful options-seller model. Mana
 _Context: operator asks (1) a simple-English explanation of the v3 options-seller model and (2) why the auditor didn't catch the faithfulness correction the operator himself made (spot-proxy vs options-AMM). Manager: insurance-seller analogy; and owns that the auditor was given a spot-AMM-framed brief (audit internals), never tasked to challenge the premise — a briefing error by the manager, not an auditor miss; lesson logged._
 
 > 1. simple english explanation? 2. why didn;t the auditor catch the prev correton i made?
+
+
+## Entry 494 — 2026-07-08 UTC
+_Context: operator says run the auditor on v3. Manager dispatched the skeptic (Opus) with a PREMISE-CHALLENGING brief — attack whether the options-seller/VRP framing is faithful at all + whether G·book coefficient and the VRP-vs-funding potential double-count hold, not just internal arithmetic._
+
+> yeah sure run the auditor /agents
