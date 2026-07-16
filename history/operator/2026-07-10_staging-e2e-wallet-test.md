@@ -282,3 +282,9 @@ give github link to open it online [×2]
 ok retest he's pushed the UG
 
 > Context (manager, one line): CTO pushed the upgrade; manager re-runs the alignment campaign (config γ, marks diff, trade-point, funding, close) to check whether staging reached 5ce1a76c.
+
+## Entry 37 (2026-07-10)
+
+are you comparing this with the latest version july thing?
+
+> Context (manager, one line): operator checks the retest reference is the July-8 5ce1a76c latest; manager verifies the md5 of the file used.
