@@ -4,10 +4,14 @@
 `/api/amm/marks` now reports **gamma=2, m=1, g_loc=2** (was gamma=1). Engine v28-lens, DB healthy.
 So Factor 0 (set γ=2) is DONE.
 
-## FINDING (candidate FLAG — manager-measured, skeptic-gating in progress)
+## FINDING (CONFIRMED — manager-measured, **skeptic-CLEAR** `notes/skeptic/VERDICT_retest_divergence_2026-07-10.md`)
 **At γ=2, staging's option marks match the reference ONLY at ATM; the wings are LINEAR, not the
-reference power-law.** Anchored on the γ=1 result (where staging matched `markLensed(wing,θ,1,g)` to
-5.6e-17 over 40 strikes — so that IS the correct shared convention):
+reference power-law.** Justification (corrected per skeptic — NOT the γ=1 match, which is a degeneracy
+since `markLensed` is itself linear at g=1): (a) reference engine source — `markLensed` uses `g` as the
+literal wing exponent `pow(·,±g)`; (b) `markLensed` is the actual pricing/settlement read (`valueAtStrike`/
+band/chart all call it — not display-only); (c) golden §1 + harness **CM11 wing power-law** runs green on
+5ce1a76c (`V(2ρ)/V(ρ)=2^(−g)`, maxRelErr 0). Skeptic re-derived staging `put=(4/27)·θ` exactly (2.8e-17)
+vs reference `(4/27)·θ²` — staging kept the γ=2 ATM amplitude (0.148) but the γ=1 wing steepness:
 
 - **Staging put_mark = V_atm · θ** (exponent **1**, linear). Measured: `MAX |staging_put − V_atm·θ| = 2.2e-10`
   over 40 strikes → staging is exactly linear in θ.
@@ -28,11 +32,11 @@ the option-value wings. This is **Factor 1 (markLensed / ITM prices)** — untes
 The golden ITM constants ($66.67 exercise line = put value ⅓ at the seam; the CM11 wing power-law) would NOT
 reproduce on staging as-is.
 
-## Caveats (before this is called a staging bug)
-1. Reference convention anchored on the γ=1 exact match — strong, but the skeptic should confirm
-   `markLensed(·,θ,1,g)` is the faithful per-strike correspondence (not a coincidence at g=1).
-2. `/api/amm/marks` might be a DISPLAY grid while the real pricing (bands/settlement) uses a different path —
-   need to confirm the marks endpoint is the actual pricing, not a coarse display.
+## Caveats
+1. ~~γ=1 anchor~~ — RESOLVED: dropped as proof (it's a degeneracy). Finding stands on engine source + CM11 + golden.
+2. **STILL OPEN:** confirmed for `/api/amm/marks` (full-precision, exactly linear — a genuine curve, not a
+   downsampled power-law). NOT yet confirmed whether band/settlement pricing shares this linear path — staging
+   is the CTO's separate Go port; ask the CTO / test a band's per-strike value at γ=2.
 3. ATM is correct, so this is a wing-shape/steepness-propagation issue, not a total pricing break.
 
 Evidence: `retest/marks_g2.json`, `retest/shape.js` (linear-fit 2.2e-10), `retest/retest_where.js` (per-θ diff).
