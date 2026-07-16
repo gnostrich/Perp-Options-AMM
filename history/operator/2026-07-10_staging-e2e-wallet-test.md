@@ -276,3 +276,9 @@ simple english will this take the current thing to that latest version? [sent ×
 give github link to open it online [×2]
 
 > Context (manager, one line): operator wants the GitHub URL to view the CTO upgrade deliverable online.
+
+## Entry 36 (2026-07-10)
+
+ok retest he's pushed the UG
+
+> Context (manager, one line): CTO pushed the upgrade; manager re-runs the alignment campaign (config γ, marks diff, trade-point, funding, close) to check whether staging reached 5ce1a76c.
