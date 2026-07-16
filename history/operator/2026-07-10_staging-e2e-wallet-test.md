@@ -288,3 +288,9 @@ ok retest he's pushed the UG
 are you comparing this with the latest version july thing?
 
 > Context (manager, one line): operator checks the retest reference is the July-8 5ce1a76c latest; manager verifies the md5 of the file used.
+
+## Entry 38 (2026-07-10)
+
+do the usual diff and report as before so we can iterate with cto
+
+> Context (manager, one line): produce the per-factor diff report refreshed with post-upgrade (γ=2) retest results across all factors, for CTO iteration.
