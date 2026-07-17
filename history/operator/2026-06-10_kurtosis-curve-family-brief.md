@@ -3612,3 +3612,15 @@ _Context: operator says run the auditor on v3. Manager dispatched the skeptic (O
 _Context: operator asks where the leverage part is in v4. Manager: it is present as `book_per_equity` (+ borrow_APR) — the leverage on the Temporal/options side, HLP un-levered per entry 486 — but the rename obscured it; renamed back to `LP_leverage` for clarity._
 
 > wheres the leverage part?
+
+
+## Entry 496 — 2026-07-08 UTC
+_Context: operator annotates the v4 file with 6 refinements: (1) imperfect delta hedge + execution costs; (2) daily turnover 0.2–0.4x (100% unlikely); (3) 2.5bps fee; (4) a vol-equivalent-of-LVR risk + a poor-calibration risk (two risks); (5) constant limit-order placement/updating costs; (6) PRODUCT — can only an LP's yield be at risk, not principal (for treasury-type LPs like Krishna's)? Manager built v5 with #1-#5 baked in (execution costs, realistic defaults, two-risk split) and answered #6 as a product/structuring question (senior-junior tranche / yield-only bucket / stop-out / tail hedge — operator-tier)._
+
+> [file: temporal_lp_economics_MODEL_v4_options_seller_CORRECTED (1).xlsx]
+> 1. Assume imperfect delta hedging and some execution costs
+> 2. Daily turnover for fee income: turning over 100% of the pool is unlikely. 0.2-0.4x are realistic.
+> 3. 2.5bps likely.
+> 4. There will be a vol equivalent of LVR here. That is one risk; second risk is a poor "calibrated volatility"
+> 5. Constant limit order placement and updating will cost
+> 6. For the product: because there is a chance of -100% is there a way to put only an LP's yield at risk instead of principal too? - Important if you're looking at Krishna's treasury type people as LPs.
