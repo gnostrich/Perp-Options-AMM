@@ -3624,3 +3624,9 @@ _Context: operator annotates the v4 file with 6 refinements: (1) imperfect delta
 > 4. There will be a vol equivalent of LVR here. That is one risk; second risk is a poor "calibrated volatility"
 > 5. Constant limit order placement and updating will cost
 > 6. For the product: because there is a chance of -100% is there a way to put only an LP's yield at risk instead of principal too? - Important if you're looking at Krishna's treasury type people as LPs.
+
+
+## Entry 497 — 2026-07-08 UTC
+_Context: operator asks for a pointwise, simulation-backed report answering the points; and to SHELVE the last one (#6 principal protection) — no action on it. Manager wrote `sims/LP_ECONOMICS_REPORT_2026-07-08.md` (point-by-point, sim-backed) and marked #6 SHELVED (not built)._
+
+> can you prepare a pintwise report answering whatevrr with smilation; last one shelve nothing on thjat not doing anythig for that

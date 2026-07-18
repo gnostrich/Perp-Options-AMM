@@ -14,7 +14,10 @@ v5 = v4 (auditor-corrected options-seller) + operator entry-496 calibrations & e
 Costs default 1.5%/yr combined; fee income now ~2.7%/yr (small). Verified: well-calibrated (σ_cal=RV) BASE ≈ **+1.2%**
 (just fees − costs); the LP's real edge is σ_cal>RV (selling vol rich), the real risk is σ_cal<RV (spike/miscalibration).
 
-## Entry-496 #6 — PRODUCT question (NOT a sim knob): can only an LP's YIELD be at risk, not principal?
+## Entry-496 #6 — SHELVED (operator entry 497): principal protection — NO ACTION
+_Parked, not built, not modeled. Options below retained for later only._
+
+### (reference) can only an LP's YIELD be at risk, not principal?
 Because the tail can hit −100%, treasury-type LPs (e.g. Krishna's) need principal protection. Standard structures
 (operator/product decision — flagged, not built):
 1. **Senior/junior tranches:** treasury LP = SENIOR (principal-protected up to a buffer); a junior tranche /
