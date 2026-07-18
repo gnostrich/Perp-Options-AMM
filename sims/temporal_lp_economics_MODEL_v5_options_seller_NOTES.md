@@ -29,3 +29,19 @@ Because the tail can hit −100%, treasury-type LPs (e.g. Krishna's) need princi
 Trade-off: someone must bear the tail (junior tranche / insurance / hedge cost), so principal protection lowers
 the senior yield &/or capital efficiency. For treasury LPs the senior-tranche or yield-only bucket is the usual fit.
 Can add a "capped-downside/senior-tranche" toggle to the sim on request — but the STRUCTURE is an operator call.
+
+---
+
+## PRE-SEND AUDIT (skeptic, Opus, 2026-07-08) — FLAG-SPOOF found + FIXED
+Auditor red-teamed the Varun report + this sheet for spoofing/conflation/gaslighting before external send.
+- **Exhibits A & B (grids):** reproduce to the digit; cell refs correct. OK.
+- **Conflation (σ_cal vs IV vs RV; carry vs funding; LVR-equivalent):** clean. OK.
+- **Caveats/overclaim:** adequate; the "~+1%/yr well-calibrated, edge requires σ_cal>RV" disclosure is present. OK.
+- **FLAG-SPOOF (hard, DO-NOT-SEND):** `Scenario_calc!B13` (BASE) and `!B15` (RESTAKED) had **broken formulas**
+  computing **−66.26% / −67.76%** (sign-flipped) vs the report's +40.2% / +50.2% — B13 double-counted the vol
+  cost and dropped hedge costs; B15 dropped the HLP layer. Since the report invites opening the live sheet, this
+  was disqualifying. **FIXED:** `B13 = B9+B10+B11+B12`, `B15 = B13+B14` → now 40.24% / 50.24% (match report & grid).
+  (v3/v4 not affected — bug was introduced by v5's carry/vol split rows.)
+- **NITs fixed:** added the Financing row (B11) to Exhibit C for row-for-row tie-out; softened the Q2
+  "widens the profitable region" claim (no shown grid cell flips colour with +10%).
+**Verdict after fixes: SAFE TO SEND.**
