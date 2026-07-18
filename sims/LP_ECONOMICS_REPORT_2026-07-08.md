@@ -1,5 +1,10 @@
 # Temporal LP economics — pointwise report (simulation-backed)
 
+![model report — rendered view](LP_ECONOMICS_REPORT.png)
+
+_Concise one-page version: `LP_ECONOMICS_REPORT.pdf` (with model screenshots). Full detail below._
+
+
 **Model:** `sims/temporal_lp_economics_MODEL_v5_options_seller.xlsx` (faithful options-seller, auditor-corrected).
 **Status:** BRAINSTORM / non-core (lives in `sims/`, touches nothing in the engine). Magnitudes ILLUSTRATIVE —
 reduced-form sketch, not a backtest.
