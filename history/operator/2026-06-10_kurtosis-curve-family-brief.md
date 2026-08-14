@@ -3793,3 +3793,21 @@ _Context: operator accepts LPs as free agents specifying their own curve paramet
 _Context: operator catches the manager's error — AMM fees and slippage are DIFFERENT: slippage raises the price for the sell-back round trip, fees don't. Manager verified by direct CPMM round trip: slippage fully reversible (trader net $0.0000000000, pool returns exactly to start), fees irreversible (= exactly the LP's income). Correct identity LP P&L = fees − LVR. MATERIAL consequence: L7 break-even turnover 2.37x/day → 11.84x/day (the spread income line was invalid), ~39x above realistic; fee must be tens of bps. Channel-1 unfairness reframed as an order-book artifact; AMM-native remedy = per-STRIKE fee schedule. Recorded in sims/CORRECTION_slippage_is_not_income.md._
 
 > but theres a difference in amm fees and slippage right, like the slippage is also making the price higher for the sell back round trip whereas fees font have. that effect so theyre different things right…?
+
+
+## Entry 524 — 2026-08-14 UTC
+_Context: operator proposes TWO CURVE SETS (buy curve + sell curve) as the fix. Manager verified: it solves revenue-irreversibility (round trip earns $10.53 vs $0 on one curve), spread expressivity (ladder emerges as the envelope), incentive-compatibility (wider quotes fill later), per-strike risk pricing, and keeps the mid common (no smile, err 5.55e-17)._
+
+> unless the AMM has 2 curves sets! buy and sell curve, prob solved
+
+
+## Entry 525 — 2026-08-14 UTC
+_Context: operator asks what remains open, confirms apportionment-by-curve + per-LP customizable fees, and asks whether closed-form solving still works. Manager: closed form SURVIVES as PIECEWISE-closed-form (analytic per tier, breakpoints = cumulative depths; order fixed if spread profiles are consistent, per-strike sort if they cross). New problem raised: two curves force an explicit MARKING RULE._
+
+> what problem remain? now u have natural apportionment like we already did as per curve, and the fees become customisable per LP as well, right? and i'm assuming closed form solving works here too?
+
+
+## Entry 526 — 2026-08-14 UTC
+_Context: operator asks to brainstorm the remaining open items and consolidate into a single spreadsheet with its checks. Manager resolved 3 items (marking rule -> mid for display + close-out for liquidation; payout under two curves -> LP revenue = (V_open+V_close)*h*K, previously omitted; L7 -> required h* = G*RV^2/(turn*days)) and built sims/CONSOLIDATED_MODEL_v1.xlsx with a 5_CHECKS sheet. All structural checks PASS; C9 FAILS — LP net APR -14.32% because required h* 99bps vs actual 5bps at 0.3x/day. Found: lower g = less gamma = cheaper to run, so m is an economics lever too._
+
+> ok let's brainstorm through whatverr rmeains open and then consolidate into the songle soreadsheet witn its smchecks
