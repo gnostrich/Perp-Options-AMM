@@ -43,8 +43,8 @@ must-have, that is the multi-lens/smile reopen — a curve/invariant change with
 ## C. Needs your call
 | # | gap | the decision |
 |---|---|---|
-| **L2** | **Funding rate law** (update-2) — sets the carry magnitude in every LP economics number. | pick the rate mapping (HL-style capped premium→rate) — D1/D3/D4 in the update-2 spec. |
-| **L6** | **Liquidation / negative cash-out.** Derived payout shows a sold-put + long-sliver pairing drives cash-out **negative past the carve** (−$83k at S=$80k; −$452k at $60k on $200k carve equity). A carve is **not** automatically self-collateralising. | which pairings are allowed, and what happens when the carve is exhausted. |
+| ~~L2~~ | ~~Funding rate law~~ — **CLOSED as moot (entry 515): there is no funding on perp options.** | — |
+| **L6** *(downgraded, entry 514)* | **Account-level liquidation.** Liquidation is ONE account-level test (all perps + perp-options, one equity pot, ~50x cap, LP excluded); per-carve negatives are absorbed. Derived payout shows a sold-put + long-sliver pairing drives cash-out **negative past the carve** (−$83k at S=$80k; −$452k at $60k on $200k carve equity). A carve is **not** automatically self-collateralising. | which pairings are allowed, and what happens when the carve is exhausted. |
 | **G6** | **No LP fairness theorem.** The book averages levels but takes the **tightest** spread; nothing proves an LP isn't systematically adversely selected by the mix. Sharpened by the workbook's **refraction** finding (one LP's β move re-prices every other LP's APR). | do you want per-LP fairness *proved* (new conjecture) or just *disclosed* in the product? |
 | **L3** | Close/settlement semantics (the old A14 seam history). | unchanged, still yours. |
 
@@ -59,3 +59,19 @@ G11 (nothing wired to the engine — by design, this is a sim).
 3. **[YOU]** L6 pairing/liquidation rule — this is the one with real money consequences.
 4. **[PROVER]** G6 fairness conjecture + the arb legs, once A is ruled.
 5. **[YOU]** L2 funding law, which unlocks calibrated (rather than illustrative) economics.
+
+---
+## UPDATE (entries 514–517) — see `CORRECTIONS_account_and_no_option_funding.md`
+- **L2 CLOSED (moot)** — no funding on perp options; the perp already keeps payoffs in line.
+- **L6 DOWNGRADED** — liquidation is account-level (~50× cap, LP excluded); carve negatives are absorbed
+  (acct lev 6.27×/9.36× vs 50× cap; account liquidation only at ≈ −70% price move).
+- **NEW L7 (now the headline economic gap)** — with no option carry the LP is a **market maker**:
+  `spread + fees + perp-hedge funding` vs `gamma bleed`. **Break-even turnover ≈ 2.4×/day** vs the
+  0.2–0.4×/day called realistic. Levers: spread width, fee, turnover, perp-funding capture.
+- **G6 CONFIRMED by the operator (entry 516) as the APPORTIONMENT problem — nontrivial.** The Lean has no
+  individual-rationality theorem; the book averages levels but takes the *tightest* spread; refraction means
+  one LP's choice re-prices everyone. Apportionment (who gets which fill, and is it fair) is the open design
+  object — a candidate for the next Aristotle conjecture once the transport-vs-level call is made.
+- **OPEN FLAG for the operator:** the engine ships a **ray-deviation funding** component (feature #9,
+  entry 232). If perp options carry no funding, what is that component — retired, or a pool-side mechanism
+  distinct from an option funding rate? Not guessing.

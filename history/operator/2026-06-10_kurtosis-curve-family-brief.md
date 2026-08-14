@@ -3741,3 +3741,15 @@ _Context: operator corrects the liquidation level — there is a TOTAL ACCOUNT-L
 _Context: operator rules there is NO funding rate on perp options — they don't need one to keep payoffs in line, the perp already does that. Manager: this invalidates the 'carry = book*G*sigma_cal^2' line used in every LP economics version (a modelling invention; verified sigma cancels pathwise since the same curve prices open and close - P&L identical -3,475.08 for sigma_cal 0.5/0.7/1.0). LP is therefore a MARKET MAKER (spread+fees+perp-hedge funding vs gamma bleed), break-even turnover ~2.4x/day vs 0.2-0.4x realistic. L2 closed as moot; NEW L7 raised; flagged the engine's existing ray-deviation funding component for reconciliation._
 
 > no funding rate on the perp options since they don't need one to ensure theire payoffs are in line, the perp already does that
+
+
+## Entry 516 — 2026-07-08 UTC
+_Context: operator confirms LP fairness = the APPORTIONMENT problem, and that it is nontrivial (corroborates gap G6 from the Lean audit: the book averages levels but takes the tightest spread, with no individual-rationality theorem; sharpened by the refraction cross-effect)._
+
+> for lp fairness etc yeah theres the apportionment thing that's sort of nontrivial
+
+
+## Entry 517 — 2026-07-08 UTC
+_Context: operator affirms the working method — brainstorming, going around obstacles, closing gaps._
+
+> but this is good, we're braintoming it and fgoing around it and cosing gaps
