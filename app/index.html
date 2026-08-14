@@ -86,7 +86,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     </div>
 
     <button class="cta" id="cta">Create Earn Position</button>
-    <div class="note">Your curve is posted as a ladder of firm rungs per wing. Each rung is its own quote at its own strike and size — that is what the book fills against.</div>
+    <div class="note">Your curve IS the quote. Any strike is priced on demand from the closed form — no ladder to post, cancel or replace. Requoting is four parameters, not N orders.</div>
   </div>
 
   <!-- ══ CENTRE : curve + ladder ══ -->
@@ -97,12 +97,12 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
         <span class="badge" style="border-color:#FF6767;color:#FF6767">put</span>
         <span class="badge">bid / ask</span></span></div>
       <canvas id="cv" width="980" height="360"></canvas>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. Squares mark your posted rungs.</div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. The teal/red ribbon is your capacity density — you quote any strike on demand from the closed form; nothing is pre-posted.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
-      <div class="chead"><b>Rung schedule</b><span class="t2" style="color:var(--mute)">per wing</span></div>
-      <table id="rungtbl"><thead><tr><th>#</th><th>strike k</th><th>size (BTC)</th><th>unit premium</th><th>posted premium</th><th>Δ</th></tr></thead><tbody></tbody></table>
+      <div class="chead"><b>Quote sheet</b><span class="t2" style="color:var(--mute)">sampled — you quote any strike on demand</span></div>
+      <table id="rungtbl"><thead><tr><th>strike k</th><th>call</th><th>put</th><th>bid</th><th>ask</th><th>capacity BTC/1%</th><th>Δ</th></tr></thead><tbody></tbody></table>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -115,10 +115,10 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Schedule Preview</b><span class="t2" style="color:var(--teal)" id="live">live</span></div>
-      <div class="m"><span>Rungs</span><b id="s-rungs">—</b></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">live</span></div>
+      <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
-      <div class="m"><span>Peak Strike</span><b id="s-peak">—</b></div>
+      <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
       <div class="m"><span>Half-Spread (Dial)</span><b id="s-hs">—</b></div>
       <div class="m"><span>Σ Posted Premium</span><b id="s-prem">—</b></div>
       <div class="m"><span>Notional $</span><b id="s-notd">—</b></div>
@@ -172,10 +172,10 @@ const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)
 const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
 return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a)*B};}
 /* ─── params (CurveParamField spec) ─── */
-const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,rungs:12};
+const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
- ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["rungs","N (rungs/wing)",2,40,1]];
+ ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
 let P={...DEF}, volIndexed=true;
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
@@ -208,13 +208,17 @@ function calc(){
  const inv=book.reduce((s,m)=>s+1/m.lam,0); book.forEach(m=>m.share=(1/m.lam)/inv);
  const me=book.find(m=>m.me);
  const notBTC=P.margin*10;                       // pool leverage 10x
- const R=Math.round(P.rungs), kMax=0.6, rung=[];
- for(let i=1;i<=R;i++){const k=kMax*i/R, w=Math.exp(-P.lam*8*k*k);
-   rung.push({i,k,prem:c.CALL(k),w,d:(c.CALL(k+0.01)-c.CALL(k-0.01))/0.02});}
- const ws=rung.reduce((s,r)=>s+r.w,0);
- rung.forEach(r=>{r.size=notBTC*r.w/ws;r.posted=r.size*r.prem;});
- const sumNot=rung.reduce((s,r)=>s+r.size,0)*2, sumPrem=rung.reduce((s,r)=>s+r.posted,0)*2;
- const peak=rung.reduce((a,r)=>r.size>a.size?r:a,rung[0]).k;
+ // CONTINUOUS capacity density w(k) — no ladder. Quote any strike on demand.
+ const kMax=0.6, M=60, dk=kMax/M, dens=[];
+ for(let i=0;i<=M;i++){const k=kMax*i/M, w=Math.exp(-P.lam*8*k*k);
+   dens.push({k,w,prem:c.CALL(k),d:(c.CALL(k+0.005)-c.CALL(k-0.005))/0.01});}
+ const wInt=dens.reduce((s,r,i)=>s+r.w*((i===0||i===M)?0.5:1),0)*dk;
+ dens.forEach(r=>{r.cap=notBTC*r.w/wInt;});                       // BTC per unit k
+ const sumNot=notBTC*2;
+ const sumPrem=dens.reduce((s,r,i)=>s+r.cap*r.prem*((i===0||i===M)?0.5:1),0)*dk*2;
+ // "peak strike" = capacity-weighted centre of mass
+ const peak=dens.reduce((s,r,i)=>s+r.k*r.cap*((i===0||i===M)?0.5:1),0)*dk/Math.max(notBTC,1e-9);
+ const rung=dens;
  const bookVal=sumPrem*S;                 // premium at risk ($)
  const notionalUSD=sumNot*S;              // notional ($) — the fee/bleed basis
  const feesYr=(hEff/1e4)*MKT.turn*365*notionalUSD, bleedYr=bleed*notionalUSD;
@@ -222,7 +226,7 @@ function calc(){
  const baseAPR=(feesYr-bleedYr)/Math.max(notionalUSD,1), levAPR=(feesYr-bleedYr)/Math.max(equity,1);
  const sorted=[...book].sort((x,y)=>x.h-y.h); let rem=MKT.Q; const px=c.CALL(0.1);
  sorted.forEach(m=>{const cap=m.share*MKT.pool,t=Math.max(0,Math.min(cap,rem));m.fill=t;m.rev=t*(m.h/1e4)*px*S;rem-=t;});
- return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,R,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
+ return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,dens,dk,M,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
 /* ─── draw ─── */
 function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32;
  g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
@@ -240,14 +244,18 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
  ln(as,'#1d4d52',1,[3,3]);ln(bi,'#1d4d52',1,[3,3]);
  ln(pu,'#FF6767',1.8);ln(ca,'#0ABAB5',2.3);
- const mx=Math.max(...st.rung.map(r=>r.size));
- st.rung.forEach(r=>{const s=3+5*r.size/mx;
-  g.fillStyle='#0ABAB5';g.fillRect(X(r.k)-s/2,Y(r.prem)-s/2,s,s);
-  g.fillStyle='#FF6767';g.fillRect(X(-r.k)-s/2,Y(st.c.PUT(-r.k))-s/2,s,s);});
+ // capacity density ribbon (continuous) along the bottom
+ const mx=Math.max(...st.rung.map(r=>r.cap));
+ g.save();g.globalAlpha=.55;
+ st.rung.forEach(r=>{const hgt=26*r.cap/mx;
+  g.fillStyle='#0ABAB5';g.fillRect(X(r.k)-1.6,H-Bm-hgt,3.2,hgt);
+  g.fillStyle='#FF6767';g.fillRect(X(-r.k)-1.6,H-Bm-hgt,3.2,hgt);});
+ g.restore();
+ g.fillStyle='#677275';g.fillText('capacity density',L+4,H-Bm-30);
  g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
 /* ─── render ─── */
 function render(){
- $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='rungs'?'= from notional':'')).join('');
+ $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='depth'?'= from notional':'')).join('');
  $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
   +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
   +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));
@@ -255,7 +263,7 @@ function render(){
  $('notional').textContent=usd(st.notBTC*S);
  $('poolLev').textContent='10.0×';
  $('lpLev').textContent=f(st.notionalUSD/Math.max(st.equity,1),2)+'×';
- $('s-rungs').textContent=st.R;
+ $('s-rungs').innerHTML='<span class="tl">continuous</span>';
  $('s-not').textContent=f(st.sumNot,2)+' BTC';
  $('s-peak').textContent=(st.peak*100).toFixed(0)+'%';
  $('s-hs').textContent='≈ '+f(st.hEff,0)+' bps';
@@ -280,8 +288,10 @@ function render(){
  $('r-bet').textContent=f(st.bleed/((st.hEff/1e4)*365),2)+'× /day';
  $('r-par').textContent=f(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12);
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
- $('rungtbl').querySelector('tbody').innerHTML=st.rung.map(r=>
-  `<tr><td>${r.i}</td><td>${(r.k*100).toFixed(1)}%</td><td>${f(r.size,3)}</td><td>${f(r.prem,4)}</td><td>${f(r.posted,4)}</td><td>${f(r.d,3)}</td></tr>`).join('');
+ const hq=st.hEff/1e4, samp=[2,6,10,15,20,25,30,40,50,60];
+ $('rungtbl').querySelector('tbody').innerHTML=samp.map(i=>{const r=st.rung[i];
+  return `<tr><td>${(r.k*100).toFixed(0)}%</td><td>${f(r.prem,4)}</td><td>${f(st.c.PUT(-r.k),4)}</td>
+  <td>${f(r.prem*(1-hq),4)}</td><td>${f(r.prem*(1+hq),4)}</td><td>${f(r.cap/100,3)}</td><td>${f(r.d,3)}</td></tr>`;}).join('');
  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
   `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
    <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
