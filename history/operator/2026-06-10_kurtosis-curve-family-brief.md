@@ -4056,3 +4056,9 @@ _Context: operator refines the normalisation ruling — a shared scale lets the 
 _Context: operator confirms the normalisation rule is uniform — the same rule applies in each of the four maker cells and to the aggregate, each shading against its own maximum. Manager found on checking that YOUR capacity was inconsistent between the two views (95 BTC in the maker grid from the share allocation vs 150 BTC on Earn from margin) and unified it._
 
 > and in each of 4 things aggregate vs individual yes the normalisation is same
+
+
+## Entry 566 — 2026-08-14 UTC
+_Context: operator rules that a participant cannot see other individual makers — only SELF and the AGGREGATE. Manager applied it to the chart toggle and also to the two panels that were naming other makers and their quotes/fills._
+
+> also you cant see individual makers only self and aggregate

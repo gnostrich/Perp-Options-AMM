@@ -102,14 +102,14 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="panel" style="margin-top:12px">
       <div class="chead"><b>RFQ — who fills this trade</b><span class="t2" style="color:var(--mute)" id="qlab">size —</span></div>
       <table id="ladder"><thead><tr><th>maker</th><th>half-spread</th><th>depth</th><th>fills</th><th>revenue</th></tr></thead><tbody></tbody></table>
-      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread.</div>
+      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread. Only your own row is itemised: another maker's spread, depth and revenue are not yours to see. Your leg is itemised; everyone else is aggregated, because you do not get to see another maker's price or size.</div>
     </div>
   </div>
 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 21 · one rule everywhere</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 22 · self + aggregate only</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -167,7 +167,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="panel">
       <div class="chead"><b>Aggregate book — what you trade against</b>
         <span><span class="badge" id="cbBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="cbSell" style="cursor:pointer">SELL</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span>
-        <span style="margin-left:10px"><span class="badge" id="cvAgg" style="cursor:pointer;background:#243b3d;color:#fff">AGGREGATE</span><span class="badge" id="cvMk" style="cursor:pointer">MAKERS</span></span></span></div>
+        <span style="margin-left:10px"><span class="badge" id="cvAgg" style="cursor:pointer;background:#243b3d;color:#fff">AGGREGATE</span><span class="badge" id="cvMk" style="cursor:pointer">YOU</span></span></span></div>
       <canvas id="cvT" width="980" height="470"></canvas>
       <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. <b>The curve is not a line</b> — each maker is an AMM, so taking size walks its own curve continuously and the book is a cloud: brightness is the liquidity still untouched at that price, full at the touch and fading to nothing where the book is exhausted, so how far the cloud reaches IS the depth. BUY and SELL are separate tabs; you only ever see one side. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
     </div>
@@ -491,9 +491,17 @@ function render(){
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
  $('magv')&&($('magv').textContent='×'+MAG);
  $('magc')&&($('magc').textContent='×'+MAG);
-  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
-  `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
-   <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
+  // operator entry 566: only YOUR row is itemised. Other makers' half-spread, depth
+  // and revenue are private — publishing them would hand every LP the outlier.
+  {const mine=st.sorted.filter(m=>m.me), oth=st.sorted.filter(m=>!m.me);
+   const oQ=oth.reduce((t,m)=>t+m.share*MKT.pool,0), oF=oth.reduce((t,m)=>t+(m.fill||0),0),
+         oR=oth.reduce((t,m)=>t+(m.rev||0),0);
+   const html=mine.map(m=>
+    `<tr class="me"><td>YOU</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
+     <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`);
+   html.push(`<tr><td>rest of book (${oth.length})</td><td>—</td><td>${f(oQ,1)}</td>
+     <td>${oF>1e-4?f(oF,2):'—'}</td><td>${oF>1e-4?usd(oR):'—'}</td></tr>`);
+   $('ladder').querySelector('tbody').innerHTML=html.join('');}
  if(VIEW==='transact'){renderTransact(st);return bind();}
  if(VIEW==='bands'){renderBands(st);return bind();}
  if(VIEW==='portfolio'){renderPortfolio(st);return bind();}
@@ -564,7 +572,7 @@ function renderTransact(st){
  $('tquote').innerHTML=
   `<div class="m"><span>best ${side==='buy'?'ask':'bid'}</span><b class="tl">${f(px,5)}</b></div>
    <div class="m"><span>book spread</span><b>${f(spr,1)} bps</b></div>
-   <div class="m"><span>filled by</span><b>${best.m.n}</b></div>
+   <div class="m"><span>filled by</span><b class="${best.m.me?'tl':''}">${best.m.me?'YOU':'another maker'}</b></div>
    <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>${side==='buy'?'you pay':'you receive'}</span><b class="${side==='buy'?'neg':'pos'}">${usd(sz*px*S)}</b></div>`;
  // best-of-book panel
  const rows=set.map(m=>({n:m.n,me:m.me,ask:m.c.CALL(k)*(1+m.h/1e4),bid:m.c.CALL(k)*(1-m.h/1e4)}));
@@ -587,7 +595,15 @@ function renderTransact(st){
  if(sz>bcap+1e-9){single='best maker alone tops out at '+f(bcap,1)+' BTC';cls='amb';}
  else if(envPx!==null){const bps=Math.abs(bestSingle.ask/envPx-1)*1e4;
    single=f(bps,2)+' bps'; cls=bps>1e-6?'pos':'';}
- $('timp').innerHTML=rows.map(r=>`<div class="m"><span>${r.n}${r.me?' (you)':''}</span><b class="${r.ask===ask?'tl':''}">${f(r.ask,5)}</b></div>`).join('')
+ // operator entry 566: this listed EVERY maker's quote by name. You get your own
+ // quote, the book's best, and where you stand — not a competitor's price.
+ const meRow=rows.find(r=>r.me), atTop=meRow&&Math.abs(meRow.ask-ask)<1e-12;
+ const rank=rows.filter(r=>r.ask<(meRow?meRow.ask:Infinity)).length+1;
+ $('timp').innerHTML=
+  `<div class="m"><span>your quote</span><b class="${atTop?'tl':''}">${meRow?f(meRow.ask,5):'—'}</b></div>`
+  +`<div class="m"><span>book best</span><b class="tl">${f(ask,5)}</b></div>`
+  +`<div class="m"><span>you are</span><b class="${atTop?'pos':'amb'}">${atTop?'AT THE TOP':'#'+rank+' of '+rows.length+', '+f(Math.abs(meRow.ask/ask-1)*1e4,0)+' bps behind'}</b></div>`
+  +`<div class="m"><span>makers quoting</span><b>${rows.length}</b></div>`
   +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single, at ${f(sz,1)} BTC</span><b class="${cls}">${single}</b></div>`;
  // fill breakdown — walk makers cheapest-first
  const sorted=[...rows].sort((a,b)=>side==='buy'?a.ask-b.ask:b.bid-a.bid);
@@ -596,8 +612,14 @@ function renderTransact(st){
   if(t>1e-6)out.push({...r,fill:t,px:side==='buy'?r.ask:r.bid});rem-=t;});
   $('tfl').textContent=f(sz,1)+' BTC · '+side;
  const av=$('arbv'),af=$('arbf'); if(av)av.textContent=f(ARBD,2); if(af)af.style.width=(ARBD*100)+'%';
- $('tfill').querySelector('tbody').innerHTML=out.map(o=>
-  `<tr class="${o.me?'me':''}"><td>${o.n}</td><td>${f(o.px,5)}</td><td>${f(o.fill,2)}</td><td>${usd(o.fill*S)}</td><td>${usd(o.fill*o.px*S)}</td></tr>`).join('');
+ // operator entry 566: your own leg is itemised; everyone else is one aggregated row.
+ const mine=out.filter(o=>o.me), oth=out.filter(o=>!o.me);
+ const othQ=oth.reduce((t,o)=>t+o.fill,0), othC=oth.reduce((t,o)=>t+o.fill*o.px,0);
+ const rowsHtml=mine.map(o=>
+   `<tr class="me"><td>YOU</td><td>${f(o.px,5)}</td><td>${f(o.fill,2)}</td><td>${usd(o.fill*S)}</td><td>${usd(o.fill*o.px*S)}</td></tr>`);
+ if(othQ>1e-9)rowsHtml.push(
+   `<tr><td>other makers (${oth.length})</td><td>${f(othC/othQ,5)}</td><td>${f(othQ,2)}</td><td>${usd(othQ*S)}</td><td>${usd(othC*S)}</td></tr>`);
+ $('tfill').querySelector('tbody').innerHTML=rowsHtml.join('');
  drawAgg(B,set,k);}
 /* ─── DEPTH CLOUD (operator entries 559/560) ─────────────────────────────────
    The curve is not a line. Each maker is an AMM, so taking size walks ITS curve
@@ -639,33 +661,32 @@ function cloudIn(g,set,x0,y0,w,h,ymax,side,Qref,res){
  g.stroke();g.restore();}
 function drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,side){
  cloudIn(g,set,L,T,W-L-R,PH,ymax,side,set.reduce((s,m)=>s+m.share*MKT.pool,0));}
-// SMALL MULTIPLES — one cloud per maker, shared brightness scale (operator entry 562)
-function drawMakerGrid(g,set,W,H,side){
- // operator entries 563/564: aggregate shades wrt the aggregate; each INDIVIDUAL
- // cell shades wrt ITS OWN maximum possible depth (the margin that maker is
- // putting up). A shared scale let the biggest maker dwarf the rest — 19 BTC
- // against a 95 BTC reference was nearly invisible. Self-relative means every
- // maker is legible on its own terms; the absolute depth is in the cell label,
- // which is where a number belongs.
- const selfRef=m=>Math.max(1e-9,m.share*MKT.pool);
+// SELF view (operator entry 566: you can see YOURSELF and the AGGREGATE, never
+// another maker individually — another maker's full curve is private, and showing
+// it would hand every participant the outlier to pick off).
+function drawSelfCloud(g,set,W,H,side){
+ const me=set.find(m=>m.me)||set[0];
+ const L=56,R=16,T=16,Bm=30,PH=H-T-Bm;
+ const Qme=Math.max(0.1,me.share*MKT.pool);
  const ask=side==='ask';
- const ymax=Math.max(...set.map(m=>ask?m.c.CALL(-0.7)*(1+m.h/1e4):m.c.CALL(-0.7)))*1.06;
- const cols=2,rows=Math.ceil(set.length/cols),PAD=12,LB=30,TB=22;
- const cw=(W-PAD*(cols+1))/cols, chh=(H-PAD*(rows+1))/rows;
- set.forEach((m,i)=>{
-  const cx=PAD+(i%cols)*(cw+PAD), cy=PAD+Math.floor(i/cols)*(chh+PAD);
-  g.strokeStyle='#1e3a3f';g.strokeRect(cx,cy,cw,chh);
-  cloudIn(g,[m],cx+LB,cy+TB,cw-LB-6,chh-TB-16,ymax,side,selfRef(m),150);
-  g.font='10px IBM Plex Mono';g.fillStyle=m.me?'#0ABAB5':'#c9d4d6';
-  g.fillText(m.n+(m.me?'  (you)':''),cx+LB,cy+14);
-  g.fillStyle='#677275';
-  g.fillText(f(m.share*MKT.pool,0)+' BTC · '+f(m.h,0)+' bps · λ '+f(m.lam,2),cx+LB+118,cy+14);
-  g.fillText('−70%',cx+LB,cy+chh-4); g.fillText('+70%',cx+cw-38,cy+chh-4);});
- g.font='10px IBM Plex Mono';g.fillStyle='#677275';
- g.fillText('each cell on ITS OWN scale — brightness runs full → empty over that maker\'s own'
-   +' capacity, so a small maker is as legible as a large one. Depth is the number in the label.',PAD+2,H-2);}
+ const touch=k=>me.c.CALL(k)*(ask?1+me.h/1e4:1-me.h/1e4);
+ const dFull=(Qme/MKT.pool)*100*me.lam*me.c.ATM;
+ const ymax=touch(-0.7)+dFull*1.02;
+ const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
+ g.strokeStyle='#141d1f';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
+ [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-9));
+ cloudIn(g,[me],L,T,W-L-R,PH,ymax,side,Qme);
+ g.font='10px IBM Plex Mono';g.fillStyle=ask?'#63e6e2':'#FF6767';
+ g.fillText((ask?'▲ YOUR ':'▼ YOUR ')+(ask?'BUY':'SELL')+'-side cloud — full → empty over your own capacity, '
+   +f(Qme,0)+' BTC',L+6,T+12);
+ g.fillStyle='#677275';
+ g.fillText('same rule as the aggregate: shaded against its own max. Other makers are not shown —'
+   +' you see yourself and the book, never a competitor\'s curve.',L+6,T+26);
+ g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
 function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=0;
- if(CVIEW==='makers'){g.clearRect(0,0,W,H);drawMakerGrid(g,set,W,H,CSIDE);return;}
+ if(CVIEW==='makers'){g.clearRect(0,0,W,H);drawSelfCloud(g,set,W,H,CSIDE);return;}
  g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
  const A=xs.map(B.ask),D=xs.map(B.bid);
  const PH=H-T-Bm-HB-28;
