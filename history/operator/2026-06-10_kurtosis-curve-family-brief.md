@@ -3705,3 +3705,15 @@ _Context: operator states the 3-layer architecture — pricing engine; portfolio
 _Context: operator jogs memory that the ITM seam moves DYNAMICALLY as the curve shifts ("pretty elegant"). Manager verified the sheet inherits this: u_seam=LN(g/(g+1)) is a formula off g=m*gamma, so leaning w or raising m slides S*/K (0.500->0.667->0.750) and strikes flip regime automatically. Flagged L5: gamma is still a static input; wiring gamma=w/(1-w) live would make the seam move within a scenario too._
 
 > jst to jog memoery thw itm seam etc moves dybamically as the curve shifts its actualy prerttyy elegant
+
+
+## Entry 510 — 2026-07-08 UTC
+_Context: operator gives the trader-side architecture — perps open into SHARED WALLETS (one for all longs, one for all shorts), all perps aggregated; creating a perp-option upon a perp REMOVES that much perp from the perps portfolio (separate tab); closing the option also closes the perp portion backing it. Manager verified this against the engine (clubs L2390, club.equity -= carveEquityAbs L2697, += retEquity L2724, carvedNotional frozen) and added Circuit B (8_TraderCircuit) to the loop model._
+
+> also just so you get the overall picture / whole loop right also,  folks open perps positions intoshared wallets one for all long one for all short; and all perps of same size are aggregated and shown, when perp option positions are created uppn perp, that much of perp is removed from the perps portfolio (separate tab)  and when a perp optoon position. is closed the portoon of perp that its backed by also is closed hope thi shelps ...
+
+
+## Entry 511 — 2026-07-08 UTC
+_Context: operator completes the exit — P&L for the perp-option AND its backing perp is cashed out DIRECTLY (one settlement, both legs together). Manager corrected the circuit (carved perp CLOSES rather than returning as an open position) and verified conservation: (perps-tab-after + cash-out) - before - P&L = 0 on both sides._
+
+> and then p/l for the perp option + its perp is cashed out directly
