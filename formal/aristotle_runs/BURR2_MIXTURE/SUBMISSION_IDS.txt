@@ -1,0 +1,4 @@
+BURR2_MIXTURE  (operator entry 532 — closure-under-mixture question)
+project 920d43a9-ae69-4eb2-8ed1-860c9ef91386
+task    e95f6377-2071-4d76-9b43-94f29b591082
+submitted 2026-08-14 ~20:04 UTC, Lean 4.28.0 / Mathlib v4.28.0

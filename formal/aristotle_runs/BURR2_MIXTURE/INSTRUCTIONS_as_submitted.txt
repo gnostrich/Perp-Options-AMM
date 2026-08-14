@@ -1,0 +1,55 @@
+Prove the `sorry`-ed theorems in `BURR2_MIXTURE.lean`. Toolchain: Lean 4.28.0 with Mathlib v4.28.0.
+
+The question: is the Burr-II / t-family wing kernel closed under mixture (this is the aggregation
+question for a pool of heterogeneous liquidity providers), and if not, how big is the error? The
+file header gives the mathematics: at fixed shoulder `a` and scale `s` the family is log-affine in
+the tail parameter in the coordinate `Lc a s v = log(1 + (v/s)^a)`, so a 50/50 mixture factors
+exactly as `midpoint member × cosh(δ·Lc)` with `δ = (γ₂-γ₁)/(2a)`.
+
+HARD CONSTRAINTS.
+1. Do NOT change any theorem statement, hypothesis, or `def` body. Everything must come back
+   byte-identical apart from the proofs. I will diff them.
+2. No `axiom`, `sorry`, `admit`, `native_decide`, `opaque`, `unsafe`. `#print axioms` on every
+   proved theorem must be a subset of {propext, Classical.choice, Quot.sound}.
+3. If a statement is FALSE, leave its `sorry` and report the counterexample. Never weaken a
+   statement or add a hypothesis to make it go through.
+4. If a statement is true but you cannot prove it, leave that `sorry` and say so plainly. This
+   applies in particular to §5 `burr2_not_closed_under_mixture_scale`, which is a deliberate
+   stretch target: it IS true (I have checked it numerically) but its intended proof needs two
+   limits and a strict-convexity step. Partial success is expected and useful.
+5. You MAY add imports, `private` helper lemmas, and `set_option`s that do not affect kernel trust.
+
+PRIORITY ORDER. §2 `mixture_eq_cosh` (the exact identity — everything else leans on it), then §3
+`burr2_not_closed_under_mixture` (the non-closure certificate), then §4 `mixture_rel_error_le`,
+`cosh_sub_one_le` and `mixture_aggregate_le` (the quantitative half — this is the part the product
+decision actually rests on), then §1, then §5.
+
+PROOF NOTES (routes I have checked by hand).
+* `kern_eq_exp`: `Real.rpow_def_of_pos` on the base `1 + (v/s)^a > 0`.
+* `mixture_eq_cosh`: write both members as `exp(-c_i·L)` with `c_i = (γ_i+1)/a`; then
+  `½(exp(-c₁L) + exp(-c₂L)) = exp(-c̄L)·½(exp(δL) + exp(-δL)) = exp(-c̄L)·cosh(δL)` where
+  `c̄ = (c₁+c₂)/2` and `δ = (c₂-c₁)/2 = (γ₂-γ₁)/(2a)`. Use `Real.cosh_eq` and `Real.exp_add`.
+* `Lc_surj`: take `v = s * (Real.exp l - 1)^(1/a)`; then `(v/s)^a = exp l - 1` by
+  `Real.rpow_natCast`-free reasoning: `((exp l - 1)^(1/a))^a = (exp l - 1)^((1/a)*a) = exp l - 1`
+  via `Real.rpow_mul` on the non-negative base.
+* `burr2_not_closed_under_mixture`: suppose some `γ'` works. Combining with `mixture_eq_cosh` and
+  `kern_eq_exp`, and using `Lc_surj` to range over all `l > 0`, one gets
+  `cosh (δ l) = exp (β l)` for all `l > 0`, with `β = -(γ̄+1)/a + (γ'+1)/a`. Apply this at `l` and
+  at `2l`: `cosh (2δl) = exp(2βl) = (exp(βl))² = cosh(δl)²`, while
+  `Real.cosh_two_mul` plus `Real.cosh_sq_sub_sinh_sq` give `cosh(2y) = 2cosh(y)² - 1`. Hence
+  `cosh(δl)² = 1`, so `cosh(δl) = 1` (cosh is positive), so `δl = 0` (`1 = cosh 0 < cosh y` for
+  `y ≠ 0`, via `Real.cosh_lt_cosh`), so `δ = 0`, contradicting `γ₁ ≠ γ₂` with `a > 0`.
+* `mixture_rel_error_le`: `mixture_eq_cosh` plus Mathlib's `Real.cosh_le_exp_half_sq`
+  (`cosh x ≤ exp (x^2/2)`), and positivity of `kern`.
+* `cosh_sub_one_le`: `cosh x - 1 = 2 sinh(x/2)²` (from `Real.cosh_two_mul` and
+  `Real.cosh_sq_sub_sinh_sq`), then `sinh y ≤ y * cosh y` for `y ≥ 0` and
+  `cosh(x/2)² = (cosh x + 1)/2 ≤ cosh x`. Any correct route is fine.
+* `mixture_aggregate_le`: pointwise `mix ≤ (1+ε)·kern γ̄` from `mixture_eq_cosh` and `hb`, then
+  `Finset.sum_le_sum` and `Finset.mul_sum`.
+* §5 scale direction (stretch): put `b_i = s_i^(-a)`, `c = (γ+1)/a`, `t = v^a`; members are
+  `t ↦ (1 + b t)^(-c)`. As `t → ∞`, `t^c ·` the equation forces `b'^(-c) = ½(b₁^(-c) + b₂^(-c))`;
+  as `t → 0`, `(1 - ·)/t` forces `b' = (b₁+b₂)/2`; strict convexity of `x ↦ x^(-c)` on `(0,∞)`
+  then contradicts `b₁ ≠ b₂`.
+
+DELIVERABLE: the same file with `sorry`s replaced by proofs, plus a summary listing, per theorem,
+PROVED / OPEN / FALSE-with-counterexample, and the `#print axioms` output for each proved theorem.

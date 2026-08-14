@@ -70,3 +70,46 @@ LP is cheapest (allowing each LP's posted spread to vary with strike), and flags
 
 **Not fixed (unchanged, and correctly so):** Gap 4 — none of this is wired into the engine; that is a build,
 not a sheet edit.
+
+---
+## ⚑ MATERIAL CORRECTION (operator, entry 539) — the slippage "revenue" is a SHORTCUT ARTIFACT
+
+**Operator:** in the spreadsheet, for simplicity, the trader pays the **post-execution price on the whole
+size**. In practice execution is **continuous, closed-form** — the trader pays the **integral along the path**.
+That shortcut is what was creating slippage revenue.
+
+**Verified.** For a trade of size Q with full-size impact `s_full`:
+```
+ENDPOINT convention (the sheet):  cost = Q·P·(1 + s_full)
+CONTINUOUS / closed form (real):  cost = ∫₀^Q P(q) dq = Q·P·(1 + s_full/2)
+surplus  = endpoint − integral    = ½·s_full·Q·P        ← EXACTLY the "slippage revenue"
+```
+| Q/N | s_full | endpoint | integral | surplus | surplus ÷ fee |
+|---|---|---|---|---|---|
+| 0.5% | 0.63% | 0.142695 | 0.142247 | 0.000447 | 1.1× |
+| 2.5% | 3.15% | 0.731363 | 0.720181 | 0.011181 | **5.3×** |
+| 10% | 12.62% | 3.193800 | 3.014900 | 0.178900 | **21×** |
+
+**The surplus exists only because of the endpoint convention.** Under true continuous execution it vanishes —
+which is exactly consistent with the earlier CPMM finding: **walking a curve is reversible, not revenue.**
+
+### This settles the Case A / Case B question I raised one message earlier
+- **Case A** (sheet's shortcut, impact counted as revenue): profitable at ~1% average trade size.
+- **Case B** (real continuous execution, only the fee is net revenue): **this is the true one.**
+  | turnover | fee revenue | vs bleed 0.985× | |
+  |---|---|---|---|
+  | 0.3×/day | 0.33× | −0.66 | **LOSS** |
+  | 0.90×/day | 0.99× | ~0 | break-even |
+  | 2.0×/day | 2.19× | +1.21 | profit |
+
+**⇒ fee-only break-even turnover ≈ 0.90×/day** (vs the 0.3× assumed), **or ~90bps fee at 0.3×/day**
+(vs 30bps today).
+
+### And it vindicates the operator's instinct
+With the integral convention, **revenue = fee × VOLUME** and **trade SIZE drops out of revenue entirely.**
+The operator's "volume is right" was correct; my whole trade-size-distribution concern (and the
+`QN_volwtd` relabel) was chasing an artifact of the sheet's own simplification.
+
+**Status of the workbook:** `2_Quote` / `4_Trade` / `8_LP_Econ` still use the endpoint convention (they mirror
+the operator's sheet). They are therefore **optimistic on revenue by ½·s·Q·P per trade**. Fixing this means
+switching the execution cost to the integral form — a real change, flagged, not yet made.

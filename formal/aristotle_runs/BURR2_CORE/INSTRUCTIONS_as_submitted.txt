@@ -1,0 +1,52 @@
+Prove the `sorry`-ed theorems in `BURR2_CORE.lean`. Toolchain: Lean 4.28.0 with Mathlib v4.28.0.
+
+This file formalises a production option pricer built on the Burr-II / t-family wing kernel. The
+file header states the mathematical content, the formalisation route (the regularized incomplete
+beta is carried as a FIELD `ibeta` of `Params`, not axiomatised), and one formalisation hazard
+that must not be "simplified" away (`uArg` is deliberately written `m^a/(m^a+s^a)`, the junk-safe
+form of the sheet's `1/(1+(s/m)^a)`; the sheet's form has the wrong Lean value at `m = 0`).
+
+HARD CONSTRAINTS.
+1. Do NOT change any theorem statement, hypothesis, or `def`/`structure` body. Every definition
+   and every statement must come back byte-identical. I will diff them.
+2. Do NOT add `axiom`, `sorry`, `admit`, `native_decide`, `opaque`, `unsafe`, or `@[implemented_by]`.
+   Kernel `decide` is fine. `#print axioms` on every theorem must be a subset of
+   {propext, Classical.choice, Quot.sound}.
+3. If a statement is FALSE, do NOT weaken it or add a hypothesis to rescue it: leave the `sorry`
+   in place and report the counterexample explicitly in your summary. A precise counterexample is
+   more valuable to me than a proof of something else.
+4. If a statement is true but you cannot prove it, leave that `sorry` and say so plainly. Partial
+   success is fine and expected; a silently altered statement is not.
+5. You MAY add imports, `private` helper lemmas, and `set_option`s that do not affect kernel trust.
+
+PRIORITY ORDER. `burr2_parity` (with `burr2_parity_of_ne` and `atm_wings_meet`) is the most
+important theorem in the file; then `call_at_zero_strike` / `put_at_zero_strike` / `AL_glue`; then
+§6 apportionment; then §4 Layer 2 (the order/sign theorems `CALL_antitone`, `CALL_lipschitz`,
+`PUT_monotone`, whose proofs are sketched below); then §5 the non-vacuity witness.
+
+PROOF NOTES (routes I have already checked by hand; use them or better ones).
+* `AR p 0 = qR p * WR p` and `AL p 0 = qL p * WL p` reduce via `uArg _ _ 0 = 0` (`Real.zero_rpow`,
+  `a ≠ 0`) and `ibeta_zero`; then `atm_wings_meet` is the algebra
+  `WL·WR/(WR+WL) = (1 - WL/(WR+WL))·WL`.
+* `G1 < 1` because the base `1 + (1/sL)^a > 1` and the exponent `-(γ+1)/a < 0`.
+* `AL_glue` is definitional: at `m = 1` the bracket is `I1 - I1 - 0`.
+* Layer 2 skeleton. Write `bracket m = tail p (sL p) m - I1 p - G1 p * (1 - m)`. From
+  `TailRep.lower` with `m' = 1` and `kern p (sL p) 1 = G1 p`, `bracket m ≥ 0` for `m ≤ 1`; more
+  generally for `m ≤ m' ≤ 1`, `bracket m - bracket m' ≥ (m'-m)(kern p (sL p) m' - G1 p) ≥ 0`
+  (kernel antitone, `kern 1 = G1`), and by `TailRep.upper`,
+  `bracket m - bracket m' ≤ (m'-m)(kern p (sL p) m - G1 p) ≤ (m'-m)(1 - G1 p)`; dividing by
+  `1 - G1 p > 0` and multiplying by `qL ∈ [0,1]` gives `ALm_antitone` and `ALm_lipschitz` (both
+  also hold across the `1 ≤ m` cutoff, where `ALm = 0`). Then `CALL_antitone` is three cases:
+  `0 ≤ k ≤ k'` (right wing antitone); `k ≤ k' ≤ 0` (the `-k` term dominates because the left wing
+  falls at rate at most `qL ≤ 1`); and `k < 0 ≤ k'`, where
+  `CALL k ≥ ALm 0 + (-k)(1 - qL) ≥ ALm 0 = AR 0 = CALL 0 ≥ CALL k'` using `atm_wings_meet`
+  (whose hypothesis `WR + WL ≠ 0` is discharged in Layer 2 from `WR > 0`, `WL ≥ 0`).
+  `CALL_lipschitz` is the same case split with the other side of the sandwich, and
+  `PUT_monotone` follows from `CALL_lipschitz` plus parity (`PUT k = CALL k + k`).
+* §5 witness: with `a = γ = 1`, `B = 1`, `ibeta = id`, `tail s m = s²/(s+m)` and
+  `kern s v = (1 + v/s)^(-2 : ℝ)`; the sandwich is that `1/((s+m)(s+m'))` lies between
+  `1/(s+m')²` and `1/(s+m)²` for `0 ≤ m ≤ m'`.
+
+DELIVERABLE: the same file with the `sorry`s replaced by proofs, plus a summary listing, per
+theorem, PROVED / OPEN / FALSE-with-counterexample, and the `#print axioms` output for each proved
+theorem.

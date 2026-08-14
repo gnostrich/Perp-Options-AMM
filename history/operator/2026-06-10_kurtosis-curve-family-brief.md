@@ -3858,3 +3858,11 @@ _Context: operator asked for the honest gaps explained simply (x2), asked whethe
 > [536] suplifu your answer forme
 > [537] single avg trade size is fine why u want to make a prog for that its an assumption that can be teeaked rigjt
 > [538] yes
+
+
+## Entry 539 — 2026-08-14 UTC
+_Context: operator explains that in the spreadsheet, for simplicity, slippage was modelled as the trader paying the POST-EXECUTION price on the WHOLE size — a shortcut that is what makes slippage look like revenue; in practice it is computed continuously in closed form (the integral along the path). Manager verified: surplus = endpoint - integral = 1/2*s_full*Q*P, exactly the apparent "slippage revenue", 1.1x-21x the fee depending on size; under true continuous execution it VANISHES (consistent with the earlier CPMM reversibility finding). This SETTLES the Case A/B question in favour of Case B: only the FEE is net revenue, so revenue = fee x VOLUME and trade SIZE drops out entirely — vindicating the operator's "volume is right". Fee-only break-even turnover ~0.90x/day (vs 0.3x assumed) or ~90bps fee at 0.3x/day. Workbook sheets 2_Quote/4_Trade/8_LP_Econ still use the endpoint convention and are therefore optimistic; flagged, not yet changed._
+
+> so here's the thing, in the soreadsheet for simplicity we made slippage so trader pays the post execution price on the whole
+>
+> this was a simplifying assumptiokn for the sheet which is making rhe revenie from slipage a thing; in practice it calculates on a continuous basis closed form which we didnt do for shortfut

@@ -1,0 +1,4 @@
+BURR2_CORE  (operator entry 532 — Burr-2 kernel, Lean half)
+project 820a8643-43c4-46a4-8554-d797399535bc
+task    26958f2b-c7dc-4f1b-8240-64fdecb70ebf
+submitted 2026-08-14 ~20:02 UTC, Lean 4.28.0 / Mathlib v4.28.0
