@@ -1,0 +1,20 @@
+/tmp/claude-0/-home-user-Perp-Options-AMM/fd6931bc-a813-533f-92eb-a3100ece1b68/scratchpad/burr2/VERIFY_MIX.lean:65:30: warning: unused variable `ha`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/tmp/claude-0/-home-user-Perp-Options-AMM/fd6931bc-a813-533f-92eb-a3100ece1b68/scratchpad/burr2/VERIFY_MIX.lean:79:28: warning: unused variable `ha`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+'Burr2Mix.base_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.kern_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.kern_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.Lc_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.Lc_surj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.mixture_eq_cosh' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.mid_le_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.mid_lt_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.burr2_not_closed_under_mixture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.cosh_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.mixture_rel_error_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.mixture_aggregate_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Burr2Mix.burr2_not_closed_under_mixture_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+RC=0

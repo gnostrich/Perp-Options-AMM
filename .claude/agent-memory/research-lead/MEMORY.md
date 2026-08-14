@@ -1,5 +1,85 @@
 # MEMORY — research-lead
 
+### ⭐ BURR-2 KERNEL — the Lean half of the rebuilt loop (operator entry 532) — 2026-08-14
+Deliverable **`notes/research/BURR2_LEAN_LOOP_2026-08-14.md`**. Artifacts
+`formal/aristotle_runs/BURR2_CORE/` + `BURR2_MIXTURE/`. **NOT COMMITTED — handed to manager.**
+**⚠ THE KERNEL CHANGED.** All prior Lean (`sims/v3-maps-lean`, `LINK_PRICING`, `LINK_SETTLEMENT`) is
+on the **single-power-law / Balancer** model. The operator's real design is the **Burr-II / t-family**
+pricer (`sims/operator_sheets/temporal_burr2_swap_pricer_6.xlsx`). The earlier links are not wrong —
+they are about a **different kernel**. Prior Lean pricing layer is SUPERSEDED for pricing.
+- **STATUS: all 55 stated theorems PROVED, and RE-VERIFIED IN MY OWN LOCAL KERNEL** (the Lean 4.28.0
+  + Mathlib build from the earlier session **survived the container restart** — scratchpad
+  `leanbuild/toolchain` + `leanbuild/proj`, `env.sh` sets LEAN_PATH; reuse it, don't reinstall).
+  Both files compiled with `#print axioms` appended to every target: **0 errors, 42/42 + 13/13 =
+  `[propext, Classical.choice, Quot.sound]`**, no `sorryAx`. **Recommended to manager: promote label
+  trusted-from-prover → verified.** Caveat stated: Mathlib oleans from CI cache, not source-rebuilt.
+- **Route for the incomplete beta: (a) — carried ABSTRACTLY as a FIELD `ibeta : ℝ → ℝ` of `Params`,
+  NOT axiomatised.** Only 4 properties used: `ibeta 0 = 0`, `ibeta 1 = 1`, monotone on `[0,1]`, valued
+  in `[0,1]`. A field is not an `axiom` decl ⇒ trusted base stays clean. Everything else transcribed
+  LITERALLY from the sheet.
+- **⚠ FORMALISATION HAZARD, HANDLED — do not "simplify" it back.** The sheet's `u = 1/(1+(s/m)^a)` at
+  `m=0` is a 0-division whose Lean junk value is `u=1` — the WRONG limit; it sends the ATM wing value
+  to 0 and silently kills the ATM target while everything still "passes". `uArg` is defined junk-safe
+  as `m^a/(m^a+s^a)`; `uArg_eq_sheet` PROVES they agree for `m>0`.
+- **T1 `burr2_parity` PROVED — and a correction to the operator's expectation.** "Pure branch
+  bookkeeping" is right at EVERY strike except exactly `k=0`, where BOTH `if` guards fire and
+  `CALL−PUT = A_R(0)−A_L(0)`. So `burr2_parity_of_ne` needs **no hypotheses at all**, but full
+  `burr2_parity` genuinely consumes `atm_wings_meet`. **Parity at the money IS the peg** — same fact,
+  not two (which is why 1.39e-17 and 2.44e-13 are the same phenomenon).
+- **T2 `atm_wings_meet` PROVED — the peg is DERIVED, not chosen.** `qR = WL/(WR+WL)` is the UNIQUE
+  wing split making value continuous at the money (both sides = `WR·WL/(WR+WL)`; only hyp `WR+WL≠0`).
+  Paper-worthy in exactly those words.
+- **T3 `call_at_zero_strike`/`put_at_zero_strike` PROVED**, plus **`AL_glue`**: the left wing's CLOSED
+  FORM already vanishes at `m=1` (`I1−I1−0`, definitional), so the `if 1 ≤ m` cutoff introduces NO
+  jump — the anchor is a fact about the formula, not the branch.
+- **T4 sign/order PROVED but ⚠ CONDITIONAL** — see OPEN #1. **T5 apportionment PROVED** (trivial, but
+  it is a stated loop invariant B5/B6, so it is now in the record).
+- **⭐ T6 — BOTH non-closure AND the error bound came out.** Exact identity (`mixture_eq_cosh`,
+  numerically 2.2e-16): `½(Δ_{γ₁}+Δ_{γ₂}) = Δ_{γ̄}·cosh(δ·Lc)`, `δ=(γ₂−γ₁)/(2a)`,
+  `Lc = log(1+(v/s)^a)`. Non-closure = `cosh` is not an exponential (evaluate at `l=1,2`, use
+  `cosh 2y = 2cosh²y−1` ⇒ `cosh δ=1` ⇒ `δ=0`). Bound `mix ≤ Δ_{γ̄}·exp((δLc)²/2)` = **SECOND ORDER**
+  in the LP gap; transfers to finite weighted aggregates (`mixture_aggregate_le`). **STRETCH also
+  proved**: scale-direction non-closure, via a route better than my sketch (differentiate twice,
+  moments of a two-atom measure, Cauchy–Schwarz equality identity ⇒ `s₁=s₂`).
+- **⭐ THE ECONOMIC HEADLINE (operator-tier).** vs `mixture_not_single_lens`: single lens = member
+  log-AFFINE / mixture strictly log-CONVEX = a smile the family **cannot represent at all**, FIRST
+  order, structural wall. Burr-2 = same shape times `1+O(δ²)`, **SECOND order**. Heterogeneous-LP
+  aggregation is a genuine but **quantitatively mild** obstruction under Burr-2. Substantive argument
+  FOR the kernel change, now mechanized.
+- **Transcription verified faithful:** my independent scipy re-implementation of the LEAN defs
+  reproduces `BURR2_PRICER_AUDIT.md` line 23 to all 10 digits (`B=0.9288399661`, `G1=0.0914859758`,
+  `I1=0.0727183316`). 6 param sets: parity ≤2.2e-16, ATM ≤1.1e-16, `CALL(−1)=1` / `PUT(−1)=0` exactly,
+  CALL strictly decreasing, PUT non-decreasing, **max |dCALL/dk| = 1.0000 exactly** (Lipschitz tight).
+- **AUDIT: CLEAN, nothing emended by me.** Statements byte-identical 42/42 + 13/13; def/structure
+  bodies 22/22 + 3/3; out-of-scope files byte-identical; no forbidden tokens (only the words in my own
+  header comments). **Only non-proof diff in either file:** MIXTURE gained one import
+  (`Mathlib.Analysis.SpecialFunctions.Pow.Deriv`) — MAY-emend class, accepted. 7 `unused variable`
+  warnings checked individually = genuine slack, not weakening (e.g. `CALL_nonneg` doesn't need
+  `TailRep` on the RIGHT wing because `A_R≥0` follows from the `ibeta ≤ 1` field alone).
+- **OPEN — DO NOT let these be reported as discharged:**
+  1. **§4 is CONDITIONAL on `TailRep`** (the one analytic bridge: closed form = tail integral of the
+     antitone kernel, as a Riemann sandwich). Non-vacuous via an explicit witness (`a=γ=1,
+     ibeta=id`) — but that witness is a TOY. That it holds for the REAL incomplete beta at production
+     params is **my numeric check only (~1e-13)**, not a theorem. Needs Mathlib incomplete-beta theory.
+     ⇒ `CALL_antitone`, `PUT_monotone`, `AR_nonneg`, `AL_nonneg` are conditional.
+  2. **The bound is on the MIDPOINT member, not the best fit.** "Best fit can only beat the midpoint"
+     is in a COMMENT, not proved, and is LOOSE: measured best-fit 1.42% vs midpoint 13.9%.
+  3. **Bound is local in gap AND strike** — grows with moneyness; at `γ₁=0.4,γ₂=3.0,v=5` actual 745%,
+     bound 5281%. **The operator's "0.02–0.12%" is a near-the-money narrow-spread figure — needs a
+     scope qualifier wherever quoted; I would not ship it unqualified.**
+  4. Joint non-closure over all four `(S̄,a,γ,κ)` NOT proved (only tail and scale, separately).
+  5. **Only the pricing layer is rebuilt on Burr-2.** `LINK_SETTLEMENT` is plausibly kernel-agnostic
+     but that portability is UNMECHANIZED. **The Burr-2 `MidConvex` bridge is NOT proved** —
+     `CALL_antitone` is monotonicity, not midpoint-convexity. **This is the next obligation.**
+  6. **`κ`-dynamics entirely unformalised** — everything above is STATIC at fixed `κ`. Nothing says a
+     swap leaves the book arb-free or that the peg re-derives after a swap.
+  7. Latent coordinate seam carried forward: these use LINEAR moneyness (`C−P=−k`), loop Stage 3 uses
+     LOG. Bites when tied.
+- Runs: CORE project `820a8643-43c4-46a4-8554-d797399535bc` / task `26958f2b-c7dc-4f1b-8240-64fdecb70ebf`;
+  MIX project `920d43a9-ae69-4eb2-8ed1-860c9ef91386` / task `e95f6377-2071-4d76-9b43-94f29b591082`.
+  **⚠ CLI GOTCHA: `aristotle show`/`download` take the PROJECT id, not the TASK id** — a task id
+  returns a bare `403 Forbidden` that looks exactly like a host/auth block. Cost a wrong diagnosis once.
+
 ### CEMENT THE CLOSED LOOP — local kernel check + statement audit + the 2 missing links (operator entries 504-506) — 2026-08-14
 Deliverable **`notes/research/AUDIT_closed_loop_lean_2026-08-14.md`**. Scope: `sims/v3-maps-lean` +
 `sims/CLOSED_LOOP_MAP.md` + `CLOSED_LOOP_MODEL_v1(_NOTES)`. No git, no `engine/` edit; all build/prover
