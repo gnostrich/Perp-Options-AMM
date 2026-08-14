@@ -92,29 +92,11 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ CENTRE : curve + ladder ══ -->
   <div>
     <div class="panel">
-      <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b>
+      <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
-      <canvas id="cv" width="980" height="360"></canvas>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. Bottom ribbon = capacity density; you quote any strike on demand from the closed form, nothing is pre-posted.</div>
-    </div>
-
-    <div class="panel" style="margin-top:12px">
-      <div class="chead"><b>Quote any strike</b><span class="t2" style="color:var(--mute)">type any k — priced from the closed form, nothing pre-posted</span></div>
-      <div style="display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:start">
-   <div>
-     <div class="frow"><div class="fchip"><span>strike k (%)</span></div>
-       <input type="number" id="qk" value="13.7" step="0.1" min="-95" max="300"></div>
-     <div class="srow"><div class="track"><div class="fill" id="qkfill" style="width:50%"></div>
-       <input type="range" id="qkr" min="-60" max="60" step="0.1" value="13.7"></div>
-       <div class="mm"><span>-60</span><span>+60</span></div></div>
-     <div class="frow" style="margin-top:8px"><div class="fchip"><span>size (BTC)</span></div>
-       <input type="number" id="qsz" value="5" step="0.5" min="0.1"></div>
-   </div>
-   <div>
-     <table><tbody id="qout"></tbody></table>
-   </div>
- </div>
- <div class="note">Any k you type is priced instantly — there is no nearest rung to snap to, and no order to cancel. That is the difference from the orderbook build.</div>
+      <canvas id="cv" width="980" height="360" style="cursor:crosshair"></canvas>
+      <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. Bottom ribbon = capacity density. <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -127,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 9 · any-strike</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 10 · hover-quote</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -188,7 +170,7 @@ const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
  ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
-let P={...DEF}, volIndexed=true, MAG=25;
+let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null;
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
 const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -277,7 +259,13 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   g.fillStyle='#FF6767';g.fillRect(X(-r.k)-1.6,H-Bm-hgt,3.2,hgt);});
  g.restore();
  g.fillStyle='#677275';g.fillText('capacity density',L+4,H-Bm-30);
- g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
+ g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);
+ if(HK!==null){const hq2=st.hEff/1e4,Cx=st.c.CALL(HK),Px=st.c.PUT(HK);
+  g.save();g.strokeStyle='#0ABAB5';g.setLineDash([2,3]);g.lineWidth=1;
+  g.beginPath();g.moveTo(X(HK),T);g.lineTo(X(HK),H-Bm);g.stroke();g.setLineDash([]);
+  g.fillStyle='#0ABAB5';g.beginPath();g.arc(X(HK),Y(Cx*(1+hq2)),3.4,0,7);g.fill();
+  g.fillStyle='#FF6767';g.beginPath();g.arc(X(HK),Y(Px*(1+hq2)),3.4,0,7);g.fill();g.restore();}
+ CV_GEO={X:X,L:L,R:R,W:W};}
 /* ─── render ─── */
 function render(){
  $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='depth'?'= from notional':'')).join('');
@@ -315,34 +303,30 @@ function render(){
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
  $('magv')&&($('magv').textContent='×'+MAG);
  $('magc')&&($('magc').textContent='×'+MAG);
- const hq=st.hEff/1e4, qk=(+$('qk').value)/100, qsz=+$('qsz').value;
- const C=st.c.CALL(qk), Pu=st.c.PUT(qk);
- const dlt=(st.c.CALL(qk+0.005)-st.c.CALL(qk-0.005))/0.01;
- const wq=Math.exp(-P.lam*8*qk*qk), capHere=st.notBTC*wq/1;
- const rows=[
-  ['strike', (qk*100).toFixed(2)+'%'],
-  ['call — bid / ask', f(C*(1-hq),5)+'  /  <b class="tl">'+f(C*(1+hq),5)+'</b>'],
-  ['put — bid / ask',  f(Pu*(1-hq),5)+'  /  <b class="tl">'+f(Pu*(1+hq),5)+'</b>'],
-  ['half-spread', f(st.hEff,1)+' bps'],
-  ['C − P (parity = −k)', f(C-Pu,6)+'  vs  '+f(-qk,6)],
-  ['delta', f(dlt,4)],
-  ['cost to BUY '+f(qsz,1)+' calls', usd(qsz*C*(1+hq)*S)],
-  ['you receive SELLING '+f(qsz,1), usd(qsz*C*(1-hq)*S)],
-  ['your spread capture', '<span class="pos">'+usd(qsz*C*2*hq*S)+'</span>']
- ];
- $('qout').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('');
- const qf=$('qkfill'); if(qf) qf.style.width=(((+$('qkr').value)+60)/120*100)+'%';
- $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
+  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
   `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
    <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
  draw(st);
+ {const hq=st.hEff/1e4,k=(HK===null?0:HK),C=st.c.CALL(k),Pu=st.c.PUT(k),sz=+(($('qsz')||{}).value||5);
+  const cell=(l,v,cls)=>'<div><div class="t2" style="color:var(--mute)">'+l+'</div><div style="font-size:12.5px;font-weight:600;margin-top:2px" class="'+(cls||'')+'">'+v+'</div></div>';
+  $('hoverbar').innerHTML=cell('strike k',(k*100).toFixed(2)+'%')
+   +cell('call bid / ask',f(C*(1-hq),4)+' / '+f(C*(1+hq),4),'tl')
+   +cell('put bid / ask',f(Pu*(1-hq),4)+' / '+f(Pu*(1+hq),4))
+   +cell('half-spread',f(st.hEff,1)+' bps')
+   +cell('C−P vs −k',f(C-Pu,5)+' / '+f(-k,5))
+   +cell('capture on '+f(sz,1),usd(sz*C*2*hq*S),'pos');}
  bind();}
 function bind(){
+ const cvE=$('cv');
+ if(cvE&&!cvE._wired){cvE._wired=1;
+  cvE.onmousemove=function(e){if(!CV_GEO)return;const r=cvE.getBoundingClientRect();
+   const px=(e.clientX-r.left)*(cvE.width/r.width);
+   const k=-0.7+(px-CV_GEO.L)/(CV_GEO.W-CV_GEO.L-CV_GEO.R)*1.4;
+   HK=Math.max(-0.68,Math.min(0.68,k));render();};}
+ ($('qsz')||{}).oninput=function(){render();};
  document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
  $('mag')&&($('mag').oninput=e=>{MAG=+e.target.value;render();});
- $('qk')&&($('qk').oninput=e=>{const v=+e.target.value;const r=$('qkr');if(r)r.value=Math.max(-60,Math.min(60,v));render();});
- $('qkr')&&($('qkr').oninput=e=>{$('qk').value=e.target.value;render();});
- $('qsz')&&($('qsz').oninput=()=>render());
+  $('qsz')&&($('qsz').oninput=()=>render());
  document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
 $('margin').oninput=e=>{P.margin=+e.target.value;render();};
 $('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
