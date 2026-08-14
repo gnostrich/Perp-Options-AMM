@@ -1,0 +1,9 @@
+{
+  "name": "temporal-mm-console",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Temporal — market-maker console (Burr-2 RFQ book)",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
