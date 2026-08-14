@@ -4050,3 +4050,9 @@ _Context: operator refines the normalisation ruling — a shared scale lets the 
 > biggest single maker can dwarf smaller makers; you want to be able to see your own thing on its own whatever scale maybe relative max possible from to how much margin you're putting up
 >
 > when seeing aggregate thats wrt aggregate it shades
+
+
+## Entry 565 — 2026-08-14 UTC
+_Context: operator confirms the normalisation rule is uniform — the same rule applies in each of the four maker cells and to the aggregate, each shading against its own maximum. Manager found on checking that YOUR capacity was inconsistent between the two views (95 BTC in the maker grid from the share allocation vs 150 BTC on Earn from margin) and unified it._
+
+> and in each of 4 things aggregate vs individual yes the normalisation is same

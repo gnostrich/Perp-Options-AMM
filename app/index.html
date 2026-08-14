@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 20 · self-relative scales</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 21 · one rule everywhere</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -406,10 +406,14 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   cbid.push(C*(1-hh));cask.push(C*(1+hh));
   pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
  bi.push(0);as.push(0);
- // the cloud spans 100·λ·ATM in value to exhaust YOUR capacity; the axis must reach
- // that or the panel floods (build-18 bug). Computed HERE, before the axis labels,
- // otherwise the labels print the old range against the new picture.
- const QmaxYou=Math.max(0.1,P.margin*10), dFull=100*P.lam*st.c.ATM;
+ // operator entry 565: ONE normalisation rule everywhere — each thing shades
+ // against its own maximum. So YOUR capacity here must be the SAME number the
+ // maker grid uses and the SAME number the fills honour: your share of the book.
+ // (It was margin×10 = 150 BTC here and share×pool = 95 BTC there — two numbers
+ // for one LP. Using the display figure the execution does not honour would be
+ // the same class of defect as the tester's C3 flag, so the book figure wins.)
+ const meRow=st.book.find(m=>m.me), QmaxYou=Math.max(0.1,(meRow?meRow.share:1)*MKT.pool);
+ const dFull=(QmaxYou/MKT.pool)*100*P.lam*st.c.ATM;
  const ymax=Math.max(...cask)+dFull*1.02;
  const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
@@ -431,10 +435,10 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  cloudIn(g,you,L,T,W-L-R,PH,ymax,CSIDE,QmaxYou);
  g.font='10px IBM Plex Mono';g.fillStyle=CSIDE==='ask'?'#63e6e2':'#FF6767';
  g.fillText(CSIDE==='ask'
-   ? '▲ YOUR BUY-side cloud — full → empty over YOUR whole capacity, '+f(QmaxYou,0)+' BTC'
-   : '▼ YOUR SELL-side cloud — full → empty over YOUR whole capacity, '+f(QmaxYou,0)+' BTC',L+6,T+12);
+   ? '▲ YOUR BUY-side cloud — full → empty over YOUR own capacity, '+f(QmaxYou,0)+' BTC'
+   : '▼ YOUR SELL-side cloud — full → empty over YOUR own capacity, '+f(QmaxYou,0)+' BTC',L+6,T+12);
  g.fillStyle='#677275';
- g.fillText('scaled to the margin you are putting up · λ sets how far it stretches ('
+ g.fillText('same rule as every maker cell: shaded against its own max · λ sets the stretch ('
    +f(dFull,2)+' in value to exhaust)',L+6,T+26);
  // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
  // where a trade of a given size at a given strike actually lands the taker.
