@@ -4062,3 +4062,9 @@ _Context: operator confirms the normalisation rule is uniform — the same rule 
 _Context: operator rules that a participant cannot see other individual makers — only SELF and the AGGREGATE. Manager applied it to the chart toggle and also to the two panels that were naming other makers and their quotes/fills._
 
 > also you cant see individual makers only self and aggregate
+
+
+## Entry 567 — 2026-08-14 UTC
+_Context: operator asks for the (a)/(b) decision to be explained. Manager measured where the bounded-disagreement condition actually holds (only up to divergence 0.01; crossing starts at 0.02) and laid out the 2x2 of the two choices._
+
+> explainn a b choice
