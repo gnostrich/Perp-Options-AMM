@@ -3811,3 +3811,9 @@ _Context: operator asks what remains open, confirms apportionment-by-curve + per
 _Context: operator asks to brainstorm the remaining open items and consolidate into a single spreadsheet with its checks. Manager resolved 3 items (marking rule -> mid for display + close-out for liquidation; payout under two curves -> LP revenue = (V_open+V_close)*h*K, previously omitted; L7 -> required h* = G*RV^2/(turn*days)) and built sims/CONSOLIDATED_MODEL_v1.xlsx with a 5_CHECKS sheet. All structural checks PASS; C9 FAILS — LP net APR -14.32% because required h* 99bps vs actual 5bps at 0.3x/day. Found: lower g = less gamma = cheaper to run, so m is an economics lever too._
 
 > ok let's brainstorm through whatverr rmeains open and then consolidate into the songle soreadsheet witn its smchecks
+
+
+## Entry 527 — 2026-08-14 UTC
+_Context: operator clarifies the sheet he meant was NOT the returns sim but the one with the AMM CURVES, parameters, showing how it adapts to trades. Manager checked all 9 sims workbooks and confirmed HONESTLY that no such sheet existed (all were static snapshots), then built sims/CURVE_ADAPTS_TO_TRADES_v1.xlsx implementing the engine's tradeUpdateAt law: pool before -> trade (rho,dy) -> pool after, whole curve before/after with charts, 5-trade chained sequence, and 7 checks. T1-T3 reproduce the pinned exhibit exactly (w'=11/21, x'=215/22, dx=-5/22 to 0.00e+00)._
+
+> so the sheet i meant wasnt the returns sim, i meant the one we had where the AMM curves were there remember? paramaters wtc showijng jow it adapta to trad
