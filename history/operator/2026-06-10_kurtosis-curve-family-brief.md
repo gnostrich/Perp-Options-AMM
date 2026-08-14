@@ -3829,3 +3829,15 @@ _Context: operator uploads the actual sheet he meant — temporal_burr2_swap_pri
 _Context: operator asks for both (a) re-derive LP economics on the Burr-2 kernel and (b) the per-LP aggregation question on this family. Manager: (a) corrected two of his own errors (a unit error in the first pass; and the ATM is NOT kinked — call is C1 smooth, jump 1.8e-07, so the peg gives smoothness AND exact parity), then computed dimensionless curvature Gtilde ~5.76 vs old G=3.00 (~1.9x), rising with strike distance; required half-spread 95bps at 0.3x/day (vs 49bps old) — L7 unchanged in kind, worse in degree. (b) Burr-2 is NOT closed under mixture (kappa/a/gamma each outside), BUT the best-fit residual is only 0.02-0.12% — materially weaker than the PROVED single-lens obstruction, so per-LP heterogeneity is practically viable via re-fit; caveats: nonzero residual = apportionment question, needs stress-testing at wider spreads, and it is numerics not proof._
 
 > a and b
+
+
+## Entry 530 — 2026-08-14 UTC
+_Context: operator checks alignment — two curve sets (buy/sell) and the curve extending ITM. Manager verified: ITM extension ALIGNED and already in the sheet (exact parity C-P=-k); two-curve PARTIAL — the sheet's haircut/markup gives a real, IRREVERSIBLE two-sided quote (3.75% round-trip cost => impact IS revenue, unlike CPMM slippage), but it is size-proportional from one pool-level lambda, not per-LP posted h. Also redid L7 on the sheet's actual revenue model: break-even = average trade size ~1.03% of pool at 0.3x/day, far more achievable than the 95bps posted-h figure._
+
+> before that we aligned on the two curve sets right for buy sell and the curve extending itm
+
+
+## Entry 531 — 2026-08-14 UTC
+_Context: operator points out you would still need to construct the two curves separately to do the APPORTIONMENT, even if the spread comes from a single number — unless the closed form handles it. Manager tested and CONFIRMED the operator is right: closed form suffices ONLY for depth-only heterogeneity (1/lam_agg=sum 1/lam_i, pro-rata shares, residual 1.7e-18); the moment LPs express SPREAD (fill order matters: Q=2 -> 5bps, Q=6 -> 12.5bps) or SHAPE (shares vary by strike), the two-curve envelope is load-bearing and must be materialised._
+
+> youd still need to make 2 curves thing separately in order to do the apportionment don't forget that, even if it comes from that single number; or if your calculation in closed form does it then cool

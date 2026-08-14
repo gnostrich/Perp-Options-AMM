@@ -64,3 +64,38 @@ the single lens. The pool can post one Burr-2 curve fitted to the aggregate, and
   spreads and lopsided weights before anyone relies on it;
 - the exact-aggregation theorems in `v3-maps-lean` were proved for the *depth/spread* maps, **not** for this
   kernel — so this is numerics, not proof. A Burr-2 closure statement is a candidate Aristotle conjecture.
+
+---
+## (c) ALIGNMENT + APPORTIONMENT: do you still need the two curves? (operator, entries 530–531)
+
+**ITM extension — ALIGNED, already in the sheet.** `Pr = |k| + mirror wing` gives **exact put-call parity**
+at every strike (`C−P = −k` to machine precision). Verified.
+
+**Two curve sets — the important half is already there.** The sheet's haircut/markup gives a real two-sided
+quote (k=0.1, Q=5 → **bid 0.139597 / ask 0.144069**) and it is **irreversible**: sell 5 then buy 5 back costs
+**3.75% of notional**. So — unlike CPMM slippage — the sheet's impact **is revenue**. Difference from our
+sketch: the sheet's spread is **size-proportional** (`s ∝ Q`, → 0 as Q → 0) from one pool-level `λ`; ours
+added a **per-LP posted `h_i(k)`** that exists at any size.
+
+### The operator's point, tested: does the closed form do the apportionment?
+| LPs differ in | closed form enough? | why |
+|---|---|---|
+| **depth only** (`λ_i`, same shape) | ✅ **YES** | `1/λ_agg = Σ1/λ_i`, shares `w_i = (1/λ_i)/Σ(1/λ_j)`; every LP fills pro-rata at the **same** `s`. Verified: shares 0.625/0.25/0.125, apportioned total = pool capture, **residual 1.7e-18**. No curves to materialise. |
+| **posted spread** | ❌ **NO** | the effective spread depends on **which LPs are marginal**, i.e. on fill ORDER (Q=2 → 5.00bps, Q=6 → 12.50bps). A scalar `s` cannot express that — you must materialise the **envelope = the two curves**. |
+| **shape** (`a, γ, κ`) | ❌ **NO** | shares vary **by strike**, so you need the per-strike curves (the 0.02–0.12% re-fit case). |
+
+**⇒ The operator is right.** The single number does the apportionment **only** in the homogeneous-shape,
+depth-only case. **The moment LPs express spread or shape, the two-curve construction is load-bearing** —
+it is not an optional presentation layer, it is what carries the allocation information.
+
+### Consequence for L7 (redone on the sheet's actual revenue model)
+Revenue = fee + size-proportional impact, so it is dominated by **trade size**:
+| turnover | avg trade | revenue/yr | bleed (RV 60%) | net |
+|---|---|---|---|---|
+| 0.3× | 0.5% of pool | 0.67× | 1.04× | −0.36× |
+| 0.3× | **2.5% of pool** | 2.05× | 1.04× | **+1.02×** |
+| 0.3× | 10% of pool | 7.23× | 1.04× | +6.20× |
+
+**Break-even = average trade size ≈ 1.03% of pool notional** at 0.3×/day (fee alone covers 32% of the bleed).
+So the viability question is **not** "can you charge ~95bps?" (that was my posted-`h` assumption, which this
+design does not use) but **"is the average trade ≥ ~1% of pool?"** — a far more answerable question.
