@@ -3964,3 +3964,28 @@ _Context: operator asks for the other views (Trade Bands, Transact, Portfolio) t
 _Context: operator corrects the manager's over-correction (forcing makers onto a common level to avoid a "crossed book"): in an RFQ there is no shared resting book, so makers ARE free to differ and arbitrage disciplines the outliers. Manager confirmed the operator is right, restored independent maker curves behind a divergence dial (build 12), and derived the consequence: the proved smile obstruction (`mixture_not_single_lens`, logged as L1) does NOT bind in an RFQ, because the book is an ENVELOPE (min ask / max bid), not a mixture._
 
 > if you think about this calmly since its an rfq and not an ob the makers can be free to differ and arbitrage keeps them iine right
+
+
+## Entry 555 — 2026-08-14 UTC
+_Context: operator reframes the aggregate depiction — the aggregation is nontrivial, so it is better shown as a DENSITY HEATMAP from the point of view of someone making a trade (where the trade will land them), and that heatmap could replace the capacity-density bars at the bottom of the chart. Manager built it as a landed-price surface over (strike, size)._
+
+> so the aggregate curve is nontrivial aggregation / more like density heatmap its basically from pov of someone whose making a trade where it will land them etc… and maybe can use that instead of the bars at bottom if that makes sense…
+
+
+## CORRIGENDUM — 2026-08-14 (manager, on the Entry 554 context note)
+_Per §2.2 corrections are dated corrigenda, never edits; the original line above is left in place._
+
+The context note I attached to Entry 554 read, in part: "derived the consequence: the proved smile
+obstruction (`mixture_not_single_lens`, logged as L1) does NOT bind in an RFQ, because the book is an
+ENVELOPE (min ask / max bid), not a mixture." That is a **contested manager conclusion sitting inside
+the verbatim transcript**, not the neutral one-line pointer §2.2 requires. Skeptic FLAG-PROCESS (6a),
+2026-08-14, upheld — the fault is mine.
+
+The neutral pointer that should have been there: _"Manager reverted the common-level rule (build 12),
+opened `sims/RFQ_ENVELOPE_vs_MIXTURE_2026-08-14.md`, and that note was subsequently HALTED by the
+skeptic."_
+
+Substantively the embedded claim is also wrong as stated: the skeptic showed, and I reproduced on my
+own harness, that the mixture IS instantiated at the execution layer above the top maker's capacity
+(38.1 BTC at app defaults), and that book-level put–call parity breaks at 100% of strikes tested for
+any maker divergence > 0. The L1 flip is NOT applied to shared truth.

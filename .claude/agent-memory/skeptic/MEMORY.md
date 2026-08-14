@@ -4047,3 +4047,52 @@ option (premium leg = funding). Each rev fixes the prior proxy but adopts a new 
 "optimistic hypothesis-on default" pattern (green corner = operator picks the favorable input)
 recurs from v2. Provenance NIT: operator entries 490/491/492 seen only via v2 NOTES synthesis,
 not a history/operator/ verbatim file.
+
+## Verdict (2026-08-14) — sims/RFQ_ENVELOPE_vs_MIXTURE (L1 state flip) = **HALT**
+Manager re-classified 🚩L1 (`mixture_not_single_lens`) to "not binding under an RFQ" on the ground
+that an RFQ book is an ENVELOPE (min ask/max bid), so the theorem's MIXTURE hypothesis is never
+instantiated; shipped app build 12 (independent maker curves + `maker divergence` dial D, crossed
+book relabelled red "CROSSED — arb" → amber "ARB OPEN"). I broke it 4 ways (all re-derived in Node
+against `app/index.html`; scripts in scratchpad, numbers in the verdict block returned to manager):
+1. **Escaping the hypothesis ≠ escaping the conclusion (FLAG-WRONG).** On the theorem's own family
+   (power-law lenses, level+shape heterogeneous, c=(0.16,g=3.0) vs (0.13,g=1.6)): best single-lens
+   fit residual = mixture **5.30%** vs envelope **15.87%**; log-log 2nd diff = mixture +1.0e-4…+2.0e-4
+   (the proved smile) vs envelope **−1.6e-2** at the crossing. Envelope is 3× HARDER for one lens to
+   represent AND (unlike the mixture) butterfly-arbitrageable (−2.30e-4 at dk=2e-3). Swap is
+   unrepresentable-but-arb-FREE → unrepresentable-AND-arb-BEARING. Strictly worse on both axes.
+2. **The mixture IS instantiated at the execution layer (FLAG-WRONG).** App's own fill rule
+   (`renderTransact` L472-475 / `calc` L318) splits an order across makers at λ-shares. Defaults
+   (pool 200): cheapest maker MM-Kappa cap = 38.1 BTC, so any order >38.1 BTC executes at a convex
+   combination of DISTINCT maker curves — 60 BTC → 63.5%/36.5%, exec px 0.15791 vs top-of-book
+   0.15693 (+62.4 bps). "No blended object anyone has to price" is false above 38.1 BTC; every $/BTC
+   arb figure in the note is a top-of-book number.
+3. **Book-level put–call parity breaks and the note never mentions it (FLAG-OMISSION).** Best call
+   ask − best put bid vs −k: **−$352/BTC at D=0.15, −$2,595 at D=1, at 100% of strikes k∈[0.005,0.60]**.
+   `agg_parity` (proved) survives aggregation; there is no analogue for min/max. The arb is against
+   the CLEARED PERP anchor (loop stage 0), not maker-vs-maker.
+4. **`BOOK_FORMAL §5 bounded_disagreement` is the one theorem about "makers free to differ" and the
+   note skips it.** It permits per-LP levels ONLY under |Pi−Pj| < hi+hj; build 12's dial deliberately
+   violates it. Build 12 = per-LP levels with UNBOUNDED disagreement, protected by no theorem.
+What SURVIVED my attack (don't re-attack): scripts reproduce exactly; the −4.9e-5 butterfly is a
+GENUINE slope kink not a finite-difference artifact (worst/dk stable ≈ −4.2e-2 over dk 1e-2→2e-4);
+`min_not_midconvex` is correctly cited AGAINST the manager's own position; the self-correction
+("my earlier common-level fix was wrong") is honest and the operator was right about resting books.
+Process holes: no operator confirmation that "makers free to differ" is a ratified product decision
+(entry 522 verbatim says "the pool AGGREGATES"; entry 555 — the NEXT message — says the aggregate is
+"nontrivial aggregation… where it will land them", i.e. asks for the landed/blended object); the
+manager's context note at entry 554 embeds his contested conclusion INSIDE the verbatim transcript
+(§2.2 says one-line neutral pointer); **zero tester passes on any `app/` build 9–13** while the
+operator personally caught 4 UI defects (entries 550-553).
+PATTERNS (add to the list):
+- **NARROW-THE-HYPOTHESIS ESCAPE** — new dodge shape: when a proved obstruction bites, find a word in
+  its hypothesis ("mixture") the new design doesn't literally instantiate, and declare scope-not-truth.
+  Test: does the CONCLUSION still hold under the new structure? Here it held harder.
+- **TOP-OF-BOOK vs EXECUTED** — quote-layer claims silently generalised to the execution layer.
+  Same class as the price-vs-slope gotcha: two layers, one label.
+- **PROVED → "NEWLY OPEN"** — a consequence already proved (`min_not_midconvex` +
+  `nonconvex_level_arbable_at_zero_spread`) re-logged as an open/unmodelled research item and softened
+  into "market discipline" using an operator adjective. Evidentiary downgrade in the wrong direction.
+- **DEMO-PARAMS OUTSIDE THE BUILD'S RANGE** — §3's butterfly uses a hand-picked maker pair (S̄ 0.30 vs
+  0.85) ~20-60× more divergent than the app's D=1 max (S̄ 0.579–0.630); at the app's OWN dial the ask
+  winner never switches (0 switches, D=0.15/0.6/1) so build 12 exhibits NO butterfly. Two parameter
+  worlds presented as one story.

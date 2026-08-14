@@ -94,9 +94,9 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="panel">
       <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
-      <canvas id="cv" width="980" height="360" style="cursor:crosshair"></canvas>
+      <canvas id="cv" width="980" height="540" style="cursor:crosshair"></canvas>
       <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. Bottom ribbon = capacity density. <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. <b>Bottom panel = the landing map</b>: the aggregate is not a curve — what a taker actually pays depends on SIZE too, because the trade walks the book cheapest-first. Colour = how far a trade of that size at that strike lands from the best quote (dark = at best, amber/red = pushed off it, deep red = the size does not fit the book). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 12 · rfq-arb</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 13 · landing map</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -167,8 +167,8 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="panel">
       <div class="chead"><b>Aggregate book — what you trade against</b>
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">best ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">best bid</span><span class="badge">makers</span></span></div>
-      <canvas id="cvT" width="980" height="330"></canvas>
-      <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
+      <canvas id="cvT" width="980" height="510"></canvas>
+      <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
     </div>
     <div class="panel" style="margin-top:12px">
       <div class="chead"><b>Fill breakdown</b><span class="t2" style="color:var(--mute)" id="tfl">—</span></div>
@@ -317,8 +317,74 @@ function calc(){
  const sorted=[...book].sort((x,y)=>x.h-y.h); let rem=MKT.Q; const px=c.CALL(0.1);
  sorted.forEach(m=>{const cap=m.share*MKT.pool,t=Math.max(0,Math.min(cap,rem));m.fill=t;m.rev=t*(m.h/1e4)*px*S;rem-=t;});
  return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,dens,dk,M,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
+/* ─── LANDING FIELD ─────────────────────────────────────────────────────────
+   The aggregate is NOT a curve. What a taker actually gets depends on SIZE as
+   well as strike, because the trade walks the book cheapest-first. So the honest
+   object is a SURFACE  landed(k,Q)  — drawn as a density heatmap.
+     ladder(k)      : makers sorted by ask, with cumulative capacity and cost
+     landed(k,Q)    : (Σ fill_i·px_i)/Q  — the average price the taker pays
+     impact_bps     : (landed/best − 1)·1e4  — how far the size pushes you off best
+   Q beyond total book capacity = "doesn't fit", drawn dark red.                */
+function ladderAt(mkrs,k,pool){
+ const a=mkrs.map(m=>({px:m.c.CALL(k)*(1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)})).sort((x,y)=>x.px-y.px);
+ let cq=0,cc=0;const cum=a.map(r=>{cq+=r.cap;cc+=r.cap*r.px;return{q:cq,c:cc,px:r.px};});
+ return {best:a[0].px,cum,total:cq};}
+function landedFrom(Ld,Q){let pq=0,pc=0;
+ for(const s of Ld.cum){if(Q<=s.q)return (pc+(Q-pq)*s.px)/Q;pq=s.q;pc=s.c;}
+ return null;}
+const HEAT=[[0,11,30,33],[.08,13,61,63],[.22,15,95,92],[.45,10,186,181],[.72,255,165,65],[1,255,103,103]];
+function heatCol(t){                 // t = impact NORMALISED to this field's own max; null = no fit
+ if(t===null)return '#4a1218';
+ if(t<=0)return 'rgb(11,30,33)';
+ for(let i=1;i<HEAT.length;i++){if(t<=HEAT[i][0]){
+   const u=(t-HEAT[i-1][0])/(HEAT[i][0]-HEAT[i-1][0]),A=HEAT[i-1],B2=HEAT[i];
+   return 'rgb('+[1,2,3].map(j=>Math.round(A[j]+u*(B2[j]-A[j]))).join(',')+')';}}
+ return 'rgb(255,103,103)';}
+function drawHeat(g,W,L,R,yT,hB,k0,k1,mkrs,pool,mark,title){
+ const NX=120,NY=44;
+ const tot=mkrs.reduce((s,m)=>s+m.share*pool,0),Qmax=Math.max(1.12*tot,1);
+ const cw=(W-L-R)/NX,ch=hB/NY;                       // size axis LINEAR: the depth structure is what matters
+ const qAt=j=>Qmax*(j+0.5)/NY,yQ=Q=>yT+hB-Math.min(1,Math.max(0,Q/Qmax))*hB;
+ const V=[];let mx=0;
+ for(let i=0;i<NX;i++){const k=k0+(k1-k0)*(i+0.5)/NX,Ld=ladderAt(mkrs,k,pool),col=[];
+  for(let j=0;j<NY;j++){const px=landedFrom(Ld,qAt(j));
+   const b=px===null?null:(px/Ld.best-1)*1e4;col.push(b);if(b!==null&&b>mx)mx=b;}
+  V.push(col);}
+ const sc=mx>1e-9?mx:1;
+ for(let i=0;i<NX;i++)for(let j=0;j<NY;j++)
+  {g.fillStyle=heatCol(V[i][j]===null?null:V[i][j]/sc);g.fillRect(L+i*cw,yT+hB-(j+1)*ch,cw+0.7,ch+0.7);}
+ g.strokeStyle='#2a3538';g.lineWidth=1;g.strokeRect(L,yT,W-L-R,hB);
+ // y axis = trade size (log)
+ g.fillStyle='#677275';g.font='9px IBM Plex Mono';
+ const fq=q=>q<1?q.toFixed(2):q<10?q.toFixed(1):q.toFixed(0);
+ [0,0.25,0.5,0.75,1].forEach(t=>{const q=t*Qmax;
+   g.fillText(fq(q),22,Math.min(yT+hB,Math.max(yT+7,yQ(q)+3)));
+   if(t>0&&t<1){g.strokeStyle='rgba(255,255,255,.07)';g.beginPath();g.moveTo(L,yQ(q));g.lineTo(W-R,yQ(q));g.stroke();}});
+ g.save();g.translate(12,yT+hB/2);g.rotate(-Math.PI/2);g.font='9px IBM Plex Mono';g.fillStyle='#677275';
+ g.fillText('trade size (BTC)',-40,0);g.restore();
+ // header + legend ABOVE the band (never over the field)
+ g.font='10px IBM Plex Mono';g.fillStyle='#8a9698';g.fillText(title,L,yT-6);
+ const leg=[[0,'0'],[0.5,fq(mx/2)+' bp'],[1,fq(mx)+' bp'],[null,'no fit']];
+ let lx=W-R;const wd=leg.map(z=>g.measureText(z[1]).width+16);
+ lx-=wd.reduce((a,b)=>a+b,0);
+ leg.forEach((z,i)=>{g.fillStyle=heatCol(z[0]);g.fillRect(lx,yT-13,9,9);
+   g.fillStyle='#8a9698';g.fillText(z[1],lx+12,yT-5);lx+=wd[i];});
+ // the marker: YOUR strike x YOUR size -> where it lands you
+ if(mark){const Ld=ladderAt(mkrs,mark.k,pool),px=landedFrom(Ld,mark.Q);
+  const bps=px===null?null:(px/Ld.best-1)*1e4;
+  const mxp=L+(Math.max(k0,Math.min(k1,mark.k))-k0)/(k1-k0)*(W-L-R),my=yQ(mark.Q);
+  g.save();g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=1;g.setLineDash([2,2]);
+  g.beginPath();g.moveTo(L,my);g.lineTo(W-R,my);g.stroke();
+  g.beginPath();g.moveTo(mxp,yT);g.lineTo(mxp,yT+hB);g.stroke();g.setLineDash([]);
+  g.fillStyle='#fff';g.beginPath();g.arc(mxp,my,3.4,0,7);g.fill();
+  const lab=px===null?'this size does not fit the book':'lands you '+bps.toFixed(1)+' bps off best';
+  g.font='10px IBM Plex Mono';const tw=g.measureText(lab).width;
+  const bx=Math.min(Math.max(mxp+9,L+4),W-R-tw-10),by=Math.min(Math.max(my-8,yT+14),yT+hB-6);
+  g.fillStyle='rgba(0,0,0,.8)';g.fillRect(bx-4,by-11,tw+8,14);
+  g.fillStyle=px===null?'#FF6767':'#fff';g.fillText(lab,bx,by);g.restore();}}
+
 /* ─── draw ─── */
-function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32;
+function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32,HB=150;
  g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
  const hh=(st.hEff/1e4)*MAG;
  const cbid=[],cask=[],pbid=[],pask=[];
@@ -328,12 +394,13 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
  bi.push(0);as.push(0);
  const ymax=Math.max(Math.max(...cask),Math.max(...pask))*1.06;
- const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*(H-T-Bm);
- g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
+ const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
- for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*(H-T-Bm)/4+3);
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
  [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-11));
- g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),H-Bm);g.stroke();
+ g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),T+PH);g.stroke();
  const ln=(A,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
   A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
  // spread BANDS — the two curve sets are the point, so show them
@@ -347,18 +414,17 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  ln(pask,'#FF6767',2.0);           ln(pbid,'#ffb3b3',1.6,[6,3]);
  // mid, faint reference
  ln(ca,'#12484a',1,[2,4]); ln(pu,'#5a2b2b',1,[2,4]);
- // capacity density ribbon (continuous) along the bottom
- const mx=Math.max(...st.rung.map(r=>r.cap));
- g.save();g.globalAlpha=.55;
- st.rung.forEach(r=>{const hgt=26*r.cap/mx;
-  g.fillStyle='#0ABAB5';g.fillRect(X(r.k)-1.6,H-Bm-hgt,3.2,hgt);
-  g.fillStyle='#FF6767';g.fillRect(X(-r.k)-1.6,H-Bm-hgt,3.2,hgt);});
- g.restore();
- g.fillStyle='#677275';g.fillText('capacity density',L+4,H-Bm-30);
- g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);
+ // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
+ // where a trade of a given size at a given strike actually lands the taker.
+ const mkrs=st.book.map(m=>({c:st.c,h:m.h,share:m.share}));
+ drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,mkrs,MKT.pool,
+   {k:HK===null?0:HK,Q:+(($('qsz')||{value:5}).value)||5},
+   'LANDING MAP — where a trade of that size at that strike lands vs the best quote');
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);
  if(HK!==null){const hq2=st.hEff/1e4,Cx=st.c.CALL(HK),Px=st.c.PUT(HK);
   g.save();g.strokeStyle='#0ABAB5';g.setLineDash([2,3]);g.lineWidth=1;
-  g.beginPath();g.moveTo(X(HK),T);g.lineTo(X(HK),H-Bm);g.stroke();g.setLineDash([]);
+  g.beginPath();g.moveTo(X(HK),T);g.lineTo(X(HK),T+PH);g.stroke();g.setLineDash([]);
   g.fillStyle='#0ABAB5';g.beginPath();g.arc(X(HK),Y(Cx*(1+hq2)),3.4,0,7);g.fill();
   g.fillStyle='#FF6767';g.beginPath();g.arc(X(HK),Y(Px*(1+hq2)),3.4,0,7);g.fill();g.restore();}
  CV_GEO={X:X,L:L,R:R,W:W};}
@@ -478,13 +544,14 @@ function renderTransact(st){
  $('tfill').querySelector('tbody').innerHTML=out.map(o=>
   `<tr class="${o.me?'me':''}"><td>${o.n}</td><td>${f(o.px,5)}</td><td>${f(o.fill,2)}</td><td>${usd(o.fill*S)}</td><td>${usd(o.fill*o.px*S)}</td></tr>`).join('');
  drawAgg(B,set,k);}
-function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30;
+function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=150;
  g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
  const A=xs.map(B.ask),D=xs.map(B.bid);
- const ymax=Math.max(...A)*1.06,X=k=>L+(k+0.7)/1.4*(W-L-R),Y=v=>T+(1-v/ymax)*(H-T-Bm);
- g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ const PH=H-T-Bm-HB-28;
+ const ymax=Math.max(...A)*1.06,X=k=>L+(k+0.7)/1.4*(W-L-R),Y=v=>T+(1-v/ymax)*PH;
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
- for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*(H-T-Bm)/4+3);
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
  [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-10));
  const ln=(arr,c,w,d)=>{g.save();g.setLineDash(d||[]);g.strokeStyle=c;g.lineWidth=w;g.beginPath();
   arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
@@ -493,8 +560,12 @@ function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext
  A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
  for(let i=D.length-1;i>=0;i--)g.lineTo(X(xs[i]),Y(D[i]));g.closePath();g.fill();g.restore();
  ln(A,'#0ABAB5',2.3);ln(D,'#63e6e2',1.8,[6,3]);
- g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),H-Bm);g.stroke();g.restore();
- g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
+ g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),T+PH);g.stroke();g.restore();
+ // LANDING HEATMAP — the aggregate is a SURFACE, not a curve (operator entry 555)
+ drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,set,MKT.pool,{k:hk,Q:+(($('tsz')||{value:3}).value)||3},
+   'LANDING MAP — the aggregate is a surface: where YOUR size at THAT strike lands vs best');
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
 
 /* ── TRADE BANDS ── */
 function renderBands(st){
