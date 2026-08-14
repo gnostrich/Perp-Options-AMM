@@ -4015,3 +4015,9 @@ _Context: operator clarifies the vision with a screenshot — NOT a separate hea
 > im envisioning each curve is no more a curve but this kind of thing and the buy thing and sell thing have this on opposite sides or something like that
 >
 > not like that, like literally the curve itself ..
+
+
+## Entry 560 — 2026-08-14 UTC
+_Context: operator corrects panel E on two counts — buy and sell must be SEPARATE TABS so both clouds are never on screen at once (one side per tab), and the cloud must FADE toward its outer end rather than ending in a hard edge._
+
+> readh waht im saying cuhbuy and sell curves are separate tabs so we dont see and the things dade toward outer end rifhtlike it would be one side tou see on each if the tabs

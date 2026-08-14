@@ -39,13 +39,15 @@ Nothing here is a mockup — every panel is drawn by the live code. Pick one.</d
 <div class="bd"><canvas id="cC2" width="1400" height="440"></canvas>
 <div class="cap">Identical code, different book. Today's shipped divergence dial never makes the winner switch — one maker wins every strike — which is why panel C above is calm. Give the makers genuinely different <i>shapes</i> and the best-of-book kinks where the winner changes, and the implied density <span class="warn">goes negative there</span>: a negative probability. <b>This is the picture of the open problem</b> — it is the same fact as the butterfly the skeptic flagged, in your language.</div></div></div>
 
-<div class="opt"><div class="hd"><b>E — the curve IS the cloud</b><span class="t">no line: ask depth spreads UP, bid depth spreads DOWN, brightness = size you can get at that price</span><span class="pick">entry 559</span></div>
-<div class="bd"><canvas id="cE" width="1500" height="620"></canvas>
+<div class="opt"><div class="hd"><b>E — the curve IS the cloud</b><span class="t">one side per tab · fades out toward the outer edge as the book thins</span><span class="pick">entries 559 + 560</span></div>
+<div class="bd"><div class="tabs"><div class="tab on" id="tabBuy">BUY (you pay)</div><div class="tab" id="tabSell">SELL (you receive)</div></div>
+<canvas id="cE" width="1500" height="620"></canvas>
 <div class="cap">Each maker is an AMM, so filling size walks <i>its own</i> curve continuously — there is no block of stock at one price and therefore no rung.
 At every strike, and every price, we ask: <b>how much can I get here?</b>
 <code>qᵢ(p) = clamp( (p − askᵢ) · 0.01·N / (λᵢ·ATMᵢ), 0, shareᵢ·N )</code> and <code>Q(k,p) = Σᵢ qᵢ(p)</code>.
-Brightness is the <b>marginal</b> depth <code>∂Q/∂p</code>, so the cloud <b>ends</b> where the book is exhausted rather than flooding upward. Teal spreads <b>upward</b> from the best ask (buy deeper ⇒ pay more); red spreads <b>downward</b> from the best bid (sell deeper ⇒ receive less).
-The dark seam between them is the spread. A thin cloud is a thin book; a fat cloud is a deep one — the shape you see <i>is</i> the liquidity distribution, not a summary of it.</div></div></div>
+<b>One side at a time</b> — click the tabs; the other side is never on screen, so nothing overlaps.
+Brightness is the liquidity <b>still untouched</b> at that price, <code>1 − Q(k,p)/Q_total</code>: full at the touch, <b>fading to nothing</b> at the outer edge where the book is exhausted. So the cloud dissolves outward instead of stopping at a hard line, and how far it reaches is how deep the book is.
+Buy fades <b>upward</b> (take more, pay more); sell fades <b>downward</b> (give more, get less) — the same object mirrored, which is why they belong on separate tabs rather than fighting for the same space.</div></div></div>
 
 <div class="opt"><div class="hd"><b>D — B + C</b><span class="t">tabs, with BOTH strips: where it lands, and what distribution that implies</span></div>
 <div class="bd"><div class="tabs"><div class="tab on">BUY (you pay)</div><div class="tab">SELL (you receive)</div></div>
@@ -224,6 +226,7 @@ function depthAt(SS,k,p,side){        // returns {Q: size available by price p, 
   if(q>=cap){Q+=cap;}                                 // this maker is exhausted: contributes NO more depth
   else {Q+=q; dens+=1/slope;}}
  return {Q,dens};}
+let SIDE='ask';
 function cloudPanel(cid){
  const cv=document.getElementById(cid),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30;
  const PH=H-T-Bm;
@@ -232,38 +235,45 @@ function cloudPanel(cid){
  const ymax=ask0(K0)*1.06, Y=v=>T+(1-v/ymax)*PH, X=k=>L+(k-K0)/(K1-K0)*(W-L-R);
  g.strokeStyle='#141d1f';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
  const NX=460,NY=560,cw=(W-L-R)/NX,ch=PH/NY;
- // brightness = MARGINAL depth (BTC per unit price). It falls to zero once every
- // maker is exhausted, so the cloud ENDS instead of flooding the panel.
- const F=[];let dmax=0;
- for(let i=0;i<NX;i++){const k=K0+(K1-K0)*(i+0.5)/NX,a0=ask0(k),b0=bid0(k),col=[];
+ const Qtot=SET.reduce((s,m)=>s+m.share*POOL,0), ask=(SIDE==='ask');
+ // brightness = liquidity STILL UNTOUCHED at that price, 1 - Q(k,p)/Qtot.
+ // Full at the touch, fading smoothly to zero at the outer edge where the book
+ // is exhausted -> the cloud dissolves outward instead of ending on a hard line.
+ for(let i=0;i<NX;i++){const k=K0+(K1-K0)*(i+0.5)/NX,e0=ask?ask0(k):bid0(k);
   for(let j=0;j<NY;j++){const p=ymax*(1-(j+0.5)/NY);
-   let d=0,ask=true;
-   if(p>a0){d=depthAt(SET,k,p,'ask').dens;}
-   else if(p<b0){d=depthAt(SET,k,p,'bid').dens;ask=false;}
-   else {col.push(null);continue;}
-   if(d>dmax)dmax=d; col.push([d,ask]);}
-  F.push(col);}
- for(let i=0;i<NX;i++)for(let j=0;j<NY;j++){const c0=F[i][j];
-  if(!c0||c0[0]<=1e-9)continue;
-  const u=Math.pow(Math.min(1,c0[0]/dmax),1.15);
-  if(u<0.008)continue;
-  const c= c0[1] ? [Math.round(6+26*u),Math.round(24+200*u),Math.round(26+192*u)]
-                 : [Math.round(34+221*u),Math.round(12+58*u),Math.round(16+58*u)];
-  g.fillStyle='rgb('+c.join(',')+')';
-  g.fillRect(L+i*cw,T+j*ch,cw+0.7,ch+0.7);}
+   if(ask? p<=e0 : p>=e0) continue;
+   const t=1-depthAt(SET,k,p,SIDE).Q/Qtot;
+   if(t<=0.004)continue;
+   const u=Math.pow(t,0.85);
+   const c= ask ? [Math.round(6+26*u),Math.round(24+200*u),Math.round(26+192*u)]
+                : [Math.round(34+221*u),Math.round(12+58*u),Math.round(16+58*u)];
+   g.fillStyle='rgb('+c.join(',')+')';
+   g.fillRect(L+i*cw,T+j*ch,cw+0.7,ch+0.7);}}
+ // the touch line itself, faint - where the cloud begins
+ g.save();g.strokeStyle=ask?'rgba(10,186,181,.55)':'rgba(255,103,103,.55)';g.lineWidth=1;
+ g.beginPath();for(let i=0;i<=200;i++){const k=K0+(K1-K0)*i/200,v=ask?ask0(k):bid0(k);
+  const x=X(k),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);} g.stroke();g.restore();
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
  for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
  [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-9));
  g.fillText('moneyness  k = K/S − 1        (value on the vertical axis — the cloud IS the curve)',W/2-190,H-1);
- g.font='10px IBM Plex Mono';g.fillStyle='#63e6e2';g.fillText('▲ BUY  — depth above the best ask: take more, pay more',L+8,T+14);
- g.fillStyle='#FF6767';g.fillText('▼ SELL — depth below the best bid: give more, get less',L+8,T+28);
+ g.font='10px IBM Plex Mono';
+ g.fillStyle=SIDE==='ask'?'#63e6e2':'#FF6767';
+ g.fillText(SIDE==='ask'
+   ? '▲ BUY — the cloud fades UPWARD: take more size, pay more, until the book runs out'
+   : '▼ SELL — the cloud fades DOWNWARD: give more size, receive less, until the book runs out',L+8,T+14);
  // the trade marker, in the same space
- const Ld=ladderAt(SET,KMARK,POOL,'ask'),px=landedFrom(Ld,QMARK);
+ const Ld=ladderAt(SET,KMARK,POOL,SIDE),px=landedFrom(Ld,QMARK);
  if(px!==null){g.save();g.strokeStyle='#fff';g.setLineDash([2,2]);
   g.beginPath();g.moveTo(X(KMARK),T);g.lineTo(X(KMARK),T+PH);g.stroke();g.restore();
   g.fillStyle='#fff';g.beginPath();g.arc(X(KMARK),Y(px),3.6,0,7);g.fill();
   g.fillStyle='#fff';g.fillText('120 BTC lands here',X(KMARK)+9,Y(px)-6);}}
 cloudPanel('cE');
+{const tb=document.getElementById('tabBuy'),ts=document.getElementById('tabSell');
+ const go=sd=>{SIDE=sd;tb.className='tab'+(sd==='ask'?' on':'');ts.className='tab'+(sd==='bid'?' on':'');
+   const cv=document.getElementById('cE');cv.getContext('2d').clearRect(0,0,cv.width,cv.height);cloudPanel('cE');};
+ tb.style.cursor='pointer';ts.style.cursor='pointer';
+ tb.onclick=()=>go('ask'); ts.onclick=()=>go('bid');}
 
 /* ── D ── */
 (function(){const cv=document.getElementById('cD'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=136,PH=H-T-30-2*HB-52;
