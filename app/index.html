@@ -4,8 +4,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0f10;--panel:#0E1B1E;--panel2:#112226;--line:#1e3a3f;--teal:#0ABAB5;--txt:#E4E4E4;--dim:#8fa0a3;
---grn:#14E800;--red:#FF6767;--amber:#F0B429}
+:root{--bg:#000;--panel:#0E1B1E;--panel2:#191919;--line:#004240;--teal:#0ABAB5;--txt:#E4E4E4;--dim:#9B9FA3;
+--grn:#14E800;--red:#FF6767;--amber:#F0B429;--card:#1A1A1A;--edge:#465E58}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.5 'IBM Plex Mono',ui-monospace,monospace}
 header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);background:#08181b}
@@ -14,12 +14,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .tag{font-size:10px;letter-spacing:.12em;padding:3px 8px;border:1px solid var(--line);color:var(--dim);text-transform:uppercase}
 .wrap{display:grid;grid-template-columns:340px 1fr 320px;gap:12px;padding:12px;align-items:start}
 @media(max-width:1200px){.wrap{grid-template-columns:1fr}}
-.card{background:var(--panel);border:1px solid var(--line);box-shadow:4px 4px 0 #00292e}
-.card h3{margin:0;padding:9px 12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);border-bottom:1px solid var(--line);background:var(--panel2)}
+.card{background:var(--panel);border:2px solid #000;box-shadow:4px 4px 0 #00475d;border-radius:0}
+.card h3{margin:0;padding:10px 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C7B7A5;border-bottom:2px solid var(--line);background:var(--panel2)}
 .card .body{padding:11px 12px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0}
 .row label{color:var(--dim);font-size:11.5px}
-input[type=number],select{background:#0a1618;border:1px solid var(--line);color:var(--txt);font:inherit;font-size:12px;padding:4px 7px;width:104px;text-align:right}
+input[type=number],select{background:#222223;border:1px solid var(--edge);color:#fff;font:inherit;font-size:12px;padding:5px 8px;width:104px;text-align:right;border-radius:2px}
 input[type=range]{width:132px;accent-color:var(--teal)}
 .v{color:var(--teal);font-weight:600}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
@@ -33,9 +33,9 @@ canvas{display:block;width:100%;height:auto}
 .kpi div{background:var(--panel);border:1px solid var(--line);padding:9px 11px}
 .kpi .l{color:var(--dim);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .kpi .n{font-size:18px;font-weight:600;margin-top:3px}
-.btn{background:var(--panel2);border:1px solid var(--teal);color:var(--teal);font:inherit;font-size:11px;letter-spacing:.1em;
-text-transform:uppercase;padding:6px 12px;cursor:pointer}
-.btn:hover{background:#08313a}.btn.on{background:var(--teal);color:#04231f}
+.btn{background:#112226;border:1px solid var(--edge);color:#fff;font:inherit;font-size:10.5px;letter-spacing:.12em;
+text-transform:uppercase;padding:7px 13px;cursor:pointer;border-radius:2px}
+.btn:hover{background:#08313a}.btn.on{background:#09ABA6;border-color:#0ABAB5;color:#04231f;font-weight:600}
 .note{color:var(--dim);font-size:10.5px;line-height:1.5;margin-top:9px;border-top:1px dashed var(--line);padding-top:8px}
 .pill{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);padding:2px 6px;color:var(--dim)}
 footer{padding:10px 18px;color:var(--dim);font-size:10.5px;border-top:1px solid var(--line)}
@@ -55,20 +55,23 @@ footer{padding:10px 18px;color:var(--dim);font-size:10.5px;border-top:1px solid 
 <div class="wrap">
   <!-- LEFT: your quote -->
   <div>
-    <div class="card"><h3>Your quote</h3><div class="body">
-      <div class="row"><label>level S̄</label><input type="number" id="Sbar" value="0.60" step="0.01" min="0.05"></div>
-      <div class="row"><label>shoulder a</label><input type="number" id="a" value="1.2705" step="0.05" min="0.3"></div>
-      <div class="row"><label>tail γ</label><input type="number" id="gam" value="1.8413" step="0.05" min="0.3"></div>
-      <div class="row"><label>skew κ</label><input type="range" id="kap" min="-0.9" max="0.9" step="0.01" value="0"><span class="v" id="kapv">0.00</span></div>
-      <div class="row"><label>depth λ</label><input type="number" id="lam" value="0.02" step="0.005" min="0.001"></div>
-      <div class="row"><label>half-spread h (bps)</label><input type="number" id="h" value="30" step="5" min="0"></div>
-      <div class="row"><label>capital ($)</label><input type="number" id="cap" value="1000000" step="50000"></div>
+    <div class="card"><h3>Curve parameters</h3><div class="body">
+      <div class="row"><label>S̄ (mean strike)</label><input type="number" id="Sbar" value="0.60" step="0.01" min="0.05"></div>
+      <div class="row"><label>a (Burr c)</label><input type="number" id="a" value="1.2705" step="0.05" min="0.3"></div>
+      <div class="row"><label>γ (Burr k)</label><input type="number" id="gam" value="1.8413" step="0.05" min="0.3"></div>
+      <div class="row"><label>κ (skew)</label><input type="range" id="kap" min="-0.9" max="0.9" step="0.01" value="0"><span class="v" id="kapv">0.00</span></div>
+      <div class="row"><label>λ (decay)</label><input type="number" id="lam" value="0.02" step="0.005" min="0.001"></div>
+      <div class="row"><label>half-spread (dial) bps</label><input type="number" id="h" value="30" step="5" min="0"></div>
+      <div class="row"><label>N (rungs / wing)</label><input type="number" id="rungs" value="12" step="1" min="2" max="40"></div>
+      <div class="row"><label>margin ($)</label><input type="number" id="cap" value="1000000" step="50000"></div>
       <div class="row"><label>margin over fair</label><input type="range" id="marg" min="0" max="1" step="0.05" value="0.25"><span class="v" id="margv">25%</span></div>
       <div class="row"><button class="btn on" id="volbtn">vol-indexed</button><span class="pill" id="hEff">h eff –</span></div>
       <div class="note">Vol-indexed quoting sets your spread ∝ realised vol², so your revenue tracks the gamma bleed at <em>any</em> vol. Switch it off to quote a fixed spread and see the vol-spike wipeout.</div>
     </div></div>
 
-    <div class="card" style="margin-top:12px"><h3>Market</h3><div class="body">
+    <div class="card" style="margin-top:12px"><h3>Schedule preview</h3><div class="body"><table><tbody id="sched"></tbody></table><div class="note">Your curve is posted as a ladder of <b>rungs</b> per wing. Each rung is a firm quote at its own strike and size — that is what the book fills against.</div></div></div>
+
+    <div class="card" style="margin-top:12px"><h3>Market conditions</h3><div class="body">
       <div class="row"><label>realised vol</label><input type="range" id="rv" min="0.1" max="1.4" step="0.05" value="0.6"><span class="v" id="rvv">60%</span></div>
       <div class="row"><label>turnover /day</label><input type="range" id="turn" min="0.05" max="3" step="0.05" value="0.3"><span class="v" id="turnv">0.30×</span></div>
       <div class="row"><label>pool notional (BTC)</label><input type="number" id="N" value="200" step="10"></div>
@@ -93,11 +96,11 @@ footer{padding:10px 18px;color:var(--dim);font-size:10.5px;border-top:1px solid 
 
   <!-- RIGHT: book + pnl -->
   <div>
-    <div class="card"><h3>Makers</h3><div class="body">
+    <div class="card"><h3>Book — competing makers</h3><div class="body">
       <table id="mms"><thead><tr><th>maker</th><th>λ</th><th>h</th><th>share</th></tr></thead><tbody></tbody></table>
     </div></div>
 
-    <div class="card" style="margin-top:12px"><h3>Your P&amp;L</h3><div class="body">
+    <div class="card" style="margin-top:12px"><h3>LP levered APR</h3><div class="body">
       <table><tbody id="pnl"></tbody></table>
       <div class="note" id="verdict"></div>
     </div></div>
@@ -158,7 +161,7 @@ const money=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
 
 function readInputs(){
  return {Sbar:+$('Sbar').value,a:+$('a').value,gam:+$('gam').value,kap:+$('kap').value,
-  lam:+$('lam').value,h:+$('h').value,cap:+$('cap').value,marg:+$('marg').value,
+  lam:+$('lam').value,h:+$('h').value,cap:+$('cap').value,marg:+$('marg').value,rungs:+$('rungs').value,
   rv:+$('rv').value,turn:+$('turn').value,N:+$('N').value,Q:+$('Q').value};
 }
 function compute(){
@@ -185,11 +188,26 @@ function compute(){
  const revYr=(hEff/1e4)*p.turn*365*bookVal;
  const bleedYr=bleedRate*bookVal;
  const net=revYr-bleedYr, apr=net/p.cap;
- return {p,c,Gt,bleedRate,hEff,hFair,book,sorted,me,bookVal,revYr,bleedYr,net,apr,P};
+ // ---- rung schedule (the posted ladder, one wing shown symmetric) ----
+ const R=Math.max(2,Math.round(p.rungs)), kMax=0.6;
+ const rung=[];
+ for(let i=1;i<=R;i++){
+   const k=kMax*i/R;
+   const wgt=Math.exp(-p.lam*100*k*k);              // decay lambda shapes size across rungs
+   rung.push({k, prem:c.CALL(k), wgt});
+ }
+ const wsum=rung.reduce((s,r)=>s+r.wgt,0);
+ const notionalBTC=me.share*p.N;
+ rung.forEach(r=>{ r.size=notionalBTC*r.wgt/wsum; r.postedPrem=r.size*r.prem; });
+ const sumNotional=rung.reduce((s,r)=>s+r.size,0)*2;      // both wings
+ const sumPremium =rung.reduce((s,r)=>s+r.postedPrem,0)*2;
+ const peakStrike =rung.reduce((a,r)=>r.size>a.size?r:a,rung[0]).k;
+ return {p,c,Gt,bleedRate,hEff,hFair,book,sorted,me,bookVal,revYr,bleedYr,net,apr,P,rung,sumNotional,sumPremium,peakStrike,R};
 }
 
 /* ---------- render ---------- */
 function draw(st){
+ const _r=st.rung;
  const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=52,R=14,T=14,Bm=30;
  g.clearRect(0,0,W,H);
  const xs=[],mine=[],minePut=[],bookmid=[],bid=[],ask=[];
@@ -211,6 +229,10 @@ function draw(st){
    arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
  line(ask,'#1d4d52',1,[3,3]); line(bid,'#1d4d52',1,[3,3]);
  line(bookmid,'#5a7d80',1.4);
+ // rung markers
+ g.fillStyle='#0ABAB5';
+ st.rung.forEach(r=>{const x=X(r.k),y=Y(r.prem);g.fillRect(x-1.5,y-1.5,3,3);
+   const x2=X(-r.k),y2=Y(st.c.PUT(-r.k));g.fillStyle='#FF6767';g.fillRect(x2-1.5,y2-1.5,3,3);g.fillStyle='#0ABAB5';});
  line(minePut,'#FF6767',1.8);
  line(mine,'#0ABAB5',2.2);
  g.fillStyle='#8fa0a3';g.fillText('moneyness  k = K/S − 1',W/2-60,H-2);
@@ -236,6 +258,15 @@ function render(){
   `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.name}</td><td>${fmt(m.h,0)}</td><td>${fmt(m.share*st.p.N,1)}</td>
    <td>${m.fill>0.0001?fmt(m.fill,2):'—'}</td><td>${m.fill>0.0001?fmt(m.h,0)+' bps':'—'}</td>
    <td class="${m.rev>0?'pos':''}">${m.fill>0.0001?money(m.rev):'—'}</td></tr>`).join('');
+ // schedule preview
+ $('sched').innerHTML=[
+  ['rungs / wing', st.R],
+  ['Σ notional', fmt(st.sumNotional,2)+' BTC'],
+  ['peak strike', (st.peakStrike*100).toFixed(0)+'%'],
+  ['half-spread (dial)', '≈ '+fmt(st.hEff,0)+' bps'],
+  ['Σ posted premium', fmt(st.sumPremium,4)+' BTC'],
+  ['notional $', money(st.sumNotional*65695.5)]
+ ].map(r=>`<tr><td>${r[0]}</td><td class="v">${r[1]}</td></tr>`).join('');
  // pnl
  $('pnl').innerHTML=[
   ['book value',money(st.bookVal)],
@@ -261,7 +292,7 @@ function render(){
  ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
  draw(st);
 }
-['Sbar','a','gam','kap','lam','h','cap','marg','rv','turn','N','Q'].forEach(id=>{
+['Sbar','a','gam','kap','lam','h','cap','marg','rungs','rv','turn','N','Q'].forEach(id=>{
  $(id).addEventListener('input',render);});
 $('volbtn').addEventListener('click',()=>{volIndexed=!volIndexed;$('volbtn').classList.toggle('on',volIndexed);render();});
 render();
