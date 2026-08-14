@@ -1,30 +1,30 @@
 {
- "run": "A",
+ "run": "B",
  "phases": {
   "P1_nav": {
    "earn": {
     "VIEW": "earn",
     "disp": "gridEarn:grid gridTransact:none gridBands:none gridPortfolio:none",
     "h": 2970,
-    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_earn.png"
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P1_earn.png"
    },
    "transact": {
     "VIEW": "transact",
     "disp": "gridEarn:none gridTransact:grid gridBands:none gridPortfolio:none",
     "h": 1741,
-    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_transact.png"
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P1_transact.png"
    },
    "bands": {
     "VIEW": "bands",
     "disp": "gridEarn:none gridTransact:none gridBands:grid gridPortfolio:none",
     "h": 811,
-    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_bands.png"
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P1_bands.png"
    },
    "portfolio": {
     "VIEW": "portfolio",
     "disp": "gridEarn:none gridTransact:none gridBands:none gridPortfolio:grid",
     "h": 1254,
-    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_portfolio.png"
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P1_portfolio.png"
    }
   },
   "P2_earn": {
@@ -459,10 +459,10 @@
     "k": 0.6475770925110131,
     "Q": 5.973333333333334
    },
-   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_legend.png",
-   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_marker.png",
-   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_axis.png",
-   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_band.png",
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_earn_legend.png",
+   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_earn_marker.png",
+   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_earn_axis.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_earn_band.png",
    "track": [
     {
      "frac": 0.25,
@@ -965,10 +965,10 @@
     "k": 0.11872246696035249,
     "Q": 5.973333333333334
    },
-   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_legend.png",
-   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_marker.png",
-   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_axis.png",
-   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_band.png",
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_transact_legend.png",
+   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_transact_marker.png",
+   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_transact_axis.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P5_transact_band.png",
    "track": [
     {
      "k": 12,
@@ -1362,9 +1362,9 @@
      ]
     }
    },
-   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_legend.png",
-   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_band.png",
-   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_full.png"
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P6_nearzero_legend.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P6_nearzero_band.png",
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P6_nearzero_full.png"
   },
   "P7_bands": {
    "base": {
@@ -1427,7 +1427,7 @@
     "distinct": 1834,
     "total": 323400
    },
-   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P7_bands.png"
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P7_bands.png"
   },
   "P7_portfolio": {
    "base": {
@@ -1475,7 +1475,7 @@
     "liq": "account leverage | 4.95× | cap | 50× | headroom | 45.05× | status | SAFE"
    },
    "responds": true,
-   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P7_portfolio.png"
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P7_portfolio.png"
   },
   "P8_probes": {
    "feeVolOff": {
@@ -1610,7 +1610,7 @@
        }
       ]
      },
-     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k40_Q150.png"
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P8_cap_k40_Q150.png"
     },
     {
      "k": -40,
@@ -1643,7 +1643,7 @@
        }
       ]
      },
-     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k-40_Q150.png"
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P8_cap_k-40_Q150.png"
     },
     {
      "k": 12,
@@ -1676,7 +1676,7 @@
        }
       ]
      },
-     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k12_Q60.png"
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P8_cap_k12_Q60.png"
     },
     {
      "k": 12,
@@ -1693,7 +1693,7 @@
       "score": 0,
       "top": []
      },
-     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k12_Q240.png"
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_B/P8_cap_k12_Q240.png"
     }
    ],
    "perClickSizeBoxes": {

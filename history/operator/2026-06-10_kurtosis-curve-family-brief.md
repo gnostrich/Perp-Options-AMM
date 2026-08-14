@@ -4007,3 +4007,11 @@ _Context: operator brainstorms the landing-map presentation — whether the heat
 _Context: operator declines to open the repo and asks for IMAGES to compare the layout options. Manager built the four options for real and served them on the live Railway URL._
 
 > im not opening that give me images ro compare
+
+
+## Entry 559 — 2026-08-14 UTC
+_Context: operator clarifies the vision with a screenshot — NOT a separate heat strip below the chart. The curve ITSELF stops being a line and becomes the density object, with the buy side and sell side spreading to opposite sides. Manager built it as a depth cloud in (strike, price) space: ask glow spreading upward from top-of-book, bid glow spreading downward, brightness = size obtainable at that price._
+
+> im envisioning each curve is no more a curve but this kind of thing and the buy thing and sell thing have this on opposite sides or something like that
+>
+> not like that, like literally the curve itself ..

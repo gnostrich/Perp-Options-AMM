@@ -1,0 +1,639 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Temporal — Earn / MM</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--temporal:#00A9A4;--coffee:#C7B7A5;--greenBlue:#00222D;--teal:#0ABAB5;--amber:#FFA541;
+--panel:#0E1B1E;--card:#1A1A1A;--field:#222223;--chip:#112226;--edge:#465E58;--rule:#677275;
+--txt:#E4E4E4;--txt2:#E5E5E5;--mute:#677275;--grn:#14E800;--red:#FF6767}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:var(--txt);font:400 13px/1.5 'IBM Plex Mono',ui-monospace,monospace}
+.t2{font-size:10.5px}.t3{font-size:11.5px}
+header{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 22px;border-bottom:1px solid #14262a}
+.logo{display:flex;align-items:center;gap:26px}
+.logo b{color:#fff;font-weight:600;letter-spacing:.06em}
+nav a{color:#fff;text-transform:uppercase;font-size:12px;font-weight:500;padding:6px 12px;text-decoration:none;transition:.3s}
+nav a:hover,nav a.on{background:#00222d;box-shadow:4px 4px 0 #00475d}
+.hbtn{background:#0ABAB5;border:2px solid #000;box-shadow:3px 3px 0 #00475d;color:#04231f;font:inherit;font-size:11px;
+font-weight:600;padding:7px 13px;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+.hbtn.ghost{background:#112226;color:#fff;border-color:#000}
+.grid{display:grid;grid-template-columns:440px 1fr 340px;gap:12px;padding:12px;align-items:start;max-width:1800px;margin:0 auto}
+@media(max-width:1300px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:2px solid #000;padding:14px}
+.card{background:var(--card);border:1px solid #CFCFCF;box-shadow:3px 3px 0 #575757;border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.card.dim{background:#0F1215;border-color:#D1D1D1}
+.chead{display:flex;align-items:center;justify-content:space-between;padding-bottom:6px;margin-bottom:8px;border-bottom:1px solid var(--rule)}
+.chead b{font-size:10.5px;letter-spacing:.16em;font-weight:600;color:#fff;text-transform:uppercase}
+.chead a{font-size:10.5px;color:var(--teal);cursor:pointer;text-decoration:none}.chead a:hover{text-decoration:underline}
+/* CurveParamField */
+.fld{margin-bottom:11px}
+.frow{display:grid;grid-template-columns:minmax(150px,46%) minmax(88px,1fr);background:var(--field);border:1px solid var(--edge);border-radius:3px}
+.fchip{display:flex;align-items:center;justify-content:center;padding:8px;background:var(--chip);border-right:1px solid var(--edge);border-radius:3px 0 0 3px}
+.fchip span{font-size:10.5px;letter-spacing:.02em;color:var(--txt);text-align:center;line-height:1.25}
+.frow input{width:100%;height:26px;background:var(--field);border:0;color:#fff;font:300 12px 'IBM Plex Mono';padding:0 8px;text-align:right;outline:none}
+.hint{font-size:10px;color:var(--mute);margin:3px 0 0 8px}
+.srow{padding:7px 8px 0}
+.track{position:relative;height:4px;background:#4E4E4E;border-radius:99px}
+.fill{position:absolute;left:0;top:0;height:100%;background:var(--edge);border-radius:99px}
+.srow input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;margin:0}
+.mm{display:flex;justify-content:space-between;font-size:10px;color:var(--mute);margin-top:5px}
+/* metric rows */
+.m{display:flex;justify-content:space-between;align-items:center;padding:2.5px 0;font-weight:300;color:var(--txt2);font-size:10.5px}
+.m b{font-weight:600;color:#fff}
+.m .amb{color:var(--amber);font-weight:600}
+.m .tl{color:var(--teal);font-weight:600}
+.pos{color:var(--grn)}.neg{color:var(--red)}.amb{color:var(--amber)}
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{color:var(--mute);font-weight:400;text-align:right;padding:5px 5px;border-bottom:1px solid #2a3538;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+th:first-child,td:first-child{text-align:left}
+td{padding:4px 5px;text-align:right;border-bottom:1px solid #1c2629;font-weight:300}
+tr.me td{background:#0d2a2c;color:#fff}
+canvas{display:block;width:100%;height:auto}
+.cta{width:100%;background:var(--teal);border:2px solid #000;box-shadow:4px 4px 0 #00475d;color:#04231f;font:600 12px 'IBM Plex Mono';
+padding:11px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.cta.off{background:#222223;color:#8a9294;box-shadow:4px 4px 0 #333}
+.tabs{display:flex;border:1px solid #004240;background:#191919;padding:0;margin-bottom:12px}
+.tab{flex:1;padding:11px 8px;text-align:center;font-size:10.5px;letter-spacing:.12em;color:#fff;cursor:pointer;text-transform:uppercase;border-bottom:2px solid transparent}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal);background:#191919}
+.note{color:var(--mute);font-size:9.5px;line-height:1.55;margin-top:8px}
+.badge{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--edge);padding:2px 6px;color:var(--mute)}
+footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid #14262a}
+</style></head><body>
+<header>
+  <div class="logo"><b>TEMPORAL</b>
+    <nav><a href="#" data-nav="transact">Transact</a><a href="#" class="on" data-nav="earn">Earn</a><a href="#" data-nav="portfolio">Portfolio</a></nav></div>
+  <div style="display:flex;gap:9px"><button class="hbtn ghost">Docs</button><button class="hbtn">Connect Wallet</button></div>
+</header>
+
+<div class="grid" id="gridEarn">
+  <!-- ══ LEFT : EARN / curve parameters ══ -->
+  <div class="panel">
+    <div class="tabs"><div class="tab" data-t="transact">Transact</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab on" data-t="earn">Earn</div></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px">
+      <span class="t2" style="color:var(--txt2)">Executed on Hyperliquid</span></div>
+
+    <div class="card">
+      <div class="chead"><b>Curve Parameters</b><a id="reset">Reset to defaults</a></div>
+      <div id="params"></div>
+    </div>
+
+    <div class="card">
+      <div class="chead"><b>Margin</b><span class="t2" style="color:var(--coffee)">BTC</span></div>
+      <div class="frow"><div class="fchip"><span>MARGIN</span></div>
+        <input type="number" id="margin" value="15" step="1" min="1"></div>
+      <div class="m" style="margin-top:8px"><span>Notional $</span><b id="notional">—</b></div>
+      <div class="m"><span>Pool Leverage</span><b id="poolLev">—</b></div>
+      <div class="m"><span>LP Leverage</span><b id="lpLev">—</b></div>
+    </div>
+
+    <button class="cta" id="cta">Create Earn Position</button>
+    <div class="note">Your curve IS the quote. Any strike is priced on demand from the closed form — no ladder to post, cancel or replace. Requoting is four parameters, not N orders.</div>
+  </div>
+
+  <!-- ══ CENTRE : curve + ladder ══ -->
+  <div>
+    <div class="panel">
+      <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
+      <canvas id="cv" width="980" height="540" style="cursor:crosshair"></canvas>
+      <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. <b>Bottom panel = the landing map</b>: the aggregate is not a curve — what a taker actually pays depends on SIZE too, because the trade walks the book cheapest-first. Colour = how far a trade of that size at that strike lands from the best quote (dark = at best, amber/red = pushed off it, deep red = the size does not fit the book). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
+    </div>
+
+    <div class="panel" style="margin-top:12px">
+      <div class="chead"><b>RFQ — who fills this trade</b><span class="t2" style="color:var(--mute)" id="qlab">size —</span></div>
+      <table id="ladder"><thead><tr><th>maker</th><th>half-spread</th><th>depth</th><th>fills</th><th>revenue</th></tr></thead><tbody></tbody></table>
+      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread.</div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT : preview / APR / risk ══ -->
+  <div>
+    <div class="card dim">
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 13 · landing map</span></div>
+      <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
+      <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
+      <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
+      <div class="m"><span>Half-Spread (Dial)</span><b id="s-hs">—</b></div>
+      <div class="m"><span>Σ Posted Premium</span><b id="s-prem">—</b></div>
+      <div class="m"><span>Notional $</span><b id="s-notd">—</b></div>
+    </div>
+
+    <div class="card">
+      <div class="chead"><b>Yield</b><span class="t2" style="color:var(--coffee)">annualized</span></div>
+      <div class="m"><span>Annualized Fees</span><b id="y-fees">—</b></div>
+      <div class="m"><span>Gamma bleed (notional)</span><b id="y-bleed">—</b></div>
+      <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>Base Annual Percentage Rate (APR)</span><b id="y-base">—</b></div>
+      <div class="m"><span>Levered Annual Percentage Rate (APR)</span><b id="y-lev">—</b></div>
+    </div>
+
+    <div class="card">
+      <div class="chead"><b>Quoting mode</b><span class="t2" id="modelab" style="color:var(--teal)">vol-indexed</span></div>
+      <div class="m"><span>Fair half-spread</span><b id="q-fair">—</b></div>
+      <div class="m"><span>Your quote</span><b class="tl" id="q-mine">—</b></div>
+      <div class="m"><span>Margin over fair</span><b id="q-marg">—</b></div>
+      <button class="cta" id="volbtn" style="margin-top:9px">vol-indexed: on</button>
+      <div class="note" id="verdict"></div>
+    </div>
+
+    <div class="card">
+      <div class="chead"><b>Market &amp; risk</b></div>
+      <div id="mkt"></div>
+      <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>Curvature G̃</span><b id="r-gt">—</b></div>
+      <div class="m"><span>Break-even half-spread</span><b id="r-be">—</b></div>
+      <div class="m"><span>Break-even turnover</span><b id="r-bet">—</b></div>
+      <div class="m"><span>Parity check</span><b id="r-par">—</b></div>
+    </div>
+  </div>
+</div>
+<!-- ═══ TRANSACT ═══ -->
+<div class="grid" id="gridTransact" style="display:none">
+  <div class="panel">
+    <div class="tabs"><div class="tab on" data-t="transact">Transact</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
+    <div style="text-align:center;margin-bottom:10px" class="t2">Executed on Hyperliquid</div>
+    <div class="card">
+      <div class="chead"><b>Order</b><span class="t2" style="color:var(--coffee)">aggregate book</span></div>
+      <div style="display:flex;gap:0;margin-bottom:10px">
+        <button class="cta" id="sideBuy" style="margin:0;border-right:0">Buy</button>
+        <button class="cta off" id="sideSell" style="margin:0">Sell</button></div>
+      <div class="frow"><div class="fchip"><span>strike k (%)</span></div><input type="number" id="tk" value="12" step="0.5"></div>
+      <div class="srow"><div class="track"><div class="fill" id="tkf" style="width:60%"></div>
+        <input type="range" id="tkr" min="-60" max="60" step="0.5" value="12"></div><div class="mm"><span>-60</span><span>+60</span></div></div>
+      <div class="frow" style="margin-top:9px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="tsz" value="3" step="0.5" min="0.1"></div>
+      <div class="m" style="margin-top:10px"><span>maker divergence</span><b class="tl" id="arbv">0.15</b></div><div class="srow"><div class="track"><div class="fill" id="arbf" style="width:15%"></div><input type="range" id="arbr" min="0" max="1" step="0.01" value="0.15"></div><div class="mm"><span>agree</span><span>diverge</span></div></div><div id="tquote" style="margin-top:10px"></div>
+      <button class="cta" style="margin-top:10px">Create Position</button>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <div class="chead"><b>Aggregate book — what you trade against</b>
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">best ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">best bid</span><span class="badge">makers</span></span></div>
+      <canvas id="cvT" width="980" height="510"></canvas>
+      <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
+    </div>
+    <div class="panel" style="margin-top:12px">
+      <div class="chead"><b>Fill breakdown</b><span class="t2" style="color:var(--mute)" id="tfl">—</span></div>
+      <table id="tfill"><thead><tr><th>maker</th><th>their quote</th><th>fills</th><th>notional $</th><th>you pay</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+  <div>
+    <div class="card dim"><div class="chead"><b>Best of book</b><span class="t2" style="color:var(--teal)">live</span></div><div id="tbest"></div></div>
+    <div class="card"><div class="chead"><b>Improvement vs single maker</b></div><div id="timp"></div>
+      <div class="note">Competition is the product: the envelope is tighter than the best individual maker whenever makers differ.</div></div>
+  </div>
+</div>
+
+<!-- ═══ TRADE BANDS ═══ -->
+<div class="grid" id="gridBands" style="display:none">
+  <div class="panel">
+    <div class="tabs"><div class="tab" data-t="transact">Transact</div><div class="tab on" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
+    <div class="card">
+      <div class="chead"><b>Band — sell one wing, buy the other</b></div>
+      <div class="frow"><div class="fchip"><span>SELL strike (%)</span></div><input type="number" id="bs" value="10" step="0.5"></div>
+      <div class="frow" style="margin-top:8px"><div class="fchip"><span>BUY strike (%)</span></div><input type="number" id="bb" value="-10" step="0.5"></div>
+      <div class="frow" style="margin-top:8px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="bsz" value="5" step="0.5" min="0.1"></div>
+      <div id="bout" style="margin-top:10px"></div>
+      <button class="cta" style="margin-top:10px">Execute Band</button>
+      <div class="note">The proceeds from the sold leg buy the other leg. Only <b>κ</b> moves — the level and shape stay put.</div>
+    </div>
+  </div>
+  <div><div class="panel">
+    <div class="chead"><b>Curve before &amp; after the band</b>
+      <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">before</span><span class="badge" style="border-color:#FFA541;color:#FFA541">after</span></span></div>
+    <canvas id="cvB" width="980" height="330"></canvas>
+    <div class="note">A band moves κ, which re-scales both wings — every strike re-prices at once. Level (S̄) and shape (a, γ) are untouched.</div></div></div>
+  <div><div class="card"><div class="chead"><b>State move</b></div><div id="bstate"></div></div></div>
+</div>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<div class="grid" id="gridPortfolio" style="display:none">
+  <div><div class="card"><div class="chead"><b>Account</b><span class="t2" style="color:var(--coffee)">perps + options, one pot</span></div><div id="pacct"></div>
+    <div class="note">All perps and perp-options sit in ONE account equity. That is what liquidates, as a whole. LP positions are excluded.</div></div>
+    <div class="card"><div class="chead"><b>Carve</b></div><div id="pcarve"></div>
+    <div class="note">Creating an option upon a perp removes that much perp from the perps tab. Closing it closes the backing slice, and both P&amp;Ls cash out together.</div></div></div>
+  <div><div class="panel"><div class="chead"><b>Positions</b></div>
+    <table id="ppos"><thead><tr><th>instrument</th><th>strike</th><th>size</th><th>mark</th><th>value $</th><th>Δ</th></tr></thead><tbody></tbody></table></div>
+    <div class="panel" style="margin-top:12px"><div class="chead"><b>Hedge readback</b><span class="t2" style="color:var(--mute)">exposure → perp book</span></div>
+    <table id="phedge"><tbody></tbody></table>
+    <div class="note">Net option delta is read back to a perp-equivalent and hedged on Hyperliquid — the same Δ that prices the book reads the exposure back.</div></div></div>
+  <div><div class="card dim"><div class="chead"><b>Liquidation</b></div><div id="pliq"></div></div></div>
+</div>
+
+<footer>Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
+<script>
+/* ─── Burr-2 ─── */
+function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+let y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){const F=1e-300,E=3e-12;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;
+if(Math.abs(d)<F)d=F;d=1/d;let h=d;
+for(let m=1;m<=300;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;h*=d*c;
+aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;let del=d*c;h*=del;if(Math.abs(del-1)<E)break;}return h;}
+function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;
+const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
+return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
+function mk(Sbar,a,gam,kap){const B=Math.exp(logGamma(1/a)+logGamma(gam/a)-logGamma(1/a+gam/a));
+const sR=Sbar*(1+kap),sL=Sbar*(1-kap);
+const G1=Math.pow(1+Math.pow(1/sL,a),-(gam+1)/a);
+const I1=(sL/a)*B*(1-ibeta(1/(1+Math.pow(sL,a)),1/a,gam/a));
+const WR=sR*B/a,WL=(sL*B/a-I1-G1)/(1-G1),qR=WL/(WR+WL),qL=1-qR;
+const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a));
+const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
+return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a)*B};}
+/* ─── params (CurveParamField spec) ─── */
+const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
+const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
+ ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
+ ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
+let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15;
+const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
+const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
+const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
+const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
+function field(k,label,min,max,step,hint){const v=P[k];const pct=(v-min)/(max-min)*100;
+ return `<div class="fld"><div class="frow"><div class="fchip"><span>${label}</span></div>
+ <input type="number" data-k="${k}" value="${v}" min="${min}" max="${max}" step="${step}"></div>
+ ${hint?`<div class="hint">${hint}</div>`:''}
+ <div class="srow"><div class="track"><div class="fill" style="width:${pct}%"></div>
+ <input type="range" data-k="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div>
+ <div class="mm"><span>${min}</span><span>${max}</span></div></div></div>`;}
+function mktField(k,label,min,max,step,fmtv){const v=MKT[k],pct=(v-min)/(max-min)*100;
+ return `<div class="m"><span>${label}</span><b>${fmtv(v)}</b></div>
+ <div class="srow" style="padding-top:2px;padding-bottom:6px"><div class="track"><div class="fill" style="width:${pct}%"></div>
+ <input type="range" data-m="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div></div>`;}
+/* ─── compute ─── */
+// aggregate book: every maker has its own curve; taker sees the ENVELOPE
+function makerCurves(){
+ // RFQ: makers are FREE to differ on level AND shape. Arbitrage disciplines divergence;
+ // no common-level rule is needed because the book is an ENVELOPE, not a shared resting book.
+ const D=ARBD;  // divergence dial: 0 = agreement, 1 = wide disagreement
+ const set=[{n:'YOU',me:true,lam:0.02,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
+   {n:'MM-Kappa',me:false,lam:0.05,Sbar:P.Sbar*(1-0.035*D),a:P.a*(1-0.06*D),gam:P.gam*(1+0.03*D),kap:P.kap+0.05*D},
+   {n:'MM-Delta',me:false,lam:0.10,Sbar:P.Sbar*(1+0.05*D),a:P.a*(1+0.06*D),gam:P.gam*(1-0.05*D),kap:P.kap-0.06*D},
+   {n:'MM-Sigma',me:false,lam:0.04,Sbar:P.Sbar*(1+0.01*D),a:P.a*(1+0.01*D),gam:P.gam,kap:P.kap+0.02*D}];
+ set.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);});
+ return set;}
+function aggBook(set,hs){
+ // per maker half-spread hs[i]; aggregate ask = min ask, bid = max bid; depth in parallel
+ const inv=set.reduce((t,m)=>t+1/m.lam,0);
+ set.forEach((m,i)=>{m.share=(1/m.lam)/inv;m.h=hs[i];});
+ const ask=k=>Math.min(...set.map(m=>m.c.CALL(k)*(1+m.h/1e4)));
+ const bid=k=>Math.max(...set.map(m=>m.c.CALL(k)*(1-m.h/1e4)));
+ const who=(k,side)=>{let best=null;set.forEach(m=>{const px=side==='ask'?m.c.CALL(k)*(1+m.h/1e4):m.c.CALL(k)*(1-m.h/1e4);
+   if(best===null||(side==='ask'?px<best.px:px>best.px))best={m,px};});return best;};
+ const mid=k=>0.5*(ask(k)+bid(k));
+ const crossed=k=>bid(k)>ask(k);
+ return {set,ask,bid,mid,who,crossed,lamAgg:1/inv};}
+function calc(){
+ const c=mk(P.Sbar,P.a,P.gam,P.kap);
+ // curvature on the NOTIONAL basis: cash value C(S)=V(K/S-1)*S, Gt = d2C/dS2 * S  (per $1 notional)
+ const cash=(Sx,K)=>c.CALL(K/Sx-1)*Sx, hS=S*2e-3;
+ let g=0,n=0;
+ [0.85,0.95,1.0,1.05,1.15].forEach(mn=>{const K=mn*S;
+   const d2=(cash(S+hS,K)-2*cash(S,K)+cash(S-hS,K))/(hS*hS);
+   const v=Math.abs(d2*S); if(isFinite(v)){g+=v;n++;}});
+ const Gt=n?g/n:0, bleed=0.5*Gt*MKT.rv*MKT.rv;   // fraction of NOTIONAL per year
+ const hFair=(bleed/(MKT.turn*365))*1e4, marg=0.25;
+ const hEff=volIndexed?hFair*(1+marg):P.fee*1e4/2;
+ const book=[{n:'YOU',lam:0.02,h:hEff,me:true},...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
+ const inv=book.reduce((s,m)=>s+1/m.lam,0); book.forEach(m=>m.share=(1/m.lam)/inv);
+ const me=book.find(m=>m.me);
+ const notBTC=P.margin*10;                       // pool leverage 10x
+ // CONTINUOUS capacity density w(k) — no ladder. Quote any strike on demand.
+ const kMax=0.6, M=60, dk=kMax/M, dens=[];
+ for(let i=0;i<=M;i++){const k=kMax*i/M, w=Math.exp(-P.lam*8*k*k);
+   dens.push({k,w,prem:c.CALL(k),d:(c.CALL(k+0.005)-c.CALL(k-0.005))/0.01});}
+ const wInt=dens.reduce((s,r,i)=>s+r.w*((i===0||i===M)?0.5:1),0)*dk;
+ dens.forEach(r=>{r.cap=notBTC*r.w/wInt;});                       // BTC per unit k
+ const sumNot=notBTC*2;
+ const sumPrem=dens.reduce((s,r,i)=>s+r.cap*r.prem*((i===0||i===M)?0.5:1),0)*dk*2;
+ // "peak strike" = capacity-weighted centre of mass
+ const peak=dens.reduce((s,r,i)=>s+r.k*r.cap*((i===0||i===M)?0.5:1),0)*dk/Math.max(notBTC,1e-9);
+ const rung=dens;
+ const bookVal=sumPrem*S;                 // premium at risk ($)
+ const notionalUSD=sumNot*S;              // notional ($) — the fee/bleed basis
+ const feesYr=(hEff/1e4)*MKT.turn*365*notionalUSD, bleedYr=bleed*notionalUSD;
+ const equity=P.margin*S;
+ const baseAPR=(feesYr-bleedYr)/Math.max(notionalUSD,1), levAPR=(feesYr-bleedYr)/Math.max(equity,1);
+ const sorted=[...book].sort((x,y)=>x.h-y.h); let rem=MKT.Q; const px=c.CALL(0.1);
+ sorted.forEach(m=>{const cap=m.share*MKT.pool,t=Math.max(0,Math.min(cap,rem));m.fill=t;m.rev=t*(m.h/1e4)*px*S;rem-=t;});
+ return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,dens,dk,M,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
+/* ─── LANDING FIELD ─────────────────────────────────────────────────────────
+   The aggregate is NOT a curve. What a taker actually gets depends on SIZE as
+   well as strike, because the trade walks the book cheapest-first. So the honest
+   object is a SURFACE  landed(k,Q)  — drawn as a density heatmap.
+     ladder(k)      : makers sorted by ask, with cumulative capacity and cost
+     landed(k,Q)    : (Σ fill_i·px_i)/Q  — the average price the taker pays
+     impact_bps     : (landed/best − 1)·1e4  — how far the size pushes you off best
+   Q beyond total book capacity = "doesn't fit", drawn dark red.                */
+function ladderAt(mkrs,k,pool){
+ const a=mkrs.map(m=>({px:m.c.CALL(k)*(1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)})).sort((x,y)=>x.px-y.px);
+ let cq=0,cc=0;const cum=a.map(r=>{cq+=r.cap;cc+=r.cap*r.px;return{q:cq,c:cc,px:r.px};});
+ return {best:a[0].px,cum,total:cq};}
+function landedFrom(Ld,Q){let pq=0,pc=0;
+ for(const s of Ld.cum){if(Q<=s.q)return (pc+(Q-pq)*s.px)/Q;pq=s.q;pc=s.c;}
+ return null;}
+const HEAT=[[0,11,30,33],[.08,13,61,63],[.22,15,95,92],[.45,10,186,181],[.72,255,165,65],[1,255,103,103]];
+function heatCol(t){                 // t = impact NORMALISED to this field's own max; null = no fit
+ if(t===null)return '#4a1218';
+ if(t<=0)return 'rgb(11,30,33)';
+ for(let i=1;i<HEAT.length;i++){if(t<=HEAT[i][0]){
+   const u=(t-HEAT[i-1][0])/(HEAT[i][0]-HEAT[i-1][0]),A=HEAT[i-1],B2=HEAT[i];
+   return 'rgb('+[1,2,3].map(j=>Math.round(A[j]+u*(B2[j]-A[j]))).join(',')+')';}}
+ return 'rgb(255,103,103)';}
+function drawHeat(g,W,L,R,yT,hB,k0,k1,mkrs,pool,mark,title){
+ const NX=120,NY=44;
+ const tot=mkrs.reduce((s,m)=>s+m.share*pool,0),Qmax=Math.max(1.12*tot,1);
+ const cw=(W-L-R)/NX,ch=hB/NY;                       // size axis LINEAR: the depth structure is what matters
+ const qAt=j=>Qmax*(j+0.5)/NY,yQ=Q=>yT+hB-Math.min(1,Math.max(0,Q/Qmax))*hB;
+ const V=[];let mx=0;
+ for(let i=0;i<NX;i++){const k=k0+(k1-k0)*(i+0.5)/NX,Ld=ladderAt(mkrs,k,pool),col=[];
+  for(let j=0;j<NY;j++){const px=landedFrom(Ld,qAt(j));
+   const b=px===null?null:(px/Ld.best-1)*1e4;col.push(b);if(b!==null&&b>mx)mx=b;}
+  V.push(col);}
+ const sc=mx>1e-9?mx:1;
+ for(let i=0;i<NX;i++)for(let j=0;j<NY;j++)
+  {g.fillStyle=heatCol(V[i][j]===null?null:V[i][j]/sc);g.fillRect(L+i*cw,yT+hB-(j+1)*ch,cw+0.7,ch+0.7);}
+ g.strokeStyle='#2a3538';g.lineWidth=1;g.strokeRect(L,yT,W-L-R,hB);
+ // y axis = trade size (log)
+ g.fillStyle='#677275';g.font='9px IBM Plex Mono';
+ const fq=q=>q<1?q.toFixed(2):q<10?q.toFixed(1):q.toFixed(0);
+ [0,0.25,0.5,0.75,1].forEach(t=>{const q=t*Qmax;
+   g.fillText(fq(q),22,Math.min(yT+hB,Math.max(yT+7,yQ(q)+3)));
+   if(t>0&&t<1){g.strokeStyle='rgba(255,255,255,.07)';g.beginPath();g.moveTo(L,yQ(q));g.lineTo(W-R,yQ(q));g.stroke();}});
+ g.save();g.translate(12,yT+hB/2);g.rotate(-Math.PI/2);g.font='9px IBM Plex Mono';g.fillStyle='#677275';
+ g.fillText('trade size (BTC)',-40,0);g.restore();
+ // header + legend ABOVE the band (never over the field)
+ g.font='10px IBM Plex Mono';g.fillStyle='#8a9698';g.fillText(title,L,yT-6);
+ const leg=[[0,'0'],[0.5,fq(mx/2)+' bp'],[1,fq(mx)+' bp'],[null,'no fit']];
+ let lx=W-R;const wd=leg.map(z=>g.measureText(z[1]).width+16);
+ lx-=wd.reduce((a,b)=>a+b,0);
+ leg.forEach((z,i)=>{g.fillStyle=heatCol(z[0]);g.fillRect(lx,yT-13,9,9);
+   g.fillStyle='#8a9698';g.fillText(z[1],lx+12,yT-5);lx+=wd[i];});
+ // the marker: YOUR strike x YOUR size -> where it lands you
+ if(mark){const Ld=ladderAt(mkrs,mark.k,pool),px=landedFrom(Ld,mark.Q);
+  const bps=px===null?null:(px/Ld.best-1)*1e4;
+  const mxp=L+(Math.max(k0,Math.min(k1,mark.k))-k0)/(k1-k0)*(W-L-R),my=yQ(mark.Q);
+  g.save();g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=1;g.setLineDash([2,2]);
+  g.beginPath();g.moveTo(L,my);g.lineTo(W-R,my);g.stroke();
+  g.beginPath();g.moveTo(mxp,yT);g.lineTo(mxp,yT+hB);g.stroke();g.setLineDash([]);
+  g.fillStyle='#fff';g.beginPath();g.arc(mxp,my,3.4,0,7);g.fill();
+  const lab=px===null?'this size does not fit the book':'lands you '+bps.toFixed(1)+' bps off best';
+  g.font='10px IBM Plex Mono';const tw=g.measureText(lab).width;
+  const bx=Math.min(Math.max(mxp+9,L+4),W-R-tw-10),by=Math.min(Math.max(my-8,yT+14),yT+hB-6);
+  g.fillStyle='rgba(0,0,0,.8)';g.fillRect(bx-4,by-11,tw+8,14);
+  g.fillStyle=px===null?'#FF6767':'#fff';g.fillText(lab,bx,by);g.restore();}}
+
+/* ─── draw ─── */
+function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32,HB=150;
+ g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
+ const hh=(st.hEff/1e4)*MAG;
+ const cbid=[],cask=[],pbid=[],pask=[];
+ for(let i=0;i<=140;i++){const k=-0.7+1.4*i/140;xs.push(k);
+  const C=st.c.CALL(k),Pu=st.c.PUT(k);ca.push(C);pu.push(Pu);
+  cbid.push(C*(1-hh));cask.push(C*(1+hh));
+  pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
+ bi.push(0);as.push(0);
+ const ymax=Math.max(Math.max(...cask),Math.max(...pask))*1.06;
+ const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
+ const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
+ [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-11));
+ g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),T+PH);g.stroke();
+ const ln=(A,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
+  A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
+ // spread BANDS — the two curve sets are the point, so show them
+ const band=(lo,hi,col)=>{g.save();g.globalAlpha=.20;g.fillStyle=col;g.beginPath();
+   hi.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
+   for(let i=lo.length-1;i>=0;i--){g.lineTo(X(xs[i]),Y(lo[i]));}
+   g.closePath();g.fill();g.restore();};
+ band(cbid,cask,'#0ABAB5'); band(pbid,pask,'#FF6767');
+ // ASK (you buy here) solid ; BID (you sell here) dashed-solid, both first-class
+ ln(cask,'#0ABAB5',2.0);           ln(cbid,'#63e6e2',1.6,[6,3]);
+ ln(pask,'#FF6767',2.0);           ln(pbid,'#ffb3b3',1.6,[6,3]);
+ // mid, faint reference
+ ln(ca,'#12484a',1,[2,4]); ln(pu,'#5a2b2b',1,[2,4]);
+ // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
+ // where a trade of a given size at a given strike actually lands the taker.
+ const mkrs=st.book.map(m=>({c:st.c,h:m.h,share:m.share}));
+ drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,mkrs,MKT.pool,
+   {k:HK===null?0:HK,Q:+(($('qsz')||{value:5}).value)||5},
+   'LANDING MAP — where a trade of that size at that strike lands vs the best quote');
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);
+ if(HK!==null){const hq2=st.hEff/1e4,Cx=st.c.CALL(HK),Px=st.c.PUT(HK);
+  g.save();g.strokeStyle='#0ABAB5';g.setLineDash([2,3]);g.lineWidth=1;
+  g.beginPath();g.moveTo(X(HK),T);g.lineTo(X(HK),T+PH);g.stroke();g.setLineDash([]);
+  g.fillStyle='#0ABAB5';g.beginPath();g.arc(X(HK),Y(Cx*(1+hq2)),3.4,0,7);g.fill();
+  g.fillStyle='#FF6767';g.beginPath();g.arc(X(HK),Y(Px*(1+hq2)),3.4,0,7);g.fill();g.restore();}
+ CV_GEO={X:X,L:L,R:R,W:W};}
+/* ─── render ─── */
+function render(){
+ $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='depth'?'= from notional':'')).join('');
+ $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
+  +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
+  +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));
+ const st=calc();
+ $('notional').textContent=usd(st.notBTC*S);
+ $('poolLev').textContent='10.0×';
+ $('lpLev').textContent=f(st.notionalUSD/Math.max(st.equity,1),2)+'×';
+ $('s-rungs').innerHTML='<span class="tl">continuous</span>';
+ $('s-not').textContent=f(st.sumNot,2)+' BTC';
+ $('s-peak').textContent=(st.peak*100).toFixed(0)+'%';
+ $('s-hs').textContent='≈ '+f(st.hEff,0)+' bps';
+ $('s-prem').textContent=f(st.sumPrem,4)+' BTC';
+ $('s-notd').textContent=usd(st.sumNot*S);
+ $('y-fees').innerHTML='<span class="pos">'+usd(st.feesYr)+'</span>';
+ $('y-bleed').innerHTML='<span class="neg">'+usd(-st.bleedYr)+'</span>';
+ const bc=st.baseAPR>=0?'pos':'neg';
+ $('y-base').innerHTML='<span class="'+bc+'">'+(st.baseAPR*100).toFixed(1)+'%</span>';
+ $('y-lev').innerHTML='<span class="'+bc+'">'+(st.levAPR*100).toFixed(1)+'%</span>';
+ $('q-fair').textContent=f(st.hFair,0)+' bps';
+ $('q-mine').textContent=f(st.hEff,0)+' bps';
+ $('q-marg').textContent=volIndexed?(st.marg*100).toFixed(0)+'%':'—';
+ $('modelab').textContent=volIndexed?'vol-indexed':'fixed spread';
+ $('volbtn').textContent='vol-indexed: '+(volIndexed?'on':'off');
+ $('volbtn').className='cta'+(volIndexed?'':' off');
+ $('verdict').innerHTML=volIndexed
+  ?'Your quote moves with realised vol, so revenue tracks the gamma bleed at every level. Drag realised vol — the APR barely moves.'
+  :'<span class="neg">Fixed spread.</span> Calibrated to one vol only — drag realised vol up and watch the APR invert.';
+ $('r-gt').textContent=f(st.Gt,2);
+ $('r-be').textContent=f(st.hFair,0)+' bps';
+ $('r-bet').textContent=f(st.bleed/((st.hEff/1e4)*365),2)+'× /day';
+ $('r-par').textContent=f(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12);
+ $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
+ $('magv')&&($('magv').textContent='×'+MAG);
+ $('magc')&&($('magc').textContent='×'+MAG);
+  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
+  `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
+   <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
+ if(VIEW==='transact'){renderTransact(st);return bind();}
+ if(VIEW==='bands'){renderBands(st);return bind();}
+ if(VIEW==='portfolio'){renderPortfolio(st);return bind();}
+ draw(st);
+ {const hq=st.hEff/1e4,k=(HK===null?0:HK),C=st.c.CALL(k),Pu=st.c.PUT(k),sz=+(($('qsz')||{}).value||5);
+  const cell=(l,v,cls)=>'<div><div class="t2" style="color:var(--mute)">'+l+'</div><div style="font-size:12.5px;font-weight:600;margin-top:2px" class="'+(cls||'')+'">'+v+'</div></div>';
+  $('hoverbar').innerHTML=cell('strike k',(k*100).toFixed(2)+'%')
+   +cell('call bid / ask',f(C*(1-hq),4)+' / '+f(C*(1+hq),4),'tl')
+   +cell('put bid / ask',f(Pu*(1-hq),4)+' / '+f(Pu*(1+hq),4))
+   +cell('half-spread',f(st.hEff,1)+' bps')
+   +cell('C−P vs −k',f(C-Pu,5)+' / '+f(-k,5))
+   +cell('capture on '+f(sz,1),usd(sz*C*2*hq*S),'pos');}
+ bind();}
+function bind(){
+ const cvE=$('cv');
+ if(cvE&&!cvE._wired){cvE._wired=1;
+  cvE.onmousemove=function(e){if(!CV_GEO)return;const r=cvE.getBoundingClientRect();
+   const px=(e.clientX-r.left)*(cvE.width/r.width);
+   const k=-0.7+(px-CV_GEO.L)/(CV_GEO.W-CV_GEO.L-CV_GEO.R)*1.4;
+   HK=Math.max(-0.68,Math.min(0.68,k));render();};}
+ ($('qsz')||{}).oninput=function(){render();};
+ ['tk','tsz','bs','bb','bsz'].forEach(id=>{const e=$(id);if(e&&!e._w){e._w=1;e.oninput=()=>{if(id==='tk'){const r=$('tkr');if(r)r.value=e.value;}render();};}});
+ const ar=$('arbr');if(ar&&!ar._w){ar._w=1;ar.oninput=()=>{ARBD=+ar.value;render();};}
+ const tkr=$('tkr');if(tkr&&!tkr._w){tkr._w=1;tkr.oninput=()=>{$('tk').value=tkr.value;render();};}
+ const sb=$('sideBuy'),ss2=$('sideSell');
+ if(sb&&!sb._w){sb._w=1;sb.onclick=()=>{TRADE.side='buy';sb.className='cta';ss2.className='cta off';render();};
+  ss2.onclick=()=>{TRADE.side='sell';ss2.className='cta';sb.className='cta off';render();};}
+ document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
+ $('mag')&&($('mag').oninput=e=>{MAG=+e.target.value;render();});
+  $('qsz')&&($('qsz').oninput=()=>render());
+ document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
+$('margin').oninput=e=>{P.margin=+e.target.value;render();};
+$('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
+$('reset').onclick=()=>{P={...DEF,margin:P.margin};render();};
+function setView(v){VIEW=v;
+ ['Earn','Transact','Bands','Portfolio'].forEach(n=>{const el=$('grid'+n);if(el)el.style.display=(n.toLowerCase()===v)?'grid':'none';});
+ document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===v||(v==='bands'&&a.dataset.nav==='transact')));
+ render();}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-t]'),n=e.target.closest('[data-nav]');
+ if(t){setView(t.dataset.t);e.preventDefault();} else if(n){setView(n.dataset.nav);e.preventDefault();}});
+
+/* ── TRANSACT ── */
+function renderTransact(st){
+ const set=makerCurves(), hs=st.book.map(m=>m.h); const B=aggBook(set,hs);
+ const k=(+($('tk')||{value:12}).value)/100, sz=+($('tsz')||{value:3}).value, side=TRADE.side;
+ const ask=B.ask(k), bid=B.bid(k), best=B.who(k,side==='buy'?'ask':'bid');
+ const px=side==='buy'?ask:bid, spr=(ask-bid)/((ask+bid)/2)*1e4;
+ $('tquote').innerHTML=
+  `<div class="m"><span>best ${side==='buy'?'ask':'bid'}</span><b class="tl">${f(px,5)}</b></div>
+   <div class="m"><span>book spread</span><b>${f(spr,1)} bps</b></div>
+   <div class="m"><span>filled by</span><b>${best.m.n}</b></div>
+   <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>${side==='buy'?'you pay':'you receive'}</span><b class="${side==='buy'?'neg':'pos'}">${usd(sz*px*S)}</b></div>`;
+ // best-of-book panel
+ const rows=set.map(m=>({n:m.n,me:m.me,ask:m.c.CALL(k)*(1+m.h/1e4),bid:m.c.CALL(k)*(1-m.h/1e4)}));
+ const bestSingle=rows.reduce((a,r)=>r.ask<a.ask?r:a,rows[0]);
+ $('tbest').innerHTML=
+  `<div class="m"><span>strike</span><b>${(k*100).toFixed(2)}%</b></div>
+   <div class="m"><span>best ask</span><b class="tl">${f(ask,5)}</b></div>
+   <div class="m"><span>best bid</span><b>${f(bid,5)}</b></div>
+   <div class="m"><span>book half-spread</span><b>${f(spr/2,1)} bps</b></div>
+   <div class="m"><span>makers quoting</span><b>${set.length}</b></div>
+   <div class="m"><span>book state</span><b class="${B.crossed(k)?'amb':'pos'}">${B.crossed(k)?'ARB OPEN':'clean'}</b></div>
+   <div class="m"><span>arb available</span><b class="${B.crossed(k)?'amb':''}">${B.crossed(k)?usd((B.bid(k)-B.ask(k))*S)+' / BTC':'—'}</b></div>`;
+ const impBps=(bestSingle.ask-ask)/ask*1e4;
+ $('timp').innerHTML=rows.map(r=>`<div class="m"><span>${r.n}${r.me?' (you)':''}</span><b class="${r.ask===ask?'tl':''}">${f(r.ask,5)}</b></div>`).join('')
+  +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single</span><b class="pos">${f(Math.max(0,impBps),2)} bps</b></div>`;
+ // fill breakdown — walk makers cheapest-first
+ const sorted=[...rows].sort((a,b)=>side==='buy'?a.ask-b.ask:b.bid-a.bid);
+ let rem=sz;const out=[];
+ sorted.forEach((r,i)=>{const cap=set.find(m=>m.n===r.n).share*MKT.pool;const t=Math.max(0,Math.min(cap,rem));
+  if(t>1e-6)out.push({...r,fill:t,px:side==='buy'?r.ask:r.bid});rem-=t;});
+  $('tfl').textContent=f(sz,1)+' BTC · '+side;
+ const av=$('arbv'),af=$('arbf'); if(av)av.textContent=f(ARBD,2); if(af)af.style.width=(ARBD*100)+'%';
+ $('tfill').querySelector('tbody').innerHTML=out.map(o=>
+  `<tr class="${o.me?'me':''}"><td>${o.n}</td><td>${f(o.px,5)}</td><td>${f(o.fill,2)}</td><td>${usd(o.fill*S)}</td><td>${usd(o.fill*o.px*S)}</td></tr>`).join('');
+ drawAgg(B,set,k);}
+function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=150;
+ g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
+ const A=xs.map(B.ask),D=xs.map(B.bid);
+ const PH=H-T-Bm-HB-28;
+ const ymax=Math.max(...A)*1.06,X=k=>L+(k+0.7)/1.4*(W-L-R),Y=v=>T+(1-v/ymax)*PH;
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
+ [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-10));
+ const ln=(arr,c,w,d)=>{g.save();g.setLineDash(d||[]);g.strokeStyle=c;g.lineWidth=w;g.beginPath();
+  arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
+ set.forEach(m=>ln(xs.map(k=>m.c.CALL(k)*(1+m.h/1e4)),m.me?'#0f5f5c':'#243b3d',1));
+ g.save();g.globalAlpha=.18;g.fillStyle='#0ABAB5';g.beginPath();
+ A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
+ for(let i=D.length-1;i>=0;i--)g.lineTo(X(xs[i]),Y(D[i]));g.closePath();g.fill();g.restore();
+ ln(A,'#0ABAB5',2.3);ln(D,'#63e6e2',1.8,[6,3]);
+ g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),T+PH);g.stroke();g.restore();
+ // LANDING HEATMAP — the aggregate is a SURFACE, not a curve (operator entry 555)
+ drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,set,MKT.pool,{k:hk,Q:+(($('tsz')||{value:3}).value)||3},
+   'LANDING MAP — the aggregate is a surface: where YOUR size at THAT strike lands vs best');
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
+
+/* ── TRADE BANDS ── */
+function renderBands(st){
+ const sk=(+($('bs')||{value:10}).value)/100, bk=(+($('bb')||{value:-10}).value)/100, sz=+($('bsz')||{value:5}).value;
+ const c=st.c, hq=st.hEff/1e4, lam=0.01, N=MKT.pool, ATM=c.ATM;
+ const Ps=c.CALL(sk), Pb=c.PUT(bk);
+ const ss=0.5*lam*(sz/N)/0.01*ATM/Math.max(Ps,1e-9);
+ const V=sz*Ps*(1-P.fee)*(1-ss);
+ const Q0=V/Math.max(Pb,1e-9), sb=0.5*lam*(Q0/N)/0.01*ATM/Math.max(Pb,1e-9);
+ const Qb=V*(1-P.fee)/(Pb*(1+sb));
+ const dk=-1*lam*(sz/N)/0.01*ATM/Math.max(Ps,1e-9) - (-1)*lam*(Qb/N)/0.01*ATM/Math.max(Pb,1e-9);
+ const kapA=Math.max(-0.95,Math.min(0.95,P.kap+dk));
+ $('bout').innerHTML=
+  `<div class="m"><span>sell leg price</span><b>${f(Ps,5)}</b></div>
+   <div class="m"><span>proceeds</span><b class="pos">${f(V,4)} BTC</b></div>
+   <div class="m"><span>buy leg price</span><b>${f(Pb,5)}</b></div>
+   <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>units bought</span><b class="tl">${f(Qb,4)}</b></div>`;
+ $('bstate').innerHTML=
+  `<div class="m"><span>κ before</span><b>${f(P.kap,4)}</b></div>
+   <div class="m"><span>Δκ</span><b class="${dk>=0?'pos':'neg'}">${f(dk,5)}</b></div>
+   <div class="m"><span>κ after</span><b style="color:#FFA541">${f(kapA,4)}</b></div>
+   <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>S̄ · a · γ</span><b>unchanged</b></div>
+   <div class="m"><span>ATM before → after</span><b>${f(c.ATM,4)} → ${f(mk(P.Sbar,P.a,P.gam,kapA).ATM,4)}</b></div>`;
+ const cv=$('cvB');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30;
+ const c2=mk(P.Sbar,P.a,P.gam,kapA);
+ g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
+ const b4=xs.map(c.CALL),af=xs.map(c2.CALL),p4=xs.map(c.PUT),pa=xs.map(c2.PUT);
+ const ymax=Math.max(...b4,...af,...p4,...pa)*1.06,X=k=>L+(k+0.7)/1.4*(W-L-R),Y=v=>T+(1-v/ymax)*(H-T-Bm);
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';[-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-10));
+ const ln=(arr,cc,w,d)=>{g.save();g.setLineDash(d||[]);g.strokeStyle=cc;g.lineWidth=w;g.beginPath();
+  arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
+ ln(b4,'#0ABAB5',2);ln(p4,'#FF6767',1.6);ln(af,'#FFA541',2,[5,3]);ln(pa,'#c98a3a',1.4,[5,3]);
+ g.save();g.fillStyle='#0ABAB5';g.beginPath();g.arc(X(sk),Y(c.CALL(sk)),4,0,7);g.fill();
+ g.fillStyle='#FF6767';g.beginPath();g.arc(X(bk),Y(c.PUT(bk)),4,0,7);g.fill();g.restore();
+ g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
+
+/* ── PORTFOLIO ── */
+function renderPortfolio(st){
+ const pos=[{n:'BTC call',k:0.12,sz:3,side:1},{n:'BTC put',k:-0.10,sz:2,side:-1},{n:'BTC call',k:0.30,sz:1.5,side:1}];
+ let netD=0,netV=0;
+ $('ppos').querySelector('tbody').innerHTML=pos.map(p=>{
+  const mk_=p.side>0?st.c.CALL(p.k):st.c.PUT(p.k);
+  const d=(st.c.CALL(p.k+0.005)-st.c.CALL(p.k-0.005))/0.01*p.side;
+  const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;
+  return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td></tr>`;}).join('');
+ const clubL=4000000,clubS=3000000,mf=0.20,cf=0.25;
+ const eq=(clubL+clubS)*mf, carveN=(clubL+clubS)*cf, carveE=carveN*mf;
+ const acctNot=clubL+clubS+Math.abs(netV), acctEq=eq+netV, lev=acctNot/Math.max(acctEq,1);
+ $('pacct').innerHTML=
+  `<div class="m"><span>perp notional</span><b>${usd(clubL+clubS)}</b></div>
+   <div class="m"><span>options value</span><b class="${netV>=0?'pos':'neg'}">${usd(netV)}</b></div>
+   <div class="m"><span>account equity</span><b>${usd(acctEq)}</b></div>
+   <div class="m"><span>account leverage</span><b class="${lev>40?'neg':''}">${f(lev,2)}×</b></div>`;
+ $('pcarve').innerHTML=
+  `<div class="m"><span>carved notional</span><b>${usd(carveN)}</b></div>
+   <div class="m"><span>equity carved out</span><b>${usd(carveE)}</b></div>
+   <div class="m"><span>perps tab after carve</span><b>${usd(eq-carveE)}</b></div>`;
+ $('phedge').innerHTML=
+  `<tr><td>net option delta</td><td style="text-align:right">${f(netD,4)} BTC</td></tr>
+   <tr><td>required perp hedge</td><td style="text-align:right"><b>${f(-netD,4)} BTC</b></td></tr>
+   <tr><td>hedge notional</td><td style="text-align:right">${usd(Math.abs(netD)*S)}</td></tr>
+   <tr><td>residual exposure</td><td style="text-align:right" class="pos">0.000000</td></tr>`;
+ const liqLev=50, headroom=liqLev-lev;
+ $('pliq').innerHTML=
+  `<div class="m"><span>account leverage</span><b>${f(lev,2)}×</b></div>
+   <div class="m"><span>cap</span><b>${liqLev}×</b></div>
+   <div class="m"><span>headroom</span><b class="${headroom>0?'pos':'neg'}">${f(headroom,2)}×</b></div>
+   <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>status</span><b class="${headroom>0?'pos':'neg'}">${headroom>0?'SAFE':'LIQUIDATED'}</b></div>`;}
+P.margin=15;setView('earn');
+</script></body></html>

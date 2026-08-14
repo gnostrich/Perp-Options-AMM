@@ -5,6 +5,7 @@ const { chromium } = pw;
 import fs from 'fs';
 
 const RUN = process.argv[2] || 'A';
+const URL = process.argv[3] || 'file:///home/user/Perp-Options-AMM/evidence/app_build13/index_build13_pinned.html';
 const OUT = '/home/user/Perp-Options-AMM/evidence/app_build13';
 const SHOT = OUT + '/shots_' + RUN;
 fs.mkdirSync(SHOT, { recursive: true });
@@ -20,7 +21,7 @@ for (const k in geo) { const g = geo[k]; g.PH = g.H - g.T - g.Bm - g.HB - 28; g.
   pg.on('console', m => cons.push(m.type() + ': ' + m.text()));
   pg.on('pageerror', e => errs.push('PAGEERROR: ' + e.message));
   pg.on('dialog', d => { errs.push('DIALOG: ' + d.message()); d.dismiss(); });
-  await pg.goto('file:///home/user/Perp-Options-AMM/app/index.html');
+  await pg.goto(URL);
   await pg.waitForTimeout(400);
 
   // ---------- helpers in page ----------
@@ -420,6 +421,8 @@ for (const k in geo) { const g = geo[k]; g.PH = g.H - g.T - g.Bm - g.HB - 28; g.
     R.phases.P8_probes = p;
   }
 
+  R.buildLabel = await pg.evaluate(() => document.getElementById('live').innerText);
+  R.url = URL;
   R.console = cons; R.pageerrors = errs;
   R.md5 = 'see file';
   await br.close();
