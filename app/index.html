@@ -1,299 +1,297 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Temporal — MM Console</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Temporal — Earn / MM</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--panel:#0E1B1E;--panel2:#191919;--line:#004240;--teal:#0ABAB5;--txt:#E4E4E4;--dim:#9B9FA3;
---grn:#14E800;--red:#FF6767;--amber:#F0B429;--card:#1A1A1A;--edge:#465E58}
+:root{--temporal:#00A9A4;--coffee:#C7B7A5;--greenBlue:#00222D;--teal:#0ABAB5;--amber:#FFA541;
+--panel:#0E1B1E;--card:#1A1A1A;--field:#222223;--chip:#112226;--edge:#465E58;--rule:#677275;
+--txt:#E4E4E4;--txt2:#E5E5E5;--mute:#677275;--grn:#14E800;--red:#FF6767}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);font:13px/1.5 'IBM Plex Mono',ui-monospace,monospace}
-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);background:#08181b}
-.brand{font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
-.brand small{color:var(--dim);letter-spacing:.06em;margin-left:10px;text-transform:none;font-weight:400}
-.tag{font-size:10px;letter-spacing:.12em;padding:3px 8px;border:1px solid var(--line);color:var(--dim);text-transform:uppercase}
-.wrap{display:grid;grid-template-columns:340px 1fr 320px;gap:12px;padding:12px;align-items:start}
-@media(max-width:1200px){.wrap{grid-template-columns:1fr}}
-.card{background:var(--panel);border:2px solid #000;box-shadow:4px 4px 0 #00475d;border-radius:0}
-.card h3{margin:0;padding:10px 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C7B7A5;border-bottom:2px solid var(--line);background:var(--panel2)}
-.card .body{padding:11px 12px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0}
-.row label{color:var(--dim);font-size:11.5px}
-input[type=number],select{background:#222223;border:1px solid var(--edge);color:#fff;font:inherit;font-size:12px;padding:5px 8px;width:104px;text-align:right;border-radius:2px}
-input[type=range]{width:132px;accent-color:var(--teal)}
-.v{color:var(--teal);font-weight:600}
-table{width:100%;border-collapse:collapse;font-size:11.5px}
-th{color:var(--dim);font-weight:500;text-align:right;padding:5px 6px;border-bottom:1px solid var(--line);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+body{margin:0;background:#000;color:var(--txt);font:400 13px/1.5 'IBM Plex Mono',ui-monospace,monospace}
+.t2{font-size:10.5px}.t3{font-size:11.5px}
+header{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 22px;border-bottom:1px solid #14262a}
+.logo{display:flex;align-items:center;gap:26px}
+.logo b{color:#fff;font-weight:600;letter-spacing:.06em}
+nav a{color:#fff;text-transform:uppercase;font-size:12px;font-weight:500;padding:6px 12px;text-decoration:none;transition:.3s}
+nav a:hover,nav a.on{background:#00222d;box-shadow:4px 4px 0 #00475d}
+.hbtn{background:#0ABAB5;border:2px solid #000;box-shadow:3px 3px 0 #00475d;color:#04231f;font:inherit;font-size:11px;
+font-weight:600;padding:7px 13px;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+.hbtn.ghost{background:#112226;color:#fff;border-color:#000}
+.grid{display:grid;grid-template-columns:440px 1fr 340px;gap:12px;padding:12px;align-items:start;max-width:1800px;margin:0 auto}
+@media(max-width:1300px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:2px solid #000;padding:14px}
+.card{background:var(--card);border:1px solid #CFCFCF;box-shadow:3px 3px 0 #575757;border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.card.dim{background:#0F1215;border-color:#D1D1D1}
+.chead{display:flex;align-items:center;justify-content:space-between;padding-bottom:6px;margin-bottom:8px;border-bottom:1px solid var(--rule)}
+.chead b{font-size:10.5px;letter-spacing:.16em;font-weight:600;color:#fff;text-transform:uppercase}
+.chead a{font-size:10.5px;color:var(--teal);cursor:pointer;text-decoration:none}.chead a:hover{text-decoration:underline}
+/* CurveParamField */
+.fld{margin-bottom:11px}
+.frow{display:grid;grid-template-columns:minmax(150px,46%) minmax(88px,1fr);background:var(--field);border:1px solid var(--edge);border-radius:3px}
+.fchip{display:flex;align-items:center;justify-content:center;padding:8px;background:var(--chip);border-right:1px solid var(--edge);border-radius:3px 0 0 3px}
+.fchip span{font-size:10.5px;letter-spacing:.02em;color:var(--txt);text-align:center;line-height:1.25}
+.frow input{width:100%;height:26px;background:var(--field);border:0;color:#fff;font:300 12px 'IBM Plex Mono';padding:0 8px;text-align:right;outline:none}
+.hint{font-size:10px;color:var(--mute);margin:3px 0 0 8px}
+.srow{padding:7px 8px 0}
+.track{position:relative;height:4px;background:#4E4E4E;border-radius:99px}
+.fill{position:absolute;left:0;top:0;height:100%;background:var(--edge);border-radius:99px}
+.srow input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;margin:0}
+.mm{display:flex;justify-content:space-between;font-size:10px;color:var(--mute);margin-top:5px}
+/* metric rows */
+.m{display:flex;justify-content:space-between;align-items:center;padding:2.5px 0;font-weight:300;color:var(--txt2);font-size:10.5px}
+.m b{font-weight:600;color:#fff}
+.m .amb{color:var(--amber);font-weight:600}
+.m .tl{color:var(--teal);font-weight:600}
+.pos{color:var(--grn)}.neg{color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{color:var(--mute);font-weight:400;text-align:right;padding:5px 5px;border-bottom:1px solid #2a3538;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
 th:first-child,td:first-child{text-align:left}
-td{padding:4px 6px;text-align:right;border-bottom:1px solid #14262a}
-tr.me td{background:#0d2a2c}
-.pos{color:var(--grn)}.neg{color:var(--red)}.warn{color:var(--amber)}
+td{padding:4px 5px;text-align:right;border-bottom:1px solid #1c2629;font-weight:300}
+tr.me td{background:#0d2a2c;color:#fff}
 canvas{display:block;width:100%;height:auto}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-.kpi div{background:var(--panel);border:1px solid var(--line);padding:9px 11px}
-.kpi .l{color:var(--dim);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.kpi .n{font-size:18px;font-weight:600;margin-top:3px}
-.btn{background:#112226;border:1px solid var(--edge);color:#fff;font:inherit;font-size:10.5px;letter-spacing:.12em;
-text-transform:uppercase;padding:7px 13px;cursor:pointer;border-radius:2px}
-.btn:hover{background:#08313a}.btn.on{background:#09ABA6;border-color:#0ABAB5;color:#04231f;font-weight:600}
-.note{color:var(--dim);font-size:10.5px;line-height:1.5;margin-top:9px;border-top:1px dashed var(--line);padding-top:8px}
-.pill{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);padding:2px 6px;color:var(--dim)}
-footer{padding:10px 18px;color:var(--dim);font-size:10.5px;border-top:1px solid var(--line)}
+.cta{width:100%;background:var(--teal);border:2px solid #000;box-shadow:4px 4px 0 #00475d;color:#04231f;font:600 12px 'IBM Plex Mono';
+padding:11px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.cta.off{background:#222223;color:#8a9294;box-shadow:4px 4px 0 #333}
+.tabs{display:flex;border:1px solid #004240;background:#191919;padding:0;margin-bottom:12px}
+.tab{flex:1;padding:11px 8px;text-align:center;font-size:10.5px;letter-spacing:.12em;color:#fff;cursor:pointer;text-transform:uppercase;border-bottom:2px solid transparent}
+.tab.on{color:var(--teal);border-bottom-color:var(--teal);background:#191919}
+.note{color:var(--mute);font-size:9.5px;line-height:1.55;margin-top:8px}
+.badge{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--edge);padding:2px 6px;color:var(--mute)}
+footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid #14262a}
 </style></head><body>
 <header>
-  <div class="brand">Temporal <small>market-maker console · Burr-2 RFQ book</small></div>
-  <div><span class="tag" id="mode">vol-indexed: on</span> <span class="tag">sim</span></div>
+  <div class="logo"><b>TEMPORAL</b>
+    <nav><a href="#">Transact</a><a href="#" class="on">Earn</a><a href="#">Portfolio</a></nav></div>
+  <div style="display:flex;gap:9px"><button class="hbtn ghost">Docs</button><button class="hbtn">Connect Wallet</button></div>
 </header>
 
-<div class="kpi">
-  <div><div class="l">your fill share</div><div class="n v" id="k-share">–</div></div>
-  <div><div class="l">net APR</div><div class="n" id="k-apr">–</div></div>
-  <div><div class="l">quoted vol</div><div class="n" id="k-vol">–</div></div>
-  <div><div class="l">inventory (κ)</div><div class="n" id="k-kappa">–</div></div>
-</div>
+<div class="grid">
+  <!-- ══ LEFT : EARN / curve parameters ══ -->
+  <div class="panel">
+    <div class="tabs"><div class="tab">Create Perp</div><div class="tab">Trade Bands</div><div class="tab on">Earn</div></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px">
+      <span class="t2" style="color:var(--txt2)">Executed on Hyperliquid</span></div>
 
-<div class="wrap">
-  <!-- LEFT: your quote -->
-  <div>
-    <div class="card"><h3>Curve parameters</h3><div class="body">
-      <div class="row"><label>S̄ (mean strike)</label><input type="number" id="Sbar" value="0.60" step="0.01" min="0.05"></div>
-      <div class="row"><label>a (Burr c)</label><input type="number" id="a" value="1.2705" step="0.05" min="0.3"></div>
-      <div class="row"><label>γ (Burr k)</label><input type="number" id="gam" value="1.8413" step="0.05" min="0.3"></div>
-      <div class="row"><label>κ (skew)</label><input type="range" id="kap" min="-0.9" max="0.9" step="0.01" value="0"><span class="v" id="kapv">0.00</span></div>
-      <div class="row"><label>λ (decay)</label><input type="number" id="lam" value="0.02" step="0.005" min="0.001"></div>
-      <div class="row"><label>half-spread (dial) bps</label><input type="number" id="h" value="30" step="5" min="0"></div>
-      <div class="row"><label>N (rungs / wing)</label><input type="number" id="rungs" value="12" step="1" min="2" max="40"></div>
-      <div class="row"><label>margin ($)</label><input type="number" id="cap" value="1000000" step="50000"></div>
-      <div class="row"><label>margin over fair</label><input type="range" id="marg" min="0" max="1" step="0.05" value="0.25"><span class="v" id="margv">25%</span></div>
-      <div class="row"><button class="btn on" id="volbtn">vol-indexed</button><span class="pill" id="hEff">h eff –</span></div>
-      <div class="note">Vol-indexed quoting sets your spread ∝ realised vol², so your revenue tracks the gamma bleed at <em>any</em> vol. Switch it off to quote a fixed spread and see the vol-spike wipeout.</div>
-    </div></div>
+    <div class="card">
+      <div class="chead"><b>Curve Parameters</b><a id="reset">Reset to defaults</a></div>
+      <div id="params"></div>
+    </div>
 
-    <div class="card" style="margin-top:12px"><h3>Schedule preview</h3><div class="body"><table><tbody id="sched"></tbody></table><div class="note">Your curve is posted as a ladder of <b>rungs</b> per wing. Each rung is a firm quote at its own strike and size — that is what the book fills against.</div></div></div>
+    <div class="card">
+      <div class="chead"><b>Margin</b><span class="t2" style="color:var(--coffee)">BTC</span></div>
+      <div class="frow"><div class="fchip"><span>MARGIN</span></div>
+        <input type="number" id="margin" value="15" step="1" min="1"></div>
+      <div class="m" style="margin-top:8px"><span>Notional $</span><b id="notional">—</b></div>
+      <div class="m"><span>Pool Leverage</span><b id="poolLev">—</b></div>
+      <div class="m"><span>LP Leverage</span><b id="lpLev">—</b></div>
+    </div>
 
-    <div class="card" style="margin-top:12px"><h3>Market conditions</h3><div class="body">
-      <div class="row"><label>realised vol</label><input type="range" id="rv" min="0.1" max="1.4" step="0.05" value="0.6"><span class="v" id="rvv">60%</span></div>
-      <div class="row"><label>turnover /day</label><input type="range" id="turn" min="0.05" max="3" step="0.05" value="0.3"><span class="v" id="turnv">0.30×</span></div>
-      <div class="row"><label>pool notional (BTC)</label><input type="number" id="N" value="200" step="10"></div>
-      <div class="row"><label>RFQ size (BTC)</label><input type="range" id="Q" min="0.5" max="40" step="0.5" value="5"><span class="v" id="Qv">5.0</span></div>
-    </div></div>
+    <button class="cta" id="cta">Create Earn Position</button>
+    <div class="note">Your curve is posted as a ladder of firm rungs per wing. Each rung is its own quote at its own strike and size — that is what the book fills against.</div>
   </div>
 
-  <!-- CENTRE: curves -->
+  <!-- ══ CENTRE : curve + ladder ══ -->
   <div>
-    <div class="card"><h3>Your curve vs the aggregate book</h3><div class="body">
-      <canvas id="cv" width="900" height="330"></canvas>
-      <div class="note"><span class="pill" style="border-color:var(--teal);color:var(--teal)">your call</span> <span class="pill" style="border-color:#FF6767;color:#FF6767">your put</span>
-      <span class="pill">book mid</span> <span class="pill">bid / ask envelope</span> —
-      value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing, so put–call parity holds exactly.</div>
-    </div></div>
+    <div class="panel">
+      <div class="chead"><b>Posted curve &amp; rung ladder</b>
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call</span>
+        <span class="badge" style="border-color:#FF6767;color:#FF6767">put</span>
+        <span class="badge">bid / ask</span></span></div>
+      <canvas id="cv" width="980" height="360"></canvas>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. Squares mark your posted rungs.</div>
+    </div>
 
-    <div class="card" style="margin-top:12px"><h3>RFQ — who fills this trade</h3><div class="body">
-      <table id="ladder"><thead><tr><th>maker</th><th>h (bps)</th><th>depth</th><th>fills</th><th>at</th><th>revenue $</th></tr></thead><tbody></tbody></table>
-      <div class="note">Cheapest quote fills first, then the next — the envelope <em>is</em> the RFQ. Each maker is paid at <em>its own</em> posted spread, so nobody's compensation is set by someone else's quote.</div>
-    </div></div>
+    <div class="panel" style="margin-top:12px">
+      <div class="chead"><b>Rung schedule</b><span class="t2" style="color:var(--mute)">per wing</span></div>
+      <table id="rungtbl"><thead><tr><th>#</th><th>strike k</th><th>size (BTC)</th><th>unit premium</th><th>posted premium</th><th>Δ</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="panel" style="margin-top:12px">
+      <div class="chead"><b>RFQ — who fills this trade</b><span class="t2" style="color:var(--mute)" id="qlab">size —</span></div>
+      <table id="ladder"><thead><tr><th>maker</th><th>half-spread</th><th>depth</th><th>fills</th><th>revenue</th></tr></thead><tbody></tbody></table>
+      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread.</div>
+    </div>
   </div>
 
-  <!-- RIGHT: book + pnl -->
+  <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
-    <div class="card"><h3>Book — competing makers</h3><div class="body">
-      <table id="mms"><thead><tr><th>maker</th><th>λ</th><th>h</th><th>share</th></tr></thead><tbody></tbody></table>
-    </div></div>
+    <div class="card dim">
+      <div class="chead"><b>Schedule Preview</b><span class="t2" style="color:var(--teal)" id="live">live</span></div>
+      <div class="m"><span>Rungs</span><b id="s-rungs">—</b></div>
+      <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
+      <div class="m"><span>Peak Strike</span><b id="s-peak">—</b></div>
+      <div class="m"><span>Half-Spread (Dial)</span><b id="s-hs">—</b></div>
+      <div class="m"><span>Σ Posted Premium</span><b id="s-prem">—</b></div>
+      <div class="m"><span>Notional $</span><b id="s-notd">—</b></div>
+    </div>
 
-    <div class="card" style="margin-top:12px"><h3>LP levered APR</h3><div class="body">
-      <table><tbody id="pnl"></tbody></table>
+    <div class="card">
+      <div class="chead"><b>Yield</b><span class="t2" style="color:var(--coffee)">annualized</span></div>
+      <div class="m"><span>Annualized Fees</span><b id="y-fees">—</b></div>
+      <div class="m"><span>Gamma bleed (notional)</span><b id="y-bleed">—</b></div>
+      <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>Base Annual Percentage Rate (APR)</span><b id="y-base">—</b></div>
+      <div class="m"><span>Levered Annual Percentage Rate (APR)</span><b id="y-lev">—</b></div>
+    </div>
+
+    <div class="card">
+      <div class="chead"><b>Quoting mode</b><span class="t2" id="modelab" style="color:var(--teal)">vol-indexed</span></div>
+      <div class="m"><span>Fair half-spread</span><b id="q-fair">—</b></div>
+      <div class="m"><span>Your quote</span><b class="tl" id="q-mine">—</b></div>
+      <div class="m"><span>Margin over fair</span><b id="q-marg">—</b></div>
+      <button class="cta" id="volbtn" style="margin-top:9px">vol-indexed: on</button>
       <div class="note" id="verdict"></div>
-    </div></div>
+    </div>
 
-    <div class="card" style="margin-top:12px"><h3>Risk</h3><div class="body">
-      <table><tbody id="risk"></tbody></table>
-      <div class="note">Gamma bleed scales with vol². A fixed spread is calibrated to one vol only — that's the wipeout you see when you turn vol-indexing off and push realised vol up.</div>
-    </div></div>
+    <div class="card">
+      <div class="chead"><b>Market &amp; risk</b></div>
+      <div id="mkt"></div>
+      <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>Curvature G̃</span><b id="r-gt">—</b></div>
+      <div class="m"><span>Break-even half-spread</span><b id="r-be">—</b></div>
+      <div class="m"><span>Break-even turnover</span><b id="r-bet">—</b></div>
+      <div class="m"><span>Parity check</span><b id="r-par">—</b></div>
+    </div>
   </div>
 </div>
-<footer>Brainstorm sim — not investment advice, not the production engine. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
-
+<footer>Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
 <script>
-/* ---------- Burr-2 math ---------- */
+/* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
 let y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x);}
-function betacf(a,b,x){const FPMIN=1e-300,EPS=3e-12;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;
-if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let hh=d;
-for(let m=1;m<=300;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;
-c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;hh*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;
-if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;let del=d*c;hh*=del;
-if(Math.abs(del-1)<EPS)break;}return hh;}
-function ibeta(x,a,b){ if(x<=0)return 0; if(x>=1)return 1;
+function betacf(a,b,x){const F=1e-300,E=3e-12;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;
+if(Math.abs(d)<F)d=F;d=1/d;let h=d;
+for(let m=1;m<=300;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;h*=d*c;
+aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;let del=d*c;h*=del;if(Math.abs(del-1)<E)break;}return h;}
+function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;
 const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
-return x<(a+1)/(a+b+2) ? bt*betacf(a,b,x)/a : 1-bt*betacf(b,a,1-x)/b; }
-function Bfn(a,g){return Math.exp(logGamma(1/a)+logGamma(g/a)-logGamma(1/a+g/a));}
-
-function mkCurve(Sbar,a,gam,kap){
-  const B=Bfn(a,gam), sR=Sbar*(1+kap), sL=Sbar*(1-kap);
-  const G1=Math.pow(1+Math.pow(1/sL,a),-(gam+1)/a);
-  const I1=(sL/a)*B*(1-ibeta(1/(1+Math.pow(sL,a)),1/a,gam/a));
-  const WR=sR*B/a, WL=(sL*B/a-I1-G1)/(1-G1);
-  const qR=WL/(WR+WL), qL=1-qR;
-  const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a));
-  const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
-  const CALL=k=>k>=0?AR(k):-k+AL(k);
-  const PUT =k=>k<=0?AL(k):k+AR(k);
-  return {B,sR,sL,G1,I1,qR,qL,AR,AL,CALL,PUT,ATM:qR*(sR/a)*B};
-}
-/* dimensionless curvature per unit value (uneven-grid 2nd derivative) */
-function gtilde(c,ks){let s=0,n=0;
- for(let i=1;i<ks.length-1;i++){const k0=ks[i-1],k1=ks[i],k2=ks[i+1],h1=k1-k0,h2=k2-k1;
-  const d2=2*(h2*c.CALL(k0)-(h1+h2)*c.CALL(k1)+h1*c.CALL(k2))/(h1*h2*(h1+h2));
-  const v=Math.abs(d2*Math.pow(1+k1,2)/Math.max(c.CALL(k1),1e-9)); if(isFinite(v)){s+=v;n++;} }
- return n?s/n:0;}
-
-/* ---------- state ---------- */
-const others=[
- {name:'MM-Kappa', lam:0.05, aggr:1.10, cap:500000},   // quotes 10% over fair
- {name:'MM-Delta', lam:0.10, aggr:1.45, cap:250000},   // fat, wants paying
- {name:'MM-Sigma', lam:0.04, aggr:1.22, cap:400000}
-];
-let volIndexed=true;
-const $=id=>document.getElementById(id);
-const ks=[-0.6,-0.45,-0.3,-0.2,-0.1,-0.04,0,0.04,0.1,0.2,0.3,0.45,0.6];
-const fmt=(x,d=2)=>x.toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
-const money=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
-
-function readInputs(){
- return {Sbar:+$('Sbar').value,a:+$('a').value,gam:+$('gam').value,kap:+$('kap').value,
-  lam:+$('lam').value,h:+$('h').value,cap:+$('cap').value,marg:+$('marg').value,rungs:+$('rungs').value,
-  rv:+$('rv').value,turn:+$('turn').value,N:+$('N').value,Q:+$('Q').value};
-}
-function compute(){
- const p=readInputs();
- const c=mkCurve(p.Sbar,p.a,p.gam,p.kap);
- const Gt=gtilde(c,ks);
- const bleedRate=0.5*Gt*p.rv*p.rv;                       // per unit book value / yr
- // vol-indexed: your spread tracks the bleed at current turnover
- const hFair=(bleedRate/(p.turn*365))*1e4;
- const hEff = volIndexed ? hFair*(1+p.marg) : p.h;
- // book: you + others
- const book=[{name:'YOU',lam:p.lam,h:hEff,cap:p.cap,me:true},
-   ...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
- const invSum=book.reduce((s,m)=>s+1/m.lam,0);
- book.forEach(m=>m.share=(1/m.lam)/invSum);
- // RFQ ladder: cheapest h fills first, capacity ~ share of pool notional
- const sorted=[...book].sort((x,y)=>x.h-y.h);
- let rem=p.Q; const P=c.CALL(0.10);
- sorted.forEach(m=>{const capBTC=m.share*p.N; const take=Math.max(0,Math.min(capBTC,rem));
-   m.fill=take; m.rev=take*(m.h/1e4)*P*65695.5; rem-=take;});
+return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
+function mk(Sbar,a,gam,kap){const B=Math.exp(logGamma(1/a)+logGamma(gam/a)-logGamma(1/a+gam/a));
+const sR=Sbar*(1+kap),sL=Sbar*(1-kap);
+const G1=Math.pow(1+Math.pow(1/sL,a),-(gam+1)/a);
+const I1=(sL/a)*B*(1-ibeta(1/(1+Math.pow(sL,a)),1/a,gam/a));
+const WR=sR*B/a,WL=(sL*B/a-I1-G1)/(1-G1),qR=WL/(WR+WL),qL=1-qR;
+const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a));
+const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
+return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a)*B};}
+/* ─── params (CurveParamField spec) ─── */
+const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,rungs:12};
+const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
+ ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
+ ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["rungs","N (rungs/wing)",2,40,1]];
+let P={...DEF}, volIndexed=true;
+const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
+const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
+const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
+function field(k,label,min,max,step,hint){const v=P[k];const pct=(v-min)/(max-min)*100;
+ return `<div class="fld"><div class="frow"><div class="fchip"><span>${label}</span></div>
+ <input type="number" data-k="${k}" value="${v}" min="${min}" max="${max}" step="${step}"></div>
+ ${hint?`<div class="hint">${hint}</div>`:''}
+ <div class="srow"><div class="track"><div class="fill" style="width:${pct}%"></div>
+ <input type="range" data-k="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div>
+ <div class="mm"><span>${min}</span><span>${max}</span></div></div></div>`;}
+function mktField(k,label,min,max,step,fmtv){const v=MKT[k],pct=(v-min)/(max-min)*100;
+ return `<div class="m"><span>${label}</span><b>${fmtv(v)}</b></div>
+ <div class="srow" style="padding-top:2px;padding-bottom:6px"><div class="track"><div class="fill" style="width:${pct}%"></div>
+ <input type="range" data-m="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div></div>`;}
+/* ─── compute ─── */
+function calc(){
+ const c=mk(P.Sbar,P.a,P.gam,P.kap);
+ // curvature on the NOTIONAL basis: cash value C(S)=V(K/S-1)*S, Gt = d2C/dS2 * S  (per $1 notional)
+ const cash=(Sx,K)=>c.CALL(K/Sx-1)*Sx, hS=S*2e-3;
+ let g=0,n=0;
+ [0.85,0.95,1.0,1.05,1.15].forEach(mn=>{const K=mn*S;
+   const d2=(cash(S+hS,K)-2*cash(S,K)+cash(S-hS,K))/(hS*hS);
+   const v=Math.abs(d2*S); if(isFinite(v)){g+=v;n++;}});
+ const Gt=n?g/n:0, bleed=0.5*Gt*MKT.rv*MKT.rv;   // fraction of NOTIONAL per year
+ const hFair=(bleed/(MKT.turn*365))*1e4, marg=0.25;
+ const hEff=volIndexed?hFair*(1+marg):P.fee*1e4/2;
+ const book=[{n:'YOU',lam:0.02,h:hEff,me:true},...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
+ const inv=book.reduce((s,m)=>s+1/m.lam,0); book.forEach(m=>m.share=(1/m.lam)/inv);
  const me=book.find(m=>m.me);
- // economics (integral convention: revenue = spread x volume; impact is a price path)
- const bookVal=me.share*p.N*c.ATM*65695.5;
- const revYr=(hEff/1e4)*p.turn*365*bookVal;
- const bleedYr=bleedRate*bookVal;
- const net=revYr-bleedYr, apr=net/p.cap;
- // ---- rung schedule (the posted ladder, one wing shown symmetric) ----
- const R=Math.max(2,Math.round(p.rungs)), kMax=0.6;
- const rung=[];
- for(let i=1;i<=R;i++){
-   const k=kMax*i/R;
-   const wgt=Math.exp(-p.lam*100*k*k);              // decay lambda shapes size across rungs
-   rung.push({k, prem:c.CALL(k), wgt});
- }
- const wsum=rung.reduce((s,r)=>s+r.wgt,0);
- const notionalBTC=me.share*p.N;
- rung.forEach(r=>{ r.size=notionalBTC*r.wgt/wsum; r.postedPrem=r.size*r.prem; });
- const sumNotional=rung.reduce((s,r)=>s+r.size,0)*2;      // both wings
- const sumPremium =rung.reduce((s,r)=>s+r.postedPrem,0)*2;
- const peakStrike =rung.reduce((a,r)=>r.size>a.size?r:a,rung[0]).k;
- return {p,c,Gt,bleedRate,hEff,hFair,book,sorted,me,bookVal,revYr,bleedYr,net,apr,P,rung,sumNotional,sumPremium,peakStrike,R};
-}
-
-/* ---------- render ---------- */
-function draw(st){
- const _r=st.rung;
- const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=52,R=14,T=14,Bm=30;
- g.clearRect(0,0,W,H);
- const xs=[],mine=[],minePut=[],bookmid=[],bid=[],ask=[];
- for(let i=0;i<=120;i++){const k=-0.7+1.4*i/120;xs.push(k);
-   mine.push(st.c.CALL(k)); minePut.push(st.c.PUT(k));
-   // aggregate mid = share-weighted (levels common ⇒ equals the curve), envelope from tightest h
-   bookmid.push(st.c.CALL(k));
-   const hh=Math.min(...st.book.map(m=>m.h))/1e4;
-   bid.push(st.c.CALL(k)*(1-hh)); ask.push(st.c.CALL(k)*(1+hh));}
- const ymax=Math.max(Math.max(...ask),Math.max(...minePut))*1.05, ymin=0;
- const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-(v-ymin)/(ymax-ymin))*(H-T-Bm);
- g.strokeStyle='#14262a';g.lineWidth=1;g.beginPath();
- for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.moveTo(L,y);g.lineTo(W-R,y);}g.stroke();
- g.fillStyle='#8fa0a3';g.font='10px IBM Plex Mono';
- for(let i=0;i<=4;i++){const v=ymax*(1-i/4);g.fillText(v.toFixed(2),6,T+i*(H-T-Bm)/4+3);}
- [-0.6,-0.3,0,0.3,0.6].forEach(k=>{g.fillText((k*100).toFixed(0)+'%',X(k)-12,H-10);});
+ const notBTC=P.margin*10;                       // pool leverage 10x
+ const R=Math.round(P.rungs), kMax=0.6, rung=[];
+ for(let i=1;i<=R;i++){const k=kMax*i/R, w=Math.exp(-P.lam*8*k*k);
+   rung.push({i,k,prem:c.CALL(k),w,d:(c.CALL(k+0.01)-c.CALL(k-0.01))/0.02});}
+ const ws=rung.reduce((s,r)=>s+r.w,0);
+ rung.forEach(r=>{r.size=notBTC*r.w/ws;r.posted=r.size*r.prem;});
+ const sumNot=rung.reduce((s,r)=>s+r.size,0)*2, sumPrem=rung.reduce((s,r)=>s+r.posted,0)*2;
+ const peak=rung.reduce((a,r)=>r.size>a.size?r:a,rung[0]).k;
+ const bookVal=sumPrem*S;                 // premium at risk ($)
+ const notionalUSD=sumNot*S;              // notional ($) — the fee/bleed basis
+ const feesYr=(hEff/1e4)*MKT.turn*365*notionalUSD, bleedYr=bleed*notionalUSD;
+ const equity=P.margin*S;
+ const baseAPR=(feesYr-bleedYr)/Math.max(notionalUSD,1), levAPR=(feesYr-bleedYr)/Math.max(equity,1);
+ const sorted=[...book].sort((x,y)=>x.h-y.h); let rem=MKT.Q; const px=c.CALL(0.1);
+ sorted.forEach(m=>{const cap=m.share*MKT.pool,t=Math.max(0,Math.min(cap,rem));m.fill=t;m.rev=t*(m.h/1e4)*px*S;rem-=t;});
+ return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,R,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
+/* ─── draw ─── */
+function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32;
+ g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
+ const hh=Math.min(...st.book.map(m=>m.h))/1e4;
+ for(let i=0;i<=140;i++){const k=-0.7+1.4*i/140;xs.push(k);ca.push(st.c.CALL(k));pu.push(st.c.PUT(k));
+  bi.push(st.c.CALL(k)*(1-hh));as.push(st.c.CALL(k)*(1+hh));}
+ const ymax=Math.max(Math.max(...ca),Math.max(...pu))*1.06;
+ const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*(H-T-Bm);
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*(H-T-Bm)/4+3);
+ [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-11));
  g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),H-Bm);g.stroke();
- const line=(arr,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
-   arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
- line(ask,'#1d4d52',1,[3,3]); line(bid,'#1d4d52',1,[3,3]);
- line(bookmid,'#5a7d80',1.4);
- // rung markers
- g.fillStyle='#0ABAB5';
- st.rung.forEach(r=>{const x=X(r.k),y=Y(r.prem);g.fillRect(x-1.5,y-1.5,3,3);
-   const x2=X(-r.k),y2=Y(st.c.PUT(-r.k));g.fillStyle='#FF6767';g.fillRect(x2-1.5,y2-1.5,3,3);g.fillStyle='#0ABAB5';});
- line(minePut,'#FF6767',1.8);
- line(mine,'#0ABAB5',2.2);
- g.fillStyle='#8fa0a3';g.fillText('moneyness  k = K/S − 1',W/2-60,H-2);
-}
+ const ln=(A,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
+  A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
+ ln(as,'#1d4d52',1,[3,3]);ln(bi,'#1d4d52',1,[3,3]);
+ ln(pu,'#FF6767',1.8);ln(ca,'#0ABAB5',2.3);
+ const mx=Math.max(...st.rung.map(r=>r.size));
+ st.rung.forEach(r=>{const s=3+5*r.size/mx;
+  g.fillStyle='#0ABAB5';g.fillRect(X(r.k)-s/2,Y(r.prem)-s/2,s,s);
+  g.fillStyle='#FF6767';g.fillRect(X(-r.k)-s/2,Y(st.c.PUT(-r.k))-s/2,s,s);});
+ g.fillStyle='#677275';g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
+/* ─── render ─── */
 function render(){
- const st=compute();
- $('kapv').textContent=fmt(st.p.kap,2);
- $('margv').textContent=(st.p.marg*100).toFixed(0)+'%';
- $('rvv').textContent=(st.p.rv*100).toFixed(0)+'%';
- $('turnv').textContent=fmt(st.p.turn,2)+'×';
- $('Qv').textContent=fmt(st.p.Q,1);
- $('hEff').textContent='h eff '+fmt(st.hEff,0)+' bps';
- $('mode').textContent='vol-indexed: '+(volIndexed?'on':'off');
- $('k-share').textContent=(st.me.share*100).toFixed(1)+'%';
- const apr=$('k-apr');apr.textContent=(st.apr*100).toFixed(1)+'%';apr.className='n '+(st.net>=0?'pos':'neg');
- $('k-vol').textContent=(st.p.rv*100).toFixed(0)+'%';
- $('k-kappa').textContent=fmt(st.p.kap,2);
- // makers
- $('mms').querySelector('tbody').innerHTML=st.book.map(m=>
-  `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.name}</td><td>${fmt(m.lam,3)}</td><td>${fmt(m.h,0)}</td><td>${(m.share*100).toFixed(1)}%</td></tr>`).join('');
- // ladder
+ $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='rungs'?'= from notional':'')).join('');
+ $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
+  +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
+  +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));
+ const st=calc();
+ $('notional').textContent=usd(st.notBTC*S);
+ $('poolLev').textContent='10.0×';
+ $('lpLev').textContent=f(st.notionalUSD/Math.max(st.equity,1),2)+'×';
+ $('s-rungs').textContent=st.R;
+ $('s-not').textContent=f(st.sumNot,2)+' BTC';
+ $('s-peak').textContent=(st.peak*100).toFixed(0)+'%';
+ $('s-hs').textContent='≈ '+f(st.hEff,0)+' bps';
+ $('s-prem').textContent=f(st.sumPrem,4)+' BTC';
+ $('s-notd').textContent=usd(st.sumNot*S);
+ $('y-fees').innerHTML='<span class="pos">'+usd(st.feesYr)+'</span>';
+ $('y-bleed').innerHTML='<span class="neg">'+usd(-st.bleedYr)+'</span>';
+ const bc=st.baseAPR>=0?'pos':'neg';
+ $('y-base').innerHTML='<span class="'+bc+'">'+(st.baseAPR*100).toFixed(1)+'%</span>';
+ $('y-lev').innerHTML='<span class="'+bc+'">'+(st.levAPR*100).toFixed(1)+'%</span>';
+ $('q-fair').textContent=f(st.hFair,0)+' bps';
+ $('q-mine').textContent=f(st.hEff,0)+' bps';
+ $('q-marg').textContent=volIndexed?(st.marg*100).toFixed(0)+'%':'—';
+ $('modelab').textContent=volIndexed?'vol-indexed':'fixed spread';
+ $('volbtn').textContent='vol-indexed: '+(volIndexed?'on':'off');
+ $('volbtn').className='cta'+(volIndexed?'':' off');
+ $('verdict').innerHTML=volIndexed
+  ?'Your quote moves with realised vol, so revenue tracks the gamma bleed at every level. Drag realised vol — the APR barely moves.'
+  :'<span class="neg">Fixed spread.</span> Calibrated to one vol only — drag realised vol up and watch the APR invert.';
+ $('r-gt').textContent=f(st.Gt,2);
+ $('r-be').textContent=f(st.hFair,0)+' bps';
+ $('r-bet').textContent=f(st.bleed/((st.hEff/1e4)*365),2)+'× /day';
+ $('r-par').textContent=f(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12);
+ $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
+ $('rungtbl').querySelector('tbody').innerHTML=st.rung.map(r=>
+  `<tr><td>${r.i}</td><td>${(r.k*100).toFixed(1)}%</td><td>${f(r.size,3)}</td><td>${f(r.prem,4)}</td><td>${f(r.posted,4)}</td><td>${f(r.d,3)}</td></tr>`).join('');
  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
-  `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.name}</td><td>${fmt(m.h,0)}</td><td>${fmt(m.share*st.p.N,1)}</td>
-   <td>${m.fill>0.0001?fmt(m.fill,2):'—'}</td><td>${m.fill>0.0001?fmt(m.h,0)+' bps':'—'}</td>
-   <td class="${m.rev>0?'pos':''}">${m.fill>0.0001?money(m.rev):'—'}</td></tr>`).join('');
- // schedule preview
- $('sched').innerHTML=[
-  ['rungs / wing', st.R],
-  ['Σ notional', fmt(st.sumNotional,2)+' BTC'],
-  ['peak strike', (st.peakStrike*100).toFixed(0)+'%'],
-  ['half-spread (dial)', '≈ '+fmt(st.hEff,0)+' bps'],
-  ['Σ posted premium', fmt(st.sumPremium,4)+' BTC'],
-  ['notional $', money(st.sumNotional*65695.5)]
- ].map(r=>`<tr><td>${r[0]}</td><td class="v">${r[1]}</td></tr>`).join('');
- // pnl
- $('pnl').innerHTML=[
-  ['book value',money(st.bookVal)],
-  ['spread revenue / yr','<span class="pos">'+money(st.revYr)+'</span>'],
-  ['gamma bleed / yr','<span class="neg">'+money(-st.bleedYr)+'</span>'],
-  ['<b>net / yr</b>','<b class="'+(st.net>=0?'pos':'neg')+'">'+money(st.net)+'</b>'],
-  ['capital',money(st.p.cap)],
-  ['<b>net APR</b>','<b class="'+(st.net>=0?'pos':'neg')+'">'+(st.apr*100).toFixed(1)+'%</b>']
- ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
- $('verdict').innerHTML = volIndexed
-  ? 'Vol-indexed at '+fmt(st.p.marg*100,0)+'% over fair ('+fmt(st.hFair,0)+' bps fair → '+fmt(st.hEff,0)+' bps quoted). Your margin is the business; drag vol and the APR barely moves.'
-  : (st.net>=0
-     ? 'Fixed spread and currently profitable — but drag realised vol up and watch it invert.'
-     : '<span class="neg">Fixed spread, losing.</span> Break-even needs h ≈ '+fmt((st.bleedRate/(st.p.turn*365))*1e4,0)+' bps at this turnover, or turnover ≈ '+fmt(st.bleedRate/((st.p.h/1e4)*365),2)+'× /day at this spread.');
- // risk
- $('risk').innerHTML=[
-  ['curvature G̃',fmt(st.Gt,2)],
-  ['bleed rate / yr',(st.bleedRate*100).toFixed(1)+'%'],
-  ['break-even h',fmt((st.bleedRate/(st.p.turn*365))*1e4,0)+' bps'],
-  ['break-even turnover',fmt(st.bleedRate/((st.hEff/1e4)*365),2)+'× /day'],
-  ['ATM value',fmt(st.c.ATM,4)],
-  ['parity check',fmt(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12)]
- ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
+   <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
  draw(st);
-}
-['Sbar','a','gam','kap','lam','h','cap','marg','rungs','rv','turn','N','Q'].forEach(id=>{
- $(id).addEventListener('input',render);});
-$('volbtn').addEventListener('click',()=>{volIndexed=!volIndexed;$('volbtn').classList.toggle('on',volIndexed);render();});
-render();
+ bind();}
+function bind(){
+ document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
+ document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
+$('margin').oninput=e=>{P.margin=+e.target.value;render();};
+$('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
+$('reset').onclick=()=>{P={...DEF,margin:P.margin};render();};
+P.margin=15;render();
 </script></body></html>
