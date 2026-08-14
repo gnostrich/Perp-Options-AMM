@@ -3729,3 +3729,15 @@ _Context: operator asks whether the loop now has the whole thing — perps, sell
 _Context: operator asks for the overall gap picture and the recommended way around. Manager wrote sims/GAPS_AND_WAYS_AROUND.md: the one blocking gap is the SMILE obstruction (per-LP steepness vs single lens); recommended + NUMERICALLY TESTED way around = LPs differ in TRANSPORT not LEVEL (shares vary by strike 62/15/74pp => genuinely different exposure profiles, while aggregate level = the common curve to 0.00e+00 => no smile, engine unchanged). Plus small gaps I can close (G1 Exposure Lean, G7 identity-in-Delta test, coordinate seam, L5 live gamma) and operator-tier calls (L2 funding law, L6 liquidation/negative cash-out, G6 LP fairness, L3 close semantics)._
 
 > so overal where ar egas and what do you suggest as the way around
+
+
+## Entry 514 — 2026-07-08 UTC
+_Context: operator corrects the liquidation level — there is a TOTAL ACCOUNT-LEVEL equity holding all perps AND all perp-option positions; that is what liquidates as a whole; it EXCLUDES LP positions; account leverage threshold ~50x. Manager re-ran at account level: the carve-only negatives are ABSORBED (acct lev 6.27x/9.36x vs 50x cap; liquidation only at ~$29,593, -70.4%), so L6 is downgraded. Noted the engine draws per-position liq lines; account-level aggregation not found => target design._
+
+> oh wait so theres a total account level equity which holds the perps and the perp otpos. ppsitons all, so this thing is what liquidats on the wholw, it excludes LP positons ; so theress account level leverage threohoisl of say 50x
+
+
+## Entry 515 — 2026-07-08 UTC
+_Context: operator rules there is NO funding rate on perp options — they don't need one to keep payoffs in line, the perp already does that. Manager: this invalidates the 'carry = book*G*sigma_cal^2' line used in every LP economics version (a modelling invention; verified sigma cancels pathwise since the same curve prices open and close - P&L identical -3,475.08 for sigma_cal 0.5/0.7/1.0). LP is therefore a MARKET MAKER (spread+fees+perp-hedge funding vs gamma bleed), break-even turnover ~2.4x/day vs 0.2-0.4x realistic. L2 closed as moot; NEW L7 raised; flagged the engine's existing ray-deviation funding component for reconciliation._
+
+> no funding rate on the perp options since they don't need one to ensure theire payoffs are in line, the perp already does that
