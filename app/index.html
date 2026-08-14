@@ -99,8 +99,22 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     </div>
 
     <div class="panel" style="margin-top:12px">
-      <div class="chead"><b>Quote sheet</b><span class="t2" style="color:var(--mute)">sampled — you quote any strike on demand</span></div>
-      <table id="rungtbl"><thead><tr><th>strike k</th><th>call</th><th>put</th><th>bid</th><th>ask</th><th>capacity BTC/1%</th><th>Δ</th></tr></thead><tbody></tbody></table>
+      <div class="chead"><b>Quote any strike</b><span class="t2" style="color:var(--mute)">type any k — priced from the closed form, nothing pre-posted</span></div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:start">
+   <div>
+     <div class="frow"><div class="fchip"><span>strike k (%)</span></div>
+       <input type="number" id="qk" value="13.7" step="0.1" min="-95" max="300"></div>
+     <div class="srow"><div class="track"><div class="fill" id="qkfill" style="width:50%"></div>
+       <input type="range" id="qkr" min="-60" max="60" step="0.1" value="13.7"></div>
+       <div class="mm"><span>-60</span><span>+60</span></div></div>
+     <div class="frow" style="margin-top:8px"><div class="fchip"><span>size (BTC)</span></div>
+       <input type="number" id="qsz" value="5" step="0.5" min="0.1"></div>
+   </div>
+   <div>
+     <table><tbody id="qout"></tbody></table>
+   </div>
+ </div>
+ <div class="note">Any k you type is priced instantly — there is no nearest rung to snap to, and no order to cancel. That is the difference from the orderbook build.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -113,7 +127,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 8 · two-curve</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 9 · any-strike</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -301,10 +315,23 @@ function render(){
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
  $('magv')&&($('magv').textContent='×'+MAG);
  $('magc')&&($('magc').textContent='×'+MAG);
- const hq=st.hEff/1e4, samp=[2,6,10,15,20,25,30,40,50,60];
- $('rungtbl').querySelector('tbody').innerHTML=samp.map(i=>{const r=st.rung[i];
-  return `<tr><td>${(r.k*100).toFixed(0)}%</td><td>${f(r.prem,4)}</td><td>${f(st.c.PUT(-r.k),4)}</td>
-  <td>${f(r.prem*(1-hq),4)}</td><td>${f(r.prem*(1+hq),4)}</td><td>${f(r.cap/100,3)}</td><td>${f(r.d,3)}</td></tr>`;}).join('');
+ const hq=st.hEff/1e4, qk=(+$('qk').value)/100, qsz=+$('qsz').value;
+ const C=st.c.CALL(qk), Pu=st.c.PUT(qk);
+ const dlt=(st.c.CALL(qk+0.005)-st.c.CALL(qk-0.005))/0.01;
+ const wq=Math.exp(-P.lam*8*qk*qk), capHere=st.notBTC*wq/1;
+ const rows=[
+  ['strike', (qk*100).toFixed(2)+'%'],
+  ['call — bid / ask', f(C*(1-hq),5)+'  /  <b class="tl">'+f(C*(1+hq),5)+'</b>'],
+  ['put — bid / ask',  f(Pu*(1-hq),5)+'  /  <b class="tl">'+f(Pu*(1+hq),5)+'</b>'],
+  ['half-spread', f(st.hEff,1)+' bps'],
+  ['C − P (parity = −k)', f(C-Pu,6)+'  vs  '+f(-qk,6)],
+  ['delta', f(dlt,4)],
+  ['cost to BUY '+f(qsz,1)+' calls', usd(qsz*C*(1+hq)*S)],
+  ['you receive SELLING '+f(qsz,1), usd(qsz*C*(1-hq)*S)],
+  ['your spread capture', '<span class="pos">'+usd(qsz*C*2*hq*S)+'</span>']
+ ];
+ $('qout').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:right">${r[1]}</td></tr>`).join('');
+ const qf=$('qkfill'); if(qf) qf.style.width=(((+$('qkr').value)+60)/120*100)+'%';
  $('ladder').querySelector('tbody').innerHTML=st.sorted.map(m=>
   `<tr class="${m.me?'me':''}"><td>${m.me?'YOU':m.n}</td><td>${f(m.h,0)} bps</td><td>${f(m.share*MKT.pool,1)}</td>
    <td>${m.fill>1e-4?f(m.fill,2):'—'}</td><td class="${m.rev>0?'pos':''}">${m.fill>1e-4?usd(m.rev):'—'}</td></tr>`).join('');
@@ -313,6 +340,9 @@ function render(){
 function bind(){
  document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
  $('mag')&&($('mag').oninput=e=>{MAG=+e.target.value;render();});
+ $('qk')&&($('qk').oninput=e=>{const v=+e.target.value;const r=$('qkr');if(r)r.value=Math.max(-60,Math.min(60,v));render();});
+ $('qkr')&&($('qkr').oninput=e=>{$('qk').value=e.target.value;render();});
+ $('qsz')&&($('qsz').oninput=()=>render());
  document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
 $('margin').oninput=e=>{P.margin=+e.target.value;render();};
 $('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
