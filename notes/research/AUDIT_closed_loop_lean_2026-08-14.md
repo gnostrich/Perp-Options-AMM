@@ -239,14 +239,32 @@ Artifacts: `formal/aristotle_runs/LOOP_LINK_B_settlement/` (solution tarball + e
 `ARISTOTLE_SUMMARY.md` + the obligation as submitted); obligation also at
 `formal/prompts/aristotle_prompt_LOOP_LINK_B_settlement.lean`. **Uncommitted — manager's call.**
 
-### VERDICT — link (a) pricing: **still running at hand-back**
+### VERDICT — link (a) pricing: **PROVED, and locally kernel-verified**
 
-The hard target is `engine_call_midconvex` (piecewise convexity glued across two kinks). Task
-`b1e0c962-…` was still working when I handed back. Status is recoverable at any time with
-`uvx --from aristotlelib aristotle show 20fa5993-74b2-49e4-b797-a5f17cbad7bf` and the result with
-`aristotle download 20fa5993-74b2-49e4-b797-a5f17cbad7bf --destination <path>`. **No verdict is
-claimed for link (a).** Its mathematics is re-derived and numerically checked above (§4), but that is
-evidence, not proof. **G2 remains OPEN.**
+Aristotle returned a complete `LINK_PRICING.lean` — **all 8 `sorry`s discharged, none left open, no
+statement found false.** Same full gate, every step passed:
+
+| gate step | result |
+|---|---|
+| out-of-scope diff | `BOOK_FORMAL` / `MAP_FORMAL` / `BASIS_FORMAL` / `lean-toolchain` / `lake-manifest.json` **byte-identical** to the working tree; `lakefile.toml` identical to submitted. Only `ARISTOTLE_SUMMARY.md` + attribution `README.md` added. |
+| token scan | clean — no `sorry` / `admit` / `axiom` / `native_decide` / `opaque` / `unsafe` / `sorryAx`. |
+| statement diff | **all 8 theorem statements byte-unchanged**, and — the check that matters most here — **every definition BODY (`atmMark`, `engineCall`, `enginePut`, `mixOTM`) is byte-identical.** The engine curve proved convex is exactly the curve I specified. The only edits to my lines are two `:= by sorry` → `:= <term>` proof-mode changes. Additions are imports and `private` helpers. |
+| **local kernel build** | compiled **in my own Lean 4.28.0 + Mathlib v4.28.0 kernel**, 15.4 s, rc=0, no errors. |
+| **local `#print axioms`** | all 9 named theorems → `[propext, Classical.choice, Quot.sound]`, run locally. |
+| math re-derived | `atm_kink_bound` is proved **for the full `0 < g`** via exactly my route (`log t ≤ t−1` at `t = g/(g+1)` ⇒ `g·log(1+1/g) ≥ g/(g+1)`, then `exp y ≥ 1+y`), landing the *stronger* `(g+1)((g+1)/g)^g ≥ 2g+1`. `engine_call_midconvex` avoided the piecewise-derivative route I suggested and instead exhibited a **global supporting line at every point** — strictly better, and it uses the sharp `(g+1)·A_g = (g/(g+1))^g ≤ 1/2` (Bernoulli `(1+1/g)^g ≥ 2`, tight at `g = 1`). §4 followed my Cauchy–Schwarz route with the gap `p₁p₂(ad−bc)²`. All of this matches my hand derivation and the numerics in §4. |
+
+**Verdict: `proved` — and verified in our own kernel.** Both halves land:
+- **positive half:** the engine's lensed smooth-paste curve **is** midpoint convex, so the standing
+  `MidConvex` hypothesis carried by `agg_midconvex` / `butterfly_nonneg` / `book_arb_free` is now
+  **discharged for the curve the engine actually posts**. A book of LPs **each with its own lens
+  exponent `g i`** is butterfly-arb-free and stays parity-anchored. **G2 CLOSED.**
+- **negative half — and this is the load-bearing product result:** `mixture_not_single_lens` is proved.
+  **Heterogeneous LP steepness generates a strict smile, and the single-`m` lens is a pure power law
+  that structurally cannot represent it.** L1 is now a *proved* structural obstruction, not a
+  suspicion. Operator-tier.
+
+Artifacts: `formal/aristotle_runs/LOOP_LINK_A_pricing/`; obligation also at
+`formal/prompts/aristotle_prompt_LOOP_LINK_A_pricing.lean`. **Uncommitted — manager's call.**
 
 ---
 
@@ -255,8 +273,8 @@ evidence, not proof. **G2 remains OPEN.**
 | # | gap | severity |
 |---|---|---|
 | G1 | **Stage 7 readback has no Lean at all.** `Exposure` is cited in the README and the loop map and does not exist. | **high — mislabel** |
-| G2 | **Stage 3 pricing ⇄ Stages 1–2 aggregation** — no theorem connects them. This is link (a), now submitted; the `mixture_not_single_lens` half looks like a genuine **obstruction**. | **high** |
-| G3 | **Settlement / units→cash** — nothing in the project. This is link (b), now submitted. | **high** |
+| G2 | ~~Stage 3 pricing ⇄ Stages 1–2 aggregation~~ — **CLOSED** by link (a): `engine_call_midconvex` discharges the standing `MidConvex` hypothesis, `engine_book_arb_free`/`engine_book_parity` connect them. Its negative half `mixture_not_single_lens` is a **proved obstruction** (see flag 1). | ~~high~~ **closed** |
+| G3 | ~~Settlement / units→cash~~ — **CLOSED** by link (b): `doorway_arbfree_iff_common`. | ~~high~~ **closed** |
 | G4 | **The option LEVEL curve is never derived from the perp book.** The map issues **depth and spread only** (`slope`, `hollow` / `slopeAt`, `halfAt`); every level `C i` enters as an abstract midconvex function. `CLOSED_LOOP_MAP.md` Stage 1's "perp book → its OWN option curve" overstates this: it is "→ its own depth and spread profile". | medium — wording |
 | G5 | **"Arb-free" = butterfly only.** No unconditional vertical leg, no price bounds (`C ≥ intrinsic`, `C ≤ S`), no calendar (N/A). | medium |
 | G6 | **No individual-rationality / adverse-selection theorem for LPs** under averaged level + tightest spread. Combined with the workbook's own "LP refraction" finding (one LP's β move re-prices every other LP's APR), this is the sharp edge of "LPs choose their own profile". | medium — product |

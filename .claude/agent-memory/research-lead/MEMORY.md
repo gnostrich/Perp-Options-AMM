@@ -75,8 +75,31 @@ work on scratchpad copies. **Loop is the priority; this is the non-blocking ceme
     files rebuild server-side = independent second opinion on the local build). Constraints carried
     verbatim: context files fixed byte-for-byte, no statement/hypothesis change, false⇒leave the `sorry`
     + report the counterexample (never weaken), no sorry/admit/axiom/native_decide/opaque/unsafe,
-    `#print axioms` ⊆ {propext, Classical.choice, Quot.sound}. **VERDICTS: see the entry appended below
-    when the runs land; audit is local-kernel re-verification, NOT trust.**
+    `#print axioms` ⊆ {propext, Classical.choice, Quot.sound}.
+- **⭐⭐ BOTH LINKS CAME BACK **PROVED** — AND I RE-VERIFIED BOTH IN MY OWN LOCAL KERNEL (not trust).**
+  Full gate passed on each: out-of-scope modules (BOOK/MAP/BASIS/lean-toolchain/lake-manifest)
+  **byte-identical**; token scan clean; **all statements AND all definition BODIES byte-unchanged**
+  (`atmMark`/`engineCall`/`enginePut`/`mixOTM` — the curve proved convex is exactly the curve I
+  specified); only additions are imports + `private` helpers (+ two `:= by sorry`→`:= <term>`);
+  **local `lean` build rc=0**; **local `#print axioms` on all 9 (A) + 12 (B) targets →
+  `[propext, Classical.choice, Quot.sound]`**; math re-derived and matching my hand derivation.
+  - **(a) `LINK_PRICING` — 8/8 proved, none open, no statement false.** `atm_kink_bound` proved for the
+    FULL `0<g` via my exact route, landing the stronger `(g+1)((g+1)/g)^g ≥ 2g+1`.
+    `engine_call_midconvex` took a BETTER route than I suggested — a **global supporting line at every
+    point** instead of piecewise derivatives — using the sharp `(g+1)A_g=(g/(g+1))^g ≤ 1/2` (Bernoulli
+    `(1+1/g)^g ≥ 2`, tight at g=1). **⇒ the standing `MidConvex` hypothesis is DISCHARGED for the curve
+    the engine actually posts; a book of LPs EACH WITH ITS OWN `g i` is butterfly-arb-free and
+    parity-anchored. G2 CLOSED.** And **`mixture_not_single_lens` is PROVED — L1 is now a PROVED
+    structural obstruction: heterogeneous LP steepness generates a strict smile the single-`m` lens
+    cannot represent.**
+  - **(b) `LINK_SETTLEMENT` — 12/12 proved.** Witness exactly as I specified (long 1/Vᵢ short 1/Vⱼ),
+    `n=0` dispatched separately so no nonemptiness smuggled in; content lives at n≥2 (scope, not
+    vacuity). **⇒ station 17's single common conversion factor is FORCED. G3 CLOSED.**
+  - Artifacts folded (UNCOMMITTED, manager's call): `formal/aristotle_runs/LOOP_LINK_A_pricing/` and
+    `.../LOOP_LINK_B_settlement/` (solution.tar.gz + extracted + ARISTOTLE_SUMMARY + obligation as
+    submitted); obligations also at `formal/prompts/aristotle_prompt_LOOP_LINK_{A_pricing,B_settlement}.lean`.
+    NOTE for manager: these are NOT yet wired into `sims/v3-maps-lean/lakefile.toml` — adding them needs
+    one `[[lean_lib]]` block each + the `defaultTargets` entry; I did not edit the operator's project.
 - **HONEST GAPS (G1–G11 in the note):** G1 `Exposure` missing (high, mislabel) · G2 aggregation⇄pricing
   (submitted; obstruction half) · G3 settlement (submitted) · G4 **the option LEVEL curve is never
   derived from the perp book** — the map issues DEPTH+SPREAD only, every level `C i` is an abstract
