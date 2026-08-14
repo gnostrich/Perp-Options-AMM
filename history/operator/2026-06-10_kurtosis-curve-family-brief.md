@@ -3660,3 +3660,10 @@ _Context: operator asks to spin an auditor (Opus 4.8) to quickly test the Varun 
 _Context: operator recaps that the v5 sheet is the closed-form-from-the-distribution model (gamma from value∝S^(−mγ)), Balancer/spot-LVR set aside — and says feedback + an idea follow, but the message contained no feedback text/attachment. Manager confirmed the recap (correct; caveat: gamma factor is closed-form, carry magnitude/funding law still open) and flagged that the feedback content did not come through._
 
 > ok recapping where we are, we did that sheet with the closed form thing coming direectly from the distirbutoon, leaving aside the balancer thing right? so here the feedback and somehitn ghi have ni mind
+
+
+## Entry 503 — 2026-07-08 UTC
+_Context: (feedback delivered w/ attachment v3mapslean.zip) — feedback = LPs should individually choose their exposure profiles, not be tied to one pool-wide profile; the zip is a kernel-checked Lean project (v3-maps-lean: BASIS/MAP/BOOK_FORMAL) formalizing 3 maps: (1) per-LP Shape map perp-book→that LP's option curve β(k)=β·Δ²,h(k)=h·|Δ|,parity C−P=−k; (2) Aggregation N curves→one book (1/β_agg=Σ1/βᵢ, weights strike-invariant, tightest spread); (3) Readback option inventory→perp-equivalent exposure. Manager token-scanned (no sorry/axiom/native_decide; 54 lemmas), statements match README; trusted-from-prover pending local build. Preserved to sims/v3-maps-lean/._
+
+> [attachment: v3mapslean.zip — Lean project v3-maps-lean/ (BASIS_FORMAL, MAP_FORMAL, BOOK_FORMAL, README, lakefile)]
+> so the feedback said LPs should be able to individually change ther exposure profiles and not be tiedto pool singular one, heres a map theat might be anle top allow that see
