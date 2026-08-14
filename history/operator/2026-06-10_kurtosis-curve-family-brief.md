@@ -4021,3 +4021,9 @@ _Context: operator clarifies the vision with a screenshot — NOT a separate hea
 _Context: operator corrects panel E on two counts — buy and sell must be SEPARATE TABS so both clouds are never on screen at once (one side per tab), and the cloud must FADE toward its outer end rather than ending in a hard edge._
 
 > readh waht im saying cuhbuy and sell curves are separate tabs so we dont see and the things dade toward outer end rifhtlike it would be one side tou see on each if the tabs
+
+
+## Entry 561 — 2026-08-14 UTC
+_Context: operator re-sends a screenshot of their own two prior messages and confirms them as the requirement, with a jab that the manager was rendering rather than reading. Both items (separate buy/sell tabs, outward fade) had shipped in the prior turn; manager read "yes these" as the spec confirmed and ported the cloud into the live Transact panel rather than leaving it on the comparison page._
+
+> [screenshot of entries 559/560 text] nust rendering not fuciing readingyes these
