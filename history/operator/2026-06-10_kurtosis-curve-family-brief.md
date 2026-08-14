@@ -3841,3 +3841,9 @@ _Context: operator checks alignment — two curve sets (buy/sell) and the curve 
 _Context: operator points out you would still need to construct the two curves separately to do the APPORTIONMENT, even if the spread comes from a single number — unless the closed form handles it. Manager tested and CONFIRMED the operator is right: closed form suffices ONLY for depth-only heterogeneity (1/lam_agg=sum 1/lam_i, pro-rata shares, residual 1.7e-18); the moment LPs express SPREAD (fill order matters: Q=2 -> 5bps, Q=6 -> 12.5bps) or SHAPE (shares vary by strike), the two-curve envelope is load-bearing and must be materialised._
 
 > youd still need to make 2 curves thing separately in order to do the apportionment don't forget that, even if it comes from that single number; or if your calculation in closed form does it then cool
+
+
+## Entry 532 — 2026-08-14 UTC
+_Context: operator orders the whole loop rebuilt on the Burr-2 kernel — perps, portfolio, translation to margin, LP aggregation/apportionment, the sims — everything previously (mistakenly) tacked onto the Balancer curve, in ONE spreadsheet plus corresponding Lean. Manager built sims/BURR2_FULL_LOOP_v1.xlsx (10 sheets: Inputs, Curve, Quote, Apportion, Trade, Portfolio, Perps_Account, Margin, LP_Econ, CHECKS) and verified independently: parity 1.4e-17, ATM wings meet 2.4e-13, shares sum exact, apportionment conserves 0.00e+00, round-trip 3.15% irreversible, swap moves kappa +0.007030, LP swap revenue +0.028779 BTC, break-even trade size 1.03% of pool vs 2.5% input => VIABLE. Lean dispatch next._
+
+> yes please and the whole loop stuff everything we discussed that you mistakenly tacked onto the balancer cirve thing (perps , portfolio , translation to margin wtc.) sot he whole loop on this curveburrmthing includikgnthe lp aggregation apportionment thing and the thing where we have the sims etc whole thing one soreadsheet and corresponding lean
