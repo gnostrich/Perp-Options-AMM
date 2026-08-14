@@ -4042,3 +4042,11 @@ _Context: operator approves panel E (green ticks on the cloud in the annotated s
 _Context: operator rules on the cloud normalisation — since the aggregate view and the individual (per-maker) view are never on screen at the same time, they should each have their own brightness maximum rather than share one scale._
 
 > and i get the normalisation thing basically youd have to have different max for aggregate and individual which are always seen separately
+
+
+## Entry 564 — 2026-08-14 UTC
+_Context: operator refines the normalisation ruling — a shared scale lets the biggest maker dwarf the small ones, so each individual cell should be on its OWN scale, referenced to that maker's maximum possible depth given the margin it is putting up; the aggregate view shades with respect to the aggregate._
+
+> biggest single maker can dwarf smaller makers; you want to be able to see your own thing on its own whatever scale maybe relative max possible from to how much margin you're putting up
+>
+> when seeing aggregate thats wrt aggregate it shades

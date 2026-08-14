@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 19 · per-view scale</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 20 · self-relative scales</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -406,7 +406,11 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   cbid.push(C*(1-hh));cask.push(C*(1+hh));
   pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
  bi.push(0);as.push(0);
- const ymax=Math.max(...cask)*1.12;
+ // the cloud spans 100·λ·ATM in value to exhaust YOUR capacity; the axis must reach
+ // that or the panel floods (build-18 bug). Computed HERE, before the axis labels,
+ // otherwise the labels print the old range against the new picture.
+ const QmaxYou=Math.max(0.1,P.margin*10), dFull=100*P.lam*st.c.ATM;
+ const ymax=Math.max(...cask)+dFull*1.02;
  const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
  g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
@@ -421,14 +425,17 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  // moves the price far past the top of a value axis (λ·ATM is additive in price),
  // so normalising to it never fades. Fading over "the first Qs BTC taken" keeps the
  // band on the curve and makes the size control do real work.
- const Qs=Math.max(0.1,+(($('qsz')||{value:5}).value)||5);
- const you=[{n:'YOU',c:st.c,h:st.hEff,share:Qs/MKT.pool,lam:P.lam,me:true}];
- cloudIn(g,you,L,T,W-L-R,PH,ymax,CSIDE,Qs);
+ // operator entry 564: YOUR cell shades against YOUR OWN maximum possible depth —
+ // the margin you are putting up — not the pool and not the size box.
+ const you=[{n:'YOU',c:st.c,h:st.hEff,share:QmaxYou/MKT.pool,lam:P.lam,me:true}];
+ cloudIn(g,you,L,T,W-L-R,PH,ymax,CSIDE,QmaxYou);
  g.font='10px IBM Plex Mono';g.fillStyle=CSIDE==='ask'?'#63e6e2':'#FF6767';
  g.fillText(CSIDE==='ask'
-   ? '▲ YOUR BUY-side cloud — the price move as takers lift the first '+f(Qs,1)+' BTC off you'
-   : '▼ YOUR SELL-side cloud — the price move as takers hit the first '+f(Qs,1)+' BTC into you',L+6,T+12);
- g.fillStyle='#677275';g.fillText('band thickness = your slippage over that size · raise «size» to widen it',L+6,T+26);
+   ? '▲ YOUR BUY-side cloud — full → empty over YOUR whole capacity, '+f(QmaxYou,0)+' BTC'
+   : '▼ YOUR SELL-side cloud — full → empty over YOUR whole capacity, '+f(QmaxYou,0)+' BTC',L+6,T+12);
+ g.fillStyle='#677275';
+ g.fillText('scaled to the margin you are putting up · λ sets how far it stretches ('
+   +f(dFull,2)+' in value to exhaust)',L+6,T+26);
  // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
  // where a trade of a given size at a given strike actually lands the taker.
  // tester FLAG-LM1: this used to hand EVERY maker st.c (your own curve), so
@@ -630,12 +637,13 @@ function drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,side){
  cloudIn(g,set,L,T,W-L-R,PH,ymax,side,set.reduce((s,m)=>s+m.share*MKT.pool,0));}
 // SMALL MULTIPLES — one cloud per maker, shared brightness scale (operator entry 562)
 function drawMakerGrid(g,set,W,H,side){
- // operator entry 563: the aggregate view and this one are never on screen at the
- // same time, so they get DIFFERENT maxima. Here the reference is the BIGGEST
- // single maker, not the whole book — otherwise every cell is dim (the largest
- // maker would top out at its share of the book, ~48%). Shared across the four
- // cells, because those ARE seen together: a thin maker still looks thin.
- const Qtot=Math.max(...set.map(m=>m.share*MKT.pool));
+ // operator entries 563/564: aggregate shades wrt the aggregate; each INDIVIDUAL
+ // cell shades wrt ITS OWN maximum possible depth (the margin that maker is
+ // putting up). A shared scale let the biggest maker dwarf the rest — 19 BTC
+ // against a 95 BTC reference was nearly invisible. Self-relative means every
+ // maker is legible on its own terms; the absolute depth is in the cell label,
+ // which is where a number belongs.
+ const selfRef=m=>Math.max(1e-9,m.share*MKT.pool);
  const ask=side==='ask';
  const ymax=Math.max(...set.map(m=>ask?m.c.CALL(-0.7)*(1+m.h/1e4):m.c.CALL(-0.7)))*1.06;
  const cols=2,rows=Math.ceil(set.length/cols),PAD=12,LB=30,TB=22;
@@ -643,15 +651,15 @@ function drawMakerGrid(g,set,W,H,side){
  set.forEach((m,i)=>{
   const cx=PAD+(i%cols)*(cw+PAD), cy=PAD+Math.floor(i/cols)*(chh+PAD);
   g.strokeStyle='#1e3a3f';g.strokeRect(cx,cy,cw,chh);
-  cloudIn(g,[m],cx+LB,cy+TB,cw-LB-6,chh-TB-16,ymax,side,Qtot,150);
+  cloudIn(g,[m],cx+LB,cy+TB,cw-LB-6,chh-TB-16,ymax,side,selfRef(m),150);
   g.font='10px IBM Plex Mono';g.fillStyle=m.me?'#0ABAB5':'#c9d4d6';
   g.fillText(m.n+(m.me?'  (you)':''),cx+LB,cy+14);
   g.fillStyle='#677275';
   g.fillText(f(m.share*MKT.pool,0)+' BTC · '+f(m.h,0)+' bps · λ '+f(m.lam,2),cx+LB+118,cy+14);
   g.fillText('−70%',cx+LB,cy+chh-4); g.fillText('+70%',cx+cw-38,cy+chh-4);});
  g.font='10px IBM Plex Mono';g.fillStyle='#677275';
- g.fillText('shared scale across these four cells (a thin maker looks thin) — scaled to the'
-   +' biggest maker, '+f(Qtot,0)+' BTC, not to the whole book',PAD+2,H-2);}
+ g.fillText('each cell on ITS OWN scale — brightness runs full → empty over that maker\'s own'
+   +' capacity, so a small maker is as legible as a large one. Depth is the number in the label.',PAD+2,H-2);}
 function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=0;
  if(CVIEW==='makers'){g.clearRect(0,0,W,H);drawMakerGrid(g,set,W,H,CSIDE);return;}
  g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
