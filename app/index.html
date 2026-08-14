@@ -41,7 +41,7 @@ font-weight:600;padding:7px 13px;cursor:pointer;text-transform:uppercase;letter-
 .m b{font-weight:600;color:#fff}
 .m .amb{color:var(--amber);font-weight:600}
 .m .tl{color:var(--teal);font-weight:600}
-.pos{color:var(--grn)}.neg{color:var(--red)}
+.pos{color:var(--grn)}.neg{color:var(--red)}.amb{color:var(--amber)}
 table{width:100%;border-collapse:collapse;font-size:10.5px}
 th{color:var(--mute);font-weight:400;text-align:right;padding:5px 5px;border-bottom:1px solid #2a3538;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
 th:first-child,td:first-child{text-align:left}
@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 11 · full app</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 12 · rfq-arb</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -159,7 +159,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
       <div class="srow"><div class="track"><div class="fill" id="tkf" style="width:60%"></div>
         <input type="range" id="tkr" min="-60" max="60" step="0.5" value="12"></div><div class="mm"><span>-60</span><span>+60</span></div></div>
       <div class="frow" style="margin-top:9px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="tsz" value="3" step="0.5" min="0.1"></div>
-      <div id="tquote" style="margin-top:10px"></div>
+      <div class="m" style="margin-top:10px"><span>maker divergence</span><b class="tl" id="arbv">0.15</b></div><div class="srow"><div class="track"><div class="fill" id="arbf" style="width:15%"></div><input type="range" id="arbr" min="0" max="1" step="0.01" value="0.15"></div><div class="mm"><span>agree</span><span>diverge</span></div></div><div id="tquote" style="margin-top:10px"></div>
       <button class="cta" style="margin-top:10px">Create Position</button>
     </div>
   </div>
@@ -168,7 +168,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
       <div class="chead"><b>Aggregate book — what you trade against</b>
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">best ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">best bid</span><span class="badge">makers</span></span></div>
       <canvas id="cvT" width="980" height="330"></canvas>
-      <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers.</div>
+      <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
     </div>
     <div class="panel" style="margin-top:12px">
       <div class="chead"><b>Fill breakdown</b><span class="t2" style="color:var(--mute)" id="tfl">—</span></div>
@@ -243,7 +243,7 @@ const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
  ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
-let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn';
+let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15;
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
@@ -263,10 +263,13 @@ function mktField(k,label,min,max,step,fmtv){const v=MKT[k],pct=(v-min)/(max-min
 /* ─── compute ─── */
 // aggregate book: every maker has its own curve; taker sees the ENVELOPE
 function makerCurves(){
- // COMMON LEVEL (no smile — the settled architecture); makers differ in DEPTH and SPREAD only
- const set=[{n:'YOU',me:true,lam:0.02},{n:'MM-Kappa',me:false,lam:0.05},
-   {n:'MM-Delta',me:false,lam:0.10},{n:'MM-Sigma',me:false,lam:0.04}];
- set.forEach(m=>{m.Sbar=P.Sbar;m.a=P.a;m.gam=P.gam;m.kap=P.kap;});
+ // RFQ: makers are FREE to differ on level AND shape. Arbitrage disciplines divergence;
+ // no common-level rule is needed because the book is an ENVELOPE, not a shared resting book.
+ const D=ARBD;  // divergence dial: 0 = agreement, 1 = wide disagreement
+ const set=[{n:'YOU',me:true,lam:0.02,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
+   {n:'MM-Kappa',me:false,lam:0.05,Sbar:P.Sbar*(1-0.035*D),a:P.a*(1-0.06*D),gam:P.gam*(1+0.03*D),kap:P.kap+0.05*D},
+   {n:'MM-Delta',me:false,lam:0.10,Sbar:P.Sbar*(1+0.05*D),a:P.a*(1+0.06*D),gam:P.gam*(1-0.05*D),kap:P.kap-0.06*D},
+   {n:'MM-Sigma',me:false,lam:0.04,Sbar:P.Sbar*(1+0.01*D),a:P.a*(1+0.01*D),gam:P.gam,kap:P.kap+0.02*D}];
  set.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);});
  return set;}
 function aggBook(set,hs){
@@ -421,6 +424,7 @@ function bind(){
    HK=Math.max(-0.68,Math.min(0.68,k));render();};}
  ($('qsz')||{}).oninput=function(){render();};
  ['tk','tsz','bs','bb','bsz'].forEach(id=>{const e=$(id);if(e&&!e._w){e._w=1;e.oninput=()=>{if(id==='tk'){const r=$('tkr');if(r)r.value=e.value;}render();};}});
+ const ar=$('arbr');if(ar&&!ar._w){ar._w=1;ar.oninput=()=>{ARBD=+ar.value;render();};}
  const tkr=$('tkr');if(tkr&&!tkr._w){tkr._w=1;tkr.oninput=()=>{$('tk').value=tkr.value;render();};}
  const sb=$('sideBuy'),ss2=$('sideSell');
  if(sb&&!sb._w){sb._w=1;sb.onclick=()=>{TRADE.side='buy';sb.className='cta';ss2.className='cta off';render();};
@@ -459,7 +463,8 @@ function renderTransact(st){
    <div class="m"><span>best bid</span><b>${f(bid,5)}</b></div>
    <div class="m"><span>book half-spread</span><b>${f(spr/2,1)} bps</b></div>
    <div class="m"><span>makers quoting</span><b>${set.length}</b></div>
-   <div class="m"><span>book state</span><b class="${B.crossed(k)?'neg':'pos'}">${B.crossed(k)?'CROSSED — arb':'clean'}</b></div>`;
+   <div class="m"><span>book state</span><b class="${B.crossed(k)?'amb':'pos'}">${B.crossed(k)?'ARB OPEN':'clean'}</b></div>
+   <div class="m"><span>arb available</span><b class="${B.crossed(k)?'amb':''}">${B.crossed(k)?usd((B.bid(k)-B.ask(k))*S)+' / BTC':'—'}</b></div>`;
  const impBps=(bestSingle.ask-ask)/ask*1e4;
  $('timp').innerHTML=rows.map(r=>`<div class="m"><span>${r.n}${r.me?' (you)':''}</span><b class="${r.ask===ask?'tl':''}">${f(r.ask,5)}</b></div>`).join('')
   +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single</span><b class="pos">${f(Math.max(0,impBps),2)} bps</b></div>`;
@@ -468,7 +473,8 @@ function renderTransact(st){
  let rem=sz;const out=[];
  sorted.forEach((r,i)=>{const cap=set.find(m=>m.n===r.n).share*MKT.pool;const t=Math.max(0,Math.min(cap,rem));
   if(t>1e-6)out.push({...r,fill:t,px:side==='buy'?r.ask:r.bid});rem-=t;});
- $('tfl').textContent=f(sz,1)+' BTC · '+side;
+  $('tfl').textContent=f(sz,1)+' BTC · '+side;
+ const av=$('arbv'),af=$('arbf'); if(av)av.textContent=f(ARBD,2); if(af)af.style.width=(ARBD*100)+'%';
  $('tfill').querySelector('tbody').innerHTML=out.map(o=>
   `<tr class="${o.me?'me':''}"><td>${o.n}</td><td>${f(o.px,5)}</td><td>${f(o.fill,2)}</td><td>${usd(o.fill*S)}</td><td>${usd(o.fill*o.px*S)}</td></tr>`).join('');
  drawAgg(B,set,k);}
