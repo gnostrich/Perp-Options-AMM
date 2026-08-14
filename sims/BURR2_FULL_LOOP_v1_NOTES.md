@@ -151,3 +151,47 @@ hyperbola — `fee × turnover ≈ 27 bps·×/day` is the break-even line.
 **Caveat that could move the whole grid:** `bleed` reads live off `1_Curve!J17` (mean per-strike curvature
 ≈5.47 at the current `a, γ`). A **flatter curve (lower curvature) lowers the bar proportionally** — so curve
 shape is itself an economics lever, not just a pricing choice.
+
+---
+## ⚑ REALTIME LP TUNING — the strongest idea yet, and it changes the problem (operator entry 541)
+
+**Operator:** if LPs can dynamically tune their own params in realtime, they can run their own strategies.
+**Verified — and it fixes the exact failure mode the static model has.**
+
+### The asymmetry that makes it work
+The bleed scales with **RV²**, but a **static fee is a constant**. So a static LP is calibrated to exactly
+one vol level and is wrong everywhere else:
+| RV | bleed | static 90bps rev | **net (static)** | vol-indexed fee | net (dynamic) |
+|---|---|---|---|---|---|
+| 20% | 0.109 | 0.985 | **+0.876** | 10 bps | 0.000 |
+| 60% | 0.985 | 0.985 | +0.001 | 90 bps | 0.000 |
+| 80% | 1.750 | 0.985 | **−0.765** | 160 bps | 0.000 |
+| 120% | 3.938 | 0.985 | **−2.953** | 360 bps | 0.000 |
+
+**The static LP is over-paid in calm markets and wiped out in vol spikes.** A dynamic LP quoting in **vol
+terms** is flat at every level. That is exactly how real options market makers work — **they quote a vol, not
+a price.** This is the single strongest argument for realtime tuning.
+
+### Four strategies it unlocks
+| strategy | mechanism | why it matters |
+|---|---|---|
+| vol-indexed spread | fee/h ∝ RV² | removes the vol-spike wipeout; break-even at ANY vol |
+| inventory skew | tilt own κᵢ | offload risk without crossing the market |
+| depth withdrawal | cut own λᵢ on toxic flow | stop feeding informed traders |
+| strike specialisation | move own a, γ | be paid for providing wings vs ATM |
+
+### What it costs — four risks that exist ONLY once tuning is realtime
+1. **LP-vs-LP adverse selection.** The slowest adjuster is picked off by the fastest. **The model has no
+   latency dimension at all.**
+2. **Correlated withdrawal.** If everyone widens on a vol spike (individually rational), the pool goes
+   illiquid exactly when traders need it: 50% withdraw → impact ×2.0; 90% → **impact ×10**. Classic
+   market-maker-withdrawal failure.
+3. **Refraction becomes continuous.** One LP re-quoting instantly re-prices everyone's fill share — the
+   zero-sum effect now runs in realtime.
+4. **Herding / oscillation.** Strategies reacting to the same signal can cycle; nothing in the design damps it.
+
+### The consequence for the whole project
+Realtime tuning converts a **passive-LP product** into an **active-MM venue**. Economically much stronger —
+it dissolves the fee-vs-turnover bind, because LPs price the risk they actually see. But the open problem
+**shifts**: no longer *"is the fee enough?"* but **"is the LP game stable and fair?"** — which is the
+apportionment/individual-rationality question, now with real teeth (latency, withdrawal, herding).
