@@ -2,12 +2,24 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
-const file = path.join(__dirname, 'index.html');
+
+const TYPES = {'.html':'text/html; charset=utf-8','.png':'image/png','.svg':'image/svg+xml','.json':'application/json'};
+const ROUTES = {'/':'index.html','/compare':'compare.html','/compare.html':'compare.html'};
+
 http.createServer((req, res) => {
-  if (req.url === '/health') { res.writeHead(200, {'Content-Type':'application/json'}); return res.end('{"ok":true}'); }
+  const url = (req.url || '/').split('?')[0];
+  if (url === '/health') { res.writeHead(200, {'Content-Type':'application/json'}); return res.end('{"ok":true}'); }
+
+  let rel = ROUTES[url];
+  if (!rel && /^\/[A-Za-z0-9_\-.]+\.(html|png|svg|json)$/.test(url)) rel = url.slice(1);
+  if (!rel) rel = 'index.html';                       // unknown path -> the console
+
+  const file = path.join(__dirname, rel);
+  if (!file.startsWith(__dirname)) { res.writeHead(403); return res.end('forbidden'); }
   fs.readFile(file, (err, data) => {
-    if (err) { res.writeHead(500); return res.end('error'); }
-    res.writeHead(200, {'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});
+    if (err) { res.writeHead(404); return res.end('not found'); }
+    res.writeHead(200, {'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream',
+                        'Cache-Control':'no-store'});
     res.end(data);
   });
 }).listen(PORT, '0.0.0.0', () => console.log('temporal-mm-console on :' + PORT));

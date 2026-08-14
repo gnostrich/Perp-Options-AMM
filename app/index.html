@@ -218,7 +218,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <div><div class="card dim"><div class="chead"><b>Liquidation</b></div><div id="pliq"></div></div></div>
 </div>
 
-<footer>Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
+<footer><b style="color:#FFA541">OPEN QUESTION, NOT A SETTLED DESIGN:</b> makers here are free to differ without bound, so the book can cross ("ARB OPEN") — at any divergence above zero that happens at every strike, and it is an arbitrage against the cleared perp, not maker-vs-maker discipline. Whether to allow that, bound it by |Pᵢ−Pⱼ| &lt; hᵢ+hⱼ, or anchor the level is an unresolved operator-tier call. Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];

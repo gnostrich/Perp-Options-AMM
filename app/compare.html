@@ -1,0 +1,209 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Temporal — layout options A/B/C/D</title>
+<style>
+@import url('');
+body{background:#0b1416;color:#c9d4d6;font:300 13px 'IBM Plex Mono',ui-monospace,Menlo,monospace;margin:0;padding:26px 30px 60px}
+h1{font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#0ABAB5;font-weight:600;margin:0 0 4px}
+.sub{color:#677275;font-size:11px;margin-bottom:24px;max-width:1100px;line-height:1.6}
+.opt{border:1px solid #1e3a3f;background:#0e1a1d;margin-bottom:26px}
+.hd{padding:11px 16px;border-bottom:1px solid #1e3a3f;display:flex;align-items:baseline;gap:14px}
+.hd b{color:#fff;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:12px}
+.hd .t{color:#8a9698;font-size:11px}
+.pick{margin-left:auto;color:#FFA541;font-size:10.5px;letter-spacing:.08em}
+.bd{padding:14px 16px}
+canvas{display:block;width:100%;height:auto;background:#0b1416}
+.cap{color:#8a9698;font-size:11px;line-height:1.65;margin-top:10px;max-width:1180px}
+.cap b{color:#c9d4d6}
+.tabs{display:flex;gap:0;margin-bottom:10px}
+.tab{padding:6px 16px;border:1px solid #1e3a3f;color:#677275;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.tab.on{background:#0ABAB5;color:#04191a;border-color:#0ABAB5;font-weight:600}
+.warn{color:#FFA541}
+</style></head><body>
+<h1>Landing-map layout — four options, rendered for real</h1>
+<div class="sub">Same Burr-2 kernel, same book (4 makers, divergence 0.6, pool 200 BTC), same trade (strike +12%, size 120 BTC).
+Nothing here is a mockup — every panel is drawn by the live code. Pick one.</div>
+
+<div class="opt"><div class="hd"><b>A — what ships today</b><span class="t">one landing field under all four overlapping curves</span></div>
+<div class="bd"><canvas id="cA" width="1400" height="520"></canvas>
+<div class="cap">Call ask/bid and put ask/bid all on one axis, landing field below. <b>The complaint:</b> four lines crossing each other; the field is book-wide so it can't tell you which side it belongs to.</div></div></div>
+
+<div class="opt"><div class="hd"><b>B — buy / sell tabs</b><span class="t">one side at a time, each with its own landing field</span><span class="pick">my pick</span></div>
+<div class="bd"><div class="tabs"><div class="tab on">BUY (you pay)</div><div class="tab">SELL (you receive)</div></div>
+<canvas id="cB" width="1400" height="440"></canvas>
+<div class="cap">Two curves instead of four, and the field underneath is <b>that side's</b> field. The BUY tab is shown; SELL is the mirror. <b>Cost:</b> you lose the shaded spread band, because the two sides are no longer on screen together.</div></div></div>
+
+<div class="opt"><div class="hd"><b>C — the field IS the distribution</b><span class="t">colour = implied density d²C/dk² of the curve you actually trade at that size</span></div>
+<div class="bd"><canvas id="cC" width="1400" height="440"></canvas>
+<div class="cap">Your point taken literally: the curve <b>is</b> a distribution (slope = CDF, curvature = density). So paint the density instead of the price impact. Teal = healthy density; <span class="warn">amber/red = the implied density goes NEGATIVE</span> — a negative probability, which is exactly where the book is arbitrageable. <b>Cost:</b> it stops answering "where does my trade land".</div></div></div>
+
+<div class="opt"><div class="hd"><b>C2 — the same density view, on a book whose makers actually CROSS</b><span class="t">strike-specialised makers: cheap-fat vs rich-thin</span></div>
+<div class="bd"><canvas id="cC2" width="1400" height="440"></canvas>
+<div class="cap">Identical code, different book. Today's shipped divergence dial never makes the winner switch — one maker wins every strike — which is why panel C above is calm. Give the makers genuinely different <i>shapes</i> and the best-of-book kinks where the winner changes, and the implied density <span class="warn">goes negative there</span>: a negative probability. <b>This is the picture of the open problem</b> — it is the same fact as the butterfly the skeptic flagged, in your language.</div></div></div>
+
+<div class="opt"><div class="hd"><b>D — B + C</b><span class="t">tabs, with BOTH strips: where it lands, and what distribution that implies</span></div>
+<div class="bd"><div class="tabs"><div class="tab on">BUY (you pay)</div><div class="tab">SELL (you receive)</div></div>
+<canvas id="cD" width="1400" height="600"></canvas>
+<div class="cap">Landing strip on top, density strip below it, one side at a time. <b>Cost:</b> tallest panel, most code.</div></div></div>
+
+<script>
+/* ─── Burr-2 ─── */
+function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+let y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){const F=1e-300,E=3e-12;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;
+if(Math.abs(d)<F)d=F;d=1/d;let h=d;
+for(let m=1;m<=300;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;h*=d*c;
+aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;let del=d*c;h*=del;if(Math.abs(del-1)<E)break;}return h;}
+function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;
+const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
+return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
+function mk(Sbar,a,gam,kap){const B=Math.exp(logGamma(1/a)+logGamma(gam/a)-logGamma(1/a+gam/a));
+const sR=Sbar*(1+kap),sL=Sbar*(1-kap);
+const G1=Math.pow(1+Math.pow(1/sL,a),-(gam+1)/a);
+const I1=(sL/a)*B*(1-ibeta(1/(1+Math.pow(sL,a)),1/a,gam/a));
+const WR=sR*B/a,WL=(sL*B/a-I1-G1)/(1-G1),qR=WL/(WR+WL),qL=1-qR;
+const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a));
+const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
+return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a)*B};}
+
+function ladderAt(mkrs,k,pool,side){                  // side: 'ask' (default) or 'bid'
+ const bid=side==='bid';
+ const a=mkrs.map(m=>({px:m.c.CALL(k)*(bid?1-m.h/1e4:1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)}))
+             .sort((x,y)=>bid?y.px-x.px:x.px-y.px);   // best first: cheapest ask / highest bid
+ let cq=0,cc=0;const cum=a.map(r=>{cq+=r.cap;cc+=r.cap*r.px;return{q:cq,c:cc,px:r.px};});
+ return {best:a[0].px,cum,total:cq};}
+// THE CURRENT CURVE: what you actually pay/receive ACROSS STRIKES at YOUR size.
+// Top-of-book (the drawn ask/bid) is the Q->0 limit of this; at real size it sits inside it.
+function landedCurve(mkrs,pool,Q,side){return k=>landedFrom(ladderAt(mkrs,k,pool,side),Q);}
+function landedFrom(Ld,Q){let pq=0,pc=0;
+ for(const s of Ld.cum){if(Q<=s.q)return (pc+(Q-pq)*s.px)/Q;pq=s.q;pc=s.c;}
+ return null;}
+const HEAT=[[0,11,30,33],[.08,13,61,63],[.22,15,95,92],[.45,10,186,181],[.72,255,165,65],[1,255,103,103]];
+function heatCol(t){                 // t = impact NORMALISED to this field's own max; null = no fit
+ if(t===null)return '#4a1218';
+ if(t<=0)return 'rgb(11,30,33)';
+ for(let i=1;i<HEAT.length;i++){if(t<=HEAT[i][0]){
+   const u=(t-HEAT[i-1][0])/(HEAT[i][0]-HEAT[i-1][0]),A=HEAT[i-1],B2=HEAT[i];
+   return 'rgb('+[1,2,3].map(j=>Math.round(A[j]+u*(B2[j]-A[j]))).join(',')+')';}}
+ return 'rgb(255,103,103)';}
+
+
+/* ── shared setup: the same book in every panel ── */
+const POOL=200, D=0.6, KMARK=0.12, QMARK=120;
+const P0={Sbar:0.60,a:1.2705,gam:1.8413,kap:0};
+const HS=[19,16,22,18];                       // half-spreads bps, per maker
+const SET=[{n:'YOU',lam:0.02,Sbar:P0.Sbar,a:P0.a,gam:P0.gam,kap:P0.kap,h:HS[0]},
+ {n:'MM-Kappa',lam:0.05,Sbar:P0.Sbar*(1-0.035*D),a:P0.a*(1-0.06*D),gam:P0.gam*(1+0.03*D),kap:P0.kap+0.05*D,h:HS[1]},
+ {n:'MM-Delta',lam:0.10,Sbar:P0.Sbar*(1+0.05*D),a:P0.a*(1+0.06*D),gam:P0.gam*(1-0.05*D),kap:P0.kap-0.06*D,h:HS[2]},
+ {n:'MM-Sigma',lam:0.04,Sbar:P0.Sbar*(1+0.01*D),a:P0.a*(1+0.01*D),gam:P0.gam,kap:P0.kap+0.02*D,h:HS[3]}];
+const inv=SET.reduce((s,m)=>s+1/m.lam,0);
+SET.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);m.share=(1/m.lam)/inv;});
+const K0=-0.7,K1=0.7;
+const askTop=k=>Math.min(...SET.map(m=>m.c.CALL(k)*(1+m.h/1e4)));
+const bidTop=k=>Math.max(...SET.map(m=>m.c.CALL(k)*(1-m.h/1e4)));
+const putAsk=k=>Math.min(...SET.map(m=>m.c.PUT(k)*(1+m.h/1e4)));
+const putBid=k=>Math.max(...SET.map(m=>m.c.PUT(k)*(1-m.h/1e4)));
+const landed=(k,Q,side)=>landedFrom(ladderAt(SET,k,POOL,side),Q);
+
+function axes(g,W,H,L,R,T,PH,ymax,lab){
+ g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
+ g.fillStyle='#677275';g.font='10px IBM Plex Mono';
+ for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
+ [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',L+(k-K0)/(K1-K0)*(W-L-R)-13,H-9));
+ g.fillText(lab,W/2-70,H-1);}
+function line(g,W,L,R,T,PH,ymax,f,col,w,dash){
+ g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();let pen=false;
+ for(let i=0;i<=200;i++){const k=K0+(K1-K0)*i/200,v=f(k);
+  if(v===null||!isFinite(v)){pen=false;continue;}
+  const x=L+(k-K0)/(K1-K0)*(W-L-R),y=T+(1-v/ymax)*PH;
+  if(pen)g.lineTo(x,y);else{g.moveTo(x,y);pen=true;}}
+ g.stroke();g.restore();}
+
+/* strip painter: mode 'impact' or 'density' */
+function densPos(t){                       // the distribution itself: dark -> teal -> white-teal
+ const A=[8,22,26],B2=[10,186,181],C2=[190,255,252];
+ const u=Math.pow(Math.max(0,Math.min(1,t)),0.55);
+ const m=u<0.6?u/0.6:(u-0.6)/0.4, p=u<0.6?A:B2, q=u<0.6?B2:C2;
+ return 'rgb('+[0,1,2].map(j=>Math.round(p[j]+m*(q[j]-p[j]))).join(',')+')';}
+function densNeg(t){return 'rgb('+[Math.round(120+135*t),Math.round(40-30*t),Math.round(50-30*t)].join(',')+')';}
+function strip(g,W,L,R,yT,hB,side,mode,mark,SETX){
+ const SS=SETX||SET;
+ const NX=130,NY=42,tot=SS.reduce((s,m)=>s+m.share*POOL,0),Qmax=1.12*tot;
+ const cw=(W-L-R)/NX,ch=hB/NY,qAt=j=>Qmax*(j+0.5)/NY,yQ=Q=>yT+hB-Math.min(1,Q/Qmax)*hB;
+ const V=[];let mx=0,mn=0;
+ for(let i=0;i<NX;i++){const k=K0+(K1-K0)*(i+0.5)/NX,col=[];
+  for(let j=0;j<NY;j++){const Q=qAt(j);let v;
+   if(mode==='impact'){const Ld=ladderAt(SS,k,POOL,side),px=landedFrom(Ld,Q);
+     v=px===null?null:Math.abs(px/Ld.best-1)*1e4;}
+   else{const hh=6e-3,f=x=>landedFrom(ladderAt(SS,x,POOL,side),Q);
+     const a=f(k-hh),b=f(k),c2=f(k+hh);
+     v=(a===null||b===null||c2===null)?null:(a-2*b+c2)/(hh*hh);}
+   col.push(v);if(v!==null){if(v>mx)mx=v;if(v<mn)mn=v;}}
+  V.push(col);}
+ for(let i=0;i<NX;i++)for(let j=0;j<NY;j++){const v=V[i][j];
+  let col;
+  if(v===null)col='#4a1218';
+  else if(mode==='impact')col=heatCol(mx>1e-9?v/mx:0);
+  else col= v<0 ? densNeg(Math.min(1,-v/Math.max(1e-9,-mn))) : densPos(mx>1e-9?v/mx:0);
+  g.fillStyle=col;g.fillRect(L+i*cw,yT+hB-(j+1)*ch,cw+0.7,ch+0.7);}
+ g.strokeStyle='#2a3538';g.strokeRect(L,yT,W-L-R,hB);
+ g.fillStyle='#677275';g.font='9px IBM Plex Mono';
+ [0,0.5,1].forEach(t=>g.fillText((t*Qmax).toFixed(0),16,Math.min(yT+hB,Math.max(yT+8,yQ(t*Qmax)+3))));
+ g.save();g.translate(11,yT+hB/2);g.rotate(-Math.PI/2);g.fillText('size (BTC)',-30,0);g.restore();
+ g.font='10px IBM Plex Mono';g.fillStyle='#8a9698';
+ g.fillText(mode==='impact'
+   ? 'LANDING — how far your size lands from the best quote   (max '+mx.toFixed(0)+' bp)'
+   : 'IMPLIED DENSITY d²C/dk² of the curve you actually trade   ('+(mn<-1e-6?'RED = NEGATIVE density = arbitrageable, min '+mn.toFixed(1):'no negative density at these settings')+')',L,yT-6);
+ if(mark){const my=yQ(mark.Q),mxp=L+(mark.k-K0)/(K1-K0)*(W-L-R);
+  g.save();g.strokeStyle='rgba(255,255,255,.75)';g.setLineDash([2,2]);
+  g.beginPath();g.moveTo(L,my);g.lineTo(W-R,my);g.stroke();
+  g.beginPath();g.moveTo(mxp,yT);g.lineTo(mxp,yT+hB);g.stroke();g.restore();
+  g.fillStyle='#fff';g.beginPath();g.arc(mxp,my,3.4,0,7);g.fill();}}
+
+/* ── A ── */
+(function(){const cv=document.getElementById('cA'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=150,PH=H-T-30-HB-28;
+ const ymax=Math.max(askTop(K0),putAsk(K1))*1.06;
+ axes(g,W,H,L,R,T,PH,ymax,'moneyness  k = K/S − 1');
+ line(g,W,L,R,T,PH,ymax,askTop,'#0ABAB5',2.2); line(g,W,L,R,T,PH,ymax,bidTop,'#63e6e2',1.7,[6,3]);
+ line(g,W,L,R,T,PH,ymax,putAsk,'#FF6767',2.2);  line(g,W,L,R,T,PH,ymax,putBid,'#ffb3b3',1.7,[6,3]);
+ strip(g,W,L,R,T+PH+28,HB,'ask','impact',{k:KMARK,Q:QMARK});})();
+
+/* ── B ── */
+(function(){const cv=document.getElementById('cB'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=150,PH=H-T-30-HB-28;
+ const ymax=Math.max(askTop(K0),putAsk(K1))*1.06;
+ axes(g,W,H,L,R,T,PH,ymax,'moneyness  k = K/S − 1   ·   BUY side only');
+ line(g,W,L,R,T,PH,ymax,askTop,'#0ABAB5',2.4); line(g,W,L,R,T,PH,ymax,putAsk,'#FF6767',2.4);
+ line(g,W,L,R,T,PH,ymax,k=>landed(k,QMARK,'ask'),'#FFA541',2.2);
+ g.fillStyle='#FFA541';g.font='10px IBM Plex Mono';g.fillText('amber = your curve at 120 BTC',L+6,T+12);
+ strip(g,W,L,R,T+PH+28,HB,'ask','impact',{k:KMARK,Q:QMARK});})();
+
+/* ── C ── */
+(function(){const cv=document.getElementById('cC'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=150,PH=H-T-30-HB-28;
+ const ymax=askTop(K0)*1.06;
+ axes(g,W,H,L,R,T,PH,ymax,'moneyness  k = K/S − 1');
+ line(g,W,L,R,T,PH,ymax,askTop,'#0ABAB5',2.2);
+ line(g,W,L,R,T,PH,ymax,k=>landed(k,QMARK,'ask'),'#FFA541',2.2);
+ strip(g,W,L,R,T+PH+28,HB,'ask','density',{k:KMARK,Q:QMARK});})();
+
+/* ── C2: a book that genuinely crosses ── */
+const XSET=[{n:'A cheap+fat',lam:0.05,Sbar:0.30,a:1.27,gam:1.05,h:16},
+            {n:'B rich+thin',lam:0.05,Sbar:0.85,a:1.27,gam:3.20,h:16}];
+{const iv=XSET.reduce((s,m)=>s+1/m.lam,0);
+ XSET.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,0);m.share=(1/m.lam)/iv;});}
+(function(){const cv=document.getElementById('cC2'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=150,PH=H-T-30-HB-28;
+ const xa=k=>Math.min(...XSET.map(m=>m.c.CALL(k)*(1+m.h/1e4)));
+ const ymax=xa(K0)*1.06;
+ axes(g,W,H,L,R,T,PH,ymax,'moneyness  k = K/S − 1');
+ XSET.forEach(m=>line(g,W,L,R,T,PH,ymax,k=>m.c.CALL(k)*(1+m.h/1e4),'#243b3d',1.2));
+ line(g,W,L,R,T,PH,ymax,xa,'#0ABAB5',2.4);
+ g.fillStyle='#8a9698';g.font='10px IBM Plex Mono';
+ g.fillText('teal = best of book; faint = the two makers. The kink near +46% is where the winner switches.',L+6,T+12);
+ strip(g,W,L,R,T+PH+28,HB,'ask','density',{k:0.46,Q:QMARK},XSET);})();
+
+/* ── D ── */
+(function(){const cv=document.getElementById('cD'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,HB=136,PH=H-T-30-2*HB-52;
+ const ymax=Math.max(askTop(K0),putAsk(K1))*1.06;
+ axes(g,W,H,L,R,T,PH,ymax,'moneyness  k = K/S − 1   ·   BUY side only');
+ line(g,W,L,R,T,PH,ymax,askTop,'#0ABAB5',2.4); line(g,W,L,R,T,PH,ymax,putAsk,'#FF6767',2.4);
+ line(g,W,L,R,T,PH,ymax,k=>landed(k,QMARK,'ask'),'#FFA541',2.2);
+ strip(g,W,L,R,T+PH+28,HB,'ask','impact',{k:KMARK,Q:QMARK});
+ strip(g,W,L,R,T+PH+28+HB+30,HB,'ask','density',{k:KMARK,Q:QMARK});})();
+</script></body></html>

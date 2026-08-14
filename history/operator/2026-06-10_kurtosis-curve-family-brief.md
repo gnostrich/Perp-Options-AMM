@@ -4001,3 +4001,9 @@ _Context: operator asks for an explanation of the landing-map heatmap shipped in
 _Context: operator brainstorms the landing-map presentation — whether the heatmap belongs below the curves or whether EACH curve generalises into its own heatmap, in which case buy and sell should be separate tabs rather than four overlapping lines; observes that the curves are actually DISTRIBUTIONS, individually and in aggregate; and asks where the current curve is on the aggregate panel._
 
 > it looks cool but 1. should it be down or each curve essentially generalises into its own heatmap in which case buy and sell should probably be separate tabs so instead of all on one and overlap you can toggle buy sell curves (but the curves are actually distributions both in terms of individual and aggregate) or idk brainstorming here… and then on the aggregate thing where is the current curve or whatverr …
+
+
+## Entry 558 — 2026-08-14 UTC
+_Context: operator declines to open the repo and asks for IMAGES to compare the layout options. Manager built the four options for real and served them on the live Railway URL._
+
+> im not opening that give me images ro compare

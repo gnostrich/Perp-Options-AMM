@@ -92,8 +92,11 @@ for (const k in geo) { const g = geo[k]; g.PH = g.H - g.T - g.Bm - g.HB - 28; g.
     async function rail0(page) { return (await page.evaluate(() => document.getElementById('r-gt').innerText)); }
     // margin
     const m0 = await sig('cv'); await set('margin', 40); await pg.waitForTimeout(60); const m1 = await sig('cv');
-    await set('margin', 1); await pg.waitForTimeout(60); const m2 = await sig('cv'); await set('margin', 15); await pg.waitForTimeout(60);
-    p.margin = { up: m1.rail !== m0.rail, down: m2.rail !== m1.rail, at40: await txt('notional'), at1_after_restore: await txt('notional') };
+    const n40 = await txt('notional'), lev40 = await txt('lpLev');
+    await set('margin', 1); await pg.waitForTimeout(60); const m2 = await sig('cv');
+    const n1 = await txt('notional'), lev1 = await txt('lpLev');
+    await set('margin', 15); await pg.waitForTimeout(60);
+    p.margin = { up: m1.rail !== m0.rail, down: m2.rail !== m1.rail, at40: n40, lev40, at1: n1, lev1, at15: await txt('notional') };
     // magnifier
     const g0 = await hash('cv'); await set('mag', 1); await pg.waitForTimeout(60); const g1 = await hash('cv'); const lab1 = await txt('magv');
     await set('mag', 60); await pg.waitForTimeout(60); const g2 = await hash('cv'); const lab2 = await txt('magv');
@@ -176,13 +179,19 @@ for (const k in geo) { const g = geo[k]; g.PH = g.H - g.T - g.Bm - g.HB - 28; g.
       const runs = []; let cur = null; for (let i = 0; i < (x1 - x0); i++) { const k = d[i * 4] + ',' + d[i * 4 + 1] + ',' + d[i * 4 + 2];
         if (k === '0,0,0') { cur = null; continue; } if (!cur || cur.c !== k) { cur = { c: k, x0: x0 + i, n: 1 }; runs.push(cur); } else cur.n++; }
       return runs.filter(r => r.n >= 4); }, [G.cv, G.yT - 9, G.L, G.W - G.Rr]);
-    // marker location by whitish dashed lines
+    // marker DOT: filled 3.4r pure-white disc.  score = # of pure-white px in a 7x7 window
+    // (glyph strokes of the caption text score much lower than a filled disc).
     out.marker = await pg.evaluate(a => { const [cv, x, y, w, h] = a; const d = document.getElementById(cv).getContext('2d').getImageData(x, y, w, h).data;
-      const rowN = new Array(h).fill(0), colN = new Array(w).fill(0); let dot = null, best = -1;
+      const W1 = new Uint8Array(w * h);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) { const o = (j * w + i) * 4;
-        if (d[o] > 170 && d[o + 1] > 170 && d[o + 2] > 170) { rowN[j]++; colN[i]++; } }
-      const my = rowN.indexOf(Math.max(...rowN)), mxp = colN.indexOf(Math.max(...colN));
-      return { my, myN: rowN[my], mxp, mxpN: colN[mxp] }; }, [G.cv, fx, fy, fw, fh]);
+        if (d[o] >= 250 && d[o + 1] >= 250 && d[o + 2] >= 250) W1[j * w + i] = 1; }
+      const cand = [];
+      for (let j = 3; j < h - 3; j++) for (let i = 3; i < w - 3; i++) { let n = 0;
+        for (let b = -3; b <= 3; b++) for (let a2 = -3; a2 <= 3; a2++) n += W1[(j + b) * w + i + a2];
+        if (n >= 18) cand.push({ i, j, n }); }
+      cand.sort((p, q) => q.n - p.n);
+      const top = cand.slice(0, 3);
+      return { mxp: top.length ? top[0].i : -1, my: top.length ? top[0].j : -1, score: top.length ? top[0].n : 0, top }; }, [G.cv, fx, fy, fw, fh]);
     return out;
   };
   const mapToKQ = (vw, mk, Qmax) => { const G = geo[vw];
@@ -347,6 +356,68 @@ for (const k in geo) { const g = geo[k]; g.PH = g.H - g.T - g.Bm - g.HB - 28; g.
     p.responds = JSON.stringify(p.gamHigh) !== JSON.stringify(p.gamLow);
     p.shot = await shot('P7_portfolio');
     R.phases.P7_portfolio = p;
+  }
+
+  // ================= PHASE 8 : targeted defect probes =================
+  {
+    const p = {};
+    // 8a: fee slider under VOL-INDEXED OFF (it is inert while ON)
+    await view('earn');
+    await pg.evaluate(() => { volIndexed = false; render(); }); await pg.waitForTimeout(80);
+    const setK = async (k, v) => pg.evaluate(([kk, vv]) => { const e = document.querySelector(`input[type=number][data-k="${kk}"]`); e.value = vv; e.dispatchEvent(new Event('input', { bubbles: true })); }, [k, v]);
+    await setK('fee', 0.005); await pg.waitForTimeout(70); const fA = { hs: await txt('s-hs'), mine: await txt('q-mine'), bet: await txt('r-bet') };
+    await setK('fee', 0.2); await pg.waitForTimeout(70); const fB = { hs: await txt('s-hs'), mine: await txt('q-mine'), bet: await txt('r-bet') };
+    await setK('fee', 0); await pg.waitForTimeout(70); const fZ = { hs: await txt('s-hs'), mine: await txt('q-mine'), bet: await txt('r-bet') };
+    await setK('fee', 0.02); await pg.evaluate(() => { volIndexed = true; render(); }); await pg.waitForTimeout(80);
+    p.feeVolOff = { at0p005: fA, at0p2: fB, at0: fZ, movesWhenOff: JSON.stringify(fA) !== JSON.stringify(fB) };
+    // 8b: strike-slider fill bar tracking
+    await view('transact');
+    const fills = [];
+    for (const v of [-60, -30, 0, 30, 60, 12]) { await set('tkr', v); await pg.waitForTimeout(70);
+      fills.push({ v, tkf: await pg.evaluate(() => document.getElementById('tkf').style.width), box: await pg.evaluate(() => document.getElementById('tk').value) }); }
+    p.strikeFillBar = { fills, distinctWidths: new Set(fills.map(x => x.tkf)).size };
+    // 8c: "improvement vs single maker" over strikes + divergence
+    const imps = [];
+    for (const D of [0, 0.3, 1]) { await set('arbr', D);
+      for (const k of [-40, 0, 25]) { await set('tk', k); await set('tkr', k); await pg.waitForTimeout(80);
+        imps.push({ D, k, timp: (await txt('timp')).replace(/\n/g, ' | ') }); } }
+    await set('arbr', 0.15); await set('tk', 12); await set('tkr', 12); await pg.waitForTimeout(80);
+    p.improvement = imps;
+    // 8d: marker caption vs independent value, at a NON-trivial and a NO-FIT point
+    const caps = [];
+    for (const [k, Q] of [[40, 150], [-40, 150], [12, 60], [12, 240]]) {
+      await set('tk', k); await set('tkr', k); await set('tsz', Q); await pg.waitForTimeout(140);
+      const a = await mapAudit('transact');
+      const inpage = await pg.evaluate(([kk, QQ]) => { const st = calc(), s = makerCurves(); aggBook(s, st.book.map(m => m.h));
+        const Ld = ladderAt(s, kk / 100, MKT.pool), px = landedFrom(Ld, QQ);
+        return { best: Ld.best, landed: px, bps: px === null ? null : (px / Ld.best - 1) * 1e4, total: Ld.total }; }, [k, Q]);
+      const nm = 'P8_cap_k' + k + '_Q' + Q;
+      const G = geo.transact;
+      const cy = a.marker.my < 0 ? 60 : Math.max(0, Math.min(G.HB - 22, a.marker.my - 14));
+      caps.push({ k, Q, inpage, marker: a.marker, crop: await crop('cvT', G.L, G.yT + cy, 460, 22, 3, nm) });
+    }
+    p.captions = caps;
+    await set('tk', 12); await set('tkr', 12); await set('tsz', 3); await pg.waitForTimeout(100);
+    // 8e: per-click on the size boxes (true keyboard step)
+    const pc = {};
+    for (const [vw, id, cvid] of [['transact', 'tsz', 'cvT'], ['earn', 'qsz', 'cv']]) {
+      await view(vw); await set(id, vw === 'earn' ? 5 : 3); await pg.waitForTimeout(90);
+      const a0 = (await mapAudit(vw)).marker;
+      await pg.focus('#' + id); await pg.keyboard.press('ArrowUp'); await pg.waitForTimeout(140);
+      const a1 = (await mapAudit(vw)).marker, v1 = await pg.evaluate(i => document.getElementById(i).value, id);
+      await pg.keyboard.press('ArrowUp'); await pg.waitForTimeout(140);
+      const a2 = (await mapAudit(vw)).marker, v2 = await pg.evaluate(i => document.getElementById(i).value, id);
+      pc[id] = { start: a0, afterOneClick: a1, v1, afterTwoClicks: a2, v2, pxMoved1: a1.my - a0.my, pxMoved2: a2.my - a0.my };
+    }
+    p.perClickSizeBoxes = pc;
+    // 8f: Earn map strike-independence, measured on the PIXELS
+    await view('earn');
+    p.earnRowUniformity = await pg.evaluate(a => { const [x, y, w, h] = a; const d = document.getElementById('cv').getContext('2d').getImageData(x, y, w, h).data;
+      const rows = []; for (const j of [30, 60, 90, 120]) { const set2 = new Set();
+        for (let i = 20; i < w - 20; i++) { const o = (j * w + i) * 4; set2.add(d[o] + ',' + d[o + 1] + ',' + d[o + 2]); }
+        rows.push({ row: j, distinctColoursAcrossRow: set2.size, sample: Array.from(set2).slice(0, 4) }); } return rows; },
+      [geo.earn.L, geo.earn.yT, geo.earn.W - geo.earn.L - geo.earn.Rr, geo.earn.HB]);
+    R.phases.P8_probes = p;
   }
 
   R.console = cons; R.pageerrors = errs;

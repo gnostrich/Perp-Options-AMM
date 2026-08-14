@@ -100,8 +100,11 @@
    "margin": {
     "up": true,
     "down": true,
-    "at40": "$9,854,325",
-    "at1_after_restore": "$9,854,325"
+    "at40": "$26,278,200",
+    "lev40": "20.00×",
+    "at1": "$656,955",
+    "lev1": "20.00×",
+    "at15": "$9,854,325"
    },
    "mag": {
     "h0": "f9c46de1",
@@ -430,15 +433,31 @@
      }
     ],
     "marker": {
-     "my": 138,
-     "myN": 22,
      "mxp": 874,
-     "mxpN": 15
+     "my": 146,
+     "score": 28,
+     "top": [
+      {
+       "i": 874,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 875,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 874,
+       "j": 145,
+       "n": 26
+      }
+     ]
     }
    },
    "kq": {
     "k": 0.6475770925110131,
-    "Q": 17.92
+    "Q": 5.973333333333334
    },
    "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_legend.png",
    "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_marker.png",
@@ -450,14 +469,30 @@
      "size": 5,
      "HK": -0.40859030837004395,
      "mk": {
-      "my": 134,
-      "myN": 22,
       "mxp": 188,
-      "mxpN": 8
+      "my": 146,
+      "score": 28,
+      "top": [
+       {
+        "i": 188,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 189,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 188,
+        "j": 145,
+        "n": 26
+       }
+      ]
      },
      "kq": {
       "k": -0.4101321585903083,
-      "Q": 23.893333333333334
+      "Q": 5.973333333333334
      }
     },
     {
@@ -465,14 +500,30 @@
      "size": 5,
      "HK": 0.34691629955947123,
      "mk": {
-      "my": 134,
-      "myN": 22,
       "mxp": 678,
-      "mxpN": 8
+      "my": 146,
+      "score": 28,
+      "top": [
+       {
+        "i": 678,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 679,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 678,
+        "j": 145,
+        "n": 26
+       }
+      ]
      },
      "kq": {
       "k": 0.345374449339207,
-      "Q": 23.893333333333334
+      "Q": 5.973333333333334
      }
     },
     {
@@ -480,14 +531,30 @@
      "size": 60,
      "HK": 0.34691629955947123,
      "mk": {
-      "my": 97,
-      "myN": 23,
       "mxp": 678,
-      "mxpN": 7
+      "my": 109,
+      "score": 28,
+      "top": [
+       {
+        "i": 678,
+        "j": 109,
+        "n": 28
+       },
+       {
+        "i": 679,
+        "j": 109,
+        "n": 28
+       },
+       {
+        "i": 678,
+        "j": 110,
+        "n": 28
+       }
+      ]
      },
      "kq": {
       "k": 0.345374449339207,
-      "Q": 79.14666666666666
+      "Q": 61.22666666666666
      }
     },
     {
@@ -495,14 +562,30 @@
      "size": 150,
      "HK": 0.34691629955947123,
      "mk": {
-      "my": 49,
-      "myN": 456,
       "mxp": 678,
-      "mxpN": 8
+      "my": 48,
+      "score": 26,
+      "top": [
+       {
+        "i": 678,
+        "j": 48,
+        "n": 26
+       },
+       {
+        "i": 679,
+        "j": 48,
+        "n": 26
+       },
+       {
+        "i": 678,
+        "j": 49,
+        "n": 26
+       }
+      ]
      },
      "kq": {
       "k": 0.345374449339207,
-      "Q": 150.82666666666665
+      "Q": 152.32000000000002
      }
     },
     {
@@ -510,14 +593,30 @@
      "size": 210,
      "HK": 0.34691629955947123,
      "mk": {
-      "my": 9,
-      "myN": 392,
       "mxp": 678,
-      "mxpN": 8
+      "my": 8,
+      "score": 26,
+      "top": [
+       {
+        "i": 678,
+        "j": 8,
+        "n": 26
+       },
+       {
+        "i": 679,
+        "j": 8,
+        "n": 26
+       },
+       {
+        "i": 678,
+        "j": 9,
+        "n": 26
+       }
+      ]
      },
      "kq": {
       "k": 0.345374449339207,
-      "Q": 210.56
+      "Q": 212.05333333333334
      }
     },
     {
@@ -525,32 +624,64 @@
      "size": 240,
      "HK": 0.34691629955947123,
      "mk": {
-      "my": 0,
-      "myN": 6,
-      "mxp": 678,
-      "mxpN": 4
+      "mxp": -1,
+      "my": -1,
+      "score": 0,
+      "top": []
      },
      "kq": {
-      "k": 0.345374449339207,
-      "Q": 224
+      "k": -0.7015418502202643,
+      "Q": 225.4933333333333
      }
     }
    ],
    "perClickSize": {
     "before": {
-     "my": 134,
-     "myN": 22,
      "mxp": 678,
-     "mxpN": 8
+     "my": 146,
+     "score": 28,
+     "top": [
+      {
+       "i": 678,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 679,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 678,
+       "j": 145,
+       "n": 26
+      }
+     ]
     },
     "after": {
-     "my": 146,
-     "myN": 456,
      "mxp": 678,
-     "mxpN": 8
+     "my": 145,
+     "score": 26,
+     "top": [
+      {
+       "i": 678,
+       "j": 145,
+       "n": 26
+      },
+      {
+       "i": 679,
+       "j": 145,
+       "n": 26
+      },
+      {
+       "i": 678,
+       "j": 146,
+       "n": 26
+      }
+     ]
     },
     "value": "5.1",
-    "movedPx": 12
+    "movedPx": 1
    }
   },
   "P4_transact": {
@@ -602,7 +733,7 @@
      "arb": "—",
      "best": "strike | 12.00% | best ask | 0.13567 | best bid | 0.13523 | book half-spread | 16.4 bps | makers quoting | 4 | book state | clean | arb available | —",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13567 | MM-Delta | 0.13574 | MM-Sigma | 0.13570 | envelope vs best single | 0.00 bps",
-     "canvas": "46f0c6e1"
+     "canvas": "84c6db6b"
     },
     {
      "D": 0.01,
@@ -612,7 +743,7 @@
      "arb": "—",
      "best": "strike | 12.00% | best ask | 0.13551 | best bid | 0.13535 | book half-spread | 5.8 bps | makers quoting | 4 | book state | clean | arb available | —",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13551 | MM-Delta | 0.13594 | MM-Sigma | 0.13574 | envelope vs best single | 0.00 bps",
-     "canvas": "f4f12979"
+     "canvas": "d626e29b"
     },
     {
      "D": 0.05,
@@ -622,7 +753,7 @@
      "arb": "$83 / BTC",
      "best": "strike | 12.00% | best ask | 0.13487 | best bid | 0.13614 | book half-spread | -46.9 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $83 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13487 | MM-Delta | 0.13673 | MM-Sigma | 0.13590 | envelope vs best single | 0.00 bps",
-     "canvas": "d9787f98"
+     "canvas": "620a2186"
     },
     {
      "D": 0.15,
@@ -632,7 +763,7 @@
      "arb": "$318 / BTC",
      "best": "strike | 12.00% | best ask | 0.13326 | best bid | 0.13810 | book half-spread | -178.4 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $318 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13326 | MM-Delta | 0.13870 | MM-Sigma | 0.13631 | envelope vs best single | 0.00 bps",
-     "canvas": "920b755c"
+     "canvas": "995c8aea"
     },
     {
      "D": 0.3,
@@ -642,7 +773,7 @@
      "arb": "$670 / BTC",
      "best": "strike | 12.00% | best ask | 0.13083 | best bid | 0.14102 | book half-spread | -375.1 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $670 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13083 | MM-Delta | 0.14163 | MM-Sigma | 0.13691 | envelope vs best single | 0.00 bps",
-     "canvas": "886805c0"
+     "canvas": "b2f3feb2"
     },
     {
      "D": 0.5,
@@ -652,7 +783,7 @@
      "arb": "$1,139 / BTC",
      "best": "strike | 12.00% | best ask | 0.12756 | best bid | 0.14490 | book half-spread | -636.2 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $1,139 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.12756 | MM-Delta | 0.14552 | MM-Sigma | 0.13772 | envelope vs best single | 0.00 bps",
-     "canvas": "765301f1"
+     "canvas": "eda764b7"
     },
     {
      "D": 0.75,
@@ -662,7 +793,7 @@
      "arb": "$1,724 / BTC",
      "best": "strike | 12.00% | best ask | 0.12345 | best bid | 0.14969 | book half-spread | -960.8 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $1,724 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.12345 | MM-Delta | 0.15034 | MM-Sigma | 0.13873 | envelope vs best single | 0.00 bps",
-     "canvas": "737d2028"
+     "canvas": "555b42fe"
     },
     {
      "D": 1,
@@ -672,24 +803,24 @@
      "arb": "$2,308 / BTC",
      "best": "strike | 12.00% | best ask | 0.11931 | best bid | 0.15443 | book half-spread | -1,283.3 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $2,308 / BTC",
      "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.11931 | MM-Delta | 0.15510 | MM-Sigma | 0.13973 | envelope vs best single | 0.00 bps",
-     "canvas": "e91a625"
+     "canvas": "d48e18b"
     }
    ],
    "perClickDial": {
     "A": {
      "arbv": "0.15",
      "best": "strike | 12.00% | best ask | 0.13326 | best bid | 0.13810 | book half-spread | -178.4 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $318 / BTC",
-     "canvas": "920b755c"
+     "canvas": "995c8aea"
     },
     "B": {
      "arbv": "0.16",
      "best": "strike | 12.00% | best ask | 0.13310 | best bid | 0.13829 | book half-spread | -191.5 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $341 / BTC",
-     "canvas": "4a974522"
+     "canvas": "3fa1d21c"
     },
     "C": {
      "arbv": "0.17",
      "best": "strike | 12.00% | best ask | 0.13293 | best bid | 0.13849 | book half-spread | -204.6 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $365 / BTC",
-     "canvas": "a022c9ca"
+     "canvas": "bee6c774"
     },
     "labelMoved": true,
     "numbersMoved": true,
@@ -808,15 +939,31 @@
      }
     ],
     "marker": {
-     "my": 135,
-     "myN": 22,
      "mxp": 531,
-     "mxpN": 24
+     "my": 146,
+     "score": 26,
+     "top": [
+      {
+       "i": 531,
+       "j": 146,
+       "n": 26
+      },
+      {
+       "i": 532,
+       "j": 146,
+       "n": 26
+      },
+      {
+       "i": 530,
+       "j": 146,
+       "n": 24
+      }
+     ]
     }
    },
    "kq": {
     "k": 0.11872246696035249,
-    "Q": 22.400000000000002
+    "Q": 5.973333333333334
    },
    "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_legend.png",
    "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_marker.png",
@@ -827,69 +974,149 @@
      "k": 12,
      "size": 3,
      "mk": {
-      "my": 135,
-      "myN": 22,
       "mxp": 531,
-      "mxpN": 24
+      "my": 146,
+      "score": 26,
+      "top": [
+       {
+        "i": 531,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 532,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 530,
+        "j": 146,
+        "n": 24
+       }
+      ]
      },
      "kq": {
       "k": 0.11872246696035249,
-      "Q": 22.400000000000002
+      "Q": 5.973333333333334
      }
     },
     {
      "k": -40,
      "size": 3,
      "mk": {
-      "my": 136,
-      "myN": 20,
-      "mxp": 194,
-      "mxpN": 78
+      "mxp": 193,
+      "my": 146,
+      "score": 23,
+      "top": [
+       {
+        "i": 193,
+        "j": 146,
+        "n": 23
+       },
+       {
+        "i": 194,
+        "j": 146,
+        "n": 23
+       },
+       {
+        "i": 195,
+        "j": 146,
+        "n": 23
+       }
+      ]
      },
      "kq": {
-      "k": -0.4008810572687225,
-      "Q": 20.906666666666666
+      "k": -0.4024229074889868,
+      "Q": 5.973333333333334
      }
     },
     {
      "k": 40,
      "size": 3,
      "mk": {
-      "my": 139,
-      "myN": 22,
-      "mxp": 713,
-      "mxpN": 78
+      "mxp": 712,
+      "my": 146,
+      "score": 23,
+      "top": [
+       {
+        "i": 712,
+        "j": 146,
+        "n": 23
+       },
+       {
+        "i": 713,
+        "j": 146,
+        "n": 23
+       },
+       {
+        "i": 714,
+        "j": 146,
+        "n": 23
+       }
+      ]
      },
      "kq": {
-      "k": 0.39933920704845827,
-      "Q": 16.426666666666666
+      "k": 0.39779735682819384,
+      "Q": 5.973333333333334
      }
     },
     {
      "k": 40,
      "size": 60,
      "mk": {
-      "my": 101,
-      "myN": 23,
-      "mxp": 713,
-      "mxpN": 79
+      "mxp": 712,
+      "my": 109,
+      "score": 26,
+      "top": [
+       {
+        "i": 712,
+        "j": 109,
+        "n": 26
+       },
+       {
+        "i": 713,
+        "j": 109,
+        "n": 26
+       },
+       {
+        "i": 714,
+        "j": 109,
+        "n": 26
+       }
+      ]
      },
      "kq": {
-      "k": 0.39933920704845827,
-      "Q": 73.17333333333333
+      "k": 0.39779735682819384,
+      "Q": 61.22666666666666
      }
     },
     {
      "k": 40,
      "size": 150,
      "mk": {
+      "mxp": 712,
       "my": 49,
-      "myN": 458,
-      "mxp": 713,
-      "mxpN": 80
+      "score": 26,
+      "top": [
+       {
+        "i": 712,
+        "j": 49,
+        "n": 26
+       },
+       {
+        "i": 713,
+        "j": 49,
+        "n": 26
+       },
+       {
+        "i": 714,
+        "j": 49,
+        "n": 26
+       }
+      ]
      },
      "kq": {
-      "k": 0.39933920704845827,
+      "k": 0.39779735682819384,
       "Q": 150.82666666666665
      }
     },
@@ -897,28 +1124,44 @@
      "k": 40,
      "size": 210,
      "mk": {
-      "my": 9,
-      "myN": 396,
-      "mxp": 713,
-      "mxpN": 80
+      "mxp": 712,
+      "my": 8,
+      "score": 25,
+      "top": [
+       {
+        "i": 712,
+        "j": 8,
+        "n": 25
+       },
+       {
+        "i": 713,
+        "j": 8,
+        "n": 25
+       },
+       {
+        "i": 714,
+        "j": 8,
+        "n": 25
+       }
+      ]
      },
      "kq": {
-      "k": 0.39933920704845827,
-      "Q": 210.56
+      "k": 0.39779735682819384,
+      "Q": 212.05333333333334
      }
     },
     {
      "k": 40,
      "size": 240,
      "mk": {
-      "my": 0,
-      "myN": 7,
-      "mxp": 713,
-      "mxpN": 77
+      "mxp": -1,
+      "my": -1,
+      "score": 0,
+      "top": []
      },
      "kq": {
-      "k": 0.39933920704845827,
-      "Q": 224
+      "k": -0.7015418502202643,
+      "Q": 225.4933333333333
      }
     }
    ],
@@ -1097,10 +1340,26 @@
      }
     ],
     "marker": {
-     "my": 134,
-     "myN": 22,
      "mxp": 678,
-     "mxpN": 8
+     "my": 146,
+     "score": 28,
+     "top": [
+      {
+       "i": 678,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 679,
+       "j": 146,
+       "n": 28
+      },
+      {
+       "i": 678,
+       "j": 145,
+       "n": 26
+      }
+     ]
     }
    },
    "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_legend.png",
@@ -1217,6 +1476,414 @@
    },
    "responds": true,
    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P7_portfolio.png"
+  },
+  "P8_probes": {
+   "feeVolOff": {
+    "at0p005": {
+     "hs": "≈ 25 bps",
+     "mine": "25 bps",
+     "bet": "0.18× /day"
+    },
+    "at0p2": {
+     "hs": "≈ 1,000 bps",
+     "mine": "1,000 bps",
+     "bet": "0.00× /day"
+    },
+    "at0": {
+     "hs": "≈ 0 bps",
+     "mine": "0 bps",
+     "bet": "∞× /day"
+    },
+    "movesWhenOff": true
+   },
+   "strikeFillBar": {
+    "fills": [
+     {
+      "v": -60,
+      "tkf": "60%",
+      "box": "-60"
+     },
+     {
+      "v": -30,
+      "tkf": "60%",
+      "box": "-30"
+     },
+     {
+      "v": 0,
+      "tkf": "60%",
+      "box": "0"
+     },
+     {
+      "v": 30,
+      "tkf": "60%",
+      "box": "30"
+     },
+     {
+      "v": 60,
+      "tkf": "60%",
+      "box": "60"
+     },
+     {
+      "v": 12,
+      "tkf": "60%",
+      "box": "12"
+     }
+    ],
+    "distinctWidths": 1
+   },
+   "improvement": [
+    {
+     "D": 0,
+     "k": -40,
+     "timp": "YOU (you) | 0.43760 | MM-Kappa | 0.43751 | MM-Delta | 0.43773 | MM-Sigma | 0.43758 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 0,
+     "k": 0,
+     "timp": "YOU (you) | 0.17922 | MM-Kappa | 0.17918 | MM-Delta | 0.17927 | MM-Sigma | 0.17921 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 0,
+     "k": 25,
+     "timp": "YOU (you) | 0.10175 | MM-Kappa | 0.10173 | MM-Delta | 0.10178 | MM-Sigma | 0.10174 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 0.3,
+     "k": -40,
+     "timp": "YOU (you) | 0.43760 | MM-Kappa | 0.43522 | MM-Delta | 0.44058 | MM-Sigma | 0.43780 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 0.3,
+     "k": 0,
+     "timp": "YOU (you) | 0.17922 | MM-Kappa | 0.17363 | MM-Delta | 0.18586 | MM-Sigma | 0.18026 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 0.3,
+     "k": 25,
+     "timp": "YOU (you) | 0.10175 | MM-Kappa | 0.09783 | MM-Delta | 0.10667 | MM-Sigma | 0.10292 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 1,
+     "k": -40,
+     "timp": "YOU (you) | 0.43760 | MM-Kappa | 0.43011 | MM-Delta | 0.44749 | MM-Sigma | 0.43829 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 1,
+     "k": 0,
+     "timp": "YOU (you) | 0.17922 | MM-Kappa | 0.16035 | MM-Delta | 0.20084 | MM-Sigma | 0.18268 | envelope vs best single | 0.00 bps"
+    },
+    {
+     "D": 1,
+     "k": 25,
+     "timp": "YOU (you) | 0.10175 | MM-Kappa | 0.08859 | MM-Delta | 0.11795 | MM-Sigma | 0.10565 | envelope vs best single | 0.00 bps"
+    }
+   ],
+   "captions": [
+    {
+     "k": 40,
+     "Q": 150,
+     "inpage": {
+      "best": 0.07369335624487784,
+      "landed": 0.0748727283714249,
+      "bps": 160.0377817815879,
+      "total": 199.99999999999997
+     },
+     "marker": {
+      "mxp": 712,
+      "my": 49,
+      "score": 26,
+      "top": [
+       {
+        "i": 712,
+        "j": 49,
+        "n": 26
+       },
+       {
+        "i": 713,
+        "j": 49,
+        "n": 26
+       },
+       {
+        "i": 714,
+        "j": 49,
+        "n": 26
+       }
+      ]
+     },
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k40_Q150.png"
+    },
+    {
+     "k": -40,
+     "Q": 150,
+     "inpage": {
+      "best": 0.43635565381147423,
+      "landed": 0.4372960169469163,
+      "bps": 21.550382749213615,
+      "total": 199.99999999999997
+     },
+     "marker": {
+      "mxp": 194,
+      "my": 49,
+      "score": 27,
+      "top": [
+       {
+        "i": 194,
+        "j": 49,
+        "n": 27
+       },
+       {
+        "i": 195,
+        "j": 49,
+        "n": 27
+       },
+       {
+        "i": 194,
+        "j": 50,
+        "n": 27
+       }
+      ]
+     },
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k-40_Q150.png"
+    },
+    {
+     "k": 12,
+     "Q": 60,
+     "inpage": {
+      "best": 0.13325697247725968,
+      "landed": 0.1341495410009713,
+      "bps": 66.9809997269688,
+      "total": 199.99999999999997
+     },
+     "marker": {
+      "mxp": 531,
+      "my": 109,
+      "score": 28,
+      "top": [
+       {
+        "i": 531,
+        "j": 109,
+        "n": 28
+       },
+       {
+        "i": 532,
+        "j": 109,
+        "n": 28
+       },
+       {
+        "i": 531,
+        "j": 110,
+        "n": 28
+       }
+      ]
+     },
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k12_Q60.png"
+    },
+    {
+     "k": 12,
+     "Q": 240,
+     "inpage": {
+      "best": 0.13325697247725968,
+      "landed": null,
+      "bps": null,
+      "total": 199.99999999999997
+     },
+     "marker": {
+      "mxp": -1,
+      "my": -1,
+      "score": 0,
+      "top": []
+     },
+     "crop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P8_cap_k12_Q240.png"
+    }
+   ],
+   "perClickSizeBoxes": {
+    "tsz": {
+     "start": {
+      "mxp": 531,
+      "my": 146,
+      "score": 26,
+      "top": [
+       {
+        "i": 531,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 532,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 530,
+        "j": 146,
+        "n": 24
+       }
+      ]
+     },
+     "afterOneClick": {
+      "mxp": 531,
+      "my": 146,
+      "score": 26,
+      "top": [
+       {
+        "i": 531,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 532,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 530,
+        "j": 146,
+        "n": 24
+       }
+      ]
+     },
+     "v1": "3.1",
+     "afterTwoClicks": {
+      "mxp": 531,
+      "my": 146,
+      "score": 26,
+      "top": [
+       {
+        "i": 531,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 532,
+        "j": 146,
+        "n": 26
+       },
+       {
+        "i": 530,
+        "j": 146,
+        "n": 23
+       }
+      ]
+     },
+     "v2": "3.6",
+     "pxMoved1": 0,
+     "pxMoved2": 0
+    },
+    "qsz": {
+     "start": {
+      "mxp": 678,
+      "my": 146,
+      "score": 28,
+      "top": [
+       {
+        "i": 678,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 679,
+        "j": 146,
+        "n": 28
+       },
+       {
+        "i": 678,
+        "j": 145,
+        "n": 26
+       }
+      ]
+     },
+     "afterOneClick": {
+      "mxp": 678,
+      "my": 145,
+      "score": 26,
+      "top": [
+       {
+        "i": 678,
+        "j": 145,
+        "n": 26
+       },
+       {
+        "i": 679,
+        "j": 145,
+        "n": 26
+       },
+       {
+        "i": 678,
+        "j": 146,
+        "n": 26
+       }
+      ]
+     },
+     "v1": "5.1",
+     "afterTwoClicks": {
+      "mxp": 678,
+      "my": 145,
+      "score": 28,
+      "top": [
+       {
+        "i": 678,
+        "j": 145,
+        "n": 28
+       },
+       {
+        "i": 679,
+        "j": 145,
+        "n": 28
+       },
+       {
+        "i": 678,
+        "j": 146,
+        "n": 28
+       }
+      ]
+     },
+     "v2": "5.6",
+     "pxMoved1": -1,
+     "pxMoved2": -1
+    }
+   },
+   "earnRowUniformity": [
+    {
+     "row": 30,
+     "distinctColoursAcrossRow": 5,
+     "sample": [
+      "255,135,84",
+      "255,135,83",
+      "255,134,83",
+      "255,135,82"
+     ]
+    },
+    {
+     "row": 60,
+     "distinctColoursAcrossRow": 5,
+     "sample": [
+      "255,158,69",
+      "255,157,68",
+      "255,158,68",
+      "255,157,69"
+     ]
+    },
+    {
+     "row": 90,
+     "distinctColoursAcrossRow": 10,
+     "sample": [
+      "93,179,142",
+      "92,178,141",
+      "92,178,142",
+      "93,179,141"
+     ]
+    },
+    {
+     "row": 120,
+     "distinctColoursAcrossRow": 8,
+     "sample": [
+      "12,69,69",
+      "10,68,68",
+      "11,68,68",
+      "10,67,67"
+     ]
+    }
+   ]
   }
  },
  "console": [
