@@ -3654,3 +3654,9 @@ _Context: (mid-turn) operator adds that the exhibits should be linked/indexed to
 _Context: operator asks to spin an auditor (Opus 4.8) to quickly test the Varun Q&A report AND the v5 spreadsheet before sending — checking for gaslighting, conflation, spoofing, etc. Manager dispatched the skeptic (Opus) read-only._
 
 > ok spin an auditor /agents using opus 4.8 to quickly test this sheet and the spreasdhset beofre i send it, check for gaslighting, conflsaton, spoofing, etc.
+
+
+## Entry 502 — 2026-07-08 UTC
+_Context: operator recaps that the v5 sheet is the closed-form-from-the-distribution model (gamma from value∝S^(−mγ)), Balancer/spot-LVR set aside — and says feedback + an idea follow, but the message contained no feedback text/attachment. Manager confirmed the recap (correct; caveat: gamma factor is closed-form, carry magnitude/funding law still open) and flagged that the feedback content did not come through._
+
+> ok recapping where we are, we did that sheet with the closed form thing coming direectly from the distirbutoon, leaving aside the balancer thing right? so here the feedback and somehitn ghi have ni mind
