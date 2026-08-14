@@ -3723,3 +3723,9 @@ _Context: operator completes the exit — P&L for the perp-option AND its backin
 _Context: operator asks whether the loop now has the whole thing — perps, selling perp-options upon them, closing those positions, and the CORRECT payout for the closed things (perp sliver + perp option). Manager flagged that v3's P&Ls were input placeholders (so conservation proved bookkeeping only), then DERIVED both legs from the curve + price move and verified: payout C0/C1 continuous across the seam (slopes agree 2.25e-07), deep-ITM exact to 0.00e+00, conservation holds with derived P&L. New economic flag L6: sold-put + long-sliver can drive cash-out NEGATIVE past the carve (liquidation rule needed)._
 
 > so if you have the whole loop from perps to selling perps options on them, closing those positons, and correct payout for the closed things (perp sliver + perp option sold / boight upon)..
+
+
+## Entry 513 — 2026-07-08 UTC
+_Context: operator asks for the overall gap picture and the recommended way around. Manager wrote sims/GAPS_AND_WAYS_AROUND.md: the one blocking gap is the SMILE obstruction (per-LP steepness vs single lens); recommended + NUMERICALLY TESTED way around = LPs differ in TRANSPORT not LEVEL (shares vary by strike 62/15/74pp => genuinely different exposure profiles, while aggregate level = the common curve to 0.00e+00 => no smile, engine unchanged). Plus small gaps I can close (G1 Exposure Lean, G7 identity-in-Delta test, coordinate seam, L5 live gamma) and operator-tier calls (L2 funding law, L6 liquidation/negative cash-out, G6 LP fairness, L3 close semantics)._
+
+> so overal where ar egas and what do you suggest as the way around

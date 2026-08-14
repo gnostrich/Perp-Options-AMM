@@ -1,5 +1,95 @@
 # MEMORY — research-lead
 
+### CEMENT THE CLOSED LOOP — local kernel check + statement audit + the 2 missing links (operator entries 504-506) — 2026-08-14
+Deliverable **`notes/research/AUDIT_closed_loop_lean_2026-08-14.md`**. Scope: `sims/v3-maps-lean` +
+`sims/CLOSED_LOOP_MAP.md` + `CLOSED_LOOP_MODEL_v1(_NOTES)`. No git, no `engine/` edit; all build/prover
+work on scratchpad copies. **Loop is the priority; this is the non-blocking cementing pass.**
+- **⭐ LOCAL KERNEL CHECK PASSED — `sims/v3-maps-lean` is no longer merely trusted-from-prover.** I
+  installed Lean 4.28.0 direct from the lean4 release asset (elan not needed; `github.com` HTML is
+  proxy-403 but release assets are reachable), `lake update -R` + `lake exe cache get` (8010 Mathlib
+  oleans, Azure cache), **`lake build` → 3107 jobs, rc=0, zero errors** (only a `linter.unusedVariables`
+  ⚠ in BOOK_FORMAL). Built sources **byte-identical** to the working tree (md5 BOOK `fe8335b1…` / MAP
+  `48831997…` / BASIS `eca4e43f…`). Token scan clean. **`#print axioms` on ALL 54 theorems →
+  `[propext, Classical.choice, Quot.sound]`, nothing else, no `sorryAx`.** README's "54 lemmas" exact
+  (11+25+18). Caveat stated, not hidden: Mathlib oleans came from CI cache, not rebuilt from source
+  (universal practice). **Recommended to manager: promote label trusted-from-prover → verified.** The
+  flip is the manager's call. **A working local Lean+Mathlib now exists in-session** (scratchpad
+  `leanbuild/toolchain` + `leanbuild/proj`) — Aristotle returns can be re-verified locally, not trusted.
+- **STATEMENT AUDIT — the 4 load-bearing ones are SOUND; one cited theorem DOES NOT EXIST.**
+  - `share_strike_invariant` ✅ correct and *stronger* than advertised (no positivity on β needed; only
+    `D≠0`, which is genuinely load-bearing — at D=0 share reads 0/0=0 for every LP). Matches manager's
+    numeric 0.625/0.25/0.125 to 5.6e-17.
+  - `beta_transport_parallel` ✅ true, but ⚠ **the loop map's gloss is wrong**: "1/β_agg=Σ1/βᵢ" is the
+    **definition** of `betaAgg`, not this theorem. The theorem is the *transported* form
+    `Σ(D²βᵢ)⁻¹=(D²β_agg)⁻¹`. The parallel-add LAW is earned by `walk_equiv`/`walk_cost_equiv`
+    (order-book walk, price AND total cost) — sound, but **interior case only** (all N active at a
+    common marginal price; segmented/active-set form = explicit unproved remark) and no sign constraint
+    on `q i`.
+  - `agg_parity`/`agg_midconvex`/`book_arb_free` ✅ **sound, strong form** (any midconvex levels, any
+    perp-basis weights; fixed-weights enforced structurally since `w : Fin n → ℝ` can't depend on k).
+    ⚠ **but "arb-free" = BUTTERFLY ONLY** — `vertical_nonneg` *assumes* level monotonicity (never
+    derived), and there are **no price bounds** (C≥intrinsic, C≤S) anywhere. `CLOSED_LOOP_MAP.md`'s
+    unqualified "ONE arb-free book" must read "butterfly-arbitrage-free".
+  - **⛔ `Exposure` DOES NOT EXIST.** `v3-maps-lean/README.md` line 10 and `CLOSED_LOOP_MAP.md` Stage 7
+    both cite "exposure readback (`Exposure`)" in BASIS_FORMAL. `grep -i exposure *.lean` = doc prose +
+    `perpEquivalent D q := D*q` (the per-fill atom) only. `NetPerp + ΣΔ(k)q(k)` is never written in Lean.
+    **Stage 7 has ZERO Lean backing.** Fix the README+map or write the ~10 lines.
+  - No vacuous statement / false hypothesis found in the 54. Vacuity guards present (`lp_inhabited`,
+    `wedge`, `min_not_midconvex`, `signed_transport_can_be_negative`). `common_transport_is_necessary`
+    and `level_convex_iff_zero_spread_arbfree` are genuine iffs — the strongest things in the project.
+    Minor: `hollow_safe_any_exponent` at e<0, D=0 is true partly by rpow junk-value convention.
+- **2 GAPS IN THE MECHANIZED LOOP ITSELF (not the Lean):** (i) **Stage 7 closure is an identity in Δ** —
+  `exposure=(1−hedge_ratio)·ΣΔq`, so at hedge_ratio=1 the residual is 0 for ANY Δ/β/w/V. Manager's
+  non-tautology check is right but tests only `hedge_ratio`. And `Δ(k)=e^(−g|k|)` is the **normalized
+  mark** `V/V_atm`, NOT `∂V/∂S`; in the Lean `D` is an uninterpreted real. (ii) **latent coordinate
+  seam**: Stage 3 `V(k)=V_atm e^(−g|k|)` is LOG-moneyness; maps' parity `C−P=−k` is LINEAR moneyness
+  (true log parity is `1−e^u`) — 2.5%/9.7%/**22.9%** apart at u=0.05/0.2/0.5. Not wrong yet (Stage 3
+  forms no call/put pair) but bites the moment they're tied.
+- **THE 2 MISSING LINKS — PINNED + SUBMITTED to Aristotle** (host reachable 200, key accepted; both
+  obligation files **pre-elaborated in my local kernel**: well-typed, only intended `sorry`s, 0 errors).
+  - **(a) `LINK_PRICING.lean`** (imports BASIS_FORMAL), coordinate `k=K/S−1`:
+    `atmMark g = 1/((g+1)((g+1)/g)^g)`; `engineCall g k` = `A(1+k)^(−g)` (k≥0) / `A(1+k)^g − k`
+    (−1≤k<0) / `−k` (k<−1); `enginePut = engineCall + k` so `C−P=−k` definitionally. Targets:
+    `atm_kink_bound (2·g·A_g ≤ 1)` — **re-derived by hand: ⟺ `(g+1)log(1+1/g) ≥ log 2`**, stronger
+    `≥1` from `log(1+x)≥x/(1+x)` at x=1/g; numerically 2gA_g ↑ **2/e≈0.7358**, margin never closes.
+    `engine_call_midconvex (1≤g)` = **THE BRIDGE** (discharges the standing MidConvex hypothesis for the
+    curve the engine actually posts; `g≥1` load-bearing on the ITM branch `A g(g−1)(1+k)^(g−2)`; slope
+    jumps UP by `1−2gA_g` at k=0; C¹ at k=−1; **numerically 0 violations over ~10⁴ pairs, g∈{1,1.2,1.5,2,3,4,8}**).
+    `engine_book_arb_free`/`engine_book_parity` = payoff (each LP its OWN `g i`).
+    **`mixture_not_single_lens` = THE OBSTRUCTION**: single lens is log-AFFINE in log-strike OTM, a
+    mixture of distinct lenses is strictly log-CONVEX (Cauchy–Schwarz) ⇒ **heterogeneous LP steepness
+    generates a SMILE that the single-`m` lens structurally cannot represent. L1 is a STRUCTURAL
+    obstruction, not an implementation gap.** Operator-tier flag.
+  - **(b) `LINK_SETTLEMENT.lean`** (self-contained over Mathlib): `units V q = Σ q i·V i`;
+    `cashOne E L V q = units·(E·L)` (station 17, one doorway at the exit); `cashPer F V q = Σ q i·V i·F i`
+    (per-STRIKE doorway counterfactual). Targets: netting additivity/homogeneity; `cashOne_zero_iff` /
+    `cashOne_pos_iff` (no value created, no sign flip); `exit_timing_irrelevant` (flat book settles 0 at
+    EVERY closing equity — can't arb by choosing when to cross); and the load-bearing
+    **`common_doorway_necessary`** + **`per_strike_doorway_unbounded_arb`** +
+    **`doorway_arbfree_iff_common`** (witness: long 1/Vᵢ short 1/Vⱼ = 0 net units, cash Fᵢ−Fⱼ, scalable
+    unbounded). **Station 17's single common factor is FORCED, not a convenience** — the settlement
+    analogue of `common_transport_is_necessary`.
+  - Runs: (a) project `20fa5993-74b2-49e4-b797-a5f17cbad7bf` / task `b1e0c962-86f7-4805-9af4-f47c8259b3af`;
+    (b) project `ce3c2190-14d4-430f-ad48-076f3c22fca7` / task `aa5f90f8-0b7d-4f52-ae30-2426ac4666d9`.
+    Submitted with `--project-dir` = scratch copy of v3-maps-lean + the one new file (so the 3 context
+    files rebuild server-side = independent second opinion on the local build). Constraints carried
+    verbatim: context files fixed byte-for-byte, no statement/hypothesis change, false⇒leave the `sorry`
+    + report the counterexample (never weaken), no sorry/admit/axiom/native_decide/opaque/unsafe,
+    `#print axioms` ⊆ {propext, Classical.choice, Quot.sound}. **VERDICTS: see the entry appended below
+    when the runs land; audit is local-kernel re-verification, NOT trust.**
+- **HONEST GAPS (G1–G11 in the note):** G1 `Exposure` missing (high, mislabel) · G2 aggregation⇄pricing
+  (submitted; obstruction half) · G3 settlement (submitted) · G4 **the option LEVEL curve is never
+  derived from the perp book** — the map issues DEPTH+SPREAD only, every level `C i` is an abstract
+  midconvex function; "perp book → its OWN option curve" overstates it · G5 butterfly-only arb ·
+  **G6 no individual-rationality/adverse-selection theorem** (averaged level + `inf'` spread; pairs with
+  the workbook's own LP-refraction finding — the sharp edge of "LPs choose their own profile") ·
+  G7 `D` uninterpreted · G8 `walk_equiv` interior-case only · G9 `depth_unbounded` (known) ·
+  G10 funding rate law (L2/update-2, known-open) · G11 nothing wired to the engine (known-open).
+- **OPERATOR FLAGS via manager:** (1) L1 = structural obstruction ⇒ multi-lens/smile pricing OR bind LPs
+  to a common `m`; (2) per-LP yield is coupled AND unproven-fair (G6) — "set your own profile" must
+  disclose it; (3) `Exposure` must be written or de-cited before the loop's Lean backing is described
+  externally.
+
 ### VERIFY + LOCK-DESIGN — REBASE gauge-invariance, RIGOROUS (operator entry 466) — 2026-07-08
 Engine HEAD `abd35f4b` (vm-extract live `<script id="engine">`; no web/git/engine/Aristotle). Deliverable
 **`notes/research/VERIFY_rebase_rigorous_2026-07-07.md`** (harnesses scratchpad `measure_rebase.js`/`measure_close*.js`/`neg_controls.js`/`neg2.js`/`neg3.js`).

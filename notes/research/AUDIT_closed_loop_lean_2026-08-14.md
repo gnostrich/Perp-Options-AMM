@@ -218,8 +218,35 @@ Classical.choice, Quot.sound}.**
 - link (a): project `20fa5993-74b2-49e4-b797-a5f17cbad7bf`, task `b1e0c962-86f7-4805-9af4-f47c8259b3af`
 - link (b): project `ce3c2190-14d4-430f-ad48-076f3c22fca7`, task `aa5f90f8-0b7d-4f52-ae30-2426ac4666d9`
 
-**Verdicts and the audit of whatever returns are recorded in `.claude/agent-memory/research-lead/MEMORY.md`.**
-Because a local kernel now exists in-session, any candidate is re-verified here rather than trusted.
+### VERDICT — link (b) settlement: **PROVED, and locally kernel-verified**
+
+Aristotle returned a complete `LINK_SETTLEMENT.lean` with **all 12 theorems proved and zero `sorry`**.
+Full audit gate, every step passed:
+
+| gate step | result |
+|---|---|
+| out-of-scope diff | `BOOK_FORMAL.lean` / `MAP_FORMAL.lean` / `BASIS_FORMAL.lean` / `lean-toolchain` / `lake-manifest.json` **byte-identical** to the working tree (md5). `lakefile.toml` identical to what I submitted. Only additions: `ARISTOTLE_SUMMARY.md` and an attribution `README.md` — no module touched. |
+| token scan | no `sorry` / `admit` / `axiom` / `native_decide` / `opaque` / `unsafe` / `sorryAx`. (Two grep hits are the English word "admits" in my own comments.) |
+| statement diff | **every theorem statement, definition and hypothesis byte-unchanged.** The only additions are permitted proof-side helpers: one `private noncomputable def pairPort` and three `private lemma`s (`pairPort_units`, `pairPort_cash`, `cashPer_smul`). Nothing weakened, nothing strengthened. |
+| **local kernel build** | I compiled the returned file **in my own Lean 4.28.0 + Mathlib v4.28.0 kernel here**: rc=0, no errors, olean produced. This is not a trust step — it is our own kernel. |
+| **local `#print axioms`** | all 12 theorems → `[propext, Classical.choice, Quot.sound]`, run **locally**, independently of Aristotle's report (which agrees). |
+| math re-derived | the witness is exactly the one I specified: long `1/Vᵢ`, short `1/Vⱼ`, giving `1 − 1 = 0` net units and `Fᵢ − Fⱼ` cash, scaled by `(|M|+1)/(Fᵢ−Fⱼ)` for the unbounded form. `n = 0` dispatched separately, so no nonemptiness hypothesis was smuggled in. Content lives at `n ≥ 2` (at `n = 1` both sides of the iff are trivially true) — that is where the arbitrage exists, so this is scope, not vacuity. |
+
+**Verdict: `proved` — and, uniquely for this repo so far, verified in our own kernel rather than
+trusted-from-prover.** Station 17's single common conversion factor is now a theorem: it is *exactly*
+the class of unit→cash doorways admitting no arbitrage. **G3 / link (b) is CLOSED.**
+Artifacts: `formal/aristotle_runs/LOOP_LINK_B_settlement/` (solution tarball + extracted +
+`ARISTOTLE_SUMMARY.md` + the obligation as submitted); obligation also at
+`formal/prompts/aristotle_prompt_LOOP_LINK_B_settlement.lean`. **Uncommitted — manager's call.**
+
+### VERDICT — link (a) pricing: **still running at hand-back**
+
+The hard target is `engine_call_midconvex` (piecewise convexity glued across two kinks). Task
+`b1e0c962-…` was still working when I handed back. Status is recoverable at any time with
+`uvx --from aristotlelib aristotle show 20fa5993-74b2-49e4-b797-a5f17cbad7bf` and the result with
+`aristotle download 20fa5993-74b2-49e4-b797-a5f17cbad7bf --destination <path>`. **No verdict is
+claimed for link (a).** Its mathematics is re-derived and numerically checked above (§4), but that is
+evidence, not proof. **G2 remains OPEN.**
 
 ---
 
