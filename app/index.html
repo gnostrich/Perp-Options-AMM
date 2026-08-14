@@ -92,12 +92,10 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ CENTRE : curve + ladder ══ -->
   <div>
     <div class="panel">
-      <div class="chead"><b>Posted curve &amp; rung ladder</b>
-        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call</span>
-        <span class="badge" style="border-color:#FF6767;color:#FF6767">put</span>
-        <span class="badge">bid / ask</span></span></div>
+      <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b>
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
       <canvas id="cv" width="980" height="360"></canvas>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. The teal/red ribbon is your capacity density — you quote any strike on demand from the closed form; nothing is pre-posted.</div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. Bottom ribbon = capacity density; you quote any strike on demand from the closed form, nothing is pre-posted.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -115,7 +113,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">live</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 8 · two-curve</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -176,7 +174,7 @@ const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
  ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
-let P={...DEF}, volIndexed=true;
+let P={...DEF}, volIndexed=true, MAG=25;
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
 const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -230,10 +228,14 @@ function calc(){
 /* ─── draw ─── */
 function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32;
  g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
- const hh=Math.min(...st.book.map(m=>m.h))/1e4;
- for(let i=0;i<=140;i++){const k=-0.7+1.4*i/140;xs.push(k);ca.push(st.c.CALL(k));pu.push(st.c.PUT(k));
-  bi.push(st.c.CALL(k)*(1-hh));as.push(st.c.CALL(k)*(1+hh));}
- const ymax=Math.max(Math.max(...ca),Math.max(...pu))*1.06;
+ const hh=(st.hEff/1e4)*MAG;
+ const cbid=[],cask=[],pbid=[],pask=[];
+ for(let i=0;i<=140;i++){const k=-0.7+1.4*i/140;xs.push(k);
+  const C=st.c.CALL(k),Pu=st.c.PUT(k);ca.push(C);pu.push(Pu);
+  cbid.push(C*(1-hh));cask.push(C*(1+hh));
+  pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
+ bi.push(0);as.push(0);
+ const ymax=Math.max(Math.max(...cask),Math.max(...pask))*1.06;
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*(H-T-Bm);
  g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*(H-T-Bm)/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
@@ -242,8 +244,17 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),H-Bm);g.stroke();
  const ln=(A,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
   A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
- ln(as,'#1d4d52',1,[3,3]);ln(bi,'#1d4d52',1,[3,3]);
- ln(pu,'#FF6767',1.8);ln(ca,'#0ABAB5',2.3);
+ // spread BANDS — the two curve sets are the point, so show them
+ const band=(lo,hi,col)=>{g.save();g.globalAlpha=.20;g.fillStyle=col;g.beginPath();
+   hi.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
+   for(let i=lo.length-1;i>=0;i--){g.lineTo(X(xs[i]),Y(lo[i]));}
+   g.closePath();g.fill();g.restore();};
+ band(cbid,cask,'#0ABAB5'); band(pbid,pask,'#FF6767');
+ // ASK (you buy here) solid ; BID (you sell here) dashed-solid, both first-class
+ ln(cask,'#0ABAB5',2.0);           ln(cbid,'#63e6e2',1.6,[6,3]);
+ ln(pask,'#FF6767',2.0);           ln(pbid,'#ffb3b3',1.6,[6,3]);
+ // mid, faint reference
+ ln(ca,'#12484a',1,[2,4]); ln(pu,'#5a2b2b',1,[2,4]);
  // capacity density ribbon (continuous) along the bottom
  const mx=Math.max(...st.rung.map(r=>r.cap));
  g.save();g.globalAlpha=.55;
@@ -288,6 +299,8 @@ function render(){
  $('r-bet').textContent=f(st.bleed/((st.hEff/1e4)*365),2)+'× /day';
  $('r-par').textContent=f(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12);
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
+ $('magv')&&($('magv').textContent='×'+MAG);
+ $('magc')&&($('magc').textContent='×'+MAG);
  const hq=st.hEff/1e4, samp=[2,6,10,15,20,25,30,40,50,60];
  $('rungtbl').querySelector('tbody').innerHTML=samp.map(i=>{const r=st.rung[i];
   return `<tr><td>${(r.k*100).toFixed(0)}%</td><td>${f(r.prem,4)}</td><td>${f(st.c.PUT(-r.k),4)}</td>
@@ -299,6 +312,7 @@ function render(){
  bind();}
 function bind(){
  document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
+ $('mag')&&($('mag').oninput=e=>{MAG=+e.target.value;render();});
  document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
 $('margin').oninput=e=>{P.margin=+e.target.value;render();};
 $('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
