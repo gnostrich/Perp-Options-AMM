@@ -3693,3 +3693,15 @@ _Context: operator hands the manager the lead, orders the whole thing done, and 
 > i'm also going to allow you to sort of take the lead here
 > get the whoel thing done gang
 > and use aristotle u have the key, so you can brainstomrm with him and autonomoysly get things done get the sheet done the LP refraction thing etc. test it at your end and get back to me
+
+
+## Entry 508 — 2026-07-08 UTC
+_Context: operator states the 3-layer architecture — pricing engine; portfolio accounting (ITM via smooth-pasting, curve gives TOTAL value in a SINGLE number, no intrinsic/extrinsic); then conversion from perp units to the actual margin. Manager mapped the loop onto these layers and CAUGHT that v1's pricing used a symmetric proxy that decayed into ITM (~30x understated deep ITM); rebuilt v2 on the engine's real two-branch smooth-paste curve._
+
+> so we have pricing engine, portfolio accounting (pricing going ITM as well smooth pasting whatever so curve tells total value in single number no intronsic extrisinc) and then finaly you have conversion from perp units to the actual margin
+
+
+## Entry 509 — 2026-07-08 UTC
+_Context: operator jogs memory that the ITM seam moves DYNAMICALLY as the curve shifts ("pretty elegant"). Manager verified the sheet inherits this: u_seam=LN(g/(g+1)) is a formula off g=m*gamma, so leaning w or raising m slides S*/K (0.500->0.667->0.750) and strikes flip regime automatically. Flagged L5: gamma is still a static input; wiring gamma=w/(1-w) live would make the seam move within a scenario too._
+
+> jst to jog memoery thw itm seam etc moves dybamically as the curve shifts its actualy prerttyy elegant
