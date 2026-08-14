@@ -56,4 +56,5 @@ function indepLanded(makers, pool, k, Q) {
   return { landed, best, total: tot, bps: (landed / best - 1) * 1e4 };
 }
 
-export { ctx, indepLanded, els, SRC };
+const evalIn = (expr) => vm.runInContext(expr, ctx);
+export { ctx, indepLanded, els, SRC, evalIn };

@@ -1,0 +1,1230 @@
+{
+ "run": "A",
+ "phases": {
+  "P1_nav": {
+   "earn": {
+    "VIEW": "earn",
+    "disp": "gridEarn:grid gridTransact:none gridBands:none gridPortfolio:none",
+    "h": 2972,
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_earn.png"
+   },
+   "transact": {
+    "VIEW": "transact",
+    "disp": "gridEarn:none gridTransact:grid gridBands:none gridPortfolio:none",
+    "h": 1758,
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_transact.png"
+   },
+   "bands": {
+    "VIEW": "bands",
+    "disp": "gridEarn:none gridTransact:none gridBands:grid gridPortfolio:none",
+    "h": 811,
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_bands.png"
+   },
+   "portfolio": {
+    "VIEW": "portfolio",
+    "disp": "gridEarn:none gridTransact:none gridBands:none gridPortfolio:grid",
+    "h": 1254,
+    "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P1_portfolio.png"
+   }
+  },
+  "P2_earn": {
+   "params": {
+    "Sbar": {
+     "lo": 0.05,
+     "hi": 1,
+     "railChanged": true,
+     "canvasChanged": true,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 60 bps | s-prem=0.5203 BTC | s-notd=$19,708,650 | y-fees=$12,921,973 | y-bleed=-$10,337,578 | y-base=13.1% | y-lev=262.3% | q-fair=48 bps | ",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 12 bps | s-prem=52.6600 BTC | s-notd=$19,708,650 | y-fees=$2,578,246 | y-bleed=-$2,062,597 | y-base=2.6% | y-lev=52.3% | q-fair=10 bps | q-m"
+    },
+    "a": {
+     "lo": 0.2,
+     "hi": 3,
+     "railChanged": true,
+     "canvasChanged": true,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 1,969 bps | s-prem=0.0136 BTC | s-notd=$19,708,650 | y-fees=$424,983,354 | y-bleed=-$339,986,683 | y-base=431.3% | y-lev=8625.3% | q-fair=1,",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 1 bps | s-prem=61.8789 BTC | s-notd=$19,708,650 | y-fees=$306,555 | y-bleed=-$245,244 | y-base=0.3% | y-lev=6.2% | q-fair=1 bps | q-mine=1 b"
+    },
+    "gam": {
+     "lo": 0.3,
+     "hi": 4,
+     "railChanged": true,
+     "canvasChanged": true,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 11 bps | s-prem=88.5002 BTC | s-notd=$19,708,650 | y-fees=$2,466,551 | y-bleed=-$1,973,241 | y-base=2.5% | y-lev=50.1% | q-fair=9 bps | q-mi",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 28 bps | s-prem=12.2162 BTC | s-notd=$19,708,650 | y-fees=$6,002,047 | y-bleed=-$4,801,638 | y-base=6.1% | y-lev=121.8% | q-fair=22 bps | q-"
+    },
+    "kap": {
+     "lo": -0.9,
+     "hi": 0.9,
+     "railChanged": true,
+     "canvasChanged": true,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 56 bps | s-prem=1.3305 BTC | s-notd=$19,708,650 | y-fees=$12,019,340 | y-bleed=-$9,615,472 | y-base=12.2% | y-lev=243.9% | q-fair=45 bps | q",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 51 bps | s-prem=8.9576 BTC | s-notd=$19,708,650 | y-fees=$11,088,307 | y-bleed=-$8,870,646 | y-base=11.3% | y-lev=225.0% | q-fair=41 bps | q"
+    },
+    "lam": {
+     "lo": 0.01,
+     "hi": 1,
+     "railChanged": true,
+     "canvasChanged": false,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=30% | s-hs=≈ 19 bps | s-prem=29.9377 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=19% | s-hs=≈ 19 bps | s-prem=36.4771 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m"
+    },
+    "fee": {
+     "lo": 0,
+     "hi": 0.2,
+     "railChanged": false,
+     "canvasChanged": false,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 19 bps | s-prem=30.6694 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 19 bps | s-prem=30.6694 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m"
+    },
+    "depth": {
+     "lo": 1,
+     "hi": 80,
+     "railChanged": false,
+     "canvasChanged": false,
+     "restored": true,
+     "railLo": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 19 bps | s-prem=30.6694 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m",
+     "railHi": "s-rungs=continuous | s-not=300.00 BTC | s-peak=29% | s-hs=≈ 19 bps | s-prem=30.6694 BTC | s-notd=$19,708,650 | y-fees=$4,019,813 | y-bleed=-$3,215,850 | y-base=4.1% | y-lev=81.6% | q-fair=15 bps | q-m"
+    }
+   },
+   "reset": {
+    "P": "{\"Sbar\":0.6,\"a\":1.2705,\"gam\":1.8413,\"kap\":0,\"lam\":0.1,\"fee\":0.02,\"depth\":25,\"margin\":15}",
+    "railRestored": "0.91"
+   },
+   "margin": {
+    "up": true,
+    "down": true,
+    "at40": "$9,854,325",
+    "at1_after_restore": "$9,854,325"
+   },
+   "mag": {
+    "h0": "f9c46de1",
+    "h1": "9a77ee3f",
+    "h2": "eabeab33",
+    "distinct": 3,
+    "lab1": "×1",
+    "lab2": "×60",
+    "inlineCaption": "×25"
+   },
+   "qsz": {
+    "changed": true,
+    "hoverbar_at40": "strike k / 13.70% / call bid / ask / 0.1300 / 0.1305 / put bid / ask / 0.2668 / 0.2678 / half-spread / 18.6 bps / C−P vs −k / -0.13700 / -0.13700 / capture on 40.0 / $1,275"
+   },
+   "volToggle": {
+    "on_mine": "19 bps",
+    "off": {
+     "mine": "100 bps",
+     "lab": "fixed spread",
+     "btn": "VOL-INDEXED: OFF",
+     "marg": "—",
+     "verdict": "Fixed spread. Calibrated to one vol only — drag realised vol"
+    },
+    "back_mine": "19 bps",
+    "roundtrip": true
+   },
+   "mkt": {
+    "rv": {
+     "lo": 0.1,
+     "hi": 1.4,
+     "A": {
+      "be": "0 bps",
+      "bet": "0.24× /day",
+      "par": "0.000000000000",
+      "base": "0.1%",
+      "lev": "2.3%",
+      "qlab": "size 5.0 BTC",
+      "hs": "≈ 1 bps"
+     },
+     "B": {
+      "be": "81 bps",
+      "bet": "0.24× /day",
+      "par": "0.000000000000",
+      "base": "22.2%",
+      "lev": "444.2%",
+      "qlab": "size 5.0 BTC",
+      "hs": "≈ 101 bps"
+     },
+     "changed": true
+    },
+    "turn": {
+     "lo": 0.05,
+     "hi": 3,
+     "A": {
+      "be": "89 bps",
+      "bet": "0.04× /day",
+      "par": "0.000000000000",
+      "base": "4.1%",
+      "lev": "81.6%",
+      "qlab": "size 5.0 BTC",
+      "hs": "≈ 112 bps"
+     },
+     "B": {
+      "be": "1 bps",
+      "bet": "2.40× /day",
+      "par": "0.000000000000",
+      "base": "4.1%",
+      "lev": "81.6%",
+      "qlab": "size 5.0 BTC",
+      "hs": "≈ 2 bps"
+     },
+     "changed": true
+    },
+    "Q": {
+     "lo": 0.5,
+     "hi": 40,
+     "A": {
+      "be": "15 bps",
+      "bet": "0.24× /day",
+      "par": "0.000000000000",
+      "base": "4.1%",
+      "lev": "81.6%",
+      "qlab": "size 0.5 BTC",
+      "hs": "≈ 19 bps"
+     },
+     "B": {
+      "be": "15 bps",
+      "bet": "0.24× /day",
+      "par": "0.000000000000",
+      "base": "4.1%",
+      "lev": "81.6%",
+      "qlab": "size 40.0 BTC",
+      "hs": "≈ 19 bps"
+     },
+     "changed": true
+    }
+   },
+   "ladderRows": [
+    "MM-Kappa 16 bps 38.1 5.00 $76",
+    "MM-Sigma 18 bps 47.6 — —",
+    "YOU 19 bps 95.2 — —",
+    "MM-Delta 22 bps 19.0 — —"
+   ]
+  },
+  "P3_hover": {
+   "samples": [
+    {
+     "frac": 0.08,
+     "HK": -0.6657840472396662,
+     "cells": [
+      "strike k=-66.58%",
+      "call bid / ask=0.6730 / 0.6755",
+      "put bid / ask=0.0084 / 0.0084",
+      "half-spread=18.6 bps",
+      "C−P vs −k=0.66578 / 0.66578",
+      "capture on 5.0=$825"
+     ],
+     "exactParity": 0,
+     "C": 0.6742141377588866,
+     "P": 0.008430090519220383
+    },
+    {
+     "frac": 0.2,
+     "HK": -0.48414096916299554,
+     "cells": [
+      "strike k=-48.41%",
+      "call bid / ask=0.5077 / 0.5096",
+      "put bid / ask=0.0245 / 0.0246",
+      "half-spread=18.6 bps",
+      "C−P vs −k=0.48414 / 0.48414",
+      "capture on 5.0=$622"
+     ],
+     "exactParity": -5.551115123125783e-17,
+     "C": 0.5086789989761875,
+     "P": 0.02453802981319203
+    },
+    {
+     "frac": 0.35,
+     "HK": -0.25748898678414095,
+     "cells": [
+      "strike k=-25.75%",
+      "call bid / ask=0.3250 / 0.3262",
+      "put bid / ask=0.0680 / 0.0682",
+      "half-spread=18.6 bps",
+      "C−P vs −k=0.25749 / 0.25749",
+      "capture on 5.0=$398"
+     ],
+     "exactParity": 5.551115123125783e-17,
+     "C": 0.32557789006056237,
+     "P": 0.06808890327642139
+    },
+    {
+     "frac": 0.5,
+     "HK": -0.03083700440528625,
+     "cells": [
+      "strike k=-3.08%",
+      "call bid / ask=0.1916 / 0.1923",
+      "put bid / ask=0.1608 / 0.1614",
+      "half-spread=18.6 bps",
+      "C−P vs −k=0.03084 / 0.03084",
+      "capture on 5.0=$235"
+     ],
+     "exactParity": 0,
+     "C": 0.19190892785817798,
+     "P": 0.16107192345289173
+    },
+    {
+     "frac": 0.65,
+     "HK": 0.19581497797356828,
+     "cells": [
+      "strike k=19.58%",
+      "call bid / ask=0.1140 / 0.1144",
+      "put bid / ask=0.3094 / 0.3106",
+      "half-spread=18.6 bps",
+      "C−P vs −k=-0.19581 / -0.19581",
+      "capture on 5.0=$140"
+     ],
+     "exactParity": 2.7755575615628914e-17,
+     "C": 0.11420109913900292,
+     "P": 0.3100160771125712
+    },
+    {
+     "frac": 0.8,
+     "HK": 0.4224669603524229,
+     "cells": [
+      "strike k=42.25%",
+      "call bid / ask=0.0718 / 0.0721",
+      "put bid / ask=0.4935 / 0.4953",
+      "half-spread=18.6 bps",
+      "C−P vs −k=-0.42247 / -0.42247",
+      "capture on 5.0=$88"
+     ],
+     "exactParity": 0,
+     "C": 0.07193813148738169,
+     "P": 0.49440509183980463
+    },
+    {
+     "frac": 0.95,
+     "HK": 0.6491189427312776,
+     "cells": [
+      "strike k=64.91%",
+      "call bid / ask=0.0486 / 0.0488",
+      "put bid / ask=0.6965 / 0.6991",
+      "half-spread=18.6 bps",
+      "C−P vs −k=-0.64912 / -0.64912",
+      "capture on 5.0=$60"
+     ],
+     "exactParity": 0,
+     "C": 0.04866133361942822,
+     "P": 0.6977802763507058
+    }
+   ],
+   "maxAbsParity": 5.551115123125783e-17,
+   "r_par": "0.000000000000",
+   "continuous": true
+  },
+  "P5_map_earn": {
+   "audit": {
+    "field": {
+     "n": 136200,
+     "distinct": 1158,
+     "total": 136200
+    },
+    "clip": {
+     "cvBottom": 638.453125,
+     "panelBottom": 813.265625,
+     "cvH": 517.953125,
+     "clipped": false
+    },
+    "topColours": [
+     [
+      "11,30,33",
+      11218
+     ],
+     [
+      "74,18,24",
+      9502
+     ],
+     [
+      "10,29,32",
+      3867
+     ],
+     [
+      "255,103,103",
+      2448
+     ],
+     [
+      "255,143,78",
+      2424
+     ],
+     [
+      "255,135,84",
+      2418
+     ],
+     [
+      "255,158,69",
+      2406
+     ],
+     [
+      "255,151,73",
+      2402
+     ],
+     [
+      "124,176,127",
+      2400
+     ],
+     [
+      "63,181,156",
+      2400
+     ],
+     [
+      "198,170,92",
+      2398
+     ],
+     [
+      "237,167,73",
+      2392
+     ],
+     [
+      "15,90,87",
+      2392
+     ],
+     [
+      "11,172,167",
+      2374
+     ]
+    ],
+    "hottest": {
+     "n": 2448,
+     "minx": 1,
+     "maxx": 906,
+     "miny": 18,
+     "maxy": 20
+    },
+    "nofit": {
+     "n": 9502,
+     "miny": 1,
+     "maxy": 16,
+     "frac": 0.06976505139500734
+    },
+    "legend": [
+     {
+      "c": "137,150,152",
+      "x0": 129,
+      "n": 9
+     },
+     {
+      "c": "11,30,33",
+      "x0": 819,
+      "n": 8
+     },
+     {
+      "c": "55,182,160",
+      "x0": 840,
+      "n": 8
+     },
+     {
+      "c": "255,103,103",
+      "x0": 885,
+      "n": 9
+     },
+     {
+      "c": "74,18,24",
+      "x0": 927,
+      "n": 8
+     }
+    ],
+    "marker": {
+     "my": 138,
+     "myN": 22,
+     "mxp": 874,
+     "mxpN": 15
+    }
+   },
+   "kq": {
+    "k": 0.6475770925110131,
+    "Q": 17.92
+   },
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_legend.png",
+   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_marker.png",
+   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_axis.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_earn_band.png",
+   "track": [
+    {
+     "frac": 0.25,
+     "size": 5,
+     "HK": -0.40859030837004395,
+     "mk": {
+      "my": 134,
+      "myN": 22,
+      "mxp": 188,
+      "mxpN": 8
+     },
+     "kq": {
+      "k": -0.4101321585903083,
+      "Q": 23.893333333333334
+     }
+    },
+    {
+     "frac": 0.75,
+     "size": 5,
+     "HK": 0.34691629955947123,
+     "mk": {
+      "my": 134,
+      "myN": 22,
+      "mxp": 678,
+      "mxpN": 8
+     },
+     "kq": {
+      "k": 0.345374449339207,
+      "Q": 23.893333333333334
+     }
+    },
+    {
+     "frac": 0.75,
+     "size": 60,
+     "HK": 0.34691629955947123,
+     "mk": {
+      "my": 97,
+      "myN": 23,
+      "mxp": 678,
+      "mxpN": 7
+     },
+     "kq": {
+      "k": 0.345374449339207,
+      "Q": 79.14666666666666
+     }
+    },
+    {
+     "frac": 0.75,
+     "size": 150,
+     "HK": 0.34691629955947123,
+     "mk": {
+      "my": 49,
+      "myN": 456,
+      "mxp": 678,
+      "mxpN": 8
+     },
+     "kq": {
+      "k": 0.345374449339207,
+      "Q": 150.82666666666665
+     }
+    },
+    {
+     "frac": 0.75,
+     "size": 210,
+     "HK": 0.34691629955947123,
+     "mk": {
+      "my": 9,
+      "myN": 392,
+      "mxp": 678,
+      "mxpN": 8
+     },
+     "kq": {
+      "k": 0.345374449339207,
+      "Q": 210.56
+     }
+    },
+    {
+     "frac": 0.75,
+     "size": 240,
+     "HK": 0.34691629955947123,
+     "mk": {
+      "my": 0,
+      "myN": 6,
+      "mxp": 678,
+      "mxpN": 4
+     },
+     "kq": {
+      "k": 0.345374449339207,
+      "Q": 224
+     }
+    }
+   ],
+   "perClickSize": {
+    "before": {
+     "my": 134,
+     "myN": 22,
+     "mxp": 678,
+     "mxpN": 8
+    },
+    "after": {
+     "my": 146,
+     "myN": 456,
+     "mxp": 678,
+     "mxpN": 8
+    },
+    "value": "5.1",
+    "movedPx": 12
+   }
+  },
+  "P4_transact": {
+   "sideBuy0": "best ask\n0.13326\nbook spread\n-356.7 bps\nfilled by\nMM-Kappa\nyou pay\n$26,263",
+   "sell": {
+    "quote": "best bid | 0.13810 | book spread | -356.7 bps | filled by | MM-Delta | you receive | $27,217",
+    "fillHdr": "3.0 BTC · sell",
+    "rows": [
+     "MM-Delta 0.13810 3.00 $197,087 $27,217"
+    ]
+   },
+   "buy": {
+    "quote": "best ask | 0.13326 | book spread | -356.7 bps | filled by | MM-Kappa | you pay | $26,263",
+    "fillHdr": "3.0 BTC · buy",
+    "rows": [
+     "MM-Kappa 0.13326 3.00 $197,087 $26,263"
+    ]
+   },
+   "sideDiffers": true,
+   "syncBoxToSlider": {
+    "box": "-25",
+    "slider": "-25",
+    "best": "strike | -25.00% | best ask | 0.31881 | best bid | 0.32182 | book half-spread | -46.9 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $197 / BTC"
+   },
+   "syncSliderToBox": {
+    "box": "42",
+    "slider": "42",
+    "best": "strike | 42.00% | best ask | 0.07095 | best bid | 0.07399 | book half-spread | -209.6 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $200 / BTC"
+   },
+   "outOfRange": {
+    "box": "200",
+    "slider": "60",
+    "fillWidth": "60%"
+   },
+   "size": {
+    "at3": "3.0 BTC · buy",
+    "at45": "45.0 BTC · buy",
+    "rows45": [
+     "MM-Kappa 0.13326 38.10 $2,502,686 $333,500",
+     "YOU 0.13570 6.90 $453,612 $61,556"
+    ]
+   },
+   "dial": [
+    {
+     "D": 0,
+     "label": "0.00",
+     "fillW": "0%",
+     "state": "clean",
+     "arb": "—",
+     "best": "strike | 12.00% | best ask | 0.13567 | best bid | 0.13523 | book half-spread | 16.4 bps | makers quoting | 4 | book state | clean | arb available | —",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13567 | MM-Delta | 0.13574 | MM-Sigma | 0.13570 | envelope vs best single | 0.00 bps",
+     "canvas": "46f0c6e1"
+    },
+    {
+     "D": 0.01,
+     "label": "0.01",
+     "fillW": "1%",
+     "state": "clean",
+     "arb": "—",
+     "best": "strike | 12.00% | best ask | 0.13551 | best bid | 0.13535 | book half-spread | 5.8 bps | makers quoting | 4 | book state | clean | arb available | —",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13551 | MM-Delta | 0.13594 | MM-Sigma | 0.13574 | envelope vs best single | 0.00 bps",
+     "canvas": "f4f12979"
+    },
+    {
+     "D": 0.05,
+     "label": "0.05",
+     "fillW": "5%",
+     "state": "ARB OPEN",
+     "arb": "$83 / BTC",
+     "best": "strike | 12.00% | best ask | 0.13487 | best bid | 0.13614 | book half-spread | -46.9 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $83 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13487 | MM-Delta | 0.13673 | MM-Sigma | 0.13590 | envelope vs best single | 0.00 bps",
+     "canvas": "d9787f98"
+    },
+    {
+     "D": 0.15,
+     "label": "0.15",
+     "fillW": "15%",
+     "state": "ARB OPEN",
+     "arb": "$318 / BTC",
+     "best": "strike | 12.00% | best ask | 0.13326 | best bid | 0.13810 | book half-spread | -178.4 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $318 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13326 | MM-Delta | 0.13870 | MM-Sigma | 0.13631 | envelope vs best single | 0.00 bps",
+     "canvas": "920b755c"
+    },
+    {
+     "D": 0.3,
+     "label": "0.30",
+     "fillW": "30%",
+     "state": "ARB OPEN",
+     "arb": "$670 / BTC",
+     "best": "strike | 12.00% | best ask | 0.13083 | best bid | 0.14102 | book half-spread | -375.1 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $670 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.13083 | MM-Delta | 0.14163 | MM-Sigma | 0.13691 | envelope vs best single | 0.00 bps",
+     "canvas": "886805c0"
+    },
+    {
+     "D": 0.5,
+     "label": "0.50",
+     "fillW": "50%",
+     "state": "ARB OPEN",
+     "arb": "$1,139 / BTC",
+     "best": "strike | 12.00% | best ask | 0.12756 | best bid | 0.14490 | book half-spread | -636.2 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $1,139 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.12756 | MM-Delta | 0.14552 | MM-Sigma | 0.13772 | envelope vs best single | 0.00 bps",
+     "canvas": "765301f1"
+    },
+    {
+     "D": 0.75,
+     "label": "0.75",
+     "fillW": "75%",
+     "state": "ARB OPEN",
+     "arb": "$1,724 / BTC",
+     "best": "strike | 12.00% | best ask | 0.12345 | best bid | 0.14969 | book half-spread | -960.8 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $1,724 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.12345 | MM-Delta | 0.15034 | MM-Sigma | 0.13873 | envelope vs best single | 0.00 bps",
+     "canvas": "737d2028"
+    },
+    {
+     "D": 1,
+     "label": "1.00",
+     "fillW": "100%",
+     "state": "ARB OPEN",
+     "arb": "$2,308 / BTC",
+     "best": "strike | 12.00% | best ask | 0.11931 | best bid | 0.15443 | book half-spread | -1,283.3 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $2,308 / BTC",
+     "imp": "YOU (you) | 0.13570 | MM-Kappa | 0.11931 | MM-Delta | 0.15510 | MM-Sigma | 0.13973 | envelope vs best single | 0.00 bps",
+     "canvas": "e91a625"
+    }
+   ],
+   "perClickDial": {
+    "A": {
+     "arbv": "0.15",
+     "best": "strike | 12.00% | best ask | 0.13326 | best bid | 0.13810 | book half-spread | -178.4 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $318 / BTC",
+     "canvas": "920b755c"
+    },
+    "B": {
+     "arbv": "0.16",
+     "best": "strike | 12.00% | best ask | 0.13310 | best bid | 0.13829 | book half-spread | -191.5 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $341 / BTC",
+     "canvas": "4a974522"
+    },
+    "C": {
+     "arbv": "0.17",
+     "best": "strike | 12.00% | best ask | 0.13293 | best bid | 0.13849 | book half-spread | -204.6 bps | makers quoting | 4 | book state | ARB OPEN | arb available | $365 / BTC",
+     "canvas": "a022c9ca"
+    },
+    "labelMoved": true,
+    "numbersMoved": true,
+    "canvasMoved": true
+   }
+  },
+  "P5_map_transact": {
+   "audit": {
+    "field": {
+     "n": 136200,
+     "distinct": 4926,
+     "total": 136200
+    },
+    "clip": {
+     "cvBottom": 609.671875,
+     "panelBottom": 707.265625,
+     "cvH": 489.171875,
+     "clipped": false
+    },
+    "topColours": [
+     [
+      "11,30,33",
+      11862
+     ],
+     [
+      "74,18,24",
+      9502
+     ],
+     [
+      "10,29,32",
+      3988
+     ],
+     [
+      "73,17,23",
+      1541
+     ],
+     [
+      "74,17,23",
+      1010
+     ],
+     [
+      "11,31,34",
+      930
+     ],
+     [
+      "73,16,23",
+      871
+     ],
+     [
+      "26,41,44",
+      861
+     ],
+     [
+      "10,30,32",
+      840
+     ],
+     [
+      "58,35,40",
+      816
+     ],
+     [
+      "73,18,23",
+      788
+     ],
+     [
+      "10,29,33",
+      772
+     ],
+     [
+      "2,6,6",
+      695
+     ],
+     [
+      "11,37,40",
+      578
+     ]
+    ],
+    "hottest": {
+     "n": 59,
+     "minx": 886,
+     "maxx": 906,
+     "miny": 18,
+     "maxy": 20
+    },
+    "nofit": {
+     "n": 9502,
+     "miny": 1,
+     "maxy": 16,
+     "frac": 0.06976505139500734
+    },
+    "legend": [
+     {
+      "c": "137,150,152",
+      "x0": 129,
+      "n": 9
+     },
+     {
+      "c": "11,30,33",
+      "x0": 819,
+      "n": 8
+     },
+     {
+      "c": "55,182,160",
+      "x0": 840,
+      "n": 8
+     },
+     {
+      "c": "255,103,103",
+      "x0": 884,
+      "n": 8
+     },
+     {
+      "c": "74,18,24",
+      "x0": 927,
+      "n": 8
+     }
+    ],
+    "marker": {
+     "my": 135,
+     "myN": 22,
+     "mxp": 531,
+     "mxpN": 24
+    }
+   },
+   "kq": {
+    "k": 0.11872246696035249,
+    "Q": 22.400000000000002
+   },
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_legend.png",
+   "markerCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_marker.png",
+   "axisCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_axis.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P5_transact_band.png",
+   "track": [
+    {
+     "k": 12,
+     "size": 3,
+     "mk": {
+      "my": 135,
+      "myN": 22,
+      "mxp": 531,
+      "mxpN": 24
+     },
+     "kq": {
+      "k": 0.11872246696035249,
+      "Q": 22.400000000000002
+     }
+    },
+    {
+     "k": -40,
+     "size": 3,
+     "mk": {
+      "my": 136,
+      "myN": 20,
+      "mxp": 194,
+      "mxpN": 78
+     },
+     "kq": {
+      "k": -0.4008810572687225,
+      "Q": 20.906666666666666
+     }
+    },
+    {
+     "k": 40,
+     "size": 3,
+     "mk": {
+      "my": 139,
+      "myN": 22,
+      "mxp": 713,
+      "mxpN": 78
+     },
+     "kq": {
+      "k": 0.39933920704845827,
+      "Q": 16.426666666666666
+     }
+    },
+    {
+     "k": 40,
+     "size": 60,
+     "mk": {
+      "my": 101,
+      "myN": 23,
+      "mxp": 713,
+      "mxpN": 79
+     },
+     "kq": {
+      "k": 0.39933920704845827,
+      "Q": 73.17333333333333
+     }
+    },
+    {
+     "k": 40,
+     "size": 150,
+     "mk": {
+      "my": 49,
+      "myN": 458,
+      "mxp": 713,
+      "mxpN": 80
+     },
+     "kq": {
+      "k": 0.39933920704845827,
+      "Q": 150.82666666666665
+     }
+    },
+    {
+     "k": 40,
+     "size": 210,
+     "mk": {
+      "my": 9,
+      "myN": 396,
+      "mxp": 713,
+      "mxpN": 80
+     },
+     "kq": {
+      "k": 0.39933920704845827,
+      "Q": 210.56
+     }
+    },
+    {
+     "k": 40,
+     "size": 240,
+     "mk": {
+      "my": 0,
+      "myN": 7,
+      "mxp": 713,
+      "mxpN": 77
+     },
+     "kq": {
+      "k": 0.39933920704845827,
+      "Q": 224
+     }
+    }
+   ],
+   "derive": [
+    {
+     "k": 0.12,
+     "Q": 3,
+     "best": 0.13325697247725968,
+     "landed": 0.13325697247725968,
+     "bps": 0,
+     "total": 199.99999999999997
+    },
+    {
+     "k": 0.12,
+     "Q": 60,
+     "best": 0.13325697247725968,
+     "landed": 0.1341495410009713,
+     "bps": 66.9809997269688,
+     "total": 199.99999999999997
+    },
+    {
+     "k": 0.4,
+     "Q": 150,
+     "best": 0.07369335624487784,
+     "landed": 0.0748727283714249,
+     "bps": 160.0377817815879,
+     "total": 199.99999999999997
+    },
+    {
+     "k": -0.4,
+     "Q": 150,
+     "best": 0.43635565381147423,
+     "landed": 0.4372960169469163,
+     "bps": 21.550382749213615,
+     "total": 199.99999999999997
+    },
+    {
+     "k": 0.12,
+     "Q": 210,
+     "best": 0.13325697247725968,
+     "landed": null,
+     "bps": null,
+     "total": 199.99999999999997
+    },
+    {
+     "k": 0.12,
+     "Q": 240,
+     "best": 0.13325697247725968,
+     "landed": null,
+     "bps": null,
+     "total": 199.99999999999997
+    }
+   ],
+   "fieldMax": {
+    "mx": 209.66016040427692,
+    "Qmax": 224,
+    "tot": 199.99999999999997
+   }
+  },
+  "P6_nearzero": {
+   "state": {
+    "rv": 0.1,
+    "turn": 3,
+    "hs": "≈ 0 bps",
+    "be": "0 bps"
+   },
+   "fieldMax": 0.005335955435281647,
+   "audit": {
+    "field": {
+     "n": 136200,
+     "distinct": 1164,
+     "total": 136200
+    },
+    "clip": {
+     "cvBottom": 638.453125,
+     "panelBottom": 813.265625,
+     "cvH": 517.953125,
+     "clipped": false
+    },
+    "topColours": [
+     [
+      "11,30,33",
+      11198
+     ],
+     [
+      "74,18,24",
+      9502
+     ],
+     [
+      "10,29,32",
+      3856
+     ],
+     [
+      "255,103,103",
+      2448
+     ],
+     [
+      "255,143,78",
+      2424
+     ],
+     [
+      "255,135,84",
+      2418
+     ],
+     [
+      "255,158,69",
+      2406
+     ],
+     [
+      "255,151,73",
+      2402
+     ],
+     [
+      "124,176,127",
+      2400
+     ],
+     [
+      "63,181,156",
+      2400
+     ],
+     [
+      "198,170,92",
+      2398
+     ],
+     [
+      "237,167,73",
+      2392
+     ],
+     [
+      "15,90,87",
+      2392
+     ],
+     [
+      "11,172,167",
+      2374
+     ]
+    ],
+    "hottest": {
+     "n": 2448,
+     "minx": 1,
+     "maxx": 906,
+     "miny": 18,
+     "maxy": 20
+    },
+    "nofit": {
+     "n": 9502,
+     "miny": 1,
+     "maxy": 16,
+     "frac": 0.06976505139500734
+    },
+    "legend": [
+     {
+      "c": "137,150,152",
+      "x0": 129,
+      "n": 9
+     },
+     {
+      "c": "11,30,33",
+      "x0": 814,
+      "n": 8
+     },
+     {
+      "c": "55,182,160",
+      "x0": 835,
+      "n": 8
+     },
+     {
+      "c": "255,103,103",
+      "x0": 880,
+      "n": 9
+     },
+     {
+      "c": "74,18,24",
+      "x0": 927,
+      "n": 8
+     }
+    ],
+    "marker": {
+     "my": 134,
+     "myN": 22,
+     "mxp": 678,
+     "mxpN": 8
+    }
+   },
+   "legendCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_legend.png",
+   "bandCrop": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_band.png",
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P6_nearzero_full.png"
+  },
+  "P7_bands": {
+   "base": {
+    "out": "sell leg price | 0.14183 | proceeds | 0.6840 BTC | buy leg price | 0.12563 | units bought | 5.2346",
+    "state": "κ before | 0.0000 | Δκ | 0.00574 | κ after | 0.0057 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1790",
+    "cv": "c5b25fba"
+   },
+   "bs": {
+    "lo": 2,
+    "hi": 55,
+    "A": {
+     "out": "sell leg price | 0.17084 | proceeds | 0.8261 BTC | buy leg price | 0.12563 | units bought | 6.2973",
+     "state": "κ before | 0.0000 | Δκ | 0.01866 | κ after | 0.0187 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1791",
+     "cv": "f603cfe9"
+    },
+    "B": {
+     "out": "sell leg price | 0.05727 | proceeds | 0.2697 BTC | buy leg price | 0.12563 | units bought | 2.0878",
+     "state": "κ before | 0.0000 | Δκ | -0.06322 | κ after | -0.0632 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1775",
+     "cv": "d8570e0e"
+    },
+    "changed": true
+   },
+   "bb": {
+    "lo": -55,
+    "hi": -2,
+    "A": {
+     "out": "sell leg price | 0.05727 | proceeds | 0.2697 BTC | buy leg price | 0.01731 | units bought | 10.8868",
+     "state": "κ before | 0.0000 | Δκ | 0.48454 | κ after | 0.4845 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1489",
+     "cv": "1c0c5b84"
+    },
+    "B": {
+     "out": "sell leg price | 0.05727 | proceeds | 0.2697 BTC | buy leg price | 0.16721 | units bought | 1.5738",
+     "state": "κ before | 0.0000 | Δκ | -0.06967 | κ after | -0.0697 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1773",
+     "cv": "b5c8f3e8"
+    },
+    "changed": true
+   },
+   "bsz": {
+    "lo": 0.5,
+    "hi": 40,
+    "A": {
+     "out": "sell leg price | 0.05727 | proceeds | 0.0280 BTC | buy leg price | 0.16721 | units bought | 0.1638",
+     "state": "κ before | 0.0000 | Δκ | -0.00693 | κ after | -0.0069 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1788",
+     "cv": "ce18427d"
+    },
+    "B": {
+     "out": "sell leg price | 0.05727 | proceeds | 1.5439 BTC | buy leg price | 0.16721 | units bought | 8.8303",
+     "state": "κ before | 0.0000 | Δκ | -0.57744 | κ after | -0.5774 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1243",
+     "cv": "b507a39e"
+    },
+    "changed": true
+   },
+   "restored": {
+    "out": "sell leg price | 0.14183 | proceeds | 0.6840 BTC | buy leg price | 0.12563 | units bought | 5.2346",
+    "state": "κ before | 0.0000 | Δκ | 0.00574 | κ after | 0.0057 | S̄ · a · γ | unchanged | ATM before → after | 0.1789 → 0.1790",
+    "cv": "c5b25fba"
+   },
+   "canvasNonblank": {
+    "n": 15237,
+    "distinct": 1834,
+    "total": 323400
+   },
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P7_bands.png"
+  },
+  "P7_portfolio": {
+   "base": {
+    "pos": [
+     "BTC call 12.0% +3.00 0.1354 $26,695 -0.311",
+     "BTC put -10.0% 2.00 0.1256 -$16,506 0.536",
+     "BTC call 30.0% +1.50 0.0915 $9,015 -0.188"
+    ],
+    "acct": "perp notional | $7,000,000 | options value | $19,204 | account equity | $1,419,204 | account leverage | 4.95×",
+    "carve": "carved notional | $1,750,000 | equity carved out | $350,000 | perps tab after carve | $1,050,000",
+    "hedge": "net option delta\t-0.1421 BTC | required perp hedge\t0.1421 BTC | hedge notional\t$9,337 | residual exposure\t0.000000",
+    "liq": "account leverage | 4.95× | cap | 50× | headroom | 45.05× | status | SAFE"
+   },
+   "gamHigh": {
+    "pos": [
+     "BTC call 12.0% +3.00 0.0749 $14,766 -0.307",
+     "BTC put -10.0% 2.00 0.0768 -$10,084 0.630",
+     "BTC call 30.0% +1.50 0.0368 $3,626 -0.138"
+    ],
+    "acct": "perp notional | $7,000,000 | options value | $8,307 | account equity | $1,408,307 | account leverage | 4.98×",
+    "carve": "carved notional | $1,750,000 | equity carved out | $350,000 | perps tab after carve | $1,050,000",
+    "hedge": "net option delta\t0.1321 BTC | required perp hedge\t-0.1321 BTC | hedge notional\t$8,679 | residual exposure\t0.000000",
+    "liq": "account leverage | 4.98× | cap | 50× | headroom | 45.02× | status | SAFE"
+   },
+   "gamLow": {
+    "pos": [
+     "BTC call 12.0% +3.00 0.2905 $57,250 -0.164",
+     "BTC put -10.0% 2.00 0.2358 -$30,984 0.307",
+     "BTC call 30.0% +1.50 0.2644 $26,054 -0.128"
+    ],
+    "acct": "perp notional | $7,000,000 | options value | $52,320 | account equity | $1,452,320 | account leverage | 4.86×",
+    "carve": "carved notional | $1,750,000 | equity carved out | $350,000 | perps tab after carve | $1,050,000",
+    "hedge": "net option delta\t-0.0684 BTC | required perp hedge\t0.0684 BTC | hedge notional\t$4,492 | residual exposure\t0.000000",
+    "liq": "account leverage | 4.86× | cap | 50× | headroom | 45.14× | status | SAFE"
+   },
+   "restored": {
+    "pos": [
+     "BTC call 12.0% +3.00 0.1354 $26,695 -0.311",
+     "BTC put -10.0% 2.00 0.1256 -$16,506 0.536",
+     "BTC call 30.0% +1.50 0.0915 $9,015 -0.188"
+    ],
+    "acct": "perp notional | $7,000,000 | options value | $19,204 | account equity | $1,419,204 | account leverage | 4.95×",
+    "carve": "carved notional | $1,750,000 | equity carved out | $350,000 | perps tab after carve | $1,050,000",
+    "hedge": "net option delta\t-0.1421 BTC | required perp hedge\t0.1421 BTC | hedge notional\t$9,337 | residual exposure\t0.000000",
+    "liq": "account leverage | 4.95× | cap | 50× | headroom | 45.05× | status | SAFE"
+   },
+   "responds": true,
+   "shot": "/home/user/Perp-Options-AMM/evidence/app_build13/shots_A/P7_portfolio.png"
+  }
+ },
+ "console": [
+  "error: Failed to load resource: net::ERR_CONNECTION_RESET",
+  "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently",
+  "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently",
+  "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+ ],
+ "pageerrors": [],
+ "md5": "see file"
+}

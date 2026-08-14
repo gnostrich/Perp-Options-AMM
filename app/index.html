@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 13 · landing map</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 14 · current curve</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -166,7 +166,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <div>
     <div class="panel">
       <div class="chead"><b>Aggregate book — what you trade against</b>
-        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">best ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">best bid</span><span class="badge">makers</span></span></div>
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">best ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">best bid</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span><span class="badge">makers</span></span></div>
       <canvas id="cvT" width="980" height="510"></canvas>
       <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. Faint lines are the individual makers. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
     </div>
@@ -325,10 +325,15 @@ function calc(){
      landed(k,Q)    : (Σ fill_i·px_i)/Q  — the average price the taker pays
      impact_bps     : (landed/best − 1)·1e4  — how far the size pushes you off best
    Q beyond total book capacity = "doesn't fit", drawn dark red.                */
-function ladderAt(mkrs,k,pool){
- const a=mkrs.map(m=>({px:m.c.CALL(k)*(1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)})).sort((x,y)=>x.px-y.px);
+function ladderAt(mkrs,k,pool,side){                  // side: 'ask' (default) or 'bid'
+ const bid=side==='bid';
+ const a=mkrs.map(m=>({px:m.c.CALL(k)*(bid?1-m.h/1e4:1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)}))
+             .sort((x,y)=>bid?y.px-x.px:x.px-y.px);   // best first: cheapest ask / highest bid
  let cq=0,cc=0;const cum=a.map(r=>{cq+=r.cap;cc+=r.cap*r.px;return{q:cq,c:cc,px:r.px};});
  return {best:a[0].px,cum,total:cq};}
+// THE CURRENT CURVE: what you actually pay/receive ACROSS STRIKES at YOUR size.
+// Top-of-book (the drawn ask/bid) is the Q->0 limit of this; at real size it sits inside it.
+function landedCurve(mkrs,pool,Q,side){return k=>landedFrom(ladderAt(mkrs,k,pool,side),Q);}
 function landedFrom(Ld,Q){let pq=0,pc=0;
  for(const s of Ld.cum){if(Q<=s.q)return (pc+(Q-pq)*s.px)/Q;pq=s.q;pc=s.c;}
  return null;}
@@ -560,6 +565,19 @@ function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext
  A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
  for(let i=D.length-1;i>=0;i--)g.lineTo(X(xs[i]),Y(D[i]));g.closePath();g.fill();g.restore();
  ln(A,'#0ABAB5',2.3);ln(D,'#63e6e2',1.8,[6,3]);
+ // ── THE CURRENT CURVE (operator entry 557: "where is the current curve") ──
+ // top-of-book is the zero-size limit; this is the curve at the size actually being traded.
+ const Qc=+(($('tsz')||{value:3}).value)||3, sideBuy=TRADE.side==='buy';
+ const LC=landedCurve(set,MKT.pool,Qc,sideBuy?'ask':'bid');
+ g.save();g.strokeStyle='#FFA541';g.lineWidth=2.2;g.beginPath();let pen=false;
+ xs.forEach(k=>{const v=LC(k);if(v===null){pen=false;return;}
+   const x=X(k),y=Y(v);if(pen)g.lineTo(x,y);else{g.moveTo(x,y);pen=true;}});
+ g.stroke();g.restore();
+ {const v0=LC(hk),tob=sideBuy?B.ask(hk):B.bid(hk);
+  g.font='10px IBM Plex Mono';g.fillStyle='#FFA541';
+  g.fillText(v0===null?'your size ('+f(Qc,1)+' BTC) does not fit the book'
+    :'your curve at '+f(Qc,1)+' BTC — '+f(Math.abs(v0/tob-1)*1e4,0)+' bps WORSE than top-of-book '
+      +(sideBuy?'(you pay more)':'(you receive less)'),L+6,T+12);}
  g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),T+PH);g.stroke();g.restore();
  // LANDING HEATMAP — the aggregate is a SURFACE, not a curve (operator entry 555)
  drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,set,MKT.pool,{k:hk,Q:+(($('tsz')||{value:3}).value)||3},

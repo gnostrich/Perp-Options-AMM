@@ -3995,3 +3995,9 @@ any maker divergence > 0. The L1 flip is NOT applied to shared truth.
 _Context: operator asks for an explanation of the landing-map heatmap shipped in build 13._
 
 > explain that heatmap thing
+
+
+## Entry 557 — 2026-08-14 UTC
+_Context: operator brainstorms the landing-map presentation — whether the heatmap belongs below the curves or whether EACH curve generalises into its own heatmap, in which case buy and sell should be separate tabs rather than four overlapping lines; observes that the curves are actually DISTRIBUTIONS, individually and in aggregate; and asks where the current curve is on the aggregate panel._
+
+> it looks cool but 1. should it be down or each curve essentially generalises into its own heatmap in which case buy and sell should probably be separate tabs so instead of all on one and overlap you can toggle buy sell curves (but the curves are actually distributions both in terms of individual and aggregate) or idk brainstorming here… and then on the aggregate thing where is the current curve or whatverr …
