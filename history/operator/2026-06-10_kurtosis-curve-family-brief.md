@@ -3989,3 +3989,9 @@ Substantively the embedded claim is also wrong as stated: the skeptic showed, an
 own harness, that the mixture IS instantiated at the execution layer above the top maker's capacity
 (38.1 BTC at app defaults), and that book-level put–call parity breaks at 100% of strikes tested for
 any maker divergence > 0. The L1 flip is NOT applied to shared truth.
+
+
+## Entry 556 — 2026-08-14 UTC
+_Context: operator asks for an explanation of the landing-map heatmap shipped in build 13._
+
+> explain that heatmap thing
