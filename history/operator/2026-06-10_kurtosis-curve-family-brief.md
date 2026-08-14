@@ -3866,3 +3866,9 @@ _Context: operator explains that in the spreadsheet, for simplicity, slippage wa
 > so here's the thing, in the soreadsheet for simplicity we made slippage so trader pays the post execution price on the whole
 >
 > this was a simplifying assumptiokn for the sheet which is making rhe revenie from slipage a thing; in practice it calculates on a continuous basis closed form which we didnt do for shortfut
+
+
+## Entry 540 — 2026-08-14 UTC
+_Context: operator says yes to both — switch the workbook to the integral (continuous) convention, and treat fee/volume as the live question. Manager: (1) 2_Quote now uses s_full/2 (average along the path) with the impact flagged as a price path not revenue; 4_Trade LP revenue = FEE ONLY (old endpoint figure retained greyed for comparison); 8_LP_Econ revenue = fee x VOLUME, trade size no longer enters. (2) New sheet 10_Viability: fee x turnover grid, green/red. Today's 30bps at 0.3x/day = -0.66 (deep red). Break-even fee 90bps at 0.3x; break-even turnover 0.90x/day at 30bps; break-even line is roughly fee x turnover = 27 bps-x/day. Flagged that bleed reads live off the per-strike curvature, so a flatter curve lowers the bar proportionally._
+
+> yes to both

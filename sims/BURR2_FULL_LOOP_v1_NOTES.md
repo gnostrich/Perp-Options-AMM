@@ -113,3 +113,41 @@ The operator's "volume is right" was correct; my whole trade-size-distribution c
 **Status of the workbook:** `2_Quote` / `4_Trade` / `8_LP_Econ` still use the endpoint convention (they mirror
 the operator's sheet). They are therefore **optimistic on revenue by ½·s·Q·P per trade**. Fixing this means
 switching the execution cost to the integral form — a real change, flagged, not yet made.
+
+---
+## SWITCHED TO THE INTEGRAL CONVENTION + VIABILITY GRID (operator entry 540: "yes to both")
+
+**Change 1 — the workbook now prices execution continuously.**
+- `2_Quote`: effective half-spread is now `s_full/2 + posted h` (the **average** along the path), with a red
+  note that the impact half is a **price path, not LP revenue**.
+- `4_Trade`: slippage is the integral form; **LP revenue is now FEE ONLY**. The old endpoint figure is kept
+  beside it, greyed, labelled *"the OLD overstated figure"*, so the difference stays visible.
+- `8_LP_Econ`: `revenue = fee × VOLUME`. **Trade size no longer enters revenue at all.**
+
+**Change 2 — new sheet `10_Viability`: the fee × turnover grid.** This is now THE business question.
+
+**NET (× book value / yr), integral convention, bleed = 0.985:**
+| fee \ turnover | 0.1× | **0.3×** | 0.5× | 1.0× | 2.0× | 3.0× | 5.0× |
+|---|---|---|---|---|---|---|---|
+| 10 bps | −0.95 | −0.88 | −0.80 | −0.62 | −0.25 | +0.11 | +0.84 |
+| **30 bps** *(today)* | −0.88 | **−0.66** | −0.44 | **+0.11** | +1.21 | +2.30 | +4.49 |
+| 50 bps | −0.80 | −0.44 | −0.07 | +0.84 | +2.67 | +4.49 | +8.14 |
+| 75 bps | −0.71 | −0.16 | **+0.38** | +1.75 | +4.49 | +7.23 | +12.70 |
+| **100 bps** | −0.62 | **+0.11** | +0.84 | +2.67 | +6.32 | +9.97 | +17.27 |
+| 200 bps | −0.25 | +1.21 | +2.67 | +6.32 | +13.62 | +20.92 | +35.52 |
+
+**Break-even fee by turnover:** 0.1× → 270bps · **0.3× → 90bps** · 0.5× → 54bps · **1.0× → 27bps** ·
+2.0× → 13bps · 5.0× → 5bps.
+**Break-even turnover by fee:** 10bps → 2.70×/day · **30bps → 0.90×/day** · 50bps → 0.54× ·
+75bps → 0.36× · 100bps → 0.27×.
+
+### The honest read
+**Today's assumption (30bps, 0.3×/day) sits at −0.66 — deep in the red.** Two routes out, and only two:
+1. **Raise the fee** to ~90bps at current turnover, or
+2. **Get turnover to ~0.9×/day** at the current 30bps.
+Anything on or above the green boundary works; everything below it does not. Note the grid is roughly a
+hyperbola — `fee × turnover ≈ 27 bps·×/day` is the break-even line.
+
+**Caveat that could move the whole grid:** `bleed` reads live off `1_Curve!J17` (mean per-strike curvature
+≈5.47 at the current `a, γ`). A **flatter curve (lower curvature) lowers the bar proportionally** — so curve
+shape is itself an economics lever, not just a pricing choice.
