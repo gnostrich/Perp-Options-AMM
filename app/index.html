@@ -92,7 +92,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ CENTRE : curve + ladder ══ -->
   <div>
     <div class="panel">
-      <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
+      <div class="chead"><b>Your curve — as a cloud</b><span style="display:flex;align-items:center;gap:8px"><span class="badge" id="ebBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="ebSell" style="cursor:pointer">SELL</span><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
       <canvas id="cv" width="980" height="400" style="cursor:crosshair"></canvas>
       <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 17 · makers + aggregate</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 18 · clouds everywhere</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -247,7 +247,7 @@ const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0
 // tester FLAG-C1: "depth (BTC per 1% strike)" removed — P.depth had zero readers,
 // so the slider moved and nothing in the app changed. Depth now comes from λ and
 // the pool, which the cloud actually renders.
-let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15, CSIDE='ask', CVIEW='agg';
+let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='transact', ARBD=0.15, CSIDE='ask', CVIEW='agg';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
@@ -406,7 +406,7 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
   cbid.push(C*(1-hh));cask.push(C*(1+hh));
   pbid.push(Pu*(1-hh));pask.push(Pu*(1+hh));}
  bi.push(0);as.push(0);
- const ymax=Math.max(Math.max(...cask),Math.max(...pask))*1.06;
+ const ymax=Math.max(...cask)*1.12;
  const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
  g.strokeStyle='#1c2629';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
@@ -414,19 +414,21 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  for(let i=0;i<=4;i++)g.fillText((ymax*(1-i/4)).toFixed(2),8,T+i*PH/4+3);
  [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-11));
  g.strokeStyle='#0f3339';g.beginPath();g.moveTo(X(0),T);g.lineTo(X(0),T+PH);g.stroke();
- const ln=(A,col,w,dash)=>{g.save();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=w;g.beginPath();
-  A.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
- // spread BANDS — the two curve sets are the point, so show them
- const band=(lo,hi,col)=>{g.save();g.globalAlpha=.20;g.fillStyle=col;g.beginPath();
-   hi.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});
-   for(let i=lo.length-1;i>=0;i--){g.lineTo(X(xs[i]),Y(lo[i]));}
-   g.closePath();g.fill();g.restore();};
- band(cbid,cask,'#0ABAB5'); band(pbid,pask,'#FF6767');
- // ASK (you buy here) solid ; BID (you sell here) dashed-solid, both first-class
- ln(cask,'#0ABAB5',2.0);           ln(cbid,'#63e6e2',1.6,[6,3]);
- ln(pask,'#FF6767',2.0);           ln(pbid,'#ffb3b3',1.6,[6,3]);
- // mid, faint reference
- ln(ca,'#12484a',1,[2,4]); ln(pu,'#5a2b2b',1,[2,4]);
+ // operator entry 562 — YOUR curve is a cloud too, not a line. Same BUY/SELL tab
+ // as Transact. Puts are not drawn separately: parity C(k) − P(k) = −k determines
+ // them exactly from this, so a put cloud would carry no extra information.
+ // Reference depth = the SIZE box, not the whole pool. One LP's full capacity
+ // moves the price far past the top of a value axis (λ·ATM is additive in price),
+ // so normalising to it never fades. Fading over "the first Qs BTC taken" keeps the
+ // band on the curve and makes the size control do real work.
+ const Qs=Math.max(0.1,+(($('qsz')||{value:5}).value)||5);
+ const you=[{n:'YOU',c:st.c,h:st.hEff,share:Qs/MKT.pool,lam:P.lam,me:true}];
+ cloudIn(g,you,L,T,W-L-R,PH,ymax,CSIDE,Qs);
+ g.font='10px IBM Plex Mono';g.fillStyle=CSIDE==='ask'?'#63e6e2':'#FF6767';
+ g.fillText(CSIDE==='ask'
+   ? '▲ YOUR BUY-side cloud — the price move as takers lift the first '+f(Qs,1)+' BTC off you'
+   : '▼ YOUR SELL-side cloud — the price move as takers hit the first '+f(Qs,1)+' BTC into you',L+6,T+12);
+ g.fillStyle='#677275';g.fillText('band thickness = your slippage over that size · raise «size» to widen it',L+6,T+26);
  // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
  // where a trade of a given size at a given strike actually lands the taker.
  // tester FLAG-LM1: this used to hand EVERY maker st.c (your own curve), so
@@ -504,13 +506,17 @@ function bind(){
  ($('qsz')||{}).oninput=function(){render();};
  ['tk','tsz','bs','bb','bsz'].forEach(id=>{const e=$(id);if(e&&!e._w){e._w=1;e.oninput=()=>{if(id==='tk'){const r=$('tkr');if(r)r.value=e.value;}render();};}});
  const ar=$('arbr');if(ar&&!ar._w){ar._w=1;ar.oninput=()=>{ARBD=+ar.value;render();};}
- const cbb=$('cbBuy'),cbs=$('cbSell');
+ const cbb=$('cbBuy'),cbs=$('cbSell'),ebb=$('ebBuy'),ebs=$('ebSell');
  const cset=sd=>{CSIDE=sd;
    if(cbb){cbb.style.background=sd==='ask'?'var(--teal)':'transparent';cbb.style.color=sd==='ask'?'#04191a':'';cbb.style.borderColor=sd==='ask'?'var(--teal)':'';}
    if(cbs){cbs.style.background=sd==='bid'?'#FF6767':'transparent';cbs.style.color=sd==='bid'?'#1a0b0b':'';cbs.style.borderColor=sd==='bid'?'#FF6767':'';}
+   if(ebb){ebb.style.background=sd==='ask'?'var(--teal)':'transparent';ebb.style.color=sd==='ask'?'#04191a':'';ebb.style.borderColor=sd==='ask'?'var(--teal)':'';}
+   if(ebs){ebs.style.background=sd==='bid'?'#FF6767':'transparent';ebs.style.color=sd==='bid'?'#1a0b0b':'';ebs.style.borderColor=sd==='bid'?'#FF6767':'';}
    render();};
  if(cbb&&!cbb._w){cbb._w=1;cbb.onclick=()=>cset('ask');}
  if(cbs&&!cbs._w){cbs._w=1;cbs.onclick=()=>cset('bid');}
+ if(ebb&&!ebb._w){ebb._w=1;ebb.onclick=()=>cset('ask');}
+ if(ebs&&!ebs._w){ebs._w=1;ebs.onclick=()=>cset('bid');}
  const va=$('cvAgg'),vm2=$('cvMk');
  const vset=v=>{CVIEW=v;
    if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}
