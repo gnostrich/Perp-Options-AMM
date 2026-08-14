@@ -44,3 +44,29 @@ Balancer curve — perps, portfolio, translation to margin, LP aggregation/appor
   is not automated.
 - Trade-size distribution is a single average `Q/N`, not a distribution — and B14 shows the answer hinges on it.
 - Everything is still `sims/` brainstorm; nothing is wired to the engine.
+
+---
+## FIXES APPLIED (operator entries 533–537)
+
+**Fix 3 — relabelled one cell (not a program).** `QN` → **`QN_volwtd`**, with a red note:
+*"VOLUME-WEIGHTED avg trade size. NOT the plain average: a few whales push this UP a lot. Revenue tracks
+THIS number."* The operator was right that a single assumption cell is fine — the problem was the **label**,
+which invited the wrong number. Demonstrated: 1000 tiny trades vs 990 tiny + 10 whales have the **same plain
+average** but **5.6× different revenue** (0.047 vs 0.262); revenue tracks the volume-weighted figure.
+
+**Fix 1 — curvature is now per-strike and LIVE.** `1_Curve!J` computes `G̃(k)` from the curve itself;
+`8_LP_Econ` reads `1_Curve!J17` instead of the hard-coded 5.76.
+**⚠ I introduced and then caught a bug here:** my first version used an *even*-spacing second-difference on an
+**unevenly spaced** strike grid, which produced a spurious spike (G̃ = 57.26 at k=−0.05). Corrected to the
+uneven-grid formula `f''(x₁) = 2(h₂f₀ − (h₁+h₂)f₁ + h₁f₂)/(h₁h₂(h₁+h₂))`. Result is now smooth and rises with |k|:
+| k | −0.40 | −0.25 | −0.15 | −0.05 | 0.00 | +0.15 | +0.25 | +0.40 |
+|---|---|---|---|---|---|---|---|---|
+| **G̃** | 0.49 | 1.63 | 3.58 | 6.07 | 4.76 | 8.23 | 8.96 | **9.66** |
+mean **5.47** (the old hard-coded 5.76 was close on average, but hid a ~20× spread across strikes).
+
+**Fix 2 — the ladder now re-sorts per strike.** New block `3_Apportion!A22` computes, for every strike, which
+LP is cheapest (allowing each LP's posted spread to vary with strike), and flags in column F where the order
+**CHANGES**. A single fixed fill order is wrong whenever LPs' spread profiles cross.
+
+**Not fixed (unchanged, and correctly so):** Gap 4 — none of this is wired into the engine; that is a build,
+not a sheet edit.
