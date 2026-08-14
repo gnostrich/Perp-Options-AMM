@@ -94,7 +94,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="panel">
       <div class="chead"><b>Your two curve sets — buy &amp; sell</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">spread view ×</span><input type="range" id="mag" min="1" max="60" step="1" value="25" style="width:110px"><b class="t2" id="magv" style="color:var(--teal)">×25</b><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
-      <canvas id="cv" width="980" height="540" style="cursor:crosshair"></canvas>
+      <canvas id="cv" width="980" height="400" style="cursor:crosshair"></canvas>
       <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
       <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. <b>Bottom panel = the landing map</b>: the aggregate is not a curve — what a taker actually pays depends on SIZE too, because the trade walks the book cheapest-first. Colour = how far a trade of that size at that strike lands from the best quote (dark = at best, amber/red = pushed off it, deep red = the size does not fit the book). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
     </div>
@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 16 · tester fixes</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 17 · makers + aggregate</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -166,8 +166,9 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <div>
     <div class="panel">
       <div class="chead"><b>Aggregate book — what you trade against</b>
-        <span><span class="badge" id="cbBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="cbSell" style="cursor:pointer">SELL</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span></span></div>
-      <canvas id="cvT" width="980" height="510"></canvas>
+        <span><span class="badge" id="cbBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="cbSell" style="cursor:pointer">SELL</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span>
+        <span style="margin-left:10px"><span class="badge" id="cvAgg" style="cursor:pointer;background:#243b3d;color:#fff">AGGREGATE</span><span class="badge" id="cvMk" style="cursor:pointer">MAKERS</span></span></span></div>
+      <canvas id="cvT" width="980" height="470"></canvas>
       <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. <b>The curve is not a line</b> — each maker is an AMM, so taking size walks its own curve continuously and the book is a cloud: brightness is the liquidity still untouched at that price, full at the touch and fading to nothing where the book is exhausted, so how far the cloud reaches IS the depth. BUY and SELL are separate tabs; you only ever see one side. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b> — there is no shared resting book to cross. Where the envelope inverts, that is a genuine <b>arbitrage</b>, and arbitrageurs taking it are what discipline an outlier maker. Drag <i>maker divergence</i> to see it open and close.</div>
     </div>
     <div class="panel" style="margin-top:12px">
@@ -246,7 +247,7 @@ const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0
 // tester FLAG-C1: "depth (BTC per 1% strike)" removed — P.depth had zero readers,
 // so the slider moved and nothing in the app changed. Depth now comes from λ and
 // the pool, which the cloud actually renders.
-let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15, CSIDE='ask';
+let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15, CSIDE='ask', CVIEW='agg';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
@@ -396,7 +397,7 @@ function drawHeat(g,W,L,R,yT,hB,k0,k1,mkrs,pool,mark,title,side){
   g.fillStyle=px===null?'#FF6767':'#fff';g.fillText(lab,bx,by);g.restore();}}
 
 /* ─── draw ─── */
-function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32,HB=150;
+function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=32,HB=0;
  g.clearRect(0,0,W,H);const xs=[],ca=[],pu=[],bi=[],as=[];
  const hh=(st.hEff/1e4)*MAG;
  const cbid=[],cask=[],pbid=[],pask=[];
@@ -431,10 +432,7 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  // tester FLAG-LM1: this used to hand EVERY maker st.c (your own curve), so
  // landed/best cancelled C(k) and the map had zero strike dependence while its
  // title said "at that strike". Use the real book.
- const mkrs=makerCurves(); aggBook(mkrs,st.book.map(m=>m.h));
- drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,mkrs,MKT.pool,
-   {k:HK===null?0:HK,Q:+(($('qsz')||{value:5}).value)||5},
-   'LANDING MAP — where a trade of that size at that strike lands vs the best quote');
+ // operator entry 562: landing strip removed here too.
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
  g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);
  if(HK!==null){const hq2=st.hEff/1e4,Cx=st.c.CALL(HK),Px=st.c.PUT(HK);
@@ -513,6 +511,13 @@ function bind(){
    render();};
  if(cbb&&!cbb._w){cbb._w=1;cbb.onclick=()=>cset('ask');}
  if(cbs&&!cbs._w){cbs._w=1;cbs.onclick=()=>cset('bid');}
+ const va=$('cvAgg'),vm2=$('cvMk');
+ const vset=v=>{CVIEW=v;
+   if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}
+   if(vm2){vm2.style.background=v==='makers'?'#243b3d':'transparent';vm2.style.color=v==='makers'?'#fff':'';}
+   render();};
+ if(va&&!va._w){va._w=1;va.onclick=()=>vset('agg');}
+ if(vm2&&!vm2._w){vm2._w=1;vm2.onclick=()=>vset('makers');}
  const tkr=$('tkr');if(tkr&&!tkr._w){tkr._w=1;tkr.oninput=()=>{$('tk').value=tkr.value;render();};}
  // tester FLAG-C2: #tkf never moved off its hard-coded width
  if(tkr){const tf=$('tkf');if(tf)tf.style.width=((+tkr.value+60)/120*100).toFixed(1)+'%';}
@@ -591,23 +596,52 @@ function depthQ(set,k,p,side){let Q=0;
   const slope=(m.lam*m.c.ATM)/(0.01*MKT.pool),d=(side==='ask'?p-base:base-p);
   if(d<=0)continue; Q+=Math.min(m.share*MKT.pool,d/slope);}
  return Q;}
-function drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,side){
- const NX=300,NY=340,cw=(W-L-R)/NX,ch=PH/NY,ask=side==='ask';
- const Qtot=set.reduce((s,m)=>s+m.share*MKT.pool,0);
+// paint a cloud for ANY maker set into ANY rect. Qref is the depth the brightness
+// is measured against — pass the WHOLE book's depth when drawing individual makers
+// so their clouds are directly comparable (a thin maker looks thin).
+function cloudIn(g,set,x0,y0,w,h,ymax,side,Qref,res){
+ const NX=res||300,NY=Math.round((res||300)*1.13),cw=w/NX,ch=h/NY,ask=side==='ask';
+ const Qcap=set.reduce((t,m)=>t+m.share*MKT.pool,0)||1;
  const edge=k=>ask?Math.min(...set.map(m=>m.c.CALL(k)*(1+m.h/1e4)))
                   :Math.max(...set.map(m=>m.c.CALL(k)*(1-m.h/1e4)));
  for(let i=0;i<NX;i++){const k=-0.7+1.4*(i+0.5)/NX,e0=edge(k);
   for(let j=0;j<NY;j++){const p=ymax*(1-(j+0.5)/NY);
    if(ask?p<=e0:p>=e0)continue;
-   const t=1-depthQ(set,k,p,side)/Qtot; if(t<=0.004)continue;
+   // FADE terminates at THIS set's own capacity (a single maker's cloud must end
+   // where that maker is exhausted); INTENSITY is scaled by its share of Qref, so
+   // a thin maker renders dim. For the aggregate Qcap==Qref and this is a no-op.
+   const t=(1-Math.min(1,depthQ(set,k,p,side)/Qcap))*Math.min(1,Qcap/Qref);
+   if(t<=0.004)continue;
    const u=Math.pow(t,0.85);
    const c=ask?[Math.round(6+26*u),Math.round(24+200*u),Math.round(26+192*u)]
               :[Math.round(34+221*u),Math.round(12+58*u),Math.round(16+58*u)];
-   g.fillStyle='rgb('+c.join(',')+')';g.fillRect(L+i*cw,T+j*ch,cw+0.7,ch+0.7);}}
+   g.fillStyle='rgb('+c.join(',')+')';g.fillRect(x0+i*cw,y0+j*ch,cw+0.7,ch+0.7);}}
  g.save();g.strokeStyle=ask?'rgba(10,186,181,.5)':'rgba(255,103,103,.5)';g.lineWidth=1;
- g.beginPath();for(let i=0;i<=200;i++){const k=-0.7+1.4*i/200,x=X(k),y=Y(edge(k));i?g.lineTo(x,y):g.moveTo(x,y);}
+ g.beginPath();for(let i=0;i<=200;i++){const k=-0.7+1.4*i/200;
+  const x=x0+(k+0.7)/1.4*w, y=y0+(1-edge(k)/ymax)*h; i?g.lineTo(x,y):g.moveTo(x,y);}
  g.stroke();g.restore();}
-function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=150;
+function drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,side){
+ cloudIn(g,set,L,T,W-L-R,PH,ymax,side,set.reduce((s,m)=>s+m.share*MKT.pool,0));}
+// SMALL MULTIPLES — one cloud per maker, shared brightness scale (operator entry 562)
+function drawMakerGrid(g,set,W,H,side){
+ const Qtot=set.reduce((s,m)=>s+m.share*MKT.pool,0);
+ const ask=side==='ask';
+ const ymax=Math.max(...set.map(m=>ask?m.c.CALL(-0.7)*(1+m.h/1e4):m.c.CALL(-0.7)))*1.06;
+ const cols=2,rows=Math.ceil(set.length/cols),PAD=12,LB=30,TB=22;
+ const cw=(W-PAD*(cols+1))/cols, chh=(H-PAD*(rows+1))/rows;
+ set.forEach((m,i)=>{
+  const cx=PAD+(i%cols)*(cw+PAD), cy=PAD+Math.floor(i/cols)*(chh+PAD);
+  g.strokeStyle='#1e3a3f';g.strokeRect(cx,cy,cw,chh);
+  cloudIn(g,[m],cx+LB,cy+TB,cw-LB-6,chh-TB-16,ymax,side,Qtot,150);
+  g.font='10px IBM Plex Mono';g.fillStyle=m.me?'#0ABAB5':'#c9d4d6';
+  g.fillText(m.n+(m.me?'  (you)':''),cx+LB,cy+14);
+  g.fillStyle='#677275';
+  g.fillText(f(m.share*MKT.pool,0)+' BTC · '+f(m.h,0)+' bps · λ '+f(m.lam,2),cx+LB+118,cy+14);
+  g.fillText('−70%',cx+LB,cy+chh-4); g.fillText('+70%',cx+cw-38,cy+chh-4);});
+ g.font='10px IBM Plex Mono';g.fillStyle='#677275';
+ g.fillText('same brightness scale in every cell — a thin maker looks thin',PAD+2,H-2);}
+function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=0;
+ if(CVIEW==='makers'){g.clearRect(0,0,W,H);drawMakerGrid(g,set,W,H,CSIDE);return;}
  g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
  const A=xs.map(B.ask),D=xs.map(B.bid);
  const PH=H-T-Bm-HB-28;
@@ -637,9 +671,9 @@ function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext
     :'your curve at '+f(Qc,1)+' BTC — '+f(Math.abs(v0/tob-1)*1e4,0)+' bps WORSE than top-of-book '
       +(sideBuy?'(you pay more)':'(you receive less)'),L+6,T+26);}
  g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),T+PH);g.stroke();g.restore();
- // LANDING HEATMAP — the aggregate is a SURFACE, not a curve (operator entry 555)
- drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,set,MKT.pool,{k:hk,Q:+(($('tsz')||{value:3}).value)||3},
-   'LANDING MAP — where YOUR size at THAT strike lands vs best ('+(CSIDE==='ask'?'BUY':'SELL')+' side)',CSIDE);
+ // operator entry 562: the landing strip that used to sit here is REMOVED — the
+ // cloud already answers "where does my size land", so the second panel was
+ // redundant (and it was the panel carrying the tester's LM1/LM2 flags).
  g.fillStyle='#677275';g.font='10px IBM Plex Mono';
  g.fillText('moneyness  k = K/S − 1',W/2-64,H-1);}
 
