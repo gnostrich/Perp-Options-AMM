@@ -3817,3 +3817,9 @@ _Context: operator asks to brainstorm the remaining open items and consolidate i
 _Context: operator clarifies the sheet he meant was NOT the returns sim but the one with the AMM CURVES, parameters, showing how it adapts to trades. Manager checked all 9 sims workbooks and confirmed HONESTLY that no such sheet existed (all were static snapshots), then built sims/CURVE_ADAPTS_TO_TRADES_v1.xlsx implementing the engine's tradeUpdateAt law: pool before -> trade (rho,dy) -> pool after, whole curve before/after with charts, 5-trade chained sequence, and 7 checks. T1-T3 reproduce the pinned exhibit exactly (w'=11/21, x'=215/22, dx=-5/22 to 0.00e+00)._
 
 > so the sheet i meant wasnt the returns sim, i meant the one we had where the AMM curves were there remember? paramaters wtc showijng jow it adapta to trad
+
+
+## Entry 528 — 2026-08-14 UTC
+_Context: operator uploads the actual sheet he meant — temporal_burr2_swap_pricer_6.xlsx (Burr-2 swap pricer). Manager audited it independently (scipy incomplete beta): all Annex-C health identities exact (ATM wings meet 0.000e+00, call at K=0 = 1, put at K=0 = 0) and put-call parity C-P=-k holds EXACTLY at every strike. OWNED a real miss: my sims (incl. CURVE_ADAPTS_TO_TRADES_v1) were built on the superseded single-power-law/w-based law, not the Burr-2/kappa design — despite the operator flagging the move to Burr at entry 518. Saved to sims/operator_sheets/ with an audit note listing what changes (gamma-bleed coefficient, smile-obstruction scope, slippage microstructure) and what carries over (loop structure, account liquidation, apportionment, fee-vs-slippage)._
+
+> [attachment: temporal_burr2_swap_pricer_6.xlsx — Burr-2 swap pricer, one 'Trade' tab: setup (S, Sbar, a, gamma, N, lambda, fee) -> transaction (sell/buy wing, k inner/outer, size) -> state before|after; Annex A leg prices, Annex B 61-point chart pipeline, Annex C health identities]
