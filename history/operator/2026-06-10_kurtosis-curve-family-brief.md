@@ -4036,3 +4036,9 @@ _Context: operator approves panel E (green ticks on the cloud in the annotated s
 >
 > id approved these…
 > [annotated screenshot: green ticks on the depth cloud, red crosses through the landing-map strip below it]
+
+
+## Entry 563 — 2026-08-14 UTC
+_Context: operator rules on the cloud normalisation — since the aggregate view and the individual (per-maker) view are never on screen at the same time, they should each have their own brightness maximum rather than share one scale._
+
+> and i get the normalisation thing basically youd have to have different max for aggregate and individual which are always seen separately

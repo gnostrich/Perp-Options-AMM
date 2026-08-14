@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 18 · clouds everywhere</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 19 · per-view scale</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -630,7 +630,12 @@ function drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,side){
  cloudIn(g,set,L,T,W-L-R,PH,ymax,side,set.reduce((s,m)=>s+m.share*MKT.pool,0));}
 // SMALL MULTIPLES — one cloud per maker, shared brightness scale (operator entry 562)
 function drawMakerGrid(g,set,W,H,side){
- const Qtot=set.reduce((s,m)=>s+m.share*MKT.pool,0);
+ // operator entry 563: the aggregate view and this one are never on screen at the
+ // same time, so they get DIFFERENT maxima. Here the reference is the BIGGEST
+ // single maker, not the whole book — otherwise every cell is dim (the largest
+ // maker would top out at its share of the book, ~48%). Shared across the four
+ // cells, because those ARE seen together: a thin maker still looks thin.
+ const Qtot=Math.max(...set.map(m=>m.share*MKT.pool));
  const ask=side==='ask';
  const ymax=Math.max(...set.map(m=>ask?m.c.CALL(-0.7)*(1+m.h/1e4):m.c.CALL(-0.7)))*1.06;
  const cols=2,rows=Math.ceil(set.length/cols),PAD=12,LB=30,TB=22;
@@ -645,7 +650,8 @@ function drawMakerGrid(g,set,W,H,side){
   g.fillText(f(m.share*MKT.pool,0)+' BTC · '+f(m.h,0)+' bps · λ '+f(m.lam,2),cx+LB+118,cy+14);
   g.fillText('−70%',cx+LB,cy+chh-4); g.fillText('+70%',cx+cw-38,cy+chh-4);});
  g.font='10px IBM Plex Mono';g.fillStyle='#677275';
- g.fillText('same brightness scale in every cell — a thin maker looks thin',PAD+2,H-2);}
+ g.fillText('shared scale across these four cells (a thin maker looks thin) — scaled to the'
+   +' biggest maker, '+f(Qtot,0)+' BTC, not to the whole book',PAD+2,H-2);}
 function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext('2d'),W=cv.width,H=cv.height,L=56,R=16,T=16,Bm=30,HB=0;
  if(CVIEW==='makers'){g.clearRect(0,0,W,H);drawMakerGrid(g,set,W,H,CSIDE);return;}
  g.clearRect(0,0,W,H);const xs=[];for(let i=0;i<=140;i++)xs.push(-0.7+1.4*i/140);
