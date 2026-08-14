@@ -13,7 +13,7 @@ BRAINSTORM / non-core. This is my synthesis of where the pieces connect — conf
  1. PER-LP SHAPE  (map 1)         each LP: perp book → its OWN option curve                 │
     β(k)=β·Δ², h(k)=h·|Δ|, parity C−P=−k        [v3-maps-lean BASIS/MAP · trusted-fr-prover]│
         ▼                                                                                   │
- 2. AGGREGATION   (map 2)         N LP curves → ONE arb-free book                           │
+ 2. AGGREGATION   (map 2)         N LP curves → ONE BUTTERFLY-arb-free book                           │
     1/β_agg=Σ1/βᵢ, strike-invariant weights, tightest spread   [BOOK: arb-free/parity/convex]│
         ▼                                                                                   │
  3. PRICING / CURVE (engine v28)  book priced value∝S^(−γ), m-lens, American smooth-paste    │
@@ -29,7 +29,7 @@ BRAINSTORM / non-core. This is my synthesis of where the pieces connect — conf
     exit: net × carved-slice closing equity × L₀   [dollar pipe built · semantics partly OPEN] │
         ▼                                                                                   │
  7. HEDGE READBACK (map 3)        inventory → perp-equivalent: NetPerp + Σ Δ(k)·q(k) ──────────┘
-                                  same Δ transports (1) and reads back (3)   [BASIS Exposure]
+                                  same Δ transports (1) and reads back (3)   [⛔ NO LEAN — `Exposure` does not exist; see AUDIT_closed_loop_lean]
 ```
 **Loop closes:** perp book → per-LP shapes → aggregated book → pricing → trade/funding → economics →
 settlement (perp units → cash) → hedge readback → back to the perp book.
@@ -55,3 +55,30 @@ settlement (perp units → cash) → hedge readback → back to the perp book.
 3. Wire the **hedge readback** (map 3) so the LP's net exposure ties back to the perp book — the loop closes numerically.
 4. THEN cement with Lean (`lake build` the maps; submit the two missing lemmas to Aristotle).
 **Open for operator:** confirm this is the loop you mean; L1–L3 are operator-tier calls that gate a *faithful* mechanization.
+
+---
+## ⚠ CORRECTIONS from the Lean audit (`notes/research/AUDIT_closed_loop_lean_2026-08-14.md`, 2026-08-14)
+1. **Stage 7 has NO Lean backing.** `Exposure` is cited by the maps' README **and by this map** and
+   **does not exist** in any of the three files. De-cited above. (~10 lines would fix it.)
+2. **"Arb-free" here means BUTTERFLY-arb-free only** — no unconditional vertical leg, no price bounds
+   (`C ≥ intrinsic`, `C ≤ S`), no calendar (N/A for perpetuals).
+3. **`1/β_agg = Σ1/βᵢ` is a DEFINITION,** not a proved theorem (the proved statement is its transported form).
+4. **Stage 1 issues depth & spread only** — the option LEVEL is never derived from the perp book.
+5. **Stage 7's closure is an identity in Δ:** at `hedge_ratio = 1` the residual is zero for *any* Δ
+   (verified: even a nonsense Δ≡42 gives residual 0). So "the loop closes" tests the **hedge ratio**, not
+   whether Δ is right. *(Separately verified: v2/v3's Δ **is** the true `−∂V/∂lnS`, err ≤4e-11 — the audit's
+   "Δ is the normalized mark" applies to v1, which v2 replaced. The identity critique stands regardless.)*
+6. **Coordinate seam:** Stage 3 prices in **log**-moneyness; the maps' parity anchor `C−P=−k` is **linear**
+   moneyness. Harmless today (Stage 3 forms no call/put pair) but bites the moment they're tied — 22.9%
+   divergence at u=0.5.
+7. **BUILD UPGRADED:** `sims/v3-maps-lean` is now **locally kernel-checked** (`lake build`, 3107 jobs, rc=0;
+   all 54 theorems `#print axioms` = {propext, Classical.choice, Quot.sound}; byte-identical sources).
+   Label: **verified** (caveat: Mathlib oleans from the standard CI cache, not a from-scratch rebuild).
+
+## 🚩 L1 IS A STRUCTURAL OBSTRUCTION (not just an unbuilt feature)
+Aristotle conjecture (a) contains `mixture_not_single_lens`: a nontrivial mixture of **distinct** lenses is
+strictly log-**convex** in log-strike on the OTM side, while a single lens is log-**affine**. So the aggregate
+OTM mark equals `c·(1+k)^(−g)` for **no** `c,g`. **Heterogeneous LP steepness generates a SMILE, and the
+single-`m` lens structurally cannot represent it.** "Each LP picks its own profile" and "the engine prices the
+book with one lens" are **formally incompatible**. Product choice (operator-tier): multi-lens/smile pricing,
+**or** bind LPs to a common `m` and let them differ only in depth/spread/level.
