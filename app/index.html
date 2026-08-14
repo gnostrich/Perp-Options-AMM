@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 15 · depth cloud</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 16 · tester fixes</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -242,7 +242,10 @@ return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a
 const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
- ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005],["depth","depth (BTC per 1% strike)",1,80,1]];
+ ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005]];
+// tester FLAG-C1: "depth (BTC per 1% strike)" removed — P.depth had zero readers,
+// so the slider moved and nothing in the app changed. Depth now comes from λ and
+// the pool, which the cloud actually renders.
 let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='earn', ARBD=0.15, CSIDE='ask';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
@@ -355,7 +358,9 @@ function drawHeat(g,W,L,R,yT,hB,k0,k1,mkrs,pool,mark,title,side){
   for(let j=0;j<NY;j++){const px=landedFrom(Ld,qAt(j));
    const b=px===null?null:(px/Ld.best-1)*1e4;col.push(b);if(b!==null&&b>mx)mx=b;}
   V.push(col);}
- const sc=mx>1e-9?mx:1;
+ // FLOOR the colour scale (tester FLAG-LM2): without it a 0.005 bp field painted
+ // byte-identically to a 1,000 bp one, because the ramp normalised to its own max.
+ const FLOOR=25, sc=Math.max(mx,FLOOR);
  for(let i=0;i<NX;i++)for(let j=0;j<NY;j++)
   {g.fillStyle=heatCol(V[i][j]===null?null:V[i][j]/sc);g.fillRect(L+i*cw,yT+hB-(j+1)*ch,cw+0.7,ch+0.7);}
  g.strokeStyle='#2a3538';g.lineWidth=1;g.strokeRect(L,yT,W-L-R,hB);
@@ -369,7 +374,9 @@ function drawHeat(g,W,L,R,yT,hB,k0,k1,mkrs,pool,mark,title,side){
  g.fillText('trade size (BTC)',-40,0);g.restore();
  // header + legend ABOVE the band (never over the field)
  g.font='10px IBM Plex Mono';g.fillStyle='#8a9698';g.fillText(title,L,yT-6);
- const leg=[[0,'0'],[0.5,fq(mx/2)+' bp'],[1,fq(mx)+' bp'],[null,'no fit']];
+ const leg=[[0,'0'],[0.5,fq(sc/2)+' bp'],[1,fq(sc)+' bp'],[null,'no fit']];
+ if(mx<FLOOR){g.fillStyle='#677275';g.font='9px IBM Plex Mono';
+   g.fillText('field max only '+mx.toFixed(2)+' bp — scale floored, so this reads FLAT on purpose',L+4,yT+hB+11);}
  let lx=W-R;const wd=leg.map(z=>g.measureText(z[1]).width+16);
  lx-=wd.reduce((a,b)=>a+b,0);
  leg.forEach((z,i)=>{g.fillStyle=heatCol(z[0]);g.fillRect(lx,yT-13,9,9);
@@ -421,7 +428,10 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  ln(ca,'#12484a',1,[2,4]); ln(pu,'#5a2b2b',1,[2,4]);
  // LANDING HEATMAP (replaces the old capacity-density bars, operator entry 555):
  // where a trade of a given size at a given strike actually lands the taker.
- const mkrs=st.book.map(m=>({c:st.c,h:m.h,share:m.share}));
+ // tester FLAG-LM1: this used to hand EVERY maker st.c (your own curve), so
+ // landed/best cancelled C(k) and the map had zero strike dependence while its
+ // title said "at that strike". Use the real book.
+ const mkrs=makerCurves(); aggBook(mkrs,st.book.map(m=>m.h));
  drawHeat(g,W,L,R,T+PH+28,HB,-0.7,0.7,mkrs,MKT.pool,
    {k:HK===null?0:HK,Q:+(($('qsz')||{value:5}).value)||5},
    'LANDING MAP — where a trade of that size at that strike lands vs the best quote');
@@ -504,6 +514,8 @@ function bind(){
  if(cbb&&!cbb._w){cbb._w=1;cbb.onclick=()=>cset('ask');}
  if(cbs&&!cbs._w){cbs._w=1;cbs.onclick=()=>cset('bid');}
  const tkr=$('tkr');if(tkr&&!tkr._w){tkr._w=1;tkr.oninput=()=>{$('tk').value=tkr.value;render();};}
+ // tester FLAG-C2: #tkf never moved off its hard-coded width
+ if(tkr){const tf=$('tkf');if(tf)tf.style.width=((+tkr.value+60)/120*100).toFixed(1)+'%';}
  const sb=$('sideBuy'),ss2=$('sideSell');
  if(sb&&!sb._w){sb._w=1;sb.onclick=()=>{TRADE.side='buy';sb.className='cta';ss2.className='cta off';render();};
   ss2.onclick=()=>{TRADE.side='sell';ss2.className='cta';sb.className='cta off';render();};}
@@ -543,9 +555,18 @@ function renderTransact(st){
    <div class="m"><span>makers quoting</span><b>${set.length}</b></div>
    <div class="m"><span>book state</span><b class="${B.crossed(k)?'amb':'pos'}">${B.crossed(k)?'ARB OPEN':'clean'}</b></div>
    <div class="m"><span>arb available</span><b class="${B.crossed(k)?'amb':''}">${B.crossed(k)?usd((B.bid(k)-B.ask(k))*S)+' / BTC':'—'}</b></div>`;
- const impBps=(bestSingle.ask-ask)/ask*1e4;
+ // tester FLAG-C3: the old row compared the envelope against the min-ask row,
+ // i.e. against ITSELF, so it read 0.00 bps always while the caption claimed a
+ // benefit. Compare the ENVELOPE FILL against filling the same size at the single
+ // best maker alone (capped by that maker's depth) — a real, size-dependent number.
+ const bm=set.find(m=>m.n===bestSingle.n), bcap=bm?bm.share*MKT.pool:0;
+ const envPx=landedFrom(ladderAt(set,k,MKT.pool,CSIDE),sz);
+ let single='—', cls='';
+ if(sz>bcap+1e-9){single='best maker alone tops out at '+f(bcap,1)+' BTC';cls='amb';}
+ else if(envPx!==null){const bps=Math.abs(bestSingle.ask/envPx-1)*1e4;
+   single=f(bps,2)+' bps'; cls=bps>1e-6?'pos':'';}
  $('timp').innerHTML=rows.map(r=>`<div class="m"><span>${r.n}${r.me?' (you)':''}</span><b class="${r.ask===ask?'tl':''}">${f(r.ask,5)}</b></div>`).join('')
-  +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single</span><b class="pos">${f(Math.max(0,impBps),2)} bps</b></div>`;
+  +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single, at ${f(sz,1)} BTC</span><b class="${cls}">${single}</b></div>`;
  // fill breakdown — walk makers cheapest-first
  const sorted=[...rows].sort((a,b)=>side==='buy'?a.ask-b.ask:b.bid-a.bid);
  let rem=sz;const out=[];
