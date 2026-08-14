@@ -3753,3 +3753,43 @@ _Context: operator confirms LP fairness = the APPORTIONMENT problem, and that it
 _Context: operator affirms the working method — brainstorming, going around obstacles, closing gaps._
 
 > but this is good, we're braintoming it and fgoing around it and cosing gaps
+
+
+## Entry 518 — 2026-08-14 UTC
+_Context: operator asks whether the ray-deviation is superseded now that value derives directly from the Burr/power-law distribution rather than from the Balancer curve. Manager confirmed value∝S^(−g) IS a Pareto/Burr-type tail with tail index g; the ray-deviation was a Balancer-pool-geometry construct so it has no basis once pricing comes from the distribution — consistent with entry 515 (no option funding). Flagged that the SHIPPED v28 engine still uses Balancer+lens with ray-deviation funding live, so acting on this is engine-touching and operator-tier._
+
+> now the ray deviation or whater things im assuming since we moved to the thing that doesnt use balancer curve to derive but directly uses the burr distrribution. or whatever righg
+
+
+## Entry 519 — 2026-08-14 UTC
+_Context: operator asks for the overall status including LP refraction / integration._
+
+> ok so where are we on the whole thing incl the LP refraction / integration
+
+
+## Entry 520 — 2026-08-14 UTC
+_Context: operator frames LP integration as a mapping that dynamically apportions positions incurred across strikes to LPs. Manager demonstrated it running: depth-weighted per-strike shares, dynamic inventory accrual, per-LP exposure/hedge, refraction as zero-sum share redistribution (LP-B reshaping cost LP-A 20.7pp at the wings while LP-C gained 12.9pp at ATM)._
+
+> can you explain to me how the LP integration / refraction would work — way i see its a mapping which dynamically apportions positions incurred across strikes to LPs
+
+
+## Entry 521 — 2026-08-14 UTC
+_Context: operator asks for the gap between "fair-ish" and "not proven fair". Manager: fair-ish = proportional/exhaustive allocation; not proven fair = no individual-rationality theorem, via (1) the book takes the tightest spread so pay is set by another LP's quote, (2) payment ignores fill toxicity (wing LP eats 0.578 avg toxicity vs ATM LP 0.245 for identical pay)._
+
+> expalin the gap netween fairish and not proven fair
+
+
+## Entry 522 — 2026-08-14 UTC
+_Context: operator accepts LPs as free agents specifying their own curve parameters that the pool aggregates "for better or worse"; unsure how SPREAD works or whether it is bakeable/unifiable into their curve parameters as slippage (thinks unlikely); can picture the refraction dynamics. Manager initially argued spread DOES unify via slippage — CORRECTED at entry 523._
+
+> so LPs are free agents they specify their own curve parameters that the pool aggregates to for better or worse
+>
+> on the spread side of things i don't yet know how this would work, wrt depth yes I get it, idk if spread is bakeable / unifiable into their slippage in their curve parameters or whatever if that makes sense (unlikely)
+>
+> in terms of how the matches refract and individual and whole curve adapts etc i can picture…
+
+
+## Entry 523 — 2026-08-14 UTC
+_Context: operator catches the manager's error — AMM fees and slippage are DIFFERENT: slippage raises the price for the sell-back round trip, fees don't. Manager verified by direct CPMM round trip: slippage fully reversible (trader net $0.0000000000, pool returns exactly to start), fees irreversible (= exactly the LP's income). Correct identity LP P&L = fees − LVR. MATERIAL consequence: L7 break-even turnover 2.37x/day → 11.84x/day (the spread income line was invalid), ~39x above realistic; fee must be tens of bps. Channel-1 unfairness reframed as an order-book artifact; AMM-native remedy = per-STRIKE fee schedule. Recorded in sims/CORRECTION_slippage_is_not_income.md._
+
+> but theres a difference in amm fees and slippage right, like the slippage is also making the price higher for the sell back round trip whereas fees font have. that effect so theyre different things right…?
