@@ -4092,3 +4092,9 @@ _Context: operator answers the active-vs-passive LP question — LPs will run th
 _Context: operator proposes dropping the per-LP tuning-agent idea in favour of a proxy — read implied vol from an oracle and translate it into the curve parameters through a natural map._
 
 > forget agents, can just use a proxy like implied vol or something from oracle translated to the params via a natural map
+
+
+## Entry 572 — 2026-08-15 UTC
+_Context: operator specifies how LPs express a view under the oracle natural map — each LP carries a BIAS relative to the oracle-derived parameters, so their view piggybacks the oracle, or they can opt out and run all parameters manually._
+
+> the LPs can just have some bias wrt this natursl map oracle thing so their views can piggyback the oracle or they can choose to manuallu run sll params

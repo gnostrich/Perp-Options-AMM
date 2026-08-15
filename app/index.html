@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 24 · mark independence</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 25 · oracle + bias</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -251,6 +251,22 @@ let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='transact',
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
+const ORC={iv:0.60, bias:0.0, mode:'oracle'};   // oracle IV, YOUR bias vs it, quoting mode
+/* ─── NATURAL MAP (operator entries 571/572) ────────────────────────────────
+   oracle vol → target ATM premium → solve S̄.  premium is strictly increasing in
+   S̄, so the inverse is well-posed; bisection lands on machine precision.
+     premiumTarget(v) = ATM₀ · v/v₀      calibrated so v=60% reproduces S̄=0.60
+   An LP does not re-pick S̄; it carries a BIAS on the vol it quotes off the same
+   oracle. bias 0 = quote the oracle. MANUAL mode ignores the map entirely.
+   Why the level is the right handle: G̃·C is ~invariant in the family (0.136–0.164
+   over a 5× range of S̄), so G̃ ≈ 0.15/C and tracking the level turns the RV²
+   gamma-bleed exposure into RV — measured exponent 0.96 vs 2.00 frozen.        */
+const IV0=0.60, ATM0=0.178897;                  // reference point of the map
+function premiumTarget(v){return ATM0*v/IV0;}
+function calibSbar(tgt,a,gam,kap){let lo=0.02,hi=60;
+ for(let i=0;i<70;i++){const m=(lo+hi)/2; if(mk(m,a,gam,kap).ATM<tgt)lo=m;else hi=m;}
+ return (lo+hi)/2;}
+function sbarFromVol(v,a,gam,kap){return calibSbar(premiumTarget(Math.max(0.01,v)),a,gam,kap);}
 const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
 const usd=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
 function field(k,label,min,max,step,hint){const v=P[k];const pct=(v-min)/(max-min)*100;
@@ -260,7 +276,7 @@ function field(k,label,min,max,step,hint){const v=P[k];const pct=(v-min)/(max-mi
  <div class="srow"><div class="track"><div class="fill" style="width:${pct}%"></div>
  <input type="range" data-k="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div>
  <div class="mm"><span>${min}</span><span>${max}</span></div></div></div>`;}
-function mktField(k,label,min,max,step,fmtv){const v=MKT[k],pct=(v-min)/(max-min)*100;
+function mktField(k,label,min,max,step,fmtv,src){const v=(src||MKT)[k],pct=(v-min)/(max-min)*100;
  return `<div class="m"><span>${label}</span><b>${fmtv(v)}</b></div>
  <div class="srow" style="padding-top:2px;padding-bottom:6px"><div class="track"><div class="fill" style="width:${pct}%"></div>
  <input type="range" data-m="${k}" min="${min}" max="${max}" step="${step}" value="${v}"></div></div>`;}
@@ -274,7 +290,11 @@ function makerCurves(){
  // independent of you (skeptic FLAG-8 root cause, found while fixing the self-mark).
  // They now sit on a FIXED reference basis; only YOU move when you move P.
  const D=ARBD;  // divergence dial: 0 = agreement, 1 = wide disagreement
- const R=DEF;   // independent reference the other makers quote around
+ // The other makers quote off the ORACLE, never off your biased level — that
+ // separation is what keeps your mark independent of your own quote (build 24).
+ const R=ORC.mode==='oracle'
+   ? {Sbar:sbarFromVol(ORC.iv,DEF.a,DEF.gam,DEF.kap),a:DEF.a,gam:DEF.gam,kap:DEF.kap}
+   : DEF;
  const set=[{n:'YOU',me:true,lam:0.02,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
    {n:'MM-Kappa',me:false,lam:0.05,Sbar:R.Sbar*(1-0.035*D),a:R.a*(1-0.06*D),gam:R.gam*(1+0.03*D),kap:R.kap+0.05*D},
    {n:'MM-Delta',me:false,lam:0.10,Sbar:R.Sbar*(1+0.05*D),a:R.a*(1+0.06*D),gam:R.gam*(1-0.05*D),kap:R.kap-0.06*D},
@@ -293,6 +313,9 @@ function aggBook(set,hs){
  const crossed=k=>bid(k)>ask(k);
  return {set,ask,bid,mid,who,crossed,lamAgg:1/inv};}
 function calc(){
+ // ORACLE mode: your level is DERIVED — oracle vol, tilted by your own bias.
+ // MANUAL mode: P.Sbar is yours, exactly as before.
+ if(ORC.mode==='oracle') P.Sbar=sbarFromVol(ORC.iv*(1+ORC.bias),P.a,P.gam,P.kap);
  const c=mk(P.Sbar,P.a,P.gam,P.kap);
  // curvature on the NOTIONAL basis: cash value C(S)=V(K/S-1)*S, Gt = d2C/dS2 * S  (per $1 notional)
  const cash=(Sx,K)=>c.CALL(K/Sx-1)*Sx, hS=S*2e-3;
@@ -461,7 +484,22 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  CV_GEO={X:X,L:L,R:R,W:W};}
 /* ─── render ─── */
 function render(){
- $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],s[0]==='depth'?'= from notional':'')).join('');
+ /* R3 CONTROL INVENTORY over the level:
+      S̄ slider      — KEPT, but DRIVEN-BY the oracle map in ORACLE mode (shown read-only);
+                       fully yours in MANUAL mode.
+      oracle vol    — NEW, venue-level reading; the base every maker quotes off.
+      your bias     — NEW, per-LP tilt on that vol. bias 0 = quote the oracle.
+      a, γ, κ       — KEPT, manual in both modes (shape is the setup calibration).
+      λ, fee, depth, margin — KEPT, untouched by this. */
+ $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],
+   s[0]==='depth'?'= from notional':(s[0]==='Sbar'&&ORC.mode==='oracle')?'= solved from oracle':'')).join('');
+ if($('orcbox'))$('orcbox').innerHTML = ORC.mode!=='oracle' ? '' :
+   mktField('iv','oracle vol',0.10,2.00,0.01,v=>(v*100).toFixed(0)+'%',ORC)
+   .replace(/data-m="iv"/,'data-o="iv"')
+  + mktField('bias','your bias vs oracle',-0.30,0.30,0.01,v=>(v>=0?'+':'')+(v*100).toFixed(0)+'%',ORC)
+   .replace(/data-m="bias"/,'data-o="bias"')
+  + `<div class="m"><span>solved S̄</span><b class="tl">${f(P.Sbar,4)}</b></div>`
+  + `<div class="m"><span>you quote vol</span><b>${((ORC.iv*(1+ORC.bias))*100).toFixed(1)}%</b></div>`;
  $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
   +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
   +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));
@@ -541,6 +579,15 @@ function bind(){
  if(cbs&&!cbs._w){cbs._w=1;cbs.onclick=()=>cset('bid');}
  if(ebb&&!ebb._w){ebb._w=1;ebb.onclick=()=>cset('ask');}
  if(ebs&&!ebs._w){ebs._w=1;ebs.onclick=()=>cset('bid');}
+ document.querySelectorAll('[data-o]').forEach(e=>{if(e._w)return;e._w=1;
+   e.oninput=()=>{ORC[e.dataset.o]=+e.value;render();};});
+ const mo=$('mdOrc'),mm=$('mdMan');
+ const mset=v=>{ORC.mode=v;
+   if(mo){mo.style.background=v==='oracle'?'var(--teal)':'transparent';mo.style.color=v==='oracle'?'#04191a':'';mo.style.borderColor=v==='oracle'?'var(--teal)':'';}
+   if(mm){mm.style.background=v==='manual'?'#243b3d':'transparent';mm.style.color=v==='manual'?'#fff':'';}
+   render();};
+ if(mo&&!mo._w){mo._w=1;mo.onclick=()=>mset('oracle');}
+ if(mm&&!mm._w){mm._w=1;mm.onclick=()=>mset('manual');}
  const va=$('cvAgg'),vm2=$('cvMk');
  const vset=v=>{CVIEW=v;
    if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}
