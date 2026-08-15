@@ -4124,3 +4124,9 @@ _Context: operator reframes LP bias — it is not a mispricing but a repositioni
 _Context: operator retracts the spread-level arb as a live question — it is moot. Manager tested the skeptic's conjecture that the book-level parity break is the same dollar as the crossed edge rather than a second arb, which is what makes it moot._
 
 > actually the arb at sprrad level thing is moot
+
+
+## Entry 577 — 2026-08-15 UTC
+_Context: operator clarifies that "arb at spread level" only ever meant the ordinary thing — a buyer being matched to the best quote across market makers. Manager removed the arb framing from the app, which had been carrying it since build 12._
+
+> it just meant the usual thing of matching best quote across mm when when buy
