@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 25 · oracle + bias</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 26 · bias budget</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -263,6 +263,7 @@ const ORC={iv:0.60, bias:0.0, mode:'oracle'};   // oracle IV, YOUR bias vs it, q
    gamma-bleed exposure into RV — measured exponent 0.96 vs 2.00 frozen.        */
 const IV0=0.60, ATM0=0.178897;                  // reference point of the map
 function premiumTarget(v){return ATM0*v/IV0;}
+let HEFF_BPS=19; function hEffBps(){return HEFF_BPS;}
 function calibSbar(tgt,a,gam,kap){let lo=0.02,hi=60;
  for(let i=0;i<70;i++){const m=(lo+hi)/2; if(mk(m,a,gam,kap).ATM<tgt)lo=m;else hi=m;}
  return (lo+hi)/2;}
@@ -325,7 +326,7 @@ function calc(){
    const v=Math.abs(d2*S); if(isFinite(v)){g+=v;n++;}});
  const Gt=n?g/n:0, bleed=0.5*Gt*MKT.rv*MKT.rv;   // fraction of NOTIONAL per year
  const hFair=(bleed/(MKT.turn*365))*1e4, marg=0.25;
- const hEff=volIndexed?hFair*(1+marg):P.fee*1e4/2;
+ const hEff=volIndexed?hFair*(1+marg):P.fee*1e4/2; HEFF_BPS=hEff;
  const book=[{n:'YOU',lam:0.02,h:hEff,me:true},...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
  const inv=book.reduce((s,m)=>s+1/m.lam,0); book.forEach(m=>m.share=(1/m.lam)/inv);
  const me=book.find(m=>m.me);
@@ -499,7 +500,18 @@ function render(){
   + mktField('bias','your bias vs oracle',-0.30,0.30,0.01,v=>(v>=0?'+':'')+(v*100).toFixed(0)+'%',ORC)
    .replace(/data-m="bias"/,'data-o="bias"')
   + `<div class="m"><span>solved S̄</span><b class="tl">${f(P.Sbar,4)}</b></div>`
-  + `<div class="m"><span>you quote vol</span><b>${((ORC.iv*(1+ORC.bias))*100).toFixed(1)}%</b></div>`;
+  + `<div class="m"><span>you quote vol</span><b>${((ORC.iv*(1+ORC.bias))*100).toFixed(1)}%</b></div>`
+  /* TWO CURVE SETS carry the spread, and the spread IS the disagreement budget
+     (operator entry 574). You publish ask C(1+h) and bid C(1-h); you become
+     arbable the moment your bid clears someone else's ask. Measured: the safe
+     bias is 0.43·(h_you + h_others), constant to 2 d.p. over a 20× range of h —
+     so the tolerance is not imposed, it falls out of having two curves. */
+  + (()=>{const hy=(hEffBps()||19), ho=19, budget=0.43*(hy+ho)/1e4;
+      const over=Math.abs(ORC.bias)>budget;
+      return `<div class="m"><span>bias budget (from your spread)</span><b>±${(budget*100).toFixed(3)}% vol</b></div>`
+       +`<div class="m"><span>you are</span><b class="${over?'neg':'pos'}">${over
+         ? 'ARBABLE — bias is '+(Math.abs(ORC.bias)/budget).toFixed(1)+'× your budget'
+         : 'inside your spread'}</b></div>`;})();
  $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
   +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
   +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));

@@ -4104,3 +4104,9 @@ _Context: operator specifies how LPs express a view under the oracle natural map
 _Context: operator identifies an arb-leak specific to this design — because a maker's whole curve is generated from a few parameters, being out of line is monetisable at every strike at once, unlike spot where one bad quote costs one trade — and suggests the fix resembles the earlier aggregation/apportionment work._
 
 > wait i think theres an arb leak problem and i also think it has a solution probably similar to our earlier aggregation thing; and this leak in this and not in typical spot because the whole curve move thoevyher or something?
+
+
+## Entry 574 — 2026-08-15 UTC
+_Context: operator accepts the constraint that the healing axis must span the disagreement axis, and concludes that the aggregation works as intended and that because there are TWO curve sets (bid and ask) the spread comes through the aggregation naturally rather than needing a separate mechanism._
+
+> which is probably fair, so the aggregation thing works as it should and since 2 curves the spread also naturally comes thru
