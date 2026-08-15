@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 28 · best-quote matching</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 29 · close at aggregate</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -212,7 +212,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="card"><div class="chead"><b>Carve</b></div><div id="pcarve"></div>
     <div class="note">Creating an option upon a perp removes that much perp from the perps tab. Closing it closes the backing slice, and both P&amp;Ls cash out together.</div></div></div>
   <div><div class="panel"><div class="chead"><b>Positions</b></div>
-    <table id="ppos"><thead><tr><th>instrument</th><th>strike</th><th>size</th><th>mark</th><th>value $</th><th>Δ</th></tr></thead><tbody></tbody></table></div>
+    <table id="ppos"><thead><tr><th>instrument</th><th>strike</th><th>size</th><th>mark</th><th>close px</th><th>value $</th><th>Δ</th></tr></thead><tbody></tbody></table></div>
     <div class="panel" style="margin-top:12px"><div class="chead"><b>Hedge readback</b><span class="t2" style="color:var(--mute)">exposure → perp book</span></div>
     <table id="phedge"><tbody></tbody></table>
     <div class="note">Net option delta is read back to a perp-equivalent and hedged on Hyperliquid — the same Δ that prices the book reads the exposure back.</div></div></div>
@@ -827,7 +827,7 @@ function renderBands(st){
 /* ── PORTFOLIO ── */
 function renderPortfolio(st){
  const pos=[{n:'BTC call',k:0.12,sz:3,side:1},{n:'BTC put',k:-0.10,sz:2,side:-1},{n:'BTC call',k:0.30,sz:1.5,side:1}];
- let netD=0,netV=0;
+ let netD=0,netV=0,netC=0;
  // ⚠ SELF-MARK DEFECT FIXED (skeptic FLAG-OMISSION 8, 2026-08-15). This marked every
  // position at st.c — the HOLDER'S OWN quoting curve — and that mark feeds account
  // leverage, which is tested against the 50× liquidation cap below. Measured: moving
@@ -846,11 +846,25 @@ function renderPortfolio(st){
    const hs2=others.map(m=>m.h/1e4);
    const ask=Math.min(...cs.map((c,i)=>c*(1+hs2[i]))), bid=Math.max(...cs.map((c,i)=>c*(1-hs2[i])));
    return 0.5*(ask+bid);};
+ /* CLOSE PRICE (operator entry 578). Payouts here are realised by BUYING and
+    SELLING, not by settling at intrinsic — so closing is a trade, and it has to
+    execute at the AGGREGATE, with your own curve EXCLUDED. Measured what happens
+    if it is not: bias +2% / +10% / +30% lets you close $277 / $6,248 / $21,528
+    richer against your own quote (40.3% at +30%), and you set that price, so it is
+    not a market price at all. With self-exclusion the close value is flat to 0.09%
+    across the whole bias range. Same defect class as the build-24 self-mark. */
+ const closePx=(k,side)=>{
+   const cs=others.map(m=>side>0?m.c.CALL(k):m.c.PUT(k));
+   const hs2=others.map(m=>m.h/1e4);
+   return side>0 ? Math.max(...cs.map((c,i)=>c*(1-hs2[i])))    // long  -> you sell into the best bid
+                 : Math.min(...cs.map((c,i)=>c*(1+hs2[i])));};  // short -> you buy at the best ask
  $('ppos').querySelector('tbody').innerHTML=pos.map(p=>{
   const mk_=bookMid(p.k,p.side);
   const d=(bookMid(p.k+0.005,1)-bookMid(p.k-0.005,1))/0.01*p.side;
-  const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;
-  return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td></tr>`;}).join('');
+  const cp=closePx(p.k,p.side), cv=p.sz*cp*S*p.side;
+  const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;netC+=cv;
+  return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td>${f(cp,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td></tr>`;}).join('');
+ const closeCost=netV-netC;
  const clubL=4000000,clubS=3000000,mf=0.20,cf=0.25;
  const eq=(clubL+clubS)*mf, carveN=(clubL+clubS)*cf, carveE=carveN*mf;
  const acctNot=clubL+clubS+Math.abs(netV), acctEq=eq+netV, lev=acctNot/Math.max(acctEq,1);
@@ -870,7 +884,10 @@ function renderPortfolio(st){
    <tr><td>residual exposure</td><td style="text-align:right" class="pos">0.000000</td></tr>`;
  const liqLev=50, headroom=liqLev-lev;
  $('pliq').innerHTML=
-  `<div class="m"><span>account leverage</span><b>${f(lev,2)}×</b></div>
+  `<div class="m"><span>marked at</span><b>book mid, your own curve excluded</b></div>
+   <div class="m"><span>closes at</span><b>best bid / ask, your own curve excluded</b></div>
+   <div class="m"><span>mark → close gap</span><b class="${closeCost>0?'neg':'pos'}">${usd(closeCost)}</b></div>
+   <div class="m"><span>account leverage</span><b>${f(lev,2)}×</b></div>
    <div class="m"><span>cap</span><b>${liqLev}×</b></div>
    <div class="m"><span>headroom</span><b class="${headroom>0?'pos':'neg'}">${f(headroom,2)}×</b></div>
    <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>status</span><b class="${headroom>0?'pos':'neg'}">${headroom>0?'SAFE':'LIQUIDATED'}</b></div>`;}

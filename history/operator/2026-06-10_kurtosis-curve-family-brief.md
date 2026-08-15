@@ -4130,3 +4130,13 @@ _Context: operator retracts the spread-level arb as a live question — it is mo
 _Context: operator clarifies that "arb at spread level" only ever meant the ordinary thing — a buyer being matched to the best quote across market makers. Manager removed the arb framing from the app, which had been carrying it since build 12._
 
 > it just meant the usual thing of matching best quote across mm when when buy
+
+
+## Entry 578 — 2026-08-15 UTC
+_Context: operator confirms bias is implemented against the aggregate via liquidity density, and spreads against the aggregate via the two curve sets; then raises a missed mechanism — because trader payouts are implemented through buy/sell rather than intrinsic settlement, a close must be executed at the AGGREGATE price, probably excluding the closer's own curve, not on the open market._
+
+> so basically theres some mechanism whereby bias is implemented wrt the aggregate thru liq density and spreads wrt aggregate (2 curves)
+>
+> one thing i think i missed in this setup is that the counterparty has to buyback on closure at the aggregate price (maybe excluding his own curve), not on the open market, if that makes sense?
+>
+> since our model full trader payouts implemented via buy sell and not via intrinsic
