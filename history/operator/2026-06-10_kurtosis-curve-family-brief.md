@@ -4232,3 +4232,9 @@ _Context: operator specifies the LP surface — LP position lives in Earn; accru
 _Context: operator sharpens the Earn aggregate — it is portfolio DURATION, but computed on strike rather than maturity._
 
 > like portfolio duration but on strike* (not maturity)
+
+
+## Entry 591 — 2026-08-15 UTC
+_Context: operator asks for a consolidation — clear any remaining ambiguity, and recap both the carved-perp treatment for the LP and the translation from perp units to actual payout._
+
+> so overall i think we meed to clear ambuguity if any / recap on the carve perp thing for the lp and on the transalation perps units tonactual payout
