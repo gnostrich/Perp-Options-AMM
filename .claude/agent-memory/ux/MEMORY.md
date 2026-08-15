@@ -13,8 +13,12 @@ operator does not think about UX when the core moves.
 
 ## State at hand-over
 - **Q1–Q11 are RULED** by the manager (formalism §5). Do not re-open without new information.
-- **Escalated, not decided:** Q5 economics (does the carved sliver accrue perp funding — provisional
-  yes); Q9 parameter (quote validity window, placeholder 10s).
+- **Q5 RULED BY THE OPERATOR, entry 586:** "carbed perp is still perp and retains everything perp
+  has." The carve is a DISPLAY/earmarking operation, not an economic one — formalism §7. Line 1 is a
+  full perp row with every perp column. No sliver type; any branch on "is this a sliver" is a defect.
+  Test for any future carve question: would the answer differ for an uncarved perp? If not, the carve
+  does not change it.
+- **Still escalated:** Q9 parameter (quote validity window, placeholder 10s).
 - **Current app = pricing object, no lifecycle.** No wallet, no perps tab, portfolio rows are a
   hardcoded literal (`app/index.html:867`), none of the three primary CTAs wired. It does get three
   things right the reference never faced: self-mark exclusion, close-price exclusion, one aggregate

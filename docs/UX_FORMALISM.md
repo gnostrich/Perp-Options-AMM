@@ -111,7 +111,7 @@ entries are the manager's calls on operator entry 585; the `ux` agent owns every
 | Q2 | Is EARN a top-level route or a ticket tab? | **Top-level route.** | LP is a distinct persona with its own lifecycle (post curve → inspect apportionment → withdraw), not a mode of trading. Burying it in a ticket costs a mode-switch on every LP task. | manager |
 | Q3 | Per-position liquidation price, or account-level only? | **Account-level only.** No per-position liq price anywhere. The ticket shows the **marginal effect of this trade on account headroom**. | §3 — a per-position liq price when liquidation is account-level is *false* decision-relevant state. Showing it is worse than showing nothing. | manager |
 | Q4 | Partial close of an option? | **Yes**, one fraction slider; the backing sliver closes in the **same proportion**. | Any other rule creates orphaned collateral or an unclosable residue. **Core consequence flagged:** the carve record must be fractional/mutable. | manager |
-| Q5 | Does the carved sliver accrue perp funding? | **UX ruling:** line 1 carries a FUNDING cell, always present, never blank. **Economics: PROVISIONAL — escalated.** Provisional position: it accrues, because the carve is an internal reallocation and the sliver is still a live perp on HL. | §4 position×stock for the cell. The value is a **core** question, not a UX one; labelled provisional until the operator rules. | manager |
+| Q5 | Does the carved sliver accrue perp funding? | **RULED BY THE OPERATOR (entry 586): yes — a carved perp is still a perp and retains everything a perp has.** Line 1 is a full perp row with the *same columns as any perp*, funding included. No reduced "sliver" row type, and no new object type in the model. | §7 — the carve is a display/earmarking operation, not an economic one. | **operator** |
 | Q6 | Can a trader write an option without holding the perp? | **Yes — one composite confirm** that opens the perp and carves in a single action, with both legs itemised before commit. | §2 — the two-ticket sequence is the 11-vs-8 step overhead, and it is pure navigation, not information. §3.1(3) keeps the disclosure. | manager |
 | Q7 | Closing a perp that has slivers standing against it? | **Compound close** — "close everything on this perp", slivers itemised in the confirm. Not fail-closed-with-a-link. | §2 — fail-closed costs more steps for no safety gain once the compound action is disclosable. | manager |
 | Q8 | Does a taker see maker-side detail? | **No.** Aggregate only. Your own leg is itemised only when you are yourself a maker in that fill. | Operator entry 566 ("you cant see individual makers only self and aggregate") binds the taker too — a taker seeing who filled them leaks the same information. Matches shipped behaviour. | manager |
@@ -120,8 +120,36 @@ entries are the manager's calls on operator entry 585; the `ux` agent owns every
 | Q11 | LP mark/close when the LP is the only maker at a strike? | **Mark** falls back to the oracle-derived curve (it exists independently of any maker). **Close** reads "no counterparty — cannot close". | §3 — inventing a close price where no counterparty exists is fabricated decision-relevant state. The oracle is a real, already-present source; a close price would not be. | manager |
 
 ### 5.1 Escalated to the operator — NOT decided here
-- **Q5 economics:** does the carved sliver accrue perp funding? Provisional yes; needs a core ruling.
+- ~~**Q5 economics**~~ — **RULED, entry 586.** See §7.
 - **Q9 parameter:** the actual quote validity window, once latency is known.
+
+---
+
+## 7. THE CARVE IS A DISPLAY OPERATION (operator entry 586)
+
+> carbed perp is still perp and retains everything perp has
+
+This is a general rule, not one answer, and it retires a whole class of future questions.
+
+**Carving does not create a new economic object.** When an option is written on a perp, the affected
+notional is **earmarked and re-listed**, nothing more. The perp continues to:
+mark, accrue funding, carry unrealised P&L, contribute to account-level margin and the ~50×
+liquidation test, and hold its entry price and size — **exactly as it did before the carve.**
+
+**Consequences that follow without further argument:**
+1. **Line 1 is a full perp row.** Same columns as the perps tab, funding included. There is no reduced
+   "sliver" row and no special-case formatting.
+2. **No new type in the model.** A carved perp is a perp with a binding tag (which option it backs).
+   Any code path that branches on "is this a sliver" is a defect.
+3. **Anything true of a perp is true of it.** Do not ask the question per property. Funding, mark,
+   margin contribution, liquidation weight, P&L — all yes, by this rule.
+4. **Only two things change:** which tab it is listed under, and that it is bound to an option (so it
+   cannot be closed independently — Q7's compound close).
+5. **Total lines are consistent by construction:** perps tab + carved lines = the account's whole perp
+   position, always. Any UI that lets those disagree is wrong.
+
+**Test for any future carve question:** would the answer differ for an uncarved perp? If not, the
+carve does not change it. That is the whole rule.
 
 ## 6. Standing obligations
 1. Every proposal reports **steps and glances** against §2, with the counting shown.

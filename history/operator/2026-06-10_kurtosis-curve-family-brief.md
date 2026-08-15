@@ -4190,3 +4190,9 @@ _Context: operator extends the UX research brief — the agent should reason for
 _Context: operator directs the manager to decide all open UX questions himself, and to retain a PERSISTENT UX agent that formally optimises steps and glances across the whole lifecycle and holds the representation formalisms — so recurring choices (payout-as-line-item vs account credit, etc.) are handled in stride rather than re-litigated each time, letting the operator abstract away UX from core changes._
 
 > take a call on all open UX questions, retain a persistent agent to formally check optimise steps / glances across all UX lifecycle possibilities and to grasp the possible design choices in terms of representation on UX so its not an idiosyncratic task to modify each time like the payout thing vs account-in etc. these should be taken in-stride by persistent UX agent using the appropriate formalisms so I can abstract away interactions with the core iygwim
+
+
+## Entry 586 — 2026-08-15 UTC
+_Context: operator rules the escalated Q5 and more broadly — a carved perp is still a perp and retains every property a perp has. The carve is therefore a display/earmarking operation, not an economic one._
+
+> carbed perp is still perp and retains everything perp has
