@@ -4086,3 +4086,9 @@ _Context: operator points out the venue has no more of a central counterparty th
 _Context: operator answers the active-vs-passive LP question — LPs will run their own agents to tune parameters continuously. Manager re-checked the break-even figure quoted in the previous turn and found it came from a different curvature measure than the app's._
 
 > they'll run their own agents to tune parameters if need be, so they can keep changing it
+
+
+## Entry 571 — 2026-08-15 UTC
+_Context: operator proposes dropping the per-LP tuning-agent idea in favour of a proxy — read implied vol from an oracle and translate it into the curve parameters through a natural map._
+
+> forget agents, can just use a proxy like implied vol or something from oracle translated to the params via a natural map
