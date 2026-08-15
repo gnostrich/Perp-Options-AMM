@@ -26,7 +26,9 @@ BRAINSTORM / non-core. This is my synthesis of where the pieces connect — conf
                                   − hedge; +HLP     [closed-form from the distribution]        │
         ▼                                                                                   │
  6. SETTLEMENT  units→cash (station 17)   legs net in PERP UNITS (q·mark); dollars only at the │
-    exit: net × carved-slice closing equity × L₀   [dollar pipe built · semantics partly OPEN] │
+    exit.  ⚠ THE `× L₀` FACTOR IS WRONG — operator entry 592 confirms leverage does NOT scale the │
+    payout; it sets the MARGIN REQUIRED only. P&L is on notional. See                            │
+    sims/scripts/units_to_payout_chain.js for the corrected worked chain.                        │
         ▼                                                                                   │
  7. HEDGE READBACK (map 3)        inventory → perp-equivalent: NetPerp + Σ Δ(k)·q(k) ──────────┘
                                   same Δ transports (1) and reads back (3)   [⛔ NO LEAN — `Exposure` does not exist; see AUDIT_closed_loop_lean]

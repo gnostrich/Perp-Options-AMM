@@ -88,6 +88,11 @@ defaulted, derived or inferred. Known **derivables** in this venue, none of whic
 | fill routing | pro-rata by capital — there is no routing choice |
 | put price | parity `C − P = −k` from the call |
 
+**Not a derivable — a basis statement (operator entry 592):** an option price is a **fraction of spot**
+*and* a function of where on the curve it sits, so a position's value moves in underlying terms for two
+reasons at once — spot moving, and moneyness moving along the curve. Any P&L or value column must state
+its basis or it reads as a bug. Handled by §4.3.
+
 ## 3. THE HARD CONSTRAINT — no decision may be made blind
 
 You are **not** minimising cost. You are minimising cost **subject to**: a step or glance may not be
@@ -176,7 +181,7 @@ entries are the manager's calls on operator entry 585; the `ux` agent owns every
 
 | Q12 | Where does the LP's own position live? | **Earn.** Capital, posted curve, bias, mode. | **CHOICE** (consistent with Q2) | LP persona owns its own route. | **operator** entry 589 |
 | Q13 | Where do LP-accrued fills show? | **Under the perp-options section, in the same table as trader positions**, disambiguated by an `origin` column plus a checkbox filter. | INVARIANT (they are economically different objects and must be distinguishable) / **CHOICE** (column + checkbox as the mechanism) | §4 places them identically — same ownership, same persistence. §4.3 handles the basis difference. Reference already carries `origin?: "opened" \| "lp"` (`portfolio.ts:56,166,228,293`) and `isLpRow` branching (`tableContainer.tsx:506,528,621,694`). | **operator** entry 589 |
-| Q14 | What is line 1 on an LP-accrued row? | **The counterparty's perp, pro-rata to the LP's fill share.** LPs do not hold perps; they take the other side of a trader who does. | **INVARIANT** | The no-naked-option invariant (§7.1) holds from both sides: the trader's option is carved from *their* perp, and the LP's accrual is backed by a pro-rata claim on that same perp. Nothing is unbacked, and no LP is required to hold a perp. | **operator** entry 589 |
+| Q14 | What is line 1 on an LP-accrued row? | **A perp-equivalent line for calculation and row consistency — NOT an economic claim** (operator entry 592). An LP is accountable to the **bundled net option / vertical-spread P&L only**; the perp leg does not enter its payout. My earlier reading — "a pro-rata claim on the counterparty's perp" — was **wrong**, and the operator corrected it: there is no claim. | **INVARIANT** | The no-naked-option invariant (§7.1) holds from both sides: the trader's option is carved from *their* perp, and the LP's accrual is backed by a pro-rata claim on that same perp. Nothing is unbacked, and no LP is required to hold a perp. | **operator** entry 589 |
 | Q15 | How is the Earn total aggregated? | **A duration triple on the STRIKE axis** (operator entry 590: "like portfolio duration but on strike* (not maturity)"). Three numbers, not one: **exposure** `Σ Δᵢqᵢ` in ₿-perp · **strike duration** `K_D = Σ wᵢkᵢ` with `wᵢ = Δᵢqᵢ/ΣΔq` · **strike dispersion** `√(Σ wᵢ(kᵢ−K_D)²)`. Magnitude, location, spread. | INVARIANT (Δ is the only axis making option lines commensurable with perps; the weighting is forced — see the asterisk below) / **CHOICE** (labels, precision) | Verified on a sample book (`sims/scripts/strike_duration_check.js`): exposure 15.763 ₿-perp, K_D −2.93%, dispersion 18.13%. **The sensitivity identity holds** — shifting every strike +1% predicts ΔV = −Σ Δ·q · shift = −0.15763 against an actual −0.15585, a 1.13% error that is pure convexity. That is duration behaving as duration. **The asterisk:** in fixed income the PV-weighted average and the first-order sensitivity coincide; here they do not. Value-weighting gives K_D = −2.75% and carries **no** sensitivity identity, so **Δ·q weighting is the one to use** — it is the version where the derivative actually is the number. Reference units already agree: "₿-perp (Δ·q)" (`earnTableContainer.tsx:68–70`). | **operator** entry 589/590 |
 
 ### 5.1 Escalated to the operator — NOT decided here
@@ -210,6 +215,30 @@ liquidation test, and hold its entry price and size — **exactly as it did befo
 
 **Test for any future carve question:** would the answer differ for an uncarved perp? If not, the
 carve does not change it. That is the whole rule.
+
+### 7.2 The trader/LP asymmetry — who owns the perp leg (operator entry 592)
+
+> a when lp is seller hes really accountable to the bundled net perp options / v spread p/l not the
+> perp p/l — so perp unit / line is just for calculation / math / ux consistency i guess
+
+| | trader | LP |
+|---|---|---|
+| owns the carved perp? | **yes** — it is their perp, carved | **no** |
+| perp leg enters payout? | **yes** | **NO** |
+| accountable for | option leg **+** carved perp leg | **the bundled net option / spread P&L only** |
+| what line 1 is | a real position | a **perp-equivalent display and calculation line** |
+
+**Worked, on the same trade** (`sims/scripts/units_to_payout_chain.js`): a 3 BTC +12% call, spot +8%.
+The trader nets `−$6,120 (option) + $15,767 (perp) = +$9,647`. The LP on the other side nets the
+**option leg alone, +$6,120** — the $15,767 never touches it. Same trade, two different payout
+compositions, and the row looks the same in both because the perp line is there for consistency.
+
+**Tier:** the accountability is **INVARIANT**. The presence of the line is a **CHOICE**, and the reason
+to keep it is that it preserves one row shape and keeps every line in Δ·q perp-equivalents so the Earn
+duration triple (§5 Q15) sums over a single currency.
+
+**INVALID surfaces this rules out:** any LP view that adds a perp P&L into the LP's payout, and any LP
+close that appears to close a perp. It does neither.
 
 ### 7.1 The bundle is the unit (operator entry 587)
 > no option can be sold without a perp its carved from

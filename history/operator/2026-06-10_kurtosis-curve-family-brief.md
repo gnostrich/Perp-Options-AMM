@@ -4238,3 +4238,13 @@ _Context: operator sharpens the Earn aggregate — it is portfolio DURATION, but
 _Context: operator asks for a consolidation — clear any remaining ambiguity, and recap both the carved-perp treatment for the LP and the translation from perp units to actual payout._
 
 > so overall i think we meed to clear ambuguity if any / recap on the carve perp thing for the lp and on the transalation perps units tonactual payout
+
+
+## Entry 592 — 2026-08-15 UTC
+_Context: operator resolves all three flagged ambiguities — an LP seller is accountable to the bundled net perp-option / vertical-spread P&L and NOT to the perp P&L, so the perp line on an LP row is a calculation and UX-consistency device rather than an economic claim; leverage does not scale the payout; and the option price moves in underlying terms because it depends on the curve and on where on the curve it sits._
+
+> a when lp is seller hes really accountable to the bundled net perp options / v spread p/l not the perp p/l — so perp unit / line is just for calculation / math / ux consistency i guess
+>
+> b yes
+>
+> c yes i guess because price in the underlyng terms changes w curve and where on curve it is
