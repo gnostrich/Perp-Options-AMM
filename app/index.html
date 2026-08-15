@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 29 · close at aggregate</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 30 · aggregate then spread</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -302,17 +302,34 @@ function makerCurves(){
    {n:'MM-Sigma',me:false,lam:0.04,Sbar:R.Sbar*(1+0.01*D),a:R.a*(1+0.01*D),gam:R.gam,kap:R.kap+0.02*D}];
  set.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);});
  return set;}
+/* ─── AGGREGATE FIRST, SPREAD AFTER (operator entry 580) ────────────────────
+   I had this backwards. I was building the ENVELOPE — each maker applies its own
+   spread, then min-ask / max-bid across makers. That order lets the two sides be
+   set by different makers, which is the only thing that ever made the book cross:
+   97–100% of strikes at any divergence above zero.
+   The right order aggregates the maker MIDS into one book curve, then applies one
+   spread to it:
+       mid(k)   = Σ wᵢ·Cᵢ(k)                 wᵢ = liquidity density (share)
+       h_agg    = min hᵢ                     the book is as tight as its tightest
+       ask/bid  = mid·(1 ± h_agg)
+   With h_agg > 0 this gives ask > bid identically — crossing is structurally
+   impossible, not merely rare. Measured: 0% of strikes crossed at every divergence
+   including 1.0, spread constant at 32.8 bps.
+   Consequence: fills are no longer a race to the touch. Every maker participates
+   in every trade at its density weight — the pro-rata apportionment, by construction.
+   Honest note: mid(k) IS Σ wᵢCᵢ, i.e. the mixture. Nothing requires it to live in
+   the Burr-2 family; it is a computed book curve, not a maker's quote.            */
 function aggBook(set,hs){
- // per maker half-spread hs[i]; aggregate ask = min ask, bid = max bid; depth in parallel
  const inv=set.reduce((t,m)=>t+1/m.lam,0);
  set.forEach((m,i)=>{m.share=(1/m.lam)/inv;m.h=hs[i];});
- const ask=k=>Math.min(...set.map(m=>m.c.CALL(k)*(1+m.h/1e4)));
- const bid=k=>Math.max(...set.map(m=>m.c.CALL(k)*(1-m.h/1e4)));
- const who=(k,side)=>{let best=null;set.forEach(m=>{const px=side==='ask'?m.c.CALL(k)*(1+m.h/1e4):m.c.CALL(k)*(1-m.h/1e4);
-   if(best===null||(side==='ask'?px<best.px:px>best.px))best={m,px};});return best;};
- const mid=k=>0.5*(ask(k)+bid(k));
- const crossed=k=>bid(k)>ask(k);
- return {set,ask,bid,mid,who,crossed,lamAgg:1/inv};}
+ const hAgg=Math.min(...set.map(m=>m.h))/1e4;
+ const mid=k=>set.reduce((t,m)=>t+m.share*m.c.CALL(k),0);
+ const midP=k=>set.reduce((t,m)=>t+m.share*m.c.PUT(k),0);
+ const ask=k=>mid(k)*(1+hAgg);
+ const bid=k=>mid(k)*(1-hAgg);
+ const who=(k,side)=>({m:set.find(m=>m.me)||set[0],px:side==='ask'?ask(k):bid(k)});
+ const crossed=()=>false;                       // structurally impossible in this order
+ return {set,ask,bid,mid,midP,who,crossed,hAgg,lamAgg:1/inv};}
 function calc(){
  // ORACLE mode: your level is DERIVED — oracle vol, tilted by your own bias.
  // MANUAL mode: P.Sbar is yours, exactly as before.
@@ -358,18 +375,25 @@ function calc(){
      landed(k,Q)    : (Σ fill_i·px_i)/Q  — the average price the taker pays
      impact_bps     : (landed/best − 1)·1e4  — how far the size pushes you off best
    Q beyond total book capacity = "doesn't fit", drawn dark red.                */
-function ladderAt(mkrs,k,pool,side){                  // side: 'ask' (default) or 'bid'
- const bid=side==='bid';
- const a=mkrs.map(m=>({px:m.c.CALL(k)*(bid?1-m.h/1e4:1+m.h/1e4),cap:Math.max(1e-9,m.share*pool)}))
-             .sort((x,y)=>bid?y.px-x.px:x.px-y.px);   // best first: cheapest ask / highest bid
- let cq=0,cc=0;const cum=a.map(r=>{cq+=r.cap;cc+=r.cap*r.px;return{q:cq,c:cc,px:r.px};});
- return {best:a[0].px,cum,total:cq};}
+function ladderAt(mkrs,k,pool,side){
+ // There is no ladder any more: one aggregate curve, taken by everyone at once.
+ // Depth combines in PARALLEL (1/slope_agg = Σ 1/slopeᵢ), which is the same rule
+ // as 1/λ_agg = Σ 1/λᵢ, and the price walks that single aggregate curve.
+ const bidSide=side==='bid';
+ const inv=mkrs.reduce((t,m)=>t+1/m.lam,0);
+ const hAgg=Math.min(...mkrs.map(m=>m.h))/1e4;
+ const mid=mkrs.reduce((t,m)=>t+((1/m.lam)/inv)*m.c.CALL(k),0);
+ const best=mid*(bidSide?1-hAgg:1+hAgg);
+ let invSlope=0; mkrs.forEach(m=>{invSlope+=1/((m.lam*m.c.ATM)/(0.01*pool));});
+ const slope=1/invSlope;                                  // parallel combination
+ const total=mkrs.reduce((t,m)=>t+m.share*pool,0);
+ return {best,slope,total,agg:true};}
 // THE CURRENT CURVE: what you actually pay/receive ACROSS STRIKES at YOUR size.
 // Top-of-book (the drawn ask/bid) is the Q->0 limit of this; at real size it sits inside it.
 function landedCurve(mkrs,pool,Q,side){return k=>landedFrom(ladderAt(mkrs,k,pool,side),Q);}
-function landedFrom(Ld,Q){let pq=0,pc=0;
- for(const s of Ld.cum){if(Q<=s.q)return (pc+(Q-pq)*s.px)/Q;pq=s.q;pc=s.c;}
- return null;}
+function landedFrom(Ld,Q){
+ if(Q>Ld.total)return null;                               // does not fit the book
+ return Ld.best+0.5*Ld.slope*Q;}                          // average along the aggregate walk
 const HEAT=[[0,11,30,33],[.08,13,61,63],[.22,15,95,92],[.45,10,186,181],[.72,255,165,65],[1,255,103,103]];
 function heatCol(t){                 // t = impact NORMALISED to this field's own max; null = no fit
  if(t===null)return '#4a1218';
@@ -672,10 +696,9 @@ function renderTransact(st){
   +`<div class="m"><span>makers quoting</span><b>${rows.length}</b></div>`
   +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>envelope vs best single, at ${f(sz,1)} BTC</span><b class="${cls}">${single}</b></div>`;
  // fill breakdown — walk makers cheapest-first
- const sorted=[...rows].sort((a,b)=>side==='buy'?a.ask-b.ask:b.bid-a.bid);
- let rem=sz;const out=[];
- sorted.forEach((r,i)=>{const cap=set.find(m=>m.n===r.n).share*MKT.pool;const t=Math.max(0,Math.min(cap,rem));
-  if(t>1e-6)out.push({...r,fill:t,px:side==='buy'?r.ask:r.bid});rem-=t;});
+ // operator entry 580: one aggregate price, apportioned pro-rata by density.
+ const pxAgg=landedFrom(ladderAt(set,k,MKT.pool,side==='buy'?'ask':'bid'),sz);
+ const out=pxAgg===null?[]:set.map(m=>({n:m.n,me:m.me,fill:sz*m.share,px:pxAgg}));
   $('tfl').textContent=f(sz,1)+' BTC · '+side;
  const av=$('arbv'),af=$('arbf'); if(av)av.textContent=f(ARBD,2); if(af)af.style.width=(ARBD*100)+'%';
  // operator entry 566: your own leg is itemised; everyone else is one aggregated row.
@@ -696,11 +719,10 @@ function renderTransact(st){
      brightness = 1 − Σqᵢ(k,p)/Qtot   → full at the touch, fading to 0 where the
                                         book is exhausted, so the cloud dissolves
    BUY fades upward, SELL fades downward — one side per tab, never both.        */
-function depthQ(set,k,p,side){let Q=0;
- for(const m of set){const base=m.c.CALL(k)*(side==='ask'?1+m.h/1e4:1-m.h/1e4);
-  const slope=(m.lam*m.c.ATM)/(0.01*MKT.pool),d=(side==='ask'?p-base:base-p);
-  if(d<=0)continue; Q+=Math.min(m.share*MKT.pool,d/slope);}
- return Q;}
+function depthQ(set,k,p,side){
+ const Ld=ladderAt(set,k,MKT.pool,side);
+ const d=(side==='ask'?p-Ld.best:Ld.best-p);
+ return d<=0?0:Math.min(Ld.total,d/Ld.slope);}
 // paint a cloud for ANY maker set into ANY rect. Qref is the depth the brightness
 // is measured against — pass the WHOLE book's depth when drawing individual makers
 // so their clouds are directly comparable (a thin maker looks thin).

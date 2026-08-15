@@ -4146,3 +4146,9 @@ _Context: operator confirms bias is implemented against the aggregate via liquid
 _Context: operator consolidates the settled model — the aggregation determines the buy and sell curves, each MM's spread feeds that, and MM biases move liquidity density and therefore pro-rata exposure._
 
 > so again reiterating that the aggregation determines the curves for buy and sell and then spreads of each mm therefrem and there biases impaft liquidity densitg for prorata exposure etc
+
+
+## Entry 580 — 2026-08-15 UTC
+_Context: operator corrects the ordering — the spread and hence the two curves come in AFTER aggregation, not before. Manager had built the envelope form (each maker's own two curves, min-ask / max-bid), which is the reverse order and is what permits a crossed book at all._
+
+> spread / two curves come in after aggregation
