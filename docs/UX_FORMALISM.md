@@ -107,16 +107,16 @@ entries are the manager's calls on operator entry 585; the `ux` agent owns every
 
 | # | question | ruling | rule applied | by |
 |---|---|---|---|---|
-| Q1 | Is the fourth portfolio line the carved perp? | **Yes.** Single leg = 3 lines (perp sliver · option leg · total); vertical spread = 4 (perp sliver · bought · sold · total). | §4 position×stock. The reference's own model is `[perp, bought, sold]`+total and it *hides* the perp row — but in Temporal the carve is a real transfer of notional between tabs, so the row it hides is the one we must show. | manager |
+| Q1 | How many portfolio lines, and what are they? | **RULED BY THE OPERATOR (entry 587): 5 lines MAX, exactly 1 of which is the carved perp** — so 4 option lines + 1 perp. My earlier ruling said 4 total and was one short. Manager's reading of the 4: a vertical spread can be constructed on either side, so bought-inner · bought-outer · sold-inner · sold-outer, with the total as a footer rather than a line. **Flagged for one word of confirmation — I inferred the composition, the operator only fixed the count.** | §7 the perp line always exists, because no option can exist unbacked (entry 587). | **operator** (count) / manager (composition, provisional) |
 | Q2 | Is EARN a top-level route or a ticket tab? | **Top-level route.** | LP is a distinct persona with its own lifecycle (post curve → inspect apportionment → withdraw), not a mode of trading. Burying it in a ticket costs a mode-switch on every LP task. | manager |
 | Q3 | Per-position liquidation price, or account-level only? | **Account-level only.** No per-position liq price anywhere. The ticket shows the **marginal effect of this trade on account headroom**. | §3 — a per-position liq price when liquidation is account-level is *false* decision-relevant state. Showing it is worse than showing nothing. | manager |
-| Q4 | Partial close of an option? | **Yes**, one fraction slider; the backing sliver closes in the **same proportion**. | Any other rule creates orphaned collateral or an unclosable residue. **Core consequence flagged:** the carve record must be fractional/mutable. | manager |
+| Q4 | Partial close of an option? | **RULED BY THE OPERATOR (entry 587): NO. Overturns my ruling.** "all perp options or vertical spreads opened bundle at once full closed together w slover perp" — the bundle is the unit. It opens at once and closes in full, together with its sliver perp. No fraction slider. | The bundle is atomic. **This removes the core consequence I had flagged:** the carve record does NOT need to be fractional or mutable, which is simpler than what I proposed. | **operator** |
 | Q5 | Does the carved sliver accrue perp funding? | **RULED BY THE OPERATOR (entry 586): yes — a carved perp is still a perp and retains everything a perp has.** Line 1 is a full perp row with the *same columns as any perp*, funding included. No reduced "sliver" row type, and no new object type in the model. | §7 — the carve is a display/earmarking operation, not an economic one. | **operator** |
-| Q6 | Can a trader write an option without holding the perp? | **Yes — one composite confirm** that opens the perp and carves in a single action, with both legs itemised before commit. | §2 — the two-ticket sequence is the 11-vs-8 step overhead, and it is pure navigation, not information. §3.1(3) keeps the disclosure. | manager |
+| Q6 | Can a trader write an option without holding the perp? | **INVARIANT, operator entry 587: "no option can be sold without a perp its carved from."** There is no naked option, ever. The composite confirm stands as the low-step route *because* it creates the perp and carves it in one act — it satisfies the invariant rather than bypassing it. | §7. The invariant is also why line 1 always exists. | **operator** (invariant) / manager (composite) |
 | Q7 | Closing a perp that has slivers standing against it? | **Compound close** — "close everything on this perp", slivers itemised in the confirm. Not fail-closed-with-a-link. | §2 — fail-closed costs more steps for no safety gain once the compound action is disclosable. | manager |
 | Q8 | Does a taker see maker-side detail? | **No.** Aggregate only. Your own leg is itemised only when you are yourself a maker in that fill. | Operator entry 566 ("you cant see individual makers only self and aggregate") binds the taker too — a taker seeing who filled them leaks the same information. Matches shipped behaviour. | manager |
 | Q9 | Quote validity window? | **Expiry with a visible countdown; on expiry, re-quote requiring re-accept. Never silently re-price.** Placeholder 10s pending real latency data. | §3.1(1). The *behaviour* is the ruling; the number is a parameter. | manager |
-| Q10 | 40× or 50×? | **Both, and labelled.** 50× hard cap = liquidation; 40× = warn band. The defect was that nothing said so. | §3 — an unlabelled colour change is state the user cannot act on. | manager |
+| Q10 | 40× or 50×? | **50× only.** Operator entry 587: "4050 idk what" — the 40 has no provenance; it was not a design decision, it was an unexplained literal in my code. Removed. If a warn band is wanted the operator picks the number; until then there is one threshold. | §3 — a threshold nobody can source is not decision-relevant state, it is noise. | **operator** (40 disowned) / manager (removal) |
 | Q11 | LP mark/close when the LP is the only maker at a strike? | **Mark** falls back to the oracle-derived curve (it exists independently of any maker). **Close** reads "no counterparty — cannot close". | §3 — inventing a close price where no counterparty exists is fabricated decision-relevant state. The oracle is a real, already-present source; a close price would not be. | manager |
 
 ### 5.1 Escalated to the operator — NOT decided here
@@ -150,6 +150,20 @@ liquidation test, and hold its entry price and size — **exactly as it did befo
 
 **Test for any future carve question:** would the answer differ for an uncarved perp? If not, the
 carve does not change it. That is the whole rule.
+
+### 7.1 The bundle is the unit (operator entry 587)
+> no option can be sold without a perp its carved from
+> all perp options or vertical spreads opened bundle at once full closed together w slover perp
+
+Two invariants that together define the traded object:
+1. **No naked option.** Every option is carved from a perp. The perp line therefore always exists —
+   that is why the row count has a floor of 2 (perp + one option leg), not 1.
+2. **The bundle is atomic.** An option or vertical spread and its sliver perp **open together and
+   close together, in full.** There is no partial close and no independent close of either part.
+
+Consequences: the carve record is **immutable** — created whole, destroyed whole; a close ticket has no
+size control, only a confirm; and Q7's "compound close" is not a convenience, it is **the only close
+that exists.**
 
 ## 6. Standing obligations
 1. Every proposal reports **steps and glances** against §2, with the counting shown.

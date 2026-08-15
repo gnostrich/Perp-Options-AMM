@@ -4196,3 +4196,17 @@ _Context: operator directs the manager to decide all open UX questions himself, 
 _Context: operator rules the escalated Q5 and more broadly — a carved perp is still a perp and retains every property a perp has. The carve is therefore a display/earmarking operation, not an economic one._
 
 > carbed perp is still perp and retains everything perp has
+
+
+## Entry 587 — 2026-08-15 UTC
+_Context: operator corrects four rulings and flags the LP surface as unclear — 5 portfolio lines max with exactly one being the carved perp; no option may exist without a perp it is carved from; option/spread bundles open at once and close in FULL together with the sliver perp (overturning the manager's partial-close ruling); the 40x threshold is unrecognised; and the LP picture is not clear._
+
+> would be 5 lines max w 1 pertaining to the carved perp
+>
+> no option can be sold without a perp its carved from
+>
+> all perp options or vertical spreads opened bundle at once full closed together w slover perp
+>
+> 4050 idk what
+>
+> lp not clear

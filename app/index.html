@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 32 · oracle ui wired</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 33 · one threshold</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -910,7 +910,7 @@ function renderPortfolio(st){
   `<div class="m"><span>perp notional</span><b>${usd(clubL+clubS)}</b></div>
    <div class="m"><span>options value</span><b class="${netV>=0?'pos':'neg'}">${usd(netV)}</b></div>
    <div class="m"><span>account equity</span><b>${usd(acctEq)}</b></div>
-   <div class="m"><span>account leverage</span><b class="${lev>40?'neg':''}">${f(lev,2)}×</b></div>`;
+   <div class="m"><span>account leverage</span><b class="${lev>50?'neg':''}">${f(lev,2)}×</b></div>`;
  $('pcarve').innerHTML=
   `<div class="m"><span>carved notional</span><b>${usd(carveN)}</b></div>
    <div class="m"><span>equity carved out</span><b>${usd(carveE)}</b></div>
