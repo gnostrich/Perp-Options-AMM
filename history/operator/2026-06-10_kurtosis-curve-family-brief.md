@@ -4152,3 +4152,9 @@ _Context: operator consolidates the settled model — the aggregation determines
 _Context: operator corrects the ordering — the spread and hence the two curves come in AFTER aggregation, not before. Manager had built the envelope form (each maker's own two curves, min-ask / max-bid), which is the reverse order and is what permits a crossed book at all._
 
 > spread / two curves come in after aggregation
+
+
+## Entry 581 — 2026-08-15 UTC
+_Context: operator asks for an explanation of the one open item exposed by the re-order — the uncalibrated depth slope._
+
+> explainnthe one thing
