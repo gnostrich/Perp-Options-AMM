@@ -37,3 +37,16 @@ operator does not think about UX when the core moves.
 Cite file paths for reference claims. Show step and glance counts. Never remove cost by hiding
 decision-relevant state — that is invalid, not optimal. Escalate economics rather than picking.
 Hand edits back to the manager; he is the sole git actor.
+
+## LP surface — RULED by the operator, entry 589
+- LP's own position (capital, curve, bias, mode) lives in **Earn**.
+- LP **accrued fills sit in the same perp-options table as trader positions**, distinguished by an
+  `origin` column + checkbox filter. Do not split the table (formalism §4.3).
+- **Line 1 on an LP row is the counterparty's perp, pro-rata** — LPs never hold perps. This is what
+  makes the no-naked-option invariant hold from both sides.
+- **Earn total is Δ-weighted, in perp-equivalent units.** No maturity axis exists for perpetuals;
+  Δ·q is what makes option lines commensurable with perps.
+- All four already exist in the reference: `origin?: "opened" | "lp"` (`portfolio.ts:56,166,228,293`),
+  `isLpRow` (`tableContainer.tsx:506,528,621,694`), `ExposureTotals`/`byLp` and the "₿-perp (Δ·q)"
+  label (`earnTableContainer.tsx:31,39,68-70`). **No path stamps `"lp"` yet** (`portfolio.ts:166`) —
+  the contract is there, the producer is not.

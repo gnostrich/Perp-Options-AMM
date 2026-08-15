@@ -135,6 +135,22 @@ permanent column on the position row, because it is a flow, not a stock.
 That is the rule. It settles the same question for close P&L, funding credits, fee rebates, liquidation
 proceeds and LP accruals without re-arguing any of them.
 
+### 4.3 Same home, different basis — the `origin` axis (operator entry 589)
+Two rows can be economically different objects and still belong in the **same table**. Taxonomy §4
+places by ownership × persistence, and an LP accrual and a trader position are identical on both axes —
+so they share a home. What differs is the **basis** of some columns:
+
+| column | trader position (`origin:"opened"`) | LP accrual (`origin:"lp"`) |
+|---|---|---|
+| notional basis | `size × entryPrice` — a real entry | **mark** — an accrual has no entry price |
+| line 1 (the carved perp) | the trader's own perp | **pro-rata share of the counterparty's perp** |
+| close | closes the bundle | closes the LP's share of it |
+
+**Rule: do not split the table; state the basis.** A separate LP table would duplicate every column and
+force a mode-switch to see total exposure. An `origin` column plus a filter checkbox costs one glance
+and keeps one total. The reference reached the same answer independently — `origin?: "opened" | "lp"`
+on the contract and `isLpRow` branching only where the *basis* differs, never the placement.
+
 ### 4.2 When the taxonomy does not decide
 Extend it and record the new rule here. Do not place by taste and move on — a one-off placement is the
 failure mode this document exists to prevent.
@@ -157,6 +173,11 @@ entries are the manager's calls on operator entry 585; the `ux` agent owns every
 | Q9 | Quote validity window? | **Expiry with a visible countdown; on expiry, re-quote requiring re-accept. Never silently re-price.** Placeholder 10s pending real latency data. | INVARIANT (expiry exists; never silently re-price) / RULED (duration) / **CHOICE** (countdown UI) | §3.1(1). The *behaviour* is the ruling; the number is a parameter. | manager |
 | Q10 | 40× or 50×? | **50× only.** Operator entry 587: "4050 idk what" — the 40 has no provenance; it was not a design decision, it was an unexplained literal in my code. Removed. If a warn band is wanted the operator picks the number; until then there is one threshold. | INVARIANT (50× is the cap) / **CHOICE** (whether a warn band exists at all) | §3 — a threshold nobody can source is not decision-relevant state, it is noise. | **operator** (40 disowned) / manager (removal) |
 | Q11 | LP mark/close when the LP is the only maker at a strike? | **Mark** falls back to the oracle-derived curve (it exists independently of any maker). **Close** reads "no counterparty — cannot close". | **INVARIANT** — no counterparty, no price / **CHOICE** (the wording) | §3 — inventing a close price where no counterparty exists is fabricated decision-relevant state. The oracle is a real, already-present source; a close price would not be. | manager |
+
+| Q12 | Where does the LP's own position live? | **Earn.** Capital, posted curve, bias, mode. | **CHOICE** (consistent with Q2) | LP persona owns its own route. | **operator** entry 589 |
+| Q13 | Where do LP-accrued fills show? | **Under the perp-options section, in the same table as trader positions**, disambiguated by an `origin` column plus a checkbox filter. | INVARIANT (they are economically different objects and must be distinguishable) / **CHOICE** (column + checkbox as the mechanism) | §4 places them identically — same ownership, same persistence. §4.3 handles the basis difference. Reference already carries `origin?: "opened" \| "lp"` (`portfolio.ts:56,166,228,293`) and `isLpRow` branching (`tableContainer.tsx:506,528,621,694`). | **operator** entry 589 |
+| Q14 | What is line 1 on an LP-accrued row? | **The counterparty's perp, pro-rata to the LP's fill share.** LPs do not hold perps; they take the other side of a trader who does. | **INVARIANT** | The no-naked-option invariant (§7.1) holds from both sides: the trader's option is carved from *their* perp, and the LP's accrual is backed by a pro-rata claim on that same perp. Nothing is unbacked, and no LP is required to hold a perp. | **operator** entry 589 |
+| Q15 | How is the Earn total aggregated? | **Δ-weighted, in perp-equivalent units.** The operator asked for "strike weighted like maturity or something"; for perpetual options there is no maturity, and the reference already resolves it as Δ-weighting: `ExposureTotals`, `byLp` (`earnTableContainer.tsx:31,39`) displayed as **"₿-perp (Δ·q)"**, with an explicit note that a bare "₿" would read as unweighted option size — "the exact ambiguity" the label exists to prevent (`:68–70`). | INVARIANT (Δ is the only axis that makes option lines commensurable with perps) / **CHOICE** (the unit label) | Aggregating raw option size across strikes adds non-commensurable quantities. Δ·q converts every line into perp-equivalents, which is also the unit the hedge readback already uses. | **operator** entry 589 / reference |
 
 ### 5.1 Escalated to the operator — NOT decided here
 - ~~**Q5 economics**~~ — **RULED, entry 586.** See §7.
