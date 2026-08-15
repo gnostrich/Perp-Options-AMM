@@ -4158,3 +4158,11 @@ _Context: operator corrects the ordering — the spread and hence the two curves
 _Context: operator asks for an explanation of the one open item exposed by the re-order — the uncalibrated depth slope._
 
 > explainnthe one thing
+
+
+## Entry 582 — 2026-08-15 UTC
+_Context: operator asks for the depth model to be done properly, pointing at the swap-pricer sheet for the individual-LP picture, and notes it is not to be taken literally at book level because aggregation sits on top._
+
+> can you pls do properly? see the sheet for the individual lp level picture
+>
+> and ofc it goes without saying now that this isnt literal because you have aggregation

@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 30 · aggregate then spread</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 31 · sheet depth model</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -240,16 +240,29 @@ const AR=k=>qR*(sR/a)*B*(1-ibeta(1/(1+Math.pow(sR/Math.max(Math.abs(k),1e-12),a)
 const AL=k=>Math.abs(k)>=1?0:qL/(1-G1)*((sL/a)*B*(1-ibeta(1/(1+Math.pow(sL/Math.max(Math.abs(k),1e-12),a)),1/a,gam/a))-I1-G1*(1-Math.abs(k)));
 return {AR,AL,CALL:k=>k>=0?AR(k):-k+AL(k),PUT:k=>k<=0?AL(k):k+AR(k),ATM:qR*(sR/a)*B};}
 /* ─── params (CurveParamField spec) ─── */
-const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:0.10,fee:0.02,depth:25};
+/* λ is NOT a per-LP knob. In the swap-pricer sheet ('Trade' B11) it is a single
+   mechanism constant = 0.01 = "DIRECT kappa change from an ATM trade worth 1% of
+   pool". What differs between LPs is CAPITAL. Sheet B35/C14:
+       slippage fraction  s  = ½·λ·(Q/N)/0.01·ATMp/P
+       kappa move        Δκ  = ±λ·(Q/N)/0.01·ATMp/P
+   P cancels in the ABSOLUTE move (P·s = ½·λ·(Q/N)/0.01·ATMp), so the absolute
+   slope is flat across strikes and the FRACTIONAL cost is not — 0.63% at k=−30%
+   rising to 3.58% at k=+50% on the same 5 BTC. That is the sheet's behaviour and
+   it is correct; my "wrong shape" claim last turn was wrong.
+   Per-LP capital N_i, aggregated in parallel, is exactly one pool of ΣN_i
+   (verified identical to 1e-15) — which is the operator's "not literal because
+   you have aggregation".                                                        */
+const LAM=0.01;                                   // sheet 'Trade'!B11
+const DEF={Sbar:0.60,a:1.2705,gam:1.8413,kap:0,lam:LAM,cap:95,fee:0.02,depth:25};
 const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0.05],
  ["gam","γ (Burr k)",0.3,4,0.05],["kap","κ (skew)",-0.9,0.9,0.01],
- ["lam","λ (decay)",0.01,1.0,0.01],["fee","fee",0,0.2,0.005]];
+ ["cap","your capital (BTC)",5,150,1],["fee","fee",0,0.2,0.005]];
 // tester FLAG-C1: "depth (BTC per 1% strike)" removed — P.depth had zero readers,
 // so the slider moved and nothing in the app changed. Depth now comes from λ and
 // the pool, which the cloud actually renders.
 let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='transact', ARBD=0.15, CSIDE='ask', CVIEW='agg';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
-const S=65695.5, others=[{n:'MM-Kappa',lam:0.05,aggr:1.10},{n:'MM-Delta',lam:0.10,aggr:1.45},{n:'MM-Sigma',lam:0.04,aggr:1.22}];
+const S=65695.5, others=[{n:'MM-Kappa',cap:38,aggr:1.10},{n:'MM-Delta',cap:19,aggr:1.45},{n:'MM-Sigma',cap:48,aggr:1.22}];
 const MKT={rv:0.60,turn:0.30,pool:200,Q:5};
 const ORC={iv:0.60, bias:0.0, mode:'oracle'};   // oracle IV, YOUR bias vs it, quoting mode
 /* ─── NATURAL MAP (operator entries 571/572) ────────────────────────────────
@@ -296,10 +309,11 @@ function makerCurves(){
  const R=ORC.mode==='oracle'
    ? {Sbar:sbarFromVol(ORC.iv,DEF.a,DEF.gam,DEF.kap),a:DEF.a,gam:DEF.gam,kap:DEF.kap}
    : DEF;
- const set=[{n:'YOU',me:true,lam:0.02,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
-   {n:'MM-Kappa',me:false,lam:0.05,Sbar:R.Sbar*(1-0.035*D),a:R.a*(1-0.06*D),gam:R.gam*(1+0.03*D),kap:R.kap+0.05*D},
-   {n:'MM-Delta',me:false,lam:0.10,Sbar:R.Sbar*(1+0.05*D),a:R.a*(1+0.06*D),gam:R.gam*(1-0.05*D),kap:R.kap-0.06*D},
-   {n:'MM-Sigma',me:false,lam:0.04,Sbar:R.Sbar*(1+0.01*D),a:R.a*(1+0.01*D),gam:R.gam,kap:R.kap+0.02*D}];
+ const set=[{n:'YOU',me:true,cap:P.cap,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
+   {n:'MM-Kappa',me:false,cap:38,Sbar:R.Sbar*(1-0.035*D),a:R.a*(1-0.06*D),gam:R.gam*(1+0.03*D),kap:R.kap+0.05*D},
+   {n:'MM-Delta',me:false,cap:19,Sbar:R.Sbar*(1+0.05*D),a:R.a*(1+0.06*D),gam:R.gam*(1-0.05*D),kap:R.kap-0.06*D},
+   {n:'MM-Sigma',me:false,cap:48,Sbar:R.Sbar*(1+0.01*D),a:R.a*(1+0.01*D),gam:R.gam,kap:R.kap+0.02*D}];
+ set.forEach(m=>{m.lam=LAM;});
  set.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);});
  return set;}
 /* ─── AGGREGATE FIRST, SPREAD AFTER (operator entry 580) ────────────────────
@@ -320,8 +334,9 @@ function makerCurves(){
    Honest note: mid(k) IS Σ wᵢCᵢ, i.e. the mixture. Nothing requires it to live in
    the Burr-2 family; it is a computed book curve, not a maker's quote.            */
 function aggBook(set,hs){
- const inv=set.reduce((t,m)=>t+1/m.lam,0);
- set.forEach((m,i)=>{m.share=(1/m.lam)/inv;m.h=hs[i];});
+ const tot=set.reduce((t,m)=>t+m.cap,0);          // pool notional = Σ per-LP capital
+ set.forEach((m,i)=>{m.share=m.cap/tot;m.h=hs[i];});
+ MKT.pool=tot;
  const hAgg=Math.min(...set.map(m=>m.h))/1e4;
  const mid=k=>set.reduce((t,m)=>t+m.share*m.c.CALL(k),0);
  const midP=k=>set.reduce((t,m)=>t+m.share*m.c.PUT(k),0);
@@ -329,7 +344,7 @@ function aggBook(set,hs){
  const bid=k=>mid(k)*(1-hAgg);
  const who=(k,side)=>({m:set.find(m=>m.me)||set[0],px:side==='ask'?ask(k):bid(k)});
  const crossed=()=>false;                       // structurally impossible in this order
- return {set,ask,bid,mid,midP,who,crossed,hAgg,lamAgg:1/inv};}
+ return {set,ask,bid,mid,midP,who,crossed,hAgg,poolTot:tot};}
 function calc(){
  // ORACLE mode: your level is DERIVED — oracle vol, tilted by your own bias.
  // MANUAL mode: P.Sbar is yours, exactly as before.
@@ -344,8 +359,8 @@ function calc(){
  const Gt=n?g/n:0, bleed=0.5*Gt*MKT.rv*MKT.rv;   // fraction of NOTIONAL per year
  const hFair=(bleed/(MKT.turn*365))*1e4, marg=0.25;
  const hEff=volIndexed?hFair*(1+marg):P.fee*1e4/2; HEFF_BPS=hEff;
- const book=[{n:'YOU',lam:0.02,h:hEff,me:true},...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
- const inv=book.reduce((s,m)=>s+1/m.lam,0); book.forEach(m=>m.share=(1/m.lam)/inv);
+ const book=[{n:'YOU',cap:P.cap,h:hEff,me:true},...others.map(o=>({...o,h:volIndexed?hFair*o.aggr:o.aggr*30,me:false}))];
+ const capT=book.reduce((s,m)=>s+(m.cap||1),0); book.forEach(m=>m.share=(m.cap||1)/capT);
  const me=book.find(m=>m.me);
  const notBTC=P.margin*10;                       // pool leverage 10x
  // CONTINUOUS capacity density w(k) — no ladder. Quote any strike on demand.
@@ -380,14 +395,15 @@ function ladderAt(mkrs,k,pool,side){
  // Depth combines in PARALLEL (1/slope_agg = Σ 1/slopeᵢ), which is the same rule
  // as 1/λ_agg = Σ 1/λᵢ, and the price walks that single aggregate curve.
  const bidSide=side==='bid';
- const inv=mkrs.reduce((t,m)=>t+1/m.lam,0);
+ const tot=mkrs.reduce((t,m)=>t+m.cap,0);
  const hAgg=Math.min(...mkrs.map(m=>m.h))/1e4;
- const mid=mkrs.reduce((t,m)=>t+((1/m.lam)/inv)*m.c.CALL(k),0);
+ const mid=mkrs.reduce((t,m)=>t+(m.cap/tot)*m.c.CALL(k),0);
  const best=mid*(bidSide?1-hAgg:1+hAgg);
- let invSlope=0; mkrs.forEach(m=>{invSlope+=1/((m.lam*m.c.ATM)/(0.01*pool));});
- const slope=1/invSlope;                                  // parallel combination
- const total=mkrs.reduce((t,m)=>t+m.share*pool,0);
- return {best,slope,total,agg:true};}
+ // sheet 'Trade'!B35: slope_i = λ·ATMp_i/(0.01·N_i). Slopes combine in parallel,
+ // which collapses exactly to one pool holding ΣN_i (verified identical to 1e-15).
+ let invSlope=0; mkrs.forEach(m=>{invSlope+=(0.01*m.cap)/(LAM*m.c.ATM);});
+ const slope=1/invSlope;
+ return {best,slope,total:tot,agg:true};}
 // THE CURRENT CURVE: what you actually pay/receive ACROSS STRIKES at YOUR size.
 // Top-of-book (the drawn ask/bid) is the Q->0 limit of this; at real size it sits inside it.
 function landedCurve(mkrs,pool,Q,side){return k=>landedFrom(ladderAt(mkrs,k,pool,side),Q);}
@@ -466,7 +482,7 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  // for one LP. Using the display figure the execution does not honour would be
  // the same class of defect as the tester's C3 flag, so the book figure wins.)
  const meRow=st.book.find(m=>m.me), QmaxYou=Math.max(0.1,(meRow?meRow.share:1)*MKT.pool);
- const dFull=(QmaxYou/MKT.pool)*100*P.lam*st.c.ATM;
+ const dFull=(QmaxYou/MKT.pool)*100*LAM*st.c.ATM;
  const ymax=Math.max(...cask)+dFull*1.02;
  const PH=H-T-Bm-HB-28;                       // plot height above the landing heatmap
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
@@ -484,7 +500,7 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  // band on the curve and makes the size control do real work.
  // operator entry 564: YOUR cell shades against YOUR OWN maximum possible depth —
  // the margin you are putting up — not the pool and not the size box.
- const you=[{n:'YOU',c:st.c,h:st.hEff,share:QmaxYou/MKT.pool,lam:P.lam,me:true}];
+ const you=[{n:'YOU',c:st.c,h:st.hEff,share:QmaxYou/MKT.pool,lam:LAM,cap:QmaxYou,me:true}];
  cloudIn(g,you,L,T,W-L-R,PH,ymax,CSIDE,QmaxYou);
  g.font='10px IBM Plex Mono';g.fillStyle=CSIDE==='ask'?'#63e6e2':'#FF6767';
  g.fillText(CSIDE==='ask'
@@ -758,7 +774,7 @@ function drawSelfCloud(g,set,W,H,side){
  const Qme=Math.max(0.1,me.share*MKT.pool);
  const ask=side==='ask';
  const touch=k=>me.c.CALL(k)*(ask?1+me.h/1e4:1-me.h/1e4);
- const dFull=(Qme/MKT.pool)*100*me.lam*me.c.ATM;
+ const dFull=(Qme/MKT.pool)*100*LAM*me.c.ATM;
  const ymax=touch(-0.7)+dFull*1.02;
  const X=k=>L+(k+0.7)/1.4*(W-L-R), Y=v=>T+(1-v/ymax)*PH;
  g.strokeStyle='#141d1f';for(let i=0;i<=4;i++){const y=T+i*PH/4;g.beginPath();g.moveTo(L,y);g.lineTo(W-R,y);g.stroke();}
