@@ -4178,3 +4178,9 @@ _Context: operator re-uploads the OB-MM repo and commissions a research agent on
 > also recao thebflow we discussed about perp going out of perp aggregatoonnwhen perp option opened on it etc
 >
 > perp options in each line, you also have vertical soreads so portfolo has upto 4 lines for perp optiooms on boudfht sold sides tofal etc etc …
+
+
+## Entry 584 — 2026-08-15 UTC
+_Context: operator extends the UX research brief — the agent should reason formally about the number of steps, from an optimality standpoint._
+
+> yes also youd want it to think formally through the number of steps etc from optimality standpoint
