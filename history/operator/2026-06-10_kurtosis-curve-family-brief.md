@@ -4080,3 +4080,9 @@ _Context: operator points out that in any routine spot RFQ system nobody needs t
 _Context: operator points out the venue has no more of a central counterparty than a perp DEX does, retiring the manager's residual "credit" concern. With entries 554/568/569 the whole (a)/(b) market-structure fork is closed: makers differ freely, fills split, no CCP exposure beyond standard perp-DEX bad-debt handling._
 
 > this also doesn't really have a central counterparty any more than a perp dex does
+
+
+## Entry 570 — 2026-08-15 UTC
+_Context: operator answers the active-vs-passive LP question — LPs will run their own agents to tune parameters continuously. Manager re-checked the break-even figure quoted in the previous turn and found it came from a different curvature measure than the app's._
+
+> they'll run their own agents to tune parameters if need be, so they can keep changing it
