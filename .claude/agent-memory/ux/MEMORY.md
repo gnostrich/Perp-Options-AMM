@@ -44,8 +44,13 @@ Hand edits back to the manager; he is the sole git actor.
   `origin` column + checkbox filter. Do not split the table (formalism §4.3).
 - **Line 1 on an LP row is the counterparty's perp, pro-rata** — LPs never hold perps. This is what
   makes the no-naked-option invariant hold from both sides.
-- **Earn total is Δ-weighted, in perp-equivalent units.** No maturity axis exists for perpetuals;
-  Δ·q is what makes option lines commensurable with perps.
+- **Earn total is a DURATION TRIPLE on the strike axis** (entry 590), not one number:
+  exposure `Σ Δq` (₿-perp) · strike duration `K_D = Σ wk`, `w = Δq/ΣΔq` · dispersion `√(Σ w(k−K_D)²)`.
+  Magnitude, location, spread — the strike-axis analogue of PV / duration / convexity.
+  Verified: the sensitivity identity holds to 1.13% (the residual is convexity).
+  **Weight by Δ·q, not by value** — value-weighting gives a similar number with NO sensitivity
+  identity. That is what the operator's asterisk is about: in fixed income the two coincide, here
+  they do not.
 - All four already exist in the reference: `origin?: "opened" | "lp"` (`portfolio.ts:56,166,228,293`),
   `isLpRow` (`tableContainer.tsx:506,528,621,694`), `ExposureTotals`/`byLp` and the "₿-perp (Δ·q)"
   label (`earnTableContainer.tsx:31,39,68-70`). **No path stamps `"lp"` yet** (`portfolio.ts:166`) —

@@ -4226,3 +4226,9 @@ _Context: operator specifies the LP surface — LP position lives in Earn; accru
 > and we have a origin column and checkbox to togfle lp accrued positions or positins enters into as a trader
 >
 > and you'd have the total positions sort of strike weighted like maturity or something aggregated in the earn tab iygwim and also inthink this stuff isn in the zip ingave
+
+
+## Entry 590 — 2026-08-15 UTC
+_Context: operator sharpens the Earn aggregate — it is portfolio DURATION, but computed on strike rather than maturity._
+
+> like portfolio duration but on strike* (not maturity)
