@@ -216,6 +216,32 @@ liquidation test, and hold its entry price and size — **exactly as it did befo
 **Test for any future carve question:** would the answer differ for an uncarved perp? If not, the
 carve does not change it. That is the whole rule.
 
+### 7.3 What "pro-rata" refers to (operator entry 593)
+
+> i said prorata inthe sense trader may have multiple lps on its position
+
+The pro-rata is the **apportionment of ONE trader position across the several LPs that filled it** —
+not a claim on anything. Fills split across all makers by capital share (§0.1(6)), so:
+
+```
+one trader bundle  →  N LP accrual rows
+Σ (LP fill shares on that position) = 1        exactly
+```
+
+**Accounting identity (INVARIANT):** the LP rows' perp-equivalent lines sum to the trader's carved
+perp, exactly. Verified on the shipped apportionment: a 30 BTC order splits
+`14.29 / 5.71 / 2.86 / 7.14 = 30.00`.
+
+Two things this fixes in my own earlier reasoning:
+1. I had guessed the pro-rata pointed at a **pool-level perp in the shared wallet**. It does not. It
+   points at **the trader's own carved perp**, divided among the LPs who filled that trader.
+2. It is still **not a claim** (§7.2) — an LP's displayed perp line is its share of the trader's carved
+   perp for calculation and row consistency, while the LP's accountability remains the option leg only.
+
+**UX consequence:** the row model is not 1:1. One trader bundle produces one trader view and N LP
+views, and any surface that implies a single counterparty per position is wrong. The `origin` column
+(§4.3) is what keeps the two readings of the same trade legible in one table.
+
 ### 7.2 The trader/LP asymmetry — who owns the perp leg (operator entry 592)
 
 > a when lp is seller hes really accountable to the bundled net perp options / v spread p/l not the

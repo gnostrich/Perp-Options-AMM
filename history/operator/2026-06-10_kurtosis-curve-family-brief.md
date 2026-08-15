@@ -4248,3 +4248,9 @@ _Context: operator resolves all three flagged ambiguities — an LP seller is ac
 > b yes
 >
 > c yes i guess because price in the underlyng terms changes w curve and where on curve it is
+
+
+## Entry 593 — 2026-08-15 UTC
+_Context: operator clarifies what "pro-rata" referred to — a single trader position may be filled by MULTIPLE LPs, so the pro-rata is the apportionment of that one position across them, not a claim on anything._
+
+> i said prorata inthe sense trader may have multiple lps on its position
