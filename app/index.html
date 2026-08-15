@@ -72,6 +72,9 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
       <span class="t2" style="color:var(--txt2)">Executed on Hyperliquid</span></div>
 
     <div class="card">
+      <div class="chead"><b>Quoting source</b><span><span class="badge" id="mdOrc" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">ORACLE + BIAS</span><span class="badge" id="mdMan" style="cursor:pointer">MANUAL</span></span></div>
+      <div id="orcbox"></div>
+      <div class="note" style="margin:6px 0 14px">Your level is not a number you pick — it is solved from the oracle vol through the natural map, tilted by <b>your bias</b>. Shape (a, γ, κ) stays yours in both modes. Switch to MANUAL to drive every parameter by hand.</div>
       <div class="chead"><b>Curve Parameters</b><a id="reset">Reset to defaults</a></div>
       <div id="params"></div>
     </div>
@@ -96,7 +99,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
         <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
       <canvas id="cv" width="980" height="400" style="cursor:crosshair"></canvas>
       <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly. TWO curve sets: solid = <b>ask</b> (traders buy from you), dashed = <b>bid</b> (traders sell to you). <b style='color:#FFA541'>The gap is drawn <span id='magc'>×25</span> for visibility</b> — the real half-spread is shown in Quote Capacity; at 19 bps the two curves would overlap on screen. The shaded band between them is your spread — that band is the revenue, and it is irreversible. <b>Bottom panel = the landing map</b>: the aggregate is not a curve — what a taker actually pays depends on SIZE too, because the trade walks the book cheapest-first. Colour = how far a trade of that size at that strike lands from the best quote (dark = at best, amber/red = pushed off it, deep red = the size does not fit the book). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike, evaluated from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly (residual 1.1e-16). <b>Your curve is drawn as a cloud, not a line</b>: brightness is liquidity still untouched at that price, full at the touch and fading to nothing over your own capacity, so how far it reaches IS your depth. BUY and SELL are separate tabs — one side on screen at a time. Impact follows the swap pricer exactly: <code>s = ½·λ·(Q/N)/0.01·ATMp/P</code>, so the same size costs more in fractional terms the further out you go (0.63% at k=−30% vs 3.58% at k=+50% on 5 BTC). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
     </div>
 
     <div class="panel" style="margin-top:12px">
@@ -109,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 31 · sheet depth model</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 32 · oracle ui wired</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -584,8 +587,6 @@ function render(){
  $('r-bet').textContent=f(st.bleed/((st.hEff/1e4)*365),2)+'× /day';
  $('r-par').textContent=f(Math.abs((st.c.CALL(0.2)-st.c.PUT(0.2))+0.2),12);
  $('qlab').textContent='size '+f(MKT.Q,1)+' BTC';
- $('magv')&&($('magv').textContent='×'+MAG);
- $('magc')&&($('magc').textContent='×'+MAG);
   // operator entry 566: only YOUR row is itemised. Other makers' half-spread, depth
   // and revenue are private — publishing them would hand every LP the outlier.
   {const mine=st.sorted.filter(m=>m.me), oth=st.sorted.filter(m=>!m.me);
@@ -654,7 +655,6 @@ function bind(){
  if(sb&&!sb._w){sb._w=1;sb.onclick=()=>{TRADE.side='buy';sb.className='cta';ss2.className='cta off';render();};
   ss2.onclick=()=>{TRADE.side='sell';ss2.className='cta';sb.className='cta off';render();};}
  document.querySelectorAll('[data-k]').forEach(el=>{el.oninput=e=>{P[e.target.dataset.k]=+e.target.value;render();};});
- $('mag')&&($('mag').oninput=e=>{MAG=+e.target.value;render();});
   $('qsz')&&($('qsz').oninput=()=>render());
  document.querySelectorAll('[data-m]').forEach(el=>{el.oninput=e=>{MKT[e.target.dataset.m]=+e.target.value;render();};});}
 $('margin').oninput=e=>{P.margin=+e.target.value;render();};
