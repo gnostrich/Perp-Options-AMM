@@ -4110,3 +4110,11 @@ _Context: operator identifies an arb-leak specific to this design — because a 
 _Context: operator accepts the constraint that the healing axis must span the disagreement axis, and concludes that the aggregation works as intended and that because there are TWO curve sets (bid and ask) the spread comes through the aggregation naturally rather than needing a separate mechanism._
 
 > which is probably fair, so the aggregation thing works as it should and since 2 curves the spread also naturally comes thru
+
+
+## Entry 575 — 2026-08-15 UTC
+_Context: operator reframes LP bias — it is not a mispricing but a repositioning of that LP's liquidity density, which changes its pro-rata share of matching relative to the aggregate; and since the spread sits away from the aggregate, an arb at the spread level is acceptable._
+
+> so LP bias as i see it is just going to change individusl's liquidity density and hence prorate matching around wrt the aggregate curve itms;
+>
+> and spread thing also i think is self explanatory now since its away from the aggregate, like if theres arb at spread level thats acceptable?
