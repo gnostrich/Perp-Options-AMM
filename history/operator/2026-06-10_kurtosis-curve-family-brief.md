@@ -4272,3 +4272,9 @@ _Context: operator approves the manager's recommendation to run a tester pass on
 _Context: operator authorises the build, capped at about an hour, parallelised across persistent Sonnet builder agents._
 
 > go for it gang donit all in 1 hr tops parallelise w persistemt sonnet builder agents
+
+
+## Entry 597 — 2026-08-15 UTC
+_Context: operator removes the CTO hand-off — the manager finishes everything with Sonnet agents, one hour cap, wrapped up._
+
+> no cto, you finish everything w sonnet agents get done in tops 1 hr everuthing wrap up
