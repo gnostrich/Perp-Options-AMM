@@ -677,3 +677,59 @@ SEPARATE from the warp. Operator's frame (use it): a trade is a swap that WARPS 
 thing. The only live question is whether the warp PER DOLLAR is bigger far OTM (operator entry 121),
 which hinges on whether the swap engages the far/steep point (goal-seek, unbuilt #16) or the live
 point (built). Speak in warp terms, never "spot swap slippage."
+
+
+---
+
+## 2026-08-15 — RFQ / app line (session `exciting-archimedes-txs2wx`)
+
+**HEAD untouched.** All work is `app/` (the brainstorm MM console, deployed at
+`https://web-production-cc265.up.railway.app/`, `/compare` for layout options) and `sims/`.
+Builds 12→26. Railway deploys via `RAILWAY_API_TOKEN=<operator key> railway up --detach` from `app/`.
+
+### Operator rulings this session (entries 554–575, all transcribed)
+- **Market structure CLOSED (554/568/569):** makers differ freely as in any multi-dealer RFQ; no bound
+  imposed; fills split at each maker's own price; venue is no more a CCP than a perp DEX. My (a)/(b)
+  fork is dead — I had imported an orderbook invariant **three times** and was corrected each time.
+- **Visibility (566):** you see SELF and AGGREGATE only, never another maker. Applied to 5 sites.
+- **Presentation (555/559/560/562/563/564/565):** the curve IS a depth cloud, one side per tab, fading
+  outward; landing strips removed; per-view brightness maxima; one capacity number everywhere.
+- **Quoting (571/572):** oracle vol → natural map → S̄, per-LP **bias**, or MANUAL for all params.
+- **Bias (575):** it is a **density/side selector**, not a mispricing.
+
+### The result set that matters (all in `sims/scripts/`, re-runnable)
+| finding | numbers |
+|---|---|
+| natural map halves the vol exponent | break-even ∝ RV^0.96 tracked vs RV^2.00 frozen; 28.3 vs 106.0 bps at RV 160% |
+| `G̃·C` invariant | 0.136–0.164 over a 5× range of S̄ ⇒ `G̃ ≈ 0.15/C` |
+| spread IS the disagreement budget | safe bias `= 0.43·(h_you+h_oth)`, ratio constant over a 20× range of h |
+| healing axis must span disagreement | κ-only: **16 rounds, $382, closes**. level+shape: 20k rounds, $1.13M, never |
+| inventory skew helps, non-monotone | η 0 → $1.76M; **η 0.25 → $201k (8.8× better)**; η 16 → $456k (overshoot) |
+| bias = side selector | bias −10% wins the ask at 100% of strikes; +10% wins the bid at 100% |
+
+**Design conclusion (derived, not asserted):** level → corrected by the **oracle** + inventory skew;
+skew (κ) → corrected by **trading**; shape (a, γ) → corrected by **nothing**, so it must be common /
+setup-calibrated. That is why the kurtosis knob being a setup calibration is forced, not a limitation.
+
+### My errors this session, for the record
+1. Quoted `$2,595/BTC` as if it scaled — a top-of-book per-BTC figure the skeptic had **already** flagged.
+2. Replaced it with `$2,212 = 0.017%`, also wrong: scales 1:1 with the strike grid ($21,797 at 595
+   strikes), and "capped by depth" was decorative — the cap **never bound** (0.40 BTC vs 19–95 BTC).
+3. Quoted `$253,035` as a total; it was where my iteration cap fell ($1.14M at 20k rounds).
+4. Told the operator LP economics were "deep red" by pairing a **premium-basis** cost with a
+   **notional-basis** fee — the same basis error I had already found and fixed once.
+5. Swapped the app footer to "RULED" and deleted a conceded parity finding the ruling never covered
+   (skeptic called it laundering; correct).
+6. Shipped a self-mark bug: positions marked at the **holder's own curve**, feeding 50× liquidation
+   (+363% by moving your own S̄). Root cause was worse — the other makers were defined as perturbations
+   of `P`, so the whole "book" tracked your quote. Fixed in build 24, verified 363% → 0.0%.
+
+### OPEN / OWED
+- **Skeptic HALT on `sims/RFQ_ENVELOPE_vs_MIXTURE_2026-08-14.md` is PARTIALLY LIFTED.** Live: FLAG-3
+  (parity arb unmeasured), FLAG-4 (feature-inventory disposition 1–16 — **never delivered**),
+  FLAG-5a ("closes as it is taken" has no mechanism in the app), FLAG-7, FLAG-8 residue.
+- **No tester pass on builds 17–26.** Standing UI smoke-pass rule binds on every operator hand-back.
+- `bounded_disagreement` disposition — now arguably *discharged by measurement* (the condition is
+  emergent from two curve sets, not imposed), but not written up.
+- Natural map ceiling: ATM premium supremum 0.5586 with `a,γ` fixed ⇒ map tops out near RV 186%.
+- Internal self-matching of crossed makers (would recapture the $227/BTC intermediation) — proposed, unbuilt.
