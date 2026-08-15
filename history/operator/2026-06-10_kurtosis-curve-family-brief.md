@@ -4260,3 +4260,9 @@ _Context: operator clarifies what "pro-rata" referred to — a single trader pos
 _Context: operator deflates the manager's framing — multiple LPs on one trader position is real, but each LP is a separate account on a separate screen, so no surface ever shows more than one of them._
 
 > yeah i mean if there multiple LPs sure yes but they're like on different screens / different accounts right
+
+
+## Entry 595 — 2026-08-15 UTC
+_Context: operator approves the manager's recommendation to run a tester pass on the app before anything further is built on top._
+
+> gonfor it…
