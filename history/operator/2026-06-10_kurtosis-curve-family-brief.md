@@ -4166,3 +4166,15 @@ _Context: operator asks for the depth model to be done properly, pointing at the
 > can you pls do properly? see the sheet for the individual lp level picture
 >
 > and ofc it goes without saying now that this isnt literal because you have aggregation
+
+
+## Entry 583 — 2026-08-15 UTC
+_Context: operator re-uploads the OB-MM repo and commissions a research agent on the UX FLOW / interaction surface across the whole trade lifecycle, supplying three pieces of domain context: shared wallets with a perp-DEX margining layer, the perp carve-out when a perp option is opened on it, and the portfolio line structure for perp options including vertical spreads._
+
+> [attachment: PerpOptionsOBMMclaudepricingenginegokleb5s.zip] put a research agent using opus onto the ux (not design specifically but the 'flow' / 'interaction surface') with the objective to find the optimal interaction surface for this through and through the lifecycle of trade (create perp opens perp on hl through the aggregate wallet, LP etc. where LP accrued positions etc show up etc we already dodn this exercise in the OB thing attached and most of the flow is same etc
+>
+> to clarify everything would live in shared wallets like any perp dex has margining layer etc… this is helpful information not directot ux related but whennthingoing througblifecycle youll need it
+>
+> also recao thebflow we discussed about perp going out of perp aggregatoonnwhen perp option opened on it etc
+>
+> perp options in each line, you also have vertical soreads so portfolo has upto 4 lines for perp optiooms on boudfht sold sides tofal etc etc …
