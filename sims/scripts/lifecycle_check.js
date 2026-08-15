@@ -157,11 +157,17 @@ assertTrue(typeof acctBefore.leverage === 'number' && isFinite(acctBefore.levera
 assertTrue(typeof acctBefore.headroom === 'number', 'headroom computed');
 
 // Prove LP exclusion: an LP-origin free perp (post-release) must not move notional.
-const r7b = life.closePerp(lpPerpId); // now free (its carve was released by r7close) — should succeed
-assertOk(r7b, 'closePerp on the lp perp succeeds once its bundle is closed (no carve stands against it)');
+// r7close.releasedPerpId is the origin:'lp' carved perp released by the lp bundle's
+// close — NOT lpPerpId (which is the SOURCE perp; its free remainder is origin:'opened'
+// and correctly DOES count toward notional, since the trader still owns that piece).
+const lpOriginPerpId = r7close.releasedPerpId;
+assertTrue(life.state().perps.find(p => p.id === lpOriginPerpId).origin === 'lp',
+  'sanity: releasedPerpId from the lp close really is an origin:"lp" row');
+const r7b = life.closePerp(lpOriginPerpId); // now free (release), no carve stands against it — should succeed
+assertOk(r7b, "closePerp on the origin:'lp' perp succeeds once its bundle is closed");
 const acctAfterLpPerpClose = life.account();
 assertTrue(Math.abs(acctAfterLpPerpClose.notionalUSD - acctBefore.notionalUSD) < 1e-6,
-  "closing the origin:'lp' free perp does not move account notional — it was excluded all along");
+  "closing the origin:'lp' perp does not move account notional — it was excluded all along");
 
 // close bundle 2 to fully wind down and re-check identity/account
 const r8 = life.closeBundle(bundle2Id, { closePx: 0.025, spot: 68000 }); // net close px for both legs (simplification)

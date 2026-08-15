@@ -173,7 +173,15 @@
 
     // ── closeBundle ──────────────────────────────────────────────────────
     // Atomic: whole bundle + its carved perp, in full. No size argument.
-    function closeBundle(id, { closePx, spot } = {}) {
+    function closeBundle(id, opts = {}) {
+      // Manager, integration: a caller passing {qty:...} used to be silently accepted
+      // and the bundle closed IN FULL anyway. Atomicity was never breached, but the
+      // caller could believe it had done a partial close. Invariant #2 says the bundle
+      // is the unit, so say so instead of ignoring the argument.
+      if (opts.qty !== undefined || opts.size !== undefined || opts.fraction !== undefined) {
+        return { ok: false, reason: 'the bundle is atomic: it closes in full, so closeBundle takes no size' };
+      }
+      const { closePx, spot } = opts;
       const b = findBundle(id);
       if (!b) return { ok: false, reason: 'no such bundle: ' + id };
       if (b.closed) return { ok: false, reason: 'bundle already closed: ' + id };
