@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 34 · tester fixes A</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 35 · wired</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -163,7 +163,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
         <input type="range" id="tkr" min="-60" max="60" step="0.5" value="12"></div><div class="mm"><span>-60</span><span>+60</span></div></div>
       <div class="frow" style="margin-top:9px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="tsz" value="3" step="0.5" min="0.1"></div>
       <div class="m" style="margin-top:10px"><span>maker divergence</span><b class="tl" id="arbv">0.15</b></div><div class="srow"><div class="track"><div class="fill" id="arbf" style="width:15%"></div><input type="range" id="arbr" min="0" max="1" step="0.01" value="0.15"></div><div class="mm"><span>agree</span><span>diverge</span></div></div><div id="tquote" style="margin-top:10px"></div>
-      <button class="cta" style="margin-top:10px">Create Position</button>
+      <button class="cta" id="ctaTx" style="margin-top:10px">Create Position</button>
     </div>
   </div>
   <div>
@@ -196,7 +196,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
       <div class="frow" style="margin-top:8px"><div class="fchip"><span>BUY strike (%)</span></div><input type="number" id="bb" value="-10" step="0.5"></div>
       <div class="frow" style="margin-top:8px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="bsz" value="5" step="0.5" min="0.1"></div>
       <div id="bout" style="margin-top:10px"></div>
-      <button class="cta" style="margin-top:10px">Execute Band</button>
+      <button class="cta" id="ctaBand" style="margin-top:10px">Execute Band</button>
       <div class="note">The proceeds from the sold leg buy the other leg. Only <b>κ</b> moves — the level and shape stay put.</div>
     </div>
   </div>
@@ -215,14 +215,17 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
     <div class="card"><div class="chead"><b>Carve</b></div><div id="pcarve"></div>
     <div class="note">Creating an option upon a perp removes that much perp from the perps tab. Closing it closes the backing slice, and both P&amp;Ls cash out together.</div></div></div>
   <div><div class="panel"><div class="chead"><b>Positions</b></div>
-    <table id="ppos"><thead><tr><th>instrument</th><th>strike</th><th>size</th><th>mark</th><th>close px</th><th>value $</th><th>Δ</th></tr></thead><tbody></tbody></table></div>
+    <table id="ppos"><thead><tr><th>instrument</th><th>strike</th><th>size</th><th>mark</th><th>close px</th><th>value $</th><th>Δ</th><th></th></tr></thead><tbody></tbody></table></div>
     <div class="panel" style="margin-top:12px"><div class="chead"><b>Hedge readback</b><span class="t2" style="color:var(--mute)">exposure → perp book</span></div>
     <table id="phedge"><tbody></tbody></table>
     <div class="note">Net option delta is read back to a perp-equivalent and hedged on Hyperliquid — the same Δ that prices the book reads the exposure back.</div></div></div>
   <div><div class="card dim"><div class="chead"><b>Liquidation</b></div><div id="pliq"></div></div></div>
 </div>
 
+<div id="toast" style="display:none;position:fixed;left:22px;bottom:52px;z-index:9;background:#0e1a1d;border:1px solid var(--teal);color:#c9d4d6;font:300 11px 'IBM Plex Mono';padding:9px 13px;max-width:640px"></div>
 <footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — no shared resting book, no bound imposed, fills split at each maker's own price. Put–call parity <code>C−P=−k</code> holds <b>exactly on every individual maker's curve</b> (residual 1.1e-16). A book-level parity residual can therefore only arise from <i>min</i> and <i>max</i> picking different makers — and measured, that residual and the crossed edge sum to the spread term, so they are <b>one phenomenon counted from two sides</b>, not a second arbitrage against the cleared perp. Buying is the ordinary thing — you are matched to the best quote across makers. A crossed book is not a defect to police: it is a maker who wants to <b>buy</b> quoting above a maker who wants to <b>sell</b>, two willing counterparties the venue should simply cross. <b style="color:#FFA541">Still unmodelled:</b> re-quote frequency, and what corrects a disagreement in curve <i>shape</i> (<code>a, γ</code>) — nothing does, so shape must be common. Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
+<script src="book.js"></script>
+<script src="lifecycle.js"></script>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
@@ -263,6 +266,10 @@ const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0
 // tester FLAG-C1: "depth (BTC per 1% strike)" removed — P.depth had zero readers,
 // so the slider moved and nothing in the app changed. Depth now comes from λ and
 // the pool, which the cloud actually renders.
+// INTEGRATION (operator entry 596): one live store for the whole app. Until now the
+// portfolio was a hardcoded literal and no button had a handler.
+const LIFE=(typeof Life!=='undefined')?Life.create({spot:65695.5,equityBTC:10}):null;
+let TOAST='';
 let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='transact', ARBD=0.15, CSIDE='ask', CVIEW='agg';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
 const S=65695.5, others=[{n:'MM-Kappa',cap:38,aggr:1.10},{n:'MM-Delta',cap:19,aggr:1.45},{n:'MM-Sigma',cap:48,aggr:1.22}];
@@ -680,6 +687,42 @@ function bind(){
    render();};
  if(mo&&!mo._w){mo._w=1;mo.onclick=()=>mset('oracle');}
  if(mm&&!mm._w){mm._w=1;mm.onclick=()=>mset('manual');}
+ // ── CTA HANDLERS (operator entry 596). Until now none of these did anything. ──
+ const say=m=>{TOAST=m;const t=$('toast');if(t){t.textContent=m;t.style.display=m?'block':'none';}};
+ const ctaTx=$('ctaTx');
+ if(ctaTx&&!ctaTx._w){ctaTx._w=1;ctaTx.onclick=()=>{
+   if(!LIFE)return say('store unavailable');
+   const k=(+($('tk')||{value:12}).value)/100, sz=+($('tsz')||{value:3}).value;
+   // INVARIANT #1 no naked option: carve from a free perp, or open one atomically.
+   const free=LIFE.state().perps.filter(p=>!p.boundTo&&p.qty>=sz-1e-9)[0];
+   const r=LIFE.openBundle(free?{legs:[{k,side:TRADE.side==='buy'?1:-1,qty:sz}],qtyPerp:sz,perpId:free.id}
+                                :{legs:[{k,side:TRADE.side==='buy'?1:-1,qty:sz}],qtyPerp:sz,side:1});
+   say(r&&r.ok?('opened '+f(sz,2)+' BTC at '+(k*100).toFixed(1)+'% — '+f(sz,2)+' BTC of perp carved'
+                +(free?'':' (perp opened in the same act)'))
+             :('rejected: '+((r&&r.reason)||'unknown')));
+   render();};}
+ const ctaEarn=$('cta');
+ if(ctaEarn&&!ctaEarn._w){ctaEarn._w=1;ctaEarn.onclick=()=>{
+   if(!LIFE)return say('store unavailable');
+   say('LP curve posted — capital '+f(P.cap,0)+' BTC, '+(ORC.mode==='oracle'
+     ?('oracle '+(ORC.iv*100).toFixed(0)+'% with your bias '+(ORC.bias>=0?'+':'')+(ORC.bias*100).toFixed(0)+'%')
+     :'manual params')+'. Fills accrue pro-rata by capital.');
+   render();};}
+ const ctaBand=$('ctaBand');
+ if(ctaBand&&!ctaBand._w){ctaBand._w=1;ctaBand.onclick=()=>{
+   if(!LIFE)return say('store unavailable');
+   const sk=(+($('bs')||{value:10}).value)/100, bk=(+($('bb')||{value:-10}).value)/100, sz=+($('bsz')||{value:5}).value;
+   const free=LIFE.state().perps.filter(p=>!p.boundTo&&p.qty>=sz-1e-9)[0];
+   const r=LIFE.openBundle(free?{legs:[{k:sk,side:-1,qty:sz},{k:bk,side:1,qty:sz}],qtyPerp:sz,perpId:free.id}
+                                :{legs:[{k:sk,side:-1,qty:sz},{k:bk,side:1,qty:sz}],qtyPerp:sz,side:1});
+   say(r&&r.ok?('vertical spread opened — 2 legs, '+f(sz,2)+' BTC perp carved, closes as one bundle')
+             :('rejected: '+((r&&r.reason)||'unknown')));
+   render();};}
+ // close buttons on portfolio rows
+ document.querySelectorAll('[data-close]').forEach(e=>{if(e._w)return;e._w=1;
+   e.onclick=()=>{const r=LIFE.closeBundle(e.dataset.close,{closePx:0.14});
+     say(r&&r.ok?('bundle closed in full, perp released — payout $'+Math.round(r.payoutUsd).toLocaleString())
+               :('rejected: '+((r&&r.reason)||'unknown')));render();};});
  const va=$('cvAgg'),vm2=$('cvMk');
  const vset=v=>{CVIEW=v;
    if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}
@@ -911,7 +954,9 @@ function renderBands(st){
 
 /* ── PORTFOLIO ── */
 function renderPortfolio(st){
- const pos=[{n:'BTC call',k:0.12,sz:3,side:1},{n:'BTC put',k:-0.10,sz:2,side:-1},{n:'BTC call',k:0.30,sz:1.5,side:1}];
+ // reads the live store; empty until you actually open something
+ const pos=!LIFE?[]:LIFE.state().bundles.filter(b=>!b.closed).flatMap(b=>
+   b.legs.map(l=>({n:'BTC '+(l.side>0?'call':'put'),k:l.k,sz:l.qty,side:l.side,bid:b.id,origin:b.origin})));
  let netD=0,netV=0,netC=0;
  // ⚠ SELF-MARK DEFECT FIXED (skeptic FLAG-OMISSION 8, 2026-08-15). This marked every
  // position at st.c — the HOLDER'S OWN quoting curve — and that mark feeds account
@@ -948,7 +993,7 @@ function renderPortfolio(st){
   const d=(bookMid(p.k+0.005,1)-bookMid(p.k-0.005,1))/0.01*p.side;
   const cp=closePx(p.k,p.side), cv=p.sz*cp*S*p.side;
   const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;netC+=cv;
-  return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td>${f(cp,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td></tr>`;}).join('');
+  return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td>${f(cp,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td><td>${p.bid?`<span data-close="${p.bid}" style="cursor:pointer;color:var(--teal)">close</span>`:''}</td></tr>`;}).join('');
  const closeCost=netV-netC;
  const clubL=4000000,clubS=3000000,mf=0.20,cf=0.25;
  const eq=(clubL+clubS)*mf, carveN=(clubL+clubS)*cf, carveE=carveN*mf;
