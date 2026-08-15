@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 37 · perps tab</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 38 · paper wallet</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -211,7 +211,12 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
 <!-- ═══ PORTFOLIO ═══ -->
 <div class="grid" id="gridPerps" style="display:none">
   <div><div class="card"><div class="chead"><b>Account</b><span class="t2" style="color:var(--mute)">perps + perp-options, one pot</span></div>
-    <div id="acctStrip"></div></div></div>
+    <div id="acctStrip"></div>
+    <div class="chead" style="margin-top:14px"><b>Paper wallet</b><span class="t2" style="color:var(--mute)">closed network · test money</span></div>
+    <div id="paperBox"></div>
+    <button class="cta" id="faucetBtn" style="margin-top:9px">Faucet +$250,000</button>
+    <div class="note">Closed network: settlement moves money between participants and never creates it. Prices, curves and impact are the real engine — only settlement is paper. Switch identity to run a multi-party simulation.</div>
+    </div></div>
   <div style="grid-column:span 2"><div class="panel"><div class="chead"><b>Perps</b><span class="t2" style="color:var(--mute)">free and carved — a carved perp is still a perp</span></div>
     <div id="perpsTable"></div></div></div>
 </div>
@@ -234,6 +239,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
 <script src="lifecycle.js"></script>
 <script src="views_perps.js"></script>
 <script src="views_ticket.js"></script>
+<script src="paper.js"></script>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
@@ -277,6 +283,12 @@ const SPEC=[["Sbar","S̄ (mean strike)",0.05,1.0,0.01],["a","a (Burr c)",0.2,3,0
 // INTEGRATION (operator entry 596): one live store for the whole app. Until now the
 // portfolio was a hardcoded literal and no button had a handler.
 const LIFE=(typeof Life!=='undefined')?Life.create({spot:65695.5,equityBTC:10}):null;
+// PAPER WALLET (operator entry 598): closed-network test money, on the reference's
+// own model — EXECUTION_MODE=paper. Prices/curves/impact are the real engine; only
+// settlement is paper, and money is conserved (see sims/scripts/paper_wallet_check.js).
+const PAPER=(typeof Paper!=='undefined')?Paper.create():null;
+let WHO='you';
+if(PAPER){['you','trader-2','lp-1','lp-2'].forEach(a=>PAPER.touch(a));}
 let TOAST='';
 let P={...DEF}, volIndexed=true, MAG=25, HK=0.137, CV_GEO=null, VIEW='transact', ARBD=0.15, CSIDE='ask', CVIEW='agg';
 const TRADE={k:0.12,size:3,side:'buy'}, BAND={sellK:0.10,buyK:-0.10,size:5};
@@ -660,6 +672,13 @@ function render(){
  if(VIEW==='transact'){renderTransact(st);return bind();}
  if(VIEW==='bands'){renderBands(st);return bind();}
  if(VIEW==='perps'){
+   if(PAPER&&$('paperBox')){
+     const c=PAPER.conserved();
+     $('paperBox').innerHTML=PAPER.list().map(a=>
+       `<div class="m"><span>${a.id===WHO?'▸ ':''}<span data-who="${a.id}" style="cursor:pointer;${a.id===WHO?'color:var(--teal)':''}">${a.id}</span></span><b>${usd(a.balanceUSD)}</b></div>`).join('')
+       +`<div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>network total</span><b>${usd(c.balances)}</b></div>`
+       +`<div class="m"><span>conserved</span><b class="${c.ok?'pos':'neg'}">${c.ok?'yes — drift 0':'NO — drift '+c.drift}</b></div>`;
+   }
    if(typeof ViewPerps!=='undefined'&&LIFE){
      $('perpsTable').innerHTML=ViewPerps.perpsTableHTML(LIFE);
      $('acctStrip').innerHTML=ViewPerps.accountStripHTML(LIFE);
@@ -743,6 +762,11 @@ function bind(){
    e.onclick=()=>{const r=LIFE.closeBundle(e.dataset.close,{closePx:0.14});
      say(r&&r.ok?('bundle closed in full, perp released — payout $'+Math.round(r.payoutUsd).toLocaleString())
                :('rejected: '+((r&&r.reason)||'unknown')));render();};});
+ const fb=$('faucetBtn');
+ if(fb&&!fb._w){fb._w=1;fb.onclick=()=>{if(!PAPER)return;PAPER.faucet(WHO,250000);
+   say('faucet: +$250,000 test money to '+WHO+' — tagged as external, so the conservation check still holds');render();};}
+ document.querySelectorAll('[data-who]').forEach(e=>{if(e._w)return;e._w=1;
+   e.onclick=()=>{WHO=e.dataset.who;say('acting as '+WHO);render();};});
  const va=$('cvAgg'),vm2=$('cvMk');
  const vset=v=>{CVIEW=v;
    if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}

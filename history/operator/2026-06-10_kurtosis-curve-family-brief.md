@@ -4278,3 +4278,9 @@ _Context: operator authorises the build, capped at about an hour, parallelised a
 _Context: operator removes the CTO hand-off — the manager finishes everything with Sonnet agents, one hour cap, wrapped up._
 
 > no cto, you finish everything w sonnet agents get done in tops 1 hr everuthing wrap up
+
+
+## Entry 598 — 2026-08-15 UTC
+_Context: operator asks for test money so closed-network simulations can be run, noting the reference zip already has that mechanism (it does — `perp-backend-staging/paper/`, EXECUTION_MODE=paper, every participant seeded $1,000,000 with a reason-tagged ledger)._
+
+> no working fine make some teat money etc so we can work closed network simulations  like the zip has that thing i think
