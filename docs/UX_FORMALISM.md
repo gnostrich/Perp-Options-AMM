@@ -238,9 +238,23 @@ Two things this fixes in my own earlier reasoning:
 2. It is still **not a claim** (§7.2) — an LP's displayed perp line is its share of the trader's carved
    perp for calculation and row consistency, while the LP's accountability remains the option leg only.
 
-**UX consequence:** the row model is not 1:1. One trader bundle produces one trader view and N LP
-views, and any surface that implies a single counterparty per position is wrong. The `origin` column
-(§4.3) is what keeps the two readings of the same trade legible in one table.
+**UX consequence — smaller than I first wrote it (operator entry 594):**
+
+> yeah i mean if there multiple LPs sure yes but they're like on different screens / different accounts right
+
+Correct, and it deflates my framing. The 1:N mapping is real **in the ledger** and invisible **on any
+screen**: each LP is a separate account, so an LP sees exactly **one** row — its own share — and never
+the other LPs' rows. There is no screen anywhere that renders N LP views of one trade, so there is no
+"which counterparty" ambiguity to design around, and no disambiguation UI is owed.
+
+What actually survives:
+- **The accounting identity is a backend check, not a screen.** `Σ shares = 1` is verified in the
+  ledger; no user is shown the sum, because no user can see the parts.
+- **The `origin` column earns its place for a different reason** than I gave: not to separate several
+  LPs, but to separate *your own two roles* — positions you entered as a trader vs accruals you
+  received as an LP — inside **one** account (§4.3).
+- It also makes entry 566 obvious rather than a rule to enforce: you cannot see other makers because
+  they are **other accounts**, not because a filter hides them.
 
 ### 7.2 The trader/LP asymmetry — who owns the perp leg (operator entry 592)
 

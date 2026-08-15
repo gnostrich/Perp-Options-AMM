@@ -4254,3 +4254,9 @@ _Context: operator resolves all three flagged ambiguities — an LP seller is ac
 _Context: operator clarifies what "pro-rata" referred to — a single trader position may be filled by MULTIPLE LPs, so the pro-rata is the apportionment of that one position across them, not a claim on anything._
 
 > i said prorata inthe sense trader may have multiple lps on its position
+
+
+## Entry 594 — 2026-08-15 UTC
+_Context: operator deflates the manager's framing — multiple LPs on one trader position is real, but each LP is a separate account on a separate screen, so no surface ever shows more than one of them._
+
+> yeah i mean if there multiple LPs sure yes but they're like on different screens / different accounts right
