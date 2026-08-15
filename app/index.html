@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 35 · wired</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 36 · one model</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -399,8 +399,13 @@ function calc(){
  const feesYr=(hEff/1e4)*MKT.turn*365*notionalUSD, bleedYr=bleed*notionalUSD;
  const equity=P.margin*S;
  const baseAPR=(feesYr-bleedYr)/Math.max(notionalUSD,1), levAPR=(feesYr-bleedYr)/Math.max(equity,1);
- const sorted=[...book].sort((x,y)=>x.h-y.h); let rem=MKT.Q; const px=c.CALL(0.1);
- sorted.forEach(m=>{const cap=m.share*MKT.pool,t=Math.max(0,Math.min(cap,rem));m.fill=t;m.rev=t*(m.h/1e4)*px*S;rem-=t;});
+ // ONE MODEL (tester major #6): this walked the book CHEAPEST-FIRST, under which
+ // YOU filled nothing in 9 of 9 states while the Yield card beside it claimed
+ // $4,019,577/yr. Fills are PRO-RATA BY CAPITAL — forced by aggregate-then-spread
+ // (operator entry 580) — so every maker participates in every trade.
+ const sorted=[...book]; const px=c.CALL(0.1);
+ const capT_=book.reduce((t,m)=>t+(m.cap||0),0)||1;
+ sorted.forEach(m=>{const sh=(m.cap||0)/capT_; m.fill=MKT.Q*sh; m.rev=m.fill*(m.h/1e4)*px*S;});
  return {c,Gt,bleed,hFair,hEff,marg,book,sorted,me,rung,dens,dk,M,sumNot,sumPrem,peak,bookVal,notionalUSD,feesYr,bleedYr,equity,baseAPR,levAPR,notBTC};}
 /* ─── LANDING FIELD ─────────────────────────────────────────────────────────
    The aggregate is NOT a curve. What a taker actually gets depends on SIZE as
@@ -970,24 +975,19 @@ function renderPortfolio(st){
  const mkrs=makerCurves(); aggBook(mkrs,st.book.map(m=>m.h));
  // SELF-EXCLUSION: your own quote does not enter your own mark. Otherwise you can still
  // walk your mark by posting an aggressive bid, since max-bid is part of the envelope.
- const others=mkrs.filter(m=>!m.me);
- const bookMid=(k,side)=>{
-   const cs=others.map(m=>side>0?m.c.CALL(k):m.c.PUT(k));
-   const hs2=others.map(m=>m.h/1e4);
-   const ask=Math.min(...cs.map((c,i)=>c*(1+hs2[i]))), bid=Math.max(...cs.map((c,i)=>c*(1-hs2[i])));
-   return 0.5*(ask+bid);};
- /* CLOSE PRICE (operator entry 578). Payouts here are realised by BUYING and
-    SELLING, not by settling at intrinsic — so closing is a trade, and it has to
-    execute at the AGGREGATE, with your own curve EXCLUDED. Measured what happens
-    if it is not: bias +2% / +10% / +30% lets you close $277 / $6,248 / $21,528
-    richer against your own quote (40.3% at +30%), and you set that price, so it is
-    not a market price at all. With self-exclusion the close value is flat to 0.09%
-    across the whole bias range. Same defect class as the build-24 self-mark. */
+ // ONE MODEL (tester majors #6/#8): this used to build its own min-ask/max-bid
+ // envelope over "others" — an envelope that was itself CROSSED, so a close paid
+ // ABOVE its mark and the mark→close gap read as a −$1,009 profit. Marking and
+ // closing now go through the same Book the trading path uses.
+ const BK = (typeof Book!=='undefined')
+   ? Book.make(mkrs.map(m=>({name:m.n,me:!!m.me,cap:m.cap,curve:m.c,hBps:m.h})),{})
+   : null;
+ const bookMid=(k,side)=> BK ? BK.mark(k, side>0?'call':'put', true) : NaN;
  const closePx=(k,side)=>{
-   const cs=others.map(m=>side>0?m.c.CALL(k):m.c.PUT(k));
-   const hs2=others.map(m=>m.h/1e4);
-   return side>0 ? Math.max(...cs.map((c,i)=>c*(1-hs2[i])))    // long  -> you sell into the best bid
-                 : Math.min(...cs.map((c,i)=>c*(1+hs2[i])));};  // short -> you buy at the best ask
+   if(!BK) return NaN;
+   // closing a long means SELLING; closing a short means BUYING. Own curve excluded.
+   const px = BK.closePx(k, side>0?'sell':'buy', 1e-9, true);
+   return px===null ? NaN : px;};
  $('ppos').querySelector('tbody').innerHTML=pos.map(p=>{
   const mk_=bookMid(p.k,p.side);
   const d=(bookMid(p.k+0.005,1)-bookMid(p.k-0.005,1))/0.01*p.side;
