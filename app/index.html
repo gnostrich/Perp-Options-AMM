@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 26 · bias budget</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 27 · parity resolved</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -219,7 +219,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <div><div class="card dim"><div class="chead"><b>Liquidation</b></div><div id="pliq"></div></div></div>
 </div>
 
-<footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — no shared resting book, no bound imposed, fills split at each maker's own price. <b style="color:#FFA541">NOT ruled, and still open:</b> at any divergence above zero the book's put–call parity <code>C−P=−k</code> breaks at <b>every strike tested</b>, and that residual is an arbitrage against the <b>cleared perp</b>, not maker-vs-maker discipline. A crossed book is worth roughly $200–$400 per BTC at top of book here; how much is actually <i>extractable</i> depends on depth and re-quote frequency and is <b>not yet modelled</b> — an earlier "0.017% of book" figure is withdrawn (it scaled 1:1 with the strike grid chosen and its depth cap never bound). Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
+<footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — no shared resting book, no bound imposed, fills split at each maker's own price. Put–call parity <code>C−P=−k</code> holds <b>exactly on every individual maker's curve</b> (residual 1.1e-16). A book-level parity residual can therefore only arise from <i>min</i> and <i>max</i> picking different makers — and measured, that residual and the crossed edge sum to the spread term, so they are <b>one phenomenon counted from two sides</b>, not a second arbitrage against the cleared perp. A crossed book here is a maker who wants to <b>buy</b> quoting above a maker who wants to <b>sell</b>: two willing counterparties, which the venue should match internally rather than leave to an intermediary. <b style="color:#FFA541">Still unmodelled:</b> re-quote frequency, and what corrects a disagreement in curve <i>shape</i> (<code>a, γ</code>) — nothing does, so shape must be common. Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];

@@ -4118,3 +4118,9 @@ _Context: operator reframes LP bias — it is not a mispricing but a repositioni
 > so LP bias as i see it is just going to change individusl's liquidity density and hence prorate matching around wrt the aggregate curve itms;
 >
 > and spread thing also i think is self explanatory now since its away from the aggregate, like if theres arb at spread level thats acceptable?
+
+
+## Entry 576 — 2026-08-15 UTC
+_Context: operator retracts the spread-level arb as a live question — it is moot. Manager tested the skeptic's conjecture that the book-level parity break is the same dollar as the crossed edge rather than a second arb, which is what makes it moot._
+
+> actually the arb at sprrad level thing is moot
