@@ -60,7 +60,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
 </style></head><body>
 <header>
   <div class="logo"><b>TEMPORAL</b>
-    <nav><a href="#" data-nav="transact">Transact</a><a href="#" class="on" data-nav="earn">Earn</a><a href="#" data-nav="portfolio">Portfolio</a></nav></div>
+    <nav><a href="#" data-nav="transact">Transact</a><a href="#" class="on" data-nav="earn">Earn</a><a href="#" data-nav="perps">Perps</a><a href="#" data-nav="portfolio">Portfolio</a></nav></div>
   <div style="display:flex;gap:9px"><button class="hbtn ghost">Docs</button><button class="hbtn">Connect Wallet</button></div>
 </header>
 
@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 36 · one model</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 37 · perps tab</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -209,6 +209,12 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
 </div>
 
 <!-- ═══ PORTFOLIO ═══ -->
+<div class="grid" id="gridPerps" style="display:none">
+  <div><div class="card"><div class="chead"><b>Account</b><span class="t2" style="color:var(--mute)">perps + perp-options, one pot</span></div>
+    <div id="acctStrip"></div></div></div>
+  <div style="grid-column:span 2"><div class="panel"><div class="chead"><b>Perps</b><span class="t2" style="color:var(--mute)">free and carved — a carved perp is still a perp</span></div>
+    <div id="perpsTable"></div></div></div>
+</div>
 <div class="grid" id="gridPortfolio" style="display:none">
   <div><div class="card"><div class="chead"><b>Account</b><span class="t2" style="color:var(--coffee)">perps + options, one pot</span></div><div id="pacct"></div>
     <div class="note">All perps and perp-options sit in ONE account equity. That is what liquidates, as a whole. LP positions are excluded.</div></div>
@@ -226,6 +232,8 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
 <footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — no shared resting book, no bound imposed, fills split at each maker's own price. Put–call parity <code>C−P=−k</code> holds <b>exactly on every individual maker's curve</b> (residual 1.1e-16). A book-level parity residual can therefore only arise from <i>min</i> and <i>max</i> picking different makers — and measured, that residual and the crossed edge sum to the spread term, so they are <b>one phenomenon counted from two sides</b>, not a second arbitrage against the cleared perp. Buying is the ordinary thing — you are matched to the best quote across makers. A crossed book is not a defect to police: it is a maker who wants to <b>buy</b> quoting above a maker who wants to <b>sell</b>, two willing counterparties the venue should simply cross. <b style="color:#FFA541">Still unmodelled:</b> re-quote frequency, and what corrects a disagreement in curve <i>shape</i> (<code>a, γ</code>) — nothing does, so shape must be common. Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
 <script src="book.js"></script>
 <script src="lifecycle.js"></script>
+<script src="views_perps.js"></script>
+<script src="views_ticket.js"></script>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
@@ -651,6 +659,13 @@ function render(){
    $('ladder').querySelector('tbody').innerHTML=html.join('');}
  if(VIEW==='transact'){renderTransact(st);return bind();}
  if(VIEW==='bands'){renderBands(st);return bind();}
+ if(VIEW==='perps'){
+   if(typeof ViewPerps!=='undefined'&&LIFE){
+     $('perpsTable').innerHTML=ViewPerps.perpsTableHTML(LIFE);
+     $('acctStrip').innerHTML=ViewPerps.accountStripHTML(LIFE);
+     ViewPerps.wire(LIFE,()=>render());
+   }
+   return bind();}
  if(VIEW==='portfolio'){renderPortfolio(st);return bind();}
  draw(st);
  {const hq=st.hEff/1e4,k=(HK===null?0:HK),C=st.c.CALL(k),Pu=st.c.PUT(k),sz=+(($('qsz')||{}).value||5);
@@ -748,7 +763,7 @@ $('margin').oninput=e=>{P.margin=+e.target.value;render();};
 $('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
 $('reset').onclick=()=>{P={...DEF,margin:P.margin};render();};
 function setView(v){VIEW=v;
- ['Earn','Transact','Bands','Portfolio'].forEach(n=>{const el=$('grid'+n);if(el)el.style.display=(n.toLowerCase()===v)?'grid':'none';});
+ ['Earn','Transact','Bands','Perps','Portfolio'].forEach(n=>{const el=$('grid'+n);if(el)el.style.display=(n.toLowerCase()===v)?'grid':'none';});
  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===v||(v==='bands'&&a.dataset.nav==='transact')));
  render();}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-t]'),n=e.target.closest('[data-nav]');

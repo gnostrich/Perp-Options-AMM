@@ -225,7 +225,11 @@
 
     // ── closePerp ────────────────────────────────────────────────────────
     // Blocked while any carved sliver still stands against this perp.
-    function closePerp(id) {
+    // Manager, integration: builder-1 had to REIMPLEMENT these two guards in the
+    // view, because there was no way to ask "can I close?" without mutating state.
+    // Two copies of one rule is a drift bug waiting to happen, so the store now
+    // answers the question itself and closePerp is defined in terms of the answer.
+    function canClosePerp(id) {
       const p = findPerp(id);
       if (!p) return { ok: false, reason: 'no such perp: ' + id };
       if (p.boundTo) {
@@ -240,6 +244,12 @@
             against.map(x => x.boundTo).join(', ')
         };
       }
+      return { ok: true };
+    }
+    function closePerp(id) {
+      const gate = canClosePerp(id);
+      if (!gate.ok) return gate;
+      const p = findPerp(id);
       const exitSpot = state.account.spot;
       const usd = p.side * p.qty * (exitSpot - p.entryPx);
       state.perps = state.perps.filter(x => x.id !== id);
@@ -293,6 +303,7 @@
       openBundle,
       closeBundle,
       closePerp,
+      canClosePerp,
       account,
       ledger
     };

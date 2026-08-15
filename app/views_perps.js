@@ -57,23 +57,16 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Mirrors lifecycle.js's own closePerp() guard EXACTLY (same reason
-  // strings, verbatim), computed read-only from a state snapshot so the
-  // table can render the disabled/enabled state without calling the real
-  // mutating closePerp() on every render (there is no dry-run entry point
-  // on Life — this reproduces its two guard clauses, copied from
-  // app/lifecycle.js closePerp(), not reinvented).
-  function closeBlockReason(perp, allPerps) {
-    if (perp.boundTo) {
-      return 'cannot close a carved perp directly — close its bundle (' + perp.boundTo + ') instead';
+  // Manager, integration: this used to REIMPLEMENT lifecycle.js's closePerp guards,
+  // because the store had no way to ask "can I close?" without mutating. Two copies
+  // of one rule drift apart silently, so the store now exposes canClosePerp() and
+  // this asks it. One source of truth for the rule AND for the wording.
+  function closeBlockReason(perp, allPerps, life) {
+    if (life && typeof life.canClosePerp === 'function') {
+      var g = life.canClosePerp(perp.id);
+      return g && g.ok ? null : (g && g.reason) || 'cannot close';
     }
-    var against = allPerps.filter(function (x) { return x.carvedFrom === perp.id && x.boundTo; });
-    if (against.length) {
-      var qty = against.reduce(function (s, x) { return s + x.qty; }, 0);
-      return 'cannot close: ' + qty + ' BTC carved against this position by open bundle(s) ' +
-        against.map(function (x) { return x.boundTo; }).join(', ');
-    }
-    return null;
+    return null;   // no gate available: offer the control, let the store refuse
   }
 
   // ── perpsTableHTML ───────────────────────────────────────────────────
@@ -88,7 +81,7 @@
     var trs = rows.map(function (p) {
       var mark = spot; // linear perp, marked at spot — same basis account() uses
       var upnl = p.side * p.qty * (mark - p.entryPx);
-      var reason = closeBlockReason(p, allPerps);
+      var reason = closeBlockReason(p, allPerps, life);
       if (p.boundTo) { carved += p.qty; } else { free += p.qty; }
       var carvedLabel = p.boundTo ? ('carved &rarr; ' + esc(p.boundTo)) : 'free';
       var btn = reason
@@ -150,8 +143,9 @@
         '<div class="m"><span>status</span><b id="acctState" class="' + (a.safe ? 'pos' : 'neg') + '">' + stateLabel + '</b></div>' +
         '<div class="t2" style="color:var(--mute);margin-top:4px">' +
           'LP positions are excluded from this account entirely &mdash; this strip is not your total across ' +
-          'every role, only this trader account. There is no per-position liquidation price anywhere: ' +
-          'liquidation is account-level (perps + carved bundles together, 50&times; cap).' +
+          'every role, only this trader account. There is no per-position figure for when a single position ' +
+          'would be force-closed: that risk is assessed once, for the whole account (perps + carved bundles ' +
+          'together, 50&times; cap), never for one row.' +
         '</div>' +
       '</div>'
     );
