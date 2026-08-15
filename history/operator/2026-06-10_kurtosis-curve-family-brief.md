@@ -4074,3 +4074,9 @@ _Context: operator asks for the (a)/(b) decision to be explained. Manager measur
 _Context: operator points out that in any routine spot RFQ system nobody needs to care what other dealers quote — it levels out. Manager conceded: this is the second time in the same conversation he imported an orderbook invariant into an RFQ, and it collapses choice (a); the residual is a marking convention, not a constraint on makers._
 
 > think of any routine spot rfq system … nobody needs to care about others it levels out
+
+
+## Entry 569 — 2026-08-15 UTC
+_Context: operator points out the venue has no more of a central counterparty than a perp DEX does, retiring the manager's residual "credit" concern. With entries 554/568/569 the whole (a)/(b) market-structure fork is closed: makers differ freely, fills split, no CCP exposure beyond standard perp-DEX bad-debt handling._
+
+> this also doesn't really have a central counterparty any more than a perp dex does
