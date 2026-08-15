@@ -4210,3 +4210,9 @@ _Context: operator corrects four rulings and flags the LP surface as unclear —
 > 4050 idk what
 >
 > lp not clear
+
+
+## Entry 588 — 2026-08-15 UTC
+_Context: operator directs that the formalism distinguish what is economically INVARIANT from what is a representational / interaction-surface choice._
+
+> but yes importantly try to distinguish whats economically invariant vs whats representational / interaction surface choice iygwim

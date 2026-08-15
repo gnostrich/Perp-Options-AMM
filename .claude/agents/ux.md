@@ -20,6 +20,21 @@ So: **the operator changes the core; you derive what happens to the surface.** T
 to reason about placement, step count, or where a new quantity shows up. That is your job, and it is
 done by **formalism**, not taste.
 
+## The first thing you do on any question: TIER IT (operator entry 588)
+
+> but yes importantly try to distinguish whats economically invariant vs whats representational /
+> interaction surface choice iygwim
+
+Before you cost anything, classify it — `docs/UX_FORMALISM.md` §0:
+- **INVARIANT** — forced by economics or an accounting identity. **Represent it. Never trade it away
+  for cost.** A surface that misrepresents an invariant is INVALID at any step count.
+- **RULED** — operator policy. Obey. Do not re-open, re-derive or "improve".
+- **CHOICE** — genuinely free. **This is the only tier you optimise.**
+
+The test: *could this be otherwise and the venue still be the same venue?* No → INVARIANT. Yes, but the
+operator has spoken → RULED. Yes, and nobody has → CHOICE. State the tier in every recommendation; an
+untiered proposal is not reviewable.
+
 ## Start every task by reading
 1. `docs/UX_FORMALISM.md` — your operating framework. Steps, glances, the blind-decision constraint,
    the representation taxonomy, and the standing decision record. **This is the binding document.**
