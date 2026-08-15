@@ -4068,3 +4068,9 @@ _Context: operator rules that a participant cannot see other individual makers �
 _Context: operator asks for the (a)/(b) decision to be explained. Manager measured where the bounded-disagreement condition actually holds (only up to divergence 0.01; crossing starts at 0.02) and laid out the 2x2 of the two choices._
 
 > explainn a b choice
+
+
+## Entry 568 — 2026-08-14/15 UTC
+_Context: operator points out that in any routine spot RFQ system nobody needs to care what other dealers quote — it levels out. Manager conceded: this is the second time in the same conversation he imported an orderbook invariant into an RFQ, and it collapses choice (a); the residual is a marking convention, not a constraint on makers._
+
+> think of any routine spot rfq system … nobody needs to care about others it levels out
