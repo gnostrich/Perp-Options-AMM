@@ -4284,3 +4284,9 @@ _Context: operator removes the CTO hand-off — the manager finishes everything 
 _Context: operator asks for test money so closed-network simulations can be run, noting the reference zip already has that mechanism (it does — `perp-backend-staging/paper/`, EXECUTION_MODE=paper, every participant seeded $1,000,000 with a reason-tagged ledger)._
 
 > no working fine make some teat money etc so we can work closed network simulations  like the zip has that thing i think
+
+
+## Entry 599 — 2026-08-15 UTC
+_Context: operator uploads arXiv 2608.13383 ("Bridging Mixture Distributions", Del Moral et al. — Schrödinger bridges between Gaussian mixtures, Bures-Wasserstein/Riccati machinery, EM-estimated components, error bounds between exact and approximate bridges, Monge-map limit) and asks, brainstorm only, whether it is relevant._
+
+> [attachment: 2608.13383.pdf] brainstorm only is this relevant related in any way
