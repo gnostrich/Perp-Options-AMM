@@ -1,0 +1,279 @@
+{
+ "slope_check": {
+  "agg_parallel_slope": 0.0008939664586924919,
+  "single_pool_slope": 0.000894037533334884,
+  "rel_gap_pct": -0.007949849949473453,
+  "ATMs": [
+   0.178888,
+   0.176135,
+   0.182196,
+   0.179423
+  ]
+ },
+ "sheet_rows": [
+  {
+   "k": -0.3,
+   "best": 0.357679,
+   "app_pct": 0.6248,
+   "sheet_pct": 0.6249,
+   "rel_err_pct": -0.0079
+  },
+  {
+   "k": -0.1,
+   "best": 0.225949,
+   "app_pct": 0.9891,
+   "sheet_pct": 0.9892,
+   "rel_err_pct": -0.0079
+  },
+  {
+   "k": 0,
+   "best": 0.179147,
+   "app_pct": 1.2475,
+   "sheet_pct": 1.2476,
+   "rel_err_pct": -0.0079
+  },
+  {
+   "k": 0.1,
+   "best": 0.142067,
+   "app_pct": 1.5731,
+   "sheet_pct": 1.5733,
+   "rel_err_pct": -0.0079
+  },
+  {
+   "k": 0.3,
+   "best": 0.091675,
+   "app_pct": 2.4379,
+   "sheet_pct": 2.4381,
+   "rel_err_pct": -0.0079
+  },
+  {
+   "k": 0.5,
+   "best": 0.06262,
+   "app_pct": 3.569,
+   "sheet_pct": 3.5693,
+   "rel_err_pct": -0.0079
+  }
+ ],
+ "crossing": [
+  {
+   "D": 0,
+   "crossedFrac": 0,
+   "minSpreadBps": 38
+  },
+  {
+   "D": 0.05,
+   "crossedFrac": 0,
+   "minSpreadBps": 38
+  },
+  {
+   "D": 0.15,
+   "crossedFrac": 0,
+   "minSpreadBps": 38
+  },
+  {
+   "D": 0.5,
+   "crossedFrac": 0,
+   "minSpreadBps": 38
+  },
+  {
+   "D": 1,
+   "crossedFrac": 0,
+   "minSpreadBps": 38
+  }
+ ],
+ "crossing_h0": {
+  "hAgg": 0,
+  "spreadBps": 0
+ },
+ "sell_side": [
+  {
+   "k": -0.3,
+   "Q": 1,
+   "bestBid": 0.356323,
+   "app_landed": 0.35677,
+   "spec_landed": 0.355876,
+   "app_pays_you_more": true,
+   "err_bps": 25.12
+  },
+  {
+   "k": -0.3,
+   "Q": 10,
+   "bestBid": 0.356323,
+   "app_landed": 0.360793,
+   "spec_landed": 0.351853,
+   "app_pays_you_more": true,
+   "err_bps": 254.07
+  },
+  {
+   "k": -0.3,
+   "Q": 50,
+   "bestBid": 0.356323,
+   "app_landed": 0.378672,
+   "spec_landed": 0.333974,
+   "app_pays_you_more": true,
+   "err_bps": 1338.38
+  },
+  {
+   "k": 0,
+   "Q": 1,
+   "bestBid": 0.178468,
+   "app_landed": 0.178915,
+   "spec_landed": 0.178021,
+   "app_pays_you_more": true,
+   "err_bps": 50.22
+  },
+  {
+   "k": 0,
+   "Q": 10,
+   "bestBid": 0.178468,
+   "app_landed": 0.182938,
+   "spec_landed": 0.173998,
+   "app_pays_you_more": true,
+   "err_bps": 513.78
+  },
+  {
+   "k": 0,
+   "Q": 50,
+   "bestBid": 0.178468,
+   "app_landed": 0.200817,
+   "spec_landed": 0.156119,
+   "app_pays_you_more": true,
+   "err_bps": 2863.1
+  },
+  {
+   "k": 0.12,
+   "Q": 1,
+   "bestBid": 0.135165,
+   "app_landed": 0.135612,
+   "spec_landed": 0.134718,
+   "app_pays_you_more": true,
+   "err_bps": 66.36
+  },
+  {
+   "k": 0.12,
+   "Q": 10,
+   "bestBid": 0.135165,
+   "app_landed": 0.139635,
+   "spec_landed": 0.130695,
+   "app_pays_you_more": true,
+   "err_bps": 684.01
+  },
+  {
+   "k": 0.12,
+   "Q": 50,
+   "bestBid": 0.135165,
+   "app_landed": 0.157514,
+   "spec_landed": 0.112816,
+   "app_pays_you_more": true,
+   "err_bps": 3962.06
+  },
+  {
+   "k": 0.3,
+   "Q": 1,
+   "bestBid": 0.091327,
+   "app_landed": 0.091774,
+   "spec_landed": 0.09088,
+   "app_pays_you_more": true,
+   "err_bps": 98.37
+  },
+  {
+   "k": 0.3,
+   "Q": 10,
+   "bestBid": 0.091327,
+   "app_landed": 0.095797,
+   "spec_landed": 0.086857,
+   "app_pays_you_more": true,
+   "err_bps": 1029.24
+  },
+  {
+   "k": 0.3,
+   "Q": 50,
+   "bestBid": 0.091327,
+   "app_landed": 0.113676,
+   "spec_landed": 0.068978,
+   "app_pays_you_more": true,
+   "err_bps": 6480.08
+  }
+ ],
+ "prorata": {
+  "tot": 200,
+  "shares": [
+   {
+    "n": "YOU",
+    "share": 0.475
+   },
+   {
+    "n": "K",
+    "share": 0.19
+   },
+   {
+    "n": "D",
+    "share": 0.095
+   },
+   {
+    "n": "S",
+    "share": 0.24
+   }
+  ],
+  "sums": [
+   {
+    "Q": 1,
+    "sum": 1,
+    "fits": true
+   },
+   {
+    "Q": 3,
+    "sum": 3,
+    "fits": true
+   },
+   {
+    "Q": 17.5,
+    "sum": 17.5,
+    "fits": true
+   },
+   {
+    "Q": 60,
+    "sum": 60,
+    "fits": true
+   },
+   {
+    "Q": 200,
+    "sum": 200,
+    "fits": true
+   },
+   {
+    "Q": 201,
+    "sum": 201,
+    "fits": false
+   }
+  ]
+ },
+ "selfmark": [
+  {
+   "sbar": 0.05,
+   "hFair": 47.9014,
+   "markedValue": 19229.1
+  },
+  {
+   "sbar": 0.3,
+   "hFair": 25.3352,
+   "markedValue": 19237.69
+  },
+  {
+   "sbar": 0.6,
+   "hFair": 14.9013,
+   "markedValue": 19241.66
+  },
+  {
+   "sbar": 0.95,
+   "hFair": 9.9872,
+   "markedValue": 19243.54
+  },
+  {
+   "sbar": 1,
+   "hFair": 9.5575,
+   "markedValue": 19243.7
+  }
+ ],
+ "selfmark_spread_pct": 0.0759
+}

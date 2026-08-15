@@ -1,0 +1,186 @@
+{
+ "run": "A",
+ "earn_ask": {
+  "side": "ask",
+  "ymax": 0.8261,
+  "captionStretch": 0.085,
+  "trueStretch": 0.1789,
+  "hEffBps": 18.63,
+  "cols": [
+   {
+    "k": -0.55,
+    "topVal": 0.6986,
+    "botVal": 0.5661,
+    "edge": 0.5684,
+    "bandWidth": 0.1326,
+    "onCorrectSide": true
+   },
+   {
+    "k": -0.31,
+    "topVal": 0.5355,
+    "botVal": 0.3646,
+    "edge": 0.3654,
+    "bandWidth": 0.1708,
+    "onCorrectSide": true
+   },
+   {
+    "k": -0.11,
+    "topVal": 0.4003,
+    "botVal": 0.232,
+    "edge": 0.2315,
+    "bandWidth": 0.1683,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.09,
+    "topVal": 0.3136,
+    "botVal": 0.1453,
+    "edge": 0.1454,
+    "bandWidth": 0.1683,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.29,
+    "topVal": 0.2626,
+    "botVal": 0.0918,
+    "edge": 0.0936,
+    "bandWidth": 0.1708,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.49,
+    "topVal": 0.232,
+    "botVal": 0.0637,
+    "edge": 0.0637,
+    "bandWidth": 0.1683,
+    "onCorrectSide": true
+   }
+  ]
+ },
+ "earn_bid": {
+  "side": "bid",
+  "ymax": 0.8261,
+  "captionStretch": 0.085,
+  "trueStretch": 0.1789,
+  "hEffBps": 18.63,
+  "cols": [
+   {
+    "k": -0.55,
+    "topVal": 0.5686,
+    "botVal": 0.4029,
+    "edge": 0.5663,
+    "bandWidth": 0.1657,
+    "onCorrectSide": true
+   },
+   {
+    "k": -0.31,
+    "topVal": 0.3672,
+    "botVal": 0.204,
+    "edge": 0.364,
+    "bandWidth": 0.1632,
+    "onCorrectSide": true
+   },
+   {
+    "k": -0.11,
+    "topVal": 0.232,
+    "botVal": 0.0688,
+    "edge": 0.2306,
+    "bandWidth": 0.1632,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.09,
+    "topVal": 0.1479,
+    "botVal": 0.0025,
+    "edge": 0.1449,
+    "bandWidth": 0.1453,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.29,
+    "topVal": 0.0969,
+    "botVal": 0.0025,
+    "edge": 0.0932,
+    "bandWidth": 0.0943,
+    "onCorrectSide": true
+   },
+   {
+    "k": 0.49,
+    "topVal": 0.0663,
+    "botVal": 0.0025,
+    "edge": 0.0635,
+    "bandWidth": 0.0637,
+    "onCorrectSide": true
+   }
+  ]
+ },
+ "book_ask": {
+  "side": "ask",
+  "Q": 50,
+  "rows": [
+   {
+    "k": -0.31,
+    "orangeVal": 0.3874,
+    "nPix": 2,
+    "landedAnalytic": 0.38759,
+    "tob": 0.36524,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   },
+   {
+    "k": 0.09,
+    "orangeVal": 0.1686,
+    "nPix": 1,
+    "landedAnalytic": 0.16771,
+    "tob": 0.14536,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   },
+   {
+    "k": 0.29,
+    "orangeVal": 0.1165,
+    "nPix": 2,
+    "landedAnalytic": 0.11591,
+    "tob": 0.09356,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   }
+  ],
+  "caption_bps": 1648
+ },
+ "book_bid": {
+  "side": "bid",
+  "Q": 50,
+  "rows": [
+   {
+    "k": -0.31,
+    "orangeVal": 0.3874,
+    "nPix": 4,
+    "landedAnalytic": 0.38639,
+    "tob": 0.36404,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   },
+   {
+    "k": 0.09,
+    "orangeVal": 0.1686,
+    "nPix": 3,
+    "landedAnalytic": 0.16723,
+    "tob": 0.14488,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   },
+   {
+    "k": 0.29,
+    "orangeVal": 0.11556,
+    "nPix": 3,
+    "landedAnalytic": 0.1156,
+    "tob": 0.09325,
+    "orangeAboveTob": true,
+    "captionSaysWorse": true
+   }
+  ],
+  "caption_bps": 1653
+ },
+ "pageerrors": []
+}

@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 33 · one threshold</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 34 · tester fixes A</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -280,10 +280,19 @@ const ORC={iv:0.60, bias:0.0, mode:'oracle'};   // oracle IV, YOUR bias vs it, q
 const IV0=0.60, ATM0=0.178897;                  // reference point of the map
 function premiumTarget(v){return ATM0*v/IV0;}
 let HEFF_BPS=19; function hEffBps(){return HEFF_BPS;}
-function calibSbar(tgt,a,gam,kap){let lo=0.02,hi=60;
+const ATM_SUP=(a,gam,kap)=>mk(1e7,a,gam,kap).ATM;          // supremum as S̄→∞
+function calibSbar(tgt,a,gam,kap){
+ // TESTER FLAG #5: ATM saturates (0.5586 at defaults), so targets above the supremum
+ // have NO solution. This used to return its bisection ceiling, 60, and the UI printed
+ // "solved S̄ 60.0000" as though it were an answer. Now it reports unreachable.
+ if(tgt>=ATM_SUP(a,gam,kap)) return null;
+ let lo=0.02,hi=60;
  for(let i=0;i<70;i++){const m=(lo+hi)/2; if(mk(m,a,gam,kap).ATM<tgt)lo=m;else hi=m;}
  return (lo+hi)/2;}
-function sbarFromVol(v,a,gam,kap){return calibSbar(premiumTarget(Math.max(0.01,v)),a,gam,kap);}
+function sbarFromVol(v,a,gam,kap){
+ const r=calibSbar(premiumTarget(Math.max(0.01,v)),a,gam,kap);
+ return r===null?NaN:r;}
+function volReachable(v,a,gam,kap){return premiumTarget(Math.max(0.01,v))<ATM_SUP(a,gam,kap);}
 const $=i=>document.getElementById(i), f=(x,d=2)=>(+x).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
 const usd=x=>(x<0?'-':'')+'$'+Math.abs(Math.round(x)).toLocaleString();
 function field(k,label,min,max,step,hint){const v=P[k];const pct=(v-min)/(max-min)*100;
@@ -351,7 +360,8 @@ function aggBook(set,hs){
 function calc(){
  // ORACLE mode: your level is DERIVED — oracle vol, tilted by your own bias.
  // MANUAL mode: P.Sbar is yours, exactly as before.
- if(ORC.mode==='oracle') P.Sbar=sbarFromVol(ORC.iv*(1+ORC.bias),P.a,P.gam,P.kap);
+ if(ORC.mode==='oracle'){const sb=sbarFromVol(ORC.iv*(1+ORC.bias),P.a,P.gam,P.kap);
+   if(isFinite(sb))P.Sbar=sb;}                     // unreachable vol: hold, and say so in the UI
  const c=mk(P.Sbar,P.a,P.gam,P.kap);
  // curvature on the NOTIONAL basis: cash value C(S)=V(K/S-1)*S, Gt = d2C/dS2 * S  (per $1 notional)
  const cash=(Sx,K)=>c.CALL(K/Sx-1)*Sx, hS=S*2e-3;
@@ -406,13 +416,16 @@ function ladderAt(mkrs,k,pool,side){
  // which collapses exactly to one pool holding ΣN_i (verified identical to 1e-15).
  let invSlope=0; mkrs.forEach(m=>{invSlope+=(0.01*m.cap)/(LAM*m.c.ATM);});
  const slope=1/invSlope;
- return {best,slope,total:tot,agg:true};}
+ return {best,slope,total:tot,agg:true,bid:bidSide};}
 // THE CURRENT CURVE: what you actually pay/receive ACROSS STRIKES at YOUR size.
 // Top-of-book (the drawn ask/bid) is the Q->0 limit of this; at real size it sits inside it.
 function landedCurve(mkrs,pool,Q,side){return k=>landedFrom(ladderAt(mkrs,k,pool,side),Q);}
 function landedFrom(Ld,Q){
  if(Q>Ld.total)return null;                               // does not fit the book
- return Ld.best+0.5*Ld.slope*Q;}                          // average along the aggregate walk
+ // TESTER FLAG #1 (build 33): this always ADDED, so a seller RECEIVED MORE with size —
+ // 0.091351 -> 0.113700 on 50 BTC, +24%, free money. Impact must move AGAINST the
+ // taker on both sides: a buyer pays up, a seller gets hit down.
+ return Ld.bid ? Ld.best-0.5*Ld.slope*Q : Ld.best+0.5*Ld.slope*Q;}
 const HEAT=[[0,11,30,33],[.08,13,61,63],[.22,15,95,92],[.45,10,186,181],[.72,255,165,65],[1,255,103,103]];
 function heatCol(t){                 // t = impact NORMALISED to this field's own max; null = no fit
  if(t===null)return '#4a1218';
@@ -535,14 +548,39 @@ function render(){
       your bias     — NEW, per-LP tilt on that vol. bias 0 = quote the oracle.
       a, γ, κ       — KEPT, manual in both modes (shape is the setup calibration).
       λ, fee, depth, margin — KEPT, untouched by this. */
- $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],
-   s[0]==='depth'?'= from notional':(s[0]==='Sbar'&&ORC.mode==='oracle')?'= solved from oracle':'')).join('');
- if($('orcbox'))$('orcbox').innerHTML = ORC.mode!=='oracle' ? '' :
+ const stPre=calc();                                  // TESTER FLAG #4: compute BEFORE drawing
+ // TESTER FLAG #9: rebuilding this innerHTML on every input destroyed the element the
+ // user was dragging — one step then frozen. Rebuild only when the structure changes;
+ // otherwise write values in place so the live drag survives.
+ const sig='params|'+ORC.mode;
+ if($('params')._sig!==sig){
+   $('params').innerHTML=SPEC.map(s=>field(s[0],s[1],s[2],s[3],s[4],
+     s[0]==='depth'?'= from notional':(s[0]==='Sbar'&&ORC.mode==='oracle')?'= solved from oracle':'')).join('');
+   $('params')._sig=sig;
+ } else {
+   SPEC.forEach(sp=>{const k=sp[0],min=sp[2],max=sp[3],v=P[k];
+     document.querySelectorAll('[data-k="'+k+'"]').forEach(e=>{
+       if(e!==document.activeElement)e.value=v;
+       const tr=e.closest&&e.closest('.track'); if(tr){const fl=tr.querySelector('.fill');
+         if(fl)fl.style.width=((v-min)/(max-min)*100)+'%';}});});
+ }
+ // same drag-preservation rule as #params: structure on mode change, values in place otherwise
+ const ob=$('orcbox'), osig='orc|'+ORC.mode;
+ if(ob&&ob._sig===osig){
+   [['iv',0.10,2.00],['bias',-0.30,0.30]].forEach(([k,min,max])=>{
+     const v=ORC[k];
+     document.querySelectorAll('[data-o="'+k+'"]').forEach(e=>{
+       if(e!==document.activeElement)e.value=v;
+       const tr=e.closest&&e.closest('.track'); if(tr){const fl=tr.querySelector('.fill');
+         if(fl)fl.style.width=((v-min)/(max-min)*100)+'%';}});});
+ } else if(ob){ ob._sig=osig; ob.innerHTML = ORC.mode!=='oracle' ? '' :
    mktField('iv','oracle vol',0.10,2.00,0.01,v=>(v*100).toFixed(0)+'%',ORC)
    .replace(/data-m="iv"/,'data-o="iv"')
   + mktField('bias','your bias vs oracle',-0.30,0.30,0.01,v=>(v>=0?'+':'')+(v*100).toFixed(0)+'%',ORC)
    .replace(/data-m="bias"/,'data-o="bias"')
-  + `<div class="m"><span>solved S̄</span><b class="tl">${f(P.Sbar,4)}</b></div>`
+  + (volReachable(ORC.iv*(1+ORC.bias),P.a,P.gam,P.kap)
+      ? `<div class="m"><span>solved S̄</span><b class="tl">${f(P.Sbar,4)}</b></div>`
+      : `<div class="m"><span>solved S̄</span><b class="neg">NO SOLUTION — vol above the map's ceiling (ATM saturates at ${f(ATM_SUP(P.a,P.gam,P.kap),4)}); level held, widen a or γ</b></div>`)
   + `<div class="m"><span>you quote vol</span><b>${((ORC.iv*(1+ORC.bias))*100).toFixed(1)}%</b></div>`
   /* TWO CURVE SETS carry the spread, and the spread IS the disagreement budget
      (operator entry 574). You publish ask C(1+h) and bid C(1-h); you become
@@ -555,6 +593,7 @@ function render(){
        +`<div class="m"><span>you are</span><b class="${over?'neg':'pos'}">${over
          ? 'ARBABLE — bias is '+(Math.abs(ORC.bias)/budget).toFixed(1)+'× your budget'
          : 'inside your spread'}</b></div>`;})();
+ }
  $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
   +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')
   +mktField('Q','RFQ size (BTC)',0.5,40,0.5,v=>f(v,1));
@@ -672,7 +711,10 @@ function renderTransact(st){
  const set=makerCurves(), hs=st.book.map(m=>m.h); const B=aggBook(set,hs);
  const k=(+($('tk')||{value:12}).value)/100, sz=+($('tsz')||{value:3}).value, side=TRADE.side;
  const ask=B.ask(k), bid=B.bid(k), best=B.who(k,side==='buy'?'ask':'bid');
- const px=side==='buy'?ask:bid, spr=(ask-bid)/((ask+bid)/2)*1e4;
+ const pxTouch=side==='buy'?ask:bid, spr=(ask-bid)/((ask+bid)/2)*1e4;
+ // TESTER FLAG #2: quote the price you will ACTUALLY get at your size, not the touch.
+ const pxSized=landedFrom(ladderAt(set,k,MKT.pool,side==='buy'?'ask':'bid'),sz);
+ const px=pxSized===null?pxTouch:pxSized;
  $('tquote').innerHTML=
   `<div class="m"><span>best ${side==='buy'?'ask':'bid'}</span><b class="tl">${f(px,5)}</b></div>
    <div class="m"><span>book spread</span><b>${f(spr,1)} bps</b></div>
@@ -699,8 +741,13 @@ function renderTransact(st){
  const envPx=landedFrom(ladderAt(set,k,MKT.pool,CSIDE),sz);
  let single='—', cls='';
  if(sz>bcap+1e-9){single='best maker alone tops out at '+f(bcap,1)+' BTC';cls='amb';}
- else if(envPx!==null){const bps=Math.abs(bestSingle.ask/envPx-1)*1e4;
-   single=f(bps,2)+' bps'; cls=bps>1e-6?'pos':'';}
+ else if(envPx!==null){
+   // TESTER FLAG #7 (recurrence of build-13 C3): Math.abs() dropped the sign, so an
+   // aggregate 489 bps WORSE than the best single maker rendered green as an
+   // improvement. Signed, and coloured by the sign.
+   const bps=(bestSingle.ask/envPx-1)*1e4;          // >0 = envelope is better
+   single=(bps>=0?'+':'')+f(bps,2)+' bps '+(bps>=0?'better':'WORSE');
+   cls=bps>1e-6?'pos':(bps<-1e-6?'neg':'');}
  // operator entry 566: this listed EVERY maker's quote by name. You get your own
  // quote, the book's best, and where you stand — not a competitor's price.
  const meRow=rows.find(r=>r.me), atTop=meRow&&Math.abs(meRow.ask-ask)<1e-12;
