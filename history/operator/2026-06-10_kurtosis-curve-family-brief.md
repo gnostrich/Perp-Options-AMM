@@ -4140,3 +4140,9 @@ _Context: operator confirms bias is implemented against the aggregate via liquid
 > one thing i think i missed in this setup is that the counterparty has to buyback on closure at the aggregate price (maybe excluding his own curve), not on the open market, if that makes sense?
 >
 > since our model full trader payouts implemented via buy sell and not via intrinsic
+
+
+## Entry 579 — 2026-08-15 UTC
+_Context: operator consolidates the settled model — the aggregation determines the buy and sell curves, each MM's spread feeds that, and MM biases move liquidity density and therefore pro-rata exposure._
+
+> so again reiterating that the aggregation determines the curves for buy and sell and then spreads of each mm therefrem and there biases impaft liquidity densitg for prorata exposure etc
