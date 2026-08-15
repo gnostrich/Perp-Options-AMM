@@ -109,7 +109,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 23 · rfq ruled</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 24 · mark independence</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -219,7 +219,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <div><div class="card dim"><div class="chead"><b>Liquidation</b></div><div id="pliq"></div></div></div>
 </div>
 
-<footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — there is no shared resting book to cross, crossings are ordinary arbitrage that closes as it is taken (measured: 0.017% of book notional at the default dial), and fills split across makers at each maker's own price. No bound is imposed. Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
+<footer><b style="color:#0ABAB5">RULED (operator, entries 554 / 568 / 569):</b> makers differ freely, exactly as in any multi-dealer RFQ — no shared resting book, no bound imposed, fills split at each maker's own price. <b style="color:#FFA541">NOT ruled, and still open:</b> at any divergence above zero the book's put–call parity <code>C−P=−k</code> breaks at <b>every strike tested</b>, and that residual is an arbitrage against the <b>cleared perp</b>, not maker-vs-maker discipline. A crossed book is worth roughly $200–$400 per BTC at top of book here; how much is actually <i>extractable</i> depends on depth and re-quote frequency and is <b>not yet modelled</b> — an earlier "0.017% of book" figure is withdrawn (it scaled 1:1 with the strike grid chosen and its depth cap never bound). Layout options: <a href="/compare" style="color:#0ABAB5">/compare</a>. &nbsp;·&nbsp; Brainstorm simulation — not the production engine, not investment advice. Burr-2 kernel; execution priced on the continuous (integral) convention, so impact is a price path, not maker revenue.</footer>
 <script>
 /* ─── Burr-2 ─── */
 function logGamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
@@ -269,11 +269,16 @@ function mktField(k,label,min,max,step,fmtv){const v=MKT[k],pct=(v-min)/(max-min
 function makerCurves(){
  // RFQ: makers are FREE to differ on level AND shape. Arbitrage disciplines divergence;
  // no common-level rule is needed because the book is an ENVELOPE, not a shared resting book.
+ // ⚠ The other makers used to be defined as perturbations of P — YOUR parameters — so
+ // the "book" tracked your own quote one-for-one and no mark computed from it could be
+ // independent of you (skeptic FLAG-8 root cause, found while fixing the self-mark).
+ // They now sit on a FIXED reference basis; only YOU move when you move P.
  const D=ARBD;  // divergence dial: 0 = agreement, 1 = wide disagreement
+ const R=DEF;   // independent reference the other makers quote around
  const set=[{n:'YOU',me:true,lam:0.02,Sbar:P.Sbar,a:P.a,gam:P.gam,kap:P.kap},
-   {n:'MM-Kappa',me:false,lam:0.05,Sbar:P.Sbar*(1-0.035*D),a:P.a*(1-0.06*D),gam:P.gam*(1+0.03*D),kap:P.kap+0.05*D},
-   {n:'MM-Delta',me:false,lam:0.10,Sbar:P.Sbar*(1+0.05*D),a:P.a*(1+0.06*D),gam:P.gam*(1-0.05*D),kap:P.kap-0.06*D},
-   {n:'MM-Sigma',me:false,lam:0.04,Sbar:P.Sbar*(1+0.01*D),a:P.a*(1+0.01*D),gam:P.gam,kap:P.kap+0.02*D}];
+   {n:'MM-Kappa',me:false,lam:0.05,Sbar:R.Sbar*(1-0.035*D),a:R.a*(1-0.06*D),gam:R.gam*(1+0.03*D),kap:R.kap+0.05*D},
+   {n:'MM-Delta',me:false,lam:0.10,Sbar:R.Sbar*(1+0.05*D),a:R.a*(1+0.06*D),gam:R.gam*(1-0.05*D),kap:R.kap-0.06*D},
+   {n:'MM-Sigma',me:false,lam:0.04,Sbar:R.Sbar*(1+0.01*D),a:R.a*(1+0.01*D),gam:R.gam,kap:R.kap+0.02*D}];
  set.forEach(m=>{m.c=mk(m.Sbar,m.a,m.gam,m.kap);});
  return set;}
 function aggBook(set,hs){
@@ -762,9 +767,27 @@ function renderBands(st){
 function renderPortfolio(st){
  const pos=[{n:'BTC call',k:0.12,sz:3,side:1},{n:'BTC put',k:-0.10,sz:2,side:-1},{n:'BTC call',k:0.30,sz:1.5,side:1}];
  let netD=0,netV=0;
+ // ⚠ SELF-MARK DEFECT FIXED (skeptic FLAG-OMISSION 8, 2026-08-15). This marked every
+ // position at st.c — the HOLDER'S OWN quoting curve — and that mark feeds account
+ // leverage, which is tested against the 50× liquidation cap below. Measured: moving
+ // your own S̄ from 0.30 to 0.95 moved your own marked options value $6,874 → $31,843
+ // (+363%) and your own liquidation headroom with it. You could mark your way out of
+ // a liquidation by re-quoting. Now marked at the BOOK mid.
+ // PLACEHOLDER CONVENTION, not a ruled one: mid = ½(best ask + best bid) across makers.
+ // Honest caveat — that mid is itself a mixture of distinct maker curves, which is the
+ // one place something really must price the whole book with a single object.
+ const mkrs=makerCurves(); aggBook(mkrs,st.book.map(m=>m.h));
+ // SELF-EXCLUSION: your own quote does not enter your own mark. Otherwise you can still
+ // walk your mark by posting an aggressive bid, since max-bid is part of the envelope.
+ const others=mkrs.filter(m=>!m.me);
+ const bookMid=(k,side)=>{
+   const cs=others.map(m=>side>0?m.c.CALL(k):m.c.PUT(k));
+   const hs2=others.map(m=>m.h/1e4);
+   const ask=Math.min(...cs.map((c,i)=>c*(1+hs2[i]))), bid=Math.max(...cs.map((c,i)=>c*(1-hs2[i])));
+   return 0.5*(ask+bid);};
  $('ppos').querySelector('tbody').innerHTML=pos.map(p=>{
-  const mk_=p.side>0?st.c.CALL(p.k):st.c.PUT(p.k);
-  const d=(st.c.CALL(p.k+0.005)-st.c.CALL(p.k-0.005))/0.01*p.side;
+  const mk_=bookMid(p.k,p.side);
+  const d=(bookMid(p.k+0.005,1)-bookMid(p.k-0.005,1))/0.01*p.side;
   const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;
   return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td></tr>`;}).join('');
  const clubL=4000000,clubS=3000000,mf=0.20,cf=0.25;
