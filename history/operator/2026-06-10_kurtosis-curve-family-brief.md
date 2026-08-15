@@ -4266,3 +4266,9 @@ _Context: operator deflates the manager's framing — multiple LPs on one trader
 _Context: operator approves the manager's recommendation to run a tester pass on the app before anything further is built on top._
 
 > gonfor it…
+
+
+## Entry 596 — 2026-08-15 UTC
+_Context: operator authorises the build, capped at about an hour, parallelised across persistent Sonnet builder agents._
+
+> go for it gang donit all in 1 hr tops parallelise w persistemt sonnet builder agents
