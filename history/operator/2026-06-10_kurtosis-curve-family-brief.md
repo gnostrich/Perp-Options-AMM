@@ -4098,3 +4098,9 @@ _Context: operator proposes dropping the per-LP tuning-agent idea in favour of a
 _Context: operator specifies how LPs express a view under the oracle natural map — each LP carries a BIAS relative to the oracle-derived parameters, so their view piggybacks the oracle, or they can opt out and run all parameters manually._
 
 > the LPs can just have some bias wrt this natursl map oracle thing so their views can piggyback the oracle or they can choose to manuallu run sll params
+
+
+## Entry 573 — 2026-08-15 UTC
+_Context: operator identifies an arb-leak specific to this design — because a maker's whole curve is generated from a few parameters, being out of line is monetisable at every strike at once, unlike spot where one bad quote costs one trade — and suggests the fix resembles the earlier aggregation/apportionment work._
+
+> wait i think theres an arb leak problem and i also think it has a solution probably similar to our earlier aggregation thing; and this leak in this and not in typical spot because the whole curve move thoevyher or something?
