@@ -2,6 +2,26 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **📌 2026-08-18 SESSION (branch `claude/rfq-spreadsheet-pdf-specs-o15n09`) — RFQ SPEC DOCS (entry 542):**
+Operator asked for a spreadsheet + arXiv-format-PDF spec of the RFQ MM console (`app/` builds 1–11,
+2026-08-14, HEAD build 11 = `ebd774e`, deployed web-production-cc265.up.railway.app) incl. all relevant
+Lean. DELIVERED `app/spec/`: `SPEC_RFQ_MM_CONSOLE.xlsx` (11 sheets; worked numbers RE-DERIVED in node,
+not copied) + `SPEC_RFQ_MM_CONSOLE_arxiv.tex/.pdf` (REAL pdflatex — TeX Live apt-installable in this
+env now, 8pp) + README. Lean corpus covered: BURR2_CORE 42 + BURR2_MIXTURE 13 + LOOP_LINK_A 9 (smile
+obstruction PROVED; G2 closed) + LOOP_LINK_B 12 (doorway iff; G3 closed) + v3-maps-lean 54 = 130 thms,
+all locally kernel-verified, axioms clean; label flip to "verified" still operator's call. KEY HONESTY
+FINDINGS carried in the docs: (1) Burr-2 MidConvex bridge UNPROVED — arb-free chain attaches to v28
+engine curve only; (2) build-5 headline APR contrast is HISTORICAL — at build-11 default fee=0.02 the
+fixed mode NEVER inverts within the RV slider (needs RV>155% or fee≲1%); (3) envelope commit figure
+16.4bps = best-maker half-spread, full book spread 32.8bps; (4) v3-maps G1 Exposure still ABSENT
+(re-verified). ⚠ TRANSCRIPTION GAP owned: the 2026-08-14 app-build session never transcribed its
+operator messages (transcript ends entry 541) — corrigendum filed
+`history/operator/CORRIGENDUM_2026-08-18_appbuild_session_gap.md`; standing request to operator to
+export that session. Skeptic gate run on the spec docs before hand-back (verdict in
+`notes/skeptic/VERDICT_rfq_spec_docs_2026-08-18.md`). NOTE: the 2026-07-08 state below is STALE for
+Aug work — the RFQ/sims/Burr-2 arc (entries ~488–541 + untranscribed app builds) lives in git log
+`93279cd..ebd774e` and `notes/research/AUDIT_closed_loop_lean_2026-08-14.md`.
+
 🧭 **📌 COMPACTION-SAFE STATE 2026-07-08 (read first) — `main` == feature branch == `edc71eb` (all pushed, green).**
 Engine HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 **`5ce1a76c`** (vocab scrub of abd35f4b: "lean"→"ray deviation / curve skew"; gates lens_selfcheck **41** + a16 **5** green; vocab_gate wired+PASS). CTO handover package current in `handover/` (engine 5ce1a76c + CHANGELOG PDF `c550f7e4` + HTML). Operator transcript current through **entry 484** in `history/operator/2026-06-10_kurtosis-curve-family-brief.md`. Open threads: (a) **staging E2E** — kit `handover/temporal_staging_test_kit.zip` (md5 8be1867b) delivered for a full-access session's tester (this sandbox can't browse external sites — proxy resets headless Chromium); another session's branch `origin/claude/temporal-exchange-e2e-b4560k` did a first pass (staging=H3/5ce1a76c, per-strike constants BLOCKED needs CTO endpoint). (b) **sims/ brainstorm** = LP economics (yield vs turnover×σ, base vs HLP-restaked LP) — NON-CORE, unreviewed, `sims/BRAINSTORM_lp_economics_2026-07-08.md`. (c) **update-2** still parked (funding rate formula D1/D3/D4, charge-back D5/D6). Funding purpose = tether/imbalance (entry 476, operator; skeptic tempered — not a settled mechanism, premium reading not dead). Branch git directive: develop on `claude/exciting-archimedes-txs2wx`; operator authorized main-update entry 484.
 

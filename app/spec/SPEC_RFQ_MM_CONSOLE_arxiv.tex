@@ -1,0 +1,436 @@
+% arXiv-format specification of the Temporal RFQ MM console (app/, builds 1-11)
+% + the relevant Lean 4 corpus. Compiled with pdflatex (TeX Live). manager, 2026-08-18.
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{lmodern}
+\usepackage{microtype}
+\newcommand{\Sbar}{\bar{S}}
+\newcommand{\ib}{I}
+\setlength{\parskip}{2pt}
+
+\title{Specification: A Continuous-Quote RFQ Market for Perpetual Options\\
+on a Burr-II Kernel, with its Formal (Lean~4) Backing}
+\author{Temporal Exchange working notes\thanks{Specification of the market-maker console
+\texttt{app/index.html}, builds 1--11 (2026-08-14), repository \texttt{Perp-Options-AMM}.
+Prepared 2026-08-18. This document specifies a \emph{brainstorm simulation}, not the production
+engine; see \S\ref{sec:scope}.}}
+\date{August 18, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We specify a request-for-quote (RFQ) market-maker console for perpetual options in which a
+maker's quote at \emph{every} strike is a single closed-form curve: four parameters
+$(\Sbar,a,\gamma,\kappa)$ of a Burr-II (Burr Type XII in the moneyness modulus) wing kernel,
+plus a half-spread $h$. There is no order ladder: any strike is priced on demand, requoting is
+four parameters rather than $N$ orders, and the two curve sets (bid and ask) make the spread an
+irreversible revenue band. Makers differ only in depth and spread while sharing the price
+\emph{level} --- a design forced by a proved theorem (heterogeneous per-maker steepness generates
+a strict volatility smile that no single power-law lens can represent). The tradeable book is the
+envelope of maker curves; RFQ fills walk makers cheapest-first, each paid at its own posted
+spread; settlement nets in perpetual units and crosses one common units$\to$cash doorway, which
+is exactly the arbitrage-free class. We give the closed form, the quoting economics
+(vol-indexed spreads against gamma bleed), the aggregation and fill rules, the user-interface
+contract, worked numbers re-derived from the shipped code, and the complete formal corpus
+backing the design: five Lean~4 packages, 130 theorems, all kernel-checked locally with axiom
+set $\{\mathsf{propext},\mathsf{Classical.choice},\mathsf{Quot.sound}\}$. Open gaps are stated
+rather than hidden.
+\end{abstract}
+
+\section{Scope and provenance}\label{sec:scope}
+
+\textbf{Object specified.} \texttt{app/index.html} (a single 562-line file; Burr-II math in
+JavaScript including a continued-fraction regularized incomplete beta), \texttt{app/server.js},
+\texttt{app/railway.json}. Build~11 $=$ commit \texttt{ebd774e} (2026-08-14); deployed at
+\url{https://web-production-cc265.up.railway.app}.
+
+\textbf{Status.} The console is a \emph{brainstorm simulation} (its own footer says so): it is
+not the production engine (\texttt{engine/builds/HEAD\_temporal\_mvp\_v28\_lens.html}, which is
+untouched by all of this), and it uses demo constants --- spot $S=\$65{,}695.5$, three synthetic
+competitor makers, demo portfolio positions.
+
+\textbf{Verification posture.} Every number in \S\ref{sec:numbers} was re-derived on 2026-08-18
+by executing the shipped code's own mathematics in Node.js, not copied from build logs. The Lean
+corpus of \S\ref{sec:lean} was proved by the external prover Aristotle (Harmonic) or written
+in-repo, then \emph{locally kernel-verified} in our own Lean~4.28.0 + Mathlib kernel; caveat
+stated, not hidden: Mathlib's \texttt{.olean}s came from the Mathlib CI cache, the universal
+practice, not a from-scratch rebuild. The JavaScript$\leftrightarrow$Lean correspondence is
+statement-by-statement mirroring plus numeric spot checks; the transcription itself is asserted,
+not proved.
+
+\section{The pricing kernel}\label{sec:kernel}
+
+Let $S$ be spot, $K$ a strike, and $k = K/S - 1$ the linear moneyness (calls are out of the money
+for $k\ge 0$, puts for $k\le 0$; the zero-strike edge is $k=-1$). Fix parameters
+$\Sbar>0$ (mean strike scale), $a>0$ (Burr shape), $\gamma>0$ (tail weight), $\kappa\in(-1,1)$
+(skew). Write $B = \Gamma(\tfrac1a)\Gamma(\tfrac\gamma a)/\Gamma(\tfrac1a+\tfrac\gamma a)
+= \mathrm{B}(\tfrac1a,\tfrac\gamma a)$ and let $\ib_u(\cdot,\cdot)$ be the regularized
+incomplete beta function.
+
+\paragraph{Wing scales and kernel.}
+\begin{equation}
+s_R = \Sbar(1+\kappa), \qquad s_L = \Sbar(1-\kappa), \qquad
+\Delta_s(v) = \Bigl(1 + (v/s)^a\Bigr)^{-\frac{\gamma+1}{a}} .
+\end{equation}
+
+\paragraph{Wing value (tail integral), pedestal, masses.}
+\begin{equation}
+T_s(m) = \frac{s}{a}\,B\,\Bigl(1 - \ib_{u}\bigl(\tfrac1a,\tfrac\gamma a\bigr)\Bigr),
+\quad u = \frac{m^a}{m^a + s^a}, \qquad
+G_1 = \Delta_{s_L}(1), \quad I_1 = T_{s_L}(1),
+\end{equation}
+\begin{equation}
+W_R = \frac{s_R B}{a}, \qquad
+W_L = \frac{s_L B/a - I_1 - G_1}{1 - G_1} .
+\end{equation}
+
+\paragraph{The peg (derived, not chosen).}
+\begin{equation}
+q_R = \frac{W_L}{W_R + W_L}, \qquad q_L = 1 - q_R
+\end{equation}
+is the \emph{unique} split making the two wings meet at the money
+(Lean: \texttt{atm\_wings\_meet}); at-the-money put--call parity \emph{is} the peg.
+
+\paragraph{Wings and option values.}
+\begin{align}
+A_R(k) &= q_R\,T_{s_R}(|k|), \\
+A_L(k) &= \begin{cases}
+\dfrac{q_L}{1-G_1}\Bigl(T_{s_L}(|k|) - I_1 - G_1\,(1-|k|)\Bigr), & |k| < 1,\\[4pt]
+0, & |k| \ge 1,
+\end{cases}\\
+\mathrm{CALL}(k) &= \begin{cases} A_R(k), & k \ge 0\\ -k + A_L(k), & k<0\end{cases}
+\qquad
+\mathrm{PUT}(k) = \begin{cases} A_L(k), & k \le 0\\ \;\,k + A_R(k), & k>0.\end{cases}
+\end{align}
+Out of the money the value is the wing; in the money it is intrinsic plus the \emph{mirror}
+wing, so
+\begin{equation}
+\boxed{\;\mathrm{CALL}(k) - \mathrm{PUT}(k) = -k \quad\text{at every strike}\;}
+\tag{parity}
+\end{equation}
+(Lean: \texttt{burr2\_parity}; away from $k=0$ it is hypothesis-free branch bookkeeping,
+\texttt{burr2\_parity\_of\_ne}). The left wing's closed form already vanishes at the zero-strike
+edge (\texttt{AL\_glue}), giving the exact anchors $\mathrm{CALL}(-1)=1$ (the whole coin) and
+$\mathrm{PUT}(-1)=0$. The at-the-money mark is $\mathrm{ATM} = q_R W_R$. Sign and order
+--- all values nonnegative, $\mathrm{CALL}$ antitone and Lipschitz, $\mathrm{PUT}$ monotone ---
+hold conditionally on a two-sided Riemann-sandwich interface for the incomplete beta
+(\texttt{TailRep}, proved non-vacuous by an explicit witness); see \S\ref{sec:gaps}.
+
+\section{Quoting: two curve sets and vol-indexed spreads}\label{sec:quoting}
+
+\paragraph{The curve is the quote.} A maker posts $(\Sbar,a,\gamma,\kappa)$ and a half-spread
+$h$ (bps). At any strike, on demand,
+\begin{equation}
+\mathrm{ask}(k) = V(k)\,\bigl(1+\tfrac{h}{10^4}\bigr), \qquad
+\mathrm{bid}(k) = V(k)\,\bigl(1-\tfrac{h}{10^4}\bigr),
+\end{equation}
+with $V \in \{\mathrm{CALL},\mathrm{PUT}\}$. There is no ladder to post, cancel, or replace;
+requoting is four parameters, not $N$ orders. The band between the two curve sets is the
+maker's revenue and is \emph{irreversible} (unlike constant-product-AMM slippage, which a
+round trip refunds). Execution is priced on the \emph{continuous (integral) convention}: impact
+is a price path, not maker revenue --- the endpoint-price shortcut that fabricated ``slippage
+revenue'' was identified and removed before this app was built (operator rulings, transcript
+entries 539--540).
+
+\paragraph{Gamma bleed and the fair spread.} With cash value
+$C_{\text{cash}}(S,K) = \mathrm{CALL}(K/S-1)\cdot S$, the console measures a per-dollar-notional
+cash curvature
+\begin{equation}
+\tilde G = \operatorname*{mean}_{K/S \in \{0.85,0.95,1,1.05,1.15\}}
+\Bigl|\,S\,\partial^2_S C_{\text{cash}}(S,K)\Bigr|,
+\qquad
+\text{bleed} = \tfrac12\,\tilde G\,\mathrm{RV}^2 \;\;[\text{notional}/\text{yr}],
+\end{equation}
+and the fair half-spread and quote
+\begin{equation}
+h_{\text{fair}} = \frac{\text{bleed}}{\text{turnover}\cdot 365}\times 10^4\ \text{bps},
+\qquad
+h_{\text{eff}} =
+\begin{cases}
+h_{\text{fair}}\cdot(1+25\%) & \text{vol-indexed mode},\\
+\text{fee}\cdot 10^4/2 & \text{fixed-spread mode}.
+\end{cases}
+\end{equation}
+Fees, bleed and returns per year on quoted notional $N_\$$ (margin $\times$ 10 pool leverage,
+both wings) are
+\begin{equation}
+\text{fees} = \tfrac{h_{\text{eff}}}{10^4}\,\text{turn}\cdot 365\cdot N_\$,\quad
+\text{bleed}_\$ = \text{bleed}\cdot N_\$,\quad
+\text{APR}_{\text{base}} = \tfrac{\text{fees}-\text{bleed}_\$}{N_\$},\quad
+\text{APR}_{\text{lev}} = \tfrac{\text{fees}-\text{bleed}_\$}{\text{equity}}.
+\end{equation}
+Capacity is a \emph{continuous} density $w(k)\propto e^{-8\lambda k^2}$ normalized to the wing
+notional --- the ribbon in the chart, not rungs. The economics layer is a model with no Lean
+backing (\S\ref{sec:gaps}).
+
+\section{Aggregation, the RFQ, and settlement}\label{sec:agg}
+
+\paragraph{Common level, private transport.} All makers share the level parameters
+$(\Sbar,a,\gamma,\kappa)$; each maker owns only its depth $\lambda_i$ and half-spread $h_i$.
+This is not a stylistic choice: \texttt{mixture\_not\_single\_lens} (\S\ref{sec:lean}) proves
+that mixing distinct per-maker steepnesses produces a strictly log-convex (smiled) aggregate
+that \emph{no} single power-law lens represents, and build~11's own test reproduced the failure
+empirically --- per-maker levels crossed the book (best bid $0.15482 >$ best ask $0.12015$,
+spread $-1{,}261$ bps). The shipped design is ``transport, not level,'' with an honest
+\textsf{CROSSED --- arb} detector that cannot fire under a common level and positive spreads.
+
+\paragraph{Depth aggregation (harmonic).}
+\begin{equation}
+\frac{1}{\lambda_{\text{agg}}} = \sum_i \frac{1}{\lambda_i}, \qquad
+\text{share}_i = \frac{1/\lambda_i}{\sum_j 1/\lambda_j}
+\end{equation}
+(Lean: \texttt{harmonic\_law}, \texttt{shares\_sum\_one}, \texttt{share\_eq\_agg\_ratio}; the
+parallel-addition law itself is \emph{earned} in the base layer from walking a stacked ladder
+to a common marginal price, \texttt{walk\_equiv}/\texttt{walk\_cost\_equiv}, interior case).
+
+\paragraph{Envelope book and RFQ fill.}
+\begin{equation}
+\mathrm{ask}(k) = \min_i V_i(k)\bigl(1+\tfrac{h_i}{10^4}\bigr), \qquad
+\mathrm{bid}(k) = \max_i V_i(k)\bigl(1-\tfrac{h_i}{10^4}\bigr),
+\end{equation}
+so the aggregate is always at least as tight as any single maker (the ``improvement vs.\ single
+maker'' panel quantifies what competition buys). An RFQ of size $Q$ walks makers
+cheapest-first, fills each up to $\text{share}_i \times \text{pool}$, and pays each maker
+\emph{at its own posted spread} (pay-your-own-quote, not uniform-price; Lean:
+\texttt{apportionment\_conserves}).
+
+\paragraph{Settlement doorway.} Legs net in perpetual \emph{units}; cash appears only through
+one common conversion at the exit. This is forced, not convenient:
+\texttt{doorway\_arbfree\_iff\_common} proves a book netting to zero units pays zero cash
+\emph{iff} the units$\to$cash factor is common across strikes, and any per-strike factor admits
+unbounded arbitrage (witness: long $1/V_i$ at strike $i$, short $1/V_j$ at strike $j$ --- zero
+net units, cash $F_i - F_j$, scalable). \texttt{exit\_timing\_irrelevant}: a netted-flat book
+settles to zero for every closing equity and leverage.
+
+\paragraph{Trade bands and portfolio.} A band sells one wing and buys the other with the
+proceeds (per-leg fee and slippage); \emph{only $\kappa$ moves} --- level and shape stay put ---
+and every strike re-prices at once. The portfolio view keeps perps and perp-options in one
+account equity (account-level liquidation, $50\times$ cap with headroom), carves option-backing
+notional out of the perps tab, and reads net option delta back to a perp hedge with zero
+residual. The $\kappa$ dynamics and the exposure readback have \emph{no} Lean backing
+(\S\ref{sec:gaps}).
+
+\section{User-interface contract}\label{sec:ui}
+
+\begin{center}\small
+\begin{tabular}{p{2.4cm}p{12.6cm}}
+\toprule
+view & contract \\
+\midrule
+\textsc{Earn} (maker) & Curve parameters $\Sbar\in[.05,1]$, $a\in[.2,3]$, $\gamma\in[.3,4]$,
+$\kappa\in[-.9,.9]$, $\lambda\in[.01,1]$, fee $\in[0,.2]$, depth $\in[1,80]$ BTC/1\%-strike;
+margin. Chart: call/put ask solid, bid dashed, both first-class; spread drawn as a filled band;
+``spread view $\times N$'' magnifier (default $\times 25$) with an honest caption --- at
+$\sim$19\,bps the true gap would overlap on screen; mid demoted to faint reference;
+capacity-density ribbon. \emph{Hover quoting}: a crosshair tracks any strike; readout $=$
+strike, call bid/ask, put bid/ask, half-spread, $C-P$ vs $-k$ parity, spread capture on size.
+No standalone quote box (the chart \emph{is} every strike). Market sliders: realised vol,
+turnover/day, RFQ size. Risk: curvature, break-even half-spread and turnover, parity check to
+12\,dp. Vol-indexed toggle. \\
+\textsc{Transact} (taker) & Buy/sell, any strike $k\in[-60\%,+60\%]$, size. Envelope best-ask
+solid / best-bid dashed with individual makers faint behind; order ticket prices off the
+envelope and names the filling maker; fill table walks makers cheapest-first; book state flag
+\textsf{clean} / \textsf{CROSSED --- arb}. \\
+\textsc{Trade Bands} & Sell-strike, buy-strike, size; both leg prices, proceeds, units bought;
+state move $\kappa\to\kappa+\Delta\kappa$ with $\Sbar,a,\gamma$ explicitly unchanged; curve
+drawn before/after. \\
+\textsc{Portfolio} & Positions with marks and deltas; one account equity, leverage vs the
+$50\times$ cap with headroom and \textsf{SAFE/LIQUIDATED}; carve panel; hedge readback (net
+option $\Delta$ $\to$ required perp hedge $\to$ residual $0$). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Worked numbers (re-derived from the shipped code)}\label{sec:numbers}
+
+Defaults: $\Sbar=.60$, $a=1.2705$, $\gamma=1.8413$, $\kappa=0$, $\lambda=.10$, fee $=.02$,
+margin 15\,BTC, $S=\$65{,}695.5$, RV $60\%$, turnover $0.30\times$/day, pool 200\,BTC,
+RFQ 5\,BTC. All values recomputed 2026-08-18 by executing the app's own math in Node.
+
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+quantity & value & note\\
+\midrule
+ATM mark & $0.178888$ & $q_R W_R$\\
+$\mathrm{CALL}/\mathrm{PUT}$ at $k{=}{+}12\%$ & $0.135450$ / $0.255450$ & Transact default strike\\
+parity $|C-P+k|$, $k{=}0.2$ & $0$ & exact in floating point off-ATM\\
+parity $C-P$ at $k{=}0$ & $2.44\times 10^{-13}$ & the peg, numerically (continued-fraction $\ib$)\\
+$\mathrm{CALL}(-1)$ / $\mathrm{PUT}(-1)$ & $1$ / $0$ & zero-strike anchor, exact\\
+curvature $\tilde G$ & $0.9065$ & five-point mean\\
+bleed & $0.16317$/yr & fraction of notional\\
+$h_{\text{fair}}$ / $h_{\text{eff}}$ & $14.90$ / $18.63$ bps & fair; vol-indexed $+25\%$\\
+$\Sigma$ notional & 300 BTC $=\$19{,}708{,}650$ & margin $\times 10$, both wings\\
+fees / bleed per yr & $\$4{,}019{,}813$ / $\$3{,}215{,}850$ & \\
+base / levered APR & $4.1\%$ / $81.6\%$ & levered on 15 BTC equity\\
+break-even turnover & $0.24\times$/day & vs $0.30\times$ assumed\\
+envelope at $k{=}12\%$ & ask $0.13567$ / bid $0.13523$ & book spread 32.8 bps (best-maker
+half-spread 16.4)\\
+depth shares & $47.6/19.0/9.5/23.8\ \%$ & \textsc{you}/Kappa/Delta/Sigma, harmonic\\
+band (sell $+10\%$ 5 BTC, buy $-10\%$) & proceeds $0.6840$ BTC, buys $5.2346$ u &
+$\Delta\kappa=+0.00574$; $\Sbar,a,\gamma$ unchanged\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Vol sweep (levered APR, current build-11 code).}
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+realised vol & $h_{\text{fair}}$ (bps) & vol-indexed & fixed (fee $=2\%$)\\
+\midrule
+20\% & 1.7 & $+9.1\%$ & $+2153.7\%$\\
+60\% & 14.9 & $+81.6\%$ & $+1863.7\%$\\
+120\% & 59.6 & $+326.3\%$ & $+884.6\%$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Finding.} At the shipped default fee $=0.02$ ($=100$ bps half-spread) the
+fixed mode never inverts within the RV slider range $[10\%,140\%]$ --- inversion needs
+RV $>155\%$ at fee $2\%$, or fee $\lesssim 1\%$ --- so the in-app fixed-mode caption (``watch
+the APR invert'') only demonstrates at lower fee settings. The build-5 headline (vol-indexed
+$+3.1/+27.7/+110.8\%$ vs fixed $+24.5/-74.0/-406.4\%$ APR at RV $20/60/120\%$) is
+\emph{historical}: build-5 code and calibration, not reproducible on build-11 defaults.
+
+\section{The formal corpus}\label{sec:lean}
+
+Five Lean~4 packages, 130 theorems. Uniformly: no
+\texttt{sorry}/\texttt{admit}/\texttt{axiom}/\texttt{native\_decide}/\texttt{opaque}/%
+\texttt{unsafe}; every theorem's \texttt{\#print axioms} $=$
+$\{\mathsf{propext},\mathsf{Classical.choice},\mathsf{Quot.sound}\}$; statements byte-identical
+to what was submitted (prover-side edits are proof bodies and private helpers only); all
+locally kernel-verified in Lean 4.28.0 (Mathlib \texttt{.olean}s from the CI cache --- stated,
+not hidden). Label-flip from \emph{trusted-from-prover} to \emph{verified} is on record as a
+recommendation; the call is the operator's.
+
+\subsection{\texttt{BURR2\_CORE} --- 42 theorems (Aristotle run \texttt{26958f2b})}
+Theorems about the \emph{exact} production formulas of \S\ref{sec:kernel}, conditional on
+nothing but four interface facts about the incomplete beta (carried as a structure field, not an
+axiom). \S1 sheet correspondence and positivity (\texttt{uArg\_eq\_sheet},
+\texttt{tail\_zero}, \texttt{G1\_pos}, \texttt{G1\_lt\_one}, \dots); \S2 parity
+(\texttt{burr2\_parity\_of\_ne} hypothesis-free off-ATM; \texttt{atm\_wings\_meet}: the peg is
+\emph{derived} as the unique wing-meeting split; \texttt{burr2\_parity}); \S3 zero-strike
+anchor (\texttt{AL\_glue}, $\mathrm{CALL}(-1)=1$, $\mathrm{PUT}(-1)=0$); \S4 sign and order
+(19 theorems: kernel in $(0,1]$ decreasing, wings nonnegative, \texttt{CALL\_antitone},
+\texttt{CALL\_lipschitz}, \texttt{PUT\_monotone} --- conditional on \texttt{TailRep}); \S5
+non-vacuity witness; \S6 apportionment (\texttt{harmonic\_law}, \texttt{shares\_sum\_one},
+\texttt{share\_eq\_agg\_ratio}, \texttt{share\_nonneg}, \texttt{apportionment\_conserves}).
+Two substantive corrections the proofs forced on the brief: at-the-money parity \emph{is} the
+peg (the $1.39\times10^{-17}$ and $2.44\times10^{-13}$ residuals are one phenomenon, not two),
+and $q_R = W_L/(W_R{+}W_L)$ is derived, not chosen.
+
+\subsection{\texttt{BURR2\_MIXTURE} --- 13 theorems (run \texttt{e95f6377})}
+Burr-II is \emph{not} closed under maker mixture
+(\texttt{burr2\_not\_closed\_under\_mixture}, and the \S5 stretch version for scale mixing via
+a two-atom moment/Cauchy--Schwarz argument), \emph{but} the exact identity
+\begin{equation}
+\tfrac12\bigl(\Delta_{\gamma_1} + \Delta_{\gamma_2}\bigr)
+= \Delta_{\bar\gamma}\cdot\cosh(\delta\,L_c)
+\end{equation}
+bounds the mixture as the same shape times $1+O(\delta^2)$ --- \emph{second} order in the
+parameter gap, versus the single-lens wall of \S\ref{sec:agg} which is first-order structural.
+The kernel change is what buys that mildness.
+
+\subsection{\texttt{LOOP\_LINK\_A} (pricing) --- 9 theorems (project \texttt{20fa5993}, task \texttt{b1e0c962})}
+The pricing$\leftrightarrow$aggregation bridge. \texttt{engine\_call\_midconvex} ($g\ge1$, via
+a global supporting line) discharges the standing \textsf{MidConvex} hypothesis for the v28
+engine curve; \texttt{atm\_kink\_bound} in the stronger form
+$(g{+}1)\bigl(\tfrac{g+1}{g}\bigr)^{g} \ge 2g+1$ for all $g>0$;
+\texttt{engine\_book\_arb\_free} / \texttt{engine\_book\_parity}: a book of makers each with
+its own exponent $g_i$ is butterfly-arbitrage-free and parity-anchored. And the load-bearing
+negative half: \texttt{engine\_log\_affine} $+$ \texttt{mixture\_strict\_log\_convex} $\implies$
+\texttt{mixture\_not\_single\_lens} --- \emph{heterogeneous maker steepness generates a strict
+smile that no single power-law lens can represent}. This proved obstruction is why the console's
+makers share the level (\S\ref{sec:agg}).
+
+\subsection{\texttt{LOOP\_LINK\_B} (settlement) --- 12 theorems (project \texttt{ce3c2190}, task \texttt{aa5f90f8})}
+Netting in units is linear and well-defined (\texttt{units\_add}, \texttt{units\_smul},
+\texttt{cashOne\_add}); the common doorway neither creates value nor flips signs
+(\texttt{cashOne\_zero\_iff}, \texttt{cashOne\_pos\_iff}); it cannot be timed
+(\texttt{exit\_timing\_irrelevant}); and the pair
+\texttt{common\_doorway\_necessary} / \texttt{per\_strike\_doorway\_unbounded\_arb} yields
+\texttt{doorway\_arbfree\_iff\_common}: one common units$\to$cash factor is \emph{exactly} the
+arbitrage-free class. ``Dollars enter only at the very end'' is a theorem.
+
+\subsection{\texttt{sims/v3-maps-lean} (base layer) --- 54 theorems}
+The book/aggregation substrate (11 \texttt{BOOK} $+$ 25 \texttt{MAP} $+$ 18 \texttt{BASIS}):
+\texttt{agg\_parity} (weights summing to one), \texttt{agg\_midconvex} (nonnegative weights;
+fixed-across-strikes enforced structurally), \texttt{book\_arb\_free} (butterfly leg),
+\texttt{level\_convex\_iff\_zero\_spread\_arbfree} (a genuine iff, the strongest statement in
+the file), \texttt{share\_strike\_invariant}, \texttt{beta\_transport\_parallel} with the
+parallel-addition law earned by \texttt{walk\_equiv}/\texttt{walk\_cost\_equiv} (interior
+case), and the exact vega dichotomy \texttt{shares\_fixed\_of\_common\_transport} /
+\texttt{common\_transport\_is\_necessary}.
+
+\section{Open gaps (stated, not hidden)}\label{sec:gaps}
+
+\begin{enumerate}\itemsep2pt
+\item \textbf{The Burr-II MidConvex bridge is not proved.} The book-layer arbitrage-freeness
+chain attaches to the v28 engine power-law curve (\texttt{engine\_call\_midconvex}) and only
+\emph{hypothesis-conditionally} to the Burr-II curve this console actually quotes. Named the
+next Lean obligation.
+\item \texttt{BURR2\_CORE} \S4 sign/order results are conditional on \texttt{TailRep}; the
+non-vacuity witness is a toy ($a=\gamma=1$, $\ib=\mathrm{id}$), not the real incomplete beta.
+\item The \texttt{BURR2\_MIXTURE} bound is on the midpoint member, near-the-money in scope
+(residuals of $0.02$--$0.12\%$ are near-money; $745\%$ excess at $\gamma$ $0.4$ vs $3.0$);
+joint non-closure over all four parameters is unproved.
+\item $\kappa$ (skew) dynamics --- the Trade Bands mechanic --- are entirely unformalised.
+\item \textbf{Mislabel risk (base layer):} the exposure readback (\texttt{Exposure}) is cited
+in \texttt{v3-maps-lean}'s README and the loop map but is \emph{absent} from the Lean files
+(re-verified 2026-08-18); the Portfolio hedge-readback panel has zero Lean backing.
+\item ``Arb-free'' means \emph{butterfly} only: no unconditional vertical leg, no price bounds
+($C\ge\text{intrinsic}$, $C\le S$); and there is no individual-rationality/adverse-selection
+theorem for makers under the mixed book (the refraction finding).
+\item The economics layer (bleed, $h_{\text{fair}}$, APR, viability) is a model with demo
+constants and no Lean; the fixed-mode inversion is unreachable at the default fee (see
+\S\ref{sec:numbers}). Realtime maker tuning converts a passive-LP product into an active-MM
+venue --- adverse selection, correlated withdrawal, and herding are new, unmodelled risks
+(operator transcript entry 541).
+\item The console is not wired to the production engine; nothing here changes
+\texttt{engine/} or its gates.
+\end{enumerate}
+
+\appendix
+\section{Build history (all 2026-08-14)}\label{app:builds}
+
+Operator-direction fragments below are quoted from the build commit messages; the session's
+verbatim transcript is missing (corrigendum filed 2026-08-18,
+\texttt{history/operator/CORRIGENDUM\_2026-08-18\_appbuild\_session\_gap.md}).
+
+\begin{center}\small
+\begin{tabular}{llp{9.6cm}}
+\toprule
+build & commit & change \\
+\midrule
+1 & \texttt{75abb52} & Burr-II RFQ book, single file, Railway-ready; parity exact headless. \\
+2 & \texttt{269a6a3} & Deployed to Railway (PORT fix); \texttt{BURR2\_CORE} $+$
+\texttt{BURR2\_MIXTURE} Lean landed (55 theorems). \\
+3--4 & \texttt{0e2b10a}, \texttt{8dfd02e} & Rebuild on the reference design system;
+gamma-bleed basis fixed to notional. \\
+6 & \texttt{caf6c71} & Rung ladder stripped --- continuous quoting (operator: ``that was the
+OB''; take the UX elements, not the orderbook mechanics). \\
+8 & \texttt{07370be} & Bid and ask as first-class separate curves; filled spread band;
+$\times N$ magnifier with honest caption; build stamp. \\
+9 & \texttt{7650a2a} & Sampled quote sheet replaced by an any-strike quoter. \\
+10 & \texttt{7fd1325} & Quote box merged into the chart --- hover to quote (operator: ``why u
+need box separately''). \\
+11 & \texttt{ebd774e} & All views activated; aggregate book on Transact; \emph{crossed-book
+bug found and fixed} --- per-maker levels crossed the book; makers now share the level and
+differ in depth/spread only; \textsf{CROSSED --- arb} detector added. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textit{Twin document: } \texttt{SPEC\_RFQ\_MM\_CONSOLE.xlsx} in the same directory
+carries this specification in spreadsheet form, including the theorem-level listing of all 64
+RFQ-specific theorems.
+
+\end{document}
