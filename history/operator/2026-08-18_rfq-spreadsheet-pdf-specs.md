@@ -14,3 +14,8 @@ spreadsheet-format and arXiv-format-PDF spec of the RFQ MM console (app/, builds
 the relevant Lean work._
 
 > can you give a spreadsheet and pdf arciv format spec of this including all the refent lean work for the thing we just did on the rfq version?
+
+## Entry 543 — 2026-08-18 UTC
+_Context: manager reported the spec docs committed/pushed with the skeptic gate still in flight; operator asks for the files to be attached in the chat once done._
+
+> once done attach them here
