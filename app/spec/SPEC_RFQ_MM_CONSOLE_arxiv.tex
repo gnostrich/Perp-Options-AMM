@@ -31,8 +31,10 @@ $(\Sbar,a,\gamma,\kappa)$ of a Burr-II (Burr Type XII in the moneyness modulus) 
 plus a half-spread $h$. There is no order ladder: any strike is priced on demand, requoting is
 four parameters rather than $N$ orders, and the two curve sets (bid and ask) make the spread an
 irreversible revenue band. Makers differ only in depth and spread while sharing the price
-\emph{level} --- a design forced by a proved theorem (heterogeneous per-maker steepness generates
-a strict volatility smile that no single power-law lens can represent). The tradeable book is the
+\emph{level} --- a design choice motivated by a proved theorem (heterogeneous per-maker steepness
+generates a strict volatility smile that no single power-law lens can represent; on the Burr-II
+kernel itself the mixture effect is proved second-order, so there the common level is chosen, not
+forced). The tradeable book is the
 envelope of maker curves; RFQ fills walk makers cheapest-first, each paid at its own posted
 spread; settlement nets in perpetual units and crosses one common units$\to$cash doorway, which
 is exactly the arbitrage-free class. We give the closed form, the quoting economics
@@ -173,12 +175,20 @@ backing (\S\ref{sec:gaps}).
 
 \paragraph{Common level, private transport.} All makers share the level parameters
 $(\Sbar,a,\gamma,\kappa)$; each maker owns only its depth $\lambda_i$ and half-spread $h_i$.
-This is not a stylistic choice: \texttt{mixture\_not\_single\_lens} (\S\ref{sec:lean}) proves
-that mixing distinct per-maker steepnesses produces a strictly log-convex (smiled) aggregate
-that \emph{no} single power-law lens represents, and build~11's own test reproduced the failure
-empirically --- per-maker levels crossed the book (best bid $0.15482 >$ best ask $0.12015$,
-spread $-1{,}261$ bps). The shipped design is ``transport, not level,'' with an honest
-\textsf{CROSSED --- arb} detector that cannot fire under a common level and positive spreads.
+The design is \emph{chosen, motivated by} --- not forced by --- a proved theorem:
+\texttt{mixture\_not\_single\_lens} (\S\ref{sec:lean}) proves, \emph{for the power-law lens
+family}, that mixing distinct per-maker steepnesses produces a strictly log-convex (smiled)
+aggregate no single lens represents. On the Burr-II kernel itself the corpus's own
+\texttt{BURR2\_MIXTURE} result shows the mixture effect is second-order mild and re-fit is
+practically viable (transcript entry 529), and the envelope need not be one curve --- so common
+level is a choice here. Its ratification provenance is reconstruction-grade (the 2026-08-14
+session is untranscribed; ``transport-not-level'' enters the transcript as a recommendation,
+entry 513). Build~11 exhibited a related but \emph{distinct} failure empirically: per-maker
+levels crossed the book (best bid $0.15482 >$ best ask $0.12015$; $-1{,}261$ bps in half-spread
+convention, $-2{,}522$ bps full-spread) --- a level-disagreement failure, not an instance of the
+smile obstruction. What is provable: under a common level and positive spreads the book cannot
+cross. The shipped design is ``transport, not level,'' with an honest \textsf{CROSSED --- arb}
+detector.
 
 \paragraph{Depth aggregation (harmonic).}
 \begin{equation}
@@ -212,9 +222,12 @@ settles to zero for every closing equity and leverage.
 proceeds (per-leg fee and slippage); \emph{only $\kappa$ moves} --- level and shape stay put ---
 and every strike re-prices at once. The portfolio view keeps perps and perp-options in one
 account equity (account-level liquidation, $50\times$ cap with headroom), carves option-backing
-notional out of the perps tab, and reads net option delta back to a perp hedge with zero
-residual. The $\kappa$ dynamics and the exposure readback have \emph{no} Lean backing
-(\S\ref{sec:gaps}).
+notional out of the perps tab, and reads net option delta back to a perp hedge. The displayed
+``residual exposure 0.000000'' is a hardcoded string over the definitional identity
+$\text{hedge} := -\Delta_{\text{net}}$ --- closure by construction, not a computed check; a
+wrong $\Delta$ would still ``read back'' to zero, and the demo put-leg delta is in fact not
+parity-consistent (skeptic finding, \S\ref{sec:gaps} item 5). The $\kappa$ dynamics and the
+exposure readback have \emph{no} Lean backing (\S\ref{sec:gaps}).
 
 \section{User-interface contract}\label{sec:ui}
 
@@ -294,10 +307,11 @@ realised vol & $h_{\text{fair}}$ (bps) & vol-indexed & fixed (fee $=2\%$)\\
 
 \noindent\textbf{Finding.} At the shipped default fee $=0.02$ ($=100$ bps half-spread) the
 fixed mode never inverts within the RV slider range $[10\%,140\%]$ --- inversion needs
-RV $>155\%$ at fee $2\%$, or fee $\lesssim 1\%$ --- so the in-app fixed-mode caption (``watch
-the APR invert'') only demonstrates at lower fee settings. The build-5 headline (vol-indexed
-$+3.1/+27.7/+110.8\%$ vs fixed $+24.5/-74.0/-406.4\%$ APR at RV $20/60/120\%$) is
-\emph{historical}: build-5 code and calibration, not reproducible on build-11 defaults.
+RV $>155.4\%$ at fee $2\%$, or fee $<1.62\%$ at the slider maximum --- so the in-app fixed-mode
+caption (``watch the APR invert'') only demonstrates at lower fee settings. The headline
+contrast (vol-indexed $+3.1/+27.7/+110.8\%$ vs fixed $+24.5/-74.0/-406.4\%$ APR at RV
+$20/60/120\%$) is \emph{historical} and belongs to \textbf{build 1} (commit \texttt{75abb52},
+\emph{before} the build-4 gamma-bleed basis fix): not reproducible on build-11 defaults.
 
 \section{The formal corpus}\label{sec:lean}
 
@@ -384,7 +398,11 @@ joint non-closure over all four parameters is unproved.
 \item $\kappa$ (skew) dynamics --- the Trade Bands mechanic --- are entirely unformalised.
 \item \textbf{Mislabel risk (base layer):} the exposure readback (\texttt{Exposure}) is cited
 in \texttt{v3-maps-lean}'s README and the loop map but is \emph{absent} from the Lean files
-(re-verified 2026-08-18); the Portfolio hedge-readback panel has zero Lean backing.
+(re-verified 2026-08-18); the Portfolio hedge-readback panel has zero Lean backing. Moreover
+(skeptic finding, 2026-08-18, reported not fixed): its ``residual exposure 0.000000'' is a
+hardcoded string over the definitional identity $\text{hedge}:=-\Delta_{\text{net}}$, and the
+demo put-leg delta is wrong --- the code uses $-\Delta_{\text{call}} = 0.5358$ at $k=-0.10$
+where parity $P = C + k$ forces $0.4642$ (manager re-derived: exact).
 \item ``Arb-free'' means \emph{butterfly} only: no unconditional vertical leg, no price bounds
 ($C\ge\text{intrinsic}$, $C\le S$); and there is no individual-rationality/adverse-selection
 theorem for makers under the mixed book (the refraction finding).
@@ -409,7 +427,8 @@ verbatim transcript is missing (corrigendum filed 2026-08-18,
 \toprule
 build & commit & change \\
 \midrule
-1 & \texttt{75abb52} & Burr-II RFQ book, single file, Railway-ready; parity exact headless. \\
+1 & \texttt{75abb52} & Burr-II RFQ book, single file, Railway-ready; parity exact headless.
+Carries the historical APR headline (\S\ref{sec:numbers}), pre-basis-fix calibration. \\
 2 & \texttt{269a6a3} & Deployed to Railway (PORT fix); \texttt{BURR2\_CORE} $+$
 \texttt{BURR2\_MIXTURE} Lean landed (55 theorems). \\
 3--4 & \texttt{0e2b10a}, \texttt{8dfd02e} & Rebuild on the reference design system;
@@ -422,15 +441,20 @@ $\times N$ magnifier with honest caption; build stamp. \\
 10 & \texttt{7fd1325} & Quote box merged into the chart --- hover to quote (operator: ``why u
 need box separately''). \\
 11 & \texttt{ebd774e} & All views activated; aggregate book on Transact; \emph{crossed-book
-bug found and fixed} --- per-maker levels crossed the book; makers now share the level and
-differ in depth/spread only; \textsf{CROSSED --- arb} detector added. \\
+bug found and fixed} --- per-maker levels crossed the book (a level-disagreement failure,
+\S\ref{sec:agg}); makers now share the level and differ in depth/spread only;
+\textsf{CROSSED --- arb} detector added. \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip
 \noindent\textit{Twin document: } \texttt{SPEC\_RFQ\_MM\_CONSOLE.xlsx} in the same directory
-carries this specification in spreadsheet form, including the theorem-level listing of all 64
-RFQ-specific theorems.
+carries this specification in spreadsheet form, including the theorem-level listing of all 76
+RFQ-specific theorems. This document was audited by the project's adversarial skeptic gate
+(verdict: \texttt{notes/skeptic/VERDICT\_rfq\_spec\_docs\_2026-08-18.md}); its three flags ---
+the build-1 attribution of the historical APR headline, the softening of ``forced''/``settled''
+on the common-level design, and the hardcoded readback residual plus the put-delta finding ---
+are incorporated above.
 
 \end{document}

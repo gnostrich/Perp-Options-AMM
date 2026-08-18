@@ -11,10 +11,18 @@ env now, 8pp) + README. Lean corpus covered: BURR2_CORE 42 + BURR2_MIXTURE 13 + 
 obstruction PROVED; G2 closed) + LOOP_LINK_B 12 (doorway iff; G3 closed) + v3-maps-lean 54 = 130 thms,
 all locally kernel-verified, axioms clean; label flip to "verified" still operator's call. KEY HONESTY
 FINDINGS carried in the docs: (1) Burr-2 MidConvex bridge UNPROVED — arb-free chain attaches to v28
-engine curve only; (2) build-5 headline APR contrast is HISTORICAL — at build-11 default fee=0.02 the
-fixed mode NEVER inverts within the RV slider (needs RV>155% or fee≲1%); (3) envelope commit figure
-16.4bps = best-maker half-spread, full book spread 32.8bps; (4) v3-maps G1 Exposure still ABSENT
-(re-verified). ⚠ TRANSCRIPTION GAP owned: the 2026-08-14 app-build session never transcribed its
+engine curve only; (2) BUILD-1 headline APR contrast (75abb52, PRE-basis-fix — skeptic F1 corrected my
+"build-5") is HISTORICAL — at build-11 default fee=0.02 the fixed mode NEVER inverts within the RV
+slider (needs RV>155.4% or fee<1.62%); (3) envelope commit figure 16.4bps = best-maker half-spread,
+full book spread 32.8bps; (4) v3-maps G1 Exposure still ABSENT (re-verified). SKEPTIC GATE (verdict
+`notes/skeptic/VERDICT_rfq_spec_docs_2026-08-18.md`, all numbers independently reproduced): F1
+build-1 attribution FIXED; F2 "forced/settled" softened — common level = CHOSEN/motivated (obstruction
+proved for power-law lens family, Burr-2 mixture 2nd-order, entry 529 re-fit viable; ratification
+reconstruction-grade; build-11 crossed book = level-disagreement failure ≠ smile obstruction); F3
+**NEW APP BUG (open, reported not fixed):** Portfolio "residual 0.000000" is HARDCODED over the
+definitional hedge:=−netΔ, and the demo put-leg delta is parity-WRONG (code −Δ_call=0.5358 at k=−0.10
+vs parity 0.4642 — manager re-derived exact). Nits fixed (76 not 64 RFQ-specific thms; bps convention;
+v3-maps never-submitted qualifier). ⚠ TRANSCRIPTION GAP owned: the 2026-08-14 app-build session never transcribed its
 operator messages (transcript ends entry 541) — corrigendum filed
 `history/operator/CORRIGENDUM_2026-08-18_appbuild_session_gap.md`; standing request to operator to
 export that session. Skeptic gate run on the spec docs before hand-back (verdict in

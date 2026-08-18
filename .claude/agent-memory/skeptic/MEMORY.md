@@ -4047,3 +4047,36 @@ option (premium leg = funding). Each rev fixes the prior proxy but adopts a new 
 "optimistic hypothesis-on default" pattern (green corner = operator picks the favorable input)
 recurs from v2. Provenance NIT: operator entries 490/491/492 seen only via v2 NOTES synthesis,
 not a history/operator/ verbatim file.
+
+## Verdict (2026-08-18) — RFQ MM console spec artifacts (xlsx + arXiv pdf), Universal Skeptic Gate, entry 542
+Full record: notes/skeptic/VERDICT_rfq_spec_docs_2026-08-18.md. First skeptic contact with the
+app/ RFQ line (builds 1-11, 2026-08-14, commits 75abb52..ebd774e; Burr-2 kernel, NON-core sim).
+**SURVIVED ATTACK (settled, don't re-attack):** ALL worked numbers in the spec reproduce exactly
+in my own Node re-typing of app/index.html math (ATM 0.178888, G̃ 0.9065, h_fair 14.90bps,
+envelope 0.13567/0.13523, band 0.6840/5.2346/+0.00574, vol sweep, inversion RV>155.4% at fee=2%);
+Lean counts 42+13+9+12+54=130 verified vs LOCAL_BUILD logs + .lean files; theorem names in sheet 7
+match sources; LINK_B doorway theorems are curve-GENERIC (V arbitrary) so the abstract's arb-free
+sentence is clean; BURR2_CORE defs mirror JS mk() exactly; Exposure absence re-verified myself.
+**FLAGS ISSUED:** F1 FLAG-WRONG — "build-5 headline" APR contrast is actually from the BUILD-1
+commit (75abb52), and the spec's own sheet-9 footnote (builds 5/7 inside post-basis-fix work)
+contradicts the attribution. F2 FLAG-OVERSELL — "design forced by a proved theorem": the theorem
+(mixture_not_single_lens) is for the ENGINE power-law family, not Burr-2 (where BURR2_MIXTURE +
+manager's own entry-529 say heterogeneity is 2nd-order mild / "practically viable via re-fit");
+the build-11 crossed book is a LEVEL-disagreement failure, not the smile obstruction; "settled
+architecture" provenance = manager recommendation (513) + method-affirmation (517), ratification
+if any is in the UNTRANSCRIBED app session. F3 FLAG-OVERSELL — hedge readback "residual 0" is a
+hardcoded literal (L554) atop a definitional identity (hedge:=-netΔ), AND the demo put delta is
+parity-INCONSISTENT (code -Δc=0.5358 vs parity Δc+1=0.4642 at k=-0.10) — real app bug, reported
+not fixed. Nits: sheet-7 "three packages/64 thms" header vs 4 packages/76 listed; -1261bps
+(half) vs 32.8bps (full) convention switch; "byte-identical to submission" blanket misapplies to
+v3-maps; fee-inversion boundary is 1.62% not "~1%". Corrigendum for the 2026-08-14 transcription
+gap: ADEQUATE (owned, reconstruction-labelled, export requested; entry-542 numbering provisional).
+**PATTERN (recurring, log):** (1) closure-by-identity sold as a check AGAIN (hedge readback = the
+audit's own §3(i) Stage-7 finding, reproduced in the shipped UI + spec) — whenever a "residual 0"
+or "check passes" appears, ask if the checked quantity is DEFINED to be zero. (2) Theorem proved
+in family A quoted as forcing a design in family B (power-law smile obstruction -> Burr-2 console)
+— check WHICH curve family every "proved" invoked in a design sentence actually binds. (3)
+Provenance drift under a transcription gap: commit-message "we settled" hardens into "THE SETTLED
+ARCHITECTURE" in a spec; gaps make manager paraphrase the only source — insist on reconstruction
+labels. (4) Headline numbers keep their fame but lose their provenance (build-1 numbers renamed
+build-5).
