@@ -4290,3 +4290,9 @@ _Context: operator asks for test money so closed-network simulations can be run,
 _Context: operator uploads arXiv 2608.13383 ("Bridging Mixture Distributions", Del Moral et al. — Schrödinger bridges between Gaussian mixtures, Bures-Wasserstein/Riccati machinery, EM-estimated components, error bounds between exact and approximate bridges, Monge-map limit) and asks, brainstorm only, whether it is relevant._
 
 > [attachment: 2608.13383.pdf] brainstorm only is this relevant related in any way
+
+
+## Entry 600 — 2026-08-15 UTC
+_Context: operator asks whether the aggregation is a convex hull or similar._
+
+> is the aggregation convex hull or something like that?
