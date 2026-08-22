@@ -4527,3 +4527,9 @@ _Context: operator asks for their complete-loop artifact without rebuilding it a
 
 > cant i kjust have my complete loop thing
 > or you want te to rebuld that bullshit again
+
+
+## Entry 637 — 2026-08-22 UTC
+_Context: operator has forwarded rfq_handoff.tar.gz into another session and asks for a purity guarantee. Manager re-audits the shipped archive file-by-file and content-grep; finds and fixes two violations of the entry-633 order (stale MANIFEST still listing v3-maps-lean/CLOSED_LOOP_MAP/v1, and the orphan BURR2_FULL_LOOP_v1_NOTES.md), adds rfq_measurements/RUNNING.md documenting the scripts' repo-path dependency, repacks and redeploys; reports remaining content-level residuals honestly._
+
+> i've sentn this package into the otehr sessio. you sure its just rfq stuff and no pollution from anyehwwr else?
