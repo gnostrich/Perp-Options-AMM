@@ -15,7 +15,7 @@ ok(/Executed on Hyperliquid/.test(h),'"Executed on Hyperliquid" present (e616)')
 // e609: no third column; two-column grid
 ok(/grid-template-columns:430px 1fr[;}]/.test(h)||/grid-template-columns:440px 1fr[;}]/.test(h),'two-column layout, no third column (e609)');
 // e609/610: the v28 background
-ok(/url\('bg\.webp'\)/.test(h)&&fs.existsSync('app/bg.webp'),'v28 backdrop wired (e609/610)');
+ok(/url\('background_physics\.webp'\)/.test(h)&&fs.existsSync('app/background_physics.webp'),'the product backdrop background_physics.webp wired (e609/610/625)');
 // e616: chart tabs Perp Mark | Options Pricing; dollar strikes with Put/Call
 ok(/Perp Mark Pricing/.test(h)&&/Options Pricing/.test(h),'chart tabs perp-mark | options-pricing (e616)');
 ok(/← Put/.test(h)&&/Call →/.test(h)&&/Strike Price/.test(h),'options chart: dollar strikes, Put ← → Call (e616)');

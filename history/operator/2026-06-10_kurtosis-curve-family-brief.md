@@ -4444,3 +4444,15 @@ _Context: operator — take whatever is applicable from the OB frontend, and do 
 _Context: operator reports still seeing the same result. Manager cannot distinguish "cached old build on the operator's device" from "the design still misses" — the new FE shipped with NO visible version stamp, so neither party can tell which build is on screen. Stamp added; visual fidelity pass toward the protect screenshots (visible swirl backdrop, larger scale, framed panels)._
 
 > still same dogshit im seeing
+
+
+## Entry 625 — 2026-08-15 UTC
+_Context: operator names what is wrong — the background and the UX visual style. The manager had been using the engine v28 backdrop, not the product's swirl; pulling the real assets from protect.temporal.exchange._
+
+> the backgroundthe ux visual style etc
+
+
+## Entry 626 — 2026-08-15 UTC
+_Context: operator demands to know when they can expect to move forward — regression after regression, no processes managing the interaction, no systematic note-taking._
+
+> when the motherfuck can i goddamn expect to start fuckong movong on things. regression afgter motherfuckgin regression . no processed in place to mamage interaction with me , taking noteds systemativcally etc.

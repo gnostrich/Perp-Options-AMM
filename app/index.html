@@ -4,8 +4,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap');
 :root{--teal:#0ABAB5;--green:#00FF9C;--red:#FF6767;--bg:#0E1B1E;--edge:#1e3a3f;--mute:#8a9698;--txt:#c9d4d6}
 *{box-sizing:border-box}
-body{margin:0;background:#0b1416 url('bg.webp') center/cover fixed no-repeat;color:var(--txt);font:400 13.5px 'IBM Plex Mono',monospace}
-body::before{content:'';position:fixed;inset:0;background:rgba(8,16,18,.68);pointer-events:none}
+body{margin:0;background:#0b1416 url('background_physics.webp') center/cover fixed no-repeat;color:var(--txt);font:400 13.5px 'IBM Plex Mono',monospace}
+body::before{content:'';position:fixed;inset:0;background:rgba(5,10,12,.45);pointer-events:none}
 header,main,#toast{position:relative}
 header{display:flex;align-items:center;gap:22px;padding:16px 28px;border-bottom:1px solid var(--edge);background:rgba(8,16,18,.55)}
 .logo{font:700 20px 'Chakra Petch';color:#fff;letter-spacing:.06em}
@@ -57,7 +57,7 @@ th:first-child,td:first-child{text-align:left}
 .dis{opacity:.45;pointer-events:none}
 </style></head><body>
 <header>
- <div class="logo">⟨T⟩ TEMPORAL</div>
+ <div class="logo" style="display:flex;align-items:center;gap:10px"><img src="TemporalLogoSmall.svg" style="height:30px"> TEMPORAL</div>
  <nav><a class="on" data-nav="transact">Transact</a><a data-nav="portfolio">Portfolio</a></nav>
  <div class="sp"></div><button class="btn">Docs</button><button class="btn primary" id="wallet">Paper Wallet</button>
 </header>
@@ -66,13 +66,13 @@ th:first-child,td:first-child{text-align:left}
 <section class="panel" id="leftPanel">
  <h2>Transact</h2>
  <div class="subtabs"><div class="on" data-sub="perp">Create Perp</div><div data-sub="bands">Trade Bands</div><div data-sub="earn">Earn</div></div>
- <div class="hl">⚡ Executed on Hyperliquid <span style="color:#FFA541">(paper mode — oracle mark)</span></div>
+ <div class="hl"><img src="logo_hyperliquid_small.svg" style="height:11px;vertical-align:-1px"> Executed on Hyperliquid <span style="color:#FFA541">(paper mode — oracle mark)</span></div>
 
  <div id="sub-perp">
   <div class="seg"><div class="on long" id="pLong">Long / Buy</div><div class="short" id="pShort">Short / Sell</div></div>
   <div class="row"><label>deposit</label><input id="pDep" type="number" value="65695" step="100" min="0" placeholder="Enter amount"><span class="chip" id="pMax">USDC · MAX</span></div>
   <div class="row"><label>leverage</label><div class="lev"><input id="pLev" type="range" min="1" max="40" step="1" value="5"><div class="tk"><span>1x</span><span>10x</span><span>20x</span><span>30x</span><span>40x</span></div></div><span class="chip" id="pLevV">5x</span></div>
-  <div class="row"><label>notional</label><input id="pQty" type="number" value="5" step="0.01" min="0"><span class="chip">BTC</span></div>
+  <div class="row"><label>notional</label><input id="pQty" type="number" value="5" step="0.01" min="0"><span class="chip"><img src="logo_BTC.svg" style="height:10px;vertical-align:-1px"> BTC</span></div>
   <div class="kv"><span>entry price (oracle mark)</span><b id="pMark">—</b></div>
   <div class="kv"><span>account headroom (50× cap)</span><b id="pHead">—</b></div>
   <div class="kv"><span>deposit from</span><b>◉ Paper Wallet&nbsp;&nbsp;<span style="color:var(--mute)">○ Hyperliquid Balance</span></b></div>
@@ -134,7 +134,7 @@ th:first-child,td:first-child{text-align:left}
 </section>
 </main>
 <div id="toast"></div>
-<div id="vstamp" style="position:fixed;left:10px;bottom:8px;color:#4a5a5e;font-size:10px;z-index:8">build 44</div>
+<div id="vstamp" style="position:fixed;left:10px;bottom:8px;color:#4a5a5e;font-size:10px;z-index:8">build 45</div>
 <button class="btn" id="fb">💬 Feedback</button>
 <script src="book.js"></script><script src="lifecycle.js"></script><script src="paper.js"></script>
 <script>
