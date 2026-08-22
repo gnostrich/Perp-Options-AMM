@@ -4314,3 +4314,9 @@ _Context: operator pushes back — the circuit breaker would stop arbitrage from
 _Context: operator states the rule precisely — each LP's quote stands; the aggregate acts as a natural cutoff/divider WITHIN the overlap; takers match the best quote permitted by that divider. This is a divider inside the overlap, not a block on matching._
 
 > so each LP stands, just that the aggregate thing creates a natural cutoff / divider for the overlap, and then takers match with the best permitted by that divider, right?
+
+
+## Entry 604 — 2026-08-15 UTC
+_Context: operator moves on from the illustrations (couldn't see them) and specifies a change to the LP inputs on the curve-adapts spreadsheet — instead of specifying notional, an LP specifies MARGIN and LONG/SHORT EXPOSURE LIMITS, and the curve interpolates these with current exposure._
+
+> tldr couldnt see it moving on.; also on the spreadsheet where we show LP curve updating with esporusre onstrad of LP specifyingh his notilnal he can just specify margin and long / short exposure limits, and the curve interpolates these with exposujre iyfwim
