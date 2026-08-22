@@ -4320,3 +4320,9 @@ _Context: operator states the rule precisely — each LP's quote stands; the agg
 _Context: operator moves on from the illustrations (couldn't see them) and specifies a change to the LP inputs on the curve-adapts spreadsheet — instead of specifying notional, an LP specifies MARGIN and LONG/SHORT EXPOSURE LIMITS, and the curve interpolates these with current exposure._
 
 > tldr couldnt see it moving on.; also on the spreadsheet where we show LP curve updating with esporusre onstrad of LP specifyingh his notilnal he can just specify margin and long / short exposure limits, and the curve interpolates these with exposujre iyfwim
+
+
+## Entry 605 — 2026-08-15 UTC
+_Context: operator raises repo hygiene — concerned the repo is a muddle, version control is broken, conflation risk is endless. Orders a version-control survey and hard archiving into folders so only current work remains in working folders, same for specs and notes._
+
+> oversall i'm concerned this repo is a muddle and version control is brokenn and we have an endless sort of conflton risk. i want a version control survey and hard archiving into folders so what we're currentl.y wokring on only remainsd in the qwokring folder iygwim, same for specs notes etc.
