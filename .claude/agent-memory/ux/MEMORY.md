@@ -6,52 +6,50 @@ placements are decided by rule, absorb core changes and derive the surface conse
 operator does not think about UX when the core moves.
 
 ## Binding documents
-- `docs/UX_FORMALISM.md` — objective function, lower bounds, the blind-decision constraint, the
-  representation taxonomy, the decision record. **Binding.**
-- `docs/UX_LIFECYCLE_INTERACTION_SURFACE.md` — screens, state, actions, lifecycle walks (695 lines).
-- `docs/UX_INTERACTION_COST_ANALYSIS.md` — quantitative baseline (in flight at hand-over).
+- `docs/UX_FORMALISM.md` — objective, lower bounds, blind-decision constraint, taxonomy (§4.1–§4.5),
+  decision record Q1–Q20. **Binding.**
+- `docs/UX_LIFECYCLE_INTERACTION_SURFACE.md` — screens/state/actions + lifecycle walks.
+- `docs/UX_INTERACTION_COST_ANALYSIS.md` — quantitative baseline (KLM; master table §4).
+- `docs/UX_ENDUSER_REVIEW_build39.md` — **my end-user review of build 39** (operator entries
+  607/608), findings F1–F17, top-10 fix list handed to the manager 2026-08-22.
 
-## State at hand-over
-- **Q1–Q11 are RULED** by the manager (formalism §5). Do not re-open without new information.
-- **Q5 RULED BY THE OPERATOR, entry 586:** "carbed perp is still perp and retains everything perp
-  has." The carve is a DISPLAY/earmarking operation, not an economic one — formalism §7. Line 1 is a
-  full perp row with every perp column. No sliver type; any branch on "is this a sliver" is a defect.
-  Test for any future carve question: would the answer differ for an uncarved perp? If not, the carve
-  does not change it.
-- **Still escalated:** Q9 parameter (quote validity window, placeholder 10s).
-- **Current app = pricing object, no lifecycle.** No wallet, no perps tab, portfolio rows are a
-  hardcoded literal (`app/index.html:867`), none of the three primary CTAs wired. It does get three
-  things right the reference never faced: self-mark exclusion, close-price exclusion, one aggregate
-  price apportioned pro-rata.
-- **Do not port from the reference blind.** Four of its surfaces are RFQ-incompatible; its cash-out
-  flow is INVERTED (a band close credits nothing, only `ClosePerp` moves money) whereas Temporal
-  cashes out the option P&L and its backing sliver on the option close.
-- Reference tree: `/tmp/obref/Perp-Options-OB-MM-claude-pricing-engine-go-kleb5s/` — ephemeral
-  container, re-extract from the operator's zip if missing.
+## Decision record state
+- Q1–Q15: ruled (operator/manager) — see formalism §5. Bundle atomic, carved perp = full perp row,
+  account-level liq only, no per-position liq price, origin column + checkbox (Q13), Earn duration
+  triple Δ·q-weighted (Q15), dormancy divider = the pricing rule (entries 606/607).
+- **Q16–Q20 ruled by me (build-39 review):** dormancy drawn on the LP's own curve (greyed dormant
+  segments; % pair is a summary mirror — taxonomy §4.4); sim controls (divergence dial, vol/turnover
+  sliders) out of commit cards into a labelled SIMULATION drawer (§4.5); depth cloud stays with
+  plain-quote priority at the point of action + hover on the Transact cloud; vocabulary rule
+  (decision-relevant → plain-named, internal → off surface); loop findability (one nav, Open Perp
+  ticket, back-pointer toasts).
+- Still escalated: Q9 parameter (quote TTL, placeholder 10s in `views_ticket.js`); funding accrual
+  missing from the lifecycle store (F15 — build item, manager's queue).
 
-## Known live defects on the surface
-- Leverage colours red at 40x while the cap is 50x, unlabelled (Q10 rules: keep both, label them).
-- Portfolio positions are a literal, not a store.
+## App state as of build 39 (`app/index.html` + modules)
+The app now HAS a lifecycle: `lifecycle.js` (Life store — openPerp/openBundle/closeBundle/closePerp/
+account/ledger, invariants enforced), `paper.js` (paper wallet, seed $1M, settle+conserved),
+`views_perps.js` (Perps tab + account strip — good), `views_ticket.js` (firm-quote + close tickets,
+**written to the formalism but NEVER invoked by index.html**), `book.js` (one Book for trade/mark/
+close, self-exclusion correct).
+
+**The invalid states I flagged (do not let anyone call these trade-offs):**
+- Close acts at a hardcoded `closePx:0.14` (`index.html:774`) while the row displays the real
+  self-excluded close px it ignores; opens record `entryPx:0` legs → fictional payouts. (F1)
+- Portfolio Account/Carve cards are hardcoded literals ($4M/$3M) disagreeing with the live
+  `LIFE.account()` strip on the Perps tab. (F2)
+- `PAPER.settle` never called — payouts never reach the wallet; ledger never rendered; on-screen
+  text claims settlement moves money. (F3)
+- Portfolio positions table has no carved-perp line → close decision blind to its dominant leg. (F4)
+- "Executed on Hyperliquid" (Earn/Transact) vs paper reality; identity switcher switches wallet
+  view only while all positions stay one global store. (F5/F6)
+- Entry-607 LP ruling violated: no long/short exposure-limit inputs; two capital numbers (margin +
+  `cap` param); leverage/notional presented around the inputs. (F7)
+- `Life.openPerp` has no UI — loop step 1 inexpressible. (F14a)
+- Q13/Q15 not implemented; "Create Earn Position" is a toast with no state change. (F8)
 
 ## Discipline
-Cite file paths for reference claims. Show step and glance counts. Never remove cost by hiding
-decision-relevant state — that is invalid, not optimal. Escalate economics rather than picking.
-Hand edits back to the manager; he is the sole git actor.
-
-## LP surface — RULED by the operator, entry 589
-- LP's own position (capital, curve, bias, mode) lives in **Earn**.
-- LP **accrued fills sit in the same perp-options table as trader positions**, distinguished by an
-  `origin` column + checkbox filter. Do not split the table (formalism §4.3).
-- **Line 1 on an LP row is the counterparty's perp, pro-rata** — LPs never hold perps. This is what
-  makes the no-naked-option invariant hold from both sides.
-- **Earn total is a DURATION TRIPLE on the strike axis** (entry 590), not one number:
-  exposure `Σ Δq` (₿-perp) · strike duration `K_D = Σ wk`, `w = Δq/ΣΔq` · dispersion `√(Σ w(k−K_D)²)`.
-  Magnitude, location, spread — the strike-axis analogue of PV / duration / convexity.
-  Verified: the sensitivity identity holds to 1.13% (the residual is convexity).
-  **Weight by Δ·q, not by value** — value-weighting gives a similar number with NO sensitivity
-  identity. That is what the operator's asterisk is about: in fixed income the two coincide, here
-  they do not.
-- All four already exist in the reference: `origin?: "opened" | "lp"` (`portfolio.ts:56,166,228,293`),
-  `isLpRow` (`tableContainer.tsx:506,528,621,694`), `ExposureTotals`/`byLp` and the "₿-perp (Δ·q)"
-  label (`earnTableContainer.tsx:31,39,68-70`). **No path stamps `"lp"` yet** (`portfolio.ts:166`) —
-  the contract is there, the producer is not.
+Cite file paths. Show step and glance counts. Never remove cost by hiding decision-relevant state.
+Escalate economics rather than picking. Hand edits back to the manager; he is the sole git actor.
+Reference tree (`/tmp/obref/...`) is ephemeral; four of its surfaces are RFQ-incompatible and its
+cash-out flow is inverted — cite, don't port.

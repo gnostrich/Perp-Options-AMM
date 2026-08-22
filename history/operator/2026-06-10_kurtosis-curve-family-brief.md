@@ -4344,3 +4344,21 @@ _Context: operator adopts the dormancy-divider as the live pricing rule ("use th
 _Context: fragment, mid-typing — scopes the UX review toward the whole-loop / lifecycle visualisations. Message appears cut off; manager proceeded with the review scoped to the full lifecycle rather than waiting._
 
 > like the whple loop etc stuff .... i think we
+
+
+## Entry 609 — 2026-08-15 UTC
+_Context: operator reviews the live Earn page — no third column (fold the right-hand cards into core-vs-collapsible), bring back the background from the older versions, and since buy/sell curves cannot overlap under the dormancy divider, draw both on one page instead of separate tabs._
+
+> on the FE, we dont want this rightmost thing as a separate colummn or whatevr, be mindful of the invofmration hats core whats collspible minimisable etc and dont make a thirs ' cokummn' ...  also refer the older versions we had a background thing too; and can the curves buy sell i guess can be on thr same page insteasd of separate sainge they dont overlap?
+
+
+## Entry 610 — 2026-08-15 UTC
+_Context: operator clarifies the reference — the earlier UX, "the thing with trade bands", i.e. the engine HEAD v28 interface, which carried the background._
+
+> like refer to the thing or whagtevr we had a ux earlier didnt we, the thing with trade bands whatevr
+
+
+## Entry 611 — 2026-08-15 UTC
+_Context: operator names it a regression — the trader interaction surface (the engine HEAD v28 UI with trade bands and the background) was not supposed to change; the app console drifted from it._
+
+> its a regression if thats been forgotten since trader inteeraction surface wasngt to change right
