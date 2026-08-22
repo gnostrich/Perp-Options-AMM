@@ -23,8 +23,17 @@ h2{font:600 15px 'Chakra Petch';letter-spacing:.1em;margin:0 0 10px;color:#fff;t
 .subtabs div{flex:1;text-align:center;padding:9px 4px;font:600 11.5px 'Chakra Petch';letter-spacing:.1em;text-transform:uppercase;color:var(--mute);cursor:pointer;border-bottom:2px solid transparent}
 .subtabs div.on{color:var(--teal);border-bottom-color:var(--teal)}
 .hl{color:var(--mute);font-size:11px;margin:0 0 12px;text-align:center}
-.row{display:grid;grid-template-columns:110px 1fr;border:1px solid var(--edge);background:#0f171a;margin-bottom:8px}
-.row label{padding:10px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);background:#112226;display:flex;align-items:center}
+.row{display:grid;grid-template-columns:110px 1fr auto;border:1px solid #465E58;background:#222223;margin-bottom:8px;border-radius:2px;align-items:center}
+.row label{padding:11px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#E4E4E4;background:#112226;border-right:1px solid #465E58;display:flex;align-items:center;justify-content:center;align-self:stretch}
+.chip{margin:0 8px;padding:3px 8px;background:#4F4F4F;color:#fff;font-size:10px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.lev{display:flex;flex-direction:column;padding:6px 10px;flex:1}
+.lev input[type=range]{width:100%;accent-color:var(--teal)}
+.lev .tk{display:flex;justify-content:space-between;font-size:9px;color:var(--mute)}
+.leg{border:1px solid #465E58;border-radius:2px;margin-bottom:8px;overflow:hidden}
+.leg .lh{padding:8px 10px;font:600 10.5px 'Chakra Petch';letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between}
+.leg.sell .lh{background:#523C4C}.leg.buy .lh{background:#212A41}
+.leg .row{margin:0;border:0;border-top:1px solid #465E58;border-radius:0}
+#fb{position:fixed;right:24px;bottom:22px;z-index:8}
 .row input,.row select{background:transparent;border:0;color:#fff;font:400 13px 'IBM Plex Mono';padding:10px;width:100%;outline:none;text-align:right}
 .seg{display:flex;margin-bottom:10px;border:1px solid var(--edge)}
 .seg div{flex:1;text-align:center;padding:10px;font:600 12px 'Chakra Petch';letter-spacing:.08em;cursor:pointer;color:var(--mute)}
@@ -61,25 +70,31 @@ th:first-child,td:first-child{text-align:left}
 
  <div id="sub-perp">
   <div class="seg"><div class="on long" id="pLong">Long / Buy</div><div class="short" id="pShort">Short / Sell</div></div>
-  <div class="row"><label>size</label><input id="pQty" type="number" value="5" step="0.5" min="0.1"></div>
-  <div class="kv"><span>entry (oracle mark)</span><b id="pMark">—</b></div>
-  <div class="kv"><span>notional</span><b id="pNot">—</b></div>
+  <div class="row"><label>deposit</label><input id="pDep" type="number" value="65695" step="100" min="0" placeholder="Enter amount"><span class="chip" id="pMax">USDC · MAX</span></div>
+  <div class="row"><label>leverage</label><div class="lev"><input id="pLev" type="range" min="1" max="40" step="1" value="5"><div class="tk"><span>1x</span><span>10x</span><span>20x</span><span>30x</span><span>40x</span></div></div><span class="chip" id="pLevV">5x</span></div>
+  <div class="row"><label>notional</label><input id="pQty" type="number" value="5" step="0.01" min="0"><span class="chip">BTC</span></div>
+  <div class="kv"><span>entry price (oracle mark)</span><b id="pMark">—</b></div>
   <div class="kv"><span>account headroom (50× cap)</span><b id="pHead">—</b></div>
+  <div class="kv"><span>deposit from</span><b>◉ Paper Wallet&nbsp;&nbsp;<span style="color:var(--mute)">○ Hyperliquid Balance</span></b></div>
   <button class="cta" id="pGo">Create Position</button>
   <div class="note">The start of the loop: perp options are carved from a perp. Liquidation is account-level — perps and options in one pot; there is no per-position liquidation price.</div>
  </div>
 
  <div id="sub-bands" style="display:none">
-  <div class="seg"><div class="on long" id="bBuy">Buy Option</div><div class="short" id="bSell">Sell Option</div></div>
-  <div class="row"><label>strike %</label><input id="bK" type="number" value="12" step="1"></div>
-  <div class="row"><label>strike $</label><input id="bKd" type="number" step="100"></div>
-  <div class="row"><label>size</label><input id="bQty" type="number" value="3" step="0.5" min="0.1"></div>
-  <div class="row"><label>2nd leg %</label><input id="bK2" type="number" placeholder="blank = single leg"></div>
+  <div class="leg sell" id="legMain"><div class="lh"><span id="legTitle">Sell option on</span><span class="chip" id="bFlip">flip ⇅</span></div>
+   <div class="row"><label>quantity</label><input id="bQty" type="number" value="3" step="0.5" min="0.1"><span class="chip">BTC perp</span></div>
+   <div class="row"><label>strike %</label><input id="bK" type="number" value="12" step="1"><span class="chip" id="bKdChip">$—</span></div>
+  </div>
+  <div class="leg buy" id="legTwo"><div class="lh"><span>2nd leg (vertical spread)</span><span class="chip" style="background:transparent;color:var(--mute)">optional</span></div>
+   <div class="row"><label>strike %</label><input id="bK2" type="number" placeholder="blank = single leg"></div>
+  </div>
+  <input id="bKd" type="hidden">
   <div class="kv"><span>quote at your size</span><b class="tl" id="bPx">—</b></div>
   <div class="kv"><span>premium</span><b id="bPrem">—</b></div>
-  <div class="kv"><span>perp carved</span><b id="bCarve">—</b></div>
+  <div class="kv"><span>deposit — perp carved</span><b id="bCarve">—</b></div>
+  <div class="kv"><span>slippage (walks the book)</span><b id="bSlip">—</b></div>
   <div class="kv"><span>headroom after</span><b id="bHead">—</b></div>
-  <button class="cta" id="bGo">Create Position</button>
+  <button class="cta" id="bGo">Transact</button>
   <div class="note">Single option or vertical spread — the bundle opens with its carved perp and closes with it, in full. Quote = the live book at your size, your own curve excluded.</div>
  </div>
 
@@ -119,6 +134,7 @@ th:first-child,td:first-child{text-align:left}
 </section>
 </main>
 <div id="toast"></div>
+<button class="btn" id="fb">💬 Feedback</button>
 <script src="book.js"></script><script src="lifecycle.js"></script><script src="paper.js"></script>
 <script>
 'use strict';
@@ -154,7 +170,7 @@ function sbarFromVol(v,a,g,kap){const r=calibSbar(premiumTarget(Math.max(0.01,v)
 const S0=65695.5, ORACLE_IV=0.60, LAM=0.01;
 const LIFE=Life.create({spot:S0,equityBTC:10});
 const PAPER=Paper.create(); ['you','trader-2','lp-1','lp-2'].forEach(a=>PAPER.touch(a));
-let SIDE_P=1, SIDE_B=1, VIEW='transact', SUB='perp';
+let SIDE_P=1, SIDE_B=-1, VIEW='transact', SUB='perp';
 const YOU={bias:0,Ep:60,Em:-40,cap:95};
 function makers(){
  const base=sbarFromVol(ORACLE_IV,1.2705,1.8413,0);
@@ -207,15 +223,16 @@ function refresh(){
  // create perp card
  $('pMark').textContent=usd(S0); $('pm2').textContent=usd(S0);
  const q=+$('pQty').value||0;
- $('pNot').textContent=usd(q*S0);
  $('pHead').textContent=f(headroom(),2)+'×';
  // bands card
  const k=(+$('bK').value||0)/100, bq=+$('bQty').value||0, side=SIDE_B>0?'buy':'sell';
- if(document.activeElement!==$('bKd'))$('bKd').value=Math.round(S0*(1+k));
+ $('bKdChip').textContent='$'+Math.round(S0*(1+k)).toLocaleString();
  const p=BK.landed(k,bq,side);
  $('bPx').textContent=p==null?'no counterparty':f(p,4);
  $('bPrem').textContent=p==null?'—':f(p*bq,4)+' BTC ('+usd(p*bq*S0)+')';
- $('bCarve').textContent=f(bq,2)+' BTC of perp';
+ $('bCarve').textContent=f(bq,2)+' BTC';
+ const touch=SIDE_B>0?BK.ask(k):BK.bid(k);
+ $('bSlip').textContent=(p==null||!touch)?'—':f(Math.abs(p/touch-1)*1e4,1)+' bps';
  $('bHead').textContent=f(headroom(),2)+'× now';
  // earn card
  const sb=sbarFromVol(ORACLE_IV*(1+YOU.bias/100),1.2705,1.8413,0);
@@ -274,8 +291,9 @@ function wireDynamic(){
 /* ── static wiring ── */
 $('pLong').onclick=()=>{SIDE_P=1;$('pLong').classList.add('on');$('pShort').classList.remove('on');};
 $('pShort').onclick=()=>{SIDE_P=-1;$('pShort').classList.add('on');$('pLong').classList.remove('on');};
-$('bBuy').onclick=()=>{SIDE_B=1;$('bBuy').classList.add('on');$('bSell').classList.remove('on');refresh();};
-$('bSell').onclick=()=>{SIDE_B=-1;$('bSell').classList.add('on');$('bBuy').classList.remove('on');refresh();};
+$('bFlip').onclick=()=>{SIDE_B=-SIDE_B;
+ $('legTitle').textContent=SIDE_B>0?'Buy option on':'Sell option on';
+ $('legMain').className='leg '+(SIDE_B>0?'buy':'sell');refresh();};
 $('pGo').onclick=()=>{const q=+$('pQty').value||0;
  const r=LIFE.openPerp({side:SIDE_P,qty:q});
  say(r&&r.ok!==false?('perp opened: '+(SIDE_P>0?'+':'−')+f(q,2)+' BTC @ '+usd(S0)+' — carve options from it in Trade Bands'):'rejected');refresh();};
@@ -287,7 +305,11 @@ $('bGo').onclick=()=>{const k=(+$('bK').value||0)/100,q=+$('bQty').value||0;
  say(r&&r.ok?((legs.length>1?'vertical spread':'option')+' opened — '+f(q,2)+' BTC perp carved'+(free?'':' (perp opened in the same act)')+'; bundle closes in full'):('rejected: '+(r&&r.reason||'?')));refresh();};
 $('eGo').onclick=()=>{say('curve posted — limits E+ '+YOU.Ep+' / E− '+YOU.Em+', bias '+YOU.bias+'% on oracle '+Math.round(ORACLE_IV*100)+'%. Fills accrue pro-rata.');refresh();};
 ['pQty','bK','bQty','bK2'].forEach(id=>$(id).oninput=()=>refresh());
-$('bKd').oninput=()=>{const d=+$('bKd').value;if(d>0){$('bK').value=((d/S0-1)*100).toFixed(1);refresh();}};
+const syncNotional=()=>{const d=+$('pDep').value||0,l=+$('pLev').value||1;
+ $('pLevV').textContent=l+'x'; $('pQty').value=(d*l/S0).toFixed(3); refresh();};
+$('pDep').oninput=syncNotional; $('pLev').oninput=syncNotional;
+$('pMax').onclick=()=>{$('pDep').value=Math.floor(PAPER.balance('you'));syncNotional();};
+
 $('eBias').oninput=()=>{YOU.bias=+$('eBias').value||0;refresh();};
 $('eEp').oninput=()=>{YOU.Ep=+$('eEp').value||0;refresh();};
 $('eEm').oninput=()=>{YOU.Em=+$('eEm').value||0;refresh();};
@@ -302,6 +324,7 @@ document.querySelectorAll('[data-nav]').forEach(a=>a.onclick=()=>{VIEW=a.dataset
  refresh();});
 $('chPerp').onclick=()=>{$('chPerp').classList.add('on');$('chOpt').classList.remove('on');$('panePerp').style.display='block';$('paneOpt').style.display='none';};
 $('chOpt').onclick=()=>{$('chOpt').classList.add('on');$('chPerp').classList.remove('on');$('panePerp').style.display='none';$('paneOpt').style.display='block';};
+$('fb').onclick=()=>say('feedback goes to the operator channel in paper mode');
 $('wallet').onclick=()=>{PAPER.faucet('you',250000);say('faucet: +$250,000 test money to you');refresh();};
 refresh();
 </script></body></html>

@@ -24,7 +24,8 @@ const bk=fs.readFileSync('app/book.js','utf8');
 ok(/DORMANCY DIVIDER/.test(bk),'dormancy divider is the pricing rule in Book (e606/607)');
 // e607: LP inputs are exposure limits ONLY — no notional/leverage input on Earn
 ok(/long limit E\+/.test(h)&&/short limit E−/.test(h),'Earn takes exposure limits (e607)');
-ok(!/id="eNotional"|id="eLev"|leverage<\/label>/i.test(h),'Earn has NO notional/leverage input (e607)');
+{const earn=h.slice(h.indexOf('id="sub-earn"'),h.indexOf('</section>',h.indexOf('id="sub-earn"')));
+ ok(!/<(input|select)[^>]*(lev|notional)|label>\s*(leverage|notional)/i.test(earn),'Earn has NO notional/leverage input (e607; perp-side leverage is a different surface)');}
 // e587: bundle atomic — closeBundle takes no size anywhere in the UI layer
 ok(!/closeBundle\([^)]*qty/.test(h),'no sized closeBundle call in the UI (e587)');
 // e592/578: close prices from Book closePx (self-excluded), never a constant
