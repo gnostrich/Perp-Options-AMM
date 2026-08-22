@@ -4520,3 +4520,10 @@ _Context: operator catches OB material inside the "RFQ-only" handoff — v3-maps
 _Context: operator — the handoff still contains the old line's material (the aristotle_runs folder was the whole GH/lens/engine-era archive). Stripped to Burr-2 only._
 
 > all this is still contraning old dosghit fuckery
+
+
+## Entry 636 — 2026-08-15 UTC
+_Context: operator asks for their complete-loop artifact without rebuilding it again. It is in the handoff (BURR2_FULL_LOOP_v1.xlsx) but predates the final RFQ rulings; manager brings it current as v2 — divider/dormancy sheet, limits-only LP sheet, rulings sheet — leaving the verified loop plumbing intact._
+
+> cant i kjust have my complete loop thing
+> or you want te to rebuld that bullshit again
