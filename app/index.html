@@ -74,17 +74,18 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
 </style></head><body>
 <header>
   <div class="logo"><b>TEMPORAL</b>
-    <nav><a href="#" data-nav="transact">Transact</a><a href="#" class="on" data-nav="earn">Earn</a><a href="#" data-nav="perps">Perps</a><a href="#" data-nav="portfolio">Portfolio</a></nav></div>
+    <nav><a href="#" class="on" data-nav="transact">Transact</a><a href="#" data-nav="portfolio">Portfolio</a></nav></div>
   <div style="display:flex;gap:9px"><button class="hbtn ghost">Docs</button><button class="hbtn">Connect Wallet</button></div>
 </header>
 
 <div class="grid" id="gridEarn">
   <!-- ══ LEFT : EARN / curve parameters ══ -->
   <div class="panel">
-    <div class="tabs"><div class="tab" data-t="transact">Transact</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab on" data-t="earn">Earn</div></div>
     <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px">
       <span class="t2" style="color:var(--txt2)">Executed on Hyperliquid</span></div>
 
+    <div class="tabs"><div class="tab" data-t="transact">Create Perp</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab on" data-t="earn">Earn</div></div>
+    <div class="note" style="margin:4px 0 10px">⚡ Executed on Hyperliquid</div>
     <div class="card">
       <div class="chead"><b>Quoting source</b><span><span class="badge" id="mdOrc" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">ORACLE + BIAS</span><span class="badge" id="mdMan" style="cursor:pointer">MANUAL</span></span></div>
       <div id="orcbox"></div>
@@ -126,7 +127,7 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 41 · surface repaired</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 42 · protect layout</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -165,7 +166,7 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
 <!-- ═══ TRANSACT ═══ -->
 <div class="grid" id="gridTransact" style="display:none">
   <div class="panel">
-    <div class="tabs"><div class="tab on" data-t="transact">Transact</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
+    <div class="tabs"><div class="tab on" data-t="transact">Create Perp</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
     <div style="text-align:center;margin-bottom:10px" class="t2">Executed on Hyperliquid</div>
     <div class="card">
       <div class="chead"><b>Order</b><span class="t2" style="color:var(--coffee)">aggregate book</span></div>
@@ -182,6 +183,8 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
   </div>
   <div>
     <div class="panel">
+      <div class="tabs" style="margin-bottom:8px"><div class="tab" id="chPerp">Perp Mark Pricing</div><div class="tab on" id="chOpt">Options Pricing</div></div>
+      <div id="perpMarkPane" style="display:none"><div class="note" style="padding:30px 16px">PERP MARK — live candle feed is a production data hook. Paper mode marks at the oracle spot <b>$65,695.50</b>; every perp opened here uses it as entry, and P&amp;L runs off it in the store.</div></div>
       <div class="chead"><b>Aggregate book — what you trade against</b>
         <span><span class="badge" id="cbBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="cbSell" style="cursor:pointer">SELL</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span>
         <span style="margin-left:10px"><span class="badge" id="cvAgg" style="cursor:pointer;background:#243b3d;color:#fff">AGGREGATE</span><span class="badge" id="cvMk" style="cursor:pointer">YOU</span></span></span></div>
@@ -203,7 +206,7 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
 <!-- ═══ TRADE BANDS ═══ -->
 <div class="grid" id="gridBands" style="display:none">
   <div class="panel">
-    <div class="tabs"><div class="tab" data-t="transact">Transact</div><div class="tab on" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
+    <div class="tabs"><div class="tab" data-t="transact">Create Perp</div><div class="tab on" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
     <div class="card">
       <div class="chead"><b>Band — sell one wing, buy the other</b></div>
       <div class="frow"><div class="fchip"><span>SELL strike (%)</span></div><input type="number" id="bs" value="10" step="0.5"></div>
@@ -226,9 +229,9 @@ details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
 <div class="grid" id="gridPerps" style="display:none">
   <div><div class="card"><div class="chead"><b>Account</b><span class="t2" style="color:var(--mute)">perps + perp-options, one pot</span></div>
     <div id="acctStrip"></div>
-    <div class="chead" style="margin-top:12px"><b>Open perp</b><span class="t2" style="color:var(--mute)">the start of the loop</span></div>
+    <div id="openPerpBlock"><div class="chead" style="margin-top:12px"><b>Open perp</b><span class="t2" style="color:var(--mute)">the start of the loop — options are carved from it</span></div>
     <div class="frow"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="npQty" value="5" step="0.5" min="0.1"></div>
-    <div style="display:flex;gap:8px;margin-top:8px"><button class="cta" id="npLong" style="margin:0">Open LONG</button><button class="cta off" id="npShort" style="margin:0">Open SHORT</button></div>
+    <div style="display:flex;gap:8px;margin-top:8px"><button class="cta" id="npLong" style="margin:0;background:#00FF9C;border-color:#00FF9C;color:#04240f">LONG / BUY</button><button class="cta" id="npShort" style="margin:0;background:#FF6767;border-color:#FF6767;color:#2d0f0f">SHORT / SELL</button></div></div>
     <div class="chead" style="margin-top:14px"><b>Paper wallet</b><span class="t2" style="color:var(--mute)">closed network · test money</span></div>
     <div id="paperBox"></div>
     <button class="cta" id="faucetBtn" style="margin-top:9px">Faucet +$250,000</button>
@@ -701,7 +704,7 @@ function render(){
    $('ladder').querySelector('tbody').innerHTML=html.join('');}
  if(VIEW==='transact'){renderTransact(st);return bind();}
  if(VIEW==='bands'){renderBands(st);return bind();}
- if(VIEW==='perps'){
+ if(VIEW==='portfolio'||VIEW==='perps'){
    if(PAPER&&$('paperBox')){
      const c=PAPER.conserved();
      $('paperBox').innerHTML=PAPER.list().map(a=>
@@ -714,8 +717,7 @@ function render(){
      $('acctStrip').innerHTML=ViewPerps.accountStripHTML(LIFE);
      ViewPerps.wire(LIFE,()=>render());
    }
-   return bind();}
- if(VIEW==='portfolio'){renderPortfolio(st);return bind();}
+   renderPortfolio(st); return bind();}
  draw(st);
  {const hq=st.hEff/1e4,k=(HK===null?0:HK),C=st.c.CALL(k),Pu=st.c.PUT(k),sz=+(($('qsz')||{}).value||5);
   const cell=(l,v,cls)=>'<div><div class="t2" style="color:var(--mute)">'+l+'</div><div style="font-size:12.5px;font-weight:600;margin-top:2px" class="'+(cls||'')+'">'+v+'</div></div>';
@@ -818,6 +820,9 @@ function bind(){
    say('faucet: +$250,000 test money to '+WHO+' — tagged as external, so the conservation check still holds');render();};}
  document.querySelectorAll('[data-who]').forEach(e=>{if(e._w)return;e._w=1;
    e.onclick=()=>{WHO=e.dataset.who;say('acting as '+WHO);render();};});
+ const chP=$('chPerp'),chO=$('chOpt');
+ if(chP&&!chP._w){chP._w=1;chP.onclick=()=>{$('perpMarkPane').style.display='block';$('cvT').style.display='none';chP.classList.add('on');chO.classList.remove('on');};}
+ if(chO&&!chO._w){chO._w=1;chO.onclick=()=>{$('perpMarkPane').style.display='none';$('cvT').style.display='block';chO.classList.add('on');chP.classList.remove('on');};}
  const va=$('cvAgg'),vm2=$('cvMk');
  const vset=v=>{CVIEW=v;
    if(va){va.style.background=v==='agg'?'#243b3d':'transparent';va.style.color=v==='agg'?'#fff':'';}
@@ -838,8 +843,8 @@ $('margin').oninput=e=>{P.margin=+e.target.value;render();};
 $('volbtn').onclick=()=>{volIndexed=!volIndexed;render();};
 $('reset').onclick=()=>{P={...DEF,margin:P.margin};render();};
 function setView(v){VIEW=v;
- ['Earn','Transact','Bands','Perps','Portfolio'].forEach(n=>{const el=$('grid'+n);if(el)el.style.display=(n.toLowerCase()===v)?'grid':'none';});
- document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===v||(v==='bands'&&a.dataset.nav==='transact')));
+ ['Earn','Transact','Bands','Portfolio'].forEach(n=>{const el=$('grid'+n);if(el)el.style.display=(n.toLowerCase()===v)?'grid':'none';});
+ document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===v||(a.dataset.nav==='transact'&&(v==='bands'||v==='earn'))));
  render();}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-t]'),n=e.target.closest('[data-nav]');
  if(t){setView(t.dataset.t);e.preventDefault();} else if(n){setView(n.dataset.nav);e.preventDefault();}});
@@ -847,6 +852,35 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-t]'),n=e.t
 /* entry 609: NO THIRD COLUMN. Relocate each grid's 3rd column into collapsible
    folds inside its 1st column AT RUNTIME — DOM moves preserve ids and handlers,
    unlike the string surgery that destroyed the Earn centre in the first build 40. */
+(function relocateOptionOrder(){
+ // entry 616: CREATE PERP is the transact subtab; single perp options live under
+ // TRADE BANDS with the spreads. Move the option order card there at runtime.
+ const tx=document.getElementById('gridTransact'), bd=document.getElementById('gridBands');
+ if(tx&&bd){
+   const orderCard=[...tx.children[0].querySelectorAll('.card')].find(c=>c.querySelector('#ctaTx'));
+   if(orderCard){const bl=bd.children[0];
+     const head=document.createElement('div'); head.className='chead';
+     head.innerHTML='<b>Perp option — single leg</b><span class="t2" style="color:var(--mute)">or build a spread below</span>';
+     orderCard.insertBefore(head, orderCard.firstChild);
+     bl.insertBefore(orderCard, bl.querySelector('.card'));}
+ }
+})();
+(function dissolvePerpsGrid(){
+ // entries 614/615: 'Perps' was an invented top-level. Open-perp goes UNDER
+ // TRANSACT (create perp is a trader action); account strip, paper wallet and
+ // the perps table go to PORTFOLIO.
+ const gp=document.getElementById('gridPerps'), po=document.getElementById('gridPortfolio'),
+       tx=document.getElementById('gridTransact');
+ if(gp&&po&&po.children.length&&tx){
+   const op=document.getElementById('openPerpBlock');
+   if(op){const left=tx.children[0]; const card=left.querySelector('.card');
+     const box=document.createElement('div'); box.className='card'; box.appendChild(op);
+     left.insertBefore(box, card);}
+   const target=po.children[0];
+   [...gp.children].forEach(col=>{[...col.children].forEach(x=>target.appendChild(x));});
+   gp.remove();
+ }
+})();
 (function fold3(){
  document.querySelectorAll('.grid').forEach(gr=>{
    if(gr.children.length<3)return;
@@ -1129,5 +1163,5 @@ function renderPortfolio(st){
    <div class="m"><span>cap</span><b>${liqLev}×</b></div>
    <div class="m"><span>headroom</span><b class="${headroom>0?'pos':'neg'}">${f(headroom,2)}×</b></div>
    <div class="m" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:6px"><span>status</span><b class="${headroom>0?'pos':'neg'}">${headroom>0?'SAFE':'LIQUIDATED'}</b></div>`;}
-P.margin=15;setView('earn');
+P.margin=15;setView('transact');   // entry 614: trader lands on TRANSACT
 </script></body></html>

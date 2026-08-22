@@ -4374,3 +4374,22 @@ _Context: operator rejects build 40 outright ("dogfucked"), deliberately not spe
 _Context: operator corrects the reference URL — protect.temporal.exchange, not app.temporal.exchange._
 
 > protect.temporal.exchange*
+
+
+## Entry 614 — 2026-08-15 UTC
+_Context: operator, furious, corrects the information architecture the manager invented — TRANSACT is the trader surface with SUBTABS (trade bands = perp options / vertical spreads thereof); EARN is the LP surface. The sibling "Trade Bands" nav item and the invented "Perps" top-level are wrong._
+
+> that the mothercusk is the trade bands thi g differer from taranssavt what the motherfuck are you referring to you fucj. its ttransavt which haas subtabs of trade bands (perp optins / vertical spreads thereof) and earn which is LP...... what the otherfuck even exists/
+
+
+## Entry 615 — 2026-08-15 UTC
+_Context: operator adds — create perp also belongs under TRANSACT._
+
+> and create perp also comes under transact
+
+
+## Entry 616 — 2026-08-15 UTC
+_Context: operator supplies screenshots of protect.temporal.exchange — the canonical layout. Header: TRANSACT | PORTFOLIO. Left panel: TRANSACT with subtabs CREATE PERP | TRADE BANDS | EARN, "Executed on Hyperliquid". Create-perp: LONG/BUY / SHORT/SELL, deposit, leverage, notional, auto-protect, fees, create position. Trade bands: SELL PROFITS ON / BUY PROFITS ON legs with quantity+price ranges, deposit line, slippage, fees. Right panel: chart with subtabs PERP MARK PRICING (candles + current mark) | OPTIONS PRICING (the tent curve over dollar strikes, Put ← → Call). Textured dark background, offset-shadow cards._
+
+> this is the layout iygwim
+> [two screenshots of protect.temporal.exchange: TRANSACT/CREATE PERP view and TRANSACT/TRADE BANDS with OPTIONS PRICING]
