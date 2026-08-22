@@ -39,6 +39,10 @@ const ctx = { document: doc, window: { addEventListener(){}, devicePixelRatio: 1
   setTimeout, Math, JSON, Intl };
 ctx.window.document = doc;
 vm.createContext(ctx);
+// new FE needs the real modules in-context (they exist and are tested — use them)
+require('../../app/lifecycle.js'); ctx.Life=globalThis.Life;
+ctx.Paper=require('../../app/paper.js');
+ctx.Book=require('../../app/book.js');
 vm.runInContext(js, ctx);
 const mk = ctx.mk; // Burr-2 kernel: mk(Sbar,a,gam,kap) -> {CALL,PUT,ATM,...}
 

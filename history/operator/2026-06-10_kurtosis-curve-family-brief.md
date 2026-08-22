@@ -4393,3 +4393,27 @@ _Context: operator supplies screenshots of protect.temporal.exchange — the can
 
 > this is the layout iygwim
 > [two screenshots of protect.temporal.exchange: TRANSACT/CREATE PERP view and TRANSACT/TRADE BANDS with OPTIONS PRICING]
+
+
+## Entry 617 — 2026-08-15 UTC
+_Context: operator, furious at ad-hoc interaction — regression after regression caught by them, reminders instead of protection. Orders the manager-operator interaction surface fixed in a principled way, and a dedicated agent set up to own how the manager must interact with the operator on this project._
+
+> this is getting hopeless if there no principled interaction and its just ad hoc me giving reminders aboutwaht to fix addressing regression after regression, fix my motherfucking ointerwction surface with you in a priciples way and fucking set jup a goddamn dedicated agent to figure how the motherfuck you need to gofddamn interaxt with me wrt the motherfucking project itself
+
+
+## Entry 618 — 2026-08-15 UTC
+_Context: operator orders the whole thing nuked._
+
+> the whole thing is dogfucked. nuke it to the ground
+
+
+## Entry 619 — 2026-08-15 UTC
+_Context: scope of the nuke — the UX specifically, torn down to scratch, beyond salvage. The tested engine modules (book/lifecycle/paper) survive; the accreted frontend does not._
+
+> the UX has to be torn down to scratch its beyond salvage
+
+
+## Entry 620 — 2026-08-15 UTC
+_Context: operator re-points at the OB-MM repo (already extracted at /tmp/obref) as the layout reference — different mechanics, but the broad layout picture._
+
+> check the repo i now linked you to (prp options ob mm) its for a different echamis byut gives you a broad picture of layout ertc
