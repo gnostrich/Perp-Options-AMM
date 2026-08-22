@@ -4362,3 +4362,15 @@ _Context: operator clarifies the reference — the earlier UX, "the thing with t
 _Context: operator names it a regression — the trader interaction surface (the engine HEAD v28 UI with trade bands and the background) was not supposed to change; the app console drifted from it._
 
 > its a regression if thats been forgotten since trader inteeraction surface wasngt to change right
+
+
+## Entry 612 — 2026-08-15 UTC
+_Context: operator rejects build 40 outright ("dogfucked"), deliberately not specifying why — directs the manager to diagnose it himself against the older versions and app.temporal.exchange._
+
+> its dogfucked, i wont specify why . refer to the older versions and app.temporal.exchange for somd context
+
+
+## Entry 613 — 2026-08-15 UTC
+_Context: operator corrects the reference URL — protect.temporal.exchange, not app.temporal.exchange._
+
+> protect.temporal.exchange*

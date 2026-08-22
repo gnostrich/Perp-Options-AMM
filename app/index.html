@@ -58,14 +58,19 @@ padding:11px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;margin-
 .badge{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--edge);padding:2px 6px;color:var(--mute)}
 footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid #14262a}
 
-.grid>div{position:relative}
-body::before{content:'';position:fixed;inset:0;background:rgba(8,16,18,.86);pointer-events:none;z-index:0}
-header,.grid,footer,#toast{position:relative;z-index:1}
-details.fold{border:1px solid #1e3a3f;background:#0e1a1dcc;margin-top:10px}
+body::before{content:'';position:fixed;inset:0;background:rgba(8,16,18,.88);pointer-events:none}
+header,.grid,footer,#toast{position:relative}
+details.fold{border:1px solid #1e3a3f;background:#0e1a1d;margin-top:10px}
 details.fold>summary{cursor:pointer;list-style:none;padding:8px 12px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8a9698;font-weight:600}
-details.fold>summary:hover{color:#0ABAB5}
 details.fold[open]>summary{color:#0ABAB5;border-bottom:1px solid #1e3a3f}
-details.fold>.bd{padding:10px 12px}
+details.fold>.bd{padding:6px 10px}
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap');
+header b:first-child,.chead b,nav a,h1{font-family:'Chakra Petch','IBM Plex Mono',monospace}
+.card,.panel{background:#0E1B1Ee6;box-shadow:6px 4px 0px 0px #000}
+.cta{box-shadow:3px 2px 0 #000}
+.cta:hover{box-shadow:4px 4px 0px #00475d}
+details.fold{box-shadow:4px 3px 0px 0px #000;background:#0E1B1Ee6}
 </style></head><body>
 <header>
   <div class="logo"><b>TEMPORAL</b>
@@ -101,8 +106,27 @@ details.fold>.bd{padding:10px 12px}
     <div class="note">Your curve IS the quote. Any strike is priced on demand from the closed form — no ladder to post, cancel or replace. Requoting is four parameters, not N orders.</div>
   </div>
 
-  <details class="fold" open><summary>Quote capacity &amp; yield</summary><div class="bd"><div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 40 · v28 surface + honest close</span></div>
+  <!-- ══ CENTRE : curve + ladder ══ -->
+  <div>
+    <div class="panel">
+      <div class="chead"><b>Your curve — as a cloud</b><span style="display:flex;align-items:center;gap:8px"><span class="badge" id="ebBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="ebSell" style="cursor:pointer">SELL</span><span class="t2" style="color:var(--mute);margin-left:10px">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
+        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
+      <canvas id="cv" width="980" height="400" style="cursor:crosshair"></canvas>
+      <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
+      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly (residual 1.1e-16). <b>Your curve is drawn as a cloud, not a line</b>: brightness is liquidity still untouched at that price, full at the touch and fading to nothing over your own capacity, so how far it reaches IS your depth. BUY and SELL are separate tabs — one side on screen at a time. Impact follows the swap pricer exactly: <code>s = ½·λ·(Q/N)/0.01·ATMp/P</code>, so the same size costs more in fractional terms the further out you go (0.63% at k=−30% vs 3.58% at k=+50% on 5 BTC). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
+    </div>
+
+    <div class="panel" style="margin-top:12px">
+      <div class="chead"><b>RFQ — who fills this trade</b><span class="t2" style="color:var(--mute)" id="qlab">size —</span></div>
+      <table id="ladder"><thead><tr><th>maker</th><th>half-spread</th><th>depth</th><th>fills</th><th>revenue</th></tr></thead><tbody></tbody></table>
+      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread. Only your own row is itemised: another maker's spread, depth and revenue are not yours to see. Your leg is itemised; everyone else is aggregated, because you do not get to see another maker's price or size.</div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT : preview / APR / risk ══ -->
+  <div>
+    <div class="card dim">
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 41 · surface repaired</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -137,27 +161,8 @@ details.fold>.bd{padding:10px 12px}
       <div class="m"><span>Parity check</span><b id="r-par">—</b></div>
     </div>
   </div>
-</div></div></details>
-
-  <!-- ══ CENTRE : curve + ladder ══ -->
-  <div>
-    <div class="panel">
-      <div class="chead"><b>Your curve — as a cloud</b><span style="display:flex;align-items:center;gap:8px"><span class="t2" style="color:var(--mute)">size</span><input type="number" id="qsz" value="5" step="0.5" min="0.1" style="width:64px;background:#222223;border:1px solid #465E58;color:#fff;font:300 11px 'IBM Plex Mono';padding:3px 6px;text-align:right">
-        <span><span class="badge" style="border-color:var(--teal);color:var(--teal)">call ask</span><span class="badge" style="border-color:#63e6e2;color:#63e6e2">call bid</span><span class="badge" style="border-color:#FF6767;color:#FF6767">put ask</span><span class="badge" style="border-color:#ffb3b3;color:#ffb3b3">put bid</span></span></div>
-      <canvas id="cv" width="980" height="400" style="cursor:crosshair"></canvas>
-      <div id="hoverbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px;padding:8px 10px;background:#111c1f;border:1px solid #1e3a3f"></div>
-      <div class="note">Value is ONE number per strike: out-of-the-money = the wing, in-the-money = |k| + the mirror wing — so put–call parity holds exactly (residual 1.1e-16). <b>Your curve is drawn as a cloud, not a line</b>: brightness is liquidity still untouched at that price, full at the touch and fading to nothing over your own capacity, so how far it reaches IS your depth. BUY and SELL are separate tabs — one side on screen at a time. Impact follows the swap pricer exactly: <code>s = ½·λ·(Q/N)/0.01·ATMp/P</code>, so the same size costs more in fractional terms the further out you go (0.63% at k=−30% vs 3.58% at k=+50% on 5 BTC). <b>Move the pointer across the curve</b> — the quote below updates continuously at any strike from the closed form. Nothing is pre-posted; there is no rung to snap to.</div>
-    </div>
-
-    <div class="panel" style="margin-top:12px">
-      <div class="chead"><b>RFQ — who fills this trade</b><span class="t2" style="color:var(--mute)" id="qlab">size —</span></div>
-      <table id="ladder"><thead><tr><th>maker</th><th>half-spread</th><th>depth</th><th>fills</th><th>revenue</th></tr></thead><tbody></tbody></table>
-      <div class="note">Cheapest quote fills first, then the next — the envelope <i>is</i> the RFQ. Each maker is paid at <i>its own</i> posted spread. Only your own row is itemised: another maker's spread, depth and revenue are not yours to see. Your leg is itemised; everyone else is aggregated, because you do not get to see another maker's price or size.</div>
-    </div>
-  </div>
-
 </div>
-
+<!-- ═══ TRANSACT ═══ -->
 <div class="grid" id="gridTransact" style="display:none">
   <div class="panel">
     <div class="tabs"><div class="tab on" data-t="transact">Transact</div><div class="tab" data-t="bands">Trade Bands</div><div class="tab" data-t="earn">Earn</div></div>
@@ -173,16 +178,12 @@ details.fold>.bd{padding:10px 12px}
       <div class="frow" style="margin-top:9px"><div class="fchip"><span>size (BTC)</span></div><input type="number" id="tsz" value="3" step="0.5" min="0.1"></div>
       <div class="m" style="margin-top:10px"><span>maker divergence</span><b class="tl" id="arbv">0.15</b></div><div class="srow"><div class="track"><div class="fill" id="arbf" style="width:15%"></div><input type="range" id="arbr" min="0" max="1" step="0.01" value="0.15"></div><div class="mm"><span>agree</span><span>diverge</span></div></div><div id="tquote" style="margin-top:10px"></div>
       <button class="cta" id="ctaTx" style="margin-top:10px">Create Position</button>
-      <details class="fold" open><summary>Best of book</summary><div class="bd"><div id="tbest"></div></div></details>
-      <details class="fold"><summary>Improvement vs single maker</summary><div class="bd"><div id="timp"></div>
-        <div class="note">Competition is the product: the book is tighter than the best individual maker whenever makers differ.</div></div></details>
-
     </div>
   </div>
   <div>
     <div class="panel">
       <div class="chead"><b>Aggregate book — what you trade against</b>
-        <span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span>
+        <span><span class="badge" id="cbBuy" style="cursor:pointer;background:var(--teal);color:#04191a;border-color:var(--teal)">BUY</span><span class="badge" id="cbSell" style="cursor:pointer">SELL</span><span class="badge" style="border-color:#FFA541;color:#FFA541">your curve @ size</span>
         <span style="margin-left:10px"><span class="badge" id="cvAgg" style="cursor:pointer;background:#243b3d;color:#fff">AGGREGATE</span><span class="badge" id="cvMk" style="cursor:pointer">YOU</span></span></span></div>
       <canvas id="cvT" width="980" height="470"></canvas>
       <div class="note">Each maker posts its own curve. The book you trade is the <b>envelope</b> — best ask and best bid at every strike — so the aggregate is always at least as tight as any single maker. <b>The curve is not a line</b> — each maker is an AMM, so taking size walks its own curve continuously and the book is a cloud: brightness is the liquidity still untouched at that price, full at the touch and fading to nothing where the book is exhausted, so how far the cloud reaches IS the depth. BUY and SELL are separate tabs; you only ever see one side. <b>The panel below is the landing map</b> — the aggregation is nontrivial, so the honest object is a <i>surface</i> <code>landed(k,Q)</code>, not a single curve: pick a strike and a size and it shows where that trade lands you relative to the best quote. In an RFQ makers are <b>free to differ</b>, and buying is just the ordinary thing: you are matched to the <b>best quote across makers</b>. Differing is how a maker chooses a side — lean cheap and you win the ask, lean rich and you win the bid (measured: a 10% lean wins its side at 100% of strikes). If one maker's bid ends up above another's ask, that is not an arbitrage to be policed but <b>two makers wanting opposite sides</b>, and the venue should simply cross them. Drag <i>maker divergence</i> to see the sides separate.</div>
@@ -191,6 +192,11 @@ details.fold>.bd{padding:10px 12px}
       <div class="chead"><b>Fill breakdown</b><span class="t2" style="color:var(--mute)" id="tfl">—</span></div>
       <table id="tfill"><thead><tr><th>maker</th><th>their quote</th><th>fills</th><th>notional $</th><th>you pay</th></tr></thead><tbody></tbody></table>
     </div>
+  </div>
+  <div>
+    <div class="card dim"><div class="chead"><b>Best of book</b><span class="t2" style="color:var(--teal)">live</span></div><div id="tbest"></div></div>
+    <div class="card"><div class="chead"><b>Improvement vs single maker</b></div><div id="timp"></div>
+      <div class="note">Competition is the product: the envelope is tighter than the best individual maker whenever makers differ.</div></div>
   </div>
 </div>
 
@@ -570,11 +576,12 @@ function draw(st){const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height,
  // operator entry 564: YOUR cell shades against YOUR OWN maximum possible depth —
  // the margin you are putting up — not the pool and not the size box.
  const you=[{n:'YOU',c:st.c,h:st.hEff,share:QmaxYou/MKT.pool,lam:LAM,cap:QmaxYou,me:true}];
- cloudIn(g,you,L,T,W-L-R,PH,ymax,'ask',QmaxYou);   // entry 609: both sides, one canvas
+ cloudIn(g,you,L,T,W-L-R,PH,ymax,'ask',QmaxYou);
  cloudIn(g,you,L,T,W-L-R,PH,ymax,'bid',QmaxYou);
- g.font='10px IBM Plex Mono';
- g.fillStyle='#63e6e2';g.fillText('▲ your BUY-side cloud — full → empty over your capacity, '+f(QmaxYou,0)+' BTC',L+6,T+12);
- g.fillStyle='#FF6767';g.fillText('▼ your SELL-side cloud',L+6,T+26);
+ g.font='10px IBM Plex Mono';g.fillStyle=CSIDE==='ask'?'#63e6e2':'#FF6767';
+ g.fillText(CSIDE==='ask'
+   ? '▲ YOUR BUY-side cloud — full → empty over YOUR own capacity, '+f(QmaxYou,0)+' BTC'
+   : '▼ YOUR SELL-side cloud — full → empty over YOUR own capacity, '+f(QmaxYou,0)+' BTC',L+6,T+12);
  g.fillStyle='#677275';
  g.fillText('same rule as every maker cell: shaded against its own max · λ sets the stretch ('
    +f(dFull,2)+' in value to exhaust)',L+6,T+26);
@@ -729,7 +736,17 @@ function bind(){
  ($('qsz')||{}).oninput=function(){render();};
  ['tk','tsz','bs','bb','bsz'].forEach(id=>{const e=$(id);if(e&&!e._w){e._w=1;e.oninput=()=>{if(id==='tk'){const r=$('tkr');if(r)r.value=e.value;}render();};}});
  const ar=$('arbr');if(ar&&!ar._w){ar._w=1;ar.oninput=()=>{ARBD=+ar.value;render();};}
- // entry 609: BUY/SELL cloud tabs retired — both sides render on one canvas.
+ const cbb=$('cbBuy'),cbs=$('cbSell'),ebb=$('ebBuy'),ebs=$('ebSell');
+ const cset=sd=>{CSIDE=sd;
+   if(cbb){cbb.style.background=sd==='ask'?'var(--teal)':'transparent';cbb.style.color=sd==='ask'?'#04191a':'';cbb.style.borderColor=sd==='ask'?'var(--teal)':'';}
+   if(cbs){cbs.style.background=sd==='bid'?'#FF6767':'transparent';cbs.style.color=sd==='bid'?'#1a0b0b':'';cbs.style.borderColor=sd==='bid'?'#FF6767':'';}
+   if(ebb){ebb.style.background=sd==='ask'?'var(--teal)':'transparent';ebb.style.color=sd==='ask'?'#04191a':'';ebb.style.borderColor=sd==='ask'?'var(--teal)':'';}
+   if(ebs){ebs.style.background=sd==='bid'?'#FF6767':'transparent';ebs.style.color=sd==='bid'?'#1a0b0b':'';ebs.style.borderColor=sd==='bid'?'#FF6767':'';}
+   render();};
+ if(cbb&&!cbb._w){cbb._w=1;cbb.onclick=()=>cset('ask');}
+ if(cbs&&!cbs._w){cbs._w=1;cbs.onclick=()=>cset('bid');}
+ if(ebb&&!ebb._w){ebb._w=1;ebb.onclick=()=>cset('ask');}
+ if(ebs&&!ebs._w){ebs._w=1;ebs.onclick=()=>cset('bid');}
  document.querySelectorAll('[data-o]').forEach(e=>{if(e._w)return;e._w=1;
    e.oninput=()=>{ORC[e.dataset.o]=+e.value;render();};});
  const mo=$('mdOrc'),mm=$('mdMan');
@@ -773,10 +790,7 @@ function bind(){
  // close buttons on portfolio rows
  document.querySelectorAll('[data-close]').forEach(e=>{if(e._w)return;e._w=1;
    e.onclick=()=>{
-     // UX review F-close (INVARIANT §0.1(5)): this used to close at a HARDCODED
-     // 0.14 while the row displayed the real self-excluded price. Now it closes
-     // AT the displayed price: Book closePx, own curve excluded, per leg
-     // (qty-weighted across legs of a spread).
+     // INVARIANT §0.1(5): close AT the displayed self-excluded price, never a constant.
      const st2=calc(); const mk2=makerCurves(); aggBook(mk2,st2.book.map(m=>m.h));
      const B2=(typeof Book!=='undefined')?Book.make(mk2.map(m=>({name:m.n,me:!!m.me,cap:m.cap,curve:m.c,hBps:m.h})),{}):null;
      const bnd=LIFE.state().bundles.find(x=>x.id===e.dataset.close);
@@ -788,7 +802,6 @@ function bind(){
      if(px===null){say('no counterparty — cannot close');return;}
      const r=LIFE.closeBundle(e.dataset.close,{closePx:px});
      if(r&&r.ok){
-       // UX review F-settle: the payout now actually moves paper money.
        if(PAPER){const amt=Math.abs(r.payoutUsd);
          if(amt>1e-9)PAPER.settle(r.payoutUsd>=0?'lp-1':WHO, r.payoutUsd>=0?WHO:'lp-1', amt, r.id, 'bundle close');}
        say('closed at '+f(px,4)+' (self-excluded book) — payout $'+Math.round(r.payoutUsd).toLocaleString()+' settled to the paper wallet');
@@ -798,7 +811,7 @@ function bind(){
  [['npLong',1],['npShort',-1]].forEach(([id,side])=>{const b=$(id);
    if(b&&!b._w){b._w=1;b.onclick=()=>{const q=+((npq||{}).value)||5;
      const r=LIFE.openPerp({side,qty:q});
-     say(r&&r.ok!==false?('perp opened: '+(side>0?'+':'−')+f(q,2)+' BTC — it appears below; write an option on it from Transact'):('rejected: '+((r&&r.reason)||'unknown')));
+     say(r&&r.ok!==false?('perp opened: '+(side>0?'+':'−')+f(q,2)+' BTC — write an option on it from Transact'):('rejected: '+((r&&r.reason)||'unknown')));
      render();};}});
  const fb=$('faucetBtn');
  if(fb&&!fb._w){fb._w=1;fb.onclick=()=>{if(!PAPER)return;PAPER.faucet(WHO,250000);
@@ -831,6 +844,23 @@ function setView(v){VIEW=v;
 document.addEventListener('click',e=>{const t=e.target.closest('[data-t]'),n=e.target.closest('[data-nav]');
  if(t){setView(t.dataset.t);e.preventDefault();} else if(n){setView(n.dataset.nav);e.preventDefault();}});
 
+/* entry 609: NO THIRD COLUMN. Relocate each grid's 3rd column into collapsible
+   folds inside its 1st column AT RUNTIME — DOM moves preserve ids and handlers,
+   unlike the string surgery that destroyed the Earn centre in the first build 40. */
+(function fold3(){
+ document.querySelectorAll('.grid').forEach(gr=>{
+   if(gr.children.length<3)return;
+   const left=gr.children[0], right=gr.children[2];
+   [...right.children].forEach((card,i)=>{
+     const d=document.createElement('details'); d.className='fold'; if(i===0)d.open=true;
+     const t=card.querySelector('.chead b'); const sum=document.createElement('summary');
+     sum.textContent=t?t.textContent:'more'; d.appendChild(sum);
+     const bd=document.createElement('div'); bd.className='bd'; bd.appendChild(card);
+     d.appendChild(bd); left.appendChild(d);
+   });
+   right.remove();
+ });
+})();
 /* ── TRANSACT ── */
 function renderTransact(st){
  const set=makerCurves(), hs=st.book.map(m=>m.h); const B=aggBook(set,hs);
@@ -973,13 +1003,11 @@ function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext
  [-0.6,-0.3,0,0.3,0.6].forEach(k=>g.fillText((k*100).toFixed(0)+'%',X(k)-13,H-10));
  const ln=(arr,c,w,d)=>{g.save();g.setLineDash(d||[]);g.strokeStyle=c;g.lineWidth=w;g.beginPath();
   arr.forEach((v,i)=>{const x=X(xs[i]),y=Y(v);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();g.restore();};
- // entry 609: under the dormancy divider ask >= divider >= bid, so BOTH clouds
- // fit on one canvas without overlap. Tabs retired.
  drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,'ask');
  drawCloud(g,set,W,L,R,T,PH,ymax,X,Y,'bid');
  g.font='10px IBM Plex Mono';
- g.fillStyle='#63e6e2';g.fillText('▲ BUY side — fades upward: take more, pay more',L+6,T+12);
- g.fillStyle='#FF6767';g.fillText('▼ SELL side — fades downward: give more, get less',L+6,T+26);
+ g.fillStyle='#63e6e2';g.fillText('▲ BUY side — take more, pay more',L+6,T+12);
+ g.fillStyle='#FF6767';g.fillText('▼ SELL side — give more, get less',L+6,T+26);
  // ── THE CURRENT CURVE (operator entry 557: "where is the current curve") ──
  // top-of-book is the zero-size limit; this is the curve at the size actually being traded.
  const Qc=+(($('tsz')||{value:3}).value)||3, sideBuy=CSIDE==='ask';
@@ -992,7 +1020,7 @@ function drawAgg(B,set,hk){const cv=$('cvT');if(!cv)return;const g=cv.getContext
   g.font='10px IBM Plex Mono';g.fillStyle='#FFA541';
   g.fillText(v0===null?'your size ('+f(Qc,1)+' BTC) does not fit the book'
     :'your curve at '+f(Qc,1)+' BTC — '+f(Math.abs(v0/tob-1)*1e4,0)+' bps WORSE than top-of-book '
-      +(sideBuy?'(you pay more)':'(you receive less)'),L+6,T+26);}
+      +(sideBuy?'(you pay more)':'(you receive less)'),L+6,T+40);}
  g.save();g.strokeStyle='#FFA541';g.setLineDash([2,3]);g.beginPath();g.moveTo(X(hk),T);g.lineTo(X(hk),T+PH);g.stroke();g.restore();
  // operator entry 562: the landing strip that used to sit here is REMOVED — the
  // cloud already answers "where does my size land", so the second panel was
@@ -1074,7 +1102,6 @@ function renderPortfolio(st){
   const v=p.sz*mk_*S*p.side;netD+=d*p.sz;netV+=v;netC+=cv;
   return `<tr><td>${p.n}</td><td>${(p.k*100).toFixed(1)}%</td><td>${p.side>0?'+':''}${f(p.sz,2)}</td><td>${f(mk_,4)}</td><td>${f(cp,4)}</td><td class="${v>=0?'pos':'neg'}">${usd(v)}</td><td>${f(d,3)}</td><td>${p.bid?`<span data-close="${p.bid}" style="cursor:pointer;color:var(--teal)">close</span>`:''}</td></tr>`;}).join('');
  const closeCost=netV-netC;
- // UX review F4: these were hardcoded literals contradicting LIFE.account().
  const _a=LIFE?LIFE.account():{perpNotional:0,equityUSD:0};
  const clubL=_a.perpNotional/2,clubS=_a.perpNotional/2,mf=0.20,cf=0.25;
  const eq=(clubL+clubS)*mf, carveN=(clubL+clubS)*cf, carveE=carveN*mf;
