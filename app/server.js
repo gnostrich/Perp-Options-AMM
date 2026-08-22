@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 
-const TYPES = {'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.json':'application/json'};
+const TYPES = {'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.json':'application/json','.gz':'application/gzip'};
 const ROUTES = {'/':'index.html','/compare':'compare.html','/compare.html':'compare.html'};
 
 http.createServer((req, res) => {
@@ -11,7 +11,7 @@ http.createServer((req, res) => {
   if (url === '/health') { res.writeHead(200, {'Content-Type':'application/json'}); return res.end('{"ok":true}'); }
 
   let rel = ROUTES[url];
-  if (!rel && /^\/[A-Za-z0-9_\-.]+\.(html|js|png|webp|svg|json)$/.test(url)) rel = url.slice(1);
+  if (!rel && /^\/[A-Za-z0-9_\-.]+\.(html|js|png|webp|svg|json|gz|tar.gz)$/.test(url)) rel = url.slice(1);
   if (!rel) rel = 'index.html';                       // unknown path -> the console
 
   const file = path.join(__dirname, rel);

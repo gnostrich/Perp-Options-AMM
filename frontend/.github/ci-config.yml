@@ -1,0 +1,54 @@
+# GitHub Actions CI/CD Configuration
+# This file centralizes all deployment settings
+
+ci:
+  name: "Perp Frontend CI/CD"
+  environment: "prod"
+  
+build:
+  dockerfile: "Dockerfile"
+  context: "."
+  target_stage: "runner"  # Multi-stage build target
+  
+docker:
+  registry: "637423656783.dkr.ecr.us-west-2.amazonaws.com"
+  repository: "temporal-frontend"
+  image_name: "perp-frontend"
+  tags:
+    - "latest"
+    - "{{ github.sha }}"
+    - "{{ github.ref_name }}-{{ github.run_id }}"
+  
+aws:
+  region: "us-west-2"
+  account_id: "637423656783"
+  
+ecs:
+  cluster: "temporal-cluster"
+  service: "temporal-frontend-service"
+  task_definition: "temporal-frontend"
+  container_name: "temporal-frontend"
+  container_port: 3000
+  
+parameter_store:
+  env_config_name: "temporal-ecs-prod-fe-env"
+  env_config_type: "SecureString"
+  
+deployment:
+  strategy: "rolling"  # rolling, blue-green, canary
+  max_unhealthy_percent: 0
+  min_healthy_percent: 100
+  max_deployment_percent: 200
+  wait_for_stable: true
+  wait_timeout_minutes: 10
+  
+notifications:
+  slack_webhook: "${SLACK_WEBHOOK_URL}"
+  email_on_failure: "devops@example.com"
+  
+health_checks:
+  endpoint: "/"
+  timeout_seconds: 5
+  interval_seconds: 30
+  healthy_threshold: 2
+  unhealthy_threshold: 2

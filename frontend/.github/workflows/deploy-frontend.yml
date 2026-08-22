@@ -1,0 +1,256 @@
+name: Deploy Perp Frontend to AWS ECS
+
+on:
+  push:
+    branches:
+      - prod
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - prod
+
+env:
+  REGISTRY: 637423656783.dkr.ecr.us-west-2.amazonaws.com
+  REPOSITORY: temporal-frontend
+  IMAGE_NAME: perp-frontend
+  AWS_REGION: us-west-2
+  ECS_CLUSTER: temporal-cluster
+  ECS_SERVICE: temporal-frontend-service
+  ECS_TASK_DEFINITION: temporal-frontend
+  CONTAINER_NAME: temporal-frontend
+  CONTAINER_PORT: 3000
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      # ========================================
+      # 1. Load Configuration
+      # ========================================
+      - name: 📋 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📖 Load CI Configuration
+        id: config
+        run: |
+          echo "Loading CI configuration..."
+          cat .github/ci-config.yml
+          echo "✅ Configuration loaded"
+
+      # ========================================
+      # 2. Setup AWS Credentials (OIDC)
+      # ========================================
+      - name: 🔐 Configure AWS Credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::637423656783:role/temporal-prod-github-actions-role
+          role-session-name: github-actions-perp-frontend
+          aws-region: ${{ env.AWS_REGION }}
+          role-skip-session-tagging: true
+
+      # ========================================
+      # 3. Verify AWS Connection
+      # ========================================
+      - name: ✅ Verify AWS Credentials
+        run: |
+          echo "Testing AWS credentials..."
+          aws sts get-caller-identity
+          echo "✅ AWS connection successful"
+
+      # ========================================
+      # 4. Login to ECR
+      # ========================================
+      - name: 🐳 Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # ========================================
+      # ========================================
+      # 5. Fetch Build-time Environment Variables
+      # ========================================
+      - name: 📋 Fetch NEXT_PUBLIC Variables
+        run: |
+          echo "Fetching NEXT_PUBLIC_ variables from Parameter Store..."
+          
+          ENV_CONFIG=$(aws ssm get-parameter \
+            --name temporal-ecs-prod-fe-env \
+            --with-decryption \
+            --query 'Parameter.Value' \
+            --output text \
+            --region ${{ env.AWS_REGION }})
+          
+          # Extract NEXT_PUBLIC variables
+          NEXT_PUBLIC_API_URL=$(echo "$ENV_CONFIG" | grep "^NEXT_PUBLIC_API_URL=" | cut -d'=' -f2)
+          NEXT_PUBLIC_TEMPORAL_WALLET_LONG=$(echo "$ENV_CONFIG" | grep "^NEXT_PUBLIC_TEMPORAL_WALLET_LONG=" | cut -d'=' -f2)
+          NEXT_PUBLIC_TEMPORAL_WALLET_SHORT=$(echo "$ENV_CONFIG" | grep "^NEXT_PUBLIC_TEMPORAL_WALLET_SHORT=" | cut -d'=' -f2)
+          
+          echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_TEMPORAL_WALLET_LONG=$NEXT_PUBLIC_TEMPORAL_WALLET_LONG" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_TEMPORAL_WALLET_SHORT=$NEXT_PUBLIC_TEMPORAL_WALLET_SHORT" >> $GITHUB_ENV
+          
+          echo "✅ Build-time variables loaded"
+
+      # ========================================
+      # 6. Build Docker Image
+      # ========================================
+      - name: ��️ Build Docker Image
+        run: |
+          echo "Building Docker image with NEXT_PUBLIC variables..."
+          docker build \
+            --target runner \
+            --build-arg NEXT_PUBLIC_API_URL="${{ env.NEXT_PUBLIC_API_URL }}" \
+            --build-arg NEXT_PUBLIC_TEMPORAL_WALLET_LONG="${{ env.NEXT_PUBLIC_TEMPORAL_WALLET_LONG }}" \
+            --build-arg NEXT_PUBLIC_TEMPORAL_WALLET_SHORT="${{ env.NEXT_PUBLIC_TEMPORAL_WALLET_SHORT }}" \
+            --tag ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }} \
+            --tag ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest \
+            --tag ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }} \
+            --file Dockerfile \
+            .
+          echo "✅ Docker build complete"
+          echo "Image tags:"
+          echo "  - ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}"
+          echo "  - ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest"
+      # ========================================
+      # ========================================
+      # 7. Sync Environment Config to S3
+      # ========================================
+      - name: 📋 Sync Config from Parameter Store to S3
+        run: |
+          echo "Fetching config from Parameter Store..."
+          
+          ENV_CONFIG=$(aws ssm get-parameter \
+            --name temporal-ecs-prod-fe-env \
+            --with-decryption \
+            --query 'Parameter.Value' \
+            --output text \
+            --region ${{ env.AWS_REGION }})
+          
+          echo "✅ Config fetched (${#ENV_CONFIG} characters)"
+          
+          # Upload to S3
+          echo "$ENV_CONFIG" > config.env
+          echo "Uploading to S3: s3://temporal-ecs-config/frontend/config.env"
+          
+          aws s3 cp config.env s3://temporal-ecs-config/frontend/config.env \
+            --region ${{ env.AWS_REGION }} \
+            --sse AES256
+          
+          echo "✅ Config synced to S3"
+          echo "   ECS will load env vars from S3 via environmentFiles"
+
+      # 8. Push to ECR
+      # ========================================
+      - name: 📤 Push Image to ECR
+        run: |
+          echo "Pushing images to ECR..."
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.ref_name }}
+          echo "✅ Images pushed successfully"
+
+      # ========================================
+      # 9. Update ECS Service (No Task Definition Change)
+      # ========================================
+      - name: 🚀 Deploy to ECS Service
+        run: |
+          echo "Forcing new deployment with latest image..."
+          aws ecs update-service \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service ${{ env.ECS_SERVICE }} \
+            --force-new-deployment \
+            --region ${{ env.AWS_REGION }}
+          echo "✅ ECS service updated - will pull latest image"
+
+      # ========================================
+      # 10. Wait for Deployment
+      # ========================================
+      - name: ⏳ Wait for Deployment to Stabilize
+        run: |
+          echo "Waiting for deployment to complete (max 10 minutes)..."
+          aws ecs wait services-stable \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --services ${{ env.ECS_SERVICE }} \
+            --region ${{ env.AWS_REGION }}
+          echo "✅ Deployment stabilized"
+
+      # ========================================
+      # 11. Verify Deployment
+      # ========================================
+      - name: 🔍 Verify Deployment
+        run: |
+          echo "Verifying deployment..."
+          
+          SERVICE_INFO=$(aws ecs describe-services \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --services ${{ env.ECS_SERVICE }} \
+            --query 'services[0]')
+          
+          RUNNING_TASKS=$(echo "$SERVICE_INFO" | jq '.runningCount')
+          DESIRED_TASKS=$(echo "$SERVICE_INFO" | jq '.desiredCount')
+          
+          echo "Running tasks: $RUNNING_TASKS / $DESIRED_TASKS"
+          
+          TASK_ARNS=$(aws ecs list-tasks \
+            --cluster ${{ env.ECS_CLUSTER }} \
+            --service-name ${{ env.ECS_SERVICE }} \
+            --desired-status RUNNING \
+            --query 'taskArns' \
+            --output text)
+          
+          echo "Active task ARNs:"
+          for ARN in $TASK_ARNS; do
+            echo "  - $ARN"
+          done
+          
+          echo "✅ Deployment verified"
+
+      # ========================================
+      # 12. Deployment Summary
+      # ========================================
+      - name: 📊 Deployment Summary
+        if: success()
+        run: |
+          echo "================================================"
+          echo "✅ DEPLOYMENT SUCCESSFUL"
+          echo "================================================"
+          echo "Project: Perp Frontend"
+          echo "Environment: prod"
+          echo "Image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ github.sha }}"
+          echo "Cluster: ${{ env.ECS_CLUSTER }}"
+          echo "Service: ${{ env.ECS_SERVICE }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Time: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "================================================"
+          echo "Application URL: https://app.temporal.exchange"
+          echo "================================================"
+
+      # ========================================
+      # 13. Failure Notification
+      # ========================================
+      - name: ❌ Deployment Failed
+        if: failure()
+        run: |
+          echo "================================================"
+          echo "❌ DEPLOYMENT FAILED"
+          echo "================================================"
+          echo "Common issues:"
+          echo "  1. Docker build failed - Check Dockerfile"
+          echo "  2. ECR push failed - Check AWS credentials"
+          echo "  3. Service update failed - Check service constraints"
+          echo "  4. Health check failed - Check application / endpoint"
+          echo "================================================"
+          echo "View logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "================================================"
+          exit 1

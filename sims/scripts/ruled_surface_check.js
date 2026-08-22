@@ -13,7 +13,10 @@ const subs=[...h.matchAll(/data-sub="([a-z]+)"/g)].map(m=>m[1]);
 ok(JSON.stringify([...new Set(subs)])==='["perp","bands","earn"]','subtabs == [create perp, trade bands, earn] (e614-616)');
 ok(/Executed on Hyperliquid/.test(h),'"Executed on Hyperliquid" present (e616)');
 // e609: no third column; two-column grid
-ok(/grid-template-columns:430px 1fr[;}]/.test(h)||/grid-template-columns:440px 1fr[;}]/.test(h),'two-column layout, no third column (e609)');
+// (assert the RULING — exactly two tracks — not a pixel value; pixel-brittleness fixed 2026-08-22)
+{const m=h.match(/main\{[^}]*grid-template-columns:([^;}]+)/);
+ const tracks=m?m[1].trim().split(/\s+/).length:0;
+ ok(tracks===2,'two-column layout, no third column — tracks='+tracks+' (e609)');}
 // e609/610: the v28 background
 ok(/url\('background_physics\.webp'\)/.test(h)&&fs.existsSync('app/background_physics.webp'),'the product backdrop background_physics.webp wired (e609/610/625)');
 // e616: chart tabs Perp Mark | Options Pricing; dollar strikes with Put/Call
@@ -37,6 +40,23 @@ ok(!/MM-Kappa|MM-Delta|MM-Sigma/.test(h),'no competitor names rendered (e566)');
 ok(!/liq(uidation)? price<\/(label|span)>|Liquidation Price<\/th>/i.test(h),'no per-position liquidation-price readout (Q3)');
 // tester #9 class: no innerHTML rebuild of a control container on input events
 ok(!/oninput[^}]*innerHTML/.test(h),'no drag-destroying innerHTML rebuild on input (tester #9)');
+// e624: visible build stamp on the artifact. NOTE e628: the operator NEVER reads/says it —
+// the manager reads it off the operator's screenshot. The stamp is a manager diagnostic.
+ok(/id="vstamp"[^>]*>\s*build \d+/.test(h),'visible build stamp on the artifact (e624; manager-read only per e628)');
+// e609/610/625: the backdrop must be VISIBLE, not buried under a near-opaque overlay.
+// Three builds (43-45) were lost to a byte-identical backdrop hidden by the overlay.
+{const m=h.match(/body::before\{[^}]*rgba\([^,]+,[^,]+,[^,]+,\s*(\.?\d+(?:\.\d+)?)\)/);
+ const a=m?parseFloat(m[1]):1;
+ ok(!!m&&a<=0.6,'backdrop visible: body overlay alpha '+(m?a:'none-found')+' <= 0.6 (e625 — the asset was right all along)');}
+// e550/551/552: quotes are CONTINUOUS and live ON the curve — hover the chart to quote,
+// no separate quote box as the only quoter. (Operator said it four ways: e547/548/550/551.)
+ok(/(mousemove|pointermove)/.test(h),'hover-to-quote wired on the chart (e550/551/552)');
+ok(!/rung/i.test(h),'no quote rungs/ladder on the trader surface (e547/548/550/551)');
+// e559/560 -> e609: bid AND ask curves drawn on the SAME page (dormancy divider means no overlap)
+ok(/BK\.ask\(/.test(h)&&/BK\.bid\(/.test(h),'bid AND ask curves drawn on one page (e559/560 -> e609)');
+// e546/548/620/622/623: the OB repo is a LAYOUT/GRAMMAR reference only — no orderbook
+// mechanics or vocabulary may surface in the RFQ product ("dont colflate version").
+ok(!/order\s?-?book|price-time|resting order/i.test(h),'no orderbook mechanics/vocabulary on the surface (e546/548/620/622/623)');
 // dead-control class: every id read is declared
 const read=new Set([...h.matchAll(/\$\('([A-Za-z0-9_-]+)'\)/g)].map(m=>m[1]));
 const decl=new Set([...h.matchAll(/id="([A-Za-z0-9_-]+)"/g)].map(m=>m[1]));

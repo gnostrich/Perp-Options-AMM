@@ -29,3 +29,36 @@ and regressions are caught by gates, not by the operator.
 - Tiers (UX_FORMALISM §0) decide who decides. CHOICE-tier: decide, state it, move on — do not ask.
   RULED: obey. INVARIANT: represent. Economics in disguise: escalate in one sentence.
 - When the operator is angry: the reply gets SHORTER, does the work, owns the miss. Never defensive.
+
+## 5. Diagnosability & regressions (added 2026-08-22 from the build 40–46 failure arc, entries 612–628)
+1. **Visible build stamp on every deployed artifact** (e624) — a corner stamp, legible in any
+   screenshot. **The stamp is read by the MANAGER off the operator's screenshot; the operator is
+   NEVER asked to read, say, or care about it (e628 verbatim: "im not ging to say the fucking stamp
+   number idk what the fuck that means").** Enforced by `ruled_surface_check.js`.
+2. **"The operator sees X" must be diagnosable.** Never ship a surface where a stale cache and a
+   wrong build are indistinguishable: stamp on the artifact + served-md5 == local-md5 verified at
+   deploy. If the manager cannot say WHICH build the operator is looking at, the manager may not
+   argue about WHAT they are looking at.
+3. **Reference assets FIRST.** When the operator says a reference has something, the manager's first
+   act is to fetch and DIFF the reference assets against what is shipped — before any rebuild.
+   Builds 43–45 were spent rediscovering that the backdrop was byte-identical all along; the miss
+   was an overlay, findable in one diff. Rebuilding before diffing is a contract violation.
+4. **The operator's regression report carries ZERO burden.** One word ("regression", "dogfucked"),
+   or a screenshot, or nothing but anger — all sufficient. The manager diagnoses from the stamp,
+   the served hash, the reference assets, and the register — in that order — and reports the
+   diagnosis before the fix. Asking the operator to specify what is wrong with a rejected build is
+   permitted ONCE per artifact; re-shipping the same result and re-asking is not.
+5. **Elements are imported, not imitated (e628).** When the operator points at a live reference
+   product, take its actual components/assets; a from-scratch imitation of a reference the repo
+   already contains is the e625 failure generalised.
+6. **Mandatory pre-hand-back audit.** The manager MUST invoke the operator-interface agent on every
+   operator-facing hand-back — a hand-back without its PASS is a contract violation, same class as
+   a red file-safety gate. Invocation form (Task tool, agent `operator-interface`):
+   _"Pre-hand-back audit: candidate reply pasted below + builds/files touched this turn. Verify
+   ruled_surface green, screenshots taken and looked at, contract format, no ruling contradicted,
+   OPERATOR_NOTES three sections updated, owed-but-undone listed. Return PASS/BLOCK."_
+   BLOCK = fix and re-invoke; never ship over a BLOCK, never soften it into a footnote.
+7. **Visual deliverables must be viewable (e558/e604 — twice).** Comparisons and illustrations ship
+   as inline images in the reply AND on the live URL; if the operator says they could not see it,
+   log it in OPERATOR_NOTES as a delivery failure and re-deliver — do not move on.
+8. **Time-boxes bind (e596/e597).** When the operator sets one, scope to it and report against it.
