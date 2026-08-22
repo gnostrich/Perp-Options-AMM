@@ -4438,3 +4438,9 @@ _Context: operator — take whatever is applicable from the OB frontend, and do 
 
 > but whatver the motherfuck is appplicable
 > and goddamn dont colflate version etc im very close to nuking this repo by hand
+
+
+## Entry 624 — 2026-08-15 UTC
+_Context: operator reports still seeing the same result. Manager cannot distinguish "cached old build on the operator's device" from "the design still misses" — the new FE shipped with NO visible version stamp, so neither party can tell which build is on screen. Stamp added; visual fidelity pass toward the protect screenshots (visible swirl backdrop, larger scale, framed panels)._
+
+> still same dogshit im seeing

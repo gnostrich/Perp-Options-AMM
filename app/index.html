@@ -4,11 +4,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap');
 :root{--teal:#0ABAB5;--green:#00FF9C;--red:#FF6767;--bg:#0E1B1E;--edge:#1e3a3f;--mute:#8a9698;--txt:#c9d4d6}
 *{box-sizing:border-box}
-body{margin:0;background:#0b1416 url('bg.webp') center/cover fixed no-repeat;color:var(--txt);font:400 13px 'IBM Plex Mono',monospace}
-body::before{content:'';position:fixed;inset:0;background:rgba(8,16,18,.88);pointer-events:none}
+body{margin:0;background:#0b1416 url('bg.webp') center/cover fixed no-repeat;color:var(--txt);font:400 13.5px 'IBM Plex Mono',monospace}
+body::before{content:'';position:fixed;inset:0;background:rgba(8,16,18,.68);pointer-events:none}
 header,main,#toast{position:relative}
-header{display:flex;align-items:center;gap:22px;padding:14px 26px;border-bottom:1px solid var(--edge)}
-.logo{font:700 18px 'Chakra Petch';color:#fff;letter-spacing:.06em}
+header{display:flex;align-items:center;gap:22px;padding:16px 28px;border-bottom:1px solid var(--edge);background:rgba(8,16,18,.55)}
+.logo{font:700 20px 'Chakra Petch';color:#fff;letter-spacing:.06em}
 nav a{font:600 13px 'Chakra Petch';color:var(--mute);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;cursor:pointer}
 nav a.on{color:#fff;background:#0E2F3A;box-shadow:3px 2px 0 #000}
 header .sp{flex:1}
@@ -17,10 +17,10 @@ header .sp{flex:1}
 .btn:hover{box-shadow:4px 4px 0 #00475d}
 main{display:grid;grid-template-columns:430px 1fr;gap:16px;padding:16px 26px;max-width:1760px;margin:0 auto;align-items:start}
 @media(max-width:1100px){main{grid-template-columns:1fr}}
-.panel{background:rgba(14,27,30,.92);border:1px solid var(--edge);box-shadow:6px 4px 0 0 #000;padding:14px}
-h2{font:600 15px 'Chakra Petch';letter-spacing:.1em;margin:0 0 10px;color:#fff;text-transform:uppercase}
+.panel{background:rgba(14,27,30,.94);border:1px solid #2a4046;outline:1px solid #0a1518;box-shadow:6px 5px 0 0 #000;padding:20px;border-radius:3px}
+h2{font:600 17px 'Chakra Petch';letter-spacing:.1em;margin:0 0 10px;color:#fff;text-transform:uppercase}
 .subtabs{display:flex;border-bottom:1px solid var(--edge);margin-bottom:10px}
-.subtabs div{flex:1;text-align:center;padding:9px 4px;font:600 11.5px 'Chakra Petch';letter-spacing:.1em;text-transform:uppercase;color:var(--mute);cursor:pointer;border-bottom:2px solid transparent}
+.subtabs div{flex:1;text-align:center;padding:11px 4px;font:600 11.5px 'Chakra Petch';letter-spacing:.1em;text-transform:uppercase;color:var(--mute);cursor:pointer;border-bottom:2px solid transparent}
 .subtabs div.on{color:var(--teal);border-bottom-color:var(--teal)}
 .hl{color:var(--mute);font-size:11px;margin:0 0 12px;text-align:center}
 .row{display:grid;grid-template-columns:110px 1fr auto;border:1px solid #465E58;background:#222223;margin-bottom:8px;border-radius:2px;align-items:center}
@@ -39,7 +39,7 @@ h2{font:600 15px 'Chakra Petch';letter-spacing:.1em;margin:0 0 10px;color:#fff;t
 .seg div{flex:1;text-align:center;padding:10px;font:600 12px 'Chakra Petch';letter-spacing:.08em;cursor:pointer;color:var(--mute)}
 .seg div.on.long{background:var(--green);color:#04240f}
 .seg div.on.short{background:var(--red);color:#2d0f0f}
-.kv{display:flex;justify-content:space-between;padding:4px 2px;font-size:12px}
+.kv{display:flex;justify-content:space-between;padding:5px 2px;font-size:12.5px}
 .kv span{color:var(--mute)} .kv b{font-weight:600;color:#fff}
 .pos{color:var(--green)} .neg{color:var(--red)} .tl{color:var(--teal)}
 .cta{width:100%;margin-top:12px;padding:13px;font:700 13px 'Chakra Petch';letter-spacing:.14em;text-transform:uppercase;background:var(--teal);color:#04191a;border:0;cursor:pointer;box-shadow:3px 2px 0 #000}
@@ -115,7 +115,7 @@ th:first-child,td:first-child{text-align:left}
 <!-- ═══ RIGHT : chart ═══ -->
 <section class="panel">
  <div class="charttabs"><div id="chPerp">Perp Mark Pricing</div><div class="on" id="chOpt">Options Pricing</div></div>
- <div id="paneOpt"><canvas id="cv" width="1240" height="560"></canvas></div>
+ <div id="paneOpt"><canvas id="cv" width="1240" height="640"></canvas></div>
  <div id="panePerp" style="display:none"><div class="note" style="padding:40px 20px;font-size:12px">Perp mark — the live candle feed is a production data hook. Paper mode marks every perp at the oracle spot <b id="pm2">—</b>; entries and P&L in the store run off it.</div></div>
 </section>
 
@@ -134,6 +134,7 @@ th:first-child,td:first-child{text-align:left}
 </section>
 </main>
 <div id="toast"></div>
+<div id="vstamp" style="position:fixed;left:10px;bottom:8px;color:#4a5a5e;font-size:10px;z-index:8">build 44</div>
 <button class="btn" id="fb">💬 Feedback</button>
 <script src="book.js"></script><script src="lifecycle.js"></script><script src="paper.js"></script>
 <script>
