@@ -69,8 +69,29 @@
           return t + (m.cap / totCap) * m.curve.PUT(k);
         }, 0);
       }
-      function ask(k) { return mid(k) * (1 + hAgg); }
-      function bid(k) { return mid(k) * (1 - hAgg); }
+      // DORMANCY DIVIDER (operator entries 606/607, replaces aggregate-then-spread).
+      // mid(k) is the single spread-free aggregate = the divider. Each maker's own
+      // bid/ask stands as posted; a quote CROSSING the divider is DORMANT — never
+      // matched, never clipped, wakes when the divider moves or the maker requotes.
+      // Structural guarantees: live asks >= divider >= live bids (never crossed),
+      // and NEITHER side can be empty, because the divider is a weighted MEAN of
+      // the mids — the dearest maker's ask and cheapest maker's bid always survive.
+      function ask(k) {
+        var d = mid(k), best = Infinity;
+        for (var i = 0; i < subset.length; i++) {
+          var a = subset[i].curve.CALL(k) * (1 + subset[i].hBps / 1e4);
+          if (a >= d && a < best) best = a;
+        }
+        return best === Infinity ? d : best;   // unreachable for nonempty books; d = safe fallback
+      }
+      function bid(k) {
+        var d = mid(k), best = -Infinity;
+        for (var i = 0; i < subset.length; i++) {
+          var b = subset[i].curve.CALL(k) * (1 - subset[i].hBps / 1e4);
+          if (b <= d && b > best) best = b;
+        }
+        return best === -Infinity ? d : best;
+      }
 
       // Depth combines in PARALLEL: 1/slope_agg = Σ (0.01·capᵢ)/(LAM·ATMᵢ).
       // Matches index.html ladderAt exactly (sheet 'Trade'!B35). Does not

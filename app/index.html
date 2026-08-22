@@ -112,7 +112,7 @@ footer{padding:12px 22px;color:var(--mute);font-size:9.5px;border-top:1px solid 
   <!-- ══ RIGHT : preview / APR / risk ══ -->
   <div>
     <div class="card dim">
-      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 38 · paper wallet</span></div>
+      <div class="chead"><b>Quote Capacity</b><span class="t2" style="color:var(--teal)" id="live">build 39 · dormancy divider</span></div>
       <div class="m"><span>Quoting</span><b id="s-rungs">—</b></div>
       <div class="m"><span>Σ Notional</span><b id="s-not">—</b></div>
       <div class="m"><span>Capacity centre</span><b id="s-peak">—</b></div>
@@ -376,11 +376,18 @@ function aggBook(set,hs){
  const tot=set.reduce((t,m)=>t+m.cap,0);          // pool notional = Σ per-LP capital
  set.forEach((m,i)=>{m.share=m.cap/tot;m.h=hs[i];});
  MKT.pool=tot;
- const hAgg=Math.min(...set.map(m=>m.h))/1e4;
+ const hAgg=Math.min(...set.map(m=>m.h))/1e4;   // retained for display only
+ // DORMANCY DIVIDER (entries 606/607): mid = the single spread-free aggregate.
+ // Quotes stand as posted; a quote crossing the divider is DORMANT. Never crossed,
+ // and neither side can empty (max >= mean >= min over the maker mids).
  const mid=k=>set.reduce((t,m)=>t+m.share*m.c.CALL(k),0);
  const midP=k=>set.reduce((t,m)=>t+m.share*m.c.PUT(k),0);
- const ask=k=>mid(k)*(1+hAgg);
- const bid=k=>mid(k)*(1-hAgg);
+ const ask=k=>{const d=mid(k);let b=Infinity;
+   set.forEach(m=>{const a=m.c.CALL(k)*(1+m.h/1e4);if(a>=d&&a<b)b=a;});
+   return b===Infinity?d:b;};
+ const bid=k=>{const d=mid(k);let b=-Infinity;
+   set.forEach(m=>{const q=m.c.CALL(k)*(1-m.h/1e4);if(q<=d&&q>b)b=q;});
+   return b===-Infinity?d:b;};
  const who=(k,side)=>({m:set.find(m=>m.me)||set[0],px:side==='ask'?ask(k):bid(k)});
  const crossed=()=>false;                       // structurally impossible in this order
  return {set,ask,bid,mid,midP,who,crossed,hAgg,poolTot:tot};}
@@ -441,9 +448,12 @@ function ladderAt(mkrs,k,pool,side){
  // as 1/λ_agg = Σ 1/λᵢ, and the price walks that single aggregate curve.
  const bidSide=side==='bid';
  const tot=mkrs.reduce((t,m)=>t+m.cap,0);
- const hAgg=Math.min(...mkrs.map(m=>m.h))/1e4;
+ // dormancy-effective touch (entries 606/607): best LIVE quote on this side
  const mid=mkrs.reduce((t,m)=>t+(m.cap/tot)*m.c.CALL(k),0);
- const best=mid*(bidSide?1-hAgg:1+hAgg);
+ let best=bidSide?-Infinity:Infinity;
+ mkrs.forEach(m=>{const q=m.c.CALL(k)*(bidSide?1-m.h/1e4:1+m.h/1e4);
+   if(bidSide){if(q<=mid&&q>best)best=q;}else{if(q>=mid&&q<best)best=q;}});
+ if(!isFinite(best))best=mid;
  // sheet 'Trade'!B35: slope_i = λ·ATMp_i/(0.01·N_i). Slopes combine in parallel,
  // which collapses exactly to one pool holding ΣN_i (verified identical to 1e-15).
  let invSlope=0; mkrs.forEach(m=>{invSlope+=(0.01*m.cap)/(LAM*m.c.ATM);});
@@ -614,17 +624,19 @@ function render(){
       ? `<div class="m"><span>solved S̄</span><b class="tl">${f(P.Sbar,4)}</b></div>`
       : `<div class="m"><span>solved S̄</span><b class="neg">NO SOLUTION — vol above the map's ceiling (ATM saturates at ${f(ATM_SUP(P.a,P.gam,P.kap),4)}); level held, widen a or γ</b></div>`)
   + `<div class="m"><span>you quote vol</span><b>${((ORC.iv*(1+ORC.bias))*100).toFixed(1)}%</b></div>`
-  /* TWO CURVE SETS carry the spread, and the spread IS the disagreement budget
-     (operator entry 574). You publish ask C(1+h) and bid C(1-h); you become
-     arbable the moment your bid clears someone else's ask. Measured: the safe
-     bias is 0.43·(h_you + h_others), constant to 2 d.p. over a 20× range of h —
-     so the tolerance is not imposed, it falls out of having two curves. */
-  + (()=>{const hy=(hEffBps()||19), ho=19, budget=0.43*(hy+ho)/1e4;
-      const over=Math.abs(ORC.bias)>budget;
-      return `<div class="m"><span>bias budget (from your spread)</span><b>±${(budget*100).toFixed(3)}% vol</b></div>`
-       +`<div class="m"><span>you are</span><b class="${over?'neg':'pos'}">${over
-         ? 'ARBABLE — bias is '+(Math.abs(ORC.bias)/budget).toFixed(1)+'× your budget'
-         : 'inside your spread'}</b></div>`;})();
+  /* Entry 607: the 0.43·(h+h) crossing budget is RETIRED — under the dormancy
+     divider a divergent quote is not arbable, it is DORMANT. Show that instead. */
+  + (()=>{const set2=makerCurves(); aggBook(set2,calc().book.map(m=>m.h));
+      const tot2=set2.reduce((t,m)=>t+m.cap,0);
+      const dv=k=>set2.reduce((t,m)=>t+(m.cap/tot2)*m.c.CALL(k),0);
+      const me2=set2.find(m=>m.me); let liveA=0,liveB=0,n2=0;
+      if(me2)for(let k=-0.4;k<=0.4;k+=0.02){n2++;const d=dv(k);
+        if(me2.c.CALL(k)*(1+me2.h/1e4)>=d)liveA++;
+        if(me2.c.CALL(k)*(1-me2.h/1e4)<=d)liveB++;}
+      const pa=n2?liveA/n2*100:0, pb=n2?liveB/n2*100:0;
+      return `<div class="m"><span>your ASK live vs the divider</span><b class="${pa>50?'pos':'neg'}">${pa.toFixed(0)}% of strikes</b></div>`
+       +`<div class="m"><span>your BID live vs the divider</span><b class="${pb>50?'pos':'neg'}">${pb.toFixed(0)}% of strikes</b></div>`
+       +`<div class="m"><span>dormant quotes</span><b>sleep — they wake when the divider moves or you requote</b></div>`;})();
  }
  $('mkt').innerHTML=mktField('rv','Realised vol',0.1,1.4,0.05,v=>(v*100).toFixed(0)+'%')
   +mktField('turn','Turnover / day',0.05,3,0.05,v=>f(v,2)+'×')

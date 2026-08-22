@@ -4332,3 +4332,15 @@ _Context: operator raises repo hygiene — concerned the repo is a muddle, versi
 _Context: operator states the aggregation design precisely — aggregate all curves into a SINGLE spread-free curve; that aggregate is the divider; each LP's own separate bid and ask curves stand as posted; any quote crossing the divider is DORMANT._
 
 > and on the aggregation thing we aggrwgater all the curves (no spread here single curve) then trhis isngle ggregate becomes the divider and then the actual LP separate bid curve ask curves exist as they are, and basically any quote crossing this separator is dormant ... dtms?
+
+
+## Entry 607 — 2026-08-15 UTC
+_Context: operator adopts the dormancy-divider as the live pricing rule ("use this, i'd like to try it out"), orders the LP exposure sheet simplified so the LP specifies ONLY exposure limits (no leverage, no notional), and asks for a UX review of the visualisations for end-user appropriateness._
+
+> yes use this, i'd like to try it out, also fix the curve interpolate thing so the LP oesnt have to specifity lvefeage or the notional just the exposure limts itms....? and review UX for visualisations etc being apprpriatr to end user....
+
+
+## Entry 608 — 2026-08-15 UTC
+_Context: fragment, mid-typing — scopes the UX review toward the whole-loop / lifecycle visualisations. Message appears cut off; manager proceeded with the review scoped to the full lifecycle rather than waiting._
+
+> like the whple loop etc stuff .... i think we
