@@ -4308,3 +4308,9 @@ _Context: operator proposes a third structure — do not aggregate to form the p
 _Context: operator pushes back — the circuit breaker would stop arbitrage from overlapping quotes and let the spread emerge naturally. Manager had tested a quote-admissibility band around the aggregate, not the operator's match-admissibility rule, and re-tested._
 
 > but wluldnt that circuit breaker stop arb from overlaps + allow spread naturally
+
+
+## Entry 603 — 2026-08-15 UTC
+_Context: operator states the rule precisely — each LP's quote stands; the aggregate acts as a natural cutoff/divider WITHIN the overlap; takers match the best quote permitted by that divider. This is a divider inside the overlap, not a block on matching._
+
+> so each LP stands, just that the aggregate thing creates a natural cutoff / divider for the overlap, and then takers match with the best permitted by that divider, right?
