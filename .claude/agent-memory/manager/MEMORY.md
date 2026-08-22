@@ -2,6 +2,24 @@
 
 Pointer-only seed per the skeptic succession plan (its §a3). Nothing narrative carries over.
 
+🧭 **📌 TERMINAL STATE 2026-08-22 (read FIRST — supersedes all blocks below on project status).**
+**REPO IS AN OFFICIAL WRITE-OFF (operator entry 633, binding):** "stop everythign . this repo is a
+write off officially." Sole deliverable = **`app/rfq_handoff.tar.gz`** — RFQ mechanism material ONLY,
+all FE categorically nuked, no older versions. Purge history: v3-maps-lean stripped (entry 634 — it's
+the OB line), GH/lens Aristotle archive stripped (entry 635), FULL_LOOP v1→v2 (entry 636,
+`BURR2_FULL_LOOP_v2_RFQ.xlsx` with live divider sheet, node-verified divider 0.134630 / effAsk
+0.135657 / effBid 0.125661 / not crossed). **Entry 637 (2026-08-22): operator forwarded the package
+to another session and asked purity assurance.** Re-audit done: fixed stale MANIFEST (still listed
+v3-maps/CLOSED_LOOP_MAP/v1), dropped `BURR2_FULL_LOOP_v1_NOTES.md` orphan, added
+`rfq_measurements/RUNNING.md` (28 scripts load pricing from repo paths NOT in archive; packaged
+`burr2_kernel.js` mk verified byte-identical to console mk; engines/*.js byte-identical to app/*.js).
+Current package md5 **`baef77ff…`** (255467 b), commit `3fa0bac`, serving at
+https://web-production-cc265.up.railway.app/rfq_handoff.tar.gz (verified served md5 == committed).
+Known content-level residuals DISCLOSED to operator (not silently purged): inline old-line mentions
+in analysis docs (define RFQ against the retired line), full transcript in record/ (ruling
+provenance, contains FE/GH-era discussion — operator may order it trimmed). Everything below this
+block is historical context for the retired lines.
+
 🧭 **📌 COMPACTION-SAFE STATE 2026-07-08 (read first) — `main` == feature branch == `edc71eb` (all pushed, green).**
 Engine HEAD = `engine/builds/HEAD_temporal_mvp_v28_lens.html` md5 **`5ce1a76c`** (vocab scrub of abd35f4b: "lean"→"ray deviation / curve skew"; gates lens_selfcheck **41** + a16 **5** green; vocab_gate wired+PASS). CTO handover package current in `handover/` (engine 5ce1a76c + CHANGELOG PDF `c550f7e4` + HTML). Operator transcript current through **entry 484** in `history/operator/2026-06-10_kurtosis-curve-family-brief.md`. Open threads: (a) **staging E2E** — kit `handover/temporal_staging_test_kit.zip` (md5 8be1867b) delivered for a full-access session's tester (this sandbox can't browse external sites — proxy resets headless Chromium); another session's branch `origin/claude/temporal-exchange-e2e-b4560k` did a first pass (staging=H3/5ce1a76c, per-strike constants BLOCKED needs CTO endpoint). (b) **sims/ brainstorm** = LP economics (yield vs turnover×σ, base vs HLP-restaked LP) — NON-CORE, unreviewed, `sims/BRAINSTORM_lp_economics_2026-07-08.md`. (c) **update-2** still parked (funding rate formula D1/D3/D4, charge-back D5/D6). Funding purpose = tether/imbalance (entry 476, operator; skeptic tempered — not a settled mechanism, premium reading not dead). Branch git directive: develop on `claude/exciting-archimedes-txs2wx`; operator authorized main-update entry 484.
 
