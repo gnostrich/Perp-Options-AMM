@@ -4302,3 +4302,9 @@ _Context: operator asks whether the aggregation is a convex hull or similar._
 _Context: operator proposes a third structure — do not aggregate to form the price. Let each maker's quote stand as posted and execute against it; use the aggregate only as a CIRCUIT BREAKER that decides which matches are permissible._
 
 > instead of aggregating, what if we allow everyone's quote to sit as is but just have the agfregarion as a sort of 'circuit breaker' so only permissible matches happen iygqwim?
+
+
+## Entry 602 — 2026-08-15 UTC
+_Context: operator pushes back — the circuit breaker would stop arbitrage from overlapping quotes and let the spread emerge naturally. Manager had tested a quote-admissibility band around the aggregate, not the operator's match-admissibility rule, and re-tested._
+
+> but wluldnt that circuit breaker stop arb from overlaps + allow spread naturally
