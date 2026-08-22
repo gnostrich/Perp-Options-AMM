@@ -4326,3 +4326,9 @@ _Context: operator moves on from the illustrations (couldn't see them) and speci
 _Context: operator raises repo hygiene — concerned the repo is a muddle, version control is broken, conflation risk is endless. Orders a version-control survey and hard archiving into folders so only current work remains in working folders, same for specs and notes._
 
 > oversall i'm concerned this repo is a muddle and version control is brokenn and we have an endless sort of conflton risk. i want a version control survey and hard archiving into folders so what we're currentl.y wokring on only remainsd in the qwokring folder iygwim, same for specs notes etc.
+
+
+## Entry 606 — 2026-08-15 UTC
+_Context: operator states the aggregation design precisely — aggregate all curves into a SINGLE spread-free curve; that aggregate is the divider; each LP's own separate bid and ask curves stand as posted; any quote crossing the divider is DORMANT._
+
+> and on the aggregation thing we aggrwgater all the curves (no spread here single curve) then trhis isngle ggregate becomes the divider and then the actual LP separate bid curve ask curves exist as they are, and basically any quote crossing this separator is dormant ... dtms?
