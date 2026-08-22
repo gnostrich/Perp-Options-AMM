@@ -16,10 +16,10 @@ FROM node:20-alpine AS builder
 
 # Accept build arguments. NEXT_PUBLIC_* is baked at `next build` — a var absent
 # here never reaches the bundle no matter what the service env says.
-ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_API_URL=/api/proxy
 ARG NEXT_PUBLIC_TEMPORAL_WALLET_LONG
 ARG NEXT_PUBLIC_TEMPORAL_WALLET_SHORT
-ARG NEXT_PUBLIC_EXECUTION_MODE
+ARG NEXT_PUBLIC_EXECUTION_MODE=paper
 ARG NEXT_PUBLIC_V3_BOOK
 
 # Set them as environment variables for Next.js build

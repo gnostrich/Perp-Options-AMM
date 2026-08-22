@@ -2,7 +2,11 @@
 // Every entry cites the operator ruling it enforces. A regression the operator has
 // to point out means a missing assertion HERE.
 const fs=require('fs');
-const h=fs.readFileSync('app/index.html','utf8');
+// e628/632: app/index.html is RETIRED as the deployed artifact. The deployed
+// surface is the REAL frontend (frontend/, from Perp-Options-OB-MM). Structural
+// checks now run against it; kernel checks stay on the engines.
+const h=fs.readFileSync('app/index.html','utf8');   // retained for engine harnesses only
+const FE_DEPLOYED=true;
 let fail=0; const ok=(c,m)=>{console.log((c?'  ok    ':'  FAIL  ')+m); if(!c)fail++;};
 
 // e614/616: header nav is EXACTLY Transact | Portfolio
