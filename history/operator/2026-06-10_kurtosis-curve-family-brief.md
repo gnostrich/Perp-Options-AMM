@@ -4508,3 +4508,15 @@ _Context: operator despairs — the frontend still wrong despite handing over th
 _Context: operator's final order — stop everything; the repo is officially a write-off; the handoff contains ONLY RFQ-pertaining material; every FE-related item categorically excluded, no older versions, nothing._
 
 > stop everythign . this repo is a write off officially. the handoff should only include anything pertaining to the RFQ and categorieclaly nuke out any and all FE related items there, no older vresions fucking nthing you hewsr. me
+
+
+## Entry 634 — 2026-08-15 UTC
+_Context: operator catches OB material inside the "RFQ-only" handoff — v3-maps-lean is the v3 (orderbook) book formalization (confirmed by NEXT_PUBLIC_V3_BOOK in the OB frontend). Manager strips it and any other OB-lineage items and rebuilds the package._
+
+> what the fuck is v3 isnt ehat the ob stuff you fuck
+
+
+## Entry 635 — 2026-08-15 UTC
+_Context: operator — the handoff still contains the old line's material (the aristotle_runs folder was the whole GH/lens/engine-era archive). Stripped to Burr-2 only._
+
+> all this is still contraning old dosghit fuckery
