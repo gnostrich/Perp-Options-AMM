@@ -4296,3 +4296,9 @@ _Context: operator uploads arXiv 2608.13383 ("Bridging Mixture Distributions", D
 _Context: operator asks whether the aggregation is a convex hull or similar._
 
 > is the aggregation convex hull or something like that?
+
+
+## Entry 601 — 2026-08-15 UTC
+_Context: operator proposes a third structure — do not aggregate to form the price. Let each maker's quote stand as posted and execute against it; use the aggregate only as a CIRCUIT BREAKER that decides which matches are permissible._
+
+> instead of aggregating, what if we allow everyone's quote to sit as is but just have the agfregarion as a sort of 'circuit breaker' so only permissible matches happen iygqwim?
